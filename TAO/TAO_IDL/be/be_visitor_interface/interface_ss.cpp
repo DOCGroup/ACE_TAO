@@ -385,7 +385,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "else" << be_idt_nl
           << "{" << be_idt_nl
           << "// stub->_incr_refcnt ();" << be_nl
-          << "CORBA::Object_var obj = new CORBA::Object (stub);" << be_nl
+          << "CORBA::Object_var obj = new CORBA::Object (stub);" << be_nl;
           << "return " << node->full_name ()
           << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl
@@ -399,8 +399,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (idl_global->gen_thru_poa_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SS)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SS);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -427,8 +427,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (idl_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SS)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SS);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -450,6 +450,50 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                             -1);
         }
       delete visitor;
+    }
+
+
+  // AMI
+
+  // Generate code for the AMI Reply Handler.
+  if (idl_global->ami_call_back () == I_TRUE
+      && this->ctx_->state () != TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SS)
+    {
+      be_interface_type_strategy *old_strategy =
+        node->set_strategy (new be_interface_ami_handler_strategy (node));
+      
+      // = Generate the Servant Skeleton code.
+
+      // Set the context.
+      be_visitor_context ctx (*this->ctx_);
+
+      // Set the state.
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SS);
+
+      // Create the visitor.
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "Bad visitor\n"),
+                            -1);
+        }
+
+      // Call the visitor on this interface.
+      if (node->accept (visitor) == -1)
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_ss::"
+                             "visit_interface - "
+                             "code gen for ami handler failed\n"),
+                            -1);
+        }
+      delete visitor;
+
+      delete node->set_strategy (old_strategy);
     }
 
   *os << "\n\n";

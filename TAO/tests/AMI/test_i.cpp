@@ -8,7 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(MT_Client, test_i, "$Id$")
-
+#if 0
 void
 Simple_Server_i::test_method (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -17,6 +17,7 @@ Simple_Server_i::test_method (CORBA::Environment&)
     ACE_DEBUG ((LM_DEBUG,
                 "%N:%l:(%P:%t):Simple_Server_i::test_method called\n"));
 }
+
 
 CORBA::Long
 Simple_Server_i::get_number (CORBA::Environment&)
@@ -38,7 +39,7 @@ Simple_Server_i::put_number (CORBA::Long l,
                 "%N:%l:(%P:%t):Simple_Server_i::put_number: %d\n",
                 l));
 }
-
+#endif // 0
 CORBA::Long
 Simple_Server_i::get_put_number (CORBA::Long_out out_l,
                                  CORBA::Long in_l,

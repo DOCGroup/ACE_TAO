@@ -1602,7 +1602,8 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_CALLBACK)
+
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
@@ -1715,6 +1716,10 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_AMI_CALLBACK */
+
+#if defined (TAO_HAS_AMI_POLLER)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -1997,7 +2002,7 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 }
 TAO_NAMESPACE_CLOSE

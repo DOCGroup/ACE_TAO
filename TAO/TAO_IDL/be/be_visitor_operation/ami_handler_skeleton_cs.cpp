@@ -143,7 +143,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
-      << "// @@ Error handling " << be_nl << be_nl;
+      << "// @@ Error handling \n\n";
 
   // declare a return type variable
   ctx = *this->ctx_;
@@ -400,7 +400,7 @@ gen_marshal_and_invoke (be_operation *node,
 
   os->indent ();
 
-  *os << "// Demarshall all the arguments.\n";
+  *os << "// Demarshall all the arguments." << be_nl;
   if (!this->void_return_type (bt)
       || this->has_param_type (node, AST_Argument::dir_INOUT)
       || this->has_param_type (node, AST_Argument::dir_OUT))
@@ -476,6 +476,8 @@ gen_marshal_and_invoke (be_operation *node,
     }
   delete visitor;
   visitor = 0;
+
+  os->indent ();
 
   *os << be_nl << ");" << be_uidt_nl;
 

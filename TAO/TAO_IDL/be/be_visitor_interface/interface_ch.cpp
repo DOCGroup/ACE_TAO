@@ -320,37 +320,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                 -1);
             }
           delete visitor;
+          visitor = 0;
 
-          //  = Generate the Servant Skeleton code.
 
-          // Set the context.
-          ctx = *this->ctx_;
-
-          // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH);
-
-          // Create the visitor.
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface_ch::"
-                                 "visit_interface - "
-                                 "Bad visitor\n"),
-                                -1);
-            }
-
-          // call the visitor on this interface.
-          if (node->accept (visitor) == -1)
-            {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface_ch::"
-                                 "visit_interface - "
-                                 "code gen for ami handler failed\n"),
-                                -1);
-            }
-          delete visitor;
 
           delete node->set_strategy (old_strategy);
         }

@@ -1284,7 +1284,7 @@ POA_Messaging::QueueOrderPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_CALLBACK)
 POA_Messaging::ReplyHandler::ReplyHandler (void)
 {
 }
@@ -1366,7 +1366,11 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
   return new POA_Messaging::_tao_collocated_ReplyHandler (this, stub);
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK */
+
 // ****************************************************************
+
+#if defined (TAO_HAS_AMI_POLLER)
 
 class TAO_Messaging_Poller_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -1847,6 +1851,6 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
   return new POA_Messaging::_tao_collocated_Poller (this, stub);
 }
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING */

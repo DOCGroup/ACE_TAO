@@ -90,8 +90,8 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
   // Generating the skeleton method.
 
   // Skeleton not necessary for collocated class.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CH
-      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_CH)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH
+      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH)
     {
       return 0;
       /* NOT REACHED */
@@ -124,7 +124,7 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
       // class.  
       switch (this->ctx_->state ())
         {
-        case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CH:
+        case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_SH:
           *os << "CORBA::ServerRequest &_tao_req, " << be_nl
               << "void *_tao_obj, " << be_nl
               << "void *_tao_context, " << be_nl

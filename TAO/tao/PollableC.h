@@ -22,7 +22,7 @@
 
 #include "tao/corbafwd.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_HAS_AMI_POLLER)
 
 #include "tao/Object.h"
 #include "tao/Exception.h"
@@ -437,6 +437,6 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */
 
 #endif /* TAO_IDL_POLLABLEC_H */

@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    ami_handler_thru_poa_collocated_ch.cpp
+//    ami_handler_thru_poa_collocated_sh.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for thru_poa_collocated operation in the client stub
@@ -26,26 +26,26 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, ami_handler_thru_poa_collocated_ch, "$Id$")
+ACE_RCSID(be_visitor_operation, ami_handler_thru_poa_collocated_sh, "$Id$")
 
 
 // *************************************************************************
-//  be_visitor_operation_ami_handler_thru_poa_collocated_ch --
+//  be_visitor_operation_ami_handler_thru_poa_collocated_sh --
 //  This visitor generates code for the thru_poa_collocated operation signature in a
 //  server header file
 // *************************************************************************
 
-be_visitor_operation_ami_handler_thru_poa_collocated_ch::be_visitor_operation_ami_handler_thru_poa_collocated_ch
+be_visitor_operation_ami_handler_thru_poa_collocated_sh::be_visitor_operation_ami_handler_thru_poa_collocated_sh
 (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_ami_handler_thru_poa_collocated_ch::~be_visitor_operation_ami_handler_thru_poa_collocated_ch (void)
+be_visitor_operation_ami_handler_thru_poa_collocated_sh::~be_visitor_operation_ami_handler_thru_poa_collocated_sh (void)
 {
 }
 
-int be_visitor_operation_ami_handler_thru_poa_collocated_ch::visit_operation (be_operation *node)
+int be_visitor_operation_ami_handler_thru_poa_collocated_sh::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node representing the return type
