@@ -197,7 +197,7 @@ public:
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
   // Add a new <ACE_Event_Handler> and a new sigaction associated with
-  // <signum>.  Passes back the existing ACE_Event_Handler and its
+  // <signum>.  Passes back the existing <ACE_Event_Handler> and its
   // sigaction if pointers are non-zero.  Returns -1 on failure and >=
   // 0 on success.
 
