@@ -1,3 +1,29 @@
+Thu Mar 16 13:02:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Time_Service/Makefile:
+	* orbsvcs/CosEvent_Service/Makefile: 
+	* orbsvcs/ImplRepo_Service/Makefile: 
+	* orbsvcs/LifeCycle_Service/Makefile: 
+	* orbsvcs/Logging_Service/Makefile:
+	* orbsvcs/Trading_Service/Makefile:
+	* examples/Callback_Quoter/Makefile: 
+	* examples/Simple/time-date/Makefile: 
+	* examples/Load_Balancing/Makefile:
+	* examples/Buffered_Oneways/Makefile: 
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: 
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile: 
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/Thruput/TAO/Makefile: 
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/Latency/Makefile:
+	* tests/InterOp-Naming/Makefile: Updated these Makefiles. Thanks
+	  to our daily builds that catches things better than a human.
+
 Thu Mar 16 12:34:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceS.h:
@@ -63,65 +89,65 @@ Wed Mar 15 21:50:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Mar 15 20:26:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/AMI/FL_Callback/Makefile
-	* examples/Buffered_AMI/Makefile
-	* examples/Callback_Quoter/Makefile
-	* examples/Event_Comm/Makefile
-	* examples/Load_Balancing/Makefile
-	* examples/Load_Balancing_persistent/Makefile
-	* examples/Logging/Makefile
-	* examples/OBV/Typed_Events/Makefile
-	* examples/POA/Generic_Servant/Makefile
-	* examples/POA/Adapter_Activator/Makefile
-	* examples/POA/DSI/Makefile
-	* examples/POA/Default_Servant/Makefile
-	* examples/POA/Explicit_Activation/Makefile
-	* examples/POA/FindPOA/Makefile
-	* examples/POA/Forwarding/Makefile
-	* examples/POA/Generic_Servant/Makefile
-	* examples/POA/Loader/Makefile
-	* examples/POA/NewPOA/Makefile
-	* examples/POA/On_Demand_Activation/Makefile
-	* examples/POA/On_Demand_Loading/Makefile
-	* examples/POA/Reference_Counted_Servant/Makefile
-	* examples/POA/RootPOA/Makefile
-	* examples/POA/TIE/Makefile:
+	* examples/AMI/FL_Callback/Makefile:
+	* examples/Buffered_AMI/Makefile:
+	* examples/Callback_Quoter/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Load_Balancing/Makefile:
+	* examples/Load_Balancing_persistent/Makefile:
+	* examples/Logging/Makefile:
+	* examples/OBV/Typed_Events/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	* examples/POA/Adapter_Activator/Makefile:
+	* examples/POA/DSI/Makefile:
+	* examples/POA/Default_Servant/Makefile:
+	* examples/POA/Explicit_Activation/Makefile:
+	* examples/POA/FindPOA/Makefile:
+	* examples/POA/Forwarding/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	* examples/POA/Loader/Makefile:
+	* examples/POA/NewPOA/Makefile:
+	* examples/POA/On_Demand_Activation/Makefile:
+	* examples/POA/On_Demand_Loading/Makefile:
+	* examples/POA/Reference_Counted_Servant/Makefile:
+	* examples/POA/RootPOA/Makefile:
+	* examples/POA/TIE/Makefile: Updated all these Makefiles.
 
 
 Wed Mar 15 19:49:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/OctetSeq/Makefile
-	* tests/Param_Test/Makefile
-	* tests/AMI/Makefile
-	* tests/CDR/Makefile
-	* tests/Connection_Purging/Makefile
-	* tests/DSI_Gateway/Makefile
-	* tests/DynAny_Test/Makefile
-	* tests/Endpoint_Per_Priority/Makefile
-	* tests/Explicit_Event_Loop/Makefile
-	* tests/Faults/Makefile
-	* tests/IDL_Test/Makefile
-	* tests/IORManipulation/Makefile
-	* tests/Interceptors/Makefile
-	* tests/Leader_Followers/Makefile
-	* tests/MProfile/Makefile
-	* tests/MProfile_Forwarding/Makefile
-	* tests/MT_Client/Makefile
-	* tests/MT_Server/Makefile
-	* tests/Multiple_Inheritance/Makefile
-	* tests/NestedUpcall/MT_Client_Test/Makefile
-	* tests/NestedUpcall/Triangle_Test/Makefile
-	* tests/NestedUpcall/Simple/Makefile
-	* tests/Nested_Event_Loop/Makefile
-	* tests/ORB_init/Makefile
-	* tests/POA/Deactivation/Makefile
-	* tests/POA/Destruction/Makefile
-	* tests/POA/Identity/Makefile
-	* tests/FL_Cube/Makefile
-	* tests/Smart_Proxies/Makefile
-	* tests/Smart_Proxies/On_Demand/Makefile
-	* tests/Timed_Buffered_Oneways/Makefile
-	* tests/Timeout/Makefile
+	* tests/OctetSeq/Makefile:
+	* tests/Param_Test/Makefile:
+	* tests/AMI/Makefile:
+	* tests/CDR/Makefile:
+	* tests/Connection_Purging/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/DynAny_Test/Makefile:
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Explicit_Event_Loop/Makefile:
+	* tests/Faults/Makefile:
+	* tests/IDL_Test/Makefile:
+	* tests/IORManipulation/Makefile:
+	* tests/Interceptors/Makefile:
+	* tests/Leader_Followers/Makefile:
+	* tests/MProfile/Makefile:
+	* tests/MProfile_Forwarding/Makefile:
+	* tests/MT_Client/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/NestedUpcall/MT_Client_Test/Makefile:
+	* tests/NestedUpcall/Triangle_Test/Makefile:
+	* tests/NestedUpcall/Simple/Makefile:
+	* tests/Nested_Event_Loop/Makefile:
+	* tests/ORB_init/Makefile:
+	* tests/POA/Deactivation/Makefile:
+	* tests/POA/Destruction/Makefile:
+	* tests/POA/Identity/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/Smart_Proxies/Makefile:
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	* tests/Timed_Buffered_Oneways/Makefile:
+	* tests/Timeout/Makefile:
 	* tests/Xt_Stopwatch/Makefile: Updated all these Makefiles to
 	  change the dependency on GIOP.h.
 
