@@ -476,7 +476,7 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
 
       if (scheduling_params.quantum () == ACE_Time_Value::zero)
         {
-          rtparms.rt_tqsecs = 0ul;
+          // rtparms.rt_tqsecs is ignored with RT_TQINF
           rtparms.rt_tqnsecs = RT_TQINF;
         }
       else
@@ -485,49 +485,54 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
           rtparms.rt_tqnsecs = scheduling_params.quantum ().usec () * 1000;
         }
 
-      // Package up the RT class ID and parameters for the ::priocntl
-      // () call.
+      // Package up the RT class ID and parameters for the ::priocntl ()
+      // call.
       ACE_OS::memcpy (pcparms.pc_clparms, &rtparms, sizeof rtparms);
     }
   else
     {
       tsparms_t tsparms;
-      // Don't bother changing ts_uprilim (user priority limit) from
-      // its default of 0.
-      tsparms.ts_uprilim = 0;
+      // Don't change ts_uprilim (user priority limit)
+      tsparms.ts_uprilim = TS_NOCHANGE;
       tsparms.ts_upri = scheduling_params.priority ().os_default_thread_priority ();
 
-      // Package up the TS class ID and parameters for the ::priocntl
-      // () call.
+      // Package up the TS class ID and parameters for the ::priocntl ()
+      // call.
       ACE_OS::memcpy (pcparms.pc_clparms, &tsparms, sizeof tsparms);
     }
 
   if (::priocntl ((idtype_t) scheduling_params.scope (), P_MYID, PC_SETPARMS,
                   (char *) &pcparms) < 0)
-    return ACE_OS::last_error ();
+    {
+      return ACE_OS::last_error ();
+    }
 
 #elif defined (ACE_WIN32)
 
   // Set the priority class of this process to the real-time process class.
-  if (! ::SetThreadPriority (
-          ::GetCurrentThread (),
-          scheduling_params.priority ().os_default_thread_priority ()))
+  if (! ::SetPriorityClass (::GetCurrentProcess (),
+                            scheduling_params.priority ().os_priority_class ()))
     {
       return -1;
     }
 
   // Set the thread priority on the current thread.
-  if (!::SetThreadPriority (::GetCurrentThread (),
-			    scheduling_params.priority ().os_default_thread_priority ())
-    return -1;
+  ACE_hthread_t my_thread_id;
+  ACE_OS::thr_self (&my_thread_id);
+  if (! ACE_OS::thr_setprio (my_thread_id,
+                             scheduling_params.priority ().os_default_thread_priority ()))
+    {
+      return -1;
+    }
 
 
 #elif defined (VXWORKS)
   // There is only one class of priorities on VxWorks, and no
   // time quanta.  So, just set the current thread's priority.
 
-  ACE_htread_t my_thread_id;
+  ACE_hthread_t my_thread_id;
   ACE_OS::thr_self (&my_thread_id);
+  // this call should never fail on VxWorks
   ACE_OS::thr_setprio (my_thread_id,
 		       scheduling_params.priority ().os_default_thread_priority ());
 
