@@ -1,8 +1,10 @@
-project(CosEvent) : cosevent, orbsvcslib, messaging, core, naming {
+// $Id$
+
+project(CosEvent) : CosEvent, orbsvcslib, messaging, core, naming {
   avoids += ec_typed_events
 }
 
-project(CosEvent) : cosevent, orbsvcslib, messaging, core, naming, ifr_client, dynamicinterface {
+project(CosEvent) : CosEvent, orbsvcslib, messaging, core, naming, ifr_client, dynamicinterface {
   requires += ec_typed_events
   macros      += TAO_HAS_TYPED_EVENT_CHANNEL
 
