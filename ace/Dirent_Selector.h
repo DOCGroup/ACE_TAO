@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class ACE_Dirent
+ * @class ACE_Dirent_Selector
  *
  * @brief Define a portable C++ directory-entry iterator based on the
  * POSIX @param scandir API.

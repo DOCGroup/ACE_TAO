@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Seth Widoff 
+ *  @author Seth Widoff
  */
 //=============================================================================
 
@@ -143,12 +143,12 @@ public:
    */
   int cur_arg_strncasecmp (const ACE_TCHAR *flag);
 
-  /// Consume <number> argument(s) by sticking them/it on the end of
+  /// Consume @a number argument(s) by sticking them/it on the end of
   /// the vector.
   int consume_arg (int number = 1);
 
-  /// Place <number> arguments in the same relative order ahead of the
-  /// known arguemnts in the vector.
+  /// Place @a number arguments in the same relative order ahead of the
+  /// known arguments in the vector.
   int ignore_arg (int number = 1);
 
   /// Returns the number of args left to see in the vector.

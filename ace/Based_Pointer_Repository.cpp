@@ -3,28 +3,29 @@
 #include "ace/Map_Manager.h"
 #include "ace/Based_Pointer_Repository.h"
 
+/**
+ * @class ACE_Based_Pointer_Repository_Rep
+ *
+ * @brief Implementation for the <ACE_Based_Pointer_Repository>.
+ *
+ * Every memory pool in ACE binds it's mapping base address and
+ * the mapped size to this repository every time it maps/remaps a
+ * new chunk of memory successfully.
+ */
 class ACE_Based_Pointer_Repository_Rep
 {
-  // = TITLE
-  //   Implementation for the <ACE_Based_Pointer_Repository>.
-  //
-  // = DESCRIPTION
-  //   Every memory pool in ACE binds it's mapping base address and
-  //   the mapped size to this repository every time it maps/remaps a
-  //   new chunk of memory successfully.
-
 public:
   // Useful typedefs.
   typedef ACE_Map_Manager <void *, size_t, ACE_Null_Mutex> MAP_MANAGER;
   typedef ACE_Map_Iterator < void *, size_t, ACE_Null_Mutex> MAP_ITERATOR;
   typedef ACE_Map_Entry <void *, size_t> MAP_ENTRY;
 
+  /// Keeps track of the mapping between addresses and their associated
+  /// values.
   MAP_MANAGER addr_map_;
-  // Keeps track of the mapping between addresses and their associated
-  // values.
 
+  /// Synchronize concurrent access to the map.
   ACE_SYNCH_MUTEX lock_;
-  // Synchronize concurrent access to the map.
 };
 
 ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository (void)

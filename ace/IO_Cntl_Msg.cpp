@@ -9,14 +9,13 @@ ACE_RCSID(ace, IO_Cntl_Msg, "$Id$")
 // Forward decl
 template <class SYNCH> class ACE_Module;
 
-
+/**
+ * @class ACE_Module_Link
+ *
+ * @brief Data structure used to link two modules together
+ */
 class ACE_Module_Link
 {
-  // = TITLE
-  //     Data structure used to link two modules together
-  //
-  // = DESCRIPTION
-  //
 public:
   ACE_Module_Link (ACE_Module *m1, ACE_Module *m2): mod_upper_ (m1), mod_lower_ (m2), count_ (0) {}
 
