@@ -1,3 +1,8 @@
+Sat Jan 15 19:59:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Reran flex on Svc_Conf.y to generate the Svc_Conf_l.cpp file
+	  with Darrell's fixes.
+
 Sat Jan 15 15:49:28 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:
