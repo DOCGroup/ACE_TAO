@@ -139,6 +139,8 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
+  // @@ FIXME: Not thread safe!
+
   if (this->non_ssl_connect_done_ == 0)
     {
       if (this->connector_.connect (new_stream.peer (),
@@ -177,6 +179,8 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
+  // @@ FIXME: Not thread safe!
+
   if (this->non_ssl_connect_done_ == 0)
     {
       if (this->connector_.connect (new_stream.peer (),
@@ -210,6 +214,8 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
                                   ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::complete");
+
+  // @@ FIXME: Not thread safe!
 
   if (this->non_ssl_connect_done_ == 0)
     {
@@ -253,8 +259,8 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT (
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
                )));
 }
@@ -291,8 +297,8 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT (
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
               )));
 }

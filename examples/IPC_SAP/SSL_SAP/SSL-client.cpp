@@ -350,9 +350,9 @@ Options::twoway_client_test (void *)
     iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) messages = %d\n")
-              ASYS_TEXT ("(%t) usec-per-message = %f\n")
-              ASYS_TEXT ("(%t) messages-per-second = %0.00f\n"),
+              ACE_TEXT ("(%t) messages = %d\n")
+              ACE_TEXT ("(%t) usec-per-message = %f\n")
+              ACE_TEXT ("(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
