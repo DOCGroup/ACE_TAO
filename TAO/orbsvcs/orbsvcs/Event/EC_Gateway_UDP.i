@@ -63,7 +63,7 @@ TAO_ECG_UDP_Request_Index::hash (void) const
 ACE_INLINE int
 TAO_ECG_UDP_Request_Index::operator== (const TAO_ECG_UDP_Request_Index& rhs) const
 {
-  return (this->from == rhs.from && 
+  return (this->from == rhs.from &&
           this->request_id == rhs.request_id);
 }
 
@@ -86,5 +86,3 @@ TAO_ECG_UDP_Request_Entry::get_timeout (void) const
 {
   return this->timeout_counter_;
 }
-
-

@@ -167,7 +167,7 @@ public:
   // Create an empty input stream. The caller is responsible for
   // putting the right data and providing the right alignment.
 
-  TAO_InputCDR (ACE_Message_Block *data,
+  TAO_InputCDR (const ACE_Message_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an input stream from an ACE_Message_Block
 
@@ -182,7 +182,7 @@ public:
 
   TAO_InputCDR (const TAO_InputCDR& rhs,
                 size_t size,
-                CDR::Long offset);
+                ACE_CDR::Long offset);
   // When interpreting indirected TypeCodes it is useful to make a
   // "copy" of the stream starting in the new position.
 

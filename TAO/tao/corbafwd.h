@@ -234,42 +234,42 @@ class TAO_Export CORBA
   //    for all standard types Foo.
 public:
 
-  typedef CDR::Boolean Boolean;
+  typedef ACE_CDR::Boolean Boolean;
   typedef Boolean &Boolean_out;
   // Out type for boolean.
 
   // This and the other CORBA IDL types below are
   // typedef'd to the corresponding CDR types
   // already defined in ACE.
-  typedef CDR::Octet Octet;
+  typedef ACE_CDR::Octet Octet;
   typedef Octet  &Octet_out;
 
-  typedef CDR::Short Short;
+  typedef ACE_CDR::Short Short;
   typedef Short &Short_out;
-  typedef CDR::UShort UShort;
+  typedef ACE_CDR::UShort UShort;
   typedef UShort &UShort_out;
 
-  typedef CDR::Long Long;
+  typedef ACE_CDR::Long Long;
   typedef Long &Long_out;
-  typedef CDR::ULong ULong;
+  typedef ACE_CDR::ULong ULong;
   typedef ULong &ULong_out;
 
-  typedef CDR::LongLong LongLong;
+  typedef ACE_CDR::LongLong LongLong;
   typedef LongLong &LongLong_out;
-  typedef CDR::ULongLong ULongLong;
+  typedef ACE_CDR::ULongLong ULongLong;
   typedef ULongLong &ULongLong_out;
 
-  typedef CDR::Float Float;
+  typedef ACE_CDR::Float Float;
   typedef Float &Float_out;
 
-  typedef CDR::Double Double;
+  typedef ACE_CDR::Double Double;
   typedef Double &Double_out;
 
-  typedef CDR::LongDouble LongDouble;
+  typedef ACE_CDR::LongDouble LongDouble;
   typedef LongDouble &LongDouble_out;
 
 
-  typedef CDR::Char Char;
+  typedef ACE_CDR::Char Char;
   typedef Char &Char_out;
 
   typedef Char *String;
@@ -288,7 +288,7 @@ public:
   // WChar is an IDL extension, not yet standard.  We use 32 bits
   // because that's what many platforms use for their native wchar_t.
 
-  typedef CDR::WChar WChar;
+  typedef ACE_CDR::WChar WChar;
   typedef WChar *WString;
 
   typedef WChar &WChar_out;
