@@ -1,3 +1,11 @@
+Mon Aug 20 13:18:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK.h: Corrected comment on ACE_SOCK ctor being protected,
+          not private. Thanks to Don Hinton <dhinton@swan.fr> for
+          pointing this out.
+
+        * THANKS: Added Don Hinton to the Hall of Fame.
+
 Mon Aug 20 11:00:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.h:
