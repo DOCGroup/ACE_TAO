@@ -839,7 +839,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
 
   be_visitor_field_ch visitor (&ctx);
 
-  if (visitor.visit_field (node) == -1)
+  if (bt->accept(&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
@@ -848,7 +848,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
                         -1);
     }
 
-  // Now output the field name.
+  // Now output the field name.  
   *os << " " << vt->field_pd_prefix ()
              << node->local_name ()
              << vt->field_pd_postfix() << ";" << be_nl;
