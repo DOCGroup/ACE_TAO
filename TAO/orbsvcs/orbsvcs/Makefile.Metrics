@@ -13,8 +13,6 @@ endif
 IDL_FILES = Metrics
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
-
-
 Metrics = \
   MetricsC \
   MetricsS \

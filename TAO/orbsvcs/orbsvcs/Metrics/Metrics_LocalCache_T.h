@@ -16,7 +16,6 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/MetricsC.h"
-
 #include "orbsvcs/Metrics/Metrics_Utils.h"
 
 #if defined (ACE_HAS_METRICS_BASE_POINTERS)
