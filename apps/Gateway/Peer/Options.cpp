@@ -12,10 +12,10 @@ Options::print_usage_and_die (void)
 
 Options::Options (void)
   : options_ (0),
-    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
+    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
     supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
+    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
     connector_host_ (ACE_DEFAULT_SERVER_HOST),
     timeout_ (0),
     max_queue_size_ (MAX_QUEUE_SIZE)
