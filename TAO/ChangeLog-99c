@@ -1,3 +1,10 @@
+Thu Nov 18 20:51:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Interceptor.pidl:
+	* docs/interceptors.html:  Updated the information and status of
+	  portable intercetors and added hints on transitting from the
+	  temporary implementation to the draft standard.
+
 Thu Nov 18 20:37:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
