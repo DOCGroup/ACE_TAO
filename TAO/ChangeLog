@@ -1,3 +1,43 @@
+Sat Jun 07 09:10:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAOACE.dsw (Package): Added TAO_Strategies library as a
+	  dependency to ImR_Activator.
+
+Sat Jun 07 08:50:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Endpoint.h: Removed the reset_hint () method.
+	
+	* tao/IIOP_Endpoint.h: Removed the reset_hint () method since it
+	  is not used anymore. Added an extra argument to the constructor
+	  to pass the priority of the endpoint.
+	
+	* tao/IIOP_Endpoint.cpp: 
+	* tao/IIOP_Endpoint.i: Moved the object_addr () method from the
+	  inlined file to the cpp file. It was too big to be inlined in
+	  the first place. 
+
+	  The implementation of the duplicate () method now passes the
+	  priority of the endpoint when it creates a new endpoint
+	  object.
+
+	  Removed the implementation of the reset_hint () method.
+	
+	* tao/Strategies/SHMIOP_Endpoint.cpp: 
+	* tao/Strategies/SHMIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.i:
+	* tao/Strategies/UIOP_Endpoint.h:
+	* tao/Strategies/UIOP_Endpoint.cpp: 
+	* tao/Strategies/DIOP_Endpoint.h:
+	* tao/Strategies/DIOP_Endpoint.i:	
+	* tao/Strategies/DIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Religiously replicated
+	  the above changes. 
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Added TAO_Strategies
+	  library to the link line.
+
 Sat Jun  7 08:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         This checkin merges a first set of changes from Carlos O'Ryan into the
