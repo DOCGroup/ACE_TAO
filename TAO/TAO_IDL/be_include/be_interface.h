@@ -54,28 +54,36 @@ public:
   ~be_interface (void);
   // dtor
 
-  virtual int gen_var_defn (void);
-  // generate the _var class definition
-
+  virtual int gen_var_defn (char *interface_name = 0);
+  // generate the var definition. If <interface_name> is not 0, generate
+  // the var defn for that name. Otherwise, do it for the interface you
+  // are visiting (this).
+  
   virtual void gen_def_ctors (TAO_OutStream* os);
   //call the default constructors of all the base classes
-
-
 
   virtual void gen_copy_ctors (TAO_OutStream* os);
   //call the copy constructors of all the base classes
 
-  virtual int gen_var_impl (void);
-  // generate the implementation for the _var class
+  virtual int gen_var_impl (char *interface_local_name = 0,
+                            char *interface_full_name  = 0);
+  // Generate the implementation for the _var class.
+  // If any one of the argument is 0, then use the name in <this>,
+  // otherwise use the name given. Just making the class more useful. 
 
-  virtual int gen_out_defn (void);
-  // generate the _out class definition
+  virtual int gen_out_defn (char *interface_name = 0);
+  // Generate the out class definition. If <interface_name> is not 0,
+  // generate the out defn for that name. Otherwise, do it for the
+  // interface you are visiting (this).
 
-  virtual int gen_out_impl (void);
-  // generate the _out implementation
+  virtual int gen_out_impl (char *interface_local_name = 0,
+                            char *interface_full_name = 0);
+  // Generate the out class implementation. 
+  // If any one of the argument is 0, then use the name giin this
+  // node, else use the arguments. 
 
   const char *full_skel_name (void);
-  // retrieve the fully scoped skel class name
+  // Retrieve the fully scoped skel class name. 
 
   //
   // Each interface (to fix names "T") also defines two help classes,

@@ -44,7 +44,6 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
-
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_CH_H_ */
