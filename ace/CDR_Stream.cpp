@@ -1369,6 +1369,9 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   cdr.start_.rd_ptr (rd_bytes);
   cdr.start_.wr_ptr (wr_bytes);
 
+  this->major_version_ = cdr.major_version_;
+  this->minor_version_ = cdr.minor_version_;
+
   return db;
 }
 
@@ -1407,7 +1410,7 @@ ACE_OutputCDR::write_float (ACE_CDR::Float x)
   return this->write_4 (ACE_reinterpret_cast (const ACE_CDR::ULong*, &x));
 }
 
-ACE_CDR::Boolean             
+ACE_CDR::Boolean
 ACE_InputCDR::read_float (ACE_CDR::Float &x)
 {
   return this->read_4 (ACE_reinterpret_cast (ACE_CDR::ULong*, &x));
