@@ -1,3 +1,11 @@
+Wed Nov 17 10:47:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/fwd.idl:
+        
+          Added IDL use cases for IDL compiler bugs fixed in
+          
+          Tue Nov 16 09:45:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed Nov 17 10:08:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Special_Impl_T.cpp (insert):
