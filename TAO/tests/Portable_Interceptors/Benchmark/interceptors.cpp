@@ -130,8 +130,8 @@ Vault_Client_Request_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
-    ACE_ASSERT ("Exception id mismatch\n");
+  // Check for exception id mismatch
+  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
 }
 
 
@@ -353,8 +353,8 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
-    ACE_ASSERT ("Exception id mismatch\n");
+  // Check for exception id mismatch
+  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
 }
 
 
@@ -568,8 +568,8 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
-    ACE_ASSERT ("Exception id mismatch\n");
+  // Check for exception id mismatch
+  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
 }
 
 
@@ -770,8 +770,8 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
-    ACE_ASSERT ("Exception id mismatch\n");
+  // Check for exception id mismatch
+  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
 }
 
 
