@@ -56,7 +56,7 @@ namespace CIAO
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
                         this->mutex_,
-                        false);
+                        0);
 
       const unsigned int sz = this->slot_index_;
 
