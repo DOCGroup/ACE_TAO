@@ -1,3 +1,14 @@
+Fri May  7 19:37:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Eliminate one memory allocation on the priority dispatching
+	  case, thanks to Tom Venturella <Thomas.Venturella@MW.Boeing.com> 
+	  for this idea.  In the future we should use a per-supplier data
+	  block instead of a global one, to minimize priority inversion.
+
 Fri May  7 19:16:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:

@@ -84,5 +84,6 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
   // @@ Use the QOS_Info to select the right queue....
   this->tasks_[0]->putq (new TAO_EC_Push_Command (proxy,
-                                                  event));
+                                                  event,
+                                                  this->data_block_.duplicate ()));
 }
