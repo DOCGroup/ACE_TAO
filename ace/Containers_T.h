@@ -1410,7 +1410,7 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  ACE_Array_Base& operator= (const ACE_Array_Base<T> &s);
+  ACE_Array_Base<T>& operator= (const ACE_Array_Base<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than
