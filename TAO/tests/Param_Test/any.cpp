@@ -108,8 +108,8 @@ Test_Any::reset_parameters (void)
                       "Param_Test: ANY_SHORT subtest\n"));
         CORBA::Short s;
         s = gen->gen_short ();
-	if (TAO_debug_level > 0)
-	  ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
+	      if (TAO_debug_level > 0)
+	        ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
         this->in_ <<= s;
         this->inout_ <<= s;
       }
@@ -121,10 +121,11 @@ Test_Any::reset_parameters (void)
           ACE_DEBUG ((LM_DEBUG,
                       "Param_Test: ANY_STRING subtest\n"));
         char *str = gen->gen_string ();
-	if (TAO_debug_level > 0)
-	  ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
+	      if (TAO_debug_level > 0)
+	        ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
+        CORBA::string_free (str);
       }
       break;
 
