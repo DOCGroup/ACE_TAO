@@ -85,7 +85,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           Deployment::ApplicationManager_var tmp_app_manager =
             my_node_manager->preparePlan (artifacts.child_plan_
-					                                ACE_ENV_ARG_PARAMETER);
+					  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Deployment::NodeApplicationManager_var app_manager
@@ -150,7 +150,7 @@ get_plan_info (void)
         {
           // Check if there is a corresponding NodeManager instance existing
           // If not present return false
-          ::Deployment::NodeManager_var mgr = 
+          ::Deployment::NodeManager_var mgr =
               this->deployment_config_.get_node_manager
                (this->plan_.instance [index].node.in ());
 
@@ -451,8 +451,8 @@ finishLaunch (::CORBA::Boolean start
 
           // Invoke finishLaunch() operation on NodeApplication.
           entry->int_id_.node_application_->finishLaunch (safe.in (),
-							                                            start
-							                                            ACE_ENV_ARG_PARAMETER);
+							  start
+							  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

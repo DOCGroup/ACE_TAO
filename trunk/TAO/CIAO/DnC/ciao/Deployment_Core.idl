@@ -70,8 +70,9 @@ module Deployment
     string executor_entrypt;
     string servant_dll;
     string servant_entrypt;
-    //  Properties component_config; //ignored for now.
+    Properties component_config;
     //  Properties home_config;      //ignored for now.
+    //  Properties container_config  //igore for now
   };
 
   typedef sequence < ImplementationInfo > ImplementationInfos;

@@ -17,7 +17,7 @@ class Null_Dom_Document { };
 typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
 typedef ACE_Hash_Map_Manager<int, int, ACE_Null_Mutex> ART_REF_MAP;
 
-void traverse_instance (Deployment::SubcomponentInstantiationDescription 
+void traverse_instance (Deployment::SubcomponentInstantiationDescription
                         &instance,
 			Deployment::DeploymentPlan &plan, int l,
                         REF_MAP &ref_map, REF_MAP &primary_ref_map);
@@ -123,14 +123,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (CORBA::ULong x = 0; x < pc->basePackage.length (); ++x)
         {
-          for (CORBA::ULong y = 0; 
+          for (CORBA::ULong y = 0;
                y < pc->basePackage[x].implementation.length (); ++y)
             {
               Deployment::ComponentImplementationDescription cid =
                 pc->basePackage[x].implementation[y].referencedImplementation;
               for (CORBA::ULong z = 0; z < cid.assemblyImpl.length (); ++z)
                 {
-                  for (CORBA::ULong k = 0; 
+                  for (CORBA::ULong k = 0;
                        k < cid.assemblyImpl[z].instance.length (); ++k)
                     {
                       const char* in_name =
@@ -147,7 +147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             }
                         }
                     }
-                  for (CORBA::ULong m = 0; 
+                  for (CORBA::ULong m = 0;
                        m < cid.assemblyImpl[z].connection.length (); ++m)
                     {
                       CORBA::ULong con_length (plan.connection.length ());
@@ -167,7 +167,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             connection[m].internalEndpoint[n].instanceRef;
                           const char* ins_name =
                             cid.assemblyImpl[z].instance[ins_ref].name;
-                          for (CORBA::ULong w = 0; w < plan.instance.length (); 
+                          for (CORBA::ULong w = 0; w < plan.instance.length ();
                                ++w)
                             {
                               const char* pl_name = plan.instance[w].name;
@@ -189,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       Deployment::DnC_Dump::dump (plan);
-      
+
 
       //Deployment::DnC_Dump::dump (*pc);
 
@@ -266,7 +266,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
       ACE_DEBUG ((LM_DEBUG, "Executor: start Launch application....."));
       // Start the Application immediately
-      int start = 0;
+      int start = 1;
       dapp_mgr->startLaunch (properties.in (), start);
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
@@ -342,7 +342,7 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
     }
 }
 
-void traverse_instance (Deployment::SubcomponentInstantiationDescription 
+void traverse_instance (Deployment::SubcomponentInstantiationDescription
                         &instance,
 			Deployment::DeploymentPlan &plan, int l,
                         REF_MAP &ref_map, REF_MAP &primary_ref_map)
@@ -363,7 +363,7 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 	  plan.implementation[impl_length].name = plan.instance[l].name;
 	  plan.instance[l].implementationRef = impl_length;
 
-	  for (CORBA::ULong p = 0; 
+	  for (CORBA::ULong p = 0;
                p < impl.referencedImplementation.monolithicImpl.length (); ++p)
 	    {
 	      Deployment::MonolithicImplementationDescription
@@ -376,10 +376,10 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 
 		  CORBA::ULong art_length (plan.artifact.length ());
 		  plan.artifact.length (art_length + 1);
-		  plan.artifact[art_length].name = 
+		  plan.artifact[art_length].name =
                        mid.primaryArtifact[q].name;
 		  plan.artifact[art_length].node = plan.instance[l].node;
-                  ACE_TString artifact_name = 
+                  ACE_TString artifact_name =
                      (const char*)plan.artifact[art_length].name;
                   ref_map.bind (artifact_name, art_length);
                   primary_ref_map.bind (artifact_name,
@@ -387,32 +387,32 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 		  CORBA::ULong
 		    art_ref_len (plan.implementation[impl_length].
                                  artifactRef.length ());
-		  plan.implementation[impl_length].artifactRef.length 
+		  plan.implementation[impl_length].artifactRef.length
                         (art_ref_len + 1);
 		  plan.implementation[impl_length].artifactRef[art_ref_len]
 		    = art_length;
 		  for (CORBA::ULong e = 0; e < pack_iad.location.length (); ++e)
 		    {
 		      CORBA::ULong
-			art_loc_len 
+			art_loc_len
                           (plan.artifact[art_length].location.length ());
-		      plan.artifact[art_length].location.length 
+		      plan.artifact[art_length].location.length
                         (art_loc_len + 1);
 		      plan.artifact[art_length].location[art_loc_len]
 			= pack_iad.location[e];
 		    }
-		  for (CORBA::ULong f = 0; 
+		  for (CORBA::ULong f = 0;
                        f < pack_iad.execParameter.length (); ++f)
 		    {
 		      CORBA::ULong
-			art_pro_len 
+			art_pro_len
                          (plan.artifact[art_length].execParameter.length ());
 		      plan.artifact[art_length].execParameter.length
 			(art_pro_len + 1);
 		      plan.artifact[art_length].execParameter[art_pro_len]
 			= pack_iad.execParameter[f];
 		    }
-		  for (CORBA::ULong g = 0; 
+		  for (CORBA::ULong g = 0;
                        g < pack_iad.dependsOn.length (); ++g)
 		    {
                       ACE_TString dep_name =
@@ -426,11 +426,11 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
                               if (art_ref_map.find (arti_len, arti_len) != 0)
                                 {
 		                  CORBA::ULong
-		                    new_art_ref_len 
+		                    new_art_ref_len
                                       (plan.implementation[impl_length].
                                              artifactRef.length ());
 		                  plan.implementation[impl_length].
-                                     artifactRef.length 
+                                     artifactRef.length
                                        (new_art_ref_len + 1);
 		                  plan.implementation[impl_length].
                                      artifactRef[new_art_ref_len] =
@@ -448,16 +448,16 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 		          plan.artifact.length (new_art_length + 1);
                           plan.artifact[new_art_length].name =
                             pack_iad.dependsOn[g].name;
-		          plan.artifact[new_art_length].node = 
+		          plan.artifact[new_art_length].node =
                              plan.instance[l].node;
-		          for (CORBA::ULong h = 0; 
+		          for (CORBA::ULong h = 0;
                                h < depends_iad.location.length (); ++h)
 		            {
 		              CORBA::ULong
-			        new_art_loc_len 
+			        new_art_loc_len
                                   (plan.artifact[new_art_length].
                                       location.length ());
-		              plan.artifact[new_art_length].location.length 
+		              plan.artifact[new_art_length].location.length
                                 (new_art_loc_len + 1);
 		              plan.artifact[new_art_length].
                                  location[new_art_loc_len]
@@ -469,7 +469,7 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 		          CORBA::ULong
 		            new_art_ref_len (plan.implementation[impl_length].
                                          artifactRef.length ());
-		          plan.implementation[impl_length].artifactRef.length 
+		          plan.implementation[impl_length].artifactRef.length
                                 (new_art_ref_len + 1);
 		          plan.implementation[impl_length].
                                 artifactRef[new_art_ref_len] = new_art_length;
@@ -478,11 +478,11 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
                     }
 		}
 	    }
-	  for (CORBA::ULong x = 0; 
+	  for (CORBA::ULong x = 0;
                x < impl.referencedImplementation.configProperty.length (); ++x)
 	    {
 	      CORBA::ULong
-                impl_pro_len 
+                impl_pro_len
                   (plan.implementation[impl_length].execParameter.length ());
               plan.implementation[impl_length].execParameter.length
 			(impl_pro_len + 1);
@@ -490,7 +490,7 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 			= impl.referencedImplementation.configProperty[x];
 
 	      CORBA::ULong
-                ins_pro_len 
+                ins_pro_len
                   (plan.instance[l].configProperty.length ());
               plan.instance[l].configProperty.length
 			(ins_pro_len + 1);
