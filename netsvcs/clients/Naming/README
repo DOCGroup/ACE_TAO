@@ -119,6 +119,6 @@ database needs to be accessed.  The server test needs to run on the
 machine that contains the net local database.  To execute the server
 test, the user has to specify the port number at which the server will
 be listening in the svc.conf file.  An implementation of a name
-service for ACE is available in the $WRAPPER_ROOT/netsvcs/bin
+service for ACE is available in the $ACE_ROOT/netsvcs/bin
 directory.  Please see the README file there for an explanation of how
 to run the server.

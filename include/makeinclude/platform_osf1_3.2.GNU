@@ -2,7 +2,7 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS          += $(DCFLAGS) -ptr $(WRAPPER_ROOT)/ptrepository
+CFLAGS          += $(DCFLAGS) -ptr $(ACE_ROOT)/ptrepository
 CCFLAGS		+= $(CFLAGS) -x cxx -w0
 DCFLAGS		+= -g -threads
 DLD		= ld -shared -expect_unresolved '*'

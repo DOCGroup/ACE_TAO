@@ -21,7 +21,7 @@ MVCMD         = @test ! -s $(@F) || mv $(@F) $(@D)/$(@F)
 MVSLIB_STATIC = -lACE
  
 # Used to build shared executables (much smaller in size)
-MVSLIB_DLL    = $(WRAPPER_ROOT)/ace/libACE.x
+MVSLIB_DLL    = $(ACE_ROOT)/ace/libACE.x
  
 # set accordingly to build either static or shared executables
 MVSLIB        = $(MVSLIB_DLL)

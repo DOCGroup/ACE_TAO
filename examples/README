@@ -5,7 +5,7 @@ learning the ACE design.
 				
 These examples are roughly divided up according to the class
 categories in ACE.  For more information on ACE class categories,
-please take a look at $WRAPPER_ROOT/ACE-categories.
+please take a look at $ACE_ROOT/ACE-categories.
 
 	. ASX
 		Illustrate various components in the ADAPTIVE Service
@@ -36,7 +36,7 @@ please take a look at $WRAPPER_ROOT/ACE-categories.
 		This is a simple version of a Server Logging Daemon
 		that illustrates the "bare-bones" usage of the
 		Reactor.  A more sophisticated set of logging examples
-		are in the $WRAPPER_ROOT/netsvcs/{client,lib,server}
+		are in the $ACE_ROOT/netsvcs/{client,lib,server}
 		directories.
 
 	. Mem_Map

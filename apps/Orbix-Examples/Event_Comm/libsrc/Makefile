@@ -28,12 +28,12 @@ BUILD 	= $(VLIB)
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Orbix related macros and target settings.
@@ -62,52 +62,52 @@ IDLFLAGS = -A -s S.cpp -c C.cpp
 Event_CommS.o: Event_CommS.cpp Event_Comm.hh Event_CommC.cpp
 Event_CommC.o: Event_CommC.cpp Event_Comm.hh
 Notifier_i.o: Notifier_i.cpp \
-  ${WRAPPER_ROOT}ace/Log_Msg.h \
-  ${WRAPPER_ROOT}ace/Log_Record.h \
-  ${WRAPPER_ROOT}ace/sysincludes.h \
-  ${WRAPPER_ROOT}ace/config.h \
-  ${WRAPPER_ROOT}ace/Log_Priority.h \
-  ${WRAPPER_ROOT}ace/Log_Record.i \
-  ${WRAPPER_ROOT}ace/Log_Msg.i \
-  ${WRAPPER_ROOT}ace/Thread_Specific.h \
-  ${WRAPPER_ROOT}ace/Synch.h \
-  ${WRAPPER_ROOT}ace/Time_Value.h \
-  ${WRAPPER_ROOT}ace/Synch_T.h \
-  ${WRAPPER_ROOT}ace/Thread_Specific.i \
+  ${ACE_ROOT}ace/Log_Msg.h \
+  ${ACE_ROOT}ace/Log_Record.h \
+  ${ACE_ROOT}ace/sysincludes.h \
+  ${ACE_ROOT}ace/config.h \
+  ${ACE_ROOT}ace/Log_Priority.h \
+  ${ACE_ROOT}ace/Log_Record.i \
+  ${ACE_ROOT}ace/Log_Msg.i \
+  ${ACE_ROOT}ace/Thread_Specific.h \
+  ${ACE_ROOT}ace/Synch.h \
+  ${ACE_ROOT}ace/Time_Value.h \
+  ${ACE_ROOT}ace/Synch_T.h \
+  ${ACE_ROOT}ace/Thread_Specific.i \
   Notification_Receiver_i.h Notifier_i.h \
-  ${WRAPPER_ROOT}ace/Map_Manager.h \
-  ${WRAPPER_ROOT}ace/SString.h \
-  ${WRAPPER_ROOT}ace/SString.i \
+  ${ACE_ROOT}ace/Map_Manager.h \
+  ${ACE_ROOT}ace/SString.h \
+  ${ACE_ROOT}ace/SString.i \
   Event_Comm.hh
 Notification_Receiver_i.o: Notification_Receiver_i.cpp \
-  ${WRAPPER_ROOT}ace/Log_Msg.h \
-  ${WRAPPER_ROOT}ace/Log_Record.h \
-  ${WRAPPER_ROOT}ace/sysincludes.h \
-  ${WRAPPER_ROOT}ace/config.h \
-  ${WRAPPER_ROOT}ace/Log_Priority.h \
-  ${WRAPPER_ROOT}ace/Log_Record.i \
-  ${WRAPPER_ROOT}ace/Log_Msg.i \
-  ${WRAPPER_ROOT}ace/Thread_Specific.h \
-  ${WRAPPER_ROOT}ace/Synch.h \
-  ${WRAPPER_ROOT}ace/Time_Value.h \
-  ${WRAPPER_ROOT}ace/Synch_T.h \
-  ${WRAPPER_ROOT}ace/Thread_Specific.i \
-  ${WRAPPER_ROOT}ace/Service_Config.h \
-  ${WRAPPER_ROOT}ace/Reactor.h \
-  ${WRAPPER_ROOT}ace/Handle_Set.h \
-  ${WRAPPER_ROOT}ace/Handle_Set.i \
-  ${WRAPPER_ROOT}ace/Timer_Queue.h \
-  ${WRAPPER_ROOT}ace/Event_Handler.h \
-  ${WRAPPER_ROOT}ace/Timer_Queue.i \
-  ${WRAPPER_ROOT}ace/Signal.h \
-  ${WRAPPER_ROOT}ace/Set.h \
-  ${WRAPPER_ROOT}ace/Thread.h \
-  ${WRAPPER_ROOT}ace/Token.h \
-  ${WRAPPER_ROOT}ace/Reactor.i \
-  ${WRAPPER_ROOT}ace/Service_Object.h \
-  ${WRAPPER_ROOT}ace/Shared_Object.h \
-  ${WRAPPER_ROOT}ace/Service_Record.h \
-  ${WRAPPER_ROOT}ace/Thread_Manager.h \
+  ${ACE_ROOT}ace/Log_Msg.h \
+  ${ACE_ROOT}ace/Log_Record.h \
+  ${ACE_ROOT}ace/sysincludes.h \
+  ${ACE_ROOT}ace/config.h \
+  ${ACE_ROOT}ace/Log_Priority.h \
+  ${ACE_ROOT}ace/Log_Record.i \
+  ${ACE_ROOT}ace/Log_Msg.i \
+  ${ACE_ROOT}ace/Thread_Specific.h \
+  ${ACE_ROOT}ace/Synch.h \
+  ${ACE_ROOT}ace/Time_Value.h \
+  ${ACE_ROOT}ace/Synch_T.h \
+  ${ACE_ROOT}ace/Thread_Specific.i \
+  ${ACE_ROOT}ace/Service_Config.h \
+  ${ACE_ROOT}ace/Reactor.h \
+  ${ACE_ROOT}ace/Handle_Set.h \
+  ${ACE_ROOT}ace/Handle_Set.i \
+  ${ACE_ROOT}ace/Timer_Queue.h \
+  ${ACE_ROOT}ace/Event_Handler.h \
+  ${ACE_ROOT}ace/Timer_Queue.i \
+  ${ACE_ROOT}ace/Signal.h \
+  ${ACE_ROOT}ace/Set.h \
+  ${ACE_ROOT}ace/Thread.h \
+  ${ACE_ROOT}ace/Token.h \
+  ${ACE_ROOT}ace/Reactor.i \
+  ${ACE_ROOT}ace/Service_Object.h \
+  ${ACE_ROOT}ace/Shared_Object.h \
+  ${ACE_ROOT}ace/Service_Record.h \
+  ${ACE_ROOT}ace/Thread_Manager.h \
   Notification_Receiver_i.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

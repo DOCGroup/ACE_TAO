@@ -5,9 +5,9 @@ CC              = gcc
 # for threads
 # for no threads
 #CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
-# LDFLAGS	+= -L $(WRAPPER_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o # -z muldefs
-# LDLIBS	+= -L $(WRAPPER_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
-LDLIBS	+= -L $(WRAPPER_ROOT)/ace -L ./ -lACE # -z muldefs
+# LDFLAGS	+= -L $(ACE_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o # -z muldefs
+# LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
+LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ -lACE # -z muldefs
 CXX		= g++
 CFLAGS		+= $(DCFLAGS) -b elf -w -O2
 CCFLAGS		+= $(DCCFLAGS) -b elf -O2 -fpic -Xpg4plus -fno-implicit-templates -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include

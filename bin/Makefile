@@ -8,7 +8,7 @@ CXX		= CC
 CFILES		= clone.cpp 
 OFILES		= clone.o
 DFLAGS		= -g
-CFLAGS		= $(DFLAGS) -I$(WRAPPER_ROOT)
+CFLAGS		= $(DFLAGS) -I$(ACE_ROOT)
 
 #############################################################################
 # C++ directives
