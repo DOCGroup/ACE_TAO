@@ -20,6 +20,8 @@
 #if ! defined (ACE_THREAD_PRIORITY_H)
 #define ACE_THREAD_PRIORITY_H
 
+#include "ace/OS.h"
+
 class ACE_Export ACE_Thread_Priority
   // = TITLE
   //    Provides OS-independent scheduling priority classes and thread
