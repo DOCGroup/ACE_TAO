@@ -141,9 +141,6 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
-  /// Set the bidirectional flag
-  virtual void bidirectional_flag (int flag);
-
   /// Open teh service context list and process it.
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
@@ -169,23 +166,8 @@ private:
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
-
-  /// Have we sent any info on bidirectional information or have we
-  /// received any info regarding making the connection
-  /// served by this transport bidirectional. This is essentially for
-  /// this -- we dont want to send the bidirectional context info more
-  /// than once on the connection. Why? Waste of marshalling and
-  /// demarshalling time on the client. On the server side, we need
-  /// this flag for this -- once a client that has established the
-  /// connection asks the server to use the connection both ways, we
-  /// *dont* want the server to go pack service info to the
-  /// client. That would be *bad*.. The value of this flag will be 0
-  /// if the client sends info and 1 if the server receives the info.
-  int bidirectional_flag_;
-
 };
 
 
 #include "ace/post.h"
-
 #endif  /* TAO_SSLIOP_TRANSPORT_H */

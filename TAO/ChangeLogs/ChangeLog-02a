@@ -1,8 +1,15 @@
+Thu Jan 18 08:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Fixed warnings due to duplicate definition of the
+          bidirectional_flag() method.
+
 Thu Jan 18 09:05:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/Concurrency_Service: Added back the svc.conf file that 
-	  appears to have been missing.  Thanks to Mark L. Boriack"
- 	  <mboriack@dctd.saic.com> for reporting this.
+        * orbsvcs/Concurrency_Service: Added back the svc.conf file that
+          appears to have been missing.  Thanks to Mark L. Boriack"
+          <mboriack@dctd.saic.com> for reporting this.
 
 Wed Jan 17 10:21:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
