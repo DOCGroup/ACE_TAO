@@ -1,3 +1,11 @@
+Mon Dec 17 15:13:52 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/MCAST_Parser.cpp (multicast_query):
+
+	  Fixed broken code that did passed a string as the value to
+	  setsockopt() call.  Thanks to Jesse <jesse@thrownet.com> for
+	  tracking down the problem and providing a fix.  [Bug 1105]
+
 Mon Dec 17 10:09:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
