@@ -23,8 +23,8 @@ TAO_DynUnion_i::TAO_DynUnion_i (const CORBA_Any& any)
 {
   CORBA::Environment env;
 
-  if (TAO_DynAny_i::unalias (any.type (), 
-                             env) 
+  if (TAO_DynAny_i::unalias (any.type (),
+                             env)
       == CORBA::tk_union)
     {
       // Initialize the typecode holder
@@ -40,8 +40,8 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA_TypeCode_ptr tc)
 {
   CORBA::Environment env;
 
-  if (TAO_DynAny_i::unalias (tc, 
-                             env) 
+  if (TAO_DynAny_i::unalias (tc,
+                             env)
     == CORBA::tk_union)
     {
       // Initialize the typecode holder
@@ -50,7 +50,7 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA_TypeCode_ptr tc)
       CORBA::TypeCode_ptr disc_tc = tc->discriminator_type (env);
 
       // Get a typecode into the discriminator holder.
-      this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_tc, 
+      this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_tc,
                                                            env);
 
       // To be filled in by from_any() or assign().
@@ -70,7 +70,7 @@ TAO_DynUnion_i::~TAO_DynUnion_i (void)
 // If an invalid value has been passed in to the discriminator,
 // we don't save it but instead set the member index to the
 // default value, if one exists.
-CORBA::Boolean 
+CORBA::Boolean
 TAO_DynUnion_i::set_as_default (CORBA::Environment& env)
 {
   if ((CORBA::Long) this->index_ == this->type_->default_index (env))
@@ -89,35 +89,35 @@ TAO_DynUnion_i::set_as_default (CORBA::Boolean set_as_default,
   // we override it as a no-op.
 }
 
-CORBA_DynAny_ptr 
+CORBA_DynAny_ptr
 TAO_DynUnion_i::discriminator (CORBA::Environment&)
 {
   return this->discriminator_.in ();
 }
 
-CORBA::TCKind 
+CORBA::TCKind
 TAO_DynUnion_i::discriminator_kind (CORBA::Environment& env)
 {
-  return TAO_DynAny_i::unalias (this->type_->discriminator_type (env), 
+  return TAO_DynAny_i::unalias (this->type_->discriminator_type (env),
                                 env);
 }
 
-CORBA_DynAny_ptr 
+CORBA_DynAny_ptr
 TAO_DynUnion_i::member (CORBA::Environment& env)
 {
   return this->member_.in ();
 }
 
-char* 
+char*
 TAO_DynUnion_i::member_name (CORBA::Environment& env)
 {
-  return CORBA::string_dup (this->type_->member_name (this->index_, 
+  return CORBA::string_dup (this->type_->member_name (this->index_,
                                                       env));
 }
 
 // If a valid member name is supplied, this function creates a new
 // member which is NOT initialized.
-void 
+void
 TAO_DynUnion_i::member_name (const char* member_name,
                              CORBA::Environment& env)
 {
@@ -125,8 +125,8 @@ TAO_DynUnion_i::member_name (const char* member_name,
 
   for (CORBA::ULong i = 0; i < count; i++)
     {
-      if (!ACE_OS::strcmp (member_name, 
-                           this->type_->member_name (i, 
+      if (!ACE_OS::strcmp (member_name,
+                           this->type_->member_name (i,
                                                      env)))
         {
           // No sense doing anything if we're just "resetting" to the
@@ -135,13 +135,13 @@ TAO_DynUnion_i::member_name (const char* member_name,
             return;
           else
             {
-              this->member_ = 
-                TAO_DynAny_i::create_dyn_any (this->type_->member_type (i, 
+              this->member_ =
+                TAO_DynAny_i::create_dyn_any (this->type_->member_type (i,
                                                                         env),
                                               env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
@@ -151,11 +151,11 @@ TAO_DynUnion_i::member_name (const char* member_name,
 }
 
 
-CORBA::TCKind 
+CORBA::TCKind
 TAO_DynUnion_i::member_kind (CORBA::Environment& env)
 {
-  return TAO_DynAny_i::unalias (this->type_->member_type (this->index_, 
-                                                          env), 
+  return TAO_DynAny_i::unalias (this->type_->member_type (this->index_,
+                                                          env),
                                 env);
 }
 
@@ -163,13 +163,13 @@ TAO_DynUnion_i::member_kind (CORBA::Environment& env)
 // Common functions
 
 void
-TAO_DynUnion_i::assign (CORBA_DynAny_ptr dyn_any, 
+TAO_DynUnion_i::assign (CORBA_DynAny_ptr dyn_any,
                         CORBA::Environment &env)
 {
   // *dyn_any->to_any raises Invalid if arg is bad.
-  if (this->type_->equal (dyn_any->type (env), 
+  if (this->type_->equal (dyn_any->type (env),
                           env))
-    this->from_any (*dyn_any->to_any (env), 
+    this->from_any (*dyn_any->to_any (env),
                     env);
   else
     env.exception (new CORBA_DynAny::Invalid);
@@ -179,7 +179,7 @@ CORBA_DynAny_ptr
 TAO_DynUnion_i::copy (CORBA::Environment &env)
 {
   CORBA_Any_ptr a = this->to_any (env);
-  return TAO_DynAny_i::create_dyn_any (*a, 
+  return TAO_DynAny_i::create_dyn_any (*a,
                                        env);
 }
 
@@ -198,9 +198,9 @@ void
 TAO_DynUnion_i::from_any (const CORBA_Any& any,
                           CORBA::Environment &env)
 {
-  if (this->type_.in ()->equal (any.type (), 
+  if (this->type_.in ()->equal (any.type (),
                                 env))
-    this->set_from_any (any, 
+    this->set_from_any (any,
                         env);
   else
     env.exception (new CORBA_DynAny::Invalid);
@@ -224,12 +224,12 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   CORBA_Any_ptr disc_any = this->discriminator_->to_any (_env);
 
-  ACE_Message_Block* disc_mb = 
+  ACE_Message_Block* disc_mb =
     ACE_Message_Block::duplicate (disc_any->_tao_get_cdr ());
 
   TAO_InputCDR disc_cdr (disc_mb);
 
-  out_cdr.append (disc_tc, 
+  out_cdr.append (disc_tc,
                   &disc_cdr,
                   _env);
 
@@ -244,8 +244,8 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   TAO_InputCDR member_cdr (member_mb);
 
-  out_cdr.append (member_tc, 
-                  &member_cdr, 
+  out_cdr.append (member_tc,
+                  &member_cdr,
                   _env);
 
   // Make the Any.
@@ -280,15 +280,15 @@ TAO_DynUnion_i::next (CORBA::Environment &env)
 
   ++this->index_;
 
-  this->member_ = 
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_, 
+  this->member_ =
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
                                                             env),
                                   env);
   return 1;
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::seek (CORBA::Long index, 
+TAO_DynUnion_i::seek (CORBA::Long index,
                       CORBA::Environment &env)
 {
   if (index < 0 || index >= (CORBA::Long) this->type_->member_count (env))
@@ -296,8 +296,8 @@ TAO_DynUnion_i::seek (CORBA::Long index,
 
   this->index_ = index;
 
-  this->member_ = 
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_, 
+  this->member_ =
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
                                                             env),
                                   env);
   return 1;
@@ -311,11 +311,11 @@ TAO_DynUnion_i::rewind (CORBA::Environment &env)
 
   this->index_ = 0;
 
-  this->member_ = 
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_, 
+  this->member_ =
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
                                                             env),
                                   env);
-} 
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Insert and get functions
@@ -328,13 +328,13 @@ TAO_DynUnion_i::rewind (CORBA::Environment &env)
 // Insert functions
 
 void
-TAO_DynUnion_i::insert_boolean (CORBA::Boolean value, 
+TAO_DynUnion_i::insert_boolean (CORBA::Boolean value,
                                 CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_boolean)
-    this->member_->insert_boolean (value, 
+    this->member_->insert_boolean (value,
                                    env);
   else
     {
@@ -342,38 +342,38 @@ TAO_DynUnion_i::insert_boolean (CORBA::Boolean value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_boolean)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_boolean (value, 
+              this->member_->insert_boolean (value,
                                              env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_octet (CORBA::Octet value, 
+TAO_DynUnion_i::insert_octet (CORBA::Octet value,
                               CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_octet)
-    this->member_->insert_octet (value, 
+    this->member_->insert_octet (value,
                                  env);
   else
     {
@@ -381,38 +381,38 @@ TAO_DynUnion_i::insert_octet (CORBA::Octet value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_octet)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_octet (value, 
+              this->member_->insert_octet (value,
                                            env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_char (CORBA::Char value, 
+TAO_DynUnion_i::insert_char (CORBA::Char value,
                              CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_char)
-    this->member_->insert_char (value, 
+    this->member_->insert_char (value,
                                 env);
   else
     {
@@ -420,36 +420,36 @@ TAO_DynUnion_i::insert_char (CORBA::Char value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_char)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_char (value, 
+              this->member_->insert_char (value,
                                           env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_short (CORBA::Short value, 
+TAO_DynUnion_i::insert_short (CORBA::Short value,
                               CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_short)
     this->member_->insert_short (value, env);
   else
@@ -458,38 +458,38 @@ TAO_DynUnion_i::insert_short (CORBA::Short value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_short)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_short (value, 
+              this->member_->insert_short (value,
                                            env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_long (CORBA::Long value, 
+TAO_DynUnion_i::insert_long (CORBA::Long value,
                              CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_long)
-    this->member_->insert_long (value, 
+    this->member_->insert_long (value,
                                 env);
   else
     {
@@ -497,38 +497,38 @@ TAO_DynUnion_i::insert_long (CORBA::Long value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_long)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_long (value, 
+              this->member_->insert_long (value,
                                           env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_ushort (CORBA::UShort value, 
+TAO_DynUnion_i::insert_ushort (CORBA::UShort value,
                                CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_ushort)
-    this->member_->insert_ushort (value, 
+    this->member_->insert_ushort (value,
                                   env);
   else
     {
@@ -536,38 +536,38 @@ TAO_DynUnion_i::insert_ushort (CORBA::UShort value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_ushort)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_ushort (value, 
+              this->member_->insert_ushort (value,
                                             env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_ulong (CORBA::ULong value, 
+TAO_DynUnion_i::insert_ulong (CORBA::ULong value,
                               CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_ulong)
-    this->member_->insert_ulong (value, 
+    this->member_->insert_ulong (value,
                                  env);
   else
     {
@@ -575,38 +575,38 @@ TAO_DynUnion_i::insert_ulong (CORBA::ULong value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_ulong)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_ulong (value, 
+              this->member_->insert_ulong (value,
                                            env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_float (CORBA::Float value, 
+TAO_DynUnion_i::insert_float (CORBA::Float value,
                               CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_float)
-    this->member_->insert_float (value, 
+    this->member_->insert_float (value,
                                  env);
   else
     {
@@ -614,38 +614,38 @@ TAO_DynUnion_i::insert_float (CORBA::Float value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_float)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_float (value, 
+              this->member_->insert_float (value,
                                            env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_double (CORBA::Double value, 
+TAO_DynUnion_i::insert_double (CORBA::Double value,
                                CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_double)
-    this->member_->insert_double (value, 
+    this->member_->insert_double (value,
                                   env);
   else
     {
@@ -653,38 +653,38 @@ TAO_DynUnion_i::insert_double (CORBA::Double value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_double)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_double (value, 
+              this->member_->insert_double (value,
                                             env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_string (const char* value, 
+TAO_DynUnion_i::insert_string (const char* value,
                                CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_string)
-    this->member_->insert_string (value, 
+    this->member_->insert_string (value,
                                   env);
   else
     {
@@ -692,38 +692,38 @@ TAO_DynUnion_i::insert_string (const char* value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_string)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_string (value, 
+              this->member_->insert_string (value,
                                             env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_reference (CORBA::Object_ptr value, 
+TAO_DynUnion_i::insert_reference (CORBA::Object_ptr value,
                                   CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_objref)
-    this->member_->insert_reference (value, 
+    this->member_->insert_reference (value,
                                      env);
   else
     {
@@ -731,38 +731,38 @@ TAO_DynUnion_i::insert_reference (CORBA::Object_ptr value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_objref)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_reference (value, 
+              this->member_->insert_reference (value,
                                                env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_typecode (CORBA::TypeCode_ptr value, 
+TAO_DynUnion_i::insert_typecode (CORBA::TypeCode_ptr value,
                                  CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_TypeCode)
-    this->member_->insert_typecode (value, 
+    this->member_->insert_typecode (value,
                                     env);
   else
     {
@@ -770,38 +770,38 @@ TAO_DynUnion_i::insert_typecode (CORBA::TypeCode_ptr value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_TypeCode)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_typecode (value, 
+              this->member_->insert_typecode (value,
                                               env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_longlong (CORBA::LongLong value, 
+TAO_DynUnion_i::insert_longlong (CORBA::LongLong value,
                                  CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_longlong)
-    this->member_->insert_longlong (value, 
+    this->member_->insert_longlong (value,
                                     env);
   else
     {
@@ -809,38 +809,38 @@ TAO_DynUnion_i::insert_longlong (CORBA::LongLong value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_longlong)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_longlong (value, 
+              this->member_->insert_longlong (value,
                                               env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_ulonglong (CORBA::ULongLong value, 
+TAO_DynUnion_i::insert_ulonglong (CORBA::ULongLong value,
                                   CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_ulonglong)
-    this->member_->insert_ulonglong (value, 
+    this->member_->insert_ulonglong (value,
                                      env);
   else
     {
@@ -848,38 +848,38 @@ TAO_DynUnion_i::insert_ulonglong (CORBA::ULongLong value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_ulonglong)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_ulonglong (value, 
+              this->member_->insert_ulonglong (value,
                                                env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_wchar (CORBA::WChar value, 
+TAO_DynUnion_i::insert_wchar (CORBA::WChar value,
                               CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_wchar)
-    this->member_->insert_wchar (value, 
+    this->member_->insert_wchar (value,
                                  env);
   else
     {
@@ -887,36 +887,36 @@ TAO_DynUnion_i::insert_wchar (CORBA::WChar value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_wchar)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_wchar (value, 
+              this->member_->insert_wchar (value,
                                            env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
 }
 
 void
-TAO_DynUnion_i::insert_any (const CORBA::Any& value, 
+TAO_DynUnion_i::insert_any (const CORBA::Any& value,
                             CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (this->member_->type (env), 
-                             env) 
+  if (TAO_DynAny_i::unalias (this->member_->type (env),
+                             env)
       == CORBA::tk_any)
     this->member_->insert_any (value, env);
   else
@@ -925,25 +925,25 @@ TAO_DynUnion_i::insert_any (const CORBA::Any& value,
 
       for (CORBA::ULong i = 0; i < count; i++)
         {
-          CORBA::TypeCode_ptr tc = this->type_->member_type (i, 
+          CORBA::TypeCode_ptr tc = this->type_->member_type (i,
                                                              env);
 
-          if (TAO_DynAny_i::unalias (tc, 
-                                     env) 
+          if (TAO_DynAny_i::unalias (tc,
+                                     env)
               == CORBA::tk_any)
             {
-              this->member_ = TAO_DynAny_i::create_dyn_any (tc, 
+              this->member_ = TAO_DynAny_i::create_dyn_any (tc,
                                                             env);
-              this->member_->insert_any (value, 
+              this->member_->insert_any (value,
                                          env);
-              this->discriminator_ = 
-                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i, 
-                                                                          env), 
+              this->discriminator_ =
+                TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
+                                                                          env),
                                               env);
               this->index_ = i;
               return;
             }
-        } 
+        }
 
       env.exception (new CORBA_DynAny::InvalidValue);
     }
@@ -955,8 +955,8 @@ TAO_DynUnion_i::insert_any (const CORBA::Any& value,
 CORBA::Boolean
 TAO_DynUnion_i::get_boolean (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_boolean)
     return this->member_->get_boolean (env);
   else
@@ -969,8 +969,8 @@ TAO_DynUnion_i::get_boolean (CORBA::Environment &env)
 CORBA::Octet
 TAO_DynUnion_i::get_octet (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_octet)
     return this->member_->get_octet (env);
   else
@@ -983,8 +983,8 @@ TAO_DynUnion_i::get_octet (CORBA::Environment &env)
 CORBA::Char
 TAO_DynUnion_i::get_char (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_char)
     return this->member_->get_char (env);
   else
@@ -997,8 +997,8 @@ TAO_DynUnion_i::get_char (CORBA::Environment &env)
 CORBA::Short
 TAO_DynUnion_i::get_short (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_short)
     return this->member_->get_short (env);
   else
@@ -1011,8 +1011,8 @@ TAO_DynUnion_i::get_short (CORBA::Environment &env)
 CORBA::Long
 TAO_DynUnion_i::get_long (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_long)
     return this->member_->get_long (env);
   else
@@ -1025,8 +1025,8 @@ TAO_DynUnion_i::get_long (CORBA::Environment &env)
 CORBA::UShort
 TAO_DynUnion_i::get_ushort(CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_ushort)
     return this->member_->get_ushort (env);
   else
@@ -1039,8 +1039,8 @@ TAO_DynUnion_i::get_ushort(CORBA::Environment &env)
 CORBA::ULong
 TAO_DynUnion_i::get_ulong (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_ulong)
     return this->member_->get_ulong (env);
   else
@@ -1053,8 +1053,8 @@ TAO_DynUnion_i::get_ulong (CORBA::Environment &env)
 CORBA::Float
 TAO_DynUnion_i::get_float (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_float)
     return this->member_->get_float (env);
   else
@@ -1067,8 +1067,8 @@ TAO_DynUnion_i::get_float (CORBA::Environment &env)
 CORBA::Double
 TAO_DynUnion_i::get_double (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_double)
     return this->member_->get_double (env);
   else
@@ -1081,8 +1081,8 @@ TAO_DynUnion_i::get_double (CORBA::Environment &env)
 CORBA::String
 TAO_DynUnion_i::get_string (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_string)
     return this->member_->get_string (env);
   else
@@ -1095,8 +1095,8 @@ TAO_DynUnion_i::get_string (CORBA::Environment &env)
 CORBA::TypeCode_ptr
 TAO_DynUnion_i::get_typecode (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_TypeCode)
     return this->member_->get_typecode (env);
   else
@@ -1109,8 +1109,8 @@ TAO_DynUnion_i::get_typecode (CORBA::Environment &env)
 CORBA::Object_ptr
 TAO_DynUnion_i::get_reference (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_objref)
     return this->member_->get_reference (env);
   else
@@ -1123,22 +1123,28 @@ TAO_DynUnion_i::get_reference (CORBA::Environment &env)
 CORBA::LongLong
 TAO_DynUnion_i::get_longlong (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_longlong)
     return this->member_->get_longlong (env);
   else
     {
       env.exception (new CORBA_DynAny::Invalid);
+
+#if defined (ACE_LACKS_LONGLONG_T)
+      CORBA::LongLong tmp = {0, 0};
+      return tmp;
+#else  /* ! ACE_LACKS_LONGLONG_T */
       return 0;
+#endif /* ! ACE_LACKS_LONGLONG_T */
     }
 }
 
 CORBA::ULongLong
 TAO_DynUnion_i::get_ulonglong (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_ulonglong)
     return this->member_->get_ulonglong (env);
   else
@@ -1151,8 +1157,8 @@ TAO_DynUnion_i::get_ulonglong (CORBA::Environment &env)
 CORBA::WChar
 TAO_DynUnion_i::get_wchar (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_wchar)
     return this->member_->get_wchar (env);
   else
@@ -1165,8 +1171,8 @@ TAO_DynUnion_i::get_wchar (CORBA::Environment &env)
 CORBA::Any_ptr
 TAO_DynUnion_i::get_any (CORBA::Environment &env)
 {
-  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env), 
-                                                    env) 
+  if (this->member_.in () && TAO_DynAny_i::unalias (this->member_->type (env),
+                                                    env)
       == CORBA::tk_any)
     return this->member_->get_any (env);
   else
@@ -1317,7 +1323,7 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
 
 // This code is common to from_any and the constructor taking an Any
 // argument.
-void 
+void
 TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                               CORBA::Environment &env)
 {
@@ -1333,7 +1339,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                       cdr.start ());
 
   // Set the discriminator holder.
-  this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_any, 
+  this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_any,
                                                        env);
 
   cdr.skip (disc_tc);
@@ -1344,19 +1350,19 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
   CORBA::TCKind discriminator_kind = disc_tc->kind (env);
 
-  ::DU_Extractor_base* functor = 
+  ::DU_Extractor_base* functor =
     this->get_extractor (discriminator_kind,
                          env);
 
   // Get the index.
   for (i = 0; i < count; i++)
     {
-      CORBA_Any label_any = *any.type ()->member_label (i, 
+      CORBA_Any label_any = *any.type ()->member_label (i,
                                                         env);
 
       CORBA::TCKind label_kind = label_any.type ()->kind (env);
 
-      // If there is a default index, note the value but don't call 
+      // If there is a default index, note the value but don't call
       // check_match.
       if (label_kind == CORBA::tk_octet)
         {
@@ -1381,7 +1387,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
       if (i == count && default_index != -1)
         this->index_ = default_index;
 
-      CORBA_Any member_any (any.type ()->member_type (this->index_, 
+      CORBA_Any member_any (any.type ()->member_type (this->index_,
                                                       env),
                             cdr.start ());
 
