@@ -9,14 +9,14 @@
 
 CC	    = xlC
 CXX	    = xlC_r
-DLD	    = makeC++SharedLib
+DLD	    = makeC++SharedLib_r
 LD	    = $(CXX)
 CPPFLAGS    += -qxcall -qtempinc
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr
 endif
-LLIBS	    = -lC_r -lC -lpthreads -lbsd -lsvld -ltli -lc_r -lm -lc $(ACELIB)
+LLIBS	    = -lsvld -ltli_r $(ACELIB)
 LIBS	    += $(filter-out $(SHLIBA:lib%.a=-l%), $(LLIBS))
 ARFLAGS	    = ruv
 AR	    = ar

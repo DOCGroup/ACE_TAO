@@ -46,7 +46,7 @@ connector (void *)
 
   ACE_Message_Block *mb;
 
-  ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof "hello thanks" * sizeof (char)), 0);
+  ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)), 0);
 
   mb->copy ("hello");
 
@@ -65,7 +65,7 @@ connector (void *)
   char mytext[] = "This string is sent by connector as a buffer";
 
   ACE_DEBUG ((LM_DEBUG, "(%t) connector sending text\n"));
-  if (c_stream.send (mytext, sizeof mytext) == -1)
+  if (c_stream.send (mytext, sizeof (mytext)) == -1)
     ACE_DEBUG ((LM_DEBUG, 
 		"(%t) buffer send from connector failed\n"));
 
@@ -121,7 +121,7 @@ acceptor (void *args)
   char s_buf[BUFSIZ];
   ACE_DEBUG ((LM_DEBUG, "(%t) acceptor sleeping on recv\n"));
 
-  if (s_stream.recv (s_buf, sizeof s_buf) == -1)
+  if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
     ACE_DEBUG ((LM_DEBUG, "(%t) acceptor recv failed\n"));
   else
     ACE_ASSERT (ACE_OS::strcmp (s_buf, 
@@ -130,7 +130,7 @@ acceptor (void *args)
   const char svr_response[] = "this is the acceptor response!";
   ACE_OS::strcpy (s_buf, svr_response);
 
-  if (s_stream.send (s_buf, sizeof svr_response) == -1)
+  if (s_stream.send (s_buf, sizeof (svr_response)) == -1)
     ACE_DEBUG ((LM_DEBUG, "(%t) acceptor send failed\n"));
 
   s_stream.close ();
