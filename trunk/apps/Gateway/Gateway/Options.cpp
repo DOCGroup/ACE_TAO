@@ -27,8 +27,8 @@ Options::Options (void)
     threading_strategy_ (REACTIVE),
     options_ (0),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
     supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
+    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
     max_timeout_ (MAX_TIMEOUT)
 {
   ACE_OS::strcpy (this->proxy_config_file_, "proxy_config");
@@ -70,7 +70,7 @@ Options::max_timeout (void) const
   return this->max_timeout_;
 }
 
-int 
+int
 Options::blocking_semantics (void) const
 {
   return this->blocking_semantics_;
