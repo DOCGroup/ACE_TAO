@@ -21,7 +21,7 @@ by TAO'd IDL compiler to generate operation dispatching tables.
 
 For more information on GPERF, please see
 
-http://www.cs.wustl.edu/~schmidt/C++-USENIX-90.ps.gz
+http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf
 
 Happy hacking!
 
