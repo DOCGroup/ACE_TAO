@@ -104,7 +104,37 @@ public:
   IOP::MultipleComponentProfile &components (void);
   // Read/Write access to the underlying
   // MutipleComponentProfile. Added by request from Chris Hafey
-  // <chris@stentorsoft.com> 
+  // <chris@stentorsoft.com>
+
+# if (TAO_HAS_FT_CORBA == 1)
+
+  CORBA::Boolean is_primary (void);
+  // Does the profile represent an endpoint of a primary
+  
+  struct TAO_FT_Group_Tagged_Component
+  {
+    // = TITLE
+    //     Tagged components in TAG_FT_GROUP
+    //
+    // = DESCRIPTION
+    //     Tagged components in the profile containing TAG_FT_GROUP
+
+    IOP::FTDomainID  ft_domain_id_;
+    // Identifier of the FT domain
+    
+    IOP::ObjectGroupID object_group_id_;
+    // The idetifier of the Object Group
+    
+    IOP::ObjectGroupRefVersion object_group_ref_version_;
+    // The version number of the Object Group Reference
+  };
+  
+  TAO_Tagged_Components::TAO_FT_Group_Tagged_Component &
+      ft_group_tagged_component (void);
+  
+  const TAO_Tagged_Components::TAO_FT_Group_Tagged_Component &
+      ft_group_tagged_component (void);
+#endif /*TAO_HAS_FT_CORBA */
 
 private:
   void set_code_sets_i (CONV_FRAME::CodeSetComponent &lhs,
@@ -112,6 +142,7 @@ private:
   // Helper method to implement set_code_sets()
 
   void set_known_component_i (const IOP::TaggedComponent& component);
+  void set_unique_component_i (const IOP::TaggedComponent& component);
   void set_component_i (const IOP::TaggedComponent& component);
   void set_component_i (IOP::TaggedComponent& component);
   void add_component_i (const IOP::TaggedComponent& component);
@@ -142,6 +173,15 @@ private:
   IOP::MultipleComponentProfile components_;
   // The rest of the components, to be compliant we cannot drop a
   // bunch of them.
+
+# if (TAO_HAS_FT_CORBA == 1)
+  CORBA::Boolean ft_tag_primary_;
+  // Flag that indicates whether the profile is from a PRIMARY
+
+  TAO_FT_Tagged_Component ft_tagged_component_;
+  // Tagged components in TAG_FT_GROUP
+
+#endif /*TAO_HAS_FT_CORBA */
 
   // A flag for each component...
   CORBA::Octet orb_type_set_;

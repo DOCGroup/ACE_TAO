@@ -37,7 +37,14 @@ TAO_Stub::reset_base (void)
   this->reset_first_locate_request ();
   this->profile_success_ = 0;
 
+#if (TAO_HAS_FT_CORBA == 0)
   this->set_profile_in_use_i (base_profiles_.get_next ());
+#else
+
+  // We need to follow a different approach for FT_CORBA. 
+  this->set_profile_from_primary ();
+  
+#endif /*TAO_HAS_FT_CORBA */
 }
 
 ACE_INLINE void
@@ -231,7 +238,7 @@ TAO_Stub::base_profiles (void) const
 }
 
 ACE_INLINE TAO_MProfile&
-TAO_Stub::base_profiles (void) 
+TAO_Stub::base_profiles (void)
 {
   return this->base_profiles_;
 }

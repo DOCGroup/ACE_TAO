@@ -70,10 +70,11 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_SSL_SEC_TRANS
           || tag == IOP::TAG_CSI_ECMA_Public_SEC_MECH
           || tag == IOP::TAG_GENERIC_SEC_MECH
-
           || tag == IOP::TAG_COMPLETE_OBJECT_KEY
           || tag == IOP::TAG_ENDPOINT_ID_POSITION
           || tag == IOP::TAG_LOCATION_POLICY
+          || tag == IOP::TAG_FT_PRIMARY
+          || tag == IOP::TAG_FT_GROUP
           || tag == IOP::TAG_DCE_STRING_BINDING
           || tag == IOP::TAG_DCE_BINDING_NAME
           || tag == IOP::TAG_DCE_NO_PIPES
@@ -84,4 +85,22 @@ ACE_INLINE IOP::MultipleComponentProfile&
 TAO_Tagged_Components::components (void)
 {
   return this->components_;
+}
+
+ACE_INLINE CORBA::Boolean 
+TAO_Tagged_Components::is_primary (void)
+{
+  return this->ft_tag_primary_;
+}
+
+ACE_INLINE TAO_Tagged_Components::TAO_FT_Group_Tagged_Component &
+TAO_Tagged_Components::ft_group_tagged_component (void)
+{
+  return this->ft_tagged_component_;
+}
+
+ACE_INLINE const TAO_Tagged_Components::TAO_FT_Group_Tagged_Component&
+TAO_Tagged_Components::ft_group_tagged_component (void)
+{
+  return this->ft_tagged_component_;
 }
