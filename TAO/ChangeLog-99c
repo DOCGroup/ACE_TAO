@@ -1,3 +1,10 @@
+Mon Jul 19 11:05:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Added a #ifdef to check if the platform supports 64bit long
+	long. If not, used the ACE_U_LongLong class intead.
+	
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp. 
+
 Mon Jul 19 10:48:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Interface.pidl:
