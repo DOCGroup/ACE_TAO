@@ -5,48 +5,6 @@
 #  Makefile to create the LifeCycle_Service
 
 
-# needed for the trading service stuff
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif # TAO_ROOT
-
-TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
-
-ifdef trader
-
-ifndef STL_ROOT
-  STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
-endif # STL_ROOT
-
-STD=$(STL_ROOT)/ospace/std
-STL=$(STL_ROOT)/stl
-
-include $(STL_ROOT)/config/local.cfg
-
-CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
-
-CPPFLAGS += \
-        -I$(TOOLKIT) \
-        $(CC_INCLUDES) \
-        $(CC_FLAGS) \
-        $(CC_DEFINES) \
-        $(CC_EH) \
-        $(CC_MT)
-
-
-ifndef exceptions
-CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
-else
-CPPFLAGS += -DOS_STL_ASSERT
-endif
-
-LDFLAGS += -L$(STL_ROOT)/lib
-
-endif # trader
-# end of the trading service stuff
-
 BIN = Life_Cycle_Service
 
 # The following lines tell the souce code that the trading
@@ -73,15 +31,7 @@ LSRC= \
 LIFE_CYCLE_SERVICE_OBJS = Life_Cycle_Service.o Life_Cycle_Service_Impl.o \
 		Factory_Trader.o Criteria_Evaluator.o
 
-ifdef trader
-
-LDLIBS = -lorbsvcs -lospace -lTAO
-
-else
-
 LDLIBS = -lorbsvcs -lTAO
-
-endif
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
