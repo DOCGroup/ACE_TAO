@@ -705,6 +705,9 @@ private:
   int release_token (void);
   // Release the token lock when a Win32 structured exception occurs.
 
+  int handle_events_i (ACE_Time_Value *max_wait_time = 0);
+  // Stops the VC++ compiler from bitching about exceptions and destructors
+
   // Deny access since member-wise won't work...
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);
