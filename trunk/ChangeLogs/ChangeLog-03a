@@ -1,3 +1,17 @@
+Mon Dec  3 10:54:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.h:
+	  Document CDR default buffer sizes and control macros
+	  using Doxygen.
+	  Document memory alignment macros in Doxygen form.
+
+	* ace/Sample_History.h:
+	* ace/Sample_History.inl:
+	  Add accessor to get the samples saved on the history.
+
+	* ace/RMCast/RMCast_Singleton_Factory.h:
+	  Document constructor in more detail.
+
 Mon Dec 03 07:54:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Unbounded_Queue.{h,cpp}:

@@ -64,6 +64,9 @@ public:
   /// Collect the summary for all the samples
   void collect_basic_stats (ACE_Basic_Stats &) const;
 
+  /// Get a sample
+  ACE_UINT64 get_sample (size_t i) const;
+
 private:
   /// The maximum number of samples
   size_t max_samples_;
