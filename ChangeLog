@@ -1,3 +1,27 @@
+Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/config-linux.h:
+          Enable the usage of native recursive mutexes for the
+          implementation of ACE recursive mutexes.  According to the
+          README, ACE_HAS_RECURSIVE_MUTEXES should be defined for
+          platforms where all mutexes are recursive. This seems a
+          little bit counter intuitive, as it implies that recursive
+          mutexes are supported by the platform.  But in reality, it means
+          that all mutexes are recursive.
+        
+          Added ACE_HAS_NONRECURSIVE_MUTEXES, which, together with
+          ACE_HAS_RECURSIVE_MUTEXES means the platform supports both
+          recursive and non-recursive mutexes.  This maintains the default
+          behavior on non-GNU/Linux platforms.  Thanks to Panagiotis Issaris
+          <panagiotis.issaris@mech.kuleuven.ac.be> for this patch.
+
+        * ace/README:
+          Added documentation for ACE_HAS_NONRECURSIVE_MUTEXES.
+
+        * THANKS:
+          Added Panagiotis Issaris to the hall of fame.
+
 Wed Mar 31 14:22:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cygwin32.GNU:
