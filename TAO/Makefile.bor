@@ -1,0 +1,54 @@
+#
+# Makefile for building	ACE and	TAO
+#
+
+!ifndef	BUILD
+BUILD =	typical
+!endif
+
+!if $(BUILD) ==	minimal
+
+DIRS = \
+	..\ace \
+	..\apps\gperf\src \
+        ..\XML \
+	tao \
+	TAO_IDL	\
+	orbsvcs
+
+!elif $(BUILD) == typical
+
+DIRS = \
+	..\ace \
+	..\apps\gperf\src \
+        ..\XML \
+	tao \
+	TAO_IDL	\
+	orbsvcs	\
+	utils
+
+!elif $(BUILD) == all
+
+DIRS = \
+	..\ace \
+	..\apps	\
+	..\netsvcs \
+	..\tests \
+        ..\examples \
+        ..\performance-tests \
+        ..\XML \
+        ..\XML\tests \
+	tao \
+	TAO_IDL	\
+	orbsvcs	\
+	examples \
+	tests \
+        performance-tests \
+        orbsvcs\tests \
+	utils
+
+!else
+!error Please set your BUILD variable to one of	"minimal", "typical" or	"all".
+!endif
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
