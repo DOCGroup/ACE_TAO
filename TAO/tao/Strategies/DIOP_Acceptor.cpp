@@ -18,8 +18,8 @@
 #include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,    
-           DIOP_Acceptor, 
+ACE_RCSID (tao,
+           DIOP_Acceptor,
            "$Id$")
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
@@ -230,11 +230,9 @@ TAO_DIOP_Acceptor::close (void)
           this->connection_handler_->reactor ()->remove_handler (this->connection_handler_,
                                                                  ACE_Event_Handler::READ_MASK);
         }
-      else
-        {
-          this->connection_handler_->handle_close (ACE_INVALID_HANDLE,
-                                                   ACE_Event_Handler::ALL_EVENTS_MASK);
-        }
+
+      this->connection_handler_->remove_reference ();
+
       this->connection_handler_ = 0;
     }
   return 0;
