@@ -44,7 +44,7 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
         	ACE_wrappers/TAO/*.bor \
         	ACE_wrappers/TAO/configure \
         	ACE_wrappers/TAO/Makefile.in \
-                ACE_wrappers/TAO/INSTALL
+                ACE_wrappers/TAO/TAO-INSTALL
 
 
 .PHONY: INSTALL
