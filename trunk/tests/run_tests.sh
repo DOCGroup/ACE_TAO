@@ -123,7 +123,7 @@ test $chorus || test $LynxOS || run Time_Service_Test # uses libnetsvcs
 test $chorus || test $LynxOS || run Tokens_Test
 
 run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
-run Message_Queue_Notifications_Test.cpp    # uses Message_Queue + Reactor.
+run Message_Queue_Notifications_Test    # uses Message_Queue + Reactor.
 test $chorus || run Message_Queue_Test  # uses Message_Queue + Forward and Reverse Message Queue Iterators.
 test $chorus || run Simple_Message_Block_Test # uses Message_Block
 test $chorus || run Message_Block_Test  # uses Message_Block and Message_Queue
