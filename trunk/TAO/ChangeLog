@@ -1,3 +1,12 @@
+Sun May 23 12:03:04 2004  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Removed platform specific portions of filename canonicalization
+          and replaced them with the new ACE_OS::realpath() function.
+
+	  Utilized ACE macros instead of conditional compilation.
+
 Fri May 21 17:25:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
@@ -91,10 +100,10 @@ Thu May 20 17:14:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May 19 18:28:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Diffserv:
+        * tests/RTCORBA/Diffserv:
 
-	  Renamed TAO_Custom_Network_Priority_Mapping to
-	  Custom_Network_Priority_Mapping.
+          Renamed TAO_Custom_Network_Priority_Mapping to
+          Custom_Network_Priority_Mapping.
 
 Wed May 19 09:14:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -183,9 +192,9 @@ Mon May 17 17:33:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 17 12:46:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.inl:
-	  Fixed more exception macros problems.
+        * orbsvcs/performance-tests/RTEvent/lib/Shutdown.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Shutdown.inl:
+          Fixed more exception macros problems.
 
 Mon May 17 11:23:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -207,55 +216,55 @@ Mon May 17 09:49:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri May 14 22:04:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/Linear_Network_Priority_Mapping.cpp (to_network):
-	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.cpp
-	  (to_network):
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp (to_network):
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.cpp
+          (to_network):
 
-	  Fixed "conversion from double to int" warnings.
+          Fixed "conversion from double to int" warnings.
 
 Fri May 14 15:38:09 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Diffserv/server.cpp (main):
+        * tests/RTCORBA/Diffserv/server.cpp (main):
 
-	  Minor fix.
+          Minor fix.
 
 Fri May 14 15:29:36 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/RTCORBA/Linear_Network_Priority_Mapping:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping:
 
-	  Several changes were made to simplify this class. <increment_>,
-	  <max_> and <min_> were removed.  Conversion from corba to
-	  network in to_network() was corrected.
+          Several changes were made to simplify this class. <increment_>,
+          <max_> and <min_> were removed.  Conversion from corba to
+          network in to_network() was corrected.
 
-	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint):
+        * tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint):
 
-	  "Failed to set Diffserv" message was incorrectly getting printed
-	  out. IPDSFIELD_DSCP_DEFAULT was made a valid DiffServ code
-	  point.
+          "Failed to set Diffserv" message was incorrectly getting printed
+          out. IPDSFIELD_DSCP_DEFAULT was made a valid DiffServ code
+          point.
 
-	* tests/RTCORBA/Diffserv/server.cpp:
+        * tests/RTCORBA/Diffserv/server.cpp:
 
-	  test_method() was modified since there is no passing or
-	  respecting of corba (thread) priorities.  Only network
-	  priorities are set. Command line options were also simplified.
-	  Both servants are registered in the same instance of the
-	  server.  The first one in the RootPOA and the other one in a POA
-	  with the correct ServerProtocolPolicy.
+          test_method() was modified since there is no passing or
+          respecting of corba (thread) priorities.  Only network
+          priorities are set. Command line options were also simplified.
+          Both servants are registered in the same instance of the
+          server.  The first one in the RootPOA and the other one in a POA
+          with the correct ServerProtocolPolicy.
 
-	* tests/RTCORBA/Diffserv/client.cpp:
+        * tests/RTCORBA/Diffserv/client.cpp:
 
-	  Serveral changes were made to correct and simplify code in this
-	  file.  PolicyCurrent was used rather than using the ORB_Core.
-	  Command line options were also simplified.  Server is shutdown
-	  only if specified.
+          Serveral changes were made to correct and simplify code in this
+          file.  PolicyCurrent was used rather than using the ORB_Core.
+          Command line options were also simplified.  Server is shutdown
+          only if specified.
 
-	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping:
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping:
 
-	  Several changes were made to simplify this class. <increment_>,
-	  <corba_priority_>, <max_> and <min_> were removed.
-	  desired_priority() was renamed to corba_priority().  Conversion
-	  from corba to network in to_network() was corrected.  An assert
-	  was added to to_CORBA() since it should never be called.
+          Several changes were made to simplify this class. <increment_>,
+          <corba_priority_>, <max_> and <min_> were removed.
+          desired_priority() was renamed to corba_priority().  Conversion
+          from corba to network in to_network() was corrected.  An assert
+          was added to to_CORBA() since it should never be called.
 
 Fri May 14 09:43:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -270,20 +279,20 @@ Fri May 14 09:43:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu May 13 22:35:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Param_Test/helper.cpp (gen_fixed_struct, gen_step):
+        * tests/Param_Test/helper.cpp (gen_fixed_struct, gen_step):
 
-	  Fixed "unsafe use of type 'bool' in % operation" warning
-	  exhibited by MSVC++ 7.1 by forcing the modulus operator to be
-	  executed prior to the cast to a bool, instead of executing the
-	  modulus operator on a boolean value.
+          Fixed "unsafe use of type 'bool' in % operation" warning
+          exhibited by MSVC++ 7.1 by forcing the modulus operator to be
+          executed prior to the cast to a bool, instead of executing the
+          modulus operator on a boolean value.
 
 Thu May 13 20:26:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
-	  (operator):
+        * orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
+          (operator):
 
-	  Added missing ACE_TRY_CHECK.  Fixes a warning about an unused
-	  label in emulated exception builds.
+          Added missing ACE_TRY_CHECK.  Fixes a warning about an unused
+          label in emulated exception builds.
 
 Thu May 13 13:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -292,7 +301,7 @@ Thu May 13 13:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           seconds and then quits, so in the run_test.pl we now don't wait
           120 seconds but 150, the test looks to be failing on the slower
           windows systems but almost takes 120 seconds on my fast
-	  development system.
+          development system.
 
 Thu May 13 12:50:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -325,58 +334,58 @@ Thu May 13 09:22:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Big_Request_Muxing/run_test.pl:
         * tests/Big_Request_Muxing/server.cpp:
           Added some more debug lines and changed timeouts and way of
-	  ending the server in the perl script. On Windows it seems the
-	  server was killed before it was really finished. On my system
-	  this tests runs now without problems.
+          ending the server in the perl script. On Windows it seems the
+          server was killed before it was really finished. On my system
+          this tests runs now without problems.
 
 Wed May 12 21:46:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.h:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.h:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
 
-	  Fixed single-threaded build compile-time errors
-	  (e.g. "ACE_MT_SYNCH" -> "ACE_SYNCH", "ACE_Thread_Mutex" ->
-	  "ACE_SYNCH_MUTEX", etc.).
+          Fixed single-threaded build compile-time errors
+          (e.g. "ACE_MT_SYNCH" -> "ACE_SYNCH", "ACE_Thread_Mutex" ->
+          "ACE_SYNCH_MUTEX", etc.).
 
 Wed May 12 20:09:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
-	* tests/Connection_Timeout/client.cpp (main):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+        * tests/Connection_Timeout/client.cpp (main):
 
-	  Fixed "use of undefined preprocessor constant" warnings
-	  revealed by compiling with g++'s "-Wundef" preprocessor flag.
+          Fixed "use of undefined preprocessor constant" warnings
+          revealed by compiling with g++'s "-Wundef" preprocessor flag.
 
-	* tests/Big_Twoways/Session.cpp (validate_connections):
-	* tests/LongUpcalls/AMI_Manager.cpp (validate_connection):
-	* tests/LongUpcalls/Manager.cpp (validate_connection):
+        * tests/Big_Twoways/Session.cpp (validate_connections):
+        * tests/LongUpcalls/AMI_Manager.cpp (validate_connection):
+        * tests/LongUpcalls/Manager.cpp (validate_connection):
 
-	  A preprocessor conditional was checking the value of an
-	  incorrect preprocessor constant.  "TAO_HAS_MESSAGING" ->
-	  "TAO_HAS_CORBA_MESSAGING".  Fixes problem where code that used
-	  CORBA::Object::_validate_connection() method was never called.
+          A preprocessor conditional was checking the value of an
+          incorrect preprocessor constant.  "TAO_HAS_MESSAGING" ->
+          "TAO_HAS_CORBA_MESSAGING".  Fixes problem where code that used
+          CORBA::Object::_validate_connection() method was never called.
 
-	* tests/ICMG_Any_Bug/client.cpp:
+        * tests/ICMG_Any_Bug/client.cpp:
 
-	  Reordered #include preprocessor directives to force all
-	  necessary non-dependent names to be parsed prior to the
-	  templates that use them (i.e. TAO_Pseudo_{Var,Out}_T).  Fixes
-	  GNU g++ 3.4 compile-time errors.
+          Reordered #include preprocessor directives to force all
+          necessary non-dependent names to be parsed prior to the
+          templates that use them (i.e. TAO_Pseudo_{Var,Out}_T).  Fixes
+          GNU g++ 3.4 compile-time errors.
 
 Wed May 12 09:31:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.h:
-	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl:
-	  Another case of simulated exceptions not working well with
-	  Auto_Functor.
+        * orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.h:
+        * orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl:
+          Another case of simulated exceptions not working well with
+          Auto_Functor.
 
 Wed May 12 12:04:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -530,10 +539,10 @@ Tue May 10 08:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 10 10:00:23 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
-	  The Auto_Functor class does not use simulated exceptions, move
-	  that code into the functor.
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
+          The Auto_Functor class does not use simulated exceptions, move
+          that code into the functor.
 
 Mon May  9 13:47:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -584,27 +593,27 @@ Mon May  9 10:02:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat May  8 00:41:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
 
-	  Changed "ACE_Thread_Mutex" template argument to
-	  "ACE_SYNCH_MUTEX".  Allows this code to build in single-threaded
-	  builds.
+          Changed "ACE_Thread_Mutex" template argument to
+          "ACE_SYNCH_MUTEX".  Allows this code to build in single-threaded
+          builds.
 
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
 
-	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
-	  allows the code to build in a single threaded environment.
-	  Fixes single-threaded build compile-time errors.
+          Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
+          allows the code to build in a single threaded environment.
+          Fixes single-threaded build compile-time errors.
 
 Fri May  7 14:58:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/RTCosScheduling/client.cpp:
-	* orbsvcs/tests/RTCosScheduling/server.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
 
-	  Include "tao/Version.h" to pull in TAO_*_VERSION preprocessor
-	  constant definitions.  Addresses undefined preprocessor constant
-	  g++ warnings when using the "-Wundef" preprocessor flag.
+          Include "tao/Version.h" to pull in TAO_*_VERSION preprocessor
+          constant definitions.  Addresses undefined preprocessor constant
+          g++ warnings when using the "-Wundef" preprocessor flag.
 
 Fri May  7 16:44:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -621,33 +630,33 @@ Fri May  7 16:44:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri May  7 14:46:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* GNUmakefile:
+        * GNUmakefile:
 
-	  Removed this GNUmakefile.  It must now be generated by MPC.
+          Removed this GNUmakefile.  It must now be generated by MPC.
 
 Fri May  7 10:34:24 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.cpp:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.inl:
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp:
-	  Removed, use the ACE_Utils::Auto_Functor<> class template.
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.inl:
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp:
+          Removed, use the ACE_Utils::Auto_Functor<> class template.
 
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
-	  Use reset() instead of the assignment operator for some
-	  Auto_Functor related classes.
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+          Use reset() instead of the assignment operator for some
+          Auto_Functor related classes.
 
-	* tao/Utils/ORB_Destroyer.h:
-	* tao/Utils/Implicit_Deactivator.h:
-	* tao/Messaging/Asynch_Invocation.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.h:
-	* orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
-	  Workaround MSVC6 lameness, use ACE_Utils::Auto_Functor
-	  explicitly instead of the type introduced into TAO::Utils.
+        * tao/Utils/ORB_Destroyer.h:
+        * tao/Utils/Implicit_Deactivator.h:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+          Workaround MSVC6 lameness, use ACE_Utils::Auto_Functor
+          explicitly instead of the type introduced into TAO::Utils.
 
 Fri May  7 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -661,33 +670,33 @@ Fri May  7 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May  6 22:14:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* rules.tao.GNU:
-	* TAO_IDL/be/be_global.cpp (BE_GlobalData):
-	* TAO_IDL/driver/drv_args.cpp:
+        * rules.tao.GNU:
+        * TAO_IDL/be/be_global.cpp (BE_GlobalData):
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  ".inl" is now the default TAO_IDL generated stub/skeleton inline
-	  file extension instead of ".i".  The latter is generally used
-	  for preprocessed C sources.  Updated these files accordingly.
+          ".inl" is now the default TAO_IDL generated stub/skeleton inline
+          file extension instead of ".i".  The latter is generally used
+          for preprocessed C sources.  Updated these files accordingly.
 
-	* TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
 
-	  Fixed potential buffer overrun problem where temporary filename
-	  could extend beyond character array boundary.
+          Fixed potential buffer overrun problem where temporary filename
+          could extend beyond character array boundary.
 
-	  Use mkstemp() to create temporary files if supported by the
-	  platform.  Closes some security holes (e.g. easily guessed
-	  temporary filenames, and race condition between check for
-	  existence of file with selected name and opening that file).
-	  Also addresses GNU linker warnings about dangerous use of
-	  mktemp() function.
+          Use mkstemp() to create temporary files if supported by the
+          platform.  Closes some security holes (e.g. easily guessed
+          temporary filenames, and race condition between check for
+          existence of file with selected name and opening that file).
+          Also addresses GNU linker warnings about dangerous use of
+          mktemp() function.
 
-	  Cleaned up some ACE_ERROR macro arguments.  They were
-	  unnecessarily complicated (e.g. unnecessarily using too many
-	  "%s" arguments).
+          Cleaned up some ACE_ERROR macro arguments.  They were
+          unnecessarily complicated (e.g. unnecessarily using too many
+          "%s" arguments).
 
 Thu May 7 2:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Tests_Multiple.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Tests_Multiple.mpc:
           moved to CosEC_RtEC_Based_Mult.mpc, project names changed from
           *Supplier, *Consumer to resp. *Supp, *Cons
         * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
@@ -695,7 +704,7 @@ Thu May 7 2:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 Thu May 7 1:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* orbsvcs/tests/Notify/*.mpc:
+        * orbsvcs/tests/Notify/*.mpc:
           *Sequence*.mpc moved to *Seq*.mpc
           *Structured*.mpc moved to *Struct*.mpc
           Project names inside *mpc changed according to rules:
@@ -714,51 +723,51 @@ Thu May 7 1:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 Thu May 6 23:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc
+        * tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc
         * tests/NestedUpcall/Triangle_Test/Traingle_Test.mpc:
           truncated to TT.mpc
 
 Thu May 6 22:30:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
           truncated to PaESelection.mpc
         * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc
           truncated to RTCORBA_MT_Client_Proto_Prio.mpc
 
 Thu May 6 22:12:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/Portable_Interceptors: Portable_Interceptors*.mpc were
-	truncated to PI_*.mpc.
+        * tests/Portable_Interceptors: Portable_Interceptors*.mpc were
+        truncated to PI_*.mpc.
 
 Thu May  6 13:12:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
-	  (write_ior):
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp (write_ior):
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
-	  (create_operation_list):
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp
-	  (~TAO_CEC_TypedProxyPushConsumer):
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp
-	  (activate, get_state):
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
-	  (get_state):
-	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp (init):
-	* orbsvcs/tests/FT_App/FT_Creator.cpp (run):
-	* orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp
-	  (create_group):
-	* orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp
-	  (init):
-	* orbsvcs/tests/FT_App/StubFaultNotifier.cpp (write_ior_file):
-	* orbsvcs/tests/FT_App/FT_Client.cpp (pass):
-	* orbsvcs/tests/FtRtEvent/PushConsumer.cpp
-	  (disconnect_push_consumer):
-	* orbsvcs/tests/FtRtEvent/PushSupplier.cpp
-	  (disconnect_push_supplier):
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp
-	  (send_reply):
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+          (write_ior):
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp (write_ior):
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
+          (create_operation_list):
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp
+          (~TAO_CEC_TypedProxyPushConsumer):
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp
+          (activate, get_state):
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
+          (get_state):
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp (init):
+        * orbsvcs/tests/FT_App/FT_Creator.cpp (run):
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp
+          (create_group):
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp
+          (init):
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp (write_ior_file):
+        * orbsvcs/tests/FT_App/FT_Client.cpp (pass):
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp
+          (disconnect_push_consumer):
+        * orbsvcs/tests/FtRtEvent/PushSupplier.cpp
+          (disconnect_push_supplier):
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp
+          (send_reply):
 
-	  Fixed "better conversion sequence" g++ warning.
+          Fixed "better conversion sequence" g++ warning.
 
 Thu May  6 09:44:16 2004  Steve Totten  <totten_s@ociweb.com>
 
@@ -771,33 +780,33 @@ Thu May  6 09:44:16 2004  Steve Totten  <totten_s@ociweb.com>
 
 Wed May  5 23:46:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Invocation.h:
+        * tao/Messaging/Asynch_Invocation.h:
 
-	  Updated to use ACE_Utils::Auto_Functor<> instead of the
-	  deprecated TAO::Utils::Auto_Functor<> class.
+          Updated to use ACE_Utils::Auto_Functor<> instead of the
+          deprecated TAO::Utils::Auto_Functor<> class.
 
 Wed May  6 00:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation:
 
-	  Portable_Interceptors_Service_Context_Manipulation.mpc was
-	  truncated to PI_Svc_Context_Manip.mpc to enable file
-	  manipulation for FS without support for very long filenames
-	  (eg. QNX).
+          Portable_Interceptors_Service_Context_Manipulation.mpc was
+          truncated to PI_Svc_Context_Manip.mpc to enable file
+          manipulation for FS without support for very long filenames
+          (eg. QNX).
 
 Wed May  5 15:10:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp (init_orb_globals):
+        * tao/ORB.cpp (init_orb_globals):
 
-	  Added run-time check for sizeof CORBA::Boolean.  TAO's (ACE's)
-	  CDR stream implementation expects the CDR boolean to have a size
-	  of one.  This is mostly a sanity check for us to prevent release
-	  of an ACE/TAO distribution with an incorrectly sized CDR boolean
-	  type on platforms that we support, or are at least have active
-	  builds on our scoreboard.  The check was added since some C++
-	  compilers do not implement a true C++ bool type, but rather
-	  implement it in terms of an integer type.  Thanks to Bala for
-	  pointing out that this is the case for some compilers.
+          Added run-time check for sizeof CORBA::Boolean.  TAO's (ACE's)
+          CDR stream implementation expects the CDR boolean to have a size
+          of one.  This is mostly a sanity check for us to prevent release
+          of an ACE/TAO distribution with an incorrectly sized CDR boolean
+          type on platforms that we support, or are at least have active
+          builds on our scoreboard.  The check was added since some C++
+          compilers do not implement a true C++ bool type, but rather
+          implement it in terms of an integer type.  Thanks to Bala for
+          pointing out that this is the case for some compilers.
 
 Wed May  5 17:07:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -814,39 +823,39 @@ Wed May  5 17:07:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tao/tao.mpc:
-	* tao/Auto_Functor.h:
-	* tao/Auto_Functor.inl:
-	* tao/Auto_Functor.cpp:
-	  Moved the implementation to the ACE library.  Take advantage of
-	  the 'using namespace' directive to preserve backwards
-	  compatibility.
+        * tao/tao.mpc:
+        * tao/Auto_Functor.h:
+        * tao/Auto_Functor.inl:
+        * tao/Auto_Functor.cpp:
+          Moved the implementation to the ACE library.  Take advantage of
+          the 'using namespace' directive to preserve backwards
+          compatibility.
 
-	* tao/Utils/Utils.mpc:
-	* tao/Utils/Auto_Functor.h:
-	  This header was dropped when the class template was moved up,
-	  re-introduced said header file to recover backwards
-	  compatibility.
+        * tao/Utils/Utils.mpc:
+        * tao/Utils/Auto_Functor.h:
+          This header was dropped when the class template was moved up,
+          re-introduced said header file to recover backwards
+          compatibility.
 
 Tue May  4 00:12:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
 
-	  Include "tao/DynamicInterface/DII_CORBA_methods.h" first to
-	  force CORBA::release(CORBA::Request...) prototype to be parsed
-	  before TAO_Pseudo_{Var,Out}_T templates.  All required
-	  non-dependent names must be parsed prior to the template in
-	  question when using compilers like g++ 3.4.x.
+          Include "tao/DynamicInterface/DII_CORBA_methods.h" first to
+          force CORBA::release(CORBA::Request...) prototype to be parsed
+          before TAO_Pseudo_{Var,Out}_T templates.  All required
+          non-dependent names must be parsed prior to the template in
+          question when using compilers like g++ 3.4.x.
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
 
-	  Include "ace/INET_Addr.h" to pull in ACE_INET_Addr class
-	  declaration.
+          Include "ace/INET_Addr.h" to pull in ACE_INET_Addr class
+          declaration.
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
 
-	  Fixed "TAO_HAS_SCIOP" is not defined warning exhibited by g++
-	  3.4.
+          Fixed "TAO_HAS_SCIOP" is not defined warning exhibited by g++
+          3.4.
 
 Mon May  3 13:15:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -857,10 +866,10 @@ Mon May  3 13:15:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon May  3 00:00:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile*:
+        * Makefile*:
 
-	  Removed all Makefiles.  GNUmakefiles must now be generated by
-	  MPC.
+          Removed all Makefiles.  GNUmakefiles must now be generated by
+          MPC.
 
 Sun May  2 17:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
