@@ -1,3 +1,12 @@
+Wed Jun 23 14:42:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Eliminated optimized generated code for CDR operators for 
+	  bounded octet sequences. The bounded class does not contain
+	  or use message blocks. This undoes a change made earlier 
+	  today. Thanks to Doug Anderson <doug@clark.net> for 
+	  pointing out this problem.
+
 Wed Jun 23 14:42:01 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/run_test.pl: Modified it to have the
