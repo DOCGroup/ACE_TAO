@@ -971,7 +971,7 @@ tao_yyparse()
     extern char *ace_foo();
 #endif
 
-    if (tao_yys = ACE_OS::getenv("TAO_YYDEBUG"))
+    if ((tao_yys = ACE_OS::getenv("TAO_YYDEBUG")))
     {
         tao_yyn = *tao_yys;
         if (tao_yyn >= '0' && tao_yyn <= '9')
@@ -988,7 +988,7 @@ tao_yyparse()
     *tao_yyssp = tao_yystate = 0;
 
 tao_yyloop:
-    if (tao_yyn = tao_yydefred[tao_yystate]) goto tao_yyreduce;
+    if ((tao_yyn = tao_yydefred[tao_yystate])) goto tao_yyreduce;
     if (tao_yychar < 0)
     {
         if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
@@ -1042,7 +1042,6 @@ tao_yyloop:
 #ifdef lint
     goto tao_yyerrlab;
 #endif
-tao_yyerrlab:
     ++tao_yynerrs;
 tao_yyinrecovery:
     if (tao_yyerrflag < 3)
