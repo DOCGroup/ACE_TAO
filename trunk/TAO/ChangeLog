@@ -2,7 +2,7 @@ Wed Apr 23 15:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>1
 
 	* docs/tutorial/Quoter/AMI/Handler_i.h:
 	* docs/tutorial/Quoter/AMI/Handler_i.cpp: Fixed the code to be
-	  portable.
+	  portable by removing _ptr's for non-object references.
 
 Wed Apr 23 09:53:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
