@@ -25,7 +25,7 @@ int CC_commandlex(void);
 
 extern int line_no;
 extern char line_buf[500];
-extern char *CC_commandtext;
+extern char *yytext;
 extern CC_CommandList *cmdlist;
 %}
 
@@ -114,10 +114,10 @@ lock_mode:	T_READ { $$ = CosConcurrencyControl::read; }
 
 %%
 
-int CC_commanderror(char *s)
+int yyerror(char *s)
 {
   printf("%d: %s at %s in:\n%s\n",
-         line_no, s, CC_commandtext, line_buf);
+         line_no, s, yytext, line_buf);
   ACE_OS::exit(-1);
   return 0;
 }
