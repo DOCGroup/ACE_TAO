@@ -1,3 +1,9 @@
+Mon Sep  2 16:59:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RT_PolicyFactory.cpp:
+
+	  Fixed unused variable warning.
+
 Mon Sep  2 16:20:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
