@@ -1,3 +1,15 @@
+Thu Jan  6 18:29:22 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Added check for
+	  ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS ( ~CLASS<PARAM>() ),
+	  and made it the primary check since most compilers like this one.
+	  If this one fails, then test for
+	  ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR ( ~CLASS() ). Some
+	  compilers don't like this one (such as IBM Visual Age C++) but
+	  do like the first one.
+
+	* m4/config_h.m4: Added ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS.
+
 Thu Jan  6 08:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:

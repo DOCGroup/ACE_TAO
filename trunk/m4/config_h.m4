@@ -309,8 +309,10 @@ AH_TEMPLATE([ACE_HAS_AUTOMATIC_INIT_FINI],
 [Compiler/platform correctly calls init()/fini() for shared libraries.])
 
 AH_TEMPLATE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR],
-[Compiler handles explicit calling of template destructor correctly.
-See `ace/OS.h' for details.])
+[Compiler handles explicit calling of template destructor correctly.])
+
+AH_TEMPLATE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS],
+[Compiler requires template args when explicitly calling template destructor.])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 [Platform doesn't cast MAP_FAILED to a (void *).])
