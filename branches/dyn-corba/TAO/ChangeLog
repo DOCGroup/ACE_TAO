@@ -1,3 +1,99 @@
+Sun Jan 12 02:01:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/NVList.cpp:
+        * tao/BiDir_GIOP/BiDirPolicy.pidl:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.i:
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.i:
+        * tao/Domain/DomainS_T.cpp:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.i:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicAny/DynamicAnyC.i:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.h:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.i:nl
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.h:
+        * tao/IORManipulation/IOR.pidl:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.i:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/IORTable/IORTableC.i:
+        * tao/Messaging/Messaging.pidl:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/MessagingC.i:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/Messaging/MessagingS.h:
+        * tao/Messaging/MessagingS.i:
+        * tao/Messaging/MessagingS_T.cpp:
+        * tao/Messaging/MessagingS_T.h:
+        * tao/Messaging/MessagingS_T.i:
+        * tao/Messaging/Messaging_No_Impl.pidl:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_No_ImplC.i:
+        * tao/Messaging/Messaging_RT_Policy.pidl:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.i:
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.i:
+        * tao/Messaging/TAO_Ext.pidl:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/Messaging/TAO_ExtC.i:
+        * tao/Messaging/TAO_Messaging.dsp:
+        * tao/RTCORBA/RTCORBA.pidl:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTCORBA/TAO_RTCORBA.dsp:
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerC.i:
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+
+	  Regenerated hand-crafted files in all TAO satellite libraries,
+	  modified PIDL files and MSVC project files as needed, and 
+	  fixed a few mistakes in TAO, all relating to the new Any
+	  implementation.
+
 Sat Jan 11 14:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Default_ORT.pidl:

@@ -101,7 +101,7 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
+TAO_DynAnyFactory::make_dyn_any (const CORBA::Any &any
                                  ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();

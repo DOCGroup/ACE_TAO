@@ -81,7 +81,7 @@ CORBA_Context::create_child (const char * /* child_ctx_name */,
 
 void
 CORBA_Context::set_one_value (const char * /* propname */,
-                              const CORBA_Any & /* propvalue */
+                              const CORBA::Any & /* propvalue */
                               ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,

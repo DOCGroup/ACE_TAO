@@ -19,9 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_RT_POLICYC_H_
 #define _TAO_IDL_ORIG_MESSAGING_RT_POLICYC_H_
@@ -61,63 +60,65 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:45
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
 TAO_NAMESPACE  Messaging
 {
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  
   typedef TimeBase::TimeT Timeout;
   typedef TimeBase::TimeT_out Timeout_out;
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Timeout;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const CORBA::ULong RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32U;
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_
-
+  
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
 
 #endif /* end #if !defined */
 
-
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:569
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     RelativeRoundtripTimeoutPolicy_var (void); // default constructor
-    RelativeRoundtripTimeoutPolicy_var (RelativeRoundtripTimeoutPolicy_ptr p) : ptr_ (p) {}
+    RelativeRoundtripTimeoutPolicy_var (RelativeRoundtripTimeoutPolicy_ptr p) : ptr_ (p) {} 
     RelativeRoundtripTimeoutPolicy_var (const RelativeRoundtripTimeoutPolicy_var &); // copy constructor
     ~RelativeRoundtripTimeoutPolicy_var (void); // destructor
-
+    
     RelativeRoundtripTimeoutPolicy_var &operator= (RelativeRoundtripTimeoutPolicy_ptr);
     RelativeRoundtripTimeoutPolicy_var &operator= (const RelativeRoundtripTimeoutPolicy_var &);
     RelativeRoundtripTimeoutPolicy_ptr operator-> (void) const;
-
+    
     operator const RelativeRoundtripTimeoutPolicy_ptr &() const;
     operator RelativeRoundtripTimeoutPolicy_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     RelativeRoundtripTimeoutPolicy_ptr in (void) const;
     RelativeRoundtripTimeoutPolicy_ptr &inout (void);
     RelativeRoundtripTimeoutPolicy_ptr &out (void);
     RelativeRoundtripTimeoutPolicy_ptr _retn (void);
     RelativeRoundtripTimeoutPolicy_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
@@ -128,7 +129,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -136,17 +137,14 @@ TAO_NAMESPACE  Messaging
     RelativeRoundtripTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:929
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
+  
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_out
   {
   public:
@@ -159,21 +157,19 @@ TAO_NAMESPACE  Messaging
     operator RelativeRoundtripTimeoutPolicy_ptr &();
     RelativeRoundtripTimeoutPolicy_ptr &ptr (void);
     RelativeRoundtripTimeoutPolicy_ptr operator-> (void);
-
+  
   private:
     RelativeRoundtripTimeoutPolicy_ptr &ptr_;
   };
 
-
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:113
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
-
+  
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy
     : public virtual CORBA::Policy
   {
@@ -181,87 +177,90 @@ TAO_NAMESPACE  Messaging
     typedef RelativeRoundtripTimeoutPolicy_ptr _ptr_type;
     typedef RelativeRoundtripTimeoutPolicy_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
-
+    
     static RelativeRoundtripTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RelativeRoundtripTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void)
       {
         return (RelativeRoundtripTimeoutPolicy_ptr)0;
       }
-
+    
+    static void _tao_any_destructor (void *);
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual TimeBase::TimeT relative_expiry (
-
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:269
-
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     RelativeRoundtripTimeoutPolicy (void);
     virtual ~RelativeRoundtripTimeoutPolicy (void);
-
+    
     friend class _TAO_RelativeRoundtripTimeoutPolicy_Remote_Proxy_Impl;
     friend class _TAO_RelativeRoundtripTimeoutPolicy_ThruPOA_Proxy_Impl;
     friend class _TAO_RelativeRoundtripTimeoutPolicy_Direct_Proxy_Impl;
-
+  
   private:
     RelativeRoundtripTimeoutPolicy (const RelativeRoundtripTimeoutPolicy &);
     void operator= (const RelativeRoundtripTimeoutPolicy &);
   };
 
-
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy;
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
-// Any operators for interface Messaging::RelativeRoundtripTimeoutPolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr &);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1002
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_RT_PolicyC.i"
@@ -277,3 +276,4 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -19,15 +19,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_DOMAINS_H_
-#define _TAO_IDL_DOMAINS_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
+
+#ifndef _TAO_IDL_ORIG_DOMAINS_H_
+#define _TAO_IDL_ORIG_DOMAINS_H_
 
 #include "ace/pre.h"
-
 #include "domain_export.h"
 #include "tao/PortableServer/PolicyS.h"
 #include "tao/DomainC.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -50,11 +51,17 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
+
 TAO_NAMESPACE  POA_CORBA
 {
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
+  
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-  // Forward Classes Declaration
+  
   class _TAO_DomainManager_ThruPOA_Proxy_Impl;
   class _TAO_DomainManager_Direct_Proxy_Impl;
   class _TAO_DomainManager_Strategized_Proxy_Broker;
@@ -64,54 +71,63 @@ TAO_NAMESPACE  POA_CORBA
   {
   protected:
     DomainManager (void);
-
+  
   public:
     DomainManager (const DomainManager& rhs);
     virtual ~DomainManager (void);
-
-
+    
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual void* _downcast (
         const char* logical_type_id
       );
-
+    
     static void _is_a_skel (
         TAO_ServerRequest &req,
-        void *obj,
+        void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-
+    
     static void _non_existent_skel (
         TAO_ServerRequest &req,
-        void *obj,
+        void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-
+    
     static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *servant,
+        void *servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+    
+    static void _component_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-
+    
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
         ACE_ENV_ARG_DECL
       );
-
+    
     ::CORBA::DomainManager *_this (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
-
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
+    
     virtual ::CORBA::Policy_ptr get_domain_policy (
         CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -120,20 +136,20 @@ TAO_NAMESPACE  POA_CORBA
         CORBA::SystemException
       )) = 0;
     
-        static void get_domain_policy_skel (
+    static void get_domain_policy_skel (
         TAO_ServerRequest &_tao_req,
-        void *_tao_obj,
+        void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-
-
-  };
-
+  };  
   
   ///////////////////////////////////////////////////////////////////////
   //               Strategized Proxy Broker Declaration 
   //
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
   
   class TAO_Domain_Export _TAO_DomainManager_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_DomainManager_Proxy_Broker
   {
@@ -170,7 +186,6 @@ TAO_NAMESPACE  POA_CORBA
     static _TAO_DomainManager_Strategized_Proxy_Broker *the_TAO_DomainManager_Strategized_Proxy_Broker (void);
   };
   
-  
   //
   //            End Strategized Proxy Broker Declaration 
   ///////////////////////////////////////////////////////////////////////
@@ -180,14 +195,20 @@ TAO_NAMESPACE  POA_CORBA
   //                    ThruPOA  Impl. Declaration
   //
   
-  class TAO_Domain_Export _TAO_DomainManager_ThruPOA_Proxy_Impl :
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+  
+  class TAO_Domain_Export _TAO_DomainManager_ThruPOA_Proxy_Impl : 
     public virtual ::CORBA::_TAO_DomainManager_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_DomainManager_ThruPOA_Proxy_Impl (void);
     
-    virtual ~_TAO_DomainManager_ThruPOA_Proxy_Impl (void) { }
+    virtual ~_TAO_DomainManager_ThruPOA_Proxy_Impl (void) {}
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     virtual ::CORBA::Policy_ptr get_domain_policy (
         CORBA_Object *_collocated_tao_target_,
@@ -197,27 +218,26 @@ TAO_NAMESPACE  POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
   };
   
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_Domain_Export _TAO_DomainManager_Direct_Proxy_Impl :
+class TAO_Domain_Export _TAO_DomainManager_Direct_Proxy_Impl : 
   public virtual CORBA::_TAO_DomainManager_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
   _TAO_DomainManager_Direct_Proxy_Impl (void);
   
-  virtual ~_TAO_DomainManager_Direct_Proxy_Impl (void) { }
+  virtual ~_TAO_DomainManager_Direct_Proxy_Impl (void) {}
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual ::CORBA::Policy_ptr get_domain_policy (
       CORBA_Object *_collocated_tao_target_,
@@ -226,19 +246,19 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-    ));
-  
-  };
+    ));};
 
 
 //
 //                Direct  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
 
 class ConstructionPolicy;
 typedef ConstructionPolicy *ConstructionPolicy_ptr;
-// Forward Classes Declaration
+
 class _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl;
 class _TAO_ConstructionPolicy_Direct_Proxy_Impl;
 class _TAO_ConstructionPolicy_Strategized_Proxy_Broker;
@@ -252,50 +272,59 @@ protected:
 public:
   ConstructionPolicy (const ConstructionPolicy& rhs);
   virtual ~ConstructionPolicy (void);
-
-
+  
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-
+  
   virtual void* _downcast (
       const char* logical_type_id
     );
-
+  
   static void _is_a_skel (
       TAO_ServerRequest &req,
-      void *obj,
+      void *servant,
       void *servant_upcall
       ACE_ENV_ARG_DECL
     );
-
+  
   static void _non_existent_skel (
       TAO_ServerRequest &req,
-      void *obj,
+      void *servant,
       void *servant_upcall
       ACE_ENV_ARG_DECL
     );
-
+  
   static void _interface_skel (
+      TAO_ServerRequest &req,
+      void *servant,
+      void *servant_upcall
+      ACE_ENV_ARG_DECL
+    );
+  
+  static void _component_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
       ACE_ENV_ARG_DECL
     );
-
+  
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
       ACE_ENV_ARG_DECL
     );
-
+  
   ::CORBA::ConstructionPolicy *_this (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
-
+  
   virtual const char* _interface_repository_id (void) const;
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
+  
   virtual void make_domain_manager (
       CORBA::InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy
@@ -305,41 +334,45 @@ public:
       CORBA::SystemException
     )) = 0;
   
-    static void make_domain_manager_skel (
+  static void make_domain_manager_skel (
       TAO_ServerRequest &_tao_req,
-      void *_tao_obj,
+      void *_tao_servant,
       void *_tao_servant_upcall
       ACE_ENV_ARG_DECL
-    );
-
-  static void _get_policy_type_skel (
+    );  static void _get_policy_type_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+  
   static void copy_skel (
       TAO_ServerRequest &req, 
       void *obj,
       void *context
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+  
   static void destroy_skel (
       TAO_ServerRequest &req, 
       void *obj,
       void *context
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-
-
 };
-
 
 ///////////////////////////////////////////////////////////////////////
 //               Strategized Proxy Broker Declaration 
 //
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
 
 class TAO_Domain_Export _TAO_ConstructionPolicy_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_ConstructionPolicy_Proxy_Broker
 {
@@ -376,7 +409,6 @@ public:
   static _TAO_ConstructionPolicy_Strategized_Proxy_Broker *the_TAO_ConstructionPolicy_Strategized_Proxy_Broker (void);
 };
 
-
 //
 //            End Strategized Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
@@ -386,16 +418,21 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_Domain_Export _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl :
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+class TAO_Domain_Export _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl : 
   public virtual ::CORBA::_TAO_ConstructionPolicy_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl
-  
 {
 public:
   _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl (void) { }
+  virtual ~_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl (void) {}
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void make_domain_manager (
       CORBA_Object *_collocated_tao_target_,
@@ -406,20 +443,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
-  
 };
 
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
-
-
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_Domain_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl :
+class TAO_Domain_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl : 
   public virtual CORBA::_TAO_ConstructionPolicy_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl,
   public virtual POA_CORBA::_TAO_Policy_Direct_Proxy_Impl
@@ -428,7 +461,10 @@ class TAO_Domain_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl :
 public:
   _TAO_ConstructionPolicy_Direct_Proxy_Impl (void);
   
-  virtual ~_TAO_ConstructionPolicy_Direct_Proxy_Impl (void) { }
+  virtual ~_TAO_ConstructionPolicy_Direct_Proxy_Impl (void) {}
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void make_domain_manager (
       CORBA_Object *_collocated_tao_target_,
@@ -438,9 +474,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-    ));
-  
-  };
+    ));};
 
 
 //
@@ -448,8 +482,15 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
+
 }
 TAO_NAMESPACE_CLOSE // module CORBA
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
 
 #include "DomainS_T.h"
 

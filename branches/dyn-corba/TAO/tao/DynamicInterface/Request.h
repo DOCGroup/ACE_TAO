@@ -85,17 +85,17 @@ public:
   // Arg adders, one for each type of parameter,
   // with and without optional name. Returns
   // reference to Any for insertion using <<=.
-  CORBA_Any &add_in_arg (void);
-  CORBA_Any &add_in_arg (const char* name);
-  CORBA_Any &add_inout_arg (void);
-  CORBA_Any &add_inout_arg (const char* name);
-  CORBA_Any &add_out_arg (void);
-  CORBA_Any &add_out_arg (const char* name);
+  CORBA::Any &add_in_arg (void);
+  CORBA::Any &add_in_arg (const char* name);
+  CORBA::Any &add_inout_arg (void);
+  CORBA::Any &add_inout_arg (const char* name);
+  CORBA::Any &add_out_arg (void);
+  CORBA::Any &add_out_arg (const char* name);
 
   void set_return_type (CORBA::TypeCode_ptr tc);
   // Initialize the return type.
 
-  CORBA_Any &return_value (void);
+  CORBA::Any &return_value (void);
   // Returns reference to Any for extraction using >>=.
 
   void invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);

@@ -61,7 +61,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_null:
       break;
     case CORBA::tk_void:
-      this->any_ = CORBA_Any (CORBA::_tc_void);
+      this->any_ = CORBA::Any (CORBA::_tc_void,
+                               0);
       break;
     case CORBA::tk_short:
       this->any_ <<= ACE_static_cast (CORBA::Short, 0);
@@ -102,7 +103,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_ <<= ACE_static_cast (CORBA::Double, 0);
       break;
     case CORBA::tk_any:
-      this->any_ <<= CORBA::Any (CORBA::_tc_null);
+      this->any_ <<= CORBA::Any (CORBA::_tc_null,
+                                 0);
       break;
     case CORBA::tk_TypeCode:
       {
@@ -115,9 +117,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       {
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
-        this->any_._tao_replace (tc,
-                                 TAO_ENCAP_BYTE_ORDER,
-                                 stream.begin ());
+        TAO::Unknown_IDL_Type *unk = 0;
+        ACE_NEW (unk,
+                 TAO::Unknown_IDL_Type (tc,
+                                        stream.begin (),
+                                        TAO_ENCAP_BYTE_ORDER));
+        this->any_.replace (unk);
         break;
       }
     case CORBA::tk_string:
@@ -165,7 +170,7 @@ TAO_DynAny_i::init (CORBA_TypeCode_ptr tc
 }
 
 void
-TAO_DynAny_i::init (const CORBA_Any& any
+TAO_DynAny_i::init (const CORBA::Any& any
                     ACE_ENV_ARG_DECL)
 {
   this->type_ = any.type ();
@@ -219,7 +224,7 @@ TAO_DynAny_i::_tao_QueryInterface (ptr_arith_t type)
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA_Any &any
+TAO_DynAny_i::from_any (const CORBA::Any &any
                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -263,7 +268,7 @@ TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA_Any_ptr retval;
+  CORBA::Any_ptr retval;
 
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (this->any_),

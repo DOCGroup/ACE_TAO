@@ -522,7 +522,7 @@ protected:
   CORBA::TypeCode_var type_;
   // Holder for our type code.
 
-  CORBA_Any any_;
+  CORBA::Any any_;
   // Gets a value only for basic types, but used in insert_*
   // and get_*, defined in this base class.
 

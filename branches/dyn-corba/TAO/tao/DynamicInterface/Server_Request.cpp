@@ -152,7 +152,7 @@ CORBA_ServerRequest::set_exception (const CORBA::Any &value
 // This method will be utilized by the DSI servant to marshal outgoing
 // parameters.
 void
-CORBA_ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
+CORBA_ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // There was a user exception, no need to marshal any parameters.
   if (this->sent_gateway_exception_)
@@ -173,12 +173,9 @@ CORBA_ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       // Send the return value, if any.
       if (this->retval_ != 0)
         {
-          this->retval_->_tao_encode (
-                             this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core ()
-                             ACE_ENV_ARG_PARAMETER
-                           );
-          ACE_CHECK;
+          this->retval_->impl ()->marshal_value (
+                                      this->orb_server_request_.outgoing ()
+                                    );
         }
 
       // Send the "inout" and "out" parameters.
@@ -201,12 +198,9 @@ CORBA_ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       // Write the reply header to the ORB request's outgoing CDR stream.
       this->orb_server_request_.init_reply ();
 
-      this->exception_->_tao_encode (
-                            this->orb_server_request_.outgoing (),
-                            this->orb_server_request_.orb_core ()
-                            ACE_ENV_ARG_PARAMETER
-                          );
-      ACE_CHECK;
+      this->exception_->impl ()->marshal_value (
+                                     this->orb_server_request_.outgoing ()
+                                   );
     }
 
   this->orb_server_request_.tao_send_reply ();

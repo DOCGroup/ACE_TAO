@@ -274,7 +274,7 @@ CORBA_NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
     {
       this->_tao_decode (cdr,
                          flag
-                          ACE_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       return;
     }
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
@@ -412,6 +412,8 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
         }
 
       CORBA::Any_ptr any = nv->value ();
+
+      // We can be sure that the impl is a TAO::Unknown_IDL_Type.
       any->impl ()->_tao_decode (incoming
                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

@@ -19,8 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 // TAO_IDL - Generated from 
-// be/be_visitor_valuetype/valuetype_ci.cpp:58
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
@@ -37,7 +38,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_
@@ -53,29 +54,37 @@ Messaging::ReplyHandler::ReplyHandler (
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:714
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
 
 #if defined (__ACE_INLINE__)
+
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Messaging::ExceptionHolder *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Messaging::ExceptionHolder *);
 }
 TAO_NAMESPACE_CLOSE
+
 #endif /*__ACE_INLINE__*/
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_ci.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_Messaging_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,

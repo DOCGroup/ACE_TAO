@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IORTableC.h"
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
+
+#include "IORTableC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
@@ -31,6 +34,8 @@
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -39,7 +44,9 @@
 #include "IORTableC.i"
 #endif /* !defined INLINE */
 
-// Default constructor.
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+
 IORTable::AlreadyBound::AlreadyBound (void)
   : CORBA_UserException (
         "IDL:IORTable/AlreadyBound:1.0",
@@ -48,12 +55,10 @@ IORTable::AlreadyBound::AlreadyBound (void)
 {
 }
 
-// Destructor - all members are of self managing types.
 IORTable::AlreadyBound::~AlreadyBound (void)
 {
 }
 
-// Copy constructor.
 IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
   : CORBA_UserException (
         _tao_excp._rep_id (),
@@ -62,7 +67,6 @@ IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
 {
 }
 
-// Assignment operator.
 IORTable::AlreadyBound&
 IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
 {
@@ -70,18 +74,12 @@ IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
   return *this;
 }
 
-void IORTable::AlreadyBound::_tao_any_destructor (void *_tao_void_pointer)
-{
-  AlreadyBound *tmp = ACE_static_cast (AlreadyBound*, _tao_void_pointer);
-  delete tmp;
-}
-
 IORTable::AlreadyBound *
-IORTable::AlreadyBound::_downcast (CORBA::Exception *exc)
+IORTable::AlreadyBound::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/AlreadyBound:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:IORTable/AlreadyBound:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (AlreadyBound *, exc);
+      return ACE_dynamic_cast (AlreadyBound *, _tao_excp);
     }
   else
     {
@@ -102,13 +100,13 @@ IORTable::AlreadyBound::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IORTable::AlreadyBound (*this),
+      ::IORTable::AlreadyBound (*this),
       0
     );
   return result;
 }
 
-void IORTable::AlreadyBound::_raise ()
+void IORTable::AlreadyBound::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -139,7 +137,11 @@ void IORTable::AlreadyBound::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-// Default constructor.
+
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+
 IORTable::NotFound::NotFound (void)
   : CORBA_UserException (
         "IDL:IORTable/NotFound:1.0",
@@ -148,12 +150,10 @@ IORTable::NotFound::NotFound (void)
 {
 }
 
-// Destructor - all members are of self managing types.
 IORTable::NotFound::~NotFound (void)
 {
 }
 
-// Copy constructor.
 IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
   : CORBA_UserException (
         _tao_excp._rep_id (),
@@ -162,7 +162,6 @@ IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
 {
 }
 
-// Assignment operator.
 IORTable::NotFound&
 IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
 {
@@ -170,18 +169,12 @@ IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
   return *this;
 }
 
-void IORTable::NotFound::_tao_any_destructor (void *_tao_void_pointer)
-{
-  NotFound *tmp = ACE_static_cast (NotFound*, _tao_void_pointer);
-  delete tmp;
-}
-
 IORTable::NotFound *
-IORTable::NotFound::_downcast (CORBA::Exception *exc)
+IORTable::NotFound::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/NotFound:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:IORTable/NotFound:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (NotFound *, exc);
+      return ACE_dynamic_cast (NotFound *, _tao_excp);
     }
   else
     {
@@ -202,13 +195,13 @@ IORTable::NotFound::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IORTable::NotFound (*this),
+      ::IORTable::NotFound (*this),
       0
     );
   return result;
 }
 
-void IORTable::NotFound::_raise ()
+void IORTable::NotFound::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -238,6 +231,11 @@ void IORTable::NotFound::_tao_decode (
   
   ACE_THROW (CORBA::MARSHAL ());
 }
+
+
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int IORTable::Table::_tao_class_id = 0;
 
@@ -284,13 +282,23 @@ tao_IORTable_Table_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_IORTable_Table_marshal (
+    IORTable::Table_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // IORTable::Table_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-IORTable::Table_var::Table_var (void) // default constructor
+IORTable::Table_var::Table_var (void)
   : ptr_ (Table::_nil ())
 {}
 
@@ -300,12 +308,12 @@ IORTable::Table_var::ptr (void) const
   return this->ptr_;
 }
 
-IORTable::Table_var::Table_var (const ::IORTable::Table_var &p) // copy constructor
+IORTable::Table_var::Table_var (const ::IORTable::Table_var &p)
   : TAO_Base_var (),
     ptr_ (Table::_duplicate (p.ptr ()))
 {}
 
-IORTable::Table_var::~Table_var (void) // destructor
+IORTable::Table_var::~Table_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -409,10 +417,11 @@ IORTable::Table_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // IORTable::Table_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 IORTable::Table_out::Table_out (Table_ptr &p)
@@ -421,14 +430,14 @@ IORTable::Table_out::Table_out (Table_ptr &p)
   this->ptr_ = ::IORTable::Table::_nil ();
 }
 
-IORTable::Table_out::Table_out (Table_var &p) // constructor from _var
+IORTable::Table_out::Table_out (Table_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::IORTable::Table::_nil ();
 }
 
-IORTable::Table_out::Table_out (const ::IORTable::Table_out &p) // copy constructor
+IORTable::Table_out::Table_out (const ::IORTable::Table_out &p)
   : ptr_ (ACE_const_cast (Table_out &, p).ptr_)
 {}
 
@@ -459,7 +468,7 @@ IORTable::Table_out::operator ::IORTable::Table_ptr &() // cast
 }
 
 ::IORTable::Table_ptr &
-IORTable::Table_out::ptr (void) // ptr
+IORTable::Table_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -470,9 +479,8 @@ IORTable::Table_out::operator-> (void)
   return this->ptr_;
 }
 
-
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 IORTable::Table::Table (void)
 {}
@@ -480,7 +488,8 @@ IORTable::Table::Table (void)
 IORTable::Table::~Table (void)
 {}
 
-IORTable::Table_ptr IORTable::Table::_narrow (
+IORTable::Table_ptr
+IORTable::Table::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -495,43 +504,61 @@ IORTable::Table::_unchecked_narrow (
   )
 {
   if (CORBA::is_nil (obj))
-    return Table::_nil ();
+    {
+      return Table::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           Table_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &Table::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &Table::_tao_class_id
+                )
+            )
         );
 }
 
 IORTable::Table_ptr
 IORTable::Table::_duplicate (Table_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *IORTable::Table::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-    
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
@@ -539,6 +566,9 @@ const char* IORTable::Table::_interface_repository_id (void) const
 {
   return "IDL:IORTable/Table:1.0";
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int IORTable::Locator::_tao_class_id = 0;
 
@@ -585,13 +615,23 @@ tao_IORTable_Locator_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_IORTable_Locator_marshal (
+    IORTable::Locator_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // IORTable::Locator_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-IORTable::Locator_var::Locator_var (void) // default constructor
+IORTable::Locator_var::Locator_var (void)
   : ptr_ (Locator::_nil ())
 {}
 
@@ -601,12 +641,12 @@ IORTable::Locator_var::ptr (void) const
   return this->ptr_;
 }
 
-IORTable::Locator_var::Locator_var (const ::IORTable::Locator_var &p) // copy constructor
+IORTable::Locator_var::Locator_var (const ::IORTable::Locator_var &p)
   : TAO_Base_var (),
     ptr_ (Locator::_duplicate (p.ptr ()))
 {}
 
-IORTable::Locator_var::~Locator_var (void) // destructor
+IORTable::Locator_var::~Locator_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -710,10 +750,11 @@ IORTable::Locator_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // IORTable::Locator_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 IORTable::Locator_out::Locator_out (Locator_ptr &p)
@@ -722,14 +763,14 @@ IORTable::Locator_out::Locator_out (Locator_ptr &p)
   this->ptr_ = ::IORTable::Locator::_nil ();
 }
 
-IORTable::Locator_out::Locator_out (Locator_var &p) // constructor from _var
+IORTable::Locator_out::Locator_out (Locator_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::IORTable::Locator::_nil ();
 }
 
-IORTable::Locator_out::Locator_out (const ::IORTable::Locator_out &p) // copy constructor
+IORTable::Locator_out::Locator_out (const ::IORTable::Locator_out &p)
   : ptr_ (ACE_const_cast (Locator_out &, p).ptr_)
 {}
 
@@ -760,7 +801,7 @@ IORTable::Locator_out::operator ::IORTable::Locator_ptr &() // cast
 }
 
 ::IORTable::Locator_ptr &
-IORTable::Locator_out::ptr (void) // ptr
+IORTable::Locator_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -771,9 +812,8 @@ IORTable::Locator_out::operator-> (void)
   return this->ptr_;
 }
 
-
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 IORTable::Locator::Locator (void)
 {}
@@ -781,7 +821,8 @@ IORTable::Locator::Locator (void)
 IORTable::Locator::~Locator (void)
 {}
 
-IORTable::Locator_ptr IORTable::Locator::_narrow (
+IORTable::Locator_ptr
+IORTable::Locator::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -796,43 +837,61 @@ IORTable::Locator::_unchecked_narrow (
   )
 {
   if (CORBA::is_nil (obj))
-    return Locator::_nil ();
+    {
+      return Locator::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           Locator_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &Locator::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &Locator::_tao_class_id
+                )
+            )
         );
 }
 
 IORTable::Locator_ptr
 IORTable::Locator::_duplicate (Locator_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *IORTable::Locator::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-    
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 

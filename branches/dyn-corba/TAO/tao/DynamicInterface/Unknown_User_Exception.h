@@ -59,7 +59,7 @@ public:
   CORBA_UnknownUserException (void);
 
   /// Constructor.
-  CORBA_UnknownUserException (CORBA_Any& exception);
+  CORBA_UnknownUserException (CORBA::Any& exception);
 
   /// Copy constructor.
   CORBA_UnknownUserException (const CORBA_UnknownUserException& e);
@@ -68,7 +68,7 @@ public:
   virtual ~CORBA_UnknownUserException (void);
 
   /// Return the any containing the user exception.
-  CORBA_Any& exception (void);
+  CORBA::Any& exception (void);
 
   /// To throw an UnknownUserException of this type.
   virtual void _raise (void);
@@ -92,7 +92,7 @@ public:
 
 private:
   /// Holder for the actual exception.
-  CORBA_Any *exception_;
+  CORBA::Any *exception_;
 };
 
 #include "ace/post.h"

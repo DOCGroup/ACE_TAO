@@ -45,7 +45,7 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
   return retval;
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_Client_Adapter *adapter =

@@ -19,14 +19,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:597
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_T_H_
 
 #include "ace/pre.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -34,11 +34,16 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_Messaging
 {
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:89
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -49,9 +54,13 @@ TAO_NAMESPACE  POA_Messaging
     // the T& ctor
     ReplyHandler_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    ReplyHandler_tie (T *tp, CORBA::Boolean release=1);
+    ReplyHandler_tie (T *tp, CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
-    ReplyHandler_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+    ReplyHandler_tie (
+        T *tp,
+        PortableServer::POA_ptr poa,
+        CORBA::Boolean release = 1
+      );
     // ctor with T*, ownership flag and a POA
     ~ReplyHandler_tie (void);
     // dtor
@@ -61,7 +70,7 @@ TAO_NAMESPACE  POA_Messaging
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
+    void _tied_object (T *obj, CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
     CORBA::Boolean _is_owner (void);
     // do we own it
@@ -72,6 +81,7 @@ TAO_NAMESPACE  POA_Messaging
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
+  
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
@@ -81,25 +91,20 @@ TAO_NAMESPACE  POA_Messaging
     ReplyHandler_tie (const ReplyHandler_tie &);
     void operator= (const ReplyHandler_tie &);
   };
-
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 #endif /* ACE_HAS_USING_KEYWORD */
 
-
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1135
-
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS_T.i"
 #endif /* defined INLINE */
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "MessagingS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("MessagingS_T.cpp")

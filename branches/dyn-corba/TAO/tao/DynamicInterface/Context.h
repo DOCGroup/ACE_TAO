@@ -72,7 +72,7 @@ public:
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void set_one_value (const char *propname,
-                      const CORBA_Any &propvalue
+                      const CORBA::Any &propvalue
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void set_values (CORBA::NVList_ptr values

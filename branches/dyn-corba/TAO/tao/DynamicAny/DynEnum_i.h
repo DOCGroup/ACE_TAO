@@ -56,7 +56,7 @@ public:
              ACE_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
-  void init (const CORBA_Any& any
+  void init (const CORBA::Any& any
              ACE_ENV_ARG_DECL);
   // Initialize using an Any.
 

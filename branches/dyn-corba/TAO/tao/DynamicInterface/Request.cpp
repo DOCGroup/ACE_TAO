@@ -216,8 +216,9 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->result_ != 0)
     {
-      this->result_->value ()->_tao_decode (call.inp_stream ()
-                                            ACE_ENV_ARG_PARAMETER);
+      // We can be sure that the impl is a TAO::Unknown_IDL_Type.
+      this->result_->value ()->impl ()->_tao_decode (call.inp_stream ()
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -390,8 +391,9 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
     case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       if (this->result_ != 0)
         {
-          this->result_->value ()->_tao_decode (incoming
-                                                ACE_ENV_ARG_PARAMETER);
+          // We can be sure that the impl is a TAO::Unknown_IDL_Type.
+          this->result_->value ()->impl ()->_tao_decode (incoming
+                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
