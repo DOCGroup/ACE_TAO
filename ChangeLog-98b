@@ -1,10 +1,17 @@
+Tue Aug 18 22:10:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-fsu-pthread.h,config-hpux-10.x.h,config-mit-pthread.h,
+          config-mvs.h,config-osf1-{3.2,4.0}.h,config-sco-5.0.0-mit-pthread.h,
+          config-sunos5.{5,6}.h,config-tandem.h:
+          removed ACE_HAS_ONEARG_SIGWAIT.  It's no longer used.
+
 Tue Aug 18 16:50:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Thread.i (sigsetmask): Renamed parameter name since it
  	  conflicts with STL class name.  Thanks to Kent Watsen
  	  <kent@watsen.net> for pointing this out.
 
-	* examples/Reactor/Proactor/test_proactor.cpp (handle_write_stream): 
+	* examples/Reactor/Proactor/test_proactor.cpp (handle_write_stream):
           Fixed incorrect unary minus operator application.
 
 Tue Aug 18 16:43:00 1998  David L. Levine  <levine@cs.wustl.edu>
