@@ -1,3 +1,10 @@
+Wed Sep 27 15:37:53 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/PortableServerC.cpp
+	  (POAManager::AdapterInactive): This exception is defined for
+	  minimum CORBA.  Therefore, code related to this class should be
+	  compiled in the minimum CORBA build.
+
 Wed Sep 27 11:25:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/time-date/svc.conf:
