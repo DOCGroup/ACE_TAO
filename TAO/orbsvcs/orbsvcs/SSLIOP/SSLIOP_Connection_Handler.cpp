@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
