@@ -22,7 +22,7 @@ LIB     = libPerf.a
 FILES   = basic_func
 LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(addsuffix .o,$(FILES))
-LDLIBS  = #-lPerf
+LDLIBS  = -lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 # See comment above about only building libPerf.a for max performance.

@@ -166,8 +166,8 @@
 
 #if defined (FD_SETSIZE)
 #undef FD_SETSIZE
-#define FD_SETSIZE 1024
 #endif /* FD_SETSIZE */
+#define FD_SETSIZE 1024
 
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
 // listenly ignored by the OS, i.e., setsockopt does not fail, and you

@@ -374,9 +374,13 @@ TAO_Trading_Loader::bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_Trading_Loader::init_multicast_server (void)
 {
-#if defined ACE_HAS_IP_MULTICAST
+#if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
+
+  // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+  ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
+                   ->mcast_discovery_endpoint ());
 
   // First, see if the user has given us a multicast port number for
   // the name service on the command-line;
@@ -395,13 +399,23 @@ TAO_Trading_Loader::init_multicast_server (void)
     }
 
   // Instantiate a server that will receive requests for an ior
-  if (this->ior_multicast_.init ((char *) this->ior_.in (),
-                                 port,
-                                 ACE_DEFAULT_MULTICAST_ADDR,
-                                 TAO_SERVICEID_TRADINGSERVICE) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to init IOR multicast.\n"),
-                      -1);
+  if (mde.length () != 0)
+    {
+      if (this->ior_multicast_.init ((char *) this->ior_.in (),
+                                     mde.c_str (),
+                                     TAO_SERVICEID_TRADINGSERVICE) == -1)
+        return -1;
+    }
+  else
+    {
+      if (this->ior_multicast_.init ((char *) this->ior_.in (),
+                                     port,
+                                     ACE_DEFAULT_MULTICAST_ADDR,
+                                     TAO_SERVICEID_TRADINGSERVICE) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Failed to init IOR multicast.\n"),
+                          -1);
+    }
 
   // Register event handler for the ior multicast.
   if (reactor->register_handler (&this->ior_multicast_,

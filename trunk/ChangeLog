@@ -1,3 +1,15 @@
+Wed May 23 16:35:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Sock_Connect.h,
+	* ace/Flag_Manip.h,
+	* ace/config-all.h: Make sure that all ACE include file have a
+	  "ace/" prefix.  Thanks to John Lindal <jafl@cco.caltech.edu> for
+ 	  reporting this.
+
+	* ace/config-win32-common.h: Fixed a problem where FD_SETSIZE wasn't
+	  getting reset properly.  Thanks to Roger Tragin
+ 	  <rtragin@cuseeme.com> for reporting this.
+
 Wed May 23 17:37:30 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
@@ -90,6 +102,21 @@ Tue May 22 21:57:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * bin/nightlybuilds/builds.lst: Added NO_AMI_MESSAGING to the
           builds.
+
+Mon May 21 18:34:52 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/platform_linux.GNU: Added default macros for:
+	
+	  PLATFORM_QT_LIBS
+	  PLATFORM_QT_LDFLAGS
+	  PLATFORM_QT_LDFLAGS
+  
+          Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+ 	  contributing this.  
+
+	* performance-tests/Misc/Makefile (LDLIBS): Added back
+	  -lPerf.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+ 	  reporting this.
 
 Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
