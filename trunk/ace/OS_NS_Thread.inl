@@ -715,7 +715,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 # elif defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
 
-  switch (type)
+  switch (lock_scope)
     {
     case USYNC_PROCESS:
 #   if defined (ACE_HAS_WINCE)
@@ -738,10 +738,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         }
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        lock_scope,
+                                        lock_type,
                                         name,
-                                        attributes,
-                                        lock_type);
+                                        attributes);
     default:
       errno = EINVAL;
       return -1;
@@ -1291,8 +1290,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 {
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
-
-  switch (type)
+  switch (lock_scope)
     {
     case USYNC_PROCESS:
       m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
@@ -1304,11 +1302,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         return 0;
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        lock_scope,
+                                        lock_type,
                                         name,
-                                        attributes,
-                                        sa,
-                                        lock_type);
+                                        attributes);
     }
 
   errno = EINVAL;
