@@ -1,3 +1,9 @@
+Mon Aug 21 15:40:00 2000  Kirthika PArameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/PortableInterceptorC.{h,cpp} (sync_scope):
+	  Added check for Messaging since for cases like Minimum CORBA
+	  Messaging is disabled.
+	
 Mon Aug 21 14:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
