@@ -2,14 +2,7 @@
 
 #include "ace/OS.h"
 #include "ace/os_include/os_errno.h"
-
-#if !defined (ACE_NDEBUG)
-#  include "ace/Log_Msg.h"  // for ACE_ASSERT
-#else
-#  if !defined (ACE_ASSERT)
-#    define ACE_ASSERT(X)
-#  endif /* !ACE_ASSERT */
-#endif /* !ACE_NDEBUG */
+#include "ace/Log_Msg.h"  // for ACE_ASSERT
 
 ACE_INLINE void *
 ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)

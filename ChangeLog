@@ -1,3 +1,12 @@
+Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Lib_Find.h:
+          Added include of os_stdio.h to pick up FILE, needed by BCB and
+          possibly other builds.
+
+        * ace/Malloc_Allocator.i:
+          Removed redundant define of ACE_ASSERT>
+
 Sun Jun 22 04:54:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Handle_Set.[i,cpp]:

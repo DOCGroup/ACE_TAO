@@ -14,6 +14,7 @@
 
 #include "ace/config-all.h"
 #include "ace/ACE_export.h"
+#include "ace/os_include/os_stdio.h"
 
 /**
  * @class ACE_Lib_Find
