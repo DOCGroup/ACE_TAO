@@ -1,3 +1,4 @@
+$Id$
 This README file lists all the example applications for the Proactor framework. 
 
 Test/Example Applications for Proactor:
@@ -47,134 +48,29 @@ o test_timeout.cpp      : Multithreaded application testing the Timers
 
 o test_timeout_st.cpp   : Sinle threaded version of test_timeout.cpp.
 
+o post_completions.cpp  : Tests the completion posting mechanism of
+        the Proactor.  
+
+o test_end_event_loop.cpp : Tests the event loop mechanism of the
+        Proactor. 
+        
+o test_cancel.cpp         : Tests <cancel> interface of the
+        Asynch_Operation class.
+        
 
 
 Behavior of POSIX AIO of various platforms:
 ==========================================
 
+Sun 5.6 :       POSIX4 Real-Time signals implementation is broken in
+                this platform. 
+                Only POSIX AIOCB Proactor works in this platform.
+                Therefore, it is not possible to use multiple threads
+                with in the framework.
+
+Sun 5.7 :       AIOCB and SIG Proactors work fine.
+
+LynxOS 3.0.0 :  <pthread_sigmask> is not available in this
+                platform. So, only AIOCB Proactor works here. 
 
 
-Summary:
-======
-                        Sun     Sun     Lynx
-                        5.6     5.7     
-                        
-test_aiocb_ace          Good    Good    Good    
-(test_aiocb)
-
-test_aiosig_ace         Inconst Inconst Inconst
-
-
-Inconst.: Inconsistent execution.
-
-
-
-Aio_Platform_Test:
-================
-
-                
-Sun5.6 CC:	
----------
-        Status  : OK
-
-	Problems: 1.The constant which indicates the maximum
-                        concurrent asynchronous I/Os is -1 at run
-                        time. This should be atleast 1.
-
-Sun57 CC:
---------        
-        Status  : OK
-        
-        Problems: <Same as in sun56 CC>
-
-Lynx g++:
---------
-        Status  : OK
-        
-        Problems: AIO_LISTIO_MAX, AIO_MAX and SIGQUEUE_MAX are defined
-                        but their values are -1
-
-test_aiocb.cpp
-=============
-
-Sun5.6 CC:	
----------
-        Status  : GOOD
-
-	Problems: NONE
-                
-Sun57 CC:
---------        
-        Status  : GOOD
-        
-        Problems: NONE
-
-Lynx g++:
---------
-
-
-
-test_aiosig.cpp:
-===============
-
-Sun5.6 CC:	
----------
-        Status  : GOOD
-
-	Problems: NONE
-                
-Sun57 CC:
---------        
-        Status  : BAD
-        
-        Problems: 1. If 2 <aio_> calls are issed, only one completion
-                        gets through, second one hangs.
-
-Lynx g++:
---------
-
-
-
-test_aiosig_ace.cpp:
-====================
-
-Sun5.6 CC:	
----------
-        Status  : BAD
-
-	Problems: 1. <aio_read> and <aio_write> calls return 0 but
-                        sets the<errno> to 48 which is <Operation Not
-                        Supported> 
-	
-                  2. I issue <aio_read/write> with a RT signal enabled. It
-                         returns but with the a wrong signal code, -2, which is
-                         SI_QUEUE. But we are supposed to get SI_ASYNCIO
-              
-                  3*.IMPORTANT: If I issue two <aio_read/write> calls,
-                        they get queued and 
-                        they execute correctly. But their completions are not
-                         queued up correctly.
-                              
-                  4. Calling <sigtimedwait> sometimes print the string 
-                	   "err = 22". But <sigtimedwait> doesnt return a error and
-                	   errno is also not set to any error values. (err == 22, may
-                	   be referring to errno 22 which means Invalid Argument) 
-                
-Sun57 CC:
---------        
-        Status  : BAD
-        
-        Problems: <same as in sun56 CC>
-
-Lynx g++:
---------
-        
-        Status  : OK
-
-        Problems: 1. In between my Proactor test application the
-                        <errno> is getting set to <77>. This means
-                        Unsupported POSIX operation. But none of my
-                        <posix> calls return -1.        
-          
-        TO-DO   : 1. Run <gdb> and watch for <errno> and figure when
-                        it is changing over to 77.
