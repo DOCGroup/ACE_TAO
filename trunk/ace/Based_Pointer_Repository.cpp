@@ -10,7 +10,7 @@
 /**
  * @class ACE_Based_Pointer_Repository_Rep
  *
- * @brief Implementation for the <ACE_Based_Pointer_Repository>.
+ * @brief Implementation for the ACE_Based_Pointer_Repository.
  *
  * Every memory pool in ACE binds it's mapping base address and
  * the mapped size to this repository every time it maps/remaps a
