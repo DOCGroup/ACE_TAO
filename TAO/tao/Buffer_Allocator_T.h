@@ -32,7 +32,7 @@ namespace TAO
    * of allocator to be used to allocate the object.
    */
   template <typename handler_type, typename alloc_type>
-  class TAO_Buffer_Allocator : TAO_Allocator<handler_type>
+  class TAO_Buffer_Allocator : public TAO_Allocator<handler_type>
   {
     public:
       typedef handler_type HANDLER_TYPE;
