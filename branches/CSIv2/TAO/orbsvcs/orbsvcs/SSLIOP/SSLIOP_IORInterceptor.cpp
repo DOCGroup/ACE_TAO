@@ -2,6 +2,9 @@
 
 
 #include "SSLIOP_IORInterceptor.h"
+#include "SSLIOP_Acceptor.h"
+
+#include "tao/Acceptor_Registry.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -9,9 +12,10 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-TAO::SSLIOP::IORInterceptor (TAO_ORB_Core * orb_core,
-                             CSIIOP::AssociationOptions csiv2_target_supports,
-                             CSIIOP::AssociationOptions csiv2_target_requires)
+TAO::SSLIOP::IORInterceptor::IORInterceptor (
+  TAO_ORB_Core * orb_core,
+  CSIIOP::AssociationOptions csiv2_target_supports,
+  CSIIOP::AssociationOptions csiv2_target_requires)
   : orb_core_ (orb_core),
     csiv2_target_supports_ (csiv2_target_supports),
     csiv2_target_requires_ (csiv2_target_requires)
@@ -73,7 +77,7 @@ TAO::SSLIOP::IORInterceptor::establish_components (
   // Replace the contents of the octet sequence with the CDR stream.
   const CORBA::ULong len = cdr.total_length ();
   tc.component_data.length (len);
-  const CORBA::Octet * buf = tc.component_data.get_buffer ();
+  CORBA::Octet * buf = tc.component_data.get_buffer ();
   for (const ACE_Message_Block *i = cdr.begin ();
        i != 0;
        i = i->cont ())
@@ -120,7 +124,7 @@ TAO::SSLIOP::IORInterceptor::construct_transport_mech_component (
   IOP::TaggedComponent & tc)
 {
   // SSLIOP-specific CSIv2 TaggedComponent information.
-  transport_mech.tag = IOP::TAG_TLS_SEC_TRANS;
+  tc.tag = IOP::TAG_TLS_SEC_TRANS;
 
   CSIIOP::TLS_SEC_TRANS tls_component;
 
@@ -139,8 +143,8 @@ TAO::SSLIOP::IORInterceptor::construct_transport_mech_component (
 
   // Replace the contents of the octet sequence with the CDR stream.
   const CORBA::ULong len = cdr.total_length ();
-  transport_mech.component_data.length (len);
-  const CORBA::Octet * buf = transport_mech.component_data.get_buffer ();
+  tc.component_data.length (len);
+  CORBA::Octet * buf = tc.component_data.get_buffer ();
   for (const ACE_Message_Block *i = cdr.begin ();
        i != 0;
        i = i->cont ())
@@ -157,9 +161,9 @@ TAO::SSLIOP::IORInterceptor::populate_transport_address_list (
   CSIIOP::TransportAddressList & list)
 {
   TAO_Acceptor_Registry & ar =
-    this->orb_core_->lane_resources->acceptor_registry ();
+    this->orb_core_->lane_resources ().acceptor_registry ();
 
-  const CORBA::ULong max_endpoints = ar->endpoint_count ();
+  const CORBA::ULong max_endpoints = ar.endpoint_count ();
 
   // Pre-allocate the maximum size of the transport address list to
   // prevent unnecessary allocations and copying resulting from
@@ -168,9 +172,9 @@ TAO::SSLIOP::IORInterceptor::populate_transport_address_list (
 
   CORBA::ULong i = 0;
 
-  const TAO_AcceptorSetIterator end = this->end ();
+  const TAO_AcceptorSetIterator end = ar.end ();
 
-  for (TAO_AcceptorSetIterator acceptor = this->begin ();
+  for (TAO_AcceptorSetIterator acceptor = ar.begin ();
        acceptor != end;
        ++acceptor)
     {
@@ -191,8 +195,8 @@ TAO::SSLIOP::IORInterceptor::populate_transport_address_list (
               const ACE_INET_Addr & addr = addrs[j];
 
               if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ()
-                  && this->dotted_decimal_address (addr,
-                                                   address.host_name.out ()) != 0)
+                  && s->dotted_decimal_address (addr,
+                                                address.host_name.out ()) != 0)
                 {
                   return -1;
                 }

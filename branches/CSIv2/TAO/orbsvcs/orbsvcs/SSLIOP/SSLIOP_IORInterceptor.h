@@ -19,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/CSIIOPC.h"
 #include "tao/IORInterceptor/IORInterceptorC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
@@ -51,7 +52,9 @@ namespace TAO
     public:
 
       /// Constructor
-      IORInterceptor (void);
+      IORInterceptor (TAO_ORB_Core * orb_core,
+                      CSIIOP::AssociationOptions csiv2_target_supports,
+                      CSIIOP::AssociationOptions csiv2_target_requires);
 
       /**
        * @name Methods Required by the IOR Interceptor Interface
@@ -92,6 +95,27 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
+    private:
+
+      /// Construct the @c IOP::TAG_TLS_SEC_TRANS tagged component
+      /// containing the @c CSIIOP::TLS_SEC_TRANS structure.
+      int construct_transport_mech_component (IOP::TaggedComponent & tc);
+
+      /// Populate the @c CSIIOP::TLS_SEC_TRANS::addresses field.
+      int populate_transport_address_list (
+            CSIIOP::TransportAddressList & list);
+
+    private:
+
+      // Pointer to the @c TAO_ORB_Core within which this interceptor
+      // is registered.
+      TAO_ORB_Core * orb_core_;
+
+      /// Supported CSIv2 TLS-specific association options.
+      CSIIOP::AssociationOptions csiv2_target_supports_;
+
+      /// Required CSIv2 TLS-specific association options.
+      CSIIOP::AssociationOptions csiv2_target_requires_;
     };
 
   }  // End SSLIOP namespace

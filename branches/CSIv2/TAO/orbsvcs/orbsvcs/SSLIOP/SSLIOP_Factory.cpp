@@ -84,7 +84,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 
   CSIIOP::AssociationOptions csiv2_target_supports =
     CSIIOP::Integrity | CSIIOP::Confidentiality;
-  CSIIOP::AssociationOptions csiv2_target_requires = 
+  CSIIOP::AssociationOptions csiv2_target_requires =
     CSIIOP::Integrity | CSIIOP::Confidentiality;
 
   // Force the Singleton instance to be initialized/instantiated.
