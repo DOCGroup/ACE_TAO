@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author  Johnny Willemsen
+ *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 

@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_LOADABLE_THREAD_POLICY_H
-#define TAO_LOADABLE_THREAD_POLICY_H
+#ifndef TAO_PORTABLESERVER_THREADPOLICYFACTORYIMPL_H
+#define TAO_PORTABLESERVER_THREADPOLICYFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -58,4 +58,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_LOADABLE_THREAD_POLICY_H */
+#endif /* TAO_PORTABLESERVER_THREADPOLICYFACTORYIMPL_H */
