@@ -58,7 +58,7 @@ Detlef Becker <detlef.becker@med.siemens.de>
 Bruce Worden <bruce@betsy.gps.caltech.edu>
 Chris Tarr <ctarr@objectspace.co>
 Bill Sears <wsears@world.std.com>
-Greg Lavendar <g.lavender@isode.com>
+Greg Lavender <g.lavender@isode.com>
 Steve Warwick <sjw@aesthetic.com>
 Mats Sundvall <sundvall@perrier.embnet.se>
 Andreas Ueltschi <Andreas.Ueltschi@ska.com>
@@ -704,6 +704,7 @@ Timothy Schimke <Schimke.Timothy@LittonDSD.com>
 Jim Robinson <robinson@wdg.mot.com>
 Peter Mueller <pmueller@decrc.abb.de>
 Raghu Nambiath <raghun@wipinfo.soft.net> 
+Mike Gingell <mgingell@istar.ca>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
