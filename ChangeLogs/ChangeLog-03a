@@ -1,3 +1,19 @@
+Tue Jan 28 18:46:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/parser/parser/Parser.cpp (parse_element): When converting
+          an escape sequence, add its length, don't lose the length of
+          already-parsed content. Thanks to Emmanuel Thevenot Beaufort
+          <emmanuel.thevenot-beaufort@jci.com> for this fix.
+
+        * ACEXML/tests/ContentHandler_Test.{cpp dsp}: New test that
+          illustrates the problem above and validates the fix.
+
+        * ACEXML/tests/Tests.dsw:
+        * ACEXML/Makefile:
+        * ACEXML/Makefile.bor: Added ContentHandler_Test.
+
+        * THANKS: Added Emmanuel Thevenot Beaufort to the Hall of Fame.
+
 Tue Jan 28 15:47:29 2003  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: For distrib builds,
