@@ -16,8 +16,6 @@ module CORBA
   typedef string Identifier;
   typedef string RepositoryId;
   typedef string ObjectId;
-  typedef short ValueModifier;
-  typedef short Visibility;
 };
 
 #endif /* TAO_ORB_TYPES_IDL */

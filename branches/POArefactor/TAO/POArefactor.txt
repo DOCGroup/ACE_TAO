@@ -1,3 +1,59 @@
+Thu Sep  9 09:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb.idl:
+        * tao/orb_types.pidl:
+          Moved ValueModifier and Visibility to orb.idl again, not really
+          needed and causes problems with valuetype library
+
+        * tao/orb_typesC.{h,cpp,inl}:
+        * tao/orb_typesA.cpp:
+          Regenerated
+
+        * tao/OBV_Constants.h:
+          Updated because of move
+
+        * tao/ObjRefTemplate/Object_Reference_Template_i.cpp:
+          Replaced tao_poa_downcast with dynamic cast
+
+Thu Sep  9 08:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb.idl:
+        * tao/orb_types.pidl:
+          Moved the typedefs from orb.idl to orb_types.pidl. This makes it
+          possiblet to just get the types without all other stuff that is
+          included in orb.idl
+
+        * tao/orb_typesC.{h,cpp,inl}:
+        * tao/orb_typesA.cpp:
+          New generated files
+
+        * tao/OBV_Constants:
+          Removed typedefs, include orb_typesC.h instead
+
+        * tao/ORB.h:
+          Removed typedefs that are now in orb_types. Also removed
+          valuetype_factory_map_ members which was ifdefed out
+
+        * tao/Typecode_Constants.cpp:
+          Removed orb_id, this is now in orb_typesA.cpp
+
+        * tao/Typecode.cpp:
+          Added include of orb_typesC.h
+
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/ServantLocator.pidl:
+          No need to include orb.idl, only need orb_types.pidl
+
+        * tao/PortableServer/*Policy.pidl:
+          Because PortableServer.pidl doesn't include orb_types.pidl, we don't
+          get Policy.pidl for free anymore, we have to explicit include it
+          here
+
+        * tao/PortableServer/*C.{h,cpp,inl}:
+        * tao/PortableServer/*A.cpp:
+        * tao/PortableServer/diffs/*:
+          Regenerated all these files
+
 Wed Sep  8 14:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp,i}:

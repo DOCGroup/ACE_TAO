@@ -73,7 +73,7 @@ namespace TAO
     if (CORBA::is_nil(poa_.in()))
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
-    TAO_POA* tao_poa = poa_->_tao_poa_downcast ();
+    TAO_POA* tao_poa = dynamic_cast<TAO_POA*>(poa_.in());
 
     return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
