@@ -1,3 +1,11 @@
+Sun Aug 25 20:52:29 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+
+	  Added PortableGroup and CosLoadBalancing MSVC++ projects to
+	  these workspaces.
+
 Sun Aug 25 20:30:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
