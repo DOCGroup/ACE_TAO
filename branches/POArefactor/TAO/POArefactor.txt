@@ -1,3 +1,8 @@
+Thu Sep  9 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Loadable_Thread_Policy.{h,cpp}:
+          First version, also have to work on these
+
 Thu Sep  9 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_ThreadPolicy.h:
