@@ -1781,7 +1781,12 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 
 // ****************************************************************
 
-ACE_Log_Msg_Attributes::ACE_Log_Msg_Attributes (void)
+ACE_Log_Msg_Attributes::ACE_Log_Msg_Attributes (
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+     ACE_SEH_EXCEPT_HANDLER selector
+     , ACE_SEH_EXCEPT_HANDLER handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                          )
   : ostream_ (0)
   , priority_mask_ (0)
   , tracing_enabled_ (0)
@@ -1794,16 +1799,12 @@ ACE_Log_Msg_Attributes::ACE_Log_Msg_Attributes (void)
 {
   if (ACE_Log_Msg::exists ())
     {
-      ACE_Log_Msg *inherit_log_ = ACE_LOG_MSG;
-      this->ostream_ = inherit_log_->msg_ostream ();
-      this->priority_mask_ = inherit_log_->priority_mask ();
-      this->tracing_enabled_ = inherit_log_->tracing_enabled ();
-      this->restart_ = inherit_log_->restart ();
-      this->trace_depth_ = inherit_log_->trace_depth ();
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-      this->seh_except_selector_ = selector;
-      this->seh_except_handler_ = handler;
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+      ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
+      this->ostream_ = inherit_log->msg_ostream ();
+      this->priority_mask_ = inherit_log->priority_mask ();
+      this->tracing_enabled_ = inherit_log->tracing_enabled ();
+      this->restart_ = inherit_log->restart ();
+      this->trace_depth_ = inherit_log->trace_depth ();
     }
 }
 
@@ -1812,10 +1813,19 @@ ACE_Log_Msg_Attributes::~ACE_Log_Msg_Attributes (void)
 }
 
 void
-ACE_Log_Msg_Attributes::init_hook (void *&attr)
+ACE_Log_Msg_Attributes::init_hook (void *&attr
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                                   , ACE_SEH_EXCEPT_HANDLER selector
+                                   , ACE_SEH_EXCEPT_HANDLER handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                                   )
 {
   ACE_Log_Msg_Attributes *attributes;
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_NEW (attributes, ACE_Log_Msg_Attributes (selector, handler));
+# else
   ACE_NEW (attributes, ACE_Log_Msg_Attributes);
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   attr = attributes;
 }
 

@@ -2535,7 +2535,12 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
   ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 
   if (ACE_Thread_Adapter::init_log_msg_hook_ != 0)
-    (*ACE_Thread_Adapter::init_log_msg_hook_) (this->log_msg_attributes_);
+    (*ACE_Thread_Adapter::init_log_msg_hook_) (this->log_msg_attributes_
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                                               , selector
+                                               , handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                                               );
 }
 
 int
