@@ -38,6 +38,7 @@ moment, only 2 levels of debugging are implemented, and more than 2 -d
 options are ignored.
 
 -o    This option creates an ior file for the server with the name ior_filename.
+-n    Use naming service
 
 The file can be used by clients who wish to access the server directly using this ior file. This
 obviates the need for the client to use the naming service for getting the server ior. The client can
@@ -57,7 +58,7 @@ Options:
 
 -x    Tells the server to shutdown at the end of the test.
 
--n    no. of iterations
+-n    Use naming service
 
 -b    initial balance
 
