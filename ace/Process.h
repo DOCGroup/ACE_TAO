@@ -97,10 +97,10 @@ private:
 
   pid_t child_id_;
   // Process id of the child.
+#endif /* ACE_WIN32 */
 
   TCHAR cwd_[MAXPATHLEN + 1];
   // The current working directory.
-#endif /* ACE_WIN32 */
 };
 
 #if defined (__ACE_INLINE__)
