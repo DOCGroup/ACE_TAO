@@ -1,3 +1,9 @@
+Wed Jan 13 14:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp: fixed string
+	  members of IDL structs by using .inout () to obtain lvalue.
+
 Wed Jan 13 09:50:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Log/Logger_i.cpp: removed ACE_Equal_To<ACE_CString>
