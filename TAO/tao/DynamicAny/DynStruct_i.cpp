@@ -182,39 +182,15 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynStruct_i *
-TAO_DynStruct_i::_narrow (CORBA::Object_ptr obj
+TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref
                           ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
-
-  return ACE_reinterpret_cast (
-             TAO_DynStruct_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynStruct_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynStruct_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynStruct_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynStruct::_tao_QueryInterface) (type);
+  
+  return dynamic_cast<TAO_DynStruct_i *> (_tao_objref);
 }
 
 // ****************************************************************
