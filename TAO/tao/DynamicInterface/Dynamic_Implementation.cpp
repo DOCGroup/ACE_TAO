@@ -82,11 +82,6 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
                                 );
   ACE_CHECK_RETURN (0);
 
-  // @@ PPOA
-  // @@ return orb->create_stub_object (
-  // @@ client_exposed_policies._retn (),
-  // @@ poa_current_impl->poa (),
-  // @@ ACE_TRY_ENV);
   return poa_current_impl->poa ()->key_to_stub (
                                        poa_current_impl->object_key (),
                                        interface,
@@ -97,44 +92,61 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
-                                      void *context,
+                                      void * /* context */,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (context);
+  // No need to do any of this if the client isn't waiting.
+  if (request.response_expected ())
+    {
+      if (!CORBA::is_nil (request.forward_location ()))
+        {
+          request.init_reply ();
+
+          request.tao_send_reply ();
+
+          // No need to invoke in this case.
+          return;
+        }
+      else if (request.sync_with_server ())
+        {
+          // The last line before the call to this function
+          // was an ACE_CHECK_RETURN, so if we're here, we
+          // know there is no exception so far, and that's all
+          // a SYNC_WITH_SERVER client request cares about.
+          request.send_no_exception_reply ();
+        }
+    }
 
   // Create DSI request object.
   CORBA::ServerRequest *dsi_request = 0;
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
 
-  // Delegate to user.
-  this->invoke (dsi_request, 
-                ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (request.response_expected ())
+  ACE_TRY
     {
-      request.init_reply ();
-
-      dsi_request->dsi_marshal (ACE_TRY_ENV);
+      // Delegate to user.
+      this->invoke (dsi_request, 
+                    ACE_TRY_ENV);
       ACE_CHECK;
+
+      // Only if the client is waiting.
+      if (request.response_expected () && !request.sync_with_server ())
+        {
+          dsi_request->dsi_marshal (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
     }
+  ACE_CATCH (CORBA::Exception, ex)
+    {
+      // Only if the client is waiting.
+      if (request.response_expected () && !request.sync_with_server ())
+        {
+          request.tao_send_reply_exception (ex);
+        }
+    }
+  ACE_ENDTRY;
 
-   ACE_TRY
-     {
-       if ((!request.sync_with_server () && request.response_expected ()))
-         {
-           request.tao_send_reply ();
-           ACE_TRY_CHECK;
-         }
-     }
-   ACE_CATCH(CORBA::Exception,ex)
-     {
-       request.tao_send_reply_exception(ex);
-     }
-   ACE_ENDTRY;
-
-   CORBA::release (dsi_request);
+  CORBA::release (dsi_request);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
