@@ -206,6 +206,8 @@ UTL_String::compare_quiet (UTL_String *s)
     result = I_FALSE;
   else if (ACE_OS::strcmp (p_str, s->get_string ()) != 0)
     result = I_TRUE;
+  else
+    result = I_FALSE;
 
   return result;
 }
