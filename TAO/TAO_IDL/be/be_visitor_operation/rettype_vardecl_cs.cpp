@@ -144,8 +144,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int
 be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 {
@@ -182,8 +180,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
 
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_type *node)

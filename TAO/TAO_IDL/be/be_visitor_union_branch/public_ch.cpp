@@ -325,8 +325,6 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 // Visit valuetype type.
 int
 be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
@@ -408,8 +406,6 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 // Visit predefined type.
 int

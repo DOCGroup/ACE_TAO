@@ -59,13 +59,11 @@ public:
   int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface node
 
-#ifdef IDL_HAS_VALUETYPE
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node);
   // visit valuetype
 
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype forward
-#endif /* IDL_HAS_VALUETYPE */
 
   int visit_predefined_type (be_predefined_type *node);
   // visit a predefined type node

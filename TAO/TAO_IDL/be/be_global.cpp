@@ -50,9 +50,7 @@ BE_GlobalData::BE_GlobalData (void)
       output_dir_ (0),
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
-#ifdef IDL_HAS_VALUETYPE
       obv_opt_accessor_ (0),
-#endif /* IDL_HAS_VALUETYPE */
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),
@@ -654,7 +652,6 @@ BE_GlobalData::tc_support (void)
   return this->tc_support_;
 }
 
-#ifdef IDL_HAS_VALUETYPE
 void
 BE_GlobalData::obv_opt_accessor (idl_bool val)
 {
@@ -666,7 +663,6 @@ BE_GlobalData::obv_opt_accessor (void)
 {
   return this->obv_opt_accessor_;
 }
-#endif /* IDL_HAS_VALUETYPE */
 
 void
 BE_GlobalData::gen_impl_files (idl_bool val)

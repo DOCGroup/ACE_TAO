@@ -84,14 +84,11 @@ public:
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
 
-#ifdef IDL_HAS_VALUETYPE
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
-#endif /* IDL_HAS_VALUETYPE */
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_REQUEST_INFO_CH_H_ */

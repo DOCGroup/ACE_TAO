@@ -793,13 +793,11 @@ IDL_GlobalData::ident_string (void) const
   return this->ident_string_;
 }
 
-#ifdef IDL_HAS_VALUETYPE
 void
 IDL_GlobalData::obv_support (idl_bool val)
 {
   this->obv_support_ = val;
 }
-#endif /* IDL_HAS_VALUETYPE */
 
 idl_bool
 IDL_GlobalData::obv_support (void)

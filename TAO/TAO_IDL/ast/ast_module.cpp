@@ -761,7 +761,6 @@ AST_Module::dump (ACE_OSTREAM_TYPE &o)
 void
 AST_Module::set_has_nested_valuetype (void)
 {
-#ifdef IDL_HAS_VALUETYPE
   UTL_Scope *parent = this->defined_in ();
 
   if (!this->pd_has_nested_valuetype && parent)
@@ -775,7 +774,6 @@ AST_Module::set_has_nested_valuetype (void)
     }
 
   this->pd_has_nested_valuetype = 1;
-#endif /* IDL_HAS_VALUETYPE */
 }
 
 idl_bool
