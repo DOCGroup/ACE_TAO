@@ -82,6 +82,9 @@ public:
   void operator = (CONCRETE *from);
   // Pseudo-assignment operator.
 
+  void operator = (const ACE_Based_Pointer_Basic<CONCRETE> &);
+  // Pseudo-assignment operator.
+
   CONCRETE operator * (void) const;
   // Dereference operator.
 
@@ -109,6 +112,9 @@ public:
   void operator+= (long index);
   // Increment operator.
 
+  operator CONCRETE *() const;
+  // Returns the underlying memory address of the smart pointer.
+
   CONCRETE *addr (void) const;
   // Returns the underlying memory address of the smart pointer.
 
@@ -118,17 +124,11 @@ public:
   void dump (void) const;
   // Dump the state of the object.
 
-  // The following should be private, but that causes problems due to
-  // broken C++ compilers that don't like friends for methods
-  // in templates.
 protected:
   long target_;
 
   long base_offset_;
   // Keep track of our offset from the base pointer.
-
-  // = Prevent assignment and initialization (for now).
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Based_Pointer_Basic<CONCRETE> &))
 };
 
 template <class CONCRETE> 
@@ -152,16 +152,16 @@ public:
   // Initialize this object using the <initial> pointer.  
 
   ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &);
-  // Copy constructor.
+  // Copy constructor (not implemented yet).
+
+  void operator = (const ACE_Based_Pointer<CONCRETE> &);
+  // Assignment operator.
 
   void operator = (CONCRETE *from);
   // Pseudo-assignment operator.
 
   CONCRETE *operator-> (void);
   // The C++ "delegation operator".
-
-  // = Prevent assignment and initialization (for now).
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Based_Pointer<CONCRETE> &))
 };
 
 #if defined (__ACE_INLINE__)

@@ -78,6 +78,20 @@ struct ACE_Export ACE_Malloc_Stats
 #define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
+// Forward decl.
+class ACE_Malloc_Header;
+class ACE_Name_Node;
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+typedef ACE_Based_Pointer<ACE_Malloc_Header> ACE_MALLOC_HEADER_PTR;
+typedef ACE_Based_Pointer<ACE_Name_Node> ACE_NAME_NODE_PTR;
+typedef ACE_Based_Pointer_Basic<char> ACE_CHAR_PTR;
+#else
+typedef ACE_Malloc_Header *ACE_MALLOC_HEADER_PTR;
+typedef ACE_Name_Node *ACE_NAME_NODE_PTR;
+typedef char *ACE_CHAR_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
 class ACE_Export ACE_Malloc_Header
 {
   // = TITLE
@@ -85,18 +99,10 @@ class ACE_Export ACE_Malloc_Header
   //    to keep track of each chunk of data when it's in the free
   //    list or in use.
 public:
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-# define ACE_POINTER_CAST(PTR) ((PTR).addr ())
-  typedef ACE_Based_Pointer<ACE_Malloc_Header> HEADER_PTR;
-#else
-# define ACE_POINTER_CAST(PTR) ((PTR))
-  typedef ACE_Malloc_Header *HEADER_PTR;
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
   class ACE_Malloc_Control_Block
   {
   public:
-    HEADER_PTR next_block_;
+    ACE_MALLOC_HEADER_PTR next_block_;
     // Points to next block if on free list.
 
     size_t size_;
@@ -150,25 +156,14 @@ public:
   void name (const char *);
   // Assign a name;
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-  ACE_Based_Pointer_Basic<char> name_;
+  ACE_CHAR_PTR name_;
   // Name of the Node.
 
-  ACE_Based_Pointer_Basic<char> pointer_;
+  ACE_CHAR_PTR pointer_;
   // Pointer to the contents.
 
-  ACE_Based_Pointer<ACE_Name_Node> next_;
+  ACE_NAME_NODE_PTR next_;
   // Pointer to the next node in the chain.
-#else
-  char *name_;
-  // Name of the Node.
-
-  char *pointer_;
-  // Pointer to the contents.
-
-  ACE_Name_Node *next_;
-  // Pointer to the next node in the chain.
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   void dump (void) const;
   // Dump the state of the object.
@@ -188,15 +183,10 @@ class ACE_Export ACE_Control_Block
   //    This class should be local to class ACE_Malloc, but some older
   //    C++ compilers don't like nested classes in templates...
 public:
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-  ACE_Based_Pointer<ACE_Name_Node> name_head_;
+  ACE_NAME_NODE_PTR name_head_;
   // Head of the linked list of Name Nodes.
-#else
-  ACE_Name_Node *name_head_;
-  // Head of the linked list of Name Nodes.
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
-  ACE_Malloc_Header::HEADER_PTR freep_;
+  ACE_MALLOC_HEADER_PTR freep_;
   // Current head of the freelist.
 
   char lock_name_[MAXNAMELEN];

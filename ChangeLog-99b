@@ -1,3 +1,37 @@
+Tue Aug  3 18:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
+	  Finished integrating all the features of this test.  It's pretty
+	  cool now!
+	
+	* examples/Shared_Malloc/Makefile: Updated the LSRC target so
+	  'make depend' works correctly...
+
+	* ace/Select_Reactor_Base.cpp (find): Don't set errno = ENOENT
+	  if we find a valid mapping of handle to Event_Handler.  Thanks
+ 	  to Hao Ruan <hruan@lucent.com> for reporting this.
+
+	* ace/Based_Pointer_T: Added support for operator= (const
+ 	  ACE_Based_Pointer_Basic<T> &).
+
+	* ace/Based_Pointer_T: Added definitions for
+	  ACE_Based_Pointer::operator= and
+ 	  ACE_Based_Pointer_Basic::operator= to make EGCS happy.
+  
+	* ace/Malloc.h: Factored out the common code for
+	  ACE_Based_Pointer<> and the underlying types, thereby reducing
+ 	  the number of #ifdef's.
+
+	* ace/Based_Pointer_T: Added an operator CONCRETE *() method
+
+	* ace/Based_Pointer_Repository.cpp: The original implementation
+	  of this classes stored a pointer to the size of each mapped
+ 	  address, rather than just the value.  This was causing problems
+ 	  when used for shared memory because the memory was allocated in
+ 	  one process and freed in another.  This is now fixed by not
+ 	  storing a pointer, but by storing the value instead.  Thanks to
+ 	  Nanbor for reporting this.
+
 Tue Aug 03 21:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (host_is_up): Added a time out
@@ -7,25 +41,23 @@ Tue Aug 03 21:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Tue Aug 03 18:30:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Strategies.h (ACE_Connection_Recycling_Strategy):
-	  Added a new pure virtual method <marked_as_closed_i> which
-	  will provide a non-locking implementation of the
-	  <mark_as_closed> method.
+	  Added a new pure virtual method <marked_as_closed_i> which will
+ 	  provide a non-locking implementation of the <mark_as_closed>
+ 	  method.
 
 	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy):
 	* ace/Cached_Connect_Strategy_T.h (ACE_Cached_Connect_Strategy_Ex):
 	  Made <mark_as_closed_i> public.
 
 	* ace/Caching_Utility_T.{h,cpp}
-	  (ACE_Refcounted_Recyclable_Caching_Utility):
-	  Added this class which caters to purging of refcounted and
-	  recyclable handlers.
+	  (ACE_Refcounted_Recyclable_Caching_Utility): Added this class
+ 	  which caters to purging of refcounted and recyclable handlers.
 
 	* ace/Cleanup_Strategy_T.{h,cpp}:
-	  (ACE_Refcounted_Recyclable_Cleanup_Strategy):
-	  Added this class which caters to the cleanup of handlers which
-	  are refcounted and recyclable. Heres where the necessity of
-	  making the non-locking version of <marked_as_closed> public
-	  arose in the first place.
+	  (ACE_Refcounted_Recyclable_Cleanup_Strategy): Added this class
+ 	  which caters to the cleanup of handlers which are refcounted and
+ 	  recyclable. Heres where the necessity of making the non-locking
+ 	  version of <marked_as_closed> public arose in the first place.
 
 	* ace/OS.h (ACE_Recyclable_State):
 	  Removed hardcoded values and left the enum values to the

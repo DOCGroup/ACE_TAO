@@ -190,12 +190,15 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle,
 #endif /* ACE_WIN32 */
     }
   else
-    // g++ can't figure out that i won't be used below if the handle
-    // is out of range, so keep it happy by defining i here . . .
+    // g++ can't figure out that <i> won't be used below if the handle
+    // is out of range, so keep it happy by defining <i> here . . .
     i = 0;
 
-  if (eh != 0 && index_p != 0)
-    *index_p = i;
+  if (eh != 0)
+    {
+      if (index_p != 0)
+        *index_p = i;
+    }
   else
     errno = ENOENT;
 

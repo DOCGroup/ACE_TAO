@@ -14,7 +14,7 @@ Tue Aug 03 18:40:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.cpp (out_of_sockets_handler):
 	  Added the iteration over the different ORBs in the system for
-	  purging 'old' connections.
+ 	  purging 'old' connections.
 
 	* tests/Connection_Purging/Connection_Purging.cpp:
 	* tests/Connection_Purging/Makefile:
