@@ -130,11 +130,6 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  ../../SSLIOP/SSL_SOCK_Connector.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -144,7 +139,11 @@ endif
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
@@ -198,45 +197,21 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  ../../SSLIOP/SSL_SOCK_Connector.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/QoS_Session.h \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
@@ -315,11 +290,6 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -333,7 +303,11 @@ endif
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.i
@@ -479,9 +453,6 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -495,7 +466,9 @@ endif
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.i SSL-server-fancy.h
@@ -573,11 +546,6 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -591,7 +559,11 @@ endif
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.i
@@ -618,7 +590,17 @@ endif
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.h ../../SSLIOP/SSL_SOCK_Stream.h \
- ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/QoS_Session.h \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -644,41 +626,7 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
- ../../SSLIOP/SSL.i \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/QoS_Session.h \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK_Stream.i \
+ ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \

@@ -172,6 +172,7 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
 protected:
   int shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
 			   ACE_Time_Value *timeout = 0,
@@ -181,10 +182,13 @@ protected:
 			    ACE_Time_Value *timeout = 0,
 			    int result = 0);
 
+  int ssl_connect (ACE_SSL_SOCK_Stream &new_stream);
+  // Complete SSL active connection establishment.
+
 private:
   ACE_SOCK_Connector connector_;
   // The class that does all of the non-secure socket connection.
-  // It is default contructed, and susequently used by connect().
+  // It is default contructed, and subsequently used by connect().
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

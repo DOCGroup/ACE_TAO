@@ -1,16 +1,19 @@
-// SSL_SOCK_Stream.cpp
+// -*- C++ -*-
 // $Id$
 
 #define ACE_BUILD_DLL
 
-#include "SSL_SOCK_Stream.h"
 #include "ace/Handle_Set.h"
+
+#if defined (ACE_HAS_SSL)
+
+#include <openssl/err.h>
+
+#include "SSL_SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "SSL_SOCK_Stream.i"
 #endif
-
-#if defined (ACE_HAS_SSL)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
@@ -31,7 +34,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
     }
 
   if (result == -1)
-    return -1;
+    bytes_sent = -1;
 
   return bytes_sent;
 }
@@ -244,22 +247,23 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
                       flags,
                       timeout);
 
-      if (n == -1)
-        {
-          // If blocked, try again.
-          if (errno == EWOULDBLOCK)
-            {
-              n = 0;
-              continue;
-            }
+      if (n < 0)
+	{
+	  switch (::SSL_get_error (this->ssl_, n))
+	    {
+	      //
+	      // No timeouts in this version.
+	      //
 
-          //
-          // No timeouts in this version.
-          //
+	    case SSL_ERROR_WANT_WRITE:
+	      // If blocked, try again.
+	      n = 0;
+	      continue;
 
-          // Other errors.
-          return -1;
-        }
+	    default:
+	      return -1;
+	    }
+	}
       else if (n == 0)
         break;
     }
@@ -292,24 +296,24 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
                       len - bytes_transferred,
                       flags,
                       timeout);
-//       if (n == -1 || n == 0)
-//         break;
-      if (n == -1)
-        {
-          // If blocked, try again.
-          if (errno == EWOULDBLOCK)
-            {
-              n = 0;
-              continue;
-            }
 
-          //
-          // No timeouts in this version.
-          //
+      if (n < 0)
+	{
+	  switch (::SSL_get_error (this->ssl_, n))
+	    {
+	      //
+	      // No timeouts in this version.
+	      //
 
-          // Other errors.
-          return -1;
-        }
+	    case SSL_ERROR_WANT_READ:
+	      // If blocked, try again.
+	      n = 0;
+	      continue;
+
+	    default:
+	      return -1;
+	    }
+	}
       else if (n == 0)
         break;
     }
@@ -338,25 +342,25 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
       n = this->recv ((char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
+      if (n < 0)
+	{
+	  switch (::SSL_get_error (this->ssl_, n))
+	    {
+	      //
+	      // No timeouts in this version.
+	      //
 
-      if (n == -1)
-        {
-          // If blocked, try again.
-          if (errno == EWOULDBLOCK)
-            {
-              n = 0;
-              continue;
-            }
+	    case SSL_ERROR_WANT_READ:
+	      // If blocked, try again.
+	      n = 0;
+	      continue;
 
-          //
-          // No timeouts in this version.
-          //
-
-          // Other errors.
-          return -1;
-        }
+	    default:
+	      return -1;
+	    }
+	}
       else if (n == 0)
-        break;
+	break;
     }
 
   return bytes_transferred;
@@ -382,23 +386,23 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
       n = this->send ((const char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
+      if (n < 0)
+	{
+	  switch (::SSL_get_error (this->ssl_, n))
+	    {
+	      //
+	      // No timeouts in this version.
+	      //
 
-      if (n == -1)
-        {
-          // If blocked, try again.
-          if (errno == EWOULDBLOCK)
-            {
-              n = 0;
-              continue;
-            }
+	    case SSL_ERROR_WANT_WRITE:
+	      // If blocked, try again.
+	      n = 0;
+	      continue;
 
-          //
-          // No timeouts in this version.
-          //
-
-          // Other errors.
-          return -1;
-        }
+	    default:
+	      return -1;
+	    }
+	}
       else if (n == 0)
         break;
     }
@@ -498,49 +502,5 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
   return length;
 }
 
-
-int
-ACE_SSL_SOCK_Stream::enable (int value) const
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::enable");
-  switch (value)
-    {
-#ifdef SIGURG
-    case SIGURG:
-    case ACE_SIGURG:
-#endif  /* SIGURG */
-    case SIGIO:
-    case ACE_SIGIO:
-    case ACE_CLOEXEC:
-      ACE_NOTSUP_RETURN (-1);
-    case ACE_NONBLOCK:
-      return this->stream_.enable (value);
-    default:
-      return -1;
-    }
-  return 0;
-}
-
-int
-ACE_SSL_SOCK_Stream::disable (int value) const
-{
-  ACE_TRACE("ACE_SSL_SOCK_Stream::disable");
-  switch (value)
-    {
-#ifdef SIGURG
-    case SIGURG:
-    case ACE_SIGURG:
-#endif  /* SIGURG */
-    case SIGIO:
-    case ACE_SIGIO:
-    case ACE_CLOEXEC:
-      ACE_NOTSUP_RETURN (-1);
-    case ACE_NONBLOCK:
-      return this->stream_.disable (value);
-    default:
-      return -1;
-    }
-  return 0;
-}
 
 #endif /* ACE_HAS_SSL */
