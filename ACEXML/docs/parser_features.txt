@@ -1,4 +1,4 @@
-/**
+/**  -*- HTML-Helper -*- $Id$
 @defgroup acexml_parser_features Configurable Special Features of ACEXML Parser
 @{
 
@@ -10,6 +10,12 @@ has been activated or not can be queried using @c getFeature.
 @sa ACEXML_XMLReader::getFeature
 
 Here is a list of supported features:
+
+<OL>
+  <li> None so far.  We are integrating a dummy debug validator into
+  the parser which will use the string "Dummy Debug Validator" to turn
+  the feature on/off.
+</OL>
 
 @}
 */
