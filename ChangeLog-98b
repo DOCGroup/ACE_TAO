@@ -1,3 +1,8 @@
+Thu May 28 15:55:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Added new configurtion files for SCO.  Thanks to Arturo for
+	  this.
+
 Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Filecache.cpp: removed redundant template instantiations.
