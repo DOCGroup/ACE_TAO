@@ -1,11 +1,18 @@
+Mon Mar 10 13:30:30 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          If an mpc file contains projects with duplicate names, MPC will
+          issue a warning to that effect.
+
 Mon Mar 10 08:25:30 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Log_Msg.cpp (log_hexdump):
-	* tests/Proactor_Test.cpp:
+        * ace/Log_Msg.cpp (log_hexdump):
+        * tests/Proactor_Test.cpp:
 
-	  Corrected format specifier for size_t (unsigned integer)
-	  variable, i.e. "%u" instead of "%d".  Fixes mismatched format
-	  specifier warnings.
+          Corrected format specifier for size_t (unsigned integer)
+          variable, i.e. "%u" instead of "%d".  Fixes mismatched format
+          specifier warnings.
 
 Mon Mar 10 07:36:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -30,23 +37,23 @@ Sun Mar  9 10:17:16 2003  Edan Ayal <edanayal@yahoo.com>
           Printing order should be 'a,b,c,d,e' instead of 'a,b,c,e,d'.
 
           First sleep() replaced with
-	  ACE_Thread_Manager::instance()->wait().
+          ACE_Thread_Manager::instance()->wait().
 
           Final sleep() is redundant, as the spawned threads are already
-	  dead.
+          dead.
 
           Prime_Scheduler::close() is called twice - once by the user
-	  (asking to close the task) and once by the framework, when the
-	  thread exists.  This causes the task_count counter to be
-	  negative.
+          (asking to close the task) and once by the framework, when the
+          thread exists.  This causes the task_count counter to be
+          negative.
 
-	  Renamed the method to 'shutdown'.  Change method declaration and
-	  definition (remove 'virtual' and all the arguments).  Change the
-	  call in Method_Request_end::call to shutdown() instead of
-	  close()
+          Renamed the method to 'shutdown'.  Change method declaration and
+          definition (remove 'virtual' and all the arguments).  Change the
+          call in Method_Request_end::call to shutdown() instead of
+          close()
 
-	  In the future set test, place different name commands in the
-	  name set, just to show that it can be done.
+          In the future set test, place different name commands in the
+          name set, just to show that it can be done.
 
 Sat Mar  8 12:54:18 2003  Steve Huston  <shuston@riverace.com>
 

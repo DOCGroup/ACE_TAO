@@ -1293,8 +1293,14 @@ sub write_output_file {
               print $fh $line;
             }
             close($fh);
-            my($fw) = $self->{'files_written'};
-            push(@$fw, $name);
+            foreach my $written (@{$self->{'files_written'}}) {
+              if ($written eq $name) {
+                print "WARNING: $name has been overwritten by a project " .
+                      "with a duplicate name.\n";
+                last;
+              }
+            }
+            push(@{$self->{'files_written'}}, $name);
           }
           else {
             $error = "ERROR: Unable to open $name for output.";
