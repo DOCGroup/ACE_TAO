@@ -1,3 +1,10 @@
+Thu Jun 06 10:50:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (cancel_timer):
+
+	  Fixed race condition by adding an ACE_GUARD.  Basically the same
+	  fix that Doug made to the Select_Reactor below.
+
 Thu Jun  6 12:28:20 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp: Moved the cancel_timer() methods
