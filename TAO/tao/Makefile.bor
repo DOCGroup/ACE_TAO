@@ -152,7 +152,6 @@ OBJFILES = \
 	$(OBJDIR)\Protocols_Hooks.obj \
 	$(OBJDIR)\Queued_Message.obj \
 	$(OBJDIR)\Reactive_Flushing_Strategy.obj \
-	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
@@ -165,7 +164,6 @@ OBJFILES = \
 	$(OBJDIR)\Service_Context.obj \
 	$(OBJDIR)\Services.obj \
 	$(OBJDIR)\Services_Activate.obj \
-	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Stub_Factory.obj \
