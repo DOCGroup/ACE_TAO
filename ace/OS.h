@@ -2054,13 +2054,13 @@ struct stat
 #       define ACE_THR_PRI_OTHER_MAX ACE_PROC_PRI_OTHER_MAX
 #     endif
 #     if !defined(ACE_THR_PRI_FIFO_DEF)
-#       define ACE_THR_PRI_FIFO_DEF  (ACE_THR_PRI_FIFO_MIN + (ACE_THR_PRI_FIFO_MAX - ACE_THR_PRI_FIFO_MIN)/2)
+#       define ACE_THR_PRI_FIFO_DEF  ((ACE_THR_PRI_FIFO_MIN + ACE_THR_PRI_FIFO_MAX)/2)
 #     endif
 #     if !defined(ACE_THR_PRI_RR_DEF)
-#       define ACE_THR_PRI_RR_DEF (ACE_THR_PRI_RR_MIN + (ACE_THR_PRI_RR_MAX - ACE_THR_PRI_RR_MIN)/2)
+#       define ACE_THR_PRI_RR_DEF ((ACE_THR_PRI_RR_MIN + ACE_THR_PRI_RR_MAX)/2)
 #     endif
 #     if !defined(ACE_THR_PRI_OTHER_DEF)
-#       define ACE_THR_PRI_OTHER_DEF (ACE_THR_PRI_OTHER_MIN + (ACE_THR_PRI_OTHER_MAX - ACE_THR_PRI_OTHER_MIN)/2)
+#       define ACE_THR_PRI_OTHER_DEF ((ACE_THR_PRI_OTHER_MIN + ACE_THR_PRI_OTHER_MAX)/2)
 #     endif
 
       // Typedefs to help compatibility with Windows NT and Pthreads.
