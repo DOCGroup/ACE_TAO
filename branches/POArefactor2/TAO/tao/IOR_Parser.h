@@ -62,9 +62,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/IOR_Parser.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_IOR_PARSER_H */

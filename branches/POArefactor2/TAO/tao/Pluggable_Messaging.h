@@ -178,10 +178,6 @@ public:
   virtual TAO_OutputCDR &out_stream (void) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/Pluggable_Messaging.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /*TAO_PLUGGABLE_MESSAGING_H*/

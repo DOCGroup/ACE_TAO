@@ -3,10 +3,6 @@
 #include "tao/IOR_Parser.h"
 #include "ace/Dynamic_Service.h"
 
-#if !defined(__ACE_INLINE__)
-#include "tao/IOR_Parser.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(tao, IOR_Parser, "$Id$")
 
 TAO_IOR_Parser::~TAO_IOR_Parser (void)

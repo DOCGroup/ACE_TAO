@@ -60,9 +60,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Object_Loader.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_OBJECT_LOADER_H */

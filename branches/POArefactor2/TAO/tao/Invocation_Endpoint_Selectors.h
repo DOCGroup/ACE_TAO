@@ -97,9 +97,5 @@ public:
                                 ACE_ENV_ARG_DECL);
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* TAO_INVOCATION_ENDPOINT_SELECTOR_H */

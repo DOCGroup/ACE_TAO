@@ -68,10 +68,6 @@ public:
                                         TAO_Leader_Follower &) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/LF_Strategy.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_LF_STRATEGY_H */
