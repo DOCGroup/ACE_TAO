@@ -206,7 +206,8 @@ const int ACE_WString::npos = -1;
 ostream &
 operator<< (ostream &os, const ACE_CString &cs)
 {
-  os << cs.fast_rep ();
+  for (size_t i = 0; i < cs.length (); i++)
+    os << cs[i];
   return os;
 }
 
@@ -218,127 +219,29 @@ operator<< (ostream &os, const ACE_SString &ss)
 }
 #endif /* !ACE_HAS_WINCE */
 
-ACE_WString
-operator+ (const ACE_WString &s, const ACE_WString &t)
-{
-  ACE_WString temp (s);
-  temp += t;
-  return temp;
-}
-
-ACE_CString
-operator+ (const ACE_CString &s, const ACE_CString &t)
-{
-  ACE_CString temp (s);
-  temp += t;
-  return temp;
-}
-
-// Copy constructor.
-
-ACE_CString::ACE_CString (const ACE_CString &s)
-  : allocator_ (s.allocator_),
-    len_ (s.len_)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
-  if (s.fast_rep ()[0] == '\0')
-    this->rep_ = &ACE_CString::NULL_CString_;
-  else
-    {
-      this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
-      ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_, this->len_);
-      this->rep_[this->len_] = '\0';
-    }
-}
-
-void
-ACE_CString::dump (void) const
-{
-  ACE_TRACE ("ACE_CString::dump");
-}
-
-ACE_CString::~ACE_CString (void)
-{
-  ACE_TRACE ("ACE_CString::~ACE_CString");
-
-  if (this->rep_ != &ACE_CString::NULL_CString_)
-    this->allocator_->free (this->rep_);
-}
-
-// Default constructor.
-
-ACE_CString::ACE_CString (ACE_Allocator *alloc)
-  : allocator_ (alloc),
-    len_ (0),
-    rep_ (&ACE_CString::NULL_CString_)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-}
-
-// Constructor that actually copies memory.
-
-ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
-  : allocator_ (alloc)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
-  if (s == 0 || s[0] == 0')
-    {
-      this->len_ = 0;
-      this->rep_ = &ACE_CString::NULL_CString_;
-    }
-  else
-    {
-      this->len_ = ACE_OS::strlen (s);
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::memcpy (this->rep_, s, this->len_);
-      this->rep_[this->len_] = '\0';
-    }
-}
-
-ACE_CString::ACE_CString (char c, ACE_Allocator *alloc)
-  : allocator_ (alloc)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
-  this->len_ = 1;
-  this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-  this->rep_[0] = c;
-  this->rep_[this->len_] = '\0';
-}
-
 // Constructor that copies <s> into dynamically allocated memory.
 // Probable loss of data. Please use with care.
 
-ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
-  : allocator_ (alloc)
+ACE_CString::ACE_CString (const ACE_USHORT16 *s, 
+                          ACE_Allocator *alloc)
+  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
   if (s == 0 || s[0] == (ACE_USHORT16) '\0')
     {
+      this->release_ = 0;
       this->len_ = 0;
       this->rep_ = &ACE_CString::NULL_CString_;
     }
   else
     {
-      this->len_ = ACE_WString::wstrlen (s);
+      this->release_ = 1;
+
+      this->len_ = ACE_WString::wstrlen (s);      
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
 
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
@@ -349,81 +252,53 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
     }
 }
 
-// Constructor that actually copies memory.
-
-ACE_CString::ACE_CString (const char *s,
-                          size_t len,
-                          ACE_Allocator *alloc)
-  : allocator_ (alloc)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
-  if (s == 0 || s[0] == '\0')
-    {
-      this->len_ = 0;
-      this->rep_ = &ACE_CString::NULL_CString_;
-    }
-  else
-    {
-      this->len_ = len;
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::memcpy (this->rep_, s, len);
-      this->rep_[len] = '\0'; // Make sure to NUL terminate this!
-    }
-}
-
-// Assignment operator (does copy memory).
-
-ACE_CString &
-ACE_CString::operator= (const ACE_CString &s)
-{
-  ACE_TRACE ("ACE_CString::operator=");
-  // Check for identify.
-
-  if (this != &s)
-    this->set (s.rep_, s.len_);
-
-  return *this;
-}
-
 void
-ACE_CString::set (const char *s)
-{
-  this->set (s, ACE_OS::strlen (s));
-}
-
-void
-ACE_CString::set (const char *s, size_t len)
+ACE_CString::set (const char *s, 
+                  size_t len,
+                  int release)
 {
   //
   // Free memory if necessary
   //
 
   // Going from memory to no memory
-  if (s[0] == '\0' &&
-      this->rep_ != &ACE_CString::NULL_CString_)
+  if ((!release || s == 0 || s[0] == '\0') && 
+      this->release_)
     this->allocator_->free (this->rep_);
 
   // Going from memory to more memory
   else if (this->len_ < len &&
-           this->rep_ != &ACE_CString::NULL_CString_)
+           this->release_)
     this->allocator_->free (this->rep_);
+  
+  // Figure out future ownership
+  if (!release || s == 0 || s[0] == '\0')
+    this->release_ = 0;
+  else
+    this->release_ = 1;
 
   //
-  // Allocate memory if necessary
+  // Allocate memory if owner and necessary
   //
-
+  
   // len is greather than 0, so must allocate space for it.
-  if (this->len_ < len)
+  if (this->release_ && this->len_ < len)
     this->rep_ = (char *) this->allocator_->malloc (len + 1);
 
+  // set new length
   this->len_ = len;
 
-  if (s[0] == '\0')
+  // If no string or null string is specified by the user
+  if (s == 0 || s[0] == '\0')
     this->rep_ = &ACE_CString::NULL_CString_;
+
+  // If we don't own the string
+  else if (!this->release_)
+    {
+      this->rep_ = (char *) s;
+    }
+  
+  // We own the string
   else
     {
       ACE_OS::memcpy (this->rep_, s, len);
@@ -441,18 +316,18 @@ ACE_CString::substring (size_t offset,
   size_t count = length;
 
   // case 1. empty string
-  if (len_ == 0)
+  if (this->len_ == 0)
     return nil;
 
   // case 2. start pos l
-  if (offset >= len_)
+  if (offset >= this->len_)
     return nil;
 
   // get all remaining bytes
   if (length == -1)
-    count = len_ - offset;
+    count = this->len_ - offset;
 
-  return ACE_CString (&rep_[offset], count, this->allocator_);
+  return ACE_CString (&this->rep_[offset], count, this->allocator_);
 }
 
 // Concat operator (does copy memory).
@@ -469,21 +344,20 @@ ACE_CString::operator+= (const ACE_CString &s)
       this->len_ += s.len_;
       char *t = 0;
 
-      if (oldlen < newlen)
-        {
-          // Allocate memory for the new string.
-          ACE_ALLOCATOR_RETURN (t,
-                                (char *) this->allocator_->malloc (newlen),
-                                *this);
-          // Copy memory from old string into new string.
-          ACE_OS::memcpy (t, this->rep_, oldlen);
-        }
+      // Allocate memory for the new string.
+      ACE_ALLOCATOR_RETURN (t,
+                            (char *) this->allocator_->malloc (newlen),
+                            *this);
+      // Copy memory from old string into new string.
+      ACE_OS::memcpy (t, this->rep_, oldlen);
 
       ACE_OS::memcpy (t + oldlen, s.rep_, s.len_);
       t[this->len_] = '\0';
 
-      if (this->rep_ != &ACE_CString::NULL_CString_)
+      if (this->release_)
         this->allocator_->free (this->rep_);
+
+      this->release_ = 1;
       this->rep_ = t;
     }
 

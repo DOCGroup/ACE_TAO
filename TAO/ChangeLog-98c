@@ -1,3 +1,9 @@
+Mon May 18 16:46:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (parse_key): Changed the processing of IORs so that
+ 	  POA names are not copied.  Only a pointer is kept to the correct
+ 	  place in the IOR.
+
 Mon May 18 12:34:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/Connect.cpp: Debug messages now check 

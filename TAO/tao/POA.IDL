@@ -22,8 +22,12 @@
 // IDL
 module CORBA
 {
-  // Basic Policy definition
+  typedef string Identifier;
+  typedef string RepositoryId;
 
+  interface Current{};
+
+  // Basic Policy definition
   typedef unsigned long PolicyType;
 
   interface Policy
@@ -35,16 +39,11 @@ module CORBA
 
   typedef sequence <Policy>  PolicyList;
 
-  interface Current{};
-
   // ....
 };
 
 module PortableServer
 {
-  typedef string Identifier;
-  typedef string RepositoryId;
-
   // forward reference
   interface POA;
 
@@ -188,14 +187,14 @@ module PortableServer
     Servant preinvoke(
                       in ObjectId       oid,
                       in POA    adapter,
-                      in Identifier     operation,
+                      in CORBA::Identifier     operation,
                       out Cookie        the_cookie )
       raises (ForwardRequest);
 
     void postinvoke(
                     in ObjectId         oid,
                     in POA      adapter,
-                    in Identifier       operation,
+                    in CORBA::Identifier       operation,
                     in Cookie   the_cookie,
                     in Servant  the_servant     );
   };
@@ -324,12 +323,12 @@ module PortableServer
       // **************************************************
 
       Object create_reference (
-                               in RepositoryId intf )
+                               in CORBA::RepositoryId intf )
         raises (WrongPolicy);
 
       Object create_reference_with_id (
                                        in ObjectId oid,
-                                       in RepositoryId intf )
+                                       in CORBA::RepositoryId intf )
         raises (WrongPolicy);
 
 

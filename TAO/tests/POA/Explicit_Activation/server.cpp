@@ -93,7 +93,20 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Creation of firstPOA is over. Destroy the Policy objects.
+  // Create the secondPOA under the firstPOA.
+  name = "secondPOA";
+  PortableServer::POA_var second_poa =
+    first_poa->create_POA (name.c_str (),
+                           poa_manager.in (),
+                           policies,
+                           env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_POA");
+      return -1;
+    }
+
+  // Creation of POAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
        i < policies.length () && env.exception () == 0;
        ++i)
@@ -177,8 +190,8 @@ main (int argc, char **argv)
   third_oid[5] = (CORBA::Octet) '\0';
 
   CORBA::Object_var third_foo =
-    first_poa->create_reference_with_id (third_oid.in (),
-                                         "IDL:Foo:1.0", env);
+    second_poa->create_reference_with_id (third_oid.in (),
+                                          "IDL:Foo:1.0", env);
 
   if (env.exception () != 0)
     {
@@ -219,10 +232,10 @@ main (int argc, char **argv)
   cout << third_ior.in () << endl;
 
   // Activate thirdPOA using its ObjectID.
-  MyFooServant third_foo_impl (first_poa.in (), 29);
-  first_poa->activate_object_with_id (third_oid.in (),
-                                      &third_foo_impl,
-                                      env);
+  MyFooServant third_foo_impl (second_poa.in (), 29);
+  second_poa->activate_object_with_id (third_oid.in (),
+                                       &third_foo_impl,
+                                       env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::activate_object_with_id");

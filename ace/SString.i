@@ -1,6 +1,144 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Malloc.h"
+
+ACE_INLINE ACE_WString
+operator+ (const ACE_WString &s, const ACE_WString &t)
+{
+  ACE_WString temp (s);
+  temp += t;
+  return temp;
+}
+
+ACE_INLINE ACE_CString
+operator+ (const ACE_CString &s, const ACE_CString &t)
+{
+  ACE_CString temp (s);
+  temp += t;
+  return temp;
+}
+
+// Default constructor.
+
+ACE_INLINE 
+ACE_CString::ACE_CString (ACE_Allocator *alloc)
+  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  this->set (0, 0, 0);
+}
+
+// Constructor that actually copies memory.
+
+ACE_INLINE 
+ACE_CString::ACE_CString (const char *s, 
+                          ACE_Allocator *alloc, 
+                          int release)
+  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  size_t length;
+  if (s != 0)
+    length = ACE_OS::strlen (s);
+  else
+    length = 0;
+
+  this->set (s, length, release);
+}
+
+ACE_INLINE 
+ACE_CString::ACE_CString (char c, 
+                          ACE_Allocator *alloc)                          
+  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  this->set (&c, 1, 1);
+}
+
+// Constructor that actually copies memory.
+
+ACE_INLINE 
+ACE_CString::ACE_CString (const char *s,
+                          size_t len,
+                          ACE_Allocator *alloc,
+                          int release)
+  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  this->set (s, len, release);
+}
+
+// Copy constructor.
+
+ACE_INLINE 
+ACE_CString::ACE_CString (const ACE_CString &s)
+  : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
+    len_ (0),
+    rep_ (0),
+    release_ (0)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  this->set (s.rep_, s.len_, 1);
+}
+
+ACE_INLINE 
+ACE_CString::~ACE_CString (void)
+{
+  ACE_TRACE ("ACE_CString::~ACE_CString");
+
+  this->set (0, 0, 0);
+}
+
+ACE_INLINE void
+ACE_CString::dump (void) const
+{
+  ACE_TRACE ("ACE_CString::dump");
+}
+
+// Assignment operator (does copy memory).
+
+ACE_INLINE ACE_CString &
+ACE_CString::operator= (const ACE_CString &s)
+{
+  ACE_TRACE ("ACE_CString::operator=");
+
+  // Check for identify.
+  if (this != &s)
+    this->set (s.rep_, s.len_, 1);
+
+  return *this;
+}
+
+ACE_INLINE void
+ACE_CString::set (const char *s, int release)
+{
+  size_t length;
+  if (s != 0)
+    length = ACE_OS::strlen (s);
+  else
+    length = 0;
+
+  this->set (s, length, release);
+}
+
 ACE_INLINE size_t
 ACE_CString::length (void) const
 {
@@ -17,7 +155,7 @@ ACE_CString::substr (size_t offset,
 
 // Return the <index'th> character in the string.
 
-ACE_INLINE char
+ACE_INLINE const char &
 ACE_CString::operator[] (size_t index) const
 {
   ACE_TRACE ("ACE_CString::operator[]");
@@ -42,7 +180,8 @@ ACE_CString::rep (void) const
 
   char *new_string;
   ACE_NEW_RETURN (new_string, char[this->len_ + 1], 0);
-  ACE_OS::strcpy (new_string, this->rep_);
+  ACE_OS::strncpy (new_string, this->rep_, this->len_);
+  new_string[this->len_] = '\0';
 
   return new_string;
 }
@@ -67,7 +206,7 @@ ACE_CString::operator== (const ACE_CString &s) const
   ACE_TRACE ("ACE_CString::operator==");
 
   return this->len_ == s.len_
-    && ACE_OS::strcmp (this->rep_, s.rep_) == 0;
+    && ACE_OS::strncmp (this->rep_, s.rep_, this->len_) == 0;
 }
 
 // Comparison operator.
@@ -83,14 +222,14 @@ ACE_INLINE int
 ACE_CString::compare (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
-  return ACE_OS::strcmp (this->rep_, s.rep_);
+  return ACE_OS::strncmp (this->rep_, s.rep_, this->len_);
 }
 
 ACE_INLINE int
 ACE_CString::find (const char *s, int pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strstr (substr, s);
+  char *pointer = ACE_OS::strnstr (substr, s, this->len_ - pos);
   if (pointer == 0)
     return ACE_CString::npos;
   else
@@ -101,7 +240,7 @@ ACE_INLINE int
 ACE_CString::find (char c, int pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strchr (substr, c);
+  char *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
   if (pointer == 0)
     return ACE_CString::npos;
   else
@@ -138,7 +277,7 @@ ACE_CString::rfind (char c, int pos) const
 ACE_INLINE u_long
 ACE_CString::hash (void) const
 {
-  return ACE::hash_pjw (this->rep_);
+  return ACE::hash_pjw (this->rep_, this->len_);
 }
 
 ACE_INLINE
@@ -220,7 +359,7 @@ ACE_SString::operator!= (const ACE_SString &s) const
 ACE_INLINE int
 ACE_SString::compare (const ACE_SString &s) const
 {
-  ACE_TRACE ("ACE_CString::compare");
+  ACE_TRACE ("ACE_SString::compare");
   return ACE_OS::strcmp (this->rep_, s.rep_);
 }
 

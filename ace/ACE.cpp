@@ -314,13 +314,42 @@ ACE::execname (const wchar_t *old_name)
 #endif /* ACE_HAS_UNICODE */
 
 u_long
-ACE::hash_pjw (const char *str)
+ACE::hash_pjw (const char *str, size_t len)
 {
   u_long hash = 0;
 
-  for (const char *temp = str; *temp != 0; temp++)
+  for (size_t i = 0; i < len; i++)
     {
-      hash = (hash << 4) + (*temp * 13);
+      const char temp = str[i];
+      hash = (hash << 4) + (temp * 13);
+
+      u_long g = hash & 0xf0000000;
+
+      if (g)
+        {
+          hash ^= (g >> 24);
+          hash ^= g;
+        }
+    }
+
+  return hash;
+}
+
+u_long
+ACE::hash_pjw (const char *str)
+{
+  return ACE::hash_pjw (str, ACE_OS::strlen (str));
+}
+
+u_long
+ACE::hash_pjw (const ACE_USHORT16 *str, size_t len)
+{
+  u_long hash = 0;
+
+  for (size_t i = 0; i < len; i++)
+    {
+      const ACE_USHORT16 temp = str[i];
+      hash = (hash << 4) + (temp * 13);
 
       u_long g = hash & 0xf0000000;
 
@@ -337,22 +366,7 @@ ACE::hash_pjw (const char *str)
 u_long
 ACE::hash_pjw (const ACE_USHORT16 *str)
 {
-  u_long hash = 0;
-
-  for (const ACE_USHORT16 *temp = str; *temp != 0; temp++)
-    {
-      hash = (hash << 4) + (*temp * 13);
-
-      u_long g = hash & 0xf0000000;
-
-      if (g)
-        {
-          hash ^= (g >> 24);
-          hash ^= g;
-        }
-    }
-
-  return hash;
+  return ACE::hash_pjw (str, ACE_OS::strlen (str));  
 }
 
 // The CRC routine was taken from the FreeBSD implementation of cksum,

@@ -51,10 +51,10 @@ public:
   ACE_CString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
-  ACE_CString (const char *s, ACE_Allocator *alloc = 0);
+  ACE_CString (const char *s, ACE_Allocator *alloc = 0, int release = 1);
   // Constructor that copies <s> into dynamically allocated memory. 
 
-  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0);
+  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0, int release = 1);
   // Constructor that copies <len> chars of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
@@ -71,7 +71,7 @@ public:
   ~ACE_CString (void);
   // Deletes the memory...
 
-  char operator[] (size_t index) const;
+  const char &operator[] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
@@ -82,10 +82,10 @@ public:
   ACE_CString &operator= (const ACE_CString &);
   // Assignment operator (does copy memory).
 
-  void set (const char *s);
+  void set (const char *s, int release = 1);
   // Copy <s>
 
-  void set (const char *s, size_t len);
+  void set (const char *s, size_t len, int release = 1);
   // Copy <len> bytes of <s> (will NUL terminate the result)
 
   ACE_CString substring (size_t offset, ssize_t length = -1) const;
@@ -160,6 +160,9 @@ private:
 
   char *rep_;
   // Pointer to data.
+
+  int release_;
+  // Flag that indicates if we own the memory
 
   static char NULL_CString_;
   // Represents the "NULL" string to simplify the internal logic.
