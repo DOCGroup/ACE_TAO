@@ -55,6 +55,9 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_Thread.h"
+
 /**
  * @class ACE_Event_Descriptions
  *

@@ -1790,6 +1790,7 @@ Pierre Pacchioni <pierre.pacchioni@avisto.com>
 John Fletcher <john.fletcher@rd.bbc.co.uk>
 Terry Ware <terry.ware@dc.alphatech.com>
 Roger Beathard <rbeathar@cisco.com>
+Konstantinos Margaritis <markos@debian.gr>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
