@@ -77,6 +77,7 @@ ACE_Get_Opt::operator () (void)
   if (argv_ == 0)
     {
       // It can happen, e.g., on VxWorks.
+      optind = 0;
       return EOF;
     }
 
