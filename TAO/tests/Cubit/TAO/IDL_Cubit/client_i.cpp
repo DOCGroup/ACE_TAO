@@ -863,7 +863,7 @@ Cubit_Client::~Cubit_Client (void)
   CORBA::release (this->cubit_);
 
   if (this->cubit_factory_key_ != 0)
-    delete[] (this->cubit_factory_key_);
+    delete [] (this->cubit_factory_key_);
 
   if (this->cubit_key_ != 0)
     ACE_OS::free (this->cubit_key_);
@@ -939,9 +939,11 @@ Cubit_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->use_naming_service_
-          && this->init_naming_service () == -1)
-        return -1;
+      if (this->use_naming_service_)
+        {
+          if (this->init_naming_service () == -1)
+            return -1;
+        }
       else
         {
           if (this->cubit_factory_key_ == 0)
@@ -949,7 +951,6 @@ Cubit_Client::init (int argc, char **argv)
                                "%s: no cubit factory key specified\n",
                                this->argv_[0]),
                               -1);
-
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cubit_factory_key_,
