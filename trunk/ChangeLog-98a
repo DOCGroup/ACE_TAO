@@ -1,22 +1,26 @@
+Thu Dec 18 22:35:45 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: fixed typo in end-of-comment marker.
+
 Thu Dec 18 21:17:46 1997    <nw1@DINGO>
 
 	* ace/ace_dll.dsp: Added project files for Windows CE on SH3
  	  series CPU and x86 emulator.
 
-	* ace/streams.h: 
+	* ace/streams.h:
 	* ace/OS.h: Added Windows CE flags.
 
 Thu Dec 18 15:48:03 1997    <nw1@JIG>
 
 	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
-	
+
 Thu Dec 18 21:19:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ACE version 4.4.7, released Thu Dec 18 20:18:50 1997.
 
 Thu Dec 18 19:47:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP: Stripped the CPP-in{server,client}.cpp 
+	* examples/IPC_SAP/SOCK_SAP: Stripped the CPP-in{server,client}.cpp
 	  tests down to their bare essence to only test the core features
 	  of sockets.  Thanks to Bryan and Brian for suggesting this.
 
@@ -32,7 +36,7 @@ Thu Dec 18 19:47:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 Thu Dec 18 15:48:03 1997    <nw1@JIG>
 
 	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
-	
+
         * ace/OS.{h,cpp} (rethrow_w32_structural_exception): Added this
  	  function, which prints out an error message to indicate the
  	  occurance of structural exception and rethrow it again.
