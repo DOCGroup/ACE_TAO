@@ -43,7 +43,7 @@ sub process {
 
   ## Back up the original file and receive the contents
   my(@contents) = ();
-  if (-r $output && -s $output) {
+  if (-s $output) {
     if (!$self->backup($output, \@contents)) {
       print STDERR "ERROR: Unable to backup $output\n";
       return 1;
@@ -91,7 +91,6 @@ sub backup {
   my($fh)       = new FileHandle();
   my($backup)   = "$source.bak";
 
-  unlink($backup);
   if (open($fh, $source)) {
     my($oh) = new FileHandle();
     if (open($oh, ">$backup")) {

@@ -80,11 +80,12 @@ sub process {
       ## common.  That way we go down the path of if elsif only if it is
       ## even possible due to the outside regular expression.
       if (/#/) {
-        ## Remove c++ comments inside this if statement.
+        ## Remove c++ and same line c comments inside this if statement.
         ## This saves about 5% off of processing the ace directory
         ## and we only need to strip comments if we are actually
         ## going to look at the string.
         $_ =~ s/\/\/.*//;
+        $_ =~ s/\/\*.*\*\///;
 
         if (/#\s*if\s+0/) {
           push(@zero, $ifcount);
@@ -119,13 +120,16 @@ sub process {
     close($fh);
 
     --$self->{'recurse'};
+  }
 
-    if (!$noincs) {
-      $self->{'ifiles'} = {};
-      $self->getFiles($file);
-      my(@incs) = keys %{$self->{'ifiles'}};
-      return \@incs;
-    }
+  ## This has to be outside the if (open(...
+  ## If the last file to be processed isn't accessable then
+  ## we still need to return the array reference of includes.
+  if (!$noincs) {
+    $self->{'ifiles'} = {};
+    $self->getFiles($file);
+    my(@incs) = keys %{$self->{'ifiles'}};
+    return \@incs;
   }
 }
 
