@@ -42,6 +42,11 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
+
+  static int method_helper (be_interface *,
+			    be_interface *,
+			    TAO_OutStream *os);
+  // helper method to generate method declaration in the TIE classes.
 };
 
 #endif /* _BE_INTERFACE_TIE_SI_H_ */
