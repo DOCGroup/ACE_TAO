@@ -26,6 +26,13 @@
 #include "test_config.h"
 #include "ace/Process.h"
 
+#define APPLICATION \
+".." ACE_DIRECTORY_SEPARATOR_STR_A \
+"netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A \
+"servers" ACE_DIRECTORY_SEPARATOR_STR_A \
+"main" ACE_PLATFORM_EXE_SUFFIX \
+" -f " ACE_PLATFORM
+
 int
 main (int, char *[])
 {
@@ -38,35 +45,22 @@ main (int, char *[])
   // no garbage data from a possible aborted run
   ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
-  char app[BUFSIZ];
-  char server_conf[BUFSIZ];
-  char clerk_conf[BUFSIZ];
-
-  ACE_OS::sprintf (server_conf, "%s", ACE_PLATFORM "server.conf");
-  ACE_OS::sprintf (clerk_conf, "%s", ACE_PLATFORM "clerk.conf");
-  
-  ACE_OS::sprintf (app, ".." ACE_DIRECTORY_SEPARATOR_STR_A "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
-		   "servers" ACE_DIRECTORY_SEPARATOR_STR_A "main" ACE_PLATFORM_EXE_SUFFIX);
-
-  char *s_argv[4];
-  s_argv[0] = app;
-  s_argv[1] = "-f";
-  s_argv[2] = server_conf;
-  s_argv[3] = 0;
-
+  ACE_Process_Options server_options;
+  server_options.command_line (APPLICATION "server.conf");
   ACE_Process server;
 
-  if (server.start (s_argv) == -1)
+  if (server.start (server_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%n %p.\n", "Server fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 
   ACE_OS::sleep (3);
-  s_argv[2] = clerk_conf;
 
+  ACE_Process_Options clerk_options;
+  clerk_options.command_line (APPLICATION "client.conf");
   ACE_Process clerk;
 
-  if (clerk.start (s_argv) == -1)
+  if (clerk.start (clerk_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Clerk fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", clerk.getpid ()));
