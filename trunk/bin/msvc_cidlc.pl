@@ -142,7 +142,7 @@ if ($#directories < 0) {
 
 print "msvc_cidlc: Begin\n";
 print STDERR "Beginning CIDLC Build\n" if ($print_status == 1);
-Build_All if !$build_core_only;
+Build_All;
 
 print "msvc_cidlc: End\n";
 print STDERR "End\n" if ($print_status == 1);
