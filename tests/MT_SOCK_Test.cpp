@@ -224,7 +224,7 @@ spawn (void)
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
-      for (int i = 0; i < ACE_MAX_CLIENTS; i++)
+      for (size_t i = 0; i < ACE_MAX_CLIENTS; i++)
         {
           switch (ACE_OS::fork ("child"))
             {
