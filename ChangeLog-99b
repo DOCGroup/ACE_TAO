@@ -1,3 +1,31 @@
+Mon Jun 14 11:55:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_g++.GNU: New platform file for AIX
+          4.x using GNU compiler. Been tested w/ egcs 1.1.2.
+
+        * include/makeinclude/platform_aix4_cset++.GNU: Make shared libs
+          correctly and without building the static one first.
+          Also, for cset++, disable warnings on AIX 4.3 to shut up the
+          0-valued preprocessor warnings. This is not a great
+          long-term general solution, but it'll do the job.
+
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.lib.GNU: On AIX, build shared lib w/o
+          requiring static one first. When building shared libs, also link
+          against them and install the proper files when done. The correct
+          files built for libfoo are:
+             libfoo.a: archive/static library
+             libfoo.so: shared library, but not set up for run-time linker.
+                        This is the one loaded by ACE dynamic loading.
+             libfooshr.a: an archive library with libfoo.so as its only
+                        member. This is what to link against when building
+                        a program/library that uses libfoo.
+
+          Silly?  Uh-huh. But that's life in AIX land. I tried to get things
+          building/running clean using the run-time linker (-brtl) but had
+          no end of trouble. And, since no other libs in /usr/lib want to
+          do it that way either, it's like this.
+
 Mon Jun 14 09:58:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Added ACE_UNUSED_ARG() macros for all the non-WINSOCK2
