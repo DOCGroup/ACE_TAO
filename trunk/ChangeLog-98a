@@ -1,3 +1,59 @@
+Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce.dsw:
+	* ace/ace_ce_dll.dsp: New project/workspace files for WinCE.  This
+	  is a temporary workspace only and should be merged into ACE mail
+	  Win32 project/workspace when the port is stable enough. 
+
+	* ace/config-WinCE.h: Added ACE_LACKS_GETS.
+
+	* ace/Synch.i (get_nesting_level): Defined it as not supported on
+	  CE.  CE's CriticalSections don't have RecursionCount defined.
+	  We should be able to simulate this, however.
+
+	* ace/Process.{h,cpp}:
+	* ace/SString.{h,cpp}: Moved class ACE_Tokenizer from Process.* to
+	  SString.*.  Although ACE_Tokenizer is used in
+	  ACE_Process[_Options], it really is a more general utility
+	  class.
+	  (operator<<): Conditionally compile these functions only when we
+	  are not running ACE on CE.
+
+	* ace/OS.i (atoi): Added inline implementation for wchar version.
+	  (gets): Remove condition !defined (ACE_HAS_WINCE).  This should
+	  be taken care of by ACE_LACKS_GETS.
+
+	* ace/OS.h (atoi): Added wchar version of this function.
+	  (ASYS_WIDE_STRING): This macro converts char strings to
+	  wchar strings when ACE_HAS_MOSTLY_UNICODE_APIS is defined.
+	  (ASYS_MULTIBYTE_STRING): This macro converts wchar strings back
+	  to char strings *only* when ACE_HAS_MOSTLY_UNICODE_APIS is
+	  defined. 
+
+	* ace/INET_Addr.{h,cpp}: Redefined interface signatures on WinCE
+	  using ASYS_* macros.  The principle here is to pass wide char
+	  strings in and get char strings out.  That's because we will use
+	  mostly wchar strings in CE but most winsock APIs return (or uses
+	  char strings.)  Doing so should reduce conversion between them
+	  to minimum.  
+	  Converting debug messages with ASYS_TEXT.
+	
+	* ace/Log_Msg.cpp (open): 
+	* ace/ACE.cpp (get_ip_interfaces): Only convert the wide character
+	  string to a char string when ACE_HAS_MOSTLY_UNICODE_APIS flag is
+	  not set using the ASYS_MULTIBYTE_STRING macro.
+
+	* ace/SOCK.cpp:
+	* ace/SOCK_Acceptor.cpp:
+	* ace/Malloc.cpp:
+	* ace/Malloc_T.cpp:
+	* ace/Synch.cpp:
+	* ace/Message_Block.cpp:
+	* ace/IPC_SAP.cpp:
+	* ace/Handle_Set.cpp:
+	* ace/Addr.cpp: Converting debugging messages to wchar strings for
+	  CE using the ASYS_TEXT macro.
+
 Sun Mar 08 14:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptors):
