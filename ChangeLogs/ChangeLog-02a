@@ -24,11 +24,6 @@ Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  ACE_LACKS_READDIR_R.
 	  This was necessary to enable the above mentioned <dirent> emulation.
 
-Mon Mar 27 17:27:40 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-	* TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-	  Fixed the ACE_Null_Mutex mispelt error. Thanks to Thomas Groth
-	  <groth.th@t-online.de> for pointing this out.
 
 Mon Mar 27 16:58:03 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
