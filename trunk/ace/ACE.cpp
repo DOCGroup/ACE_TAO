@@ -2752,7 +2752,12 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
   // Get interface structure and initialize the addresses using UNIX
   // techniques
-  if (ACE_OS::ioctl (s, SIOCGIFCONF, (char *) &ifc) == -1)
+#if defined (AIX)
+  int cmd = CSIOCGIFCONF;
+#else
+  int cmd = SIOCGIFCONF;
+#endif /* AIX */
+  if (ACE_OS::ioctl (s, cmd, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("ACE::get_bcast_addr:")
@@ -2939,8 +2944,13 @@ ACE::count_interfaces (ACE_HANDLE handle,
   ifcfg.ifc_req = p_ifs;
   ifcfg.ifc_len = ifreq_size;
 
+#if defined (AIX)
+  int cmd = CSIOCGIFCONF;
+#else
+  int cmd = SIOCGIFCONF;
+#endif /* AIX */
   if (ACE_OS::ioctl (handle,
-                     SIOCGIFCONF,
+                     cmd,
                      (caddr_t) &ifcfg) == -1)
     {
       ACE_OS::free (ifcfg.ifc_req);
@@ -3234,8 +3244,13 @@ ACE::get_ip_interfaces (size_t &count,
   ifcfg.ifc_req = p_ifs.get ();
   ifcfg.ifc_len = num_ifs * sizeof (struct ifreq);
 
+#if defined (AIX)
+  int cmd = CSIOCGIFCONF;
+#else
+  int cmd = SIOCGIFCONF;
+#endif /* AIX */
   if (ACE_OS::ioctl (handle,
-                     SIOCGIFCONF,
+                     cmd,
                      (caddr_t) &ifcfg) == -1)
     {
       ACE_OS::close (handle);
