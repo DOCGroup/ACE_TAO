@@ -1,3 +1,9 @@
+Wed Oct  7 17:21:17 1998  Arturo Montes <mitosys@colomsat.com.co>
+
+	* ace/OS.{i,cpp}: FSU pthreads is draft6, but FSU in SCO is an
+	  special port. The API is draft6 but return values is DRAFT7
+	  (really I am moving to STD).
+
 Wed Oct 07 09:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/Functor.{cpp, h, i}
