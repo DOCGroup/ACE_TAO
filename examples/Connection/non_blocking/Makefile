@@ -9,7 +9,7 @@
 #----------------------------------------------------------------------------
 
 LIB   	= libConn.a
-SHLIB 	= libConn.so
+SHLIB 	= libConn.$(SOEXT)
 
 BIN   	= test_sock_connector \
           test_sock_acceptor \
