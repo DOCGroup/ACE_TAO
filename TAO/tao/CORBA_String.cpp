@@ -178,18 +178,17 @@ operator<< (ostream &os, const CORBA::WString_var &wsv)
 istream &
 operator>> (istream &is, CORBA::WString_var &wsv)
 {
-  CORBA::ULong i = 0;
-  CORBA::WChar wc;
-  is >> wc;
+  is.seekg (0, ios::end);
+  // @@ is.tellg()/sizeof(CORBA::WChar) instead?
+  CORBA::ULong len = is.tellg ();
+  wsv = CORBA::wstring_alloc (len);
+  is.seekg (0, ios::beg);
 
-  while (wc)
-    {
-      wsv[i] = wc;
-      ++i;
-      is >> wc;
-    }
+  // Unformatted input is used to work around overloaded extraction
+  // operator (>>) ambiguities on some platforms.
+  is.read (wsv.inout (), len);
+  wsv[len] = 0;
 
-  wsv[i] = 0;
   return is;
 }
 
@@ -210,18 +209,17 @@ operator<< (ostream &os, CORBA::WString_out &wso)
 istream &
 operator>> (istream &is, CORBA::WString_out &wso)
 {
-  CORBA::ULong i = 0;
-  CORBA::WChar wc;
-  is >> wc;
+  is.seekg (0, ios::end);
+  // @@ is.tellg()/sizeof(CORBA::WChar) instead?
+  CORBA::ULong len = is.tellg ();
+  wso = CORBA::wstring_alloc (len);
+  is.seekg (0, ios::beg);
+  
+  // Unformatted input is used to work around overloaded extraction
+  // operator (>>) ambiguities on some platforms.
+  is.read (wso.ptr (), len);
+  wso.ptr ()[len] = 0;
 
-  while (wc)
-    {
-      wso.ptr ()[i] = wc;
-      ++i;
-      is >> wc;
-    }
-
-  wso.ptr ()[i] = 0;
   return is;
 }
 
