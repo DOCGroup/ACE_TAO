@@ -64,6 +64,7 @@ protected:
       log_map_.bind (logging_peer.get_handle (), log_file);
       master_handle_set_.set_bit (logging_peer.get_handle ());
     }
+    active_read_handles_.clr_bit (acceptor ().get_handle ());
     return 0;
   }
 
