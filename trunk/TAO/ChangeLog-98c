@@ -27,6 +27,14 @@ Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
           definition below in class CORBA.  Thanks to Todd Pack
           <todd@rwii.com> for reporting this.
 
+        * tao/giop.cpp (TAO_GIOP_message_name): cast quotient of sizeof's
+          to int to avoid signed/unsigned comparison.
+
+        * tao/interp.cpp (calc_nested_size_and_alignment,private_size,
+          private_alignment): qualified TC_KIND_COUNT with CORBA::,
+          so that the file-scope TC_KIND_COUNT isn't used in the
+          comparison.
+
 Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_array.cpp:
