@@ -1,3 +1,15 @@
+Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Minor change to allow the IDL compiler to handle cases
+          like
+
+          const unsigned short a = 12;
+          typedef string<a+3> foo;
+          typedef long bar[a+1];
+
 Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * orbsvcs/IFR_Service/Container_i.cpp:
