@@ -262,7 +262,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
             }
         }
 
-      if (raw_default_index >= 0 && index == raw_default_index)
+      if (index == raw_default_index)
         {
           // This is the default label - we have to find a legal value.
           CORBA::TCKind kind = discriminator_type->kind (ACE_TRY_ENV);
@@ -1353,7 +1353,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_C
 template class ACE_Hash<ACE_CString>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>;
-template class ACE_Hash_Map_With_Allocator<ACE_CString, int>;
 template class ACE_Bounded_Set<CORBA::Long>;
 template class ACE_Bounded_Set<CORBA::ULong>;
 template class ACE_Bounded_Set_Iterator<CORBA::Long>;
@@ -1369,7 +1368,6 @@ template class ACE_Bounded_Set_Iterator<CORBA::ULong>;
 #pragma instantiate ACE_Hash<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_CString, int>
 #pragma instantiate ACE_Bounded_Set<CORBA::Long>
 #pragma instantiate ACE_Bounded_Set<CORBA::ULong>
 #pragma instantiate ACE_Bounded_Set_Iterator<CORBA::Long>
