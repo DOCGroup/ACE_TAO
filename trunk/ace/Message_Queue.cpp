@@ -311,7 +311,11 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   if (!this->deactivated_)
     {
-      size_t msize = new_item->size ();
+      size_t msize = 0;
+      for (ACE_Message_Block *temp = new_item;
+           temp != 0;
+           temp = temp->cont ())
+        msize += temp->size ();
       if (::PostQueuedCompletionStatus (this->completion_port_,
                                         msize,
                                         this->deactivated_,

@@ -94,6 +94,22 @@ ACE_Message_Queue_Vx::message_count (void)
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 ACE_INLINE int
+ACE_Message_Queue_NT::enqueue_tail (ACE_Message_Block *new_item,
+                                    ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::enqueue_tail");
+  return this->enqueue (new_item, timeout);
+}
+
+ACE_INLINE int
+ACE_Message_Queue_NT::dequeue_head (ACE_Message_Block *&first_item,
+                                    ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::dequeue_head");
+  return this->dequeue (first_item, timeout);
+}
+
+ACE_INLINE int
 ACE_Message_Queue_NT::is_full (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_full");

@@ -70,11 +70,15 @@ public:
   // when a signal occurs, or if the time specified in timeout
   // elapses, (in which case errno = EWOULDBLOCK).
 
+  virtual int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0) = 0;
   virtual int enqueue (ACE_Message_Block *new_item,
                        ACE_Time_Value *timeout = 0) = 0;
   // Enqueue a <ACE_Message_Block *> into the tail of the queue.
   // Return -1 on failure, number of items in queue otherwise.
 
+  virtual int dequeue_head (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0) = 0;
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = 0) = 0;
   // Dequeue and return the <ACE_Message_Block *> at the head of the
@@ -289,9 +293,6 @@ class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
   //     * peek_dequeue_head ().
   //     * ACE_Message_Queue_Iterators.
   //     * No flow control.
-  //     * Message_Block chains.  The continuation field of ACE_Message_Block
-  //     *   is ignored; only the first block of a fragment chain is
-  //     *   recognized.
 public:
   // = Initialization and termination methods.
   ACE_Message_Queue_NT (size_t max_threads = ACE_Message_Queue_Base::DEFAULT_HWM);
@@ -311,12 +312,16 @@ public:
 
   // = Enqueue and dequeue methods.
 
+  virtual int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0);
   virtual int enqueue (ACE_Message_Block *new_item,
                        ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> at the end of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
+  virtual int dequeue_head (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0);
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = 0);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
