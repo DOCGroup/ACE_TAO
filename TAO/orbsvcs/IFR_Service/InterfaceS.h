@@ -32,6 +32,8 @@
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableInterceptor.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
@@ -133,6 +135,113 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+  class TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get : public TAO_ServerRequestInfo
+  {
+  public:
+    friend class POA_CORBA_IRObject;
+    TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get (
+      TAO_ServerRequest &_tao_server_request,
+      POA_CORBA_IRObject *tao_impl
+      ,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    virtual char * target_most_derived_interface (
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    virtual CORBA::Boolean target_is_a (
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+  private:
+    TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get (const TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get &);
+    void operator= (const TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get &);
+    
+  private:
+    POA_CORBA_IRObject *_tao_impl;
+    void result (IR::DefinitionKind        result);
+     // update the result 
+    IR_DefinitionKind  _result;
+  };
+
+  class TAO_ServerRequestInfo_CORBA_IRObject_destroy : public TAO_ServerRequestInfo
+  {
+  public:
+    friend class POA_CORBA_IRObject;
+    TAO_ServerRequestInfo_CORBA_IRObject_destroy (
+      TAO_ServerRequest &_tao_server_request,
+      POA_CORBA_IRObject *tao_impl
+      ,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual char * target_most_derived_interface (
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+    virtual CORBA::Boolean target_is_a (
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+  private:
+    TAO_ServerRequestInfo_CORBA_IRObject_destroy (const TAO_ServerRequestInfo_CORBA_IRObject_destroy &);
+    void operator= (const TAO_ServerRequestInfo_CORBA_IRObject_destroy &);
+  
+  private:
+    POA_CORBA_IRObject *_tao_impl;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -194,7 +303,7 @@ class _TAO_IRObject_ThruPOA_Proxy_Impl
 public:
   _TAO_IRObject_ThruPOA_Proxy_Impl (void);
 
-  virtual ~_TAO_IRObject_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_IRObject_ThruPOA_Proxy_Impl (void) { }
 
     virtual IR_DefinitionKind def_kind (
       CORBA_Object *_collocated_tao_target_,
@@ -472,6 +581,575 @@ TAO_NAMESPACE  POA_IR
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_Contained_id_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_id_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      
+      
+    private:
+      TAO_ServerRequestInfo_IR_Contained_id_get (const TAO_ServerRequestInfo_IR_Contained_id_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_id_get &);
+      
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (char *result);
+      // update the result 
+      char *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_id_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_id_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_id_set (const TAO_ServerRequestInfo_IR_Contained_id_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_id_set &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      const char * id_;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_name_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_name_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_name_get (const TAO_ServerRequestInfo_IR_Contained_name_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_name_get &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (char *    result);
+      // update the result 
+      char *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_name_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_name_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        const char * name,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_name_set (const TAO_ServerRequestInfo_IR_Contained_name_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_name_set &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      const char * name_;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_version_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_version_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_version_get (const TAO_ServerRequestInfo_IR_Contained_version_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_version_get &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (char *    result);
+      // update the result 
+      char *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_version_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_version_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_version_set (const TAO_ServerRequestInfo_IR_Contained_version_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_version_set &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      const char * version_;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_defined_in_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_defined_in_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_defined_in_get (const TAO_ServerRequestInfo_IR_Contained_defined_in_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_defined_in_get &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (IR::Container_ptr    result);
+      // update the result 
+      IR_Container_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_absolute_name_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_absolute_name_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_absolute_name_get (const TAO_ServerRequestInfo_IR_Contained_absolute_name_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_absolute_name_get &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (char *    result);
+     // update the result 
+    char *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_containing_repository_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_containing_repository_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_containing_repository_get (const TAO_ServerRequestInfo_IR_Contained_containing_repository_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_containing_repository_get &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (IR::Repository_ptr    result);
+      // update the result 
+      IR_Repository_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_describe : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_describe (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_describe (const TAO_ServerRequestInfo_IR_Contained_describe &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_describe &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      void result (IR::Contained::Description *    result);
+      // update the result 
+      IR_Contained::Description *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Contained_move : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Contained;
+      TAO_ServerRequestInfo_IR_Contained_move (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Contained *tao_impl
+        ,
+        IR_Container_ptr new_container,
+        const char * new_name,
+        const char * new_version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Contained_move (const TAO_ServerRequestInfo_IR_Contained_move &);
+      void operator= (const TAO_ServerRequestInfo_IR_Contained_move &);
+  
+    private:
+      POA_IR::Contained *_tao_impl;
+      IR_Container_ptr new_container_;
+      const char * new_name_;
+      const char * new_version_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -534,7 +1212,7 @@ class _TAO_Contained_ThruPOA_Proxy_Impl :
 public:
   _TAO_Contained_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_Contained_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_Contained_ThruPOA_Proxy_Impl (void) { }
   
   virtual char * id   (
       CORBA_Object *_collocated_tao_target_,
@@ -1166,6 +1844,903 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_Container_lookup : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_lookup (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * search_name,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_Container_lookup (const TAO_ServerRequestInfo_IR_Container_lookup &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_lookup &);
+    
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * search_name_;
+      void result (IR::Contained_ptr      result);
+       // update the result 
+      IR_Contained_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_contents : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_contents (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_contents (const TAO_ServerRequestInfo_IR_Container_contents &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_contents &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const IR_DefinitionKind & limit_type_;
+      const CORBA::Boolean & exclude_inherited_;
+      void result (IR::ContainedSeq *    result);
+      // update the result 
+      IR_ContainedSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_lookup_name : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_lookup_name (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * search_name,
+        const CORBA::Long & levels_to_search,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_lookup_name (const TAO_ServerRequestInfo_IR_Container_lookup_name &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_lookup_name &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * search_name_;
+      const CORBA::Long & levels_to_search_;
+      const IR_DefinitionKind & limit_type_;
+      const CORBA::Boolean & exclude_inherited_;
+      void result (IR::ContainedSeq *    result);
+      // update the result 
+      IR_ContainedSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_describe_contents : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_describe_contents (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        IR_DefinitionKind & limit_type,
+        const CORBA::Boolean & exclude_inherited,
+        const CORBA::Long & max_returned_objs,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_describe_contents (const TAO_ServerRequestInfo_IR_Container_describe_contents &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_describe_contents &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const IR_DefinitionKind & limit_type_;
+      const CORBA::Boolean & exclude_inherited_;
+      const CORBA::Long & max_returned_objs_;
+      void result (IR::Container::DescriptionSeq *    result);
+      // update the result 
+      IR_Container::DescriptionSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_module : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_module (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_module (const TAO_ServerRequestInfo_IR_Container_create_module &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_module &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      void result (IR::ModuleDef_ptr    result);
+      // update the result 
+      IR_ModuleDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_constant : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_constant (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        const CORBA::Any & value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_constant (const TAO_ServerRequestInfo_IR_Container_create_constant &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_constant &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr type_;
+      const CORBA::Any & value_;
+      void result (IR::ConstantDef_ptr    result);
+      // update the result 
+      IR_ConstantDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_struct : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_struct (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_struct (const TAO_ServerRequestInfo_IR_Container_create_struct &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_struct &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_StructMemberSeq & members_;
+      void result (IR::StructDef_ptr    result);
+      // update the result 
+      IR_StructDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_union : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_union (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr discriminator_type,
+        const IR_UnionMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_union (const TAO_ServerRequestInfo_IR_Container_create_union &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_union &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr discriminator_type_;
+      const IR_UnionMemberSeq & members_;
+      void result (IR::UnionDef_ptr    result);
+      // update the result 
+      IR_UnionDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_enum : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_enum (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_EnumMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_enum (const TAO_ServerRequestInfo_IR_Container_create_enum &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_enum &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_EnumMemberSeq & members_;
+      void result (IR::EnumDef_ptr    result);
+      // update the result 
+      IR_EnumDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_alias : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_alias (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr original_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_alias (const TAO_ServerRequestInfo_IR_Container_create_alias &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_alias &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr original_type_;
+      void result (IR::AliasDef_ptr    result);
+      // update the result 
+      IR_AliasDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_interface : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_interface (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_InterfaceDefSeq & base_interfaces,
+        const CORBA::Boolean & is_abstract,
+        const CORBA::Boolean & is_local,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_interface (const TAO_ServerRequestInfo_IR_Container_create_interface &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_interface &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_InterfaceDefSeq & base_interfaces_;
+      const CORBA::Boolean & is_abstract_;
+      const CORBA::Boolean & is_local_;
+      void result (IR::InterfaceDef_ptr    result);
+      // update the result 
+      IR_InterfaceDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_value : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_value (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA::Boolean & is_custom,
+        const CORBA::Boolean & is_abstract,
+        IR_ValueDef_ptr base_value,
+        const CORBA::Boolean & is_truncatable,
+        const IR_ValueDefSeq & abstract_base_values,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        const IR_InitializerSeq & initializers,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_value (const TAO_ServerRequestInfo_IR_Container_create_value &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_value &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const CORBA::Boolean & is_custom_;
+      const CORBA::Boolean & is_abstract_;
+      IR_ValueDef_ptr base_value_;
+      const CORBA::Boolean & is_truncatable_;
+      const IR_ValueDefSeq & abstract_base_values_;
+      const IR_InterfaceDefSeq & supported_interfaces_;
+      const IR_InitializerSeq & initializers_;
+      void result (IR::ValueDef_ptr    result);
+      // update the result 
+      IR_ValueDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_value_box : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_value_box (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_value_box (const TAO_ServerRequestInfo_IR_Container_create_value_box &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_value_box &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr original_type_def_;
+      void result (IR::ValueBoxDef_ptr    result);
+      // update the result 
+      IR_ValueBoxDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_exception : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_exception (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_exception (const TAO_ServerRequestInfo_IR_Container_create_exception &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_exception &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_StructMemberSeq & members_;
+      void result (IR::ExceptionDef_ptr    result);
+      // update the result 
+      IR_ExceptionDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Container_create_native : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Container;
+      TAO_ServerRequestInfo_IR_Container_create_native (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Container *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Container_create_native (const TAO_ServerRequestInfo_IR_Container_create_native &);
+      void operator= (const TAO_ServerRequestInfo_IR_Container_create_native &);
+  
+    private:
+      POA_IR::Container *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      void result (IR::NativeDef_ptr    result);
+      // update the result 
+      IR_NativeDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -1228,7 +2803,7 @@ class _TAO_Container_ThruPOA_Proxy_Impl :
 public:
   _TAO_Container_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_Container_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_Container_ThruPOA_Proxy_Impl (void) { }
   
   virtual IR_Contained_ptr lookup   (
       CORBA_Object *_collocated_tao_target_,
@@ -1752,6 +3327,64 @@ private:
       );
 
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_IDLType_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::IDLType;
+      TAO_ServerRequestInfo_IR_IDLType_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::IDLType *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_IDLType_type_get (const TAO_ServerRequestInfo_IR_IDLType_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_IDLType_type_get &);
+    
+    private:
+      POA_IR::IDLType *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -1814,7 +3447,7 @@ class _TAO_IDLType_ThruPOA_Proxy_Impl :
 public:
   _TAO_IDLType_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_IDLType_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_IDLType_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type   (
       CORBA_Object *_collocated_tao_target_,
@@ -2231,6 +3864,444 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_Repository_lookup_id : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_lookup_id (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const char * search_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_Repository_lookup_id (const TAO_ServerRequestInfo_IR_Repository_lookup_id &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_lookup_id &);
+    
+    private:
+      POA_IR::Repository *_tao_impl;
+      const char * search_id_;
+      void result (IR::Contained_ptr      result);
+      // update the result 
+      IR_Contained_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        CORBA::TypeCode_ptr tc,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode (const TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      CORBA::TypeCode_ptr tc_;
+      void result (CORBA::TypeCode_ptr    result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_get_primitive : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_get_primitive (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        IR_PrimitiveKind & kind,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_get_primitive (const TAO_ServerRequestInfo_IR_Repository_get_primitive &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_get_primitive &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const IR_PrimitiveKind & kind_;
+      void result (IR::PrimitiveDef_ptr    result);
+      // update the result 
+      IR_PrimitiveDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_create_string : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_create_string (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_create_string (const TAO_ServerRequestInfo_IR_Repository_create_string &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_create_string &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const CORBA::ULong & bound_;
+      void result (IR::StringDef_ptr    result);
+      // update the result 
+      IR_StringDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_create_wstring : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_create_wstring (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_create_wstring (const TAO_ServerRequestInfo_IR_Repository_create_wstring &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_create_wstring &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const CORBA::ULong & bound_;
+      void result (IR::WstringDef_ptr    result);
+      // update the result 
+      IR_WstringDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_create_sequence : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_create_sequence (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        IR_IDLType_ptr element_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_create_sequence (const TAO_ServerRequestInfo_IR_Repository_create_sequence &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_create_sequence &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const CORBA::ULong & bound_;
+      IR_IDLType_ptr element_type_;
+      void result (IR::SequenceDef_ptr    result);
+      // update the result 
+      IR_SequenceDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_create_array : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_create_array (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const CORBA::ULong & length,
+        IR_IDLType_ptr element_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_create_array (const TAO_ServerRequestInfo_IR_Repository_create_array &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_create_array &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const CORBA::ULong & length_;
+      IR_IDLType_ptr element_type_;
+      void result (IR::ArrayDef_ptr    result);
+      // update the result 
+      IR_ArrayDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_Repository_create_fixed : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::Repository;
+      TAO_ServerRequestInfo_IR_Repository_create_fixed (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::Repository *tao_impl
+        ,
+        const CORBA::UShort & digits,
+        const CORBA::Short & scale,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_Repository_create_fixed (const TAO_ServerRequestInfo_IR_Repository_create_fixed &);
+      void operator= (const TAO_ServerRequestInfo_IR_Repository_create_fixed &);
+  
+    private:
+      POA_IR::Repository *_tao_impl;
+      const CORBA::UShort & digits_;
+      const CORBA::Short & scale_;
+      void result (IR::FixedDef_ptr    result);
+      // update the result 
+      IR_FixedDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -2293,7 +4364,7 @@ class _TAO_Repository_ThruPOA_Proxy_Impl :
 public:
   _TAO_Repository_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_Repository_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_Repository_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_Contained_ptr lookup_id   (
       CORBA_Object *_collocated_tao_target_,
@@ -2995,6 +5066,138 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ComponentRepository_create_component : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentRepository;
+      TAO_ServerRequestInfo_IR_ComponentRepository_create_component (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentRepository *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ComponentDef_ptr base_component,
+        const IR_InterfaceDefSeq & supports_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ComponentRepository_create_component (const TAO_ServerRequestInfo_IR_ComponentRepository_create_component &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentRepository_create_component &);
+    
+    private:
+      POA_IR::ComponentRepository *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_ComponentDef_ptr base_component_;
+      const IR_InterfaceDefSeq & supports_interfaces_;
+      void result (IR::ComponentDef_ptr      result);
+      // update the result 
+      IR_ComponentDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentRepository_create_home : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentRepository;
+      TAO_ServerRequestInfo_IR_ComponentRepository_create_home (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentRepository *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_HomeDef_ptr base_home,
+        IR_ComponentDef_ptr managed_component,
+        IR_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentRepository_create_home (const TAO_ServerRequestInfo_IR_ComponentRepository_create_home &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentRepository_create_home &);
+  
+    private:
+      POA_IR::ComponentRepository *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_HomeDef_ptr base_home_;
+      IR_ComponentDef_ptr managed_component_;
+      IR_ValueDef_ptr primary_key_;
+      void result (IR::HomeDef_ptr    result);
+      // update the result 
+      IR_HomeDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -3057,7 +5260,7 @@ class _TAO_ComponentRepository_ThruPOA_Proxy_Impl :
 public:
   _TAO_ComponentRepository_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ComponentRepository_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ComponentRepository_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_ComponentDef_ptr create_component   (
       CORBA_Object *_collocated_tao_target_,
@@ -3720,6 +5923,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -3783,7 +5994,7 @@ class _TAO_ModuleDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ModuleDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ModuleDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ModuleDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -4371,6 +6582,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ConstantDef_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ConstantDef;
+      TAO_ServerRequestInfo_IR_ConstantDef_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ConstantDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ConstantDef_type_get (const TAO_ServerRequestInfo_IR_ConstantDef_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ConstantDef_type_get &);
+    
+    private:
+      POA_IR::ConstantDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ConstantDef_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ConstantDef;
+      TAO_ServerRequestInfo_IR_ConstantDef_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ConstantDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ConstantDef_type_def_get (const TAO_ServerRequestInfo_IR_ConstantDef_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ConstantDef_type_def_get &);
+  
+    private:
+      POA_IR::ConstantDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ConstantDef_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ConstantDef;
+      TAO_ServerRequestInfo_IR_ConstantDef_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ConstantDef *tao_impl
+        ,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ConstantDef_type_def_set (const TAO_ServerRequestInfo_IR_ConstantDef_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ConstantDef_type_def_set &);
+  
+    private:
+      POA_IR::ConstantDef *_tao_impl;
+      IR_IDLType_ptr type_def_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ConstantDef_value_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ConstantDef;
+      TAO_ServerRequestInfo_IR_ConstantDef_value_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ConstantDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ConstantDef_value_get (const TAO_ServerRequestInfo_IR_ConstantDef_value_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ConstantDef_value_get &);
+  
+    private:
+      POA_IR::ConstantDef *_tao_impl;
+      void result (CORBA::Any *    result);
+      // update the result 
+      CORBA::Any *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ConstantDef_value_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ConstantDef;
+      TAO_ServerRequestInfo_IR_ConstantDef_value_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ConstantDef *tao_impl
+        ,
+        const CORBA::Any & value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ConstantDef_value_set (const TAO_ServerRequestInfo_IR_ConstantDef_value_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ConstantDef_value_set &);
+  
+    private:
+      POA_IR::ConstantDef *_tao_impl;
+      const CORBA::Any & value_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -4433,7 +6905,7 @@ class _TAO_ConstantDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ConstantDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ConstantDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ConstantDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type   (
       CORBA_Object *_collocated_tao_target_,
@@ -4849,6 +7321,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -4912,7 +7392,7 @@ class _TAO_TypedefDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_TypedefDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_TypedefDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_TypedefDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -5405,6 +7885,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_StructDef_members_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::StructDef;
+      TAO_ServerRequestInfo_IR_StructDef_members_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::StructDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_StructDef_members_get (const TAO_ServerRequestInfo_IR_StructDef_members_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_StructDef_members_get &);
+    
+    private:
+      POA_IR::StructDef *_tao_impl;
+      void result (IR::StructMemberSeq *      result);
+      // update the result 
+      IR_StructMemberSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_StructDef_members_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::StructDef;
+      TAO_ServerRequestInfo_IR_StructDef_members_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::StructDef *tao_impl
+        ,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_StructDef_members_set (const TAO_ServerRequestInfo_IR_StructDef_members_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_StructDef_members_set &);
+  
+    private:
+      POA_IR::StructDef *_tao_impl;
+      const IR_StructMemberSeq & members_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -5468,7 +8057,7 @@ class _TAO_StructDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_StructDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_StructDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_StructDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_StructMemberSeq * members   (
       CORBA_Object *_collocated_tao_target_,
@@ -6226,6 +8815,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UnionDef;
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UnionDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get &);
+    
+    private:
+      POA_IR::UnionDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UnionDef;
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UnionDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get &);
+  
+    private:
+      POA_IR::UnionDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UnionDef;
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UnionDef *tao_impl
+        ,
+        IR_IDLType_ptr discriminator_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set &);
+  
+    private:
+      POA_IR::UnionDef *_tao_impl;
+      IR_IDLType_ptr discriminator_type_def_;
+    };
+
+    class TAO_ServerRequestInfo_IR_UnionDef_members_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UnionDef;
+      TAO_ServerRequestInfo_IR_UnionDef_members_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UnionDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_UnionDef_members_get (const TAO_ServerRequestInfo_IR_UnionDef_members_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_UnionDef_members_get &);
+  
+    private:
+      POA_IR::UnionDef *_tao_impl;
+      void result (IR::UnionMemberSeq *    result);
+      // update the result 
+      IR_UnionMemberSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_UnionDef_members_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UnionDef;
+      TAO_ServerRequestInfo_IR_UnionDef_members_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UnionDef *tao_impl
+        ,
+        const IR_UnionMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_UnionDef_members_set (const TAO_ServerRequestInfo_IR_UnionDef_members_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_UnionDef_members_set &);
+  
+    private:
+      POA_IR::UnionDef *_tao_impl;
+      const IR_UnionMemberSeq & members_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -6289,7 +9139,7 @@ class _TAO_UnionDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_UnionDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_UnionDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_UnionDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr discriminator_type   (
       CORBA_Object *_collocated_tao_target_,
@@ -6928,6 +9778,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_EnumDef_members_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::EnumDef;
+      TAO_ServerRequestInfo_IR_EnumDef_members_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::EnumDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_EnumDef_members_get (const TAO_ServerRequestInfo_IR_EnumDef_members_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_EnumDef_members_get &);
+    
+    private:
+      POA_IR::EnumDef *_tao_impl;
+      void result (IR::EnumMemberSeq *      result);
+      // update the result 
+      IR_EnumMemberSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_EnumDef_members_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::EnumDef;
+      TAO_ServerRequestInfo_IR_EnumDef_members_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::EnumDef *tao_impl
+        ,
+        const IR_EnumMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_EnumDef_members_set (const TAO_ServerRequestInfo_IR_EnumDef_members_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_EnumDef_members_set &);
+  
+    private:
+      POA_IR::EnumDef *_tao_impl;
+      const IR_EnumMemberSeq & members_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -6990,7 +9949,7 @@ class _TAO_EnumDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_EnumDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_EnumDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_EnumDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_EnumMemberSeq * members   (
       CORBA_Object *_collocated_tao_target_,
@@ -7397,6 +10356,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AliasDef;
+      TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AliasDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get (const TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get &);
+    
+    private:
+      POA_IR::AliasDef *_tao_impl;
+      void result (IR::IDLType_ptr      result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AliasDef;
+      TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AliasDef *tao_impl
+        ,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set (const TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set &);
+  
+    private:
+      POA_IR::AliasDef *_tao_impl;
+      IR_IDLType_ptr original_type_def_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -7459,7 +10527,7 @@ class _TAO_AliasDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_AliasDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_AliasDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_AliasDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_IDLType_ptr original_type_def   (
       CORBA_Object *_collocated_tao_target_,
@@ -7833,6 +10901,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptions, contexts
+  // and build the lists dynamically on demand so that unnecessary time overhead
+  // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -7895,7 +10971,7 @@ class _TAO_NativeDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_NativeDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_NativeDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_NativeDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -8163,6 +11239,65 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::PrimitiveDef;
+      TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::PrimitiveDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get (const TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get &);
+    
+    private:
+      POA_IR::PrimitiveDef *_tao_impl;
+      void result (IR::PrimitiveKind      result);
+      // update the result 
+      IR_PrimitiveKind  _result;
+  };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -8225,7 +11360,7 @@ class _TAO_PrimitiveDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_PrimitiveKind kind   (
       CORBA_Object *_collocated_tao_target_,
@@ -8432,6 +11567,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_StringDef_bound_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::StringDef;
+      TAO_ServerRequestInfo_IR_StringDef_bound_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::StringDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_StringDef_bound_get (const TAO_ServerRequestInfo_IR_StringDef_bound_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_StringDef_bound_get &);
+    
+    private:
+      POA_IR::StringDef *_tao_impl;
+      void result (CORBA::ULong      result);
+      // update the result 
+      CORBA::ULong  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_StringDef_bound_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::StringDef;
+      TAO_ServerRequestInfo_IR_StringDef_bound_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::StringDef *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_StringDef_bound_set (const TAO_ServerRequestInfo_IR_StringDef_bound_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_StringDef_bound_set &);
+  
+    private:
+      POA_IR::StringDef *_tao_impl;
+      const CORBA::ULong & bound_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -8494,7 +11738,7 @@ class _TAO_StringDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_StringDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_StringDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_StringDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound   (
       CORBA_Object *_collocated_tao_target_,
@@ -8719,6 +11963,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_WstringDef_bound_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::WstringDef;
+      TAO_ServerRequestInfo_IR_WstringDef_bound_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::WstringDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_WstringDef_bound_get (const TAO_ServerRequestInfo_IR_WstringDef_bound_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_WstringDef_bound_get &);
+    
+    private:
+      POA_IR::WstringDef *_tao_impl;
+      void result (CORBA::ULong      result);
+      // update the result 
+      CORBA::ULong  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_WstringDef_bound_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::WstringDef;
+      TAO_ServerRequestInfo_IR_WstringDef_bound_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::WstringDef *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_WstringDef_bound_set (const TAO_ServerRequestInfo_IR_WstringDef_bound_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_WstringDef_bound_set &);
+  
+    private:
+      POA_IR::WstringDef *_tao_impl;
+      const CORBA::ULong & bound_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -8781,7 +12134,7 @@ class _TAO_WstringDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_WstringDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_WstringDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_WstringDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound   (
       CORBA_Object *_collocated_tao_target_,
@@ -9039,6 +12392,216 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_FixedDef_digits_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::FixedDef;
+      TAO_ServerRequestInfo_IR_FixedDef_digits_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::FixedDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_FixedDef_digits_get (const TAO_ServerRequestInfo_IR_FixedDef_digits_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_FixedDef_digits_get &);
+    
+    private:
+      POA_IR::FixedDef *_tao_impl;
+      void result (CORBA::UShort      result);
+      // update the result 
+      CORBA::UShort  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_FixedDef_digits_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::FixedDef;
+      TAO_ServerRequestInfo_IR_FixedDef_digits_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::FixedDef *tao_impl
+        ,
+        const CORBA::UShort & digits,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_FixedDef_digits_set (const TAO_ServerRequestInfo_IR_FixedDef_digits_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_FixedDef_digits_set &);
+  
+    private:
+      POA_IR::FixedDef *_tao_impl;
+      const CORBA::UShort & digits_;
+    };
+
+    class TAO_ServerRequestInfo_IR_FixedDef_scale_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::FixedDef;
+      TAO_ServerRequestInfo_IR_FixedDef_scale_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::FixedDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_FixedDef_scale_get (const TAO_ServerRequestInfo_IR_FixedDef_scale_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_FixedDef_scale_get &);
+  
+    private:
+      POA_IR::FixedDef *_tao_impl;
+      void result (CORBA::Short    result);
+      // update the result 
+      CORBA::Short  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_FixedDef_scale_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::FixedDef;
+      TAO_ServerRequestInfo_IR_FixedDef_scale_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::FixedDef *tao_impl
+        ,
+        const CORBA::Short & scale,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_FixedDef_scale_set (const TAO_ServerRequestInfo_IR_FixedDef_scale_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_FixedDef_scale_set &);
+  
+    private:
+      POA_IR::FixedDef *_tao_impl;
+      const CORBA::Short & scale_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -9101,7 +12664,7 @@ class _TAO_FixedDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_FixedDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_FixedDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_FixedDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::UShort digits   (
       CORBA_Object *_collocated_tao_target_,
@@ -9409,6 +12972,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_SequenceDef_bound_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::SequenceDef;
+      TAO_ServerRequestInfo_IR_SequenceDef_bound_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::SequenceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_SequenceDef_bound_get (const TAO_ServerRequestInfo_IR_SequenceDef_bound_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_SequenceDef_bound_get &);
+    
+    private:
+      POA_IR::SequenceDef *_tao_impl;
+      void result (CORBA::ULong      result);
+      // update the result 
+      CORBA::ULong  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_SequenceDef_bound_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::SequenceDef;
+      TAO_ServerRequestInfo_IR_SequenceDef_bound_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::SequenceDef *tao_impl
+        ,
+        const CORBA::ULong & bound,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_SequenceDef_bound_set (const TAO_ServerRequestInfo_IR_SequenceDef_bound_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_SequenceDef_bound_set &);
+  
+    private:
+      POA_IR::SequenceDef *_tao_impl;
+      const CORBA::ULong & bound_;
+    };
+
+    class TAO_ServerRequestInfo_IR_SequenceDef_element_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::SequenceDef;
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::SequenceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_get (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_get &);
+  
+    private:
+      POA_IR::SequenceDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr    result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::SequenceDef;
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::SequenceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get &);
+  
+    private:
+      POA_IR::SequenceDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::SequenceDef;
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::SequenceDef *tao_impl
+        ,
+        IR_IDLType_ptr element_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set &);
+  
+    private:
+      POA_IR::SequenceDef *_tao_impl;
+      IR_IDLType_ptr element_type_def_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -9471,7 +13295,7 @@ class _TAO_SequenceDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_SequenceDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_SequenceDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_SequenceDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound   (
       CORBA_Object *_collocated_tao_target_,
@@ -9795,6 +13619,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ArrayDef_length_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ArrayDef;
+      TAO_ServerRequestInfo_IR_ArrayDef_length_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ArrayDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ArrayDef_length_get (const TAO_ServerRequestInfo_IR_ArrayDef_length_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ArrayDef_length_get &);
+    
+    private:
+      POA_IR::ArrayDef *_tao_impl;
+      void result (CORBA::ULong      result);
+      // update the result 
+      CORBA::ULong  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ArrayDef_length_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ArrayDef;
+      TAO_ServerRequestInfo_IR_ArrayDef_length_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ArrayDef *tao_impl
+        ,
+        const CORBA::ULong & length,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ArrayDef_length_set (const TAO_ServerRequestInfo_IR_ArrayDef_length_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ArrayDef_length_set &);
+  
+    private:
+      POA_IR::ArrayDef *_tao_impl;
+      const CORBA::ULong & length_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ArrayDef_element_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ArrayDef;
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ArrayDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_get (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_get &);
+  
+    private:
+      POA_IR::ArrayDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr    result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ArrayDef;
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ArrayDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get &);
+  
+    private:
+      POA_IR::ArrayDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ArrayDef;
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ArrayDef *tao_impl
+        ,
+        IR_IDLType_ptr element_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set &);
+  
+    private:
+      POA_IR::ArrayDef *_tao_impl;
+      IR_IDLType_ptr element_type_def_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -9857,7 +13942,7 @@ class _TAO_ArrayDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ArrayDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ArrayDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ArrayDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::ULong length   (
       CORBA_Object *_collocated_tao_target_,
@@ -10348,6 +14433,166 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ExceptionDef_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ExceptionDef;
+      TAO_ServerRequestInfo_IR_ExceptionDef_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ExceptionDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ExceptionDef_type_get (const TAO_ServerRequestInfo_IR_ExceptionDef_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ExceptionDef_type_get &);
+    
+    private:
+      POA_IR::ExceptionDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ExceptionDef_members_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ExceptionDef;
+      TAO_ServerRequestInfo_IR_ExceptionDef_members_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ExceptionDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ExceptionDef_members_get (const TAO_ServerRequestInfo_IR_ExceptionDef_members_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ExceptionDef_members_get &);
+  
+    private:
+      POA_IR::ExceptionDef *_tao_impl;
+      void result (IR::StructMemberSeq *    result);
+      // update the result 
+      IR_StructMemberSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ExceptionDef_members_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ExceptionDef;
+      TAO_ServerRequestInfo_IR_ExceptionDef_members_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ExceptionDef *tao_impl
+        ,
+        const IR_StructMemberSeq & members,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ExceptionDef_members_set (const TAO_ServerRequestInfo_IR_ExceptionDef_members_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ExceptionDef_members_set &);
+  
+    private:
+      POA_IR::ExceptionDef *_tao_impl;
+      const IR_StructMemberSeq & members_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -10411,7 +14656,7 @@ class _TAO_ExceptionDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ExceptionDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ExceptionDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ExceptionDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type   (
       CORBA_Object *_collocated_tao_target_,
@@ -11049,6 +15294,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_AttributeDef_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AttributeDef;
+      TAO_ServerRequestInfo_IR_AttributeDef_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AttributeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_AttributeDef_type_get (const TAO_ServerRequestInfo_IR_AttributeDef_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_AttributeDef_type_get &);
+    
+    private:
+      POA_IR::AttributeDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_AttributeDef_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AttributeDef;
+      TAO_ServerRequestInfo_IR_AttributeDef_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AttributeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_AttributeDef_type_def_get (const TAO_ServerRequestInfo_IR_AttributeDef_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_AttributeDef_type_def_get &);
+  
+    private:
+      POA_IR::AttributeDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_AttributeDef_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AttributeDef;
+      TAO_ServerRequestInfo_IR_AttributeDef_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AttributeDef *tao_impl
+        ,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_AttributeDef_type_def_set (const TAO_ServerRequestInfo_IR_AttributeDef_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_AttributeDef_type_def_set &);
+  
+    private:
+      POA_IR::AttributeDef *_tao_impl;
+      IR_IDLType_ptr type_def_;
+    };
+
+    class TAO_ServerRequestInfo_IR_AttributeDef_mode_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AttributeDef;
+      TAO_ServerRequestInfo_IR_AttributeDef_mode_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AttributeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_AttributeDef_mode_get (const TAO_ServerRequestInfo_IR_AttributeDef_mode_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_AttributeDef_mode_get &);
+  
+    private:
+      POA_IR::AttributeDef *_tao_impl;
+      void result (IR::AttributeMode    result);
+      // update the result 
+      IR_AttributeMode  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_AttributeDef_mode_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::AttributeDef;
+      TAO_ServerRequestInfo_IR_AttributeDef_mode_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::AttributeDef *tao_impl
+        ,
+        IR_AttributeMode & mode,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_AttributeDef_mode_set (const TAO_ServerRequestInfo_IR_AttributeDef_mode_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_AttributeDef_mode_set &);
+  
+    private:
+      POA_IR::AttributeDef *_tao_impl;
+      const IR_AttributeMode & mode_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -11111,7 +15617,7 @@ class _TAO_AttributeDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_AttributeDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_AttributeDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_AttributeDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type   (
       CORBA_Object *_collocated_tao_target_,
@@ -11700,6 +16206,570 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_OperationDef_result_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_result_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_result_get (const TAO_ServerRequestInfo_IR_OperationDef_result_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_result_get &);
+    
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_result_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_result_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_result_def_get (const TAO_ServerRequestInfo_IR_OperationDef_result_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_result_def_get &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_result_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_result_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        IR_IDLType_ptr result_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_result_def_set (const TAO_ServerRequestInfo_IR_OperationDef_result_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_result_def_set &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      IR_IDLType_ptr result_def_;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_params_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_params_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_params_get (const TAO_ServerRequestInfo_IR_OperationDef_params_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_params_get &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (IR::ParDescriptionSeq *    result);
+      // update the result 
+      IR_ParDescriptionSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_params_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_params_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        const IR_ParDescriptionSeq & params,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_params_set (const TAO_ServerRequestInfo_IR_OperationDef_params_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_params_set &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      const IR_ParDescriptionSeq & params_;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_mode_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_mode_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_mode_get (const TAO_ServerRequestInfo_IR_OperationDef_mode_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_mode_get &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (IR::OperationMode    result);
+      // update the result 
+      IR_OperationMode  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_mode_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_mode_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        IR_OperationMode & mode,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_mode_set (const TAO_ServerRequestInfo_IR_OperationDef_mode_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_mode_set &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      const IR_OperationMode & mode_;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_contexts_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_contexts_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_contexts_get (const TAO_ServerRequestInfo_IR_OperationDef_contexts_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_contexts_get &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (IR::ContextIdSeq *    result);
+      // update the result 
+      IR_ContextIdSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_contexts_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_contexts_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_contexts_set (const TAO_ServerRequestInfo_IR_OperationDef_contexts_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_contexts_set &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      const IR_ContextIdSeq & contexts_;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_exceptions_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_exceptions_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_exceptions_get (const TAO_ServerRequestInfo_IR_OperationDef_exceptions_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_exceptions_get &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      void result (IR::ExceptionDefSeq *    result);
+      // update the result 
+      IR_ExceptionDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_OperationDef_exceptions_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::OperationDef;
+      TAO_ServerRequestInfo_IR_OperationDef_exceptions_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::OperationDef *tao_impl
+        ,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_OperationDef_exceptions_set (const TAO_ServerRequestInfo_IR_OperationDef_exceptions_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_OperationDef_exceptions_set &);
+  
+    private:
+      POA_IR::OperationDef *_tao_impl;
+      const IR_ExceptionDefSeq & exceptions_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -11762,7 +16832,7 @@ class _TAO_OperationDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_OperationDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_OperationDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_OperationDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr result   (
       CORBA_Object *_collocated_tao_target_,
@@ -12563,6 +17633,502 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get (const TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get &);
+    
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      void result (IR::InterfaceDefSeq *      result);
+      // update the result 
+      IR_InterfaceDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const IR_InterfaceDefSeq & base_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set (const TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const IR_InterfaceDefSeq & base_interfaces_;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get (const TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const CORBA::Boolean & is_abstract,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set (const TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const CORBA::Boolean & is_abstract_;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get (const TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const CORBA::Boolean & is_local,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set (const TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const CORBA::Boolean & is_local_;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_is_a : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_a (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const char * interface_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_is_a (const TAO_ServerRequestInfo_IR_InterfaceDef_is_a &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_is_a &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const char * interface_id_;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        IR_AttributeMode & mode,
+        const IR_ExceptionDefSeq & get_exceptions,
+        const IR_ExceptionDefSeq & put_exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute (const TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr type_;
+      const IR_AttributeMode & mode_;
+      const IR_ExceptionDefSeq & get_exceptions_;
+      const IR_ExceptionDefSeq & put_exceptions_;
+      void result (IR::AttributeDef_ptr    result);
+      // update the result 
+      IR_AttributeDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_InterfaceDef_create_operation : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::InterfaceDef;
+      TAO_ServerRequestInfo_IR_InterfaceDef_create_operation (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::InterfaceDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr result,
+        IR_OperationMode & mode,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_InterfaceDef_create_operation (const TAO_ServerRequestInfo_IR_InterfaceDef_create_operation &);
+      void operator= (const TAO_ServerRequestInfo_IR_InterfaceDef_create_operation &);
+  
+    private:
+      POA_IR::InterfaceDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr result_;
+      const IR_OperationMode & mode_;
+      const IR_ParDescriptionSeq & params_;
+      const IR_ExceptionDefSeq & exceptions_;
+      const IR_ContextIdSeq & contexts_;
+      void result (IR::OperationDef_ptr    result);
+      // update the result 
+      IR_OperationDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -12627,7 +18193,7 @@ class _TAO_InterfaceDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_InterfaceDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_InterfaceDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_InterfaceDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_InterfaceDefSeq * base_interfaces   (
       CORBA_Object *_collocated_tao_target_,
@@ -13405,6 +18971,267 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ValueMemberDef_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueMemberDef;
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueMemberDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_get (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_get &);
+    
+    private:
+      POA_IR::ValueMemberDef *_tao_impl;
+      void result (CORBA::TypeCode_ptr      result);
+      // update the result 
+      CORBA::TypeCode_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueMemberDef;
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueMemberDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get &);
+  
+    private:
+      POA_IR::ValueMemberDef *_tao_impl;
+      void result (IR::IDLType_ptr    result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueMemberDef;
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueMemberDef *tao_impl
+        ,
+        IR_IDLType_ptr type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set &);
+  
+    private:
+      POA_IR::ValueMemberDef *_tao_impl;
+      IR_IDLType_ptr type_def_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueMemberDef_access_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueMemberDef;
+      TAO_ServerRequestInfo_IR_ValueMemberDef_access_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueMemberDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ValueMemberDef_access_get (const TAO_ServerRequestInfo_IR_ValueMemberDef_access_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueMemberDef_access_get &);
+  
+    private:
+      POA_IR::ValueMemberDef *_tao_impl;
+      void result (CORBA::Visibility    result);
+      // update the result 
+      CORBA::Visibility  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueMemberDef_access_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueMemberDef;
+      TAO_ServerRequestInfo_IR_ValueMemberDef_access_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueMemberDef *tao_impl
+        ,
+        const CORBA::Visibility & access,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ValueMemberDef_access_set (const TAO_ServerRequestInfo_IR_ValueMemberDef_access_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueMemberDef_access_set &);
+  
+    private:
+      POA_IR::ValueMemberDef *_tao_impl;
+      const CORBA::Visibility & access_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -13467,7 +19294,7 @@ class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ValueMemberDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueMemberDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ValueMemberDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type   (
       CORBA_Object *_collocated_tao_target_,
@@ -14319,6 +20146,967 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get (const TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get &);
+    
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (IR::InterfaceDefSeq *      result);
+      // update the result 
+      IR_InterfaceDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set (const TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const IR_InterfaceDefSeq & supported_interfaces_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_initializers_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_initializers_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_initializers_get (const TAO_ServerRequestInfo_IR_ValueDef_initializers_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_initializers_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (IR::InitializerSeq *    result);
+      // update the result 
+      IR_InitializerSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_initializers_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_initializers_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const IR_InitializerSeq & initializers,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_initializers_set (const TAO_ServerRequestInfo_IR_ValueDef_initializers_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_initializers_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const IR_InitializerSeq & initializers_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_base_value_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_base_value_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_base_value_get (const TAO_ServerRequestInfo_IR_ValueDef_base_value_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_base_value_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (IR::ValueDef_ptr    result);
+      // update the result 
+      IR_ValueDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_base_value_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_base_value_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        IR_ValueDef_ptr base_value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_base_value_set (const TAO_ServerRequestInfo_IR_ValueDef_base_value_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_base_value_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      IR_ValueDef_ptr base_value_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get (const TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (IR::ValueDefSeq *    result);
+      // update the result 
+      IR_ValueDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const IR_ValueDefSeq & abstract_base_values,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set (const TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const IR_ValueDefSeq & abstract_base_values_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get (const TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const CORBA::Boolean & is_abstract,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set (const TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const CORBA::Boolean & is_abstract_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_custom_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_custom_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_custom_get (const TAO_ServerRequestInfo_IR_ValueDef_is_custom_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_custom_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_custom_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_custom_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const CORBA::Boolean & is_custom,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_custom_set (const TAO_ServerRequestInfo_IR_ValueDef_is_custom_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_custom_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const CORBA::Boolean & is_custom_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get (const TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const CORBA::Boolean & is_truncatable,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set (const TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const CORBA::Boolean & is_truncatable_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_is_a : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_is_a (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const char * id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_is_a (const TAO_ServerRequestInfo_IR_ValueDef_is_a &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_is_a &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const char * id_;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_create_value_member : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_create_value_member (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        const CORBA::Visibility & access,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_create_value_member (const TAO_ServerRequestInfo_IR_ValueDef_create_value_member &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_create_value_member &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr type_;
+      const CORBA::Visibility & access_;
+      void result (IR::ValueMemberDef_ptr    result);
+      // update the result 
+      IR_ValueMemberDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_create_attribute : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_create_attribute (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr type,
+        IR_AttributeMode & mode,
+        const IR_ExceptionDefSeq & get_exceptions,
+        const IR_ExceptionDefSeq & put_exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_create_attribute (const TAO_ServerRequestInfo_IR_ValueDef_create_attribute &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_create_attribute &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr type_;
+      const IR_AttributeMode & mode_;
+      const IR_ExceptionDefSeq & get_exceptions_;
+      const IR_ExceptionDefSeq & put_exceptions_;
+      void result (IR::AttributeDef_ptr    result);
+      // update the result 
+      IR_AttributeDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueDef_create_operation : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueDef;
+      TAO_ServerRequestInfo_IR_ValueDef_create_operation (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_IDLType_ptr result,
+        IR_OperationMode & mode,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        const IR_ContextIdSeq & contexts,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+    private:
+      TAO_ServerRequestInfo_IR_ValueDef_create_operation (const TAO_ServerRequestInfo_IR_ValueDef_create_operation &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueDef_create_operation &);
+
+    private:
+      POA_IR::ValueDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_IDLType_ptr result_;
+      const IR_OperationMode & mode_;
+      const IR_ParDescriptionSeq & params_;
+      const IR_ExceptionDefSeq & exceptions_;
+      const IR_ContextIdSeq & contexts_;
+      void result (IR::OperationDef_ptr    result);
+      // update the result 
+      IR_OperationDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -14383,7 +21171,7 @@ class _TAO_ValueDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ValueDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ValueDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_InterfaceDefSeq * supported_interfaces   (
       CORBA_Object *_collocated_tao_target_,
@@ -15282,6 +22070,115 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueBoxDef;
+      TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueBoxDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get (const TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get &);
+    
+    private:
+      POA_IR::ValueBoxDef *_tao_impl;
+      void result (IR::IDLType_ptr      result);
+      // update the result 
+      IR_IDLType_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ValueBoxDef;
+      TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ValueBoxDef *tao_impl
+        ,
+        IR_IDLType_ptr original_type_def,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set (const TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set &);
+  
+    private:
+      POA_IR::ValueBoxDef *_tao_impl;
+      IR_IDLType_ptr original_type_def_;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -15344,7 +22241,7 @@ class _TAO_ValueBoxDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ValueBoxDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueBoxDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ValueBoxDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_IDLType_ptr original_type_def   (
       CORBA_Object *_collocated_tao_target_,
@@ -15726,6 +22623,65 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ProvidesDef;
+      TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ProvidesDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get (const TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get &);
+    
+    private:
+      POA_IR::ProvidesDef *_tao_impl;
+      void result (IR::InterfaceDef_ptr      result);
+      // update the result 
+      IR_InterfaceDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -15788,7 +22744,7 @@ class _TAO_ProvidesDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ProvidesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ProvidesDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ProvidesDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_InterfaceDef_ptr interface_type   (
       CORBA_Object *_collocated_tao_target_,
@@ -16160,6 +23116,116 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_UsesDef_interface_type_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UsesDef;
+      TAO_ServerRequestInfo_IR_UsesDef_interface_type_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UsesDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_UsesDef_interface_type_get (const TAO_ServerRequestInfo_IR_UsesDef_interface_type_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_UsesDef_interface_type_get &);
+    
+    private:
+      POA_IR::UsesDef *_tao_impl;
+      void result (IR::InterfaceDef_ptr      result);
+      // update the result 
+      IR_InterfaceDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::UsesDef;
+      TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::UsesDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get (const TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get &);
+  
+    private:
+      POA_IR::UsesDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -16222,7 +23288,7 @@ class _TAO_UsesDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_UsesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_UsesDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_UsesDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_InterfaceDef_ptr interface_type   (
       CORBA_Object *_collocated_tao_target_,
@@ -16611,6 +23677,118 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_EventDef_is_a : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::EventDef;
+      TAO_ServerRequestInfo_IR_EventDef_is_a (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::EventDef *tao_impl
+        ,
+        const char * event_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_EventDef_is_a (const TAO_ServerRequestInfo_IR_EventDef_is_a &);
+      void operator= (const TAO_ServerRequestInfo_IR_EventDef_is_a &);
+    
+    private:
+      POA_IR::EventDef *_tao_impl;
+      const char * event_id_;
+      void result (CORBA::Boolean      result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_EventDef_event_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::EventDef;
+      TAO_ServerRequestInfo_IR_EventDef_event_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::EventDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_EventDef_event_get (const TAO_ServerRequestInfo_IR_EventDef_event_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_EventDef_event_get &);
+  
+    private:
+      POA_IR::EventDef *_tao_impl;
+      void result (IR::ValueDef_ptr    result);
+      // update the result 
+      IR_ValueDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -16673,7 +23851,7 @@ class _TAO_EventDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_EventDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_EventDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_EventDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::Boolean is_a   (
       CORBA_Object *_collocated_tao_target_,
@@ -17047,6 +24225,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -17109,7 +24295,7 @@ class _TAO_EmitsDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_EmitsDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_EmitsDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_EmitsDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -17466,6 +24652,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -17528,7 +24722,7 @@ class _TAO_PublishesDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_PublishesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_PublishesDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_PublishesDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -17885,6 +25079,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -17947,7 +25149,7 @@ class _TAO_ConsumesDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ConsumesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ConsumesDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ConsumesDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -18734,6 +25936,769 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get (const TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get &);
+    
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::InterfaceDefSeq *      result);
+      // update the result 
+      IR_InterfaceDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const IR_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set (const TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const IR_InterfaceDefSeq & supported_interfaces_;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_base_component_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_base_component_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_base_component_get (const TAO_ServerRequestInfo_IR_ComponentDef_base_component_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_base_component_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::ComponentDef_ptr    result);
+      // update the result 
+      IR_ComponentDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get (const TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::ProvidesDefSeq *    result);
+      // update the result 
+      IR_ProvidesDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get (const TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::UsesDefSeq *    result);
+      // update the result 
+      IR_UsesDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get (const TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::EmitsDefSeq *    result);
+      // update the result 
+      IR_EmitsDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get (const TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::PublishesDefSeq *    result);
+      // update the result 
+      IR_PublishesDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get (const TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (IR::ConsumesDefSeq *    result);
+      // update the result 
+      IR_ConsumesDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get (const TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_create_provides : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_create_provides (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_InterfaceDef_ptr interface_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_create_provides (const TAO_ServerRequestInfo_IR_ComponentDef_create_provides &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_create_provides &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_InterfaceDef_ptr interface_type_;
+      void result (IR::ProvidesDef_ptr    result);
+      // update the result 
+      IR_ProvidesDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_create_uses : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_create_uses (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_InterfaceDef_ptr interface_type,
+        const CORBA::Boolean & is_multiple,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_create_uses (const TAO_ServerRequestInfo_IR_ComponentDef_create_uses &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_create_uses &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_InterfaceDef_ptr interface_type_;
+      const CORBA::Boolean & is_multiple_;
+      void result (IR::UsesDef_ptr    result);
+      // update the result 
+      IR_UsesDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_create_emits : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_create_emits (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_create_emits (const TAO_ServerRequestInfo_IR_ComponentDef_create_emits &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_create_emits &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_ValueDef_ptr value_;
+      void result (IR::EmitsDef_ptr    result);
+      // update the result 
+      IR_EmitsDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_create_publishes : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_create_publishes (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_create_publishes (const TAO_ServerRequestInfo_IR_ComponentDef_create_publishes &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_create_publishes &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_ValueDef_ptr value_;
+      void result (IR::PublishesDef_ptr    result);
+      // update the result 
+      IR_PublishesDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_ComponentDef_create_consumes : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::ComponentDef;
+      TAO_ServerRequestInfo_IR_ComponentDef_create_consumes (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::ComponentDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_ComponentDef_create_consumes (const TAO_ServerRequestInfo_IR_ComponentDef_create_consumes &);
+      void operator= (const TAO_ServerRequestInfo_IR_ComponentDef_create_consumes &);
+  
+    private:
+      POA_IR::ComponentDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_ValueDef_ptr value_;
+      void result (IR::ConsumesDef_ptr    result);
+      // update the result 
+      IR_ConsumesDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -18796,7 +26761,7 @@ class _TAO_ComponentDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_ComponentDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ComponentDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_ComponentDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_InterfaceDefSeq * supported_interfaces   (
       CORBA_Object *_collocated_tao_target_,
@@ -19702,6 +27667,118 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::PrimaryKeyDef;
+      TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::PrimaryKeyDef *tao_impl
+        ,
+        const char * primary_key_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a (const TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a &);
+      void operator= (const TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a &);
+    
+    private:
+      POA_IR::PrimaryKeyDef *_tao_impl;
+      const char * primary_key_id_;
+      void result (CORBA::Boolean      result);
+      // update the result 
+      CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::PrimaryKeyDef;
+      TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::PrimaryKeyDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get (const TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
+  
+    private:
+      POA_IR::PrimaryKeyDef *_tao_impl;
+      void result (IR::ValueDef_ptr    result);
+      // update the result 
+      IR_ValueDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -19764,7 +27841,7 @@ class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::Boolean is_a   (
       CORBA_Object *_collocated_tao_target_,
@@ -20210,6 +28287,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -20272,7 +28357,7 @@ class _TAO_FactoryDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_FactoryDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_FactoryDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_FactoryDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -20777,6 +28862,14 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -20839,7 +28932,7 @@ class _TAO_FinderDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_FinderDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_FinderDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_FinderDef_ThruPOA_Proxy_Impl (void) { }
   
 };
 
@@ -21614,6 +29707,501 @@ private:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
+  
+#if (TAO_HAS_INTERCEPTORS == 1)
+    // Generation of interceptors related RequestInfo classes per operation.
+    // This needed to be able to store the arguments, exceptions, contexts
+    // and build the lists dynamically on demand so that unnecessary time overhead
+    // of building these lists when they arent used is avoided.
+    class TAO_ServerRequestInfo_IR_HomeDef_base_home_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_base_home_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    
+    
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_base_home_get (const TAO_ServerRequestInfo_IR_HomeDef_base_home_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_base_home_get &);
+    
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (IR::HomeDef_ptr      result);
+      // update the result 
+      IR_HomeDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_managed_component_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_managed_component_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_managed_component_get (const TAO_ServerRequestInfo_IR_HomeDef_managed_component_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_managed_component_get &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (IR::ComponentDef_ptr    result);
+      // update the result 
+      IR_ComponentDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_primary_key_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_primary_key_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_primary_key_get (const TAO_ServerRequestInfo_IR_HomeDef_primary_key_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_primary_key_get &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (IR::PrimaryKeyDef_ptr    result);
+      // update the result 
+      IR_PrimaryKeyDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_factories_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_factories_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_factories_get (const TAO_ServerRequestInfo_IR_HomeDef_factories_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_factories_get &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (IR::FactoryDefSeq *    result);
+      // update the result 
+      IR_FactoryDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_finders_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_finders_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_finders_get (const TAO_ServerRequestInfo_IR_HomeDef_finders_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_finders_get &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (IR::FinderDefSeq *    result);
+      // update the result 
+      IR_FinderDefSeq *  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_is_basic_get : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_is_basic_get (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_is_basic_get (const TAO_ServerRequestInfo_IR_HomeDef_is_basic_get &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_is_basic_get &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      void result (CORBA::Boolean    result);
+     // update the result 
+    CORBA::Boolean  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_create_primary_key : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_create_primary_key (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_create_primary_key (const TAO_ServerRequestInfo_IR_HomeDef_create_primary_key &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_create_primary_key &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      IR_ValueDef_ptr primary_key_;
+      void result (IR::PrimaryKeyDef_ptr    result);
+      // update the result 
+      IR_PrimaryKeyDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_create_factory : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_create_factory (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_create_factory (const TAO_ServerRequestInfo_IR_HomeDef_create_factory &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_create_factory &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_ParDescriptionSeq & params_;
+      const IR_ExceptionDefSeq & exceptions_;
+      void result (IR::FactoryDef_ptr    result);
+      // update the result 
+      IR_FactoryDef_ptr  _result;
+    };
+
+    class TAO_ServerRequestInfo_IR_HomeDef_create_finder : public TAO_ServerRequestInfo
+    {
+    public:
+      friend class POA_IR::HomeDef;
+      TAO_ServerRequestInfo_IR_HomeDef_create_finder (
+        TAO_ServerRequest &_tao_server_request,
+        POA_IR::HomeDef *tao_impl
+        ,
+        const char * id,
+        const char * name,
+        const char * version,
+        const IR_ParDescriptionSeq & params,
+        const IR_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual char * target_most_derived_interface (
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+      virtual CORBA::Boolean target_is_a (
+          const char * id,
+          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  
+    private:
+      TAO_ServerRequestInfo_IR_HomeDef_create_finder (const TAO_ServerRequestInfo_IR_HomeDef_create_finder &);
+      void operator= (const TAO_ServerRequestInfo_IR_HomeDef_create_finder &);
+  
+    private:
+      POA_IR::HomeDef *_tao_impl;
+      const char * id_;
+      const char * name_;
+      const char * version_;
+      const IR_ParDescriptionSeq & params_;
+      const IR_ExceptionDefSeq & exceptions_;
+      void result (IR::FinderDef_ptr    result);
+      // update the result 
+      IR_FinderDef_ptr  _result;
+    };
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
   };
 
 ///////////////////////////////////////////////////////////////////////
@@ -21676,7 +30264,7 @@ class _TAO_HomeDef_ThruPOA_Proxy_Impl :
 public:
   _TAO_HomeDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_HomeDef_ThruPOA_Proxy_Impl (void);
+  virtual ~_TAO_HomeDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual IR_HomeDef_ptr base_home   (
       CORBA_Object *_collocated_tao_target_,
