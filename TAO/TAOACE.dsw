@@ -848,6 +848,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -883,6 +886,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
     End Project Dependency
 }}}
 
@@ -1320,7 +1326,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Valuetype"=.\tao\Valuetype\Valuetype.dsp - Package Owner=<4>
+Project: "Valuetype"=.\tao\Valuetype\TAO_Valuetype.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

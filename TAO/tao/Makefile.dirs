@@ -8,8 +8,9 @@
 MAKEFILE = Makefile.dirs
 
 DIRS = \
-  ObjRefTemplate \
   IORInterceptor \
+  Valuetype \
+  ObjRefTemplate \
   PortableServer \
   DynamicAny \
   DynamicInterface \

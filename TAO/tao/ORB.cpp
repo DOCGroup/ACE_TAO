@@ -2092,7 +2092,7 @@ void
 CORBA::ORB::unregister_value_factory (const char * /* repository_id */
                                       ACE_ENV_ARG_DECL)
 {
-  ACE_THROW ((CORBA::NO_IMPLEMENT ()));
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA::ValueFactory

@@ -1,0 +1,28 @@
+#
+# Makefile for building the TAO Valuetype library
+#
+
+NAME = TAO_Valuetype
+
+OBJFILES = \
+	$(OBJDIR)\ValueBase.obj \
+	$(OBJDIR)\AbstractBase.obj \
+	$(OBJDIR)\ValueFactory.obj \
+	$(OBJDIR)\ValueFactory_Map.obj \
+	$(OBJDIR)\Valuetype_Adapter_Impl.obj
+
+RESOURCE = $(OBJDIR)\TAO_Valuetype.res
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_VALUETYPE_CFLAGS) \
+	-DTAO_VALUETYPE_BUILD_DLL
+
+CPPDIR = .
+
+INCDIR_NAME = tao\Valuetype
+INCLUDES = \
+	*.h *.inl
+
+LIBFILES = $(TAO_LIB) $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -318,7 +318,7 @@ PortableInterceptor::IORInfo::_unchecked_narrow (
           IORInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &IORInfo::_tao_class_id
                 )
             )
@@ -336,19 +336,19 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, IORInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -657,7 +657,7 @@ PortableInterceptor::IORInterceptor::_unchecked_narrow (
           IORInterceptor_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &IORInterceptor::_tao_class_id
                 )
             )
@@ -675,19 +675,19 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, IORInterceptor)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::PortableInterceptor::Interceptor::_tao_class_id)
             )
     {
@@ -701,7 +701,7 @@ void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

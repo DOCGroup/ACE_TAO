@@ -1,3 +1,69 @@
+Thu May  1 20:24:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_helper.h:
+        * tao/ORB.cpp:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/ValueBase.cpp:
+
+	  Finished subsetting the Valuetype library. Also changed some
+          ptr_arith_t to ptrdiff_t, to be compatible with recent
+          changes in ACE.
+
+        * TAOACE.dsw:
+        * rules.tao.GNU:
+        * tao/BiDir_GIOP/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/Valuetype/ValueBase.h:
+        * tao/IORInterceptor/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/Makefile.bor:
+        * tao/Makefile.dirs
+        * tao/Makefile.tao:
+        * tao/ObjRefTemplate/Makefile:
+        * tao/ObjRefTemplate/Makefile.bor:
+        * tao/Messaging/Makefile:
+        * tao/RTCORBA/Makefile:
+        * tao/RTPortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile:
+        * tao/TypeCodeFactory/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/Utils/Makefile:
+        * tao/Messaging/TAO_Messaging.dsp:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+
+	  Modified and/or updated dependencies.
+
+        * tao/Valuetype/Valuetype.mpc:
+        * tao/Valuetype/Makefile:
+        * tao/Valuetype/Makefile.bor:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+
+	  New files.
+
 Thu May  1 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ObjectReferencTemplate/ObjectReferenceTemplateC.h:
