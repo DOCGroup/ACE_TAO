@@ -42,11 +42,17 @@ Test_TypeCode::opname (void) const
   return this->opname_;
 }
 
+void
+Test_TypeCode::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_TypeCode::init_parameters (Param_Test_ptr objref,
                                 CORBA::Environment &env)
 {
-  static CORBA::TypeCode_ptr tc_table [] = 
+  static CORBA::TypeCode_ptr tc_table [] =
     {
       // primitive parameterless typecodes
       CORBA::_tc_short,
@@ -60,13 +66,13 @@ Test_TypeCode::init_parameters (Param_Test_ptr objref,
     };
 
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = 
+  CORBA::ULong index =
     (CORBA::ULong) (gen->gen_long () % sizeof(tc_table)/sizeof(CORBA::TypeCode_ptr));
 
   this->tc_holder_ = CORBA::TypeCode::_duplicate (tc_table [index]);
   this->in_ = this->tc_holder_;
   this->inout_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-  
+
   // Must initialize these for DII
   this->out_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
   this->ret_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -99,16 +105,16 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
 			 CORBA::NVList_ptr retval,
 			 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (CORBA::_tc_TypeCode, 
-                     &this->in_, 
+  CORBA::Any in_arg (CORBA::_tc_TypeCode,
+                     &this->in_,
                      0);
 
-  CORBA::Any inout_arg (CORBA::_tc_TypeCode, 
+  CORBA::Any inout_arg (CORBA::_tc_TypeCode,
                         &this->inout_,
                         0);
 
-  CORBA::Any out_arg (CORBA::_tc_TypeCode, 
-                      &this->out_, 
+  CORBA::Any out_arg (CORBA::_tc_TypeCode,
+                      &this->out_,
                       0);
 
   // add parameters
@@ -157,4 +163,3 @@ void
 Test_TypeCode::print_values (void)
 {
 }
-

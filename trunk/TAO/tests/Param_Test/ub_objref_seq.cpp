@@ -56,6 +56,12 @@ Test_ObjRef_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
                                        CORBA::Environment &env)

@@ -46,6 +46,12 @@ Test_Bounded_Long_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
                                              CORBA::Environment &env)

@@ -42,6 +42,56 @@ Test_Exception::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Exception::dii_req_invoke (CORBA::Request *req)
+{
+  TAO_TRY_VAR (*req->env ())
+    {
+      req->invoke ();
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (Param_Test::Ooops, ex)
+    {
+      if (TAO_debug_level > 0)
+        {
+          const char *reason = ex.reason.in ();
+          if (reason == 0)
+            reason = "nil";
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test_Exception::run_sii_test - "
+                      "expected user exception"
+                      " (%s,%d)\n", reason, ex.input));
+        }
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
+
+      return;
+    }
+  TAO_CATCH (CORBA::UNKNOWN, ex)
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                       "expected system exception\n");
+        }
+      this->inout_ = this->in_ * 2;
+      this->out_ = this->in_ * 3;
+      this->ret_ = this->in_ * 4;
+      TAO_TRY_ENV.clear ();
+
+      return;
+    }
+  TAO_CATCH (Param_Test::BadBoy, ex)
+    {
+      TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                   " unexpected exception\n");
+      TAO_RETHROW_RETURN_VOID;
+    }
+  TAO_ENDTRY;
+}
+
 int
 Test_Exception::init_parameters (Param_Test_ptr,
                                  CORBA::Environment &)

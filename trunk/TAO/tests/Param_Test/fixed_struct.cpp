@@ -42,6 +42,12 @@ Test_Fixed_Struct::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Fixed_Struct::init_parameters (Param_Test_ptr objref,
                                     CORBA::Environment &env)
@@ -72,7 +78,7 @@ Test_Fixed_Struct::reset_parameters (void)
   ACE_OS::memset (&this->ret_,
                   0,
                   sizeof (Param_Test::Fixed_Struct));
-  
+
   return 0;
 }
 
@@ -237,4 +243,3 @@ Test_Fixed_Struct::print_values (void)
               this->ret_.b,
               this->ret_.d));
 }
-

@@ -47,6 +47,12 @@ Test_Objref_Struct::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
 				     CORBA::Environment &env)
@@ -91,15 +97,15 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
 			   CORBA::NVList_ptr retval,
 			   CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Objref_Struct, 
-                    &this->in_, 
+  CORBA::Any in_arg (Param_Test::_tc_Objref_Struct,
+                    &this->in_,
                     0);
 
-  CORBA::Any inout_arg (Param_Test::_tc_Objref_Struct, 
-                        &this->inout_.inout (), // .out () causes crash 
+  CORBA::Any inout_arg (Param_Test::_tc_Objref_Struct,
+                        &this->inout_.inout (), // .out () causes crash
                         0);
 
-  CORBA::Any out_arg (Param_Test::_tc_Objref_Struct, 
+  CORBA::Any out_arg (Param_Test::_tc_Objref_Struct,
                       &this->out_.inout (),
                       0);
 
@@ -203,4 +209,3 @@ Test_Objref_Struct::print_values (void)
               s_out->name.in (),
               s_ret->name.in () ));
 }
-

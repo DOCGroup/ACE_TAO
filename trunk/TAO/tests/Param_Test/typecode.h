@@ -61,6 +61,9 @@ public:
   void print_values (void);
   // print all the values
 
+  void dii_req_invoke (CORBA::Request *);
+  // invoke DII request with appropriate exception handling.
+
 private:
   CORBA::TypeCode_var tc_holder_;
   // place for selected typecode to stay during time

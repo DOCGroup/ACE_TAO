@@ -38,6 +38,12 @@ Test_ULongLong::opname (void) const
   return this->opname_;
 }
 
+void
+Test_ULongLong::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_ULongLong::init_parameters (Param_Test_ptr objref,
                                 CORBA::Environment &env)
@@ -149,5 +155,3 @@ Test_ULongLong::print_values (void)
               this->out_,
               this->ret_));
 }
-
-

@@ -47,6 +47,12 @@ Test_Nested_Struct::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Nested_Struct::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Nested_Struct::init_parameters (Param_Test_ptr objref,
                                      CORBA::Environment &env)
@@ -185,5 +191,3 @@ Test_Nested_Struct::print_values (void)
                   (this->ret_->vs.seq.length ()? (const char *)this->ret_->vs.seq[i]:"<nul>")));
     }
 }
-
-

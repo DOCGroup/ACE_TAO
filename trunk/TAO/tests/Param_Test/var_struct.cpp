@@ -47,6 +47,12 @@ Test_Var_Struct::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Var_Struct::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Var_Struct::init_parameters (Param_Test_ptr objref,
                                   CORBA::Environment &env)
@@ -100,15 +106,15 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
 			   CORBA::NVList_ptr retval,
 			   CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Var_Struct, 
-                    &this->in_, 
+  CORBA::Any in_arg (Param_Test::_tc_Var_Struct,
+                    &this->in_,
                     0);
 
-  CORBA::Any inout_arg (Param_Test::_tc_Var_Struct, 
-                        &this->inout_.inout (), // .out () causes crash 
+  CORBA::Any inout_arg (Param_Test::_tc_Var_Struct,
+                        &this->inout_.inout (), // .out () causes crash
                         0);
 
-  CORBA::Any out_arg (Param_Test::_tc_Var_Struct, 
+  CORBA::Any out_arg (Param_Test::_tc_Var_Struct,
                       &this->out_.inout (),
                       0);
 
@@ -242,4 +248,3 @@ Test_Var_Struct::print_values (void)
     ACE_DEBUG ((LM_DEBUG, "\nret struct is NUL\n"));
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }
-
