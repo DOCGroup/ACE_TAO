@@ -120,22 +120,21 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
   else
     {
       int error_status = 0;
-      int return_status = 0;
+      size_t transfer_count = 0;
 
       ACE_POSIX_Asynch_Result *asynch_result =
         find_completed_aio (result,
                             error_status,
-                            return_status);
+                            transfer_count);
 
       if (asynch_result != 0)
         {
           // Call the application code.
           this->application_specific_code (asynch_result,
-                                       return_status, // Bytes transferred.
-                                       0,             // No completion key.
-                                       error_status); // Error
-          retval ++ ;
-
+                                           transfer_count,
+                                           0,             // No completion key.
+                                           error_status); // Error
+          retval++;
         }
     }
 
@@ -149,12 +148,12 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 int
 ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
                                      int &error_status,
-                                     int &return_status)
+                                     size_t &transfer_count)
 {
 
    // Get the error status of the aio_ operation.
    error_status  = asynch_result->aio_resultp.aio_errno;
-   return_status = asynch_result->aio_resultp.aio_return;
+   ssize_t op_return = asynch_result->aio_resultp.aio_return;
 
    // ****** from Sun man pages *********************
    // Upon completion of the operation both aio_return and aio_errno
@@ -163,27 +162,26 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
    // so the client may detect a change in state
    // by initializing aio_return to this value.
 
-   if (return_status == AIO_INPROGRESS || error_status == EINPROGRESS)
-     {
-       return_status = 0;
-       return 0;  // not completed
-     }
+   if (error_status == EINPROGRESS || op_return == AIO_INPROGRESS)
+     return 0;  // not completed
 
    if (error_status == -1)   // should never be
       ACE_ERROR ((LM_ERROR,
-                  "%N:%l:(%P | %t)::%p\n",
-                  "ACE_SUN_Proactor::get_result_status:"
-                  "<aio_errno> has failed\n"));
+                  ACE_LIB_TEXT ("%N:%l:(%P | %t)::%p\n"),
+                  ACE_LIB_TEXT ("ACE_SUN_Proactor::get_result_status:")
+                  ACE_LIB_TEXT ("<aio_errno> has failed\n")));
 
-   if (return_status < 0)
+   if (op_return < 0)
     {
-      return_status = 0; // zero bytes transferred
+      transfer_count = 0; // zero bytes transferred
       if (error_status == 0)  // nonsense
         ACE_ERROR ((LM_ERROR,   
                     "%N:%l:(%P | %t)::%p\n",
                     "ACE_SUN_Proactor::get_result_status:"
                     "<aio_return> failed\n"));
     }
+   else
+     transfer_count = ACE_static_cast (size_t, op_return);
 
    return 1; // completed
 }
@@ -191,18 +189,18 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
 ACE_POSIX_Asynch_Result *
 ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                                       int &error_status,
-                                      int &return_status)
+                                      size_t &transfer_count)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, 0));
 
   size_t ai;
   error_status = -1;
-  return_status = 0;
+  transfer_count = 0;
 
   // we call find_completed_aio always with result != 0
         
   for (ai = 0; ai < aiocb_list_max_size_; ai++)
-    if (aiocb_list_[ai] !=0 &&                 //check for non zero
+    if (aiocb_list_[ai] != 0 &&                 //check for non zero
         result == &aiocb_list_[ai]->aio_resultp)
       break;
 
@@ -213,7 +211,7 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
 
   if (this->get_result_status (asynch_result,
                                error_status,
-                               return_status) == 0)
+                               transfer_count) == 0)
     { // should never be
       ACE_ERROR ((LM_ERROR,
                   "%N:%l:(%P | %t)::%p\n",
@@ -221,9 +219,6 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                   "should never be !!!\n"));
       return 0;
     }
-
-  if (return_status < 0)
-     return_status = 0;    // zero bytes transferred
 
   aiocb_list_[ai] = 0;
   result_list_[ai] = 0;

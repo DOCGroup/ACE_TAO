@@ -1,3 +1,33 @@
+Mon Oct 28 20:38:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_IO.cpp (ACE_Service_Handler::addresses()): Don't
+          print addresses from here. It's inappropriate for a framework
+          to be printing things out without being asked to.
+
+        * ace/POSIX_Asynch_IO.cpp (ACE_POSIX_Asynch_Read_Stream::read):
+        * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Read_Stream::read):
+          Don't print a message for a 0-byte/no space read - set errno to
+          ENOSPC so the caller can figure out what's going on.
+
+        * ace/SUN_Proactor.{h cpp}:
+        * ace/POSIX_Proactor.{h cpp} (ACE_POSIX_AIOCB_Proactor):Change
+          'return_status' arg to get_result_status(), find_completed_aio()
+          from int to size_t and rename transfer_count; get_result_status()
+          takes care of sensing -1 count and changing to 0. Passing back
+          a size_t smooths the path from here through to the result object.
+          Removed application_specific_code() - reuse the one from
+          ACE_POSIX_Proactor - this one called it; remove the middle-man.
+
+        * tests/Proactor_Test.cpp: Added addresses() method implementations
+          to print address with session IDs; helps to match Sender/Receiver
+          pairs in the log. Also added some logging of basic send/recv info
+          to help try to track down why this facility doesn't work well.
+          Added a check for comparable sends/receives when a session ends.
+          Added a warning if there are outstanding I/O when the session
+          ends. This probably should be an error, but I haven't thought
+          through it enough to go that far. For the SUN Proactor, use one
+          thread by default (not 3) - aiosuspend() is not MT safe.
+
 Mon Oct 28 12:48:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/PerlACE/Process_Unix.pm (Spawn): Return 0 when the function
