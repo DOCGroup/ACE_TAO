@@ -41,7 +41,6 @@ DIRS = \
         Hello \
 	IDL_Test \
 	InterOp-Naming \
-        ior_corbaloc \
 	IORManipulation \
 	Leader_Followers \
         LongUpcalls \
