@@ -119,8 +119,10 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
   cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
   cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
-  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default is interpretive)\n");
-  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
+  cerr << GTDEVEL (" -Cw\t\t\tWarning if identifier spellings differ only in case (default)\n");
+  cerr << GTDEVEL (" -Ce\t\t\tError if identifier spellings differ only in case (default is warning)\n");
+  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default)\n");
+  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default is compiled)\n");
   cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
 #ifdef IDL_HAS_VALUETYPE
@@ -554,7 +556,26 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
-
+            case 'C':
+              // If identifiers in the same scope differ only by case...
+              if (av[i][2] == 'e')
+                {
+                  // ...report an error.
+                  idl_global->case_diff_error (I_TRUE);
+                }
+              else if (av[i][2] == 'w')
+                {
+                  // ...report a warning (default for now)
+                  idl_global->case_diff_error (I_FALSE);
+                }
+              else
+                {
+                  cerr << GTDEVEL("IDL: missing argument after '")
+                       << av[i]
+                       << GTDEVEL("' flag\n");
+                  ACE_OS::exit (99);
+                }
+              break;
             case 'G':
               // enable generation of ...
               if (av[i][2] == 'c')
