@@ -38,9 +38,9 @@ public:
 
   void dump_results (int expected_count,
                      int tolerance);
-  void dump_results (int expected_count,
-                     int tolerance,
-                     int max_base_count);
+  void dump_results (int base_count,
+                     int extra_count,
+                     int tolerance);
 
   // = The RtecEventComm::PushConsumer methods
 

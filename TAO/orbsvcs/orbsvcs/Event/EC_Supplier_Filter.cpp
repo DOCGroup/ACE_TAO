@@ -21,6 +21,5 @@ TAO_EC_Filter_Worker::work (TAO_EC_ProxyPushSupplier *supplier,
                             CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_QOS_Info qos_info = this->event_info_;
-
   supplier->filter (this->event_, qos_info, ACE_TRY_ENV);
 }

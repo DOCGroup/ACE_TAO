@@ -49,34 +49,25 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       CORBA::ULong i = 0;
-      for (; i != n && pos != l; ++i)
+      for (; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
         }
-      if (pos == l)
-        ++i;
-      return new TAO_EC_Conjunction_Filter (children, i);
+      return new TAO_EC_Conjunction_Filter (children, n);
     }
-  else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR
-           || e.header.type == ACE_ES_GLOBAL_DESIGNATOR)
+  else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
-      for (CORBA::ULong i = 0; i != n; ++i)
-        {
-          children[i] = this->recursive_build (supplier, qos, pos);
-        }
       CORBA::ULong i = 0;
-      for (; i != n && pos != l; ++i)
+      for (; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
         }
-      if (pos == l)
-        ++i;
-      return new TAO_EC_Disjunction_Filter (children, i);
+      return new TAO_EC_Disjunction_Filter (children, n);
     }
   else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR)
     {
@@ -152,17 +143,12 @@ TAO_EC_Basic_Filter_Builder::
 {
   CORBA::ULong l = qos.dependencies.length ();
   CORBA::ULong i;
-
-  int n = 0;
-  for (i = pos; i < l; ++i)
+  for (i = pos; i != l; ++i)
     {
       const RtecEventComm::Event& e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;
-      // @@ Properly count the number of children, and not the number
-      // of nodes below...
-      ++n;
     }
-  return n;
+  return i - pos;
 }

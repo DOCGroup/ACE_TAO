@@ -89,7 +89,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      Consumer consumer01 ("Consumer/010", event_type);
+      Consumer consumer01 ("Consumer/01", event_type);
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
@@ -207,13 +207,18 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Supplier 0 pushed %d events\n", task0.push_count ()));
+                  "Task 0 pushed %d events\n", task0.push_count ()));
       ACE_DEBUG ((LM_DEBUG,
-                  "Supplier 1 pushed %d events\n", task1.push_count ()));
+                  "Task 1 pushed %d events\n", task1.push_count ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Supplier 0 pushed %d events\n", supplier0.event_count));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Supplier 1 pushed %d events\n", supplier1.event_count));
       consumer0.dump_results (task0.push_count (), 5);
       consumer1.dump_results (task1.push_count (), 5);
-      consumer01.dump_results (task0.push_count (), 1,
-                               task0.push_count () + task1.push_count ());
+      consumer01.dump_results (task0.push_count (),
+                               task1.push_count (),
+                               1);
     }
   ACE_CATCHANY
     {
@@ -242,28 +247,45 @@ Consumer::dump_results (int expected_count,
 }
 
 void
-Consumer::dump_results (int expected_count,
-                        int tolerance,
-                        int max_base_count)
+Consumer::dump_results (int base_count,
+                        int extra_count,
+                        int tolerance)
 {
-  this->dump_results (expected_count, tolerance);
-
-  if (event_base_count >= CORBA::ULong (max_base_count))
+  int diff = this->event_base_count - base_count;
+  if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR - %s unexpected number of events  <%d,%d>\n",
+                  "ERROR - %s unexpected number of base events  <%d>\n",
                   this->name_,
-                  this->event_base_count,
-                  max_base_count));
+                  this->event_base_count));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s - number of base events <%d> within margins\n",
+                  this->name_,
+                  this->event_base_count));
+    }
+
+  if (this->event_count < base_count
+      || this->event_count >= base_count + extra_count)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ERROR - %s unexpected number of events  <%d,%d,%d>\n",
+                  this->name_,
+                  base_count,
+                  this->event_count,
+                  base_count + extra_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s number of events "
-                  "<%d,%d> within margins\n",
+                  "<%d,%d,%d> within margins\n",
                   this->name_,
-                  this->event_base_count,
-                  max_base_count));
+                  base_count,
+                  this->event_count,
+                  base_count + extra_count));
     }
 }
 
@@ -281,6 +303,10 @@ Consumer::push (const RtecEventComm::EventSet& events,
 
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->event_count++;
+
+  // ACE_DEBUG ((LM_DEBUG,
+  //               "Consumer %s has received %d events\n",
+  //               this->name_, this->event_count));
 
   if (events[0].header.type == this->event_base_type_)
     this->event_base_count++;
