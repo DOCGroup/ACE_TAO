@@ -392,7 +392,7 @@ module AVStreams
 
       void disconnect_leaf (in StreamEndPoint_B the_ep,
                             in flowSpec theSpec)
-        raises(streamOpFailed, noSuchFlow);
+        raises(streamOpFailed, noSuchFlow, notSupported);
       // Used for ATM-style multicast.
     };
 
@@ -524,7 +524,8 @@ module AVStreams
 
       void remove_fdev (in string flow_name)
         raises (notSupported, 
-                noSuchFlow);
+                noSuchFlow,
+                streamOpFailed);
       // Not supported in the light profile, raises notsupported.
     };
 
