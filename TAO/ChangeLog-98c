@@ -1,3 +1,10 @@
+Mon Dec  7 05:26:35 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* docs/compiler.html:
+	  
+	  Fixed the entry for -St (suppressing typecodes). It was
+	  appearing as -Ge. Thanks to Ossama Othman for noticing this.
+
 Sun Dec  6 17:48:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
