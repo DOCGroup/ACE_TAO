@@ -29,7 +29,6 @@ static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
-ACE_SYNCH_RW_MUTEX ACE_Filecache::lock_;
 
 void
 ACE_Filecache_Handle::init (void)
