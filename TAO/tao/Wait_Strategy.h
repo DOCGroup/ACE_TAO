@@ -16,16 +16,8 @@
 //
 // ============================================================================
 
-// @@ Alex: don't forget to protect your files against multiple
-// inclusion:
-
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
-
-// @@ Alex: why do you need this #include?
-// @@ I just wanted some file to include ;-). I am taking it
-//    off. (Alex).
-// #include "tao/GIOP.h"
 
 #include "tao/CDR.h"
 
@@ -124,16 +116,21 @@ public:
   virtual ~TAO_Wait_On_Leader_Follower (void);
   // Destructor.
 
-  // = Documented in TAO_Wait_Strategy
+  // = Documented in TAO_Wait_Strategy.
+  
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
+  
   virtual int wait (void);
+  
   virtual int handle_input (void);
+
   virtual int register_handler (void);
 
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
-  // Return the cond_response_available, initializing it if necessary.
+  // Return the cond_response_available, initializing it if
+  // necessary. 
 
   void wake_up (void);
   // Helper method to wake us up when we are a follower...
@@ -148,7 +145,6 @@ protected:
   int expecting_response_;
   // State flag which, if non-zero, indicates that we were expecting
   // respose. Otherwise, any input received is unexpected.
-  // @@ Do we need this anymore? (Alex).
 
   int reply_received_;
   // This flag indicates if a *complete* reply was received. Until
