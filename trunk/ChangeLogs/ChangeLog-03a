@@ -1,3 +1,21 @@
+Sun Apr  7 04:02:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-g++-common.h (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES):
+
+          Moved common definitions for egcs into a single block. Wrapped
+          ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES inside appropriate
+          compiler checks.
+
+        * ace/config-all.h:
+
+          Added a negation before check for
+          ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS.
+
+        * ace/config-sunos5.5.h:
+
+          Enabled ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION and
+          ACE_TEMPLATES_REQUIRE_SOURCE only if Sun CC version <= 5.0.
+
 Sun Apr 07 10:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:

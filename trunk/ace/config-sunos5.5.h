@@ -24,9 +24,9 @@
 # elif (__SUNPRO_CC >= 0x420)
 # define ACE_HAS_ANSI_CASTS
 # if (__SUNPRO_CC >= 0x500)
-// string.h and memory.h conflict for memchr definitions
+    // string.h and memory.h conflict for memchr definitions
 #   define ACE_LACKS_MEMORY_H
-// Sun C++ 5.0 supports the `using' and `typename' keywords.
+    // Sun C++ 5.0 supports the `using' and `typename' keywords.
 #   define ACE_HAS_TYPENAME_KEYWORD
     /* Explicit instantiation requires the -instances=explicit
        CCFLAG.  It seems to work for the most part, except for:
@@ -34,19 +34,21 @@
        2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found.
        With CC 5.0, those problems may be fixed.  And, this is necessary
        to work around problems with automatic template instantiation. */
-#   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#   define ACE_TEMPLATES_REQUIRE_SOURCE
+#   if (__SUNPRO_CC <= 0x500)
+#      define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#      define ACE_TEMPLATES_REQUIRE_SOURCE
+#   endif /* __SUNPRO_CC <= 0x500 */
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
-#   define ACE_HAS_USING_KEYWORD
+#     define ACE_HAS_USING_KEYWORD
 #     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-// Note that SunC++ 5.0 doesn't yet appear to support
-// ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
+    // Note that SunC++ 5.0 doesn't yet appear to support
+    // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
-#   endif
+#   endif /* __SUNPRO_CC_COMPAT >= 5 */
 #  if !defined (ACE_HAS_EXCEPTIONS)
      // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
 #    define _RWSTD_NO_EXCEPTIONS 1
@@ -91,9 +93,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-// Need to define this explicitly as SunOS doesn't ship with the latest
-// binutils needed for implicit template instantiation
-# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 # define ACE_HAS_HI_RES_TIMER
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
