@@ -15,7 +15,6 @@
 
 #include "pace/errno.h"
 #include "pace/signal.h"
-extern int errno;
 
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE

@@ -274,9 +274,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.4.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
-                                               pace_pthread_mutex_t * mutex,
-                                               const pace_timespec * abstime);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
+                                   pace_pthread_mutex_t * mutex,
+                                   const pace_timespec * abstime);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -285,8 +288,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.4.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_cond_wait (pace_pthread_cond_t * cond,
-                                          pace_pthread_mutex_t * mutex);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_cond_wait (pace_pthread_cond_t * cond,
+                              pace_pthread_mutex_t * mutex);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -333,10 +339,13 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_create (pace_pthread_t * thread,
-                                       const pace_pthread_attr_t * attr,
-                                       void * (*start_routine) (void*),
-                                       void * arg);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_create (pace_pthread_t * thread,
+                           const pace_pthread_attr_t * attr,
+                           void * (*start_routine) (void*),
+                           void * arg);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -345,7 +354,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_detach (pace_pthread_t thread);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_detach (pace_pthread_t thread);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -392,7 +404,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_join (pace_pthread_t thread, void ** value_ptr);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_join (pace_pthread_t thread, void ** value_ptr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -401,8 +416,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 17.1.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_key_create (pace_pthread_key_t * key,
-                                           void (*destructor)(void*));
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_key_create (pace_pthread_key_t * key,
+                               void (*destructor)(void*));
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -411,7 +429,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 17.1.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_key_delete (pace_pthread_key_t key);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_key_delete (pace_pthread_key_t key);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -579,8 +600,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.8.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_once (pace_pthread_once_t * once_control,
-                                     void (*void_routine) (void));
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_once (pace_pthread_once_t * once_control,
+                         void (*void_routine) (void));
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 # define PACE_PTHREAD_ONCE_INIT PTHREAD_ONCE_INIT

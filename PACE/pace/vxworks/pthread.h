@@ -80,14 +80,17 @@ extern "C" {
    * VxWorks helper functions
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pthread_verify(pace_pthread_t pthread);
-  PACE_INLINE void pthread_run_cleanup (WIND_TCB *pTcb);
-  PACE_INLINE int pthread_queue_add(pace_pthread_t pthread);
-  PACE_INLINE int pthread_queue_remove(pace_pthread_t pthread);
-  PACE_INLINE void pthread_cleanup_popall(pace_pthread_t thread);
-  PACE_INLINE void pthread_destructor_thread(pace_pthread_t pthread);
-  PACE_INLINE int pthread_key_validate(pace_pthread_key_t key);
-  PACE_INLINE void pthread_destructor_key(pace_pthread_key_t key, void * arg);
+  extern pace_pthread_attr_t pthread_attr_default;
+
+  void pacevx_pthread_proc_exit(pace_pthread_t pthread, void *value_ptr);
+  int pacevx_pthread_verify(pace_pthread_t pthread);
+  void pacevx_pthread_run_cleanup (WIND_TCB *pTcb);
+  int pacevx_pthread_queue_add(pace_pthread_t pthread);
+  int pacevx_pthread_queue_remove(pace_pthread_t pthread);
+  void pacevx_pthread_cleanup_popall(pace_pthread_t thread);
+  void pacevx_pthread_destructor_thread(pace_pthread_t pthread);
+  int pacevx_pthread_key_validate(pace_pthread_key_t key);
+  void pacevx_pthread_destructor_key(pace_pthread_key_t key, void * arg);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_CPLUSPLUS)
