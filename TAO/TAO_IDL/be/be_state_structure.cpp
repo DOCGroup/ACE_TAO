@@ -53,6 +53,7 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
                         -1);
     }
 
+  // retrieve the enclosing "struct" node
   bs = be_structure::narrow_from_scope (f->defined_in ());
   if (!bs)
     {
@@ -61,10 +62,6 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
                          "Bad structure\n"),
                         -1);
     }
-
-  // pass the field node just incase it is needed to generate definition for
-  // sequence
-  cg->node (f);
 
   if (!type) // not a recursive call
     type = bt;
@@ -198,7 +195,7 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
               // We first need to generate code for this aggregate type. Check
               // if we are not called recursively thru a typedef
               if (bt->node_type () != AST_Decl::NT_typedef
-		  && !bt->imported ())
+                  && !bt->imported ())
                 if (bt->gen_client_header () == -1)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
@@ -206,9 +203,13 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
                                        "error generating code for type\n"),
                                       -1);
                   }
-              os->indent ();
-              *os << bt->nested_type_name (bs) << " " << f->local_name () <<
-                ";\n";
+              // this is not to be generated for arrays
+              if (bt->node_type () != AST_Decl::NT_array)
+                {
+                  os->indent ();
+                  *os << bt->nested_type_name (bs) << " " << f->local_name () <<
+                    ";\n";
+                }
             }
             break;
           case TAO_CodeGen::TAO_STRUCT_CI:
@@ -216,7 +217,7 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
               // We first need to generate code for this aggregate type. Check
               // if we are not called recursively thru a typedef
               if (bt->node_type () != AST_Decl::NT_typedef
-		  && !bt->imported ())
+                  && !bt->imported ())
                 if (bt->gen_client_inline () == -1)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
@@ -231,7 +232,7 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
               // We first need to generate code for this aggregate type. Check
               // if we are not called recursively thru a typedef
               if (bt->node_type () != AST_Decl::NT_typedef
-		  && !bt->imported ())
+                  && !bt->imported ())
                 if (bt->gen_client_stubs () == -1)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,

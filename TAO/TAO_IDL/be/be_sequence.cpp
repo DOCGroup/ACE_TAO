@@ -35,7 +35,6 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
     AST_Decl (AST_Decl::NT_sequence,
               NULL,
               NULL),
-    seq_node_ (NULL),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
   // check if we are bounded or unbounded. An expression value of 0 means
@@ -53,41 +52,69 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
                                        // VARIABLE
 }
 
+// helper to create_name
+const char *
+be_sequence::gen_name (void)
+{
+  char namebuf [NAMEBUFSIZE];
+  be_type *bt; // base type;
+  be_sequence *seq;
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
+  // retrieve the base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_sequence::"
+                         "gen_name - "
+                         "bad base type\n"),
+                        0);
+    }
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      // our base type is an anonymous sequence
+      be_sequence *seq;
+      seq = be_sequence::narrow_from_decl (bt);
+      if (!seq)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_sequence::"
+                             "gen_name - "
+                             "error converting base type to sequence\n"),
+                            0);
+        }
+      seq->set_defined_in (this); // set ourselves as its parent
+      this->fe_add_sequence (seq); // add the child to our scope
+      ACE_OS::sprintf (namebuf, "_tao_seq_%s", seq->gen_name ());
+    }
+  else
+    {
+      ACE_OS::sprintf (namebuf, "_tao_seq_%s", bt->local_name ()->get_string ());
+    }
+  // append the size (if any)
+  if (!this->unbounded_)
+    {
+      ACE_OS::sprintf (namebuf, "%s_%d", namebuf, this->max_size ()->ev
+                       ()->u.ulval);
+    }
+  return namebuf;
+}
+
 // create a name for ourselves
 int
 be_sequence::create_name (void)
 {
-  static char namebuf [200];
+  static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = NULL;
-  be_decl *d;   // may point to a typedef node
   be_decl *scope; // scope in which we are defined
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
+  ACE_OS::strcpy (namebuf, this->gen_name ()); // generate a local name
 
-  d = cg->node (); // retrieve the node that was passed in via the CodeGen
-                   // object
-
-  if (!d)
-    return -1; // error, we cannot be free standing.
-
-  // we generate a name for ourselves. Start by generating a local name
-
-  ACE_OS::memset (namebuf, '\0', 200);
-  ACE_OS::sprintf (namebuf, "_tao__seq_%s", d->local_name ()->get_string ());
-
-  if (d->node_type () == AST_Decl::NT_sequence)
-    {
-      // this means that we are an anonymous sequence who happens to be a
-      // base type of the sequence denoted by the node "d".
-      // Hence we set our enclosing scope to be the node "d"
-      this->set_defined_in (DeclAsScope (d));
-    }
-
-  // now set our fully scoped name
-
-  // now see if we have a fully scoped name.
-  scope = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
-  if (scope != NULL)
+  // now see if we have a fully scoped name and if so, generate one
+  scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+  if (scope)
     {
       // make a copy of the enclosing scope's  name
       n = (UTL_ScopedName *)scope->name ()->copy () ;
@@ -107,14 +134,6 @@ be_sequence::create_name (void)
       return -1;
     }
   return 0;
-}
-
-void
-be_sequence::compute_scoped_name (void)
-{
-  UTL_ScopedName *n = (UTL_ScopedName *)this->seq_node_->name ()->copy ();
-  n->nconc (this->name ());
-  this->set_name (n);
 }
 
 // Does this sequence have a managed type sequence element?
@@ -963,6 +982,9 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
+      // generate the ifdefined macro for type
+      ci->gen_ifdef_macro (this->flatname ());
+
       // freebuf method
       ci->indent ();
       *ci << "ACE_INLINE void" << nl;
@@ -1090,6 +1112,10 @@ be_sequence::gen_client_inline (void)
       ci->decr_indent ();
       *ci << "}\n\n";
       cg->pop ();
+      ci->gen_endif (); // endif macro
+
+      // generate the ifdefined macro for the var type
+      ci->gen_ifdef_macro (this->flatname (), "_var");
 
       // generate the implementations for the _var and _impl classes
       if (this->gen_var_impl () == -1)
@@ -1100,6 +1126,10 @@ be_sequence::gen_client_inline (void)
                              "var implementation failed\n"),
                             -1);
         }
+      ci->gen_endif ();
+
+      // generate the ifdefined macro for the var type
+      ci->gen_ifdef_macro (this->flatname (), "_out");
 
       if (this->gen_out_impl () == -1)
         {
@@ -1109,6 +1139,7 @@ be_sequence::gen_client_inline (void)
                              "out impl failed\n"),
                             -1);
         }
+      ci->gen_endif (); // endif macro
 
       this->cli_inline_gen_ = I_TRUE;
     }
@@ -2353,6 +2384,26 @@ be_sequence::tc_encap_len (void)
 
     }
   return this->encap_len_;
+}
+
+/*
+ * Add this be_sequence to the locally defined types in this scope
+ */
+be_sequence *
+be_sequence::fe_add_sequence (be_sequence *t)
+{
+  if (t == NULL)
+    return NULL;
+
+  this->add_to_local_types(t);
+  return t;
+}
+
+// overridden method
+be_decl *
+be_sequence::decl (void)
+{
+  return this;
 }
 
 // Narrowing

@@ -377,9 +377,9 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 idl_bool
 be_decl::is_nested (void)
 {
-  AST_Decl *d;
+  be_decl *d;
 
-  d = ScopeAsDecl (this->defined_in ());
+  d = be_scope::narrow_from_scope (this->defined_in ())->decl ();
   // if we have an outermost scope and if that scope is not that of the Root,
   // then we are defined at some nesting level
   if (d && d->node_type () != AST_Decl::NT_root)
@@ -422,6 +422,46 @@ int
 be_decl::compute_size_type (void)
 {
   return 0;
+}
+
+// return the scope created by this node (if one exists, else NULL)
+be_scope *
+be_decl::scope (void)
+{
+  be_decl *d = this;
+
+   switch (this->node_type()) {
+   case AST_Decl::NT_interface_fwd:
+      /*
+       * Resolve forward declared interface by looking at full_definition()
+       * field and iterating
+       */
+      d = be_interface::narrow_from_decl ((be_interface_fwd::narrow_from_decl
+                                           (this))->full_definition ());
+      /*
+       * Fall through
+       */
+   case AST_Decl::NT_interface:
+      return be_interface::narrow_from_decl (d);
+   case AST_Decl::NT_module:
+      return be_module::narrow_from_decl (d);
+   case AST_Decl::NT_root:
+      return be_root::narrow_from_decl (d);
+   case AST_Decl::NT_except:
+      return be_exception::narrow_from_decl (d);
+   case AST_Decl::NT_union:
+      return be_union::narrow_from_decl (d);
+   case AST_Decl::NT_struct:
+      return be_structure::narrow_from_decl (d);
+   case AST_Decl::NT_enum:
+      return be_enum::narrow_from_decl (d);
+   case AST_Decl::NT_op:
+      return be_operation::narrow_from_decl (d);
+   case AST_Decl::NT_sequence:
+      return be_sequence::narrow_from_decl (d);
+   default:
+      return (be_scope *)0;
+   }
 }
 
 // narrowing methods

@@ -147,6 +147,24 @@ public:
 typedef ACE_Singleton<be_state_union_private_ch, ACE_SYNCH_RECURSIVE_MUTEX>
                                     TAO_BE_STATE_UNION_PRIVATE_CH;
 
+class be_state_union_public_cs: public be_state
+{
+  // =TITLE
+  // be_state_union_public_cs
+  // =DESCRIPTION
+  // union discriminant defn generation in client stubs file
+public:
+
+  be_state_union_public_cs (void);
+  // constructor
+
+  virtual int gen_code (be_type *bt, be_decl *d, be_type *type=0);
+  // code generation for node "d" whose type is "bt". The third parameter is
+  // used for recursive invocation involving a typedef
+};
+typedef ACE_Singleton<be_state_union_public_cs, ACE_SYNCH_RECURSIVE_MUTEX>
+                                    TAO_BE_STATE_UNION_PUBLIC_CS;
+
 class be_state_operation: public be_state
 {
   // =TITLE

@@ -51,11 +51,13 @@ be_union_branch::gen_client_header (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   bt = be_type::narrow_from_decl (this->field_type ());
-  s   = cg->make_state ();
+  s = cg->make_state ();
   if (!s || !bt || (s->gen_code (bt, this) ==  -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_union_branch: error generating type\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_union_branch::"
+                         "gen_client_header - "
+                         "state based code gen failed\n"), -1);
     }
   return 0;
 }
@@ -64,48 +66,22 @@ be_union_branch::gen_client_header (void)
 int
 be_union_branch::gen_client_stubs (void)
 {
-  TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
+  be_type *bt;  // the union_branch type
+  be_state *s;  // state based code gen object
 
-  if (!this->cli_stub_gen_)
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  bt = be_type::narrow_from_decl (this->field_type ());
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) ==  -1))
     {
-      // retrieve a singleton instance of the code generator
-      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-      cs = cg->client_stubs ();
-
-      cs->indent ();
-      // generate a case stmt
-      if (this->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
-        {
-          *cs << "case " << this->label ()->label_val ()->n ()  << ":\n";
-        }
-      else
-        {
-          *cs << "case " << this->label ()->label_val () << ":\n";
-        }
-      cs->incr_indent ();
-      *cs << "this->" << this->local_name () << "_ = u." << this->local_name ()
-          << "_;" << nl;
-      *cs << "break;\n";
-      cs->decr_indent (0);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_union_branch::"
+                         "gen_client_stubs - "
+                         "state based code gen failed\n"), -1);
     }
-  return 0;
-}
 
-// Generates the server-side header information for the union_branch
-int
-be_union_branch::gen_server_header (void)
-{
-  // nothing to be done
-  return 0;
-}
-
-// Generates the server-side skeletons for the union_branch
-int
-be_union_branch::gen_server_skeletons (void)
-{
-  // nothing to be done
   return 0;
 }
 
@@ -123,10 +99,27 @@ be_union_branch::gen_client_inline (void)
   s = cg->make_state ();
   if (!s || !bt || (s->gen_code (bt, this) ==  -1))
     {
-      ACE_ERROR ((LM_ERROR,
-        "be_union_branch: error generating impl of access methods\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_union_branch::"
+                         "gen_client_inline - "
+                         "state based code gen failed\n"), -1);
     }
+  return 0;
+}
+
+// Generates the server-side header information for the union_branch
+int
+be_union_branch::gen_server_header (void)
+{
+  // nothing to be done
+  return 0;
+}
+
+// Generates the server-side skeletons for the union_branch
+int
+be_union_branch::gen_server_skeletons (void)
+{
+  // nothing to be done
   return 0;
 }
 

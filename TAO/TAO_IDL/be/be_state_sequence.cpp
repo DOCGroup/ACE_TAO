@@ -67,10 +67,10 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
     // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
-  // enclosing scope in which the typedef occurs
+  // enclosing scope in which the sequence occurs
   be_decl *scope;
   if (bt->node_type () == AST_Decl::NT_typedef)
-    scope =  be_decl::narrow_from_decl (ScopeAsDecl (bt->defined_in ()));
+    scope =  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
   else // no anonymous data types are allowed here
     scope = 0;
 
