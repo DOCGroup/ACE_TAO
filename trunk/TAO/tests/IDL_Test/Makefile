@@ -24,6 +24,7 @@ IDL_ALWAYS =	anonymous		\
 		including		\
 		interface		\
 		keywords		\
+		nested_scope		\
 		params			\
 		pragma			\
 		sequence		\

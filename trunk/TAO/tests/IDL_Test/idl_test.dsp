@@ -162,6 +162,14 @@ SOURCE=.\main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\nested_scopeC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_scopeS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\paramsC.cpp
 # End Source File
 # Begin Source File
@@ -286,6 +294,14 @@ SOURCE=.\keywordsS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\nested_scopeC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_scopeS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\paramsC.h
 # End Source File
 # Begin Source File
@@ -371,6 +387,10 @@ SOURCE=.\interfaceC.i
 # Begin Source File
 
 SOURCE=.\keywordsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_scopeC.i
 # End Source File
 # Begin Source File
 
@@ -1160,6 +1180,27 @@ BuildCmds= \
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_scope.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__NESTE="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\nested_scope.idl
+InputName=nested_scope
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
 # End Custom Build
 
 !ENDIF 
