@@ -1,3 +1,9 @@
+Mon Feb 26 12:07:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Memory_Pool.cpp: Moved the copying of MMAP flags up before
+          setting the MAP_FIXED flag.  Thanks to <rhuber@amadeus.net> for
+          reporting this.                                 [Bug 752]
+
 Mon Feb 26 09:29:36 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/RB_Tree.h:
