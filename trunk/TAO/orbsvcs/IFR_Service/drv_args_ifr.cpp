@@ -17,25 +17,6 @@ DRV_push_file (const char *s)
   DRV_files[DRV_nfiles++] = s;
 }
 
-// Prepare a CPP argument.
-static void
-DRV_prep_cpp_arg (char *s)
-{
-  char *newarg = new char[512];
-  char *farg;
-
-  newarg[0] = '\0';
-
-  for (farg = ACE_OS::strtok (s, ","); 
-       farg != NULL; 
-       farg = ACE_OS::strtok (0, ","))
-    {
-      ACE_OS::strcat (newarg, farg);
-    }
-
-  DRV_cpp_putarg (newarg);
-}
-
 // Print a usage message and exit.
 void
 DRV_usage (void)
