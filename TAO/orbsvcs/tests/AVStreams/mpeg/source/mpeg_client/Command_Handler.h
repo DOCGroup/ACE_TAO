@@ -65,6 +65,8 @@ public:
 private:
   CORBA::Boolean init_video (void);
   
+  int init_video_channel (char *phostname,char *videofile);
+
   CORBA::Boolean stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size) ;
   
@@ -93,6 +95,8 @@ private:
   CORBA::Boolean speed (void);
   
   CORBA::Boolean stop (void);
+
+  int stop_playing (void);
 
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket

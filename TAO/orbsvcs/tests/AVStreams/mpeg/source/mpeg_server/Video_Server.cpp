@@ -211,10 +211,10 @@ Video_Control_Handler::get_state (void)
 
 CORBA::Boolean 
 Video_Control_Handler::init_video (const Video_Control::INITvideoPara &para,
-                             CORBA::Environment&)
+                                   Video_Control::INITvideoReply_out reply,
+                                   CORBA::Environment&)
 {
-  this->state_->init_video (para);
-  return 0;
+  return this->state_->init_video (para,reply);
 }
 
 
@@ -296,8 +296,7 @@ CORBA::Boolean
 Video_Control_Handler::speed (const Video_Control::SPEEDpara &para,
                         CORBA::Environment&)
 {
-  this->state_->speed (para);
-  return 0;
+  return this->state_->speed (para);
 }
 
 // ~~ Why do you need the Environment
@@ -431,6 +430,7 @@ Video_Server::init (int ctr_fd,
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
 
   VIDEO_SINGLETON::instance ()->init_video ();
+  // This is commented so that the client will do a CORBA call now.
 
   if (rttag) {
     if (SetRTpriority("VS", 0) == -1) rttag = 0;
