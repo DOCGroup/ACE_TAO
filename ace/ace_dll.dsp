@@ -598,6 +598,10 @@ SOURCE=.\Object_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Manager_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Obstack.cpp
 # End Source File
 # Begin Source File
