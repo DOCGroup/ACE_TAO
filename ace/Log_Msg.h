@@ -381,9 +381,9 @@ private:
   // Number of existing Log_Msg instances; when 0, delete program/host names
 
   static void close (void);
-  // For cleanup, at program termination, by ACE_Object_Manager;
+  // For cleanup, at program termination.
 
-  friend class ACE_Object_Manager;
+  friend void ACE_OS::cleanup_tss ();
 };
 
 // #if defined (__ACE_INLINE__)
