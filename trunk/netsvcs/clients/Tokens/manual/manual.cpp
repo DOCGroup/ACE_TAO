@@ -1,5 +1,4 @@
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -151,7 +150,7 @@ STDIN_Token::open (int argc, char *argv[])
       (SIGINT, this) == -1)
     ACE_DEBUG ((LM_DEBUG, "Can't register signal handler\n"));
 
-#if (ACE_WIN32)
+#if defined (ACE_WIN32)
 
 #else
   // Register for STDIN events with Reactor.
@@ -165,7 +164,7 @@ STDIN_Token::open (int argc, char *argv[])
 
   this->display_menu ();
 
-#if (ACE_WIN32)
+#if defined (ACE_WIN32)
 
 #else
   ACE_Reactor::run_event_loop ();
