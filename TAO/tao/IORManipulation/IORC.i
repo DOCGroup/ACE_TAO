@@ -27,22 +27,6 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY___CI_)
-#define _TAO_IOP_TAO_IOR_PROPERTY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___CI_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
 // be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE

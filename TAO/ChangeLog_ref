@@ -1,3 +1,11 @@
+Wed Sep  3 11:41:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORManipulation/IORC.cpp: 
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.i: Regenerated the code. 
+	
+	* tao/PortableServer/PolicyS.h: Fixed a compile error on g++.
+
 Tue Sep  2 20:39:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
