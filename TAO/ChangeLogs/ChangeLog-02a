@@ -1,3 +1,18 @@
+Thu Jan 24 18:51:21 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/performance-tests/AMH_Single_Threaded_Latency:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Makefile:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/run_test.pl:
+	* TAO/performance-tests/Makefile:
+	* TAO/performance-tests/Makefile.bor:
+	* TAO/performance-tests/README:
+	  Performance test for AMH based on the Single_Threaded_Latency
+	  test.
+
 Thu Jan 24 17:47:00 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_decl.cpp:
@@ -167,6 +182,7 @@ Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* TAO/tao/Makefile.bor: 
 	* TAO/tao/PortableServer/Makefile: 
 	* TAO/tao/PortableServer/Makefile.bor:
+	
 	  Updated the files with the changes of moving the
 	  AMH_Response_Handler files from `tao' and `tao/PortableServer'.
 
