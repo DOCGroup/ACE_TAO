@@ -38,7 +38,7 @@
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
 #include "ace/Event_Handler.h"
-
+#include "ace/Handle_Set.h"
 #include "ace/Map_Manager.h"
 
 // Forward declaration

@@ -1,3 +1,9 @@
+Sat Aug  2 17:50:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/WIN32_Asynch_IO.h:
+	  
+	  Added #include of ace/Handle_Set.h.
+
 Fri Aug  1 17:23:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Cache_Map_Manager_T.cpp:
