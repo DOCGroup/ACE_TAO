@@ -52,7 +52,7 @@ inline void
 Latency_Stats::dump_results (const char *test_name,
                                           const char *sub_test)
 {
-  if (this->n_ <= 1)
+  if (this->n_ < 1)
     return;
 
   ACE_hrtime_t avg = this->sum_ / this->n_;
@@ -95,6 +95,90 @@ Latency_Stats::accumulate (const Latency_Stats& rhs)
   this->sum_  += rhs.sum_;
   this->sum2_ += rhs.sum2_;
   this->n_    += rhs.n_;
+}
+
+class Throughput_Stats
+{
+public:
+  Throughput_Stats (void);
+
+  void dump_results (const char* test_name,
+                     const char* sub_test);
+
+  void sample (void);
+  // An event has been received
+
+  void accumulate (const Throughput_Stats& stats);
+  // Useful to merge several Throughput_Stats.
+
+private:
+  u_long n_;
+  ACE_hrtime_t start_;
+  ACE_hrtime_t stop_;
+};
+
+inline void
+Throughput_Stats::accumulate (const Throughput_Stats& rhs)
+{
+  if (this->n_ == 0)
+    {
+      this->start_ = rhs.start_;
+      this->stop_ = rhs.stop_;
+      this->n_ = rhs.n_;
+      return;
+    }
+
+  if (this->start_ > rhs.start_)
+    this->start_ = rhs.start_;
+
+  if (this->stop_ < rhs.stop_)
+    this->stop_ = rhs.stop_;
+
+  this->n_ += rhs.n_;
+}
+
+inline void
+Throughput_Stats::dump_results (const char *test_name,
+                                           const char *subtest)
+{
+  if (this->n_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s/%s: no events recorded\n",
+                  test_name, subtest));
+      return;
+    }
+
+  ACE_Time_Value tv;
+  ACE_High_Res_Timer::hrtime_to_tv (tv, this->stop_ - this->start_);
+
+  double f = 1.0/(tv.sec () + tv.usec () / 1000000.0);
+  double events_per_second = this->n_ * f;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s/%s: "
+              "%d / %d.%06.6d = %.3f events/second\n",
+              test_name, subtest,
+              this->n_,
+              tv.sec (), tv.usec (),
+              events_per_second));
+}
+
+inline
+Throughput_Stats::Throughput_Stats (void)
+  : n_ (0)
+{
+}
+
+inline void
+Throughput_Stats::sample (void)
+{
+  if (this->n_ == 0)
+    {
+      this->start_ = ACE_OS::gethrtime ();
+    }
+  this->n_++;
+  this->stop_ = ACE_OS::gethrtime ();
 }
 
 inline void
