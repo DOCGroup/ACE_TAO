@@ -50,14 +50,13 @@ trap 'kill -1 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
 ########
 ######## Start server and save its pid.
 ########
-$server_exec_prefix ./server -s -f $ior_file -t $threads $iioplite > \
+$server_exec_prefix ./server -s -f $ior_file -t $threads $iiop_lite > \
   ${tmp}server.log 2>&1 &
 server_pid=$!
 
 while [ ! -f $ior_file ]; do
   sleep 2
 done
-sleep 4
 
 
 ########
