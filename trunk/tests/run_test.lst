@@ -108,7 +108,7 @@ SOCK_Connector_Test
 SOCK_Send_Recv_Test: !LynxOS
 SPIPE_Test: !VxWorks
 SString_Test
-SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks
+SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1
 Task_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
