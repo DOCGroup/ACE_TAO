@@ -1,3 +1,9 @@
+Tue Jun 15 11:51:38 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: 
+	  Fixed the run_test.pl so that the first line doesn't start with a
+	  # and also appended . to the executable PATH in the script.
+
 Tue Jun 15 11:06:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp:
