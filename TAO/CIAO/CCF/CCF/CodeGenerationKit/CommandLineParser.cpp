@@ -34,7 +34,7 @@ bool parse (int argc, char* argv[], CommandLine& cl) throw ()
 
   match<nil_t> hit = g.parse(scan);
 
-  bool result = hit.length() == v.size ();
+  bool result = static_cast<std::size_t>(hit.length()) == v.size ();
 
   // some semantic analisys
   if (!cl.separator)

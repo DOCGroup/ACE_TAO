@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "CCF/CompilerElements/ReferenceCounting.hpp"
 #include "CCF/IDL2/Parsing/Elements.hpp"
 
 namespace CCF
@@ -107,8 +108,11 @@ namespace CCF
       //
       //
       //
-      struct RecoveryDescriptor
+      struct RecoveryDescriptor :
+        public virtual ReferenceCounting::DefaultImpl <>
       {
+        virtual ~RecoveryDescriptor () throw () {}
+
         RecoveryDescriptor (std::string d,
                             RecoveryMethod::Value recovery,
                             DiagnosticType::Value diagnostic)
@@ -166,13 +170,19 @@ namespace CCF
         DiagnosticType::Value diagnostic_;
       };
 
-
-
-      //
-      //
-      //
       typedef
-      parser_error<RecoveryDescriptor, Iterator>
+      ReferenceCounting::StrictPtr<RecoveryDescriptor>
+      RecoveryDescriptorPtr;
+
+
+      // I have to use a pointer to RecoveryDescriptor instead of
+      // just RecoveryDescriptor to subvert constness of descriptor
+      // member in spirit::parser_error.
+      //
+      //
+
+      typedef
+      parser_error<RecoveryDescriptorPtr, Iterator>
       Error;
 
 
@@ -181,54 +191,56 @@ namespace CCF
       //
       struct Assertion
       {
-        assertion<RecoveryDescriptor>
+        typedef
+        assertion<RecoveryDescriptorPtr>
+        AssertionImpl;
+
+        AssertionImpl
         operator () (RecoveryMethod::Value recovery = RecoveryMethod::NONE)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor ("", recovery, DiagnosticType::NONE));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor ("", recovery, DiagnosticType::NONE)));
         }
 
-        assertion<RecoveryDescriptor>
+        AssertionImpl
         operator () (std::string d,
                      RecoveryMethod::Value recovery = RecoveryMethod::STANDARD,
                      DiagnosticType::Value diagnostic = DiagnosticType::AFTER)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor (d, recovery, diagnostic));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor (d, recovery, diagnostic)));
         }
 
         template<typename Object>
-        assertion<RecoveryDescriptor>
+        AssertionImpl
         operator () (std::string d,
                      Object& obj,
                      void (Object::*action_one)(),
                      RecoveryMethod::Value recovery = RecoveryMethod::STANDARD,
                      DiagnosticType::Value diagnostic = DiagnosticType::AFTER)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor (d,
-                                recovery,
-                                diagnostic,
-                                obj,
-                                action_one));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor (
+                d, recovery, diagnostic, obj, action_one)));
         }
 
         template<typename Object>
-        assertion<RecoveryDescriptor>
+        AssertionImpl
         operator () (Object& obj,
                      void (Object::*action_one)(),
                      RecoveryMethod::Value recovery = RecoveryMethod::BAIL_OUT)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor ("",
-                                recovery,
-                                DiagnosticType::NONE,
-                                obj,
-                                action_one));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor (
+                "", recovery, DiagnosticType::NONE, obj, action_one)));
         }
 
         template<typename Object>
-        assertion<RecoveryDescriptor>
+        AssertionImpl
         operator () (std::string d,
                      Object& obj,
                      void (Object::*action_one)(),
@@ -236,32 +248,30 @@ namespace CCF
                      RecoveryMethod::Value recovery = RecoveryMethod::STANDARD,
                      DiagnosticType::Value diagnostic = DiagnosticType::AFTER)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor (d,
-                                recovery,
-                                diagnostic,
-                                obj,
-                                action_one,
-                                action_two));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor (
+                d, recovery, diagnostic, obj, action_one, action_two)));
         }
 
 
         template<typename Object>
-        assertion<RecoveryDescriptor>
+        AssertionImpl
         operator () (Object& obj,
                      void (Object::*action_one)(),
                      void (Object::*action_two)(),
                      RecoveryMethod::Value recovery = RecoveryMethod::BAIL_OUT)
         {
-          return assertion<RecoveryDescriptor> (
-            RecoveryDescriptor ("",
-                                recovery,
-                                DiagnosticType::NONE,
-                                obj,
-                                action_one,
-                                action_two));
+          return AssertionImpl (
+            RecoveryDescriptorPtr (
+              new RecoveryDescriptor ("",
+                                      recovery,
+                                      DiagnosticType::NONE,
+                                      obj,
+                                      action_one,
+                                      action_two)));
         }
-
+        
       };
 
       typedef
@@ -269,7 +279,7 @@ namespace CCF
       RecoveryStatus;
 
       typedef
-      guard<RecoveryDescriptor>
+      guard<RecoveryDescriptorPtr>
       Guard;
     }
   }

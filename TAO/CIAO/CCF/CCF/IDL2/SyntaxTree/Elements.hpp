@@ -537,7 +537,7 @@ namespace CCF
           {
             context_holder_ = ContextHolderPtr (new ContextHolder);
           }
-          
+
           return context_holder_;
         }
 
