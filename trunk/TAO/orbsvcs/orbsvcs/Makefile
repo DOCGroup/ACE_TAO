@@ -39,7 +39,9 @@ IDL_FILES += \
 	CosPropertyServiceC \
 	\
 	AVStreamsS \
-	AVStreamsC
+	AVStreamsC \
+	sfpS \
+	sfpC 
 
 endif
 
