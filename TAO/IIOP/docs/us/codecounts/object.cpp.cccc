@@ -1,21 +1,4 @@
-
-CCCC - a code counter for C and C++
-===================================
-
-A program to analyse C and C++ source code and report on
-some simple software metrics
-Version  1.00 
-Copyright Tim Littlefair, 1995
-
-The development of this program was heavily dependent on
-the Purdue Compiler Construction Tool Set (PCCTS) 
-by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
-and others.
-
-This software is provided with NO WARRANTY
-
-
-Scope: ../../../lib/runtime/object.cpp
+Scope: object.cpp
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 CORBA_Object::CORBA_Object(){}       1    25       9     5     0   0.6   0.0
@@ -45,10 +28,10 @@ CORBA_Boolean __stdcall CORBA_Objec  271  306      3    28 ?   8 ? 9.3   2.7
 CORBA_ULong __stdcall CORBA_Object:  309  329      4    14     3   3.5   0.8
 CORBA_Boolean __stdcall CORBA_Objec  332  360      7    18     5   2.6   0.7
 DEFINE_GUID(IID_IUnknown,0x77420089  363  374      7     3     0   0.4   0.0
-DEFINE_GUID(IID_CORBA_Object,0xa201  377  379      1     1     0   1.0   0.0
-ULONG __stdcall CORBA_Object::AddRe  382  387      0     5     1 ! *** ! ***
-ULONG __stdcall CORBA_Object::Relea  389  394      0     5     1 ! *** ! ***
-HRESULT __stdcall CORBA_Object::Que  396  404      0     8     1 ! *** ! ***
+DEFINE_GUID(IID_CORBA_Object,0xa201  378  380      1     1     0   1.0   0.0
+ULONG __stdcall CORBA_Object::AddRe  384  389      0     5     1 ! *** ! ***
+ULONG __stdcall CORBA_Object::Relea  391  396      0     5     1 ! *** ! ***
+HRESULT __stdcall CORBA_Object::Que  398  406      0     8     1 ! *** ! ***
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 Summary for scope:                               105   233    37   2.2   0.4
 --------------------                 ---- ---- ----- ----- ----- ----- -----
