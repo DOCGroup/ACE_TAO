@@ -399,14 +399,16 @@ Video_Control_Waiting_State::step (const Video_Control::STEPpara &para)
 
 CORBA::Boolean 
 Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
-                       CORBA::Long_out vts)
+                                   CORBA::Long_out vts)
                        
 {
   // Many guys in legacy code depend on this variable.
   VIDEO_SINGLETON::instance ()-> cmd = CmdPLAY;
   //ACE_DEBUG ((LM_DEBUG,
   //            "(%P|%t)Video_Control_Waiting_State::play () called \n"));
-  VIDEO_SINGLETON::instance ()->init_play (para);
+  VIDEO_SINGLETON::instance ()->init_play (para,
+                                           vts);
+  cerr << "vts is " << vts << endl;
   this->vch_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
   return CORBA::B_TRUE;
 }
@@ -554,10 +556,13 @@ Video_Control_Play_State::speed (const Video_Control::SPEEDpara &para)
   VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
   VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
   VIDEO_SINGLETON::instance ()->addedUPF = 0;
+
   for (int i=0; i<para.sendPattern.length (); i++)
     VIDEO_SINGLETON::instance ()->sendPattern [i] = para.sendPattern [i];
   //  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
+
   Video_Timer_Global::TimerSpeed ();
+  VIDEO_SINGLETON::instance ()->play_send ();
   return CORBA::B_TRUE;
 }
 
