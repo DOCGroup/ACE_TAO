@@ -377,7 +377,7 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
 
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler>
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR, >
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -405,8 +405,10 @@ template class ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class TAO_SVC_TUPLE;
-
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
+
+template class ACE_Reverse_Lock<TAO_Cached_Connector_Lock>;
+template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
 
 template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_IIOP_Client_Connection_Handler *>;
 template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
@@ -452,12 +454,15 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR,
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
-#pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Entry<int, TAO_SVC_TUPLE*>
+
+#pragma instantiate ACE_Reverse_Lock<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >
 
 #pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_IIOP_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>

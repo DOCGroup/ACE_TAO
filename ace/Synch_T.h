@@ -108,14 +108,14 @@ class ACE_Reverse_Lock : public ACE_Lock
   //     on the lock, and release() on this class calls acquire() on
   //     the lock.
   //
-  //  	 One motivation for this class is when we temporarily want to
-  //  	 release a lock (which we have already acquired) but then
-  //  	 reaquire it soon after.  An alternative design would be to
-  //  	 add a Anti_Guard or Reverse_Guard class which would release()
-  //  	 on construction and acquire() destruction.  However, there
-  //  	 are *many* varieties of the Guard class and this design
-  //  	 choice would lead to at least 6 new classes.  One new
-  //  	 ACE_Reverse_Lock class seemed more reasonable.
+  //     One motivation for this class is when we temporarily want to
+  //     release a lock (which we have already acquired) but then
+  //     reaquire it soon after.  An alternative design would be to
+  //     add a Anti_Guard or Reverse_Guard class which would release()
+  //     on construction and acquire() destruction.  However, there
+  //     are *many* varieties of the Guard class and this design
+  //     choice would lead to at least 6 new classes.  One new
+  //     ACE_Reverse_Lock class seemed more reasonable.
 public:
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
@@ -154,12 +154,8 @@ public:
   // Explicitly destroy the lock.
 
 private:
-  ACE_LOCKING_MECHANISM *lock_;
+  ACE_LOCKING_MECHANISM &lock_;
   // The concrete locking mechanism that all the methods delegate to.
-
-  int delete_lock_;
-  // This flag keep track of whether we are responsible for deleting
-  // the lock
 };
 
 template <class ACE_LOCK, class TYPE>

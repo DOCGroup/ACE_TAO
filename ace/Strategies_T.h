@@ -782,6 +782,8 @@ public:
   typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *>
           CONNECTION_MAP_ENTRY;
 
+  typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
+
   // = Strategy accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
   virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy (void) const;
@@ -789,8 +791,17 @@ public:
 
 protected:
 
-  int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
+  virtual int new_connection (SVC_HANDLER *&sh,
+                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                              ACE_Time_Value *timeout,
+                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                              int reuse_addr,
+                              int flags,
+                              int perms);
+  // Creates a new connection.
+
+  virtual int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
   // Find an idle handle.
 
   virtual int purge_i (const void *recycling_act);
@@ -848,6 +859,9 @@ protected:
 
   int delete_lock_;
   // Mutual exclusion for this object.
+
+  REVERSE_MUTEX *reverse_lock_;
+  // Reverse lock.
 
   // = Strategy objects.
 
