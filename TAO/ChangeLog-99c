@@ -1,3 +1,14 @@
+Thu Dec 16 18:52:44 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/pluggable_protocols/index.html:
+
+	  Added missing closing tag.  Sections that were incorrectly
+	  considered part of another section are now in the right place.
+
+	  Added Bruce Trask to the list of authors.
+
+	  Added hyperlinks to referenced papers.
+
 Thu Dec 16 17:25:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
