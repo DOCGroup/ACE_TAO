@@ -245,19 +245,19 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 public:
-  // The get_singleton_lock accessors are for internal use by
-  // ACE_Singleton _only_.  The arguments are ignored; they are
-  // only used for overload resolution.
+  // = The <get_singleton_lock> accessors are for internal use by ACE_Singleton _only_.
 
   static int get_singleton_lock (ACE_Null_Mutex *&);
   // Accesses a null lock to be used for construction of
   // ACE_Singletons.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.
+  // success; returns -1 on failure.  The argument is ignored -- it is
+  // only used for overload resolution.
 
   static int get_singleton_lock (ACE_Thread_Mutex *&);
-  // Accesses a non-recursve lock to be used for construction of
+  // Accesses a non-recursive lock to be used for construction of
   // ACE_Singletons.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.
+  // success; returns -1 on failure.  The argument is ignored -- it is
+  // only used for overload resolution.
 
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
   // Accesses a recursive lock to be used for construction of
