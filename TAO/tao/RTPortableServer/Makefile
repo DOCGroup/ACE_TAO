@@ -12,7 +12,7 @@ LIBNAME  = libTAO_RTPortableServer
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO_Valuetype
+ACE_SHLIBS = -lTAO_RTCORBA -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO_Valuetype -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
