@@ -131,7 +131,7 @@ Logger_Client::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 
 int
 Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
-{ 
+{
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   ACE_TRY
@@ -139,7 +139,7 @@ Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
       this->logger_1_ = factory_->make_logger ("key1",
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->logger_2_ = factory_->make_logger ("key2",
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -148,16 +148,16 @@ Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "nil logger1"),
                           -1);
-      
+
       if (CORBA::is_nil (this->logger_2_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "nil logger2"),
                           -1);
-      
+
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Created two loggers\n"));
-      
+
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -165,7 +165,7 @@ Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
           Logger_var logger_3 = factory_->make_logger ("key1",
                                                        ACE_TRY_ENV);
           ACE_TRY_CHECK;
-      
+
           if (CORBA::is_nil (logger_3.in ()))
             ACE_DEBUG ((LM_DEBUG,
                         "\nResolution failed."));
@@ -347,7 +347,7 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
   ACE_DEBUG ((LM_DEBUG,
               " Log Priority: %d\n"
               "         Time: %d\n"
-              "          PID: %d\n"
+              "          PID: %ld\n"
               " Host Address: %s\n"
               "      Message: %s\n",
               newrec.type,

@@ -1,12 +1,33 @@
+Fri May 19 20:54:57 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp,
+          orbsvcs/Scheduling_Service/Scheduling_Service.cpp,
+          orbsvcs/Trading_Service/Trading_Service.cpp,
+          orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp,
+          orbsvcs/tests/EC_Basic/EC_Basic.cpp,
+          orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp,
+          orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp,
+          orbsvcs/tests/EC_Mcast/EC_Mcast.cpp,
+          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp,
+          orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp,
+          orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp,
+          orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp,
+          orbsvcs/tests/Event/lib/Driver.cpp,
+          examples/Logging/Logging_Test_i.cpp:
+          static cast result of ACE_getpid () to long, and printf
+          it with %ld instead of %d, to avoid warnings from g++
+          2.95.1 on Solaris.  pid_t is a long on (32-bit) Solaris,
+          so %ld should be used for it.
+
 Fri May 19 19:20:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/constants.idl:
-	  Removed the signed long constant I added earlier today.
-	  I got warnings from at least 3 compilers and an error
-	  from SunCC 4.2, just as the original bug report says.
-	  Even though 'long foo = -2147483648' is legal according
-	  to ANSI, hardly any platforms deal with it flawlessly.
-	  I don't believe it's an IDL compiler bug.
+        * tests/IDL_Test/constants.idl:
+          Removed the signed long constant I added earlier today.
+          I got warnings from at least 3 compilers and an error
+          from SunCC 4.2, just as the original bug report says.
+          Even though 'long foo = -2147483648' is legal according
+          to ANSI, hardly any platforms deal with it flawlessly.
+          I don't believe it's an IDL compiler bug.
 
 Fri May 19 11:47:11 2000  Samir Shaikh  <SamirShaikh@bigfoot.com>
 
