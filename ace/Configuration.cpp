@@ -1689,6 +1689,9 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   if (index_->unbind (SectionExtId, allocator_))
     return -1;
 
+  value_hash_map->close ();
+  section_entry->int_id_.section_hash_map_->close (allocator_);
+
   // Free the memory
   ExtIdToFree.free (allocator_);
   IntIdToFree.free (allocator_);
