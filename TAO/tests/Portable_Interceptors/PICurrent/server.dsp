@@ -89,6 +89,10 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
+SOURCE=.\ClientRequestInterceptor2.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
@@ -115,6 +119,10 @@ SOURCE=.\testS.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor2.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\ServerORBInitializer.h
