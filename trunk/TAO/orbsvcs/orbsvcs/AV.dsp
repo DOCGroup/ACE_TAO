@@ -7,21 +7,21 @@
 CFG=AV - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "AV.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "AV.mak" CFG="AV - Win32 MFC Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "AV - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib ace.lib ACE_QoS.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib ace.lib ACE_QoS.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\QoS"
 
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib TAO_CosTradingd.lib TAO_CosPropertyd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib ACE_QoSmfcd.lib TAO_CosNamingmfcd.lib TAO_CosTradingmfcd.lib TAO_CosPropertymfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib ACE_QoSmfcd.lib TAO_CosNamingmfcd.lib TAO_CosTradingmfcd.lib TAO_CosPropertymfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\QoS"
 
 !ELSEIF  "$(CFG)" == "AV - Win32 MFC Release"
 
@@ -141,9 +141,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib ACE_QoSmfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_CosTradingmfc.lib TAO_CosPropertymfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AVmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib ACE_QoSmfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_CosTradingmfc.lib TAO_CosPropertymfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AVmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"  /libpath:"..\..\..\ace\QoS"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -405,7 +405,7 @@ SOURCE=.\AVStreams.idl
 !IF  "$(CFG)" == "AV - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -444,7 +444,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -490,7 +490,7 @@ BuildCmds= \
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -500,7 +500,7 @@ SOURCE=.\Null_MediaCtrl.idl
 !IF  "$(CFG)" == "AV - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
@@ -539,7 +539,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl.exe"	
+USERDEP__NULL_="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
