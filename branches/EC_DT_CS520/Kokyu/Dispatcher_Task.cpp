@@ -157,7 +157,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
   if (buf == 0)
     return -1;
 
-  ACE_Message_Block *mb =
+  Dispatch_Queue_Item *qitem =
     new (buf) Dispatch_Queue_Item (cmd,
 				   qos_info,
 				   &(this->data_block_),
@@ -176,18 +176,10 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
   ACE_Time_Value release;
   release.msec(rel_msec);
   release += qos_info.deadline_;
+
   if (now < release)
     {
       //defer until last release time + period
-      Dispatch_Queue_Item *qitem =
-        ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
-
-      if (qitem == 0)
-        {
-          ACE_Message_Block::release (mb);
-          continue;
-        }
-
       this->deferrer_.dispatch(qitem);
     }
   else 
@@ -195,7 +187,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       //release!
 #endif //KOKYU_HAS_RELEASE_GUARD
 
-      this->enqueue (mb);
+      this->enqueue (qitem);
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
     } //else now >= release
