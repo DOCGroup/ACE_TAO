@@ -37,8 +37,16 @@ TAO_Notify_Method_Request_Lookup::work (
   TAO_Notify_ProxySupplier* proxy_supplier
   ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
-  proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
+  if (delivery_request_.get () == 0)
+  {
+    TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
+    proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
+  }
+  else
+  {
+    delivery_request_->dispatch (proxy_supplier, true ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
 }
 
 TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)

@@ -288,8 +288,6 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
 void
 TAO_Notify_EventChannelFactory::load_event_persistence (ACE_ENV_SINGLE_ARG_DECL)
 {
-#define EVENT_PERISISTENCE_SUPPORT //@@todo
-#ifdef EVENT_PERISISTENCE_SUPPORT //@@todo
   TAO_Notify::Event_Persistence_Strategy * strategy =
     ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
   if (strategy != 0)
@@ -329,9 +327,6 @@ TAO_Notify_EventChannelFactory::load_event_persistence (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
     }
   }
-#else //EVENT_PERISISTENCE_SUPPORT //@@todo
-#pragma message ("TODO: EVENT_PERISISTENCE_SUPPORT")
-#endif //EVENT_PERISISTENCE_SUPPORT //@@todo
 }
 
 bool
@@ -411,13 +406,8 @@ TAO_Notify_EventChannelFactory::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Then send reconnection announcement to registered clients
-  CORBA::Object_var obj = this->poa()->id_to_reference (this->id () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CosNotifyChannelAdmin::EventChannelFactory_var this_reference = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
-  ACE_ASSERT (CORBA::is_nil (this_reference.in ()));
-  // todo: Is there an easier way?
-  this->reconnect_registry_.send_reconnect (this_reference.in () ACE_ENV_ARG_PARAMETER);
+  ACE_ASSERT (!CORBA::is_nil (this->channel_factory_.in ()));
+  this->reconnect_registry_.send_reconnect (this->channel_factory_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // reactivate events in-progress
@@ -524,6 +514,39 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
   }
   return result;
 }
+
+CosNotifyChannelAdmin::EventChannelFactory_ptr
+TAO_Notify_EventChannelFactory::activate_self (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CORBA::Object_var obj = this->activate (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
+  this->channel_factory_
+    = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+                           CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_NEW_ENV
+  {
+    if (DEBUG_LEVEL > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self") ));
+    }
+    this->reconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    // ignore for now
+  }
+  ACE_ENDTRY;
+  return this->channel_factory_._retn();
+}
+
+
+TAO_Notify_Object::ID
+TAO_Notify_EventChannelFactory::get_id () const
+{
+  return id();
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -58,14 +58,14 @@ TAO_Notify_Consumer::proxy (void)
   return this->proxy_supplier ();
 }
 
-//@@ todo: consider buffering strategy
 void
 TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
 
 /*
-if (this->max_batch_size_.is_valid ())
+//@@ todo: consider buffering strategy
+  if (this->max_batch_size_.is_valid ())
     {// set the max batch size.
       this->buffering_strategy_->batch_size (this->max_batch_size_.value ());
     }
@@ -346,6 +346,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         ex._info ().c_str ()
         ));
     // @@todo what to return here?
+    return DISPATCH_RETRY;
   }
   ACE_CATCHANY
   {

@@ -17,6 +17,11 @@
 #include "Properties.h"
 #include "Topology_Saver.h"
 #include <ace/Vector_T.h>
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif
+
 namespace TAO_Notify
 {
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
@@ -41,7 +46,7 @@ namespace TAO_Notify
     //@@todo DO WE NEED THREAD SAFENESS?
     NotifyExt::ReconnectionRegistry::ReconnectionID next_id = ++highest_id_;
 
-    if (TAO_debug_level > 0)
+    if (DEBUG_LEVEL > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: registering %d\n"),
@@ -68,7 +73,7 @@ namespace TAO_Notify
   Reconnection_Registry::unregister_callback (NotifyExt::ReconnectionRegistry::ReconnectionID id
     ACE_ENV_ARG_DECL)
   {
-    if (TAO_debug_level > 0)
+    if (DEBUG_LEVEL > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: unregistering %d\n"),
@@ -109,7 +114,7 @@ namespace TAO_Notify
       iter.advance ())
     {
       NVPList cattrs;
-      if (TAO_debug_level > 0)
+      if (DEBUG_LEVEL > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnect registry: saving %d\n"),
@@ -150,7 +155,7 @@ namespace TAO_Notify
         {
           highest_id_ = id;
 
-          if (TAO_debug_level > 0)
+          if (DEBUG_LEVEL > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Reconnect registry: reloading %d\n"),
@@ -188,7 +193,7 @@ namespace TAO_Notify
     {
       ACE_TRY_NEW_ENV
       {
-        if (TAO_debug_level > 0)
+        if (DEBUG_LEVEL > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Reconnection Registry: Sending reconnection to client %d\n"),
@@ -251,9 +256,6 @@ template class ACE_Hash_Map_Manager_Ex<NotifyExt::ReconnectionRegistry::Reconnec
 template class ACE_Hash_Map_Iterator_Base_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>;
-// vector of int's is instantiated elsewhere
-//template class ACE_Vector<NotifyExt::ReconnectionRegistry::ReconnectionID>;
-//template class ACE_Array_Base<NotifyExt::ReconnectionRegistry::ReconnectionID>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString >
@@ -261,7 +263,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<NotifyExt::ReconnectionRegistry:
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString ,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString ,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID, ACE_CString ,ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>, ACE_Null_Mutex>
-// vector of int's is instantiated elsewhere
-//#pragma instantiate ACE_Vector<NotifyExt::ReconnectionRegistry::ReconnectionID>
-//#pragma instantiate ACE_Array_Base<NotifyExt::ReconnectionRegistry::ReconnectionID>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

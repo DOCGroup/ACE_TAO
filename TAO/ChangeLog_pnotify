@@ -1,3 +1,42 @@
+Fri Oct 29 10:53:56 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Don't write IOR file until Notification Service
+          is *really* ready to run.
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+
+          Add Event reloading and restarting.  Passes Reconnection test.
+          There is a lot of debug output still turned on so some housecleaning
+          is definately in order.
+
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+          Add additional diagnostic information to track down problems
+          revealed by test.
+
+
 Wed Oct 27 11:59:01 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:
