@@ -207,8 +207,26 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
   // in a reactive handler, except that this can simply block waiting
   // for input.
 
-  while ((result = handle_input ()) >= 0)
-    continue;
+  ACE_Time_Value *max_wait_time = 0;
+  ACE_Time_Value timeout;
+  ACE_Time_Value current_timeout;
+  if (this->orb_core_->thread_per_connection_timeout (timeout))
+    {
+      current_timeout = timeout;
+      max_wait_time = &current_timeout;
+    }
+
+  while (!this->orb_core_->has_shutdown ()
+         && result >= 0)
+    {
+      result = handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
+      if (result == -1 && errno == ETIME)
+        {
+          // Ignore timeouts, they are only used to wake up and
+          // shutdown.
+          result = 0;
+        }
+    }
 
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
@@ -218,13 +236,21 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
 }
 
 int
-TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE h)
+{
+  return this->handle_input_i (h);
+}
+
+int
+TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                                    ACE_Time_Value *max_wait_time)
 {
   this->refcount_++;
 
   int result = TAO_GIOP::handle_input (this->transport (),
                                        this->orb_core_,
-                                       this->transport_.message_state_);
+                                       this->transport_.message_state_,
+                                       max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {

@@ -161,6 +161,13 @@ TAO_ORB_Core::has_shutdown (void)
   return this->has_shutdown_;
 }
 
+ACE_INLINE int
+TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
+{
+  timeout = this->thread_per_connection_timeout_;
+  return this->thread_per_connection_use_timeout_;
+}
+
 // ****************************************************************
 
 ACE_INLINE

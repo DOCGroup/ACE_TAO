@@ -478,7 +478,47 @@ The default is <code>select_mt</code></TD>
         concurrency strategy to use.  Range of values is <code>reactive</code>
         for a purely Reactor-driven concurrency strategy or
         <code>thread-per-connection</code> for creating a new thread to
-        service each connection. The default is reactive.</TD>
+        service each connection. The default is reactive.
+	      <P>
+		TAO also supports the thread-pool concurrency model
+		but this is implemented by the user, creating multiple 
+		threads that call <CODE>ORB::run()</CODE> and using
+		the <CODE>-ORBReactorType tp</CODE> option.
+	      </P>
+    </TD>
+  </TR>
+  <TR>
+
+    <TD><a name="server_timeout"><CODE>-ORBThreadPerConnectionTimeout</CODE></a>
+        <EM>milliseconds</EM></TD>
+    <TD>In many platforms it is impossible to interrupt the server
+	      threads created by the
+	      <code>thread-per-connection</code> model.
+	      This is because these threads are blocked in
+	      <CODE>read()</CODE> operations (and not in
+	      <CODE>select()</CODE>).
+	      As a workaround, the server threads
+	      periodically poll the ORB to find out if they should
+	      shutdown.
+	      This option controls the period of the polling,
+	      expressed in milliseconds.
+	      Applications that do not shutdown, or that can otherwise 
+	      ensure that no server threads will be running at
+	      shutdown (for example if all the clients terminate
+	      before the server) can disable the polling using  the
+	      magic value <CODE>INFINITE</CODE>.
+
+	      <P>
+		If the option is not provided then the ORB uses the
+		compile time flag
+		<CODE>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</CODE>,
+		this flag also expresses the time in milliseconds (as
+		a string constant) and the magic value
+		<CODE>"INFINITE"</CODE> can be used to disable polling
+		entirely. This yields a slight performance improvement 
+		(around 1%).
+	      </P>
+	    </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBActiveObjectMapSize</CODE> <EM>active object map
