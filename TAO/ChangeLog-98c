@@ -1,3 +1,9 @@
+Fri Jul  3 13:05:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	  Fixed template instantiations.
+
 Fri Jul 03 11:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Param_Test/Makefile,
