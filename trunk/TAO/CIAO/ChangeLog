@@ -1,3 +1,9 @@
+Tue Nov 25 15:06:02 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/cidlc.cpp:
+	
+	  Some code to support #include handling.
+
 Tue Nov 25 14:47:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CodeGenerationKit/CommandLine.hpp:
@@ -15,11 +21,11 @@ Tue Nov 25 14:47:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
 	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:	
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	
+
 	  Added #include handling.
-	
+
 	* CCF/Test/IDL2/Parser/Include/root.idl:
 	* CCF/Test/IDL2/Parser/Include/bar/bar.idl:
 	* CCF/Test/IDL2/Parser/Include/bar/baz.idl:
