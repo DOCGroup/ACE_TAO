@@ -256,6 +256,10 @@
 # define ACE_LACKS_MUTEXATTR_PSHARED
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_POSIX_SEM
+// Include this file, the sys/stat.h file shipped with VxWorks has old types
+// and without this include we get a lot of compile errors. A TSR has been filed
+// so that hopefully in the future we can zap this include
+#include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
 # define ACE_LACKS_COND_T
