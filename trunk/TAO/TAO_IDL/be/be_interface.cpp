@@ -370,7 +370,7 @@ be_interface::gen_var_defn (char* interface_name)
   ACE_OS::sprintf (namebuf,
                    "%s_var",
                    interface_name);
-  
+
   // Retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
@@ -441,7 +441,7 @@ be_interface::gen_var_defn (char* interface_name)
 }
 
 // implementation of the _var class. All of these get generated in the
-// inline file. 
+// inline file.
 // If the argument is 0, then use the name in <this>, otherwise use
 // the name given. Just making the class more useful.
 int
@@ -453,7 +453,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _var names
 
-  // Decide on the names to use. 
+  // Decide on the names to use.
   // Even if one argument is 0, there is no point using the
   // arguments. Let us then use the name in this node.
   if (interface_local_name == 0 || interface_full_name == 0)
@@ -644,7 +644,7 @@ be_interface::gen_out_defn (char *interface_name)
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
-  
+
   // Decide which name to use.
   if (interface_name == 0)
     interface_name = this->local_name ()->get_string ();
@@ -722,7 +722,7 @@ be_interface::gen_out_impl (char *interface_local_name,
       interface_local_name = local_name ()->get_string ();
       interface_full_name = (char *) this->fullname ();
     }
-  
+
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (fname, "%s_out", interface_full_name);
 
@@ -1067,7 +1067,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                   // we are an operation node
                   *ss << "{\"" << d->original_local_name () << "\", &"
                       << derived->full_skel_name () << "::"
-                      << d->original_local_name () << "_skel},\n";
+                      << d->local_name () << "_skel},\n";
 
                   derived->skel_count_++;
                 }
@@ -1077,12 +1077,12 @@ be_interface::gen_optable_entries (be_interface *derived)
 
                   // Start from current indentation level.
                   ss->indent ();
-                  
+
                   // Generate only the "get" entry if we are
-                  // readonly. 
-                  *ss << "{\"_get_" << d->original_local_name () << "\", &" <<
-                    derived->full_skel_name () << "::_get_" << d->original_local_name () <<
-                    "_skel},\n";
+                  // readonly.
+                  *ss << "{\"_get_" << d->original_local_name ()
+                      << "\", &" << derived->full_skel_name ()
+                      << "::_get_" << d->local_name () << "_skel},\n";
 
                   derived->skel_count_++;
 
@@ -1094,9 +1094,9 @@ be_interface::gen_optable_entries (be_interface *derived)
                     {
                       // the set method
                       ss->indent (); // start from current indentation level
-                      *ss << "{\"_set_" << d->original_local_name () << "\", &" <<
-                        derived->full_skel_name () << "::_set_" << d->original_local_name
-                        () << "_skel},\n";
+                      *ss << "{\"_set_" << d->original_local_name ()
+                          << "\", &" << derived->full_skel_name ()
+                          << "::_set_" << d->local_name () << "_skel},\n";
                       derived->skel_count_++;
                     }
                 }
@@ -1131,17 +1131,17 @@ be_interface::gen_optable_entries (be_interface *derived)
                 {
                   //
                   // Generate operation name.
-                  // 
+                  //
 
                   // Start from current indentation level
                   ss->indent ();
-                  
+
                   // We are an operation node. We use the original
                   // operation name, not the one with _cxx_ in it.
                   *ss << d->original_local_name () << ",\t&"
                       << derived->full_skel_name () << "::"
-                      << d->original_local_name () << "_skel" << "\n";
-                  
+                      << d->local_name () << "_skel" << "\n";
+
                   derived->skel_count_++;
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
@@ -1154,7 +1154,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                   // Generate only the "get" entry if we are readonly
                   *ss << "_get_" << d->original_local_name () << ",\t&"
                       << derived->full_skel_name () << "::_get_"
-                      << d->original_local_name () << "_skel\n";
+                      << d->local_name () << "_skel\n";
                   derived->skel_count_++;
 
                   attr = AST_Attribute::narrow_from_decl (d);
@@ -1167,7 +1167,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                       ss->indent (); // start from current indentation level
                       *ss << "_set_" << d->original_local_name () << ",\t&"
                           << derived->full_skel_name () << "::_set_"
-                          << d->original_local_name () << "_skel\n";
+                          << d->local_name () << "_skel\n";
                       derived->skel_count_++;
                     }
                 }
