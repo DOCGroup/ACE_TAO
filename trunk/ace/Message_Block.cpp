@@ -623,7 +623,7 @@ ACE_Message_Block::duplicate (void) const
 }
 
 ACE_Message_Block *
-ACE_Message_Block::duplicate (ACE_Message_Block *mb)
+ACE_Message_Block::duplicate (const ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
   if (mb == 0)
