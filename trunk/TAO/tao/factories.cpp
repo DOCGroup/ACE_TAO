@@ -93,7 +93,7 @@ TAO_Server_Factory::object_lookup_strategy (void)
     case TAO_OA_Parameters::TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
-      ACE_ASSERT (this->objtable_ != 0);
+      //      ACE_ASSERT (this->objtable_ != 0);
       this->objtable_ = p->userdef_lookup_strategy ();
       break;
     case TAO_OA_Parameters::TAO_ACTIVE_DEMUX:
