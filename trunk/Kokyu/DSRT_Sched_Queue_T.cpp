@@ -250,6 +250,36 @@ dump ()
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):##########################\n"));
 }
 
+template <class DSRT_Scheduler_Traits,
+          class More_Eligible_Comparator,
+          class ACE_LOCK>
+int Sched_Ready_Queue<DSRT_Scheduler_Traits,
+                       More_Eligible_Comparator,
+                       ACE_LOCK>::
+change_prio(int old_prio, int new_prio, int policy)
+{
+  if (dispatch_items_prio_queue_.current_size ())
+    {
+      PRIO_QUEUE_ITERATOR end_iter = dispatch_items_prio_queue_.end ();
+      PRIO_QUEUE_ITERATOR iter;
+      int prio;
+
+      iter = dispatch_items_prio_queue_.begin ();
+      while( iter != end_iter )
+        {
+          PRIO_QUEUE_ENTRY &ent = (*iter);
+          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
+            item_var = ent.item ();
+          ACE_OS::thr_getprio (item_var->thread_handle (), prio);
+          if (prio==old_prio) {
+            ACE_OS::thr_setprio(item_var->thread_handle (), new_prio, policy);
+          }
+          ++iter;
+        }
+    }
+    return(0);
+}
+
 }
 
 #endif /* DSRT_SCHED_QUEUE_T_CPP */
