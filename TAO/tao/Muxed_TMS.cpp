@@ -2,7 +2,7 @@
 
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 #include "tao/debug.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "Transport.h"

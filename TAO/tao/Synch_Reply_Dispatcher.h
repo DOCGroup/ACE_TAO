@@ -20,7 +20,7 @@
 #include "ace/pre.h"
 
 #include "tao/Reply_Dispatcher.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

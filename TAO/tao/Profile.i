@@ -4,7 +4,7 @@
 ACE_INLINE
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Version &version)
+                          const TAO_GIOP_Message_Version &version)
   : version_ (version),
     are_policies_parsed_ (0),
     stub_ (0),
@@ -22,7 +22,7 @@ TAO_Profile::tag (void) const
   return this->tag_;
 }
 
-ACE_INLINE const TAO_GIOP_Version &
+ACE_INLINE const TAO_GIOP_Message_Version &
 TAO_Profile::version (void) const
 {
   return this->version_;

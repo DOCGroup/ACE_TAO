@@ -945,7 +945,7 @@ TAO_GIOP_Message_Base::set_state (CORBA::Octet def_major,
 
 void
 TAO_GIOP_Message_Base::
-  send_close_connection (const TAO_GIOP_Version &version,
+  send_close_connection (const TAO_GIOP_Message_Version &version,
                          TAO_Transport *transport,
                          void *)
 {
