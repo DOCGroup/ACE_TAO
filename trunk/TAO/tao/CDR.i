@@ -56,187 +56,112 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
 
 // ****************************************************************
 
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA::ULong x)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::Short x)
 {
-  return operator<< (cdr, x);
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::UShort x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_ANY::instance ()->encode (0, 
-                                              &x, 
-                                              0, 
-                                              &cdr, 
-                                              TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 1;
-      // else return 0 at the end of the function
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-  return 0;
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::Long x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_OBJREF::instance ()->encode (0, 
-                                                 &x, 
-                                                 0, 
-                                                 &cdr, 
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 1;
-      // else return 0 at the end of the function
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-  return 0;
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::ULong x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->encode (0, 
-                                                   &x, 
-                                                   0, 
-                                                   &cdr, 
-                                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+}
 
-      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 1;
-      // else return 0 at the end of the function
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-  return 0;
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      CORBA::LongLong x)
+{
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      CORBA::ULongLong x)
+{
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR& os,
+                                      CORBA::LongDouble x)
+{
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::Float x)
+{
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                      CORBA::Double x)
+{
+  return ACE_static_cast(ACE_OutputCDR&,os) << x;
 }
 
 // ****************************************************************
 
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::ULong x)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::Short &x)
 {
-  return operator>> (cdr, x);
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::UShort &x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_ANY::instance ()->decode (0, 
-                                              &x, 
-                                              0, 
-                                              &cdr, 
-                                              TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-
-  return 1;
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::Long &x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_OBJREF::instance ()->decode (0, 
-                                                 &x, 
-                                                 0, 
-                                                 &cdr, 
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-
-  return 1;
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }
 
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::ULong &x)
 {
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->decode (0, 
-                                                   &x, 
-                                                   0, 
-                                                   &cdr, 
-                                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-
-  return 1;
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }
 
-// ***************************************************************************
-// We must define this method here because it uses the "read_*" inlined
-// methods of the ACE_InputCDR class
-// ***************************************************************************
-
-ACE_INLINE CORBA::TypeCode::traverse_status
-TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
-                       TAO_InputCDR *src,
-                       CORBA::Environment &TAO_IN_ENV)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      CORBA::LongLong &x)
 {
-  TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
-                                                           TAO_IN_ENV);
-  TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+}
 
-  if (mobj == 0)
-    return CORBA::TypeCode::TRAVERSE_STOP;
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      CORBA::ULongLong &x)
+{
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+}
 
-  return mobj->append (tc, src, this, TAO_IN_ENV);
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      CORBA::LongDouble &x)
+{
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::Float &x)
+{
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::Double &x)
+{
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }

@@ -131,6 +131,103 @@ TAO_OutputCDR::~TAO_OutputCDR (void)
 {
 }
 
+CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
+{
+  // @@ This function should *not* use the interpreter, there must be
+  // a way to do this with just CDR operations!!!!
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_ANY::instance ()->encode (0, 
+                                              &x, 
+                                              0, 
+                                              &cdr, 
+                                              TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 1;
+      // else return 0 at the end of the function
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
+
+CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
+{
+  TAO_TRY
+    {
+      // @@ This function should *not* use the interpreter, there must
+      // be a way to do this with just CDR operations!!!!
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_OBJREF::instance ()->encode (0, 
+                                                 &x, 
+                                                 0, 
+                                                 &cdr, 
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 1;
+      // else return 0 at the end of the function
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
+
+CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
+{
+  TAO_TRY
+    {
+      // @@ This function should *not* use the interpreter, there must
+      // be a way to do this with just CDR operations!!!!
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_TYPECODE::instance ()->encode (0, 
+                                                   &x, 
+                                                   0, 
+                                                   &cdr, 
+                                                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 1;
+      // else return 0 at the end of the function
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
+
+CORBA::TypeCode::traverse_status
+TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
+                       TAO_InputCDR *src,
+                       CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_Marshal_Object *mobj =
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+                                                           TAO_IN_ENV);
+  TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (mobj == 0)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->append (tc, src, this, TAO_IN_ENV);
+}
+
 // ****************************************************************
 
 TAO_InputCDR::TAO_InputCDR (const char *buf, 
@@ -199,5 +296,80 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
 
 TAO_InputCDR::~TAO_InputCDR (void)
 {
+}
+
+CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
+{
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_ANY::instance ()->decode (0, 
+                                              &x, 
+                                              0, 
+                                              &cdr, 
+                                              TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
+}
+
+CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
+{
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_OBJREF::instance ()->decode (0, 
+                                                 &x, 
+                                                 0, 
+                                                 &cdr, 
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
+}
+
+CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
+{
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_TYPECODE::instance ()->decode (0, 
+                                                   &x, 
+                                                   0, 
+                                                   &cdr, 
+                                                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
 }
 

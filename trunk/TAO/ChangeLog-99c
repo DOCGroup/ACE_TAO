@@ -1,3 +1,15 @@
+Sat Feb  6 19:56:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  Added << and >> operators for the TAO_*CDR classes; otherwise we 
+	  get a lot of ambiguos definitions with the ACE_*CDR versions.
+
+	* tao/orbconf.h: 
+	  TAO_NO_COPY_OCTET_SEQUENCES is enabled always, until somebody
+	  actually defines ACE_NO_COPY_OCTET_SEQUENCES.
+
 Sat Feb  6 17:50:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp: 	
