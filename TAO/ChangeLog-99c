@@ -1,3 +1,8 @@
+Fri Apr 09 12:52:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (_is_a): Removed
+	  ACE_UNUSED_ARG(named_value_1) since named_value_1 was removed.
+
 Fri Apr  9 14:29:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.{h,cpp}:
@@ -18,7 +23,7 @@ Fri Apr  9 13:28:06 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Updated the following .dsp files to incorporate the recent file
 	name changes for Time service server and clerk.
-	
+
         * Time_Service_{Server,Clerk}.dsp
 
 Fri Apr  9 11:30:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
