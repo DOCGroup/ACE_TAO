@@ -1537,6 +1537,15 @@ CORBA_ORB::string_to_object (const char *str,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // Check for NULL pointer
+  if (str == 0)
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_NULL_POINTER_MINOR_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                      CORBA::Object::_nil ());
+
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
