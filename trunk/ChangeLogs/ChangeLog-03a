@@ -1,3 +1,9 @@
+Wed Dec 11 23:11:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/clean_sems.sh: A shell script to remove
+	  semaphores. Integrating the script that Ossama used to the
+	  daily build system.
+
 Wed Dec 11 21:05:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Block_T.cpp:
