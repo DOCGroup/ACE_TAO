@@ -9,8 +9,10 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Cubit \
-	Thruput_test \
-	Demux_Test
+	Thruput_test 
+
+# The following test hasn't been updated yet
+# Demux_Test
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
