@@ -1,3 +1,35 @@
+Fri Sep  8 14:02:26 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IORManipulation: A new pluggable library along the lines of
+	  DynAny and PortableServer. As this is proprietary to TAO, it is
+	  moved to a seperate library and should help footprint a bit.
+
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.i:
+	* tao/IORManipulation/IORManipulation.h:
+	* tao/IORManipulation/IORManipulation.cpp: Moved these files from
+	  tao to this directory. Moreover new operations have been added
+	  for FT support. They are also proprietary to TAO. The details of
+	  the operations can be seen in IOR.pidl
+
+	* tao/IORManipulation/ior_manip_export.h: New file for export
+	  definitions.
+
+	* tao/IORManipulation/Makefile: Makefile for this.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.h:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp: Changes to load the library. Changes closely follow
+	  the way DynAny library is loaded in to the ORB.
+
+	* tao/IOR.pidl: Added new operations for FT support
+	* tao/Makefile: Removed the file IORC.* and IORManipulation.cpp
+	  from the compilation list.
+
 Fri Sep  8 11:34:59 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
