@@ -1,10 +1,18 @@
+Sat Apr 04 07:45:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h,config-sunos4*.h,README: don't use
+          u_longlong_t on Suns if ACE_LACKS_U_LONGLONG_T is defined.
+          Define ACE_LACKS_U_LONGLONG_T in all SunOS4 config files.
+          Thanks to John Lindal <jafl@cco.caltech.edu> for reporting
+          this.
+
 Sat Apr  4 02:06:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (invoke,thr_exit): (*Win32*) We also need to consider
-	  threads that are not spawned by ACT_Thread_Manager by checking
-	  the validity of cached ACE_Thread_Descriptor.  In any rate,
-	  please avoid using thread functions in ACE_Thread::* and
-	  ACE_OS::thr_* directly.
+        * ace/OS.cpp (invoke,thr_exit): (*Win32*) We also need to consider
+          threads that are not spawned by ACE_Thread_Manager by checking
+          the validity of cached ACE_Thread_Descriptor.  In any rate,
+          please avoid using thread functions in ACE_Thread::* and
+          ACE_OS::thr_* directly.
 
 Sat Apr  4 01:03:17 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
@@ -12,88 +20,88 @@ Sat Apr  4 01:03:17 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 Sat Apr  4 00:55:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/clients/Naming/{Client,Dump_Restore}/Makefile:
-	  Moved all program source names to PSRC, not SRC, for
-	  'make depend'.
+        * netsvcs/clients/Naming/{Client,Dump_Restore}/Makefile:
+          Moved all program source names to PSRC, not SRC, for
+          'make depend'.
 
 Fri Apr  3 21:18:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp (cleanup): Moved ACE_Cleanup::cleanup() back into the
- 	  *.cpp file so that we have at least one non-inline virtual
- 	  function.
+        * ace/OS.cpp (cleanup): Moved ACE_Cleanup::cleanup() back into the
+          *.cpp file so that we have at least one non-inline virtual
+          function.
 
-	* ace/OS (cleanup): Created a dummy ACE_Cleanup constructor since
-	  the lack of this may be causing a bug with CC and the linker for
-	  TAO's IDL compiler.  Also moved the constructor and destructor of
-	  ACE_Cleanup into the OS.i file and made them inline.  We'll fix
-	  this bug yet!!!!
+        * ace/OS (cleanup): Created a dummy ACE_Cleanup constructor since
+          the lack of this may be causing a bug with CC and the linker for
+          TAO's IDL compiler.  Also moved the constructor and destructor of
+          ACE_Cleanup into the OS.i file and made them inline.  We'll fix
+          this bug yet!!!!
 
 Fri Apr 03 18:45:35 1998  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS/clients/Blobby/Makefile
-	* apps/JAWS/clients/Caching/Makefile
-	* examples/ASX/Event_Server/Event_Server/Makefile
-	* examples/ASX/UPIPE_Event_Server/Makefile
-	* examples/Logger/simple-server/Makefile
-	* examples/Mem_Map/IO-tests/Makefile
-	* examples/Reactor/Multicast/Makefile
-	* examples/Service_Configurator/Misc/Makefile
-	* examples/Shared_Malloc/Makefile
-	* performance-tests/Synch-Benchmarks/Makefile
-	      Adjusted for corresponding changes to rules.bin.GNU and/or
-	      rules.lib.GNU, below.
+        * apps/JAWS/clients/Blobby/Makefile
+        * apps/JAWS/clients/Caching/Makefile
+        * examples/ASX/Event_Server/Event_Server/Makefile
+        * examples/ASX/UPIPE_Event_Server/Makefile
+        * examples/Logger/simple-server/Makefile
+        * examples/Mem_Map/IO-tests/Makefile
+        * examples/Reactor/Multicast/Makefile
+        * examples/Service_Configurator/Misc/Makefile
+        * examples/Shared_Malloc/Makefile
+        * performance-tests/Synch-Benchmarks/Makefile
+              Adjusted for corresponding changes to rules.bin.GNU and/or
+              rules.lib.GNU, below.
 
-	* examples/Connection/non_blocking/Makefile
-	* examples/Service_Configurator/IPC-tests/server/Makefile
-	* examples/Timer_Queue/Makefile
-	* performance-tests/Misc/Makefile
-	      Moved all program source names to PSRC, not SRC, for
-	      'make depend'.
+        * examples/Connection/non_blocking/Makefile
+        * examples/Service_Configurator/IPC-tests/server/Makefile
+        * examples/Timer_Queue/Makefile
+        * performance-tests/Misc/Makefile
+              Moved all program source names to PSRC, not SRC, for
+              'make depend'.
 
-	* performance-tests/Makefile: Removed UDP from list of dirs to build.
+        * performance-tests/Makefile: Removed UDP from list of dirs to build.
 
-	* include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
-	  SRC files in the Makefile (LSRC sets VLOBJS in rules.lib.GNU;
-	  SRC sets VOBJS in rules.bin.GNU).
+        * include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
+          SRC files in the Makefile (LSRC sets VLOBJS in rules.lib.GNU;
+          SRC sets VOBJS in rules.bin.GNU).
 
-	* include/makeinclude/rules.local.GNU: depend rule will also operate
-	  on $(PSRC) in addition to $(SRC).  PSRC is new - if you have more
-	  than one program to build in a makefile, set PSRC to the source
-	  files for make depend.
+        * include/makeinclude/rules.local.GNU: depend rule will also operate
+          on $(PSRC) in addition to $(SRC).  PSRC is new - if you have more
+          than one program to build in a makefile, set PSRC to the source
+          files for make depend.
 
-	* include/makeinclude/rules.lib.GNU: Use VLOBJS for archive lib object
-	  files; using VOBJS gets it confused with VOBJS in rules.bin.GNU and
-	  makes it very difficult to build lib and exe from same Makefile.
+        * include/makeinclude/rules.lib.GNU: Use VLOBJS for archive lib object
+          files; using VOBJS gets it confused with VOBJS in rules.bin.GNU and
+          makes it very difficult to build lib and exe from same Makefile.
 
 Fri Apr  3 10:40:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (invoke): We were using AfxGetThread to determine
-	  whether a thread was created with AfxBeginThread or
-	  _beginthreadex.  This seemed to cause some subtle problem with
-	  MSVC 4.2.  Since we always cached the Thread_Descriptor in TSS
-	  now, we can just check how a thread was created and use the
-	  appropriate thread exiting method.  Thanks to Detlef Becker
-	  <Becker.Detlef@med.siemens.de> for tracing down this obscure
-	  bug.
+        * ace/OS.cpp (invoke): We were using AfxGetThread to determine
+          whether a thread was created with AfxBeginThread or
+          _beginthreadex.  This seemed to cause some subtle problem with
+          MSVC 4.2.  Since we always cached the Thread_Descriptor in TSS
+          now, we can just check how a thread was created and use the
+          appropriate thread exiting method.  Thanks to Detlef Becker
+          <Becker.Detlef@med.siemens.de> for tracing down this obscure
+          bug.
 
-	* ace/Thread_Manager.{h,i} (flags): Added this new access function
-	  into ACE_Thread_Descriptor to get the creation flags for a
-	  thread.
+        * ace/Thread_Manager.{h,i} (flags): Added this new access function
+          into ACE_Thread_Descriptor to get the creation flags for a
+          thread.
 
 Fri Apr 03 10:01:32 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.cpp (handle_timed_complete): On AIX, always check a
-	  completed non-blocking connect() because AIX sets only the write
-	  handle from select regardless of whether the connect succeeded
-	  or not.
+        * ace/ACE.cpp (handle_timed_complete): On AIX, always check a
+          completed non-blocking connect() because AIX sets only the write
+          handle from select regardless of whether the connect succeeded
+          or not.
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: Removed
-	  the #include <fstream.h> - this is taken care of via ace/OS.h.
-	  Having the #include in Dump_Restore.cpp caused some very weird
-	  compile errors on DG/UX.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: Removed
+          the #include <fstream.h> - this is taken care of via ace/OS.h.
+          Having the #include in Dump_Restore.cpp caused some very weird
+          compile errors on DG/UX.
 
-	* netsvcs/lib/Server_Logging_Handler.cpp: Fixed template instantiations
-	  for Base_Optimizer, non-static logging cases.
+        * netsvcs/lib/Server_Logging_Handler.cpp: Fixed template instantiations
+          for Base_Optimizer, non-static logging cases.
 
 Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
 

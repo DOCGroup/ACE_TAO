@@ -1,3 +1,8 @@
+Sat Apr 04 07:45:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.h: don't use u_longlong_t on Suns if
+          ACE_LACKS_U_LONGLONG_T is defined.
+
 Sat Apr  4 04:26:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface_fwd.cpp: We were not checking if
