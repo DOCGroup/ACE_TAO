@@ -1,5 +1,5 @@
 /**
- * @file PolicyList_Destroyer.hpp
+ * @file PolicyList_Destroyer.h
  *
  * $Id$
  *
