@@ -37,8 +37,6 @@ Reply_Handler::next_prime_excep (
       ACE_TRY_CHECK;
 
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-
-      cout << "Exiting " << endl;
     }
   ACE_CATCHANY
     {
