@@ -1,3 +1,24 @@
+Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:
+
+          One more warning cleaned up from my get_temp_dir () change.  
+          Hopefully the last (crossing my fingers).
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Missing some header files, thanks to Andres Kruse 
+          <andres.kruse@creaturelabs.com> for noticing.
+
+        * ace/OS.h:
+
+          Even when ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS was not defined,
+          ACE_SEH_TRY and family was still being defined to the seh
+          commands (like __try) on Win32.  When the above macro is not
+          defined, they are now noops.  Thanks to Natarajan Kalpathy 
+          <Natarajan_Kalpathy@mw.3com.com> for reporting this.  
+
 Tue Feb 29 16:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/CDR_Stream.h:

@@ -3204,7 +3204,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     define ACE_SEH_EXCEPT(X) while (0)
 #     define ACE_SEH_FINALLY if (1)
 #   else
-#     if defined(__BORLANDC__)
+#     if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#       define ACE_SEH_TRY if (1)
+#       define ACE_SEH_EXCEPT(X) while (0)
+#       define ACE_SEH_FINALLY if (1)
+#     elif defined(__BORLANDC__)
 #       if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
 #         define ACE_SEH_TRY try
 #         define ACE_SEH_EXCEPT(X) __except(X)
