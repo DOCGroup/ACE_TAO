@@ -205,9 +205,9 @@ ACE_POSIX_AIOCB_Asynch_Operation::~ACE_POSIX_AIOCB_Asynch_Operation (void)
 // return 0 if yes, else return -1. If a valid ptr is passed, keep it
 // in a free slot.
 int
-ACE_POSIX_AIOCB_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
+ACE_POSIX_AIOCB_Asynch_Operation::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
 {
-  return this->posix_proactor ()->register_aio_with_proactor (aiocb_ptr);
+  return this->posix_proactor ()->register_aio_with_proactor (result);
 }
 
 // *********************************************************************
@@ -421,7 +421,7 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Re
   // strategy.
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
 
-  // Fire off the aio write.
+  // Fire off the aio read.
   if (aio_read (result) == -1)
     // Queueing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -429,10 +429,9 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Re
                        "Asynch_Read_Stream: aio_read queueing failed"),
                       -1);
 
-  // <aio_read> successfully issued. Store the aiocb_ptr with
+  // <aio_read> successfully issued. Store the <result> with
   // proactor.
-  aiocb *aiocb_ptr = (aiocb *) result;
-  if (this->register_aio_with_proactor (aiocb_ptr) == -1)
+  if (this->register_aio_with_proactor (result) == -1)
     // This shouldn't happen anyway, since we have already checked for
     // availability of free slots.
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -520,7 +519,7 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
   result->aio_sigevent.sigev_value.sival_ptr = (void *) result;
 
 
-  // Fire off the aio write.
+  // Fire off the aio read.
   if (aio_read (result) == -1)
     // Queueing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -754,7 +753,7 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream
                        "Asynch_Write_Stream: aio_write queueing failed"),
                       -1);
 
-  // Success. Store the aiocb_ptr with Proactor.
+  // Success. Store the <result> with Proactor.
   if (this->register_aio_with_proactor (result) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Fatal error:%N:%l:%p\n",
