@@ -12,7 +12,8 @@
 //    CORBA C/C++/COM mapping for Win32
 //
 // = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
+//     Copyright 1994-1995 by Sun Microsystems Inc. and Andy Gokhale
+//     <gokhale@cs.wustl.edu>. 
 // 
 // ============================================================================
 
@@ -168,13 +169,14 @@ struct CORBA_SEQUENCE
   ~CORBA_SEQUENCE (void) { }
 };
 
-
 class ACE_Svc_Export CORBA 
-{
   // = TITLE
-  // class CORBA
-  // =DESCRIPTION
-  // Provides the CORBA namespace. 
+  //    Provides the CORBA namespace. 
+  //
+  // = DESCRIPTION
+  //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
+  //    for all standard types Foo.
+{
 public:
 
 #  if	SIZEOF_BOOL != 0
@@ -284,28 +286,10 @@ public:
   static void string_free (Char *);
 
   class String_var
-<<<<<<< corbacom.h
     // = TITLE
     //   String var class. Provides automatic deallocation of storage
     //   for the string once it goes out of scope.
-    {
-    public:
-      String_var (void);
-      // default constructor
-
-      String_var (char *p);
-      // constructor, owns p
-
-      String_var (const char *p);
-      // constructor. Makes a copy of p
-
-      String_var (const String_var &s);
-      // copy constructor
-=======
   {
-    // = TITLE
-    // String var class. Provides automatic deallocation of storage for the
-    // string once it goes out of scope. 
   public:
     String_var (void);
     // default constructor
@@ -535,9 +519,8 @@ public:
   SYSEX(OBJ_ADAPTER);
   SYSEX(DATA_CONVERSION);
 #undef SYSEX
-  
 
-  //= all the CORBA::is_nil methods
+  // = all the CORBA::is_nil methods
   static Boolean is_nil (BOA_ptr);
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
