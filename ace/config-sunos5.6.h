@@ -15,6 +15,7 @@
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
     defined (__EXTENSIONS__)
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+# define ACE_HAS_SIGWAIT
 // Hack 'cuz -DPOSIX_SOURCE=199506L and -DEXTENSIONS hides this.
 # include <sys/types.h>
   extern "C" int madvise(caddr_t, size_t, int);

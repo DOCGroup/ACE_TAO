@@ -10665,21 +10665,24 @@ ACE_OS::readdir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
-  // The returned pointer to the dirent struct must be
-  // deleted by the caller to avoid a memory leak.
+  // The returned pointer to the dirent struct must be deleted by the
+  // caller to avoid a memory leak.
   struct dirent *dir_ent;
   u_long result;
-  ACE_NEW_RETURN (dir_ent, dirent, 0);
+
+  ACE_NEW_RETURN (dir_ent,
+                  dirent,
+                  0);
   result = ::read_dir (d, dir_ent);
+
   if (0 == result)
-  {
     return dir_ent;
-  }
   else
-  {
-    errno = result;
-    return 0;
-  }
+    {
+      errno = result;
+      return 0;
+    }
+
 #  else /* ! defined (ACE_PSOS) */
   return ::readdir (d);
 #  endif /* ! defined (ACE_PSOS) */
@@ -10694,8 +10697,11 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent *entry,
                    struct dirent **result)
 {
-#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
-
+# if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
+  // <result> has better not be 0!
+  *result = ACE_OS::readdir (dirp);
+  return 0;
+# elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
 # if (defined (sun) && defined (_POSIX_PTHREAD_SEMANTICS))  || \
      (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
@@ -10717,7 +10723,7 @@ ACE_OS::readdir_r (DIR *dirp,
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
 
-#endif /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
+#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE long
