@@ -1,3 +1,23 @@
+Tue Aug 08 12:38:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp (TAO_Singleton_Manager):
+
+	  Invoke init() with special value that leaves the "registered
+	  with Object Manager" state unset.  That state must be set by
+	  explicitly invoking init().
+
+	  (init):
+
+	  Only set the "registered with Object Manager" state if the
+	  TAO_Singleton_Manager is being explicitly initialized.
+
+	* examples/Simple/time-date/Time_Date.cpp (init, fini):
+
+	  Added calls to TAO_Singleton_Manager::{init,fini}() that
+	  pre-initialize the ORB so that it remains isolated from the
+	  ACE_Object_Manager, forcing its lifetime be to dictated by the
+	  Service Configurator.
+
 Tue Aug 08 09:52:52 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Native_Exceptions/Makefile: regenerated dependencies.
