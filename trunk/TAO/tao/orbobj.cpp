@@ -186,6 +186,16 @@ CORBA::ORB_init (int &argc,
       || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != SIZEOF_VOID_P)
     {
+      ACE_DEBUG ((LM_DEBUG, "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n", 
+		  sizeof (CORBA::Short),
+		  sizeof (CORBA::Long),
+		  sizeof (CORBA::LongLong),
+		  sizeof (CORBA::Float),
+		  sizeof (CORBA::Double),
+		  sizeof (CORBA::LongDouble),
+		  sizeof (CORBA::WChar),
+		  sizeof (void *)));
+
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
@@ -411,7 +421,7 @@ template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
-//template class TAO_HASH_ADDR;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean>;
 template class ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>;
 template class ACE_Hash_Map_Iterator<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
