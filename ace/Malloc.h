@@ -100,6 +100,11 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
+#if defined (ACE_MALLOC_STATS)
+  virtual void print_stats (void) const = 0;
+  // Dump statistics of how malloc is behaving.
+#endif /* ACE_MALLOC_STATS */ 
+
   virtual void dump (void) const = 0;
   // Dump the state of the object.
 };
@@ -255,6 +260,9 @@ public:
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+#if defined (ACE_MALLOC_STATS)
+  virtual void print_stats (void) const;
+#endif /* ACE_MALLOC_STATS */ 
   virtual void dump (void) const;
 };
 
