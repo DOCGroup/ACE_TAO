@@ -1,3 +1,160 @@
+Sun Aug 24 22:03:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Merged the RTCIAO-0 branch into main trunk.
+
+	Sun Aug 24 21:45:33 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+		* tools/Daemon/Daemon.mpc: Both CIAO_Daemon and Assembly_Manager
+		  depend on RTCORBA  library now because they both required to
+		  handle RTCORBA related types.
+
+		* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+		* tools/Assembly_Deployer/Assembly_Visitors.h: Decoupled the
+		  container creation functionality from the creation of
+		  ComponentServer into a separate method.  This allows us to
+		  better manage the type of container and the associating policy
+		  sets.
+
+		* tools/Assembly_Deployer/Deployment_Configuration.cpp:
+		* tools/Assembly_Deployer/Deployment_Configuration.h: Changed the
+		  get_activator[_ior] functions to return default activator where
+		  there's no valid activator id available instead of throwing an
+		  exception.
+
+		* tools/ComponentServer/ComponentServer.cpp: Invoke the init
+		  method of ComponentServer servant.  This function is now
+		  supported.
+
+		* tools/RTComponentServer/ComponentServer_Task.cpp:
+		* tools/RTComponentServer/ComponentServer_Task.h:
+		* tools/RTComponentServer/RTComponentServer.cpp:
+		* tools/RTComponentServer/RTComponentServer.mpc:
+		* tools/RTComponentServer/RTConfig_Manager.cpp:
+		* tools/RTComponentServer/RTConfig_Manager.h:
+		* tools/RTComponentServer/RTServer_Impl.cpp:
+		* tools/RTComponentServer/RTServer_Impl.h:
+		* tools/RTComponentServer/RTServer_Impl.inl: Added/Changed to
+		  properly support the real-time ComponentServer implementation.
+
+		* tools/ServerActivator/ServerActivator.cpp: Fixed a fuzz error.
+
+		* tools/XML_Helpers/Assembly_Spec.inl: Changed to return 0 if
+		  rtcad_filename and rtpolicyset_ref is not specified in the
+		  original XML file.
+
+	Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/XML_Helpers/RTCAD-example.rtd:
+		* tools/XML_Helpers/RTCAD-example.cad: Added new file to show some
+		  example cad and rtd files.
+
+		* tools/XML_Helpers/main.cpp:
+		* tools/XML_Helpers/XML_Utils.cpp: Extended to invoke the RTCAD
+		  handler.
+
+		* tools/XML_Helpers/RTConfig_Handlers.h:
+		* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed run-time errors.
+
+	Wed Aug 13 01:48:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTComponentServer.mpc: Added dependency
+		  to XML_Helpers library.
+
+		* tools/XML_Helpers/XML_Utils.h: Added parse_rtcad_extension
+		  static method.  This is yet to be implemented.
+
+		* tools/XML_Helpers/RTConfig_Handlers.h:
+		* tools/XML_Helpers/RTConfig_Handlers.inl:
+		* tools/XML_Helpers/RTConfig_Handlers.cpp: Added new files for
+		  parsing RTConfig extention.
+
+		* tools/RTComponentServer/RTConfig_Manager.h:
+		* tools/RTComponentServer/RTConfig_Manager.cpp:
+		* tools/XML_Helpers/RTConfiguration.idl: Renamed
+		  RTORB_Resources_Info to RTORB_Resource_Info.
+
+		* tools/XML_Helpers/XMLHelper.mpc: Added rtcorba as a base
+		  project.  We now depend on RTCORBA.
+
+	Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTConfiguration.idl:
+		* tools/RTComponentServer/RTConfigurationClient.cpp:
+		* tools/RTComponentServer/RTComponentServer.mpc: Removed
+		  RTConfiguration.idl and the stub wrapper
+		  RTConfigurationClient.cpp.  They have been moved to XML_Helpers
+		  library.
+
+		* tools/RTComponentServer/RTConfig_Manager.h:
+		* tools/RTComponentServer/RTConfig_Manager.cpp: Changed to include
+		  RTConfigurationC.h from XML_Helpers subdir and make sure
+		  RTCORBA.h is included before RTConfigurationC.h.
+
+		* tools/XML_Helpers/XMLHelpers.mpc:
+		* tools/XML_Helpers/RTConfiguration.idl:
+		* tools/XML_Helpers/RTConfiguration_Stubs.cpp: Added
+		  RTConfiguration info and its wrapper cpp file.  This wrapper cpp
+		  file is used to ensure that RTCORBA.h is included before
+		  RTConfigurationC.h.
+
+		* tools/XML_Helpers/Assembly_Handlers.cpp:
+		* tools/XML_Helpers/Assembly_Handlers.h:
+		* tools/XML_Helpers/Assembly_Handlers.inl:
+		* tools/XML_Helpers/Assembly_Spec.h:
+		* tools/XML_Helpers/Assembly_Spec.inl: Extended to parse and store
+		  <extension> information in <processcollocation> and
+		  <homeplacement>.
+
+	Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTConfig_Manager.h:
+		* tools/RTComponentServer/RTConfig_Manager.cpp: Added support for
+		  keeping PriorityBands information.
+
+	Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed mismatched
+		  throw specifications.  Added inclusion of "ace/SString.h" as ACE
+		  now only includes "ace/SStringfwd.h".
+
+	Sun Aug 03 00:45:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed some
+		  accidental pastings of code.
+
+	Fri Aug 01 13:50:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/RTComponentServer.mpc:
+		* tools/RTComponentServer/RTConfig_Manager.cpp:
+		* tools/RTComponentServer/RTConfig_Manager.h:
+		* tools/RTComponentServer/RTConfig_Manager.inl:
+		* tools/RTComponentServer/RTConfiguration.idl: Added code for
+		  managing named collection of RTCORBA related policies.
+
+	Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
+		  to take advantage of CIAO::Activator_Callback interface change
+		  for getting back our own ConfigValues.  We will need to use
+		  these configuration values in the future.
+
+	Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tools/RTComponentServer/ComponentServer_Task.cpp:
+		* tools/RTComponentServer/ComponentServer_Task.h:
+		* tools/RTComponentServer/ComponentServer_Task.inl:
+		* tools/RTComponentServer/README:
+		* tools/RTComponentServer/RTComponentServer.cpp:
+		* tools/RTComponentServer/RTComponentServer.mpc: Added the
+		  skeleton of RTComponentServer.
+
+	Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* Added: this temporary ChangeLog file for changes within the
+		  RTComponentServer.
+
+
 Sun Aug 24 21:38:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Container_Base.cpp:
