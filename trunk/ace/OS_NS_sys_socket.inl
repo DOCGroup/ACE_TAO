@@ -532,8 +532,8 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
   else
     return (ssize_t) bytes_sent;
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
-  ACE_SOCKCALL_RETURN (::sendmsg (handle, 
-				  const_cast<struct msghdr *>(msg), 
+  ACE_SOCKCALL_RETURN (::sendmsg (handle,
+				  const_cast<struct msghdr *>(msg),
 				  flags), int, -1);
 # else
   ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
@@ -633,8 +633,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; ++i)
     {
        result = ACE_OS::sendto (handle,
-                                reinterpret_cast<char *ACE_CAST_CONST> (
-                                                      buffers[i].iov_base),
+                                reinterpret_cast<char *> (
+                                                 buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
                                 addr,
