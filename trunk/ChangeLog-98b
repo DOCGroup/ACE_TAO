@@ -1,5 +1,8 @@
 Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Service_Manager: Cleaned up the documentation and formatting
+ 	  a bit.
+
 	* ace/Message_Queue_T.i: Changed the computation of is_empty_i()
 	  so that it's
 	  
