@@ -28,6 +28,7 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
@@ -87,6 +88,7 @@ Hello *get_hello (void)
 
 typedef Hello *(*TC) (void);
 
+#if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) 
 int
 main (int argc, char *argv[])
 {
@@ -121,6 +123,7 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
+#endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;
