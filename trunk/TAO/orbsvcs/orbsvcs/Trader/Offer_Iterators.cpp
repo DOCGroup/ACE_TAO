@@ -251,7 +251,7 @@ TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &_env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::UnknownMaxLeft))
 {
-  TAO_THROW_RETURN (CosTrading::UnknownMaxLeft, 0);
+  TAO_THROW_RETURN (CosTrading::UnknownMaxLeft(), 0);
 }
 
   // *************************************************************

@@ -73,6 +73,8 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
 					   this->out_,
 					   TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      return 0;
     }
   TAO_CATCH (Param_Test::Ooops, ex)
     {
@@ -90,6 +92,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
       TAO_TRY_ENV.clear ();
+
       return 0;
     }
   TAO_CATCH (CORBA::UNKNOWN, ex)
@@ -103,6 +106,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
       TAO_TRY_ENV.clear ();
+
       return 0;
     }
   TAO_CATCH (Param_Test::BadBoy, ex)
@@ -111,13 +115,9 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
 				   " unexpected exception\n");
       TAO_RETHROW_RETURN (-1);
     }
-  TAO_CATCHANY
-    {
-      TAO_RETHROW_RETURN (-1);
-    }
   TAO_ENDTRY;
 
-  return 0;
+  return -1;
 }
 
 int

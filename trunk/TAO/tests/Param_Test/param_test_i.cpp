@@ -637,7 +637,6 @@ Param_Test_i::test_exception (CORBA::ULong s1,
 			      CORBA::ULong& s2,
 			      CORBA::ULong_out s3,
 			      CORBA::Environment &env)
-  TAO_THROW_SPEC ((CORBA::SystemException, Param_Test::Ooops))
 {
   int d = this->test_exception_count_ % 3;
   this->test_exception_count_++;

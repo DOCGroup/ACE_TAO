@@ -163,7 +163,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
   TAO_TRY
     {
       if (lock_[lm] == 0) // This lock is not held.
-        TAO_THROW (CosConcurrencyControl::LockNotHeld);
+        TAO_THROW (CosConcurrencyControl::LockNotHeld());
       else
         lock_[lm]--;
 
@@ -214,7 +214,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
   TAO_TRY
     {
       if (this->lock_held (lm_held) == 0) // This lock is not held
-        TAO_THROW (CosConcurrencyControl::LockNotHeld);
+        TAO_THROW (CosConcurrencyControl::LockNotHeld());
       else if (this->change_mode_i (lm_held, lm_new)==1)
         {
           this->unlock (held_mode, _env);

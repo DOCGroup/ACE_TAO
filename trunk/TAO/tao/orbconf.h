@@ -177,8 +177,10 @@
 // can also be set using the command line option -ORBCDRtradeoff
 #define TAO_DEFAULT_CDR_MEMCPY_TRADEOFF 256
 
-#if defined (ACE_HAS_EXCEPTIONS)
 // #define TAO_USE_EXCEPTIONS
+
+#if defined (TAO_USE_EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#error "You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_USE_EXCEPTIONS */
 
 // The CDR growing strategy is control by several parameters:

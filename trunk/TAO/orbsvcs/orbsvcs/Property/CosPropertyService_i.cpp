@@ -151,7 +151,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       delete new_set;
 
       // Throw the exception.
-      TAO_THROW_RETURN (CosPropertyService::ConstraintNotSupported,
+      TAO_THROW_RETURN (CosPropertyService::ConstraintNotSupported(),
                         0);
     }
   TAO_CATCH (CORBA::SystemException, ex)
@@ -297,7 +297,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       delete new_set;
 
       // Throw the exception.
-      TAO_THROW_RETURN (CosPropertyService::ConstraintNotSupported,
+      TAO_THROW_RETURN (CosPropertyService::ConstraintNotSupported(),
                         0);
     }
   TAO_CATCH (CORBA::SystemException, ex)
@@ -530,15 +530,15 @@ TAO_PropertySet::define_property (const char *property_name,
 
   // Check the name's validity.
   if (property_name == 0)
-    TAO_THROW (CosPropertyService::InvalidPropertyName);
+    TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   // Is this type allowed?
   if (is_type_allowed (property_value.type ()) != CORBA::B_TRUE)
-    TAO_THROW (CosPropertyService::UnsupportedTypeCode);
+    TAO_THROW (CosPropertyService::UnsupportedTypeCode());
 
   // Is this property allowed?
   if (is_property_allowed (property_name) != CORBA::B_TRUE)
-    TAO_THROW (CosPropertyService::UnsupportedProperty);
+    TAO_THROW (CosPropertyService::UnsupportedProperty());
 
   // Try to bind the property. (*normal* mode is used).
   CosProperty_Hash_Key hash_key (property_name);
@@ -567,12 +567,12 @@ TAO_PropertySet::define_property (const char *property_name,
 
       // If type is not the same, raise exception.
       if (entry_ptr->int_id_.pvalue_->type () != property_value.type ())
-        TAO_THROW (CosPropertyService::ConflictingProperty);
+        TAO_THROW (CosPropertyService::ConflictingProperty());
 
       // If mode is read only, raise exception.
       if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
           (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
-        TAO_THROW (CosPropertyService::ReadOnlyProperty);
+        TAO_THROW (CosPropertyService::ReadOnlyProperty());
 
       // Use the mode that is already there.
       hash_value.pmode_ = entry_ptr->int_id_.pmode_;
@@ -609,21 +609,23 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
   for (size_t ti = 0;
        ti < this->allowed_property_types_.length ();
        ti++)
-    TAO_TRY
     {
-      ret_val = ((const CORBA::TypeCode *)this->allowed_property_types_[ti])->equal (type,
-                                                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (ret_val == CORBA::B_TRUE)
-        return CORBA::B_TRUE;
+      TAO_TRY
+	{
+	  ret_val = ((const CORBA::TypeCode *)this->allowed_property_types_[ti])->equal (type,
+											 TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  if (ret_val == CORBA::B_TRUE)
+	    return CORBA::B_TRUE;
+	}
+      TAO_CATCHANY
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_PropertySet::is_type_allowed");
+	  return ret_val;
+	}
+      TAO_ENDTRY;
     }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("TypeCode::equal");
-      return ret_val;
-    }
-  TAO_ENDTRY;
 
   // Type not found.
   return ret_val;
@@ -834,14 +836,14 @@ TAO_PropertySet::get_property_value (const char *property_name,
 
   // Check the name's validity.
   if (property_name == 0)
-    TAO_THROW_RETURN (CosPropertyService::InvalidPropertyName,
+    TAO_THROW_RETURN (CosPropertyService::InvalidPropertyName(),
                       0);
 
   CosProperty_Hash_Key hash_key (property_name);
   CosProperty_Hash_Value hash_value;
 
   if (this->hash_table_.find (hash_key, hash_value) != 0)
-    TAO_THROW_RETURN (CosPropertyService::PropertyNotFound,
+    TAO_THROW_RETURN (CosPropertyService::PropertyNotFound(),
                       0);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -1012,7 +1014,7 @@ TAO_PropertySet::delete_property (const char *property_name,
 
   // Check the name's validity.
   if (property_name == 0)
-    TAO_THROW (CosPropertyService::InvalidPropertyName);
+    TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   CosProperty_Hash_Key hash_key (property_name);
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
@@ -1020,14 +1022,14 @@ TAO_PropertySet::delete_property (const char *property_name,
   // Get the entry_ptr and delete it.
   if (this->hash_table_.find (hash_key,
                               entry_ptr) < 0)
-    TAO_THROW (CosPropertyService::PropertyNotFound);
+    TAO_THROW (CosPropertyService::PropertyNotFound());
 
   ACE_DEBUG ((LM_DEBUG, "Property found\n"));
 
   // If property is fixed, then raise exception.
   if ((entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_normal)
       || (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
-    TAO_THROW (CosPropertyService::FixedProperty);
+    TAO_THROW (CosPropertyService::FixedProperty());
 
   // Unbind this property.
   if (this->hash_table_.unbind (entry_ptr) != 0)
@@ -1321,19 +1323,19 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
 
   // Check the names validity.
   if (property_name == 0)
-    TAO_THROW (CosPropertyService::InvalidPropertyName);
+    TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   // Is this type allowed?
   if (is_type_allowed (property_value.type ()) != CORBA::B_TRUE)
-    TAO_THROW (CosPropertyService::UnsupportedTypeCode);
+    TAO_THROW (CosPropertyService::UnsupportedTypeCode());
 
   // Is this property allowed?
   if (is_property_allowed (property_name) != CORBA::B_TRUE)
-    TAO_THROW (CosPropertyService::UnsupportedProperty);
+    TAO_THROW (CosPropertyService::UnsupportedProperty());
 
   // Is this a valid mode.
   if (property_mode == CosPropertyService::undefined)
-    TAO_THROW (CosPropertyService::UnsupportedMode);
+    TAO_THROW (CosPropertyService::UnsupportedMode());
 
   // Try to bind the Property.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1363,19 +1365,19 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
 
       // If type is not the same, raise exception.
       if (entry_ptr->int_id_.pvalue_->type () != property_value.type ())
-        TAO_THROW (CosPropertyService::ConflictingProperty);
+        TAO_THROW (CosPropertyService::ConflictingProperty());
 
       // If mode is read only, raise exception.
       if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
           (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
-        TAO_THROW (CosPropertyService::ReadOnlyProperty);
+        TAO_THROW (CosPropertyService::ReadOnlyProperty());
 
       // If current mode is fixed_normal, but the new mode is not
       // fixed, reject it.
       if ((entry_ptr->int_id_.pmode_ ==
            CosPropertyService::fixed_normal) &&
           (property_mode < CosPropertyService::fixed_normal))
-        TAO_THROW (CosPropertyService::UnsupportedMode);
+        TAO_THROW (CosPropertyService::UnsupportedMode());
 
       // Everything is fine. Overwrite the value.
       if (this->hash_table_.rebind (hash_key,
@@ -1504,7 +1506,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name,
 
   // Check for the name's validity.
   if (property_name == 0)
-    TAO_THROW_RETURN (CosPropertyService::InvalidPropertyName,
+    TAO_THROW_RETURN (CosPropertyService::InvalidPropertyName(),
                       CosPropertyService::undefined);
 
   // Find the property in the hash table.
@@ -1520,7 +1522,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name,
       return hash_value.pmode_;
     default:
       // Error or property is not found.
-      TAO_THROW_RETURN (CosPropertyService::PropertyNotFound,
+      TAO_THROW_RETURN (CosPropertyService::PropertyNotFound(),
                         CosPropertyService::undefined);
     }
 }
@@ -1600,11 +1602,11 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
 
   // Check the names validity.
   if (property_name == 0)
-    TAO_THROW (CosPropertyService::InvalidPropertyName);
+    TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   // Trying to set to undefined mode is not allowed.
   if (property_mode == CosPropertyService::undefined)
-    TAO_THROW (CosPropertyService::UnsupportedMode);
+    TAO_THROW (CosPropertyService::UnsupportedMode());
 
   // Find the property from the Hash Table.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1645,7 +1647,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
         case CosPropertyService::read_only:
           // Read_only to fixed read only alone is possible.
           if (property_mode != CosPropertyService::fixed_readonly)
-            TAO_THROW (CosPropertyService::UnsupportedMode);
+            TAO_THROW (CosPropertyService::UnsupportedMode());
           else
             {
               // Change the mode and update hash table.
@@ -1664,7 +1666,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
         case CosPropertyService::fixed_normal:
           // Fixed_normal to fixed_readonly alone is possible.
           if (property_mode != CosPropertyService::fixed_readonly)
-            TAO_THROW (CosPropertyService::UnsupportedMode);
+            TAO_THROW (CosPropertyService::UnsupportedMode());
           else
             {
               // Change the mode and update the hash table.
@@ -1682,13 +1684,13 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
 
         default:
           // Fixed_readonly to any mode is not possible.
-          TAO_THROW (CosPropertyService::UnsupportedMode);
+          TAO_THROW (CosPropertyService::UnsupportedMode());
         }
       break;
     case -1:
     default:
       // Error or property not found in the Hash Table.
-      TAO_THROW (CosPropertyService::PropertyNotFound);
+      TAO_THROW (CosPropertyService::PropertyNotFound());
     }
 }
 

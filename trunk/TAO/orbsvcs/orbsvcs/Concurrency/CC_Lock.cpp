@@ -90,7 +90,7 @@ CC_Lock::unlock (CORBA::Environment &_env)
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
-    TAO_THROW (CosConcurrencyControl::LockNotHeld);
+    TAO_THROW (CosConcurrencyControl::LockNotHeld());
 
   int success = 0; //semaphore_.release ();
 
@@ -116,7 +116,7 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
   // write lock
 
   if (lock_held_ == 0)
-    TAO_THROW (CosConcurrencyControl::LockNotHeld);
+    TAO_THROW (CosConcurrencyControl::LockNotHeld());
 
   this->mode_ = new_mode;
 }
