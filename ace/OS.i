@@ -4668,7 +4668,6 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
                               int ttl,
                               int priority)
 {
-  ACE_UNUSED_ARG (priority);
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenRate = token_rate;
   this->TokenBucketSize = token_bucket_size;
@@ -4685,16 +4684,20 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
   ACE_UNUSED_ARG (minimum_policed_size);
 #endif /* ACE_HAS_WINSOCK2_GQOS */
   ACE_UNUSED_ARG (ttl);
+  ACE_UNUSED_ARG (priority);
 #else
-  ACE_UNUSED_ARG (token_rate);
-  ACE_UNUSED_ARG (token_bucket_size);
-  ACE_UNUSED_ARG (peak_bandwidth);
-  ACE_UNUSED_ARG (latency);
-  ACE_UNUSED_ARG (delay_variation);
-  ACE_UNUSED_ARG (service_type);
-  ACE_UNUSED_ARG (max_sdu_size);
-  ACE_UNUSED_ARG (minimum_policed_size);
-  ACE_UNUSED_ARG (ttl);
+
+  this->token_rate_ = token_rate;
+  this->token_bucket_size_ = token_bucket_size;
+  this->peak_bandwidth_ = peak_bandwidth;
+  this->latency_ = latency;
+  this->delay_variation_ = delay_variation;
+  this->service_type_ = service_type;
+  this->max_sdu_size_ = max_sdu_size;
+  this->minimum_policed_size_ = minimum_policed_size;
+  this->ttl_ = ttl;
+  this->priority_ = priority;
+
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
@@ -4713,16 +4716,28 @@ ACE_Flow_Spec::ACE_Flow_Spec (void)
   this->MinimumPolicedSize = 0;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 #else
+
+  this->token_rate_ = 0;
+  this->token_bucket_size_ = 0;
+  this->peak_bandwidth_ = 0;
+  this->latency_ = 0;
+  this->delay_variation_ = 0;
+  this->service_type_ = 0;
+  this->max_sdu_size_ = 0;
+  this->minimum_policed_size_ = 0;
+  this->ttl_ = 0;
+  this->priority_ = 0;
+
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::token_rate (void)
+ACE_Flow_Spec::token_rate (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->TokenRate;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->token_rate_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4732,17 +4747,17 @@ ACE_Flow_Spec::token_rate (u_long tr)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenRate = tr;
 #else
-  ACE_UNUSED_ARG (tr);
+  this->token_rate_ = tr;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::token_bucket_size (void)
+ACE_Flow_Spec::token_bucket_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->TokenBucketSize;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->token_bucket_size_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4752,17 +4767,17 @@ ACE_Flow_Spec::token_bucket_size (u_long tbs)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenBucketSize = tbs;
 #else
-  ACE_UNUSED_ARG (tbs);
+  this->token_bucket_size_ = tbs;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::peak_bandwidth (void)
+ACE_Flow_Spec::peak_bandwidth (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->PeakBandwidth;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->peak_bandwidth_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4772,17 +4787,17 @@ ACE_Flow_Spec::peak_bandwidth (u_long pb)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->PeakBandwidth = pb;
 #else
-  ACE_UNUSED_ARG (pb);
+  this->peak_bandwidth_ = pb;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::latency (void)
+ACE_Flow_Spec::latency (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->Latency;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->latency_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4792,17 +4807,17 @@ ACE_Flow_Spec::latency (u_long l)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->Latency = l;
 #else
-  ACE_UNUSED_ARG (l);
+  this->latency_ = l;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::delay_variation (void)
+ACE_Flow_Spec::delay_variation (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return this->DelayVariation;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->delay_variation_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 ACE_INLINE void
@@ -4811,18 +4826,18 @@ ACE_Flow_Spec::delay_variation (u_long dv)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->DelayVariation = dv;
 #else
-  ACE_UNUSED_ARG (dv);
+  this->delay_variation_ = dv;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE ACE_SERVICE_TYPE
-ACE_Flow_Spec::service_type (void)
+ACE_Flow_Spec::service_type (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   return this->ServiceType;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->service_type_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4833,18 +4848,18 @@ ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
     defined (ACE_HAS_WINSOCK2_GQOS)
   this->ServiceType = st;
 #else
-  ACE_UNUSED_ARG (st);
+  this->service_type_ = st;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::max_sdu_size (void)
+ACE_Flow_Spec::max_sdu_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   return this->MaxSduSize;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->max_sdu_size_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4855,18 +4870,18 @@ ACE_Flow_Spec::max_sdu_size (u_long mss)
     defined (ACE_HAS_WINSOCK2_GQOS)
   this->MaxSduSize = mss;
 #else
-  ACE_UNUSED_ARG (mss);
+  this->max_sdu_size_ = mss;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE u_long
-ACE_Flow_Spec::minimum_policed_size (void)
+ACE_Flow_Spec::minimum_policed_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   return this->MinimumPolicedSize;
 #else
-  ACE_NOTSUP_RETURN (0);
+  return this->minimum_policed_size_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4877,18 +4892,18 @@ ACE_Flow_Spec::minimum_policed_size (u_long mps)
     defined (ACE_HAS_WINSOCK2_GQOS)
   this->MinimumPolicedSize = mps;
 #else
-  ACE_UNUSED_ARG (mps);
+  this->minimum_policed_size_ = mps;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE int
-ACE_Flow_Spec::ttl (void)
+ACE_Flow_Spec::ttl (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_NOTSUP_RETURN (-1);
+  return this->ttl_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4900,18 +4915,18 @@ ACE_Flow_Spec::ttl (int t)
   ACE_UNUSED_ARG (t);
   // TBD...
 #else
-  ACE_UNUSED_ARG (t);
+  this->ttl_ = t;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE int
-ACE_Flow_Spec::priority (void)
+ACE_Flow_Spec::priority (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_NOTSUP_RETURN (-1);
+  return this->priority_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4923,17 +4938,17 @@ ACE_Flow_Spec::priority (int p)
   ACE_UNUSED_ARG (p);
   // TBD...
 #else
-  ACE_UNUSED_ARG (p);
+  this->priority_ = p;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE ACE_Flow_Spec
-ACE_QoS::sending_flowspec (void)
+ACE_QoS::sending_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (ACE_Flow_Spec &) this->SendingFlowspec;
 #else
-  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
+  return this->sending_flowspec_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4943,17 +4958,17 @@ ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->SendingFlowspec = (FLOWSPEC) fs;
 #else
-  ACE_UNUSED_ARG (fs);
+  this->sending_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE ACE_Flow_Spec
-ACE_QoS::receiving_flowspec (void)
+ACE_QoS::receiving_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (ACE_Flow_Spec &) this->ReceivingFlowspec;
 #else
-  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
+  return receiving_flowspec_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4963,12 +4978,12 @@ ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->ReceivingFlowspec = (FLOWSPEC) fs;
 #else
-  ACE_UNUSED_ARG (fs);
+  this->receiving_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE iovec
-ACE_QoS::provider_specific (void)
+ACE_QoS::provider_specific (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   return (iovec &) this->ProviderSpecific;
