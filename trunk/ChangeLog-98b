@@ -1,44 +1,50 @@
+Wed Jul 15 16:23:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: redirect error output of cvs checkout to
+          stdout, so that new directories must be added to the staging
+          workspace before creating the release.
+
 Wed Jul 15 16:16:40 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp: Fixed message/byte counting bugs.
+        * ace/Message_Queue_T.cpp: Fixed message/byte counting bugs.
 
 Wed Jul 15 15:42:44 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/OS.h: Added a copy constructor for ACE_Thread_ID.
+        * ace/OS.h: Added a copy constructor for ACE_Thread_ID.
 
 Wed Jul 15 14:33:15 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Select_Reactor.cpp: Added some MVS-specific behavior in the
-	  error checking/recovery code so that bad handles are properly
-	  located and removed on MVS Open Edition.  Thanks to Chuck Gehr
-	  for his hard work in tracking these down.
+        * ace/Select_Reactor.cpp: Added some MVS-specific behavior in the
+          error checking/recovery code so that bad handles are properly
+          located and removed on MVS Open Edition.  Thanks to Chuck Gehr
+          for his hard work in tracking these down.
 
 Tue Jul 14 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp: Changed the handling
-	  of the state_changed flag. Now, it is set to "changed" (=1)
-	  after each run of the event loop. This fixed a nested
-	  upcalls bug, which was caused by overwriting this
-	  flag each time entering the event loop. So that,
-	  when poping one level of the handle_events call
-	  stack information was lost about changes. Now, we
-	  assume that information has changed and
-	  propagate this knowlegde down in the call
-	  stack. No performance overhead is caused by that.
+        * ace/Select_Reactor.cpp: Changed the handling
+          of the state_changed flag. Now, it is set to "changed" (=1)
+          after each run of the event loop. This fixed a nested
+          upcalls bug, which was caused by overwriting this
+          flag each time entering the event loop. So that,
+          when poping one level of the handle_events call
+          stack information was lost about changes. Now, we
+          assume that information has changed and
+          propagate this knowlegde down in the call
+          stack. No performance overhead is caused by that.
 
 Tue Jul 14 12:02:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
-	* ace/SOCK_Dgram_Mcast.cpp:
-	* ace/SOCK_Acceptor.cpp:
-	* ace/ACE.cpp:
-	  Use ACE_reinterpret_cast in several conversions address type
-	  conversions (like from sockaddr* to sockaddr_in*).
-	  Some compilers (HP/aCC) give a warning if the old C-style cast
-	  operators are used; using the proper cast operator removes the
-	  warning. Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
-	  pointing out this problem.
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/ACE.cpp:
+          Use ACE_reinterpret_cast in several conversions address type
+          conversions (like from sockaddr* to sockaddr_in*).
+          Some compilers (HP/aCC) give a warning if the old C-style cast
+          operators are used; using the proper cast operator removes the
+          warning. Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+          pointing out this problem.
 
 Tue Jul 14 11:26:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -50,7 +56,7 @@ Tue Jul 14 11:26:40 1998  David L. Levine  <levine@cs.wustl.edu>
           breaks following ACE_ERROR_RETURNs, to avoid compiler warnings about
           unreachable statements.
 
-	* tests/Dynamic_Priority_Test.cpp: commented out unused global
+        * tests/Dynamic_Priority_Test.cpp: commented out unused global
           FIFO_receipt_order.
 
         * ace/Basic_Types.h: added ACE_UINT64_LITERAL macro.  Thanks to
