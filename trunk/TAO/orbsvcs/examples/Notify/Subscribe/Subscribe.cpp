@@ -8,6 +8,14 @@
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
+#define DOMAIN_A "domain_a"
+#define DOMAIN_B "domain_b"
+#define DOMAIN_C "domain_c"
+
+#define TYPE_A "type_a"
+#define TYPE_B "type_b"
+#define TYPE_C "type_c"
+
 class Subscribe_Consumer : public TAO_Notify_PushConsumer
 {
 public:
@@ -99,33 +107,6 @@ Subscribe::run (CORBA::Environment &ACE_TRY_ENV)
   this->send_events (ACE_TRY_ENV);
   ACE_CHECK;
 }
-
-/*
-void
-Subscribe::run (CORBA::Environment &ACE_TRY_ENV)
-{
-  Subscribe_Consumer* sc = new Subscribe_Consumer ();
-  sc->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-  sc->connect (this->consumer_admin_, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  Subscribe_Supplier* ss = new Subscribe_Supplier ();
-  ss->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-  ss->connect (this->supplier_admin_, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  CORBA::Any event;
-  event <<= CORBA::string_dup("pressure");
-
-  ss->send_event (event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // send_events (ACE_TRY_ENV);
-  // ACE_CHECK;
-}
-*/
 
 void
 Subscribe::init_ORB (int argc,
@@ -269,37 +250,40 @@ Subscribe::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
 void
 Subscribe::send_events (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Setup the CA to receive event_type : "domain_A", "Type_1"
+  // Setup the CA to receive event_type : "domain_A", "Type_a"
   CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (0);
+  CosNotification::EventTypeSeq removed (1);
   added.length (1);
-  removed.length (0);
+  removed.length (1);
 
-  added[0].domain_name =  CORBA::string_dup ("domain_A");
-  added[0].type_name = CORBA::string_dup ("Type_1");
+  added[0].domain_name =  CORBA::string_dup (DOMAIN_A);
+  added[0].type_name = CORBA::string_dup (TYPE_A);
+
+  removed[0].domain_name =  CORBA::string_dup ("*");
+  removed[0].type_name = CORBA::string_dup ("*");
 
   this->consumer_admin_->subscription_change (added, removed, ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Setup the Consumer 1 to receive event_type : "domain_B", "Type_2"
+  // Setup the Consumer 1 to receive event_type : "domain_B", "Type_b"
   CosNotification::EventTypeSeq added_1(1);
   CosNotification::EventTypeSeq removed_1 (0);
 
-  added_1[0].domain_name =  CORBA::string_dup ("domain_B");
-  added_1[0].type_name = CORBA::string_dup ("Type_2");
+  added_1[0].domain_name =  CORBA::string_dup (DOMAIN_B);
+  added_1[0].type_name = CORBA::string_dup (TYPE_B);
   added_1.length (1);
   removed_1.length (0);
 
   this->consumer_1_->proxy_supplier_->subscription_change (added_1, removed_1,
-                                                        ACE_TRY_ENV);
+                                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Setup the Consumer 2 to receive event_type : "domain_C", "Type_3"
+  // Setup the Consumer 2 to receive event_type : "domain_C", "Type_c"
   CosNotification::EventTypeSeq added_2(1);
   CosNotification::EventTypeSeq removed_2 (0);
 
-  added_2[0].domain_name =  CORBA::string_dup ("domain_C");
-  added_2[0].type_name = CORBA::string_dup ("Type_3");
+  added_2[0].domain_name =  CORBA::string_dup (DOMAIN_C);
+  added_2[0].type_name = CORBA::string_dup (TYPE_C);
   added_2.length (1);
   removed_2.length (0);
 
@@ -307,30 +291,45 @@ Subscribe::send_events (CORBA::Environment &ACE_TRY_ENV)
                                                            ACE_TRY_ENV);
   ACE_CHECK;
 
-  // make 3 different events.
-  CosNotification::StructuredEvent event;
-  event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("domain_A");
-  event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("Type_1");
+  // Create the events - one of each type
+  // Event 1
+  CosNotification::StructuredEvent event1;
+  event1.header.fixed_header.event_type.domain_name =
+    CORBA::string_dup(DOMAIN_A);
+  event1.header.fixed_header.event_type.type_name =
+    CORBA::string_dup(TYPE_A);
+  event1.header.fixed_header.event_name = CORBA::string_dup("");
+  event1.header.variable_header.length (0); // put nothing here
+  event1.filterable_data.length (0);
+  event1.remainder_of_body <<= (CORBA::Long)10;
 
-  CosNotification::StructuredEvent event_1;
-  event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("domain_B");
-  event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("Type_2");
+  // Event 2
+  CosNotification::StructuredEvent event2;
+  event2.header.fixed_header.event_type.domain_name =
+    CORBA::string_dup(DOMAIN_B);
+  event2.header.fixed_header.event_type.type_name =
+    CORBA::string_dup(TYPE_B);
+  event2.header.fixed_header.event_name = CORBA::string_dup("");
+  event2.header.variable_header.length (0); // put nothing here
+  event2.filterable_data.length (0);
+  event2.remainder_of_body <<= (CORBA::Long)10;
 
-  CosNotification::StructuredEvent event_2;
-  event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("domain_C");
-  event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("Type_2");
+  // event 3
+  CosNotification::StructuredEvent event3;
+  event3.header.fixed_header.event_type.domain_name =
+    CORBA::string_dup(DOMAIN_C);
+  event3.header.fixed_header.event_type.type_name =
+    CORBA::string_dup(TYPE_C);
+  event3.header.fixed_header.event_name = CORBA::string_dup("");
+  event3.header.variable_header.length (0); // put nothing here
+  event3.filterable_data.length (0);
+  event3.remainder_of_body <<= (CORBA::Long)10;
 
-  // let supplier 1 send all these events
+ // let supplier 1 send all these events
   for (int i = 0; i < 1; ++i)
     {
-      supplier_1_->send_event (event, ACE_TRY_ENV);
-      supplier_1_->send_event (event_1, ACE_TRY_ENV);
-      supplier_1_->send_event (event_2, ACE_TRY_ENV);
+      supplier_1_->send_event (event1, ACE_TRY_ENV);
+      supplier_1_->send_event (event2, ACE_TRY_ENV);
+      supplier_1_->send_event (event3, ACE_TRY_ENV);
     }
 }
