@@ -1,6 +1,8 @@
 Fri Mar  2 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI_Timeouts/timeout_i.cpp:
+	* tests/AMI_Timeouts/server.cpp:
+	* tests/AMI_Timeouts/client.cpp:
 	  Fixed exception handling code.
 
 Fri Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
