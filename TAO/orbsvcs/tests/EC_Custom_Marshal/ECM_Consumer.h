@@ -42,10 +42,8 @@ public:
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &_env);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // The skeleton methods.
 
 private:

@@ -105,14 +105,10 @@ public:
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos,
-                CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected));
+                CORBA::Environment &);
   virtual void push (const RtecEventComm::EventSet& event,
-                     CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);

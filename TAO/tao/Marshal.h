@@ -22,7 +22,6 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
-#include "tao/Principal.h"
 #include "tao/Any.h"
 #include "tao/ORB.h"
 

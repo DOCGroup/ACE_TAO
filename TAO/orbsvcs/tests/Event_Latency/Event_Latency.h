@@ -50,8 +50,7 @@ public:
   // supplier.  Stores <my_name> for printing out messages.  Returns 0
   // on success, -1 on failure.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // The channel is disconnecting.
 
   void entry_point (const char*);
@@ -60,9 +59,9 @@ public:
   void print_stats () /* const */;
   // Print timing statistics.
 
+// (not protected to allow short-circuiting) protected:
   virtual void push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &);
   // If the <events>[0] is a notification, prints out the data from
   // the supplier.  If its a shutdown message, the consumer
   // disconnects from the channel.
@@ -125,8 +124,7 @@ public:
   //
   class Supplier : public POA_RtecEventComm::PushSupplier {
   public:
-    virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void disconnect_push_supplier (CORBA::Environment &);
     // The channel is disconnecting.
 
   private:
@@ -140,12 +138,10 @@ public:
   class Consumer : public POA_RtecEventComm::PushConsumer {
   public:
     virtual void push (const RtecEventComm::EventSet &events,
-                       CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                       CORBA::Environment &);
     // The channel pushed some events to us.
 
-    virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void disconnect_push_consumer (CORBA::Environment &);
     // The channel is disconnecting.
 
   private:

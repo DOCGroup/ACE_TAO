@@ -204,35 +204,30 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (CORBA::Environment& env)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_consumers (CORBA::Environment& env);
   // The default implementation is:
   //    this->consumer_admin ()->_this (env);
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (CORBA::Environment& env)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_suppliers (CORBA::Environment& env);
   // The default implementation is:
   //    this->supplier_admin ()->_this (env);
 
-  virtual void destroy (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (CORBA::Environment &env);
   // Commit suicide.
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
                        CORBA::Environment &env)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      TAO_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                       RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
   virtual void
       remove_observer (RtecEventChannelAdmin::Observer_Handle,
                        CORBA::Environment &env)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+      TAO_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                       RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
 
 private:
   PortableServer::POA_var supplier_poa_;

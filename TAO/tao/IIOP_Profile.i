@@ -15,9 +15,15 @@ TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 }
 
 ACE_INLINE TAO_ObjectKey *
-TAO_IIOP_Profile::_key (void) const
+TAO_IIOP_Profile::_key (CORBA::Environment &) const
 {
   return new TAO_ObjectKey (this->object_key_);
+}
+
+ACE_INLINE const TAO_opaque&
+TAO_IIOP_Profile::body (void) const
+{
+  return this->body_;
 }
 
 ACE_INLINE const ACE_INET_Addr&
@@ -44,10 +50,17 @@ TAO_IIOP_Profile::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE const TAO_GIOP_Version &
-TAO_IIOP_Profile::version (void) const
+ACE_INLINE const TAO_IOP_Version *
+TAO_IIOP_Profile::version (void)
 {
-  return this->version_;
+  return &this->version_;
+}
+
+ACE_INLINE const TAO_IOP_Version *
+TAO_IIOP_Profile::version (TAO_IOP_Version *v)
+{
+  this->version_ = *v;
+  return &this->version_;
 }
 
 ACE_INLINE TAO_IIOP_Client_Connection_Handler *&
@@ -56,14 +69,8 @@ TAO_IIOP_Profile::hint(void)
   return this->hint_;
 }
 
-ACE_INLINE const TAO_Tagged_Components&
-TAO_IIOP_Profile::tagged_components (void) const
+ACE_INLINE TAO_Profile *
+TAO_IIOP_Profile::_nil (void)
 {
-  return this->tagged_components_;
-}
-
-ACE_INLINE TAO_Tagged_Components&
-TAO_IIOP_Profile::tagged_components (void)
-{
-  return this->tagged_components_;
+  return (TAO_IIOP_Profile *)0;
 }

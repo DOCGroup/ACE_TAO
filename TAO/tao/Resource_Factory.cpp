@@ -55,12 +55,6 @@ TAO_Resource_Factory::~TAO_Resource_Factory (void)
 {
 }
 
-int
-TAO_Resource_Factory::use_tss_resources (void) const
-{
-  return 0;
-}
-
 ACE_Reactor *
 TAO_Resource_Factory::get_reactor (void)
 {

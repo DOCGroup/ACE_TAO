@@ -73,7 +73,6 @@ Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i (void)
 
 Pluggable_Test_ptr
 Pluggable_Test_Factory_i::make_pluggable_test (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_MAKE_PLUGGABLE_START);
   return my_pluggable_test_._this (env);
@@ -96,7 +95,6 @@ PP_Test_i::~PP_Test_i (void)
 
 void
 PP_Test_i::send_oneway (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_ONEWAY_START);
 }
@@ -105,7 +103,6 @@ PP_Test_i::send_oneway (CORBA::Environment &)
 
 void
 PP_Test_i::send_void (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_VOID_START);
 }
@@ -113,7 +110,6 @@ PP_Test_i::send_void (CORBA::Environment &)
 // Shutdown.
 
 void PP_Test_i::shutdown (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",

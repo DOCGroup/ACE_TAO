@@ -492,10 +492,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
         result = this->not_full_cond_.acquire ();
       else
         result = this->not_full_cond_.acquire (*timeout);
-
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
+      int error = errno;
       mon.acquire ();
+      errno = error;
     }
 #else
   ACE_UNUSED_ARG (mon);
@@ -541,9 +540,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
           if (result == -1 && errno == ETIME)
             errno = EWOULDBLOCK;
         }
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
+      int error = errno;
       mon.acquire ();
+      errno = error;
     }
 #else
   ACE_UNUSED_ARG (mon);

@@ -99,20 +99,19 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
-
-  if (this->dynamic_ != 0)
-    // Make sure to reset the flag.
+  if (this->dynamic_)
+    // Make sure to reset the flag
     ACE_Dynamic::instance ()->reset ();
 }
 
-// Default behavior for a ACE_Svc_Handler object is to be registered
-// with the ACE_Reactor (thereby ensuring single threading).
+// Default behavior for a ACE_Svc_Handler object is to be registered with
+// the ACE_Reactor (thereby ensuring single threading).
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open");
-#if defined (ACE_DEBUGGING)
+#if defined (DEBUGGING)
   ASYS_TCHAR buf[BUFSIZ];
   ACE_PEER_STREAM_ADDR client_addr;
 
@@ -130,7 +129,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
               ASYS_TEXT ("connected to %s on fd %d\n"),
               buf,
               this->peer_.get_handle ()));
-#endif /* ACE_DEBUGGING */
+#endif /* DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler
       (this,
@@ -183,20 +182,6 @@ template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
-
-  this->peer_.dump ();
-  ACE_DEBUG ((LM_DEBUG,
-              "dynamic_ = %d\n",
-              this->dynamic_));
-  ACE_DEBUG ((LM_DEBUG,
-              "closing_ = %d\n",
-              this->closing_));
-  ACE_DEBUG ((LM_DEBUG,
-              "recycler_ = %d\n",
-              this->recycler_));
-  ACE_DEBUG ((LM_DEBUG,
-              "recycling_act_ = %d\n",
-              this->recycling_act_));
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> ACE_PEER_STREAM &
@@ -325,168 +310,6 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle");
   // By default, the object is ready and willing to be recycled.
-  return 0;
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL>
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Buffered_Svc_Handler (void)
-{
-  this->flush ();
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL>
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Buffered_Svc_Handler (ACE_Thread_Manager *tm,
-                                                                            ACE_Message_Queue<ACE_SYNCH_USE> *mq,
-                                                                            ACE_Reactor *reactor,
-                                                                            size_t maximum_buffer_size,
-                                                                            ACE_Time_Value *timeout)
-  : ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE> (tm, mq, reactor),
-    maximum_buffer_size_ (maximum_buffer_size),
-    current_buffer_size_ (0),
-    timeoutp_ (timeout)
-{
-  ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Buffered_Svc_Handler");
-
-  if (this->timeoutp_ != 0)
-    {
-      this->interval_ = *timeout;
-      this->next_timeout_ = ACE_OS::gettimeofday () + this->interval_;
-    }
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
-                                                       ACE_Time_Value *tv)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->msg_queue ()->lock (), -1);
-
-  // Enqueue <mb> onto the message queue.
-  if (this->putq (mb, tv) == -1)
-    return -1;
-  else
-    {
-      // Update the current number of bytes on the queue.
-      this->current_buffer_size_ += mb->total_size ();
-
-      // Flush the buffer when the number of bytes exceeds the maximum
-      // buffer size or when the timeout period has elapsed.
-      if (this->current_buffer_size_ >= this->maximum_buffer_size_
-          || (this->timeoutp_ != 0
-              && this->next_timeout_ <= ACE_OS::gettimeofday ()))
-        return this->flush ();
-      else
-        return 0;
-    }
-}
-
-// Flush the buffer.
-
-template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->msg_queue ()->lock (), -1);
-  ACE_Message_Block *entry = 0;
-  iovec iov[IOV_MAX];
-  size_t i = 0;
-  int result = 0;
-
-  // Iterate over all the <ACE_Message_Block>s in the
-  // <ACE_Message_Queue> and prepare them to be written out.
-  for (ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
-       iterator.next (entry) != 0
-         && result == 0;
-       iterator.advance ())
-    {
-      // Iterate over all the <Message_Block>s in a chain, including
-      // continuations.
-      for (ACE_Message_Block *temp = entry;
-           temp != 0;
-           temp = temp->cont ())
-        {
-          iov[i].iov_len = temp->length ();
-          iov[i].iov_base = temp->rd_ptr ();
-
-          i++;
-
-          // Flush the <iovec>s when we've reached the maximum size
-          // for the platform.
-          if (i == IOV_MAX)
-            {
-#if defined (ACE_DEBUGGING)
-              ACE_DEBUG ((LM_DEBUG,
-                          "sending data (inside loop, i = %d)\n",
-                          i));
-#endif /* ACE_DEBUGGING */
-              // Send off the data.
-              if (this->peer ().sendv_n (iov,
-                                         i) == -1)
-                {
-                  result = -1;
-                  break;
-                }
-              i = 0;
-            }
-        }
-    }
-
-  // Take care of any remaining <iovec>s.
-  if (i > 0 && result != -1)
-    {
-      if (this->peer ().sendv_n (iov, i) == -1)
-        result = -1;
-#if defined (ACE_DEBUGGING)
-      ACE_DEBUG ((LM_DEBUG,
-                  "sending data (final flush, i = %d)\n",
-                  i));
-#endif /* ACE_DEBUGGING */
-    }
-
-  // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
-  // and <release> their memory.
-  while (this->msg_queue ()->is_empty () == 0)
-    {
-      if (this->msg_queue ()->dequeue_head (entry) == -1)
-        break;
-
-      entry->release ();
-    }
-
-  if (this->timeoutp_ != 0)
-    // Update the next timeout period by adding the interval.
-    this->next_timeout_ += this->interval_;
-
-  this->current_buffer_size_ = 0;
-
-  return result;
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
-{
-  ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
-
-  ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump ();
-  ACE_DEBUG ((LM_DEBUG,
-              "maximum_buffer_size_ = %d\n",
-              this->maximum_buffer_size_));
-  ACE_DEBUG ((LM_DEBUG,
-              "current_buffer_size_ = %d\n",
-              this->current_buffer_size_));
-  if (this->timeoutp_ != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
-                this->next_timeout_.sec (),
-                this->next_timeout_.usec ()));
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "timeoutp_ == NULL"));
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
-                                                                  const void *)
-{
-  ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout");
   return 0;
 }
 

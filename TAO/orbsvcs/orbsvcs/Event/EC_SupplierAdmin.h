@@ -86,8 +86,7 @@ public:
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (CORBA::Environment &)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_consumer (CORBA::Environment &);
 
   typedef ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*> ConsumerSet;
   typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*> ConsumerSetIterator;

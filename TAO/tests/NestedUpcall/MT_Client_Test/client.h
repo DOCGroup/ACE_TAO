@@ -72,11 +72,11 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
-  CORBA::ORB_var orb_var_;
-  // Remember our orb.
-
   MT_Object_var mT_Object_var_;
   // pointer to the mt Object
+
+  CORBA::ORB_var orb_var_;
+  // Remember our orb.
 
   int client_number_;
   // This is used to choose the server...

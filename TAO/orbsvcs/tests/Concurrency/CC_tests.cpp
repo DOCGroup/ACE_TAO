@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "CC_tests.h"
-#include "ace/OS.h"
+
 ACE_RCSID(Concurrency, CC_tests, "$Id$")
 
 CC_Test::CC_Test (CC_naming_service *ns)
@@ -37,24 +37,24 @@ CC_Test::create_lock_set (void)
   // Create the lock set and return an obj ref corresponding to the
   // key.
   CosConcurrencyControl::LockSet_ptr lock_set(0);
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+
+  TAO_TRY
     {
       lock_set =
-        this->naming_service_->get_lock_set_factory ()->create (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->naming_service_->get_lock_set_factory ()->create (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (lock_set))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null lock set objref returned by factory\n"),
                           0);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("CC_Client::create_lock_set");
+      TAO_TRY_ENV.print_exception ("CC_Client::create_lock_set");
       return 0;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return lock_set;
 }
 
@@ -62,21 +62,21 @@ char *
 CC_Test::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {
   if (mode==CosConcurrencyControl::read)
-    return ACE_const_cast (char *, "read");
+    return "read";
 
   if (mode==CosConcurrencyControl::write)
-    return ACE_const_cast (char *, "write");
+    return "write";
 
   if (mode==CosConcurrencyControl::upgrade)
-    return ACE_const_cast (char *, "upgrade");
+    return "upgrade";
 
   if (mode==CosConcurrencyControl::intention_read)
-    return ACE_const_cast (char *, "intension_read");
+    return "intension_read";
 
   if (mode==CosConcurrencyControl::intention_write)
-    return ACE_const_cast (char *, "intension_write");
+    return "intension_write";
 
-  return ACE_const_cast (char *, "unknown lock mode");
+  return "unknown lock mode";
 }
 
 // ================================
@@ -100,19 +100,17 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
 
   CosConcurrencyControl::LockSet_ptr cc_lock_set_ = create_lock_set ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      cc_lock_set_->lock (mode_, ACE_TRY_ENV);
-
-      ACE_TRY_CHECK;
+      cc_lock_set_->lock (mode_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                              TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (lock_not_held)
         {
@@ -127,14 +125,14 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
                     get_lock_mode_name (mode_)));
 
       cc_lock_set_->unlock (mode_,
-                            ACE_TRY_ENV);
+                            TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock released\n",
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                              TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (lock_not_held)
         ACE_DEBUG ((LM_DEBUG,
@@ -149,12 +147,12 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
         }
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Test_Single_Lock_With_Mode::run");
+      TAO_TRY_ENV.print_exception ("Test_Single_Lock_With_Mode::run");
       return CC_FAIL;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   CORBA::release (cc_lock_set_);
 
@@ -177,31 +175,30 @@ Test_Setup_LockSet::~Test_Setup_LockSet (void)
 int
 Test_Setup_LockSet::run (int /* times_to_run */)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       CosConcurrencyControl::LockSet_ptr cc_lock_set_ =
         create_lock_set ();
       this->naming_service_->bind_name (my_name_, cc_lock_set_,
-                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Name bound\n"));
 
       cc_lock_set_->lock (CosConcurrencyControl::read,
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Read lock set\n"));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
+      TAO_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
       return CC_FAIL;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return CC_SUCCESS;
 }
@@ -223,31 +220,30 @@ Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
 int
 Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       CORBA::Object_var ccls_obj =
-        this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""),
+        this->naming_service_->get_obj_from_name ("",
                                                   my_name_,
-                                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->lock (CosConcurrencyControl::read,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
+      TAO_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
       return CC_FAIL;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return CC_SUCCESS;
 }
@@ -269,28 +265,27 @@ Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
 int
 Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       CORBA::Object_var ccls_obj =
-        this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""), my_name_,
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->naming_service_->get_obj_from_name ("", my_name_,
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->unlock (CosConcurrencyControl::read,
-                    ACE_TRY_ENV);
+                    TAO_TRY_ENV);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Test_Unlock_Already_Created_LockSet::run");
+      TAO_TRY_ENV.print_exception ("Test_Unlock_Already_Created_LockSet::run");
       return CC_FAIL;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return CC_SUCCESS;
 }
@@ -315,18 +310,18 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
   // Create the lock set
   CosConcurrencyControl::LockSet_ptr cc_lock_set_ = create_lock_set ();
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+
+  TAO_TRY
     {
       // lock the lock
-      cc_lock_set_->lock (mode_, ACE_TRY_ENV);
+      cc_lock_set_->lock (mode_, TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
                   get_lock_mode_name (mode_)));
 
       // check to see if the lock is held
       lock_not_held = cc_lock_set_->try_lock (mode_,
-                                              ACE_TRY_ENV);
+                                              TAO_TRY_ENV);
 
       if (lock_not_held)
         {
@@ -342,22 +337,22 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
       // release the lock
       cc_lock_set_->unlock (mode_,
-                            ACE_TRY_ENV);
+                            TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock released\n",
                   get_lock_mode_name (mode_)));
 
       // release the lock again. this should raise an exception
       cc_lock_set_->unlock (mode_,
-                            ACE_TRY_ENV);
+                            TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,
                   "attemptet to release %s lock\n",
                   get_lock_mode_name (mode_)));
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
     }
-  ACE_CATCH(CosConcurrencyControl::LockNotHeld, userex)
+  TAO_CATCH(CosConcurrencyControl::LockNotHeld, userex)
     {
       // We should end here
       ACE_UNUSED_ARG (userex);
@@ -365,12 +360,12 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
       return CC_SUCCESS;
     }
 
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Test_Release_Not_Held_Lock::run");
+      TAO_TRY_ENV.print_exception ("Test_Release_Not_Held_Lock::run");
       return CC_FAIL;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   CORBA::release (cc_lock_set_);
 

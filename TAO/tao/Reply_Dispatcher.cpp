@@ -16,8 +16,8 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 {
 }
 
-TAO_GIOP_Message_State *
-TAO_Reply_Dispatcher::message_state (void) const
+TAO_InputCDR *
+TAO_Reply_Dispatcher::cdr (void) const
 {
   return 0;
 }
@@ -25,10 +25,9 @@ TAO_Reply_Dispatcher::message_state (void) const
 // *********************************************************************
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::
-    TAO_Synch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state)
-  : message_state_ (message_state)
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_InputCDR* cdr)
 {
+  this->cdr_ = cdr;
 }
 
 // Destructor.
@@ -41,14 +40,8 @@ int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                             const TAO_GIOP_Version& version,
                                             TAO_GIOP_ServiceContextList& reply_ctx,
-                                            TAO_GIOP_Message_State* message_state)
+                                            TAO_InputCDR*)
 {
-  ACE_ASSERT (message_state == this->message_state_);
-  // @@ Notice that the message is ignored because we assume that
-  //    the message_state is the same we are giving down to the ORB to
-  //    use.... I.E. this class cannot be used with Muxed stream, but
-  //    chances are that the way to implement that will change several
-  //    times in the next few weeks.
   this->reply_status_ = reply_status;
   this->version_ = version;
 
@@ -62,8 +55,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   return 0;
 }
 
-TAO_GIOP_Message_State *
-TAO_Synch_Reply_Dispatcher::message_state (void) const
+TAO_InputCDR *
+TAO_Synch_Reply_Dispatcher::cdr (void) const
 {
-  return this->message_state_;
+  return this->cdr_;
 }

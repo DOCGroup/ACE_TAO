@@ -17,27 +17,21 @@
 # or a successor.
 
 debug = 1
+# xlC builds the shared lib from the static lib, so need to build both.
+shared_libs_only = 0
+static_libs = 1
 
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
 
-CC	    = xlc_r
+CC	    = xlC
 CXX	    = xlC_r
 
 # -qextchk is handy, but produces false type mismatches when linking
 # netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
-CCFLAGS     += $(CFLAGS) -qtempinc -qinfo
-# AIX 4.3 and IBM C/C++ compilers 3.6.4 produce a bazillion warnings
-# about 0-valued preprocessor defs. The problem may be a 3.6.4 compiler thing,
-# but the only way I know of at this moment to turn the things off is to switch
-# it based on the OS minor vers (assuming AIX 4.3 is used w/ xlC 3.6.4).
-ifeq ($(AIX_MINOR_VERS),3)
- CCFLAGS    += -qflag=e:e
-else
- CCFLAGS    += -qflag=w:w
-endif
+CCFLAGS     += $(CFLAGS) -qtempinc -qflag=w:w -qinfo
 CPPFLAGS    += -qlanglvl=ansi -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_MINOR_VERS=$(AIX_MINOR_VERS)
 
 # -qinitauto seems useful, but when built with -qinitauto=5F, the
@@ -46,10 +40,9 @@ DCFLAGS     += -g -qcheck=nobounds:div:null
 
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
-
-ifeq ($(shared_libs),1)
-ACELIB      = -lACEshr
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
+ifdef SHLIB
+ACELIB      = -lACEshr
 endif
 
 ifeq ($(AIX_MINOR_VERS),1)
@@ -71,6 +64,6 @@ LDFLAGS	    += -bI:/lib/pse.exp
 OCCFLAGS    += -qarch=com 
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
+STATLIB     = $(VLIB)
 TEMPINCDIR  = tempinc
-TMPL_OBJS := $(TEMPINCDIR)/*.o
 SOBUILD = 

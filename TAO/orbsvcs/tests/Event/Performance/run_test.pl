@@ -12,87 +12,36 @@ unshift @INC, '../../../../../bin';
 require Process;
 require Uniqueid;
 
-$prefix = "." . $DIR_SEPARATOR;
-$status = 0;
-
 print STDERR "\n\nThroughput/Latency single threaded configuration\n";
-$T = Process::Create ($prefix . "Throughput",
-		      " -ORBsvcconf ec.st.conf "
-		      . "-burstsize 100000 -burstcount 1");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
+system ("Throughput -ORBsvcconf ec.st.conf -burstsize 100000 -burstcount 1");
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration\n";
-$T = Process::Create ($prefix . "Throughput",
-		      " -burstsize 100000"
-		      ." -burstcount 1");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
+system ("Throughput -burstsize 100000"
+        ." -burstcount 1");
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration, 4 consumers\n";
-$T = Process::Create ($prefix . "Throughput",
-		      " -burstsize 100000"
-		      ." -burstcount 1 -consumers 4");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
+system ("Throughput -burstsize 100000"
+        ." -burstcount 1 -consumers 4");
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
-$T = Process::Create ($prefix . "Throughput",
-		      " -burstsize 100000"
-		      ." -burstcount 1 -consumers 4 -suppliers 4");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
+system ("Throughput -burstsize 100000"
+        ." -burstcount 1 -consumers 4 -suppliers 4");
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
-$T = Process::Create ($prefix . "Throughput",
-		      " -burstsize 100000"
-		      ." -burstcount 1 -consumers 4 -suppliers 4"
-		      ." -consumers_tshift 0 -suppliers_tshift 0");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+system ("Throughput -burstsize 100000"
+        ." -burstcount 1 -consumers 4 -suppliers 4"
+        ." -consumers_tshift 0 -suppliers_tshift 0");
 
 print STDERR "\n\nConnection and disconnection time,",
   " 100 consumers 100 suppliers\n";
-$T = Process::Create ($prefix . "Connect",
-		      " -consumers 100 -suppliers 100"
-		      ." -connection_order interleaved");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
+system ("Connect -consumers 100 -suppliers 100"
+        ." -connection_order interleaved");
 
 print STDERR "\n\nConnection and disconnection time,",
   " 500 consumers 500 suppliers\n";
-$T = Process::Create ($prefix . "Connect",
-		      " -consumers 500 -suppliers 500"
-		      ." -connection_order interleaved");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+system ("Connect -consumers 500 -suppliers 500"
+        ." -connection_order interleaved");
 
-exit $status;
+exit 0;

@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-// ****************************************************************
-
 ACE_INLINE
 TAO_Profile::TAO_Profile (CORBA::ULong tag)
   :  tag_ (tag),

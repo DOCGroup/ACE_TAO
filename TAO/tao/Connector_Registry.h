@@ -52,10 +52,8 @@ class TAO_Export TAO_Connector_Registry
   //   Connector Registry and Generic Connector interface definitions.
   //   All loaded ESIOP or GIOP connector bridges must register with
   //   this object.
-  //   This class is able to dynamically load a set of
-  //   concrete protocol connectors which have registered with the service
-  //   configurator and added their Factory name to the Resource_Factory
-  //   line of the svc.comf file.
+  //   @@ Fred: this class should be able to dynamically load a set of
+  //            connectors using the service configurator.
 public:
   TAO_Connector_Registry (void);
   //  Default constructor.
@@ -76,7 +74,7 @@ public:
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
-  int connect (TAO_Profile *&profile, TAO_Transport *&transport);
+  int connect (TAO_Stub *&obj, TAO_Transport *&);
   // This is where the transport protocol is selected based on some
   // policy.  This member will call the connect member of the
   // TAO_Connector class which in turn will call the concrete

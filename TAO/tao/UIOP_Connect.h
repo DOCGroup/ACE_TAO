@@ -129,11 +129,38 @@ public:
 
   // = Template Methods Called by <handle_input>
 
+  virtual int handle_message (TAO_InputCDR &msg,
+                              TAO_OutputCDR &response,
+                              CORBA::Boolean &response_required,
+                              CORBA::ULong &request_id,
+                              CORBA_Environment &TAO_IN_ENV =
+                                  TAO_default_environment ());
+  // Handle processing of the request residing in <msg>, setting
+  // <response_required> to zero if the request is for a oneway or
+  // non-zero if for a two-way and <response> to any necessary
+  // response (including errors).  In case of errors, -1 is returned
+  // and additional information carried in <env>.
+
   TAO_Transport *transport (void);
 
 protected:
   TAO_UIOP_Server_Transport *transport_;
   // @@ New transport object reference.
+
+  virtual int handle_locate (TAO_InputCDR &msg,
+                             TAO_OutputCDR &response,
+                             CORBA::Boolean &response_required,
+                             CORBA::ULong &request_id,
+                             CORBA_Environment &TAO_IN_ENV =
+                                 TAO_default_environment ());
+  // Handle processing of the location request residing in <msg>,
+  // setting <response_required> to one if no errors are encountered.
+  // The LocateRequestReply is placed into <response>.  In case of
+  // errors, -1 is returned and additional information carried in
+  // <TAO_IN_ENV>.
+
+  virtual void send_response (TAO_OutputCDR &response);
+  // Send <response> to the client on the other end.
 
   // = Event Handler overloads
 
@@ -150,6 +177,12 @@ protected:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  TAO_GIOP_MessageHeader message_header_;
+  CORBA::ULong current_offset_;
+  TAO_InputCDR input_;
+  // This keep the state of the current message, to enable
+  // non-blocking reads.
 };
 
 #if defined (__ACE_INLINE__)

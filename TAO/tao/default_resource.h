@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/POA.h"
 #include "ace/Singleton.h"
 #include "ace/Service_Config.h"
 
@@ -51,9 +52,16 @@ public:
 
   // = Resources
 
+  ACE_Reactor *r_;
+  // The Reactor.
+
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
   // The allocators for the input CDR streams.
+
+  ACE_Allocator *output_cdr_dblock_allocator_;
+  ACE_Allocator *output_cdr_buffer_allocator_;
+  // The allocators for the output CDR streams.
 };
 
 // ****************************************************************
@@ -99,15 +107,24 @@ public:
     TAO_REACTOR_FL,
     TAO_REACTOR_XT,
     TAO_REACTOR_WFMO,
-    TAO_REACTOR_MSGWFMO,
-    TAO_REACTOR_TP
+    TAO_REACTOR_MSGWFMO
   };
+
+  // = Range of values for <{resource source specifier}>.
+  virtual void resource_source (int which_source);
+  // Set the resource source specifier.
+  virtual int resource_source (void);
+  // Get the resource source specifier.
+
+  virtual void poa_source (int which_source);
+  // Set the POA source specifier.
+  virtual int poa_source (void);
+  // Get the POA source specifier.
 
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
   // = Resource Retrieval
-  virtual int use_tss_resources (void) const;
   virtual ACE_Reactor *get_reactor (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
@@ -125,9 +142,15 @@ protected:
   // Obtain the reactor implementation
 
 protected:
-  int use_tss_resources_;
+
+  int resource_source_;
   // Flag indicating whether resources should be global or
   // thread-specific.
+
+  int poa_source_;
+  // Flag indicating whether the POA should be global or
+  // thread-specific.  If not set specifically, this takes on the
+  // value of <resource_source_>.
 
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.

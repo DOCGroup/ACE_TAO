@@ -342,7 +342,7 @@ DRV_pre_proc(const char *myfile)
       idl_global->set_filename(new UTL_String (myfile));
       idl_global->set_main_filename(new UTL_String (myfile));
       ACE_Auto_String_Free tmp (ACE_OS::strdup (myfile));
-      idl_global->set_stripped_filename(new UTL_String (DRV_stripped_name (tmp.get ())));
+      idl_global->set_stripped_filename(new UTL_String (tmp.get ()));
       idl_global->set_real_filename(new UTL_String (tmp_ifile));
     }
 

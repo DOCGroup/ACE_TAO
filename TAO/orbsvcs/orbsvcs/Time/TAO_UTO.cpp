@@ -41,7 +41,6 @@ TAO_UTO::~TAO_UTO (void)
 
 TimeBase::TimeT
 TAO_UTO::time (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_.time;
 }
@@ -50,7 +49,6 @@ TAO_UTO::time (CORBA::Environment &)
 
 TimeBase::InaccuracyT
 TAO_UTO::inaccuracy (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Construct the Inaccuracy from the
   // inacchi and inacclo.
@@ -65,7 +63,6 @@ TAO_UTO::inaccuracy (CORBA::Environment &)
 
 TimeBase::TdfT
 TAO_UTO::tdf (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_.tdf;
 }
@@ -74,7 +71,6 @@ TAO_UTO::tdf (CORBA::Environment &)
 
 TimeBase::UtcT
 TAO_UTO::utc_time (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_;
 }
@@ -84,7 +80,6 @@ TAO_UTO::utc_time (CORBA::Environment &)
 
 CosTime::UTO_ptr
 TAO_UTO::absolute_time (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -96,7 +91,6 @@ CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto,
                        CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
@@ -152,7 +146,7 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TCIndeterminate);
-
+  
   return CosTime::TCIndeterminate;
 }
 
@@ -165,7 +159,6 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
                            CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
@@ -173,22 +166,22 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
     {
       if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
         {
-          ACE_NEW_THROW_EX (tio,
-                            TAO_TIO (uto->time (ACE_TRY_ENV),
-                                     this->time (ACE_TRY_ENV)),
-                            CORBA::NO_MEMORY ());
-
-          ACE_TRY_CHECK;
-        }
+	  ACE_NEW_THROW_EX (tio,
+			    TAO_TIO (uto->time (ACE_TRY_ENV),
+				     this->time (ACE_TRY_ENV)),
+			    CORBA::NO_MEMORY ());
+	  
+	  ACE_TRY_CHECK;
+	}
       else
         {
-          ACE_NEW_THROW_EX (tio,
-                            TAO_TIO (this->time (ACE_TRY_ENV),
-                                     uto->time (ACE_TRY_ENV)),
-                            CORBA::NO_MEMORY ());
-
-          ACE_TRY_CHECK;
-        }
+	  ACE_NEW_THROW_EX (tio,
+			    TAO_TIO (this->time (ACE_TRY_ENV),
+				     uto->time (ACE_TRY_ENV)),
+			    CORBA::NO_MEMORY ());
+	  
+	  ACE_TRY_CHECK;
+	}
     }
   ACE_CATCHANY
     {
@@ -197,7 +190,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
-
+  
   return tio->_this ();
 }
 
@@ -206,10 +199,9 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 
 CosTime::TIO_ptr
 TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
-
+  
   ACE_TRY
     {
       TimeBase::TimeT lower =
@@ -221,10 +213,10 @@ TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY_CHECK;
 
       ACE_NEW_THROW_EX (tio,
-                        TAO_TIO (lower,
-                                 upper),
-                        CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
+			TAO_TIO (lower,
+				 upper),
+			CORBA::NO_MEMORY ());
+      ACE_TRY_CHECK;      
     }
   ACE_CATCHANY
     {
@@ -233,6 +225,7 @@ TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
-
+  
   return tio->_this ();
 }
+

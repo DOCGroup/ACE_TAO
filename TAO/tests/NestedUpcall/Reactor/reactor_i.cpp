@@ -19,7 +19,6 @@ Reactor_i::~Reactor_i (void)
 CORBA::Long
 Reactor_i::register_handler (EventHandler_ptr eh,
                              CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Reactor_i::register_handler ()\n"));
@@ -48,7 +47,6 @@ Reactor_i::register_handler (EventHandler_ptr eh,
 
 void
 Reactor_i::set_value (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) doing Reactor_i::set_value()\n"));
@@ -58,7 +56,6 @@ CORBA::UShort
 Reactor_i::decrement (EventHandler_ptr eh,
                       CORBA::UShort num,
                       CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "%{%I(%P|%t) Reactor::decrement (%d)%$", num));
 
@@ -77,9 +74,7 @@ Reactor_i::decrement (EventHandler_ptr eh,
 
 void
 Reactor_i::stop (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ TODO Keep an ORB pointer around...
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) stopping.\n"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }

@@ -46,6 +46,20 @@ public:
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
 
+  virtual ACE_Lock *create_servant_lock (void);
+  // The servant lock is based on the setting of POA, and concurrency
+  // strategy as follows:
+  // 1. If concurrency policy is reactive and POA is TSS
+  //    then return ACE_Null_Mutex via ACE_Lock_Adapter.
+  //
+  // 2. If concurrency policy is non-reactive then
+  //    return ACE_Thread_Mutex ...
+  //
+  // 3. If the POA is global then, return
+  //    ACE_Null_Mutex iff ORB_init count == 1,
+  //    else if ORB_init count > 1 return
+  //    ACE_Thread_Mutex.
+
   virtual ACE_Lock *create_event_loop_lock (void);
   // If the ORB is single threaded or some form of ORB-per-thread then
   // it is more efficient to use a Null_Mutex for the variables
@@ -78,6 +92,9 @@ protected:
 
   Lock_Type poa_lock_type_;
   // The type of lock to be returned by <create_poa_lock()>.
+
+  Lock_Type poa_mgr_lock_type_;
+  // The type of lock to be returned by <create_poa_mgr_lock()>.
 
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.

@@ -214,13 +214,13 @@ public:
 
 // *************************************************************
 
-template<class T,class T_var> class TAO_Unbounded_Object_Sequence;
-template<class T, class T_var, CORBA::ULong MAX> class TAO_Bounded_Object_Sequence;
+template<class T> class TAO_Unbounded_Object_Sequence;
+template<class T, CORBA::ULong MAX> class TAO_Bounded_Object_Sequence;
 template<CORBA::ULong MAX> class TAO_Bounded_String_Sequence;
 
 // *************************************************************
 
-template<class T,class T_var>
+template<class T>
 class TAO_Object_Manager
 {
   // = TITLE
@@ -250,7 +250,7 @@ class TAO_Object_Manager
   //   says that T_ptr *could* map to a type different to T* in the
   //   particular case of TAO it does map to <T*>.
   //
-  friend class TAO_Unbounded_Object_Sequence<T,T_var>;
+  friend class TAO_Unbounded_Object_Sequence<T>;
 public:
   // @@ Use partial template specialization here to give access only
   // to the right kind of sequence.
@@ -258,7 +258,7 @@ public:
   //    class TAO_Bounded_Object_Sequence<T,MAX>;
 
   // = Initialization and termination methods.
-  TAO_Object_Manager (const TAO_Object_Manager<T,T_var> &rhs);
+  TAO_Object_Manager (const TAO_Object_Manager<T> &rhs);
   // Copy constructor, the semantics are non-trivial:
   //   + The referenced element is duplicated or not according to the
   //   release value on the <rhs>.
@@ -272,16 +272,13 @@ public:
   ~TAO_Object_Manager (void);
   // Destructor, only releases the object if <release_> is true.
 
-  TAO_Object_Manager<T,T_var> &operator= (const TAO_Object_Manager<T,T_var> &rhs);
+  TAO_Object_Manager<T> &operator= (const TAO_Object_Manager<T> &rhs);
   // Assignment from another managed type, only release if
   // <this->release_> is true.
   // @@ TODO what happens if rhs.release_ is true an this->relase_ is
   // false?
 
-  TAO_Object_Manager<T,T_var> &operator= (T *);
-  // Assignment from T *.
-
-  TAO_Object_Manager<T,T_var> &operator= (T_var &);
+  TAO_Object_Manager<T> &operator= (T *);
   // Assignment from T *.
 
   T * operator-> (void) const;
@@ -316,7 +313,7 @@ private:
 
 // *************************************************************
 
-template<class T,class T_var>
+template<class T>
 class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
 {
   // = TITLE
@@ -371,7 +368,7 @@ public:
   // using the sequence allocbuf function, and the sequence will pass
   // it to freebuf when finished with it.
 
-  TAO_Unbounded_Object_Sequence(const TAO_Unbounded_Object_Sequence<T,T_var> &);
+  TAO_Unbounded_Object_Sequence(const TAO_Unbounded_Object_Sequence<T> &);
   // The copy constructor performs a deep copy from the existing
   // structure to create a new structure, including calling _duplicate
   // on all object  reference members and performing the necessary
@@ -386,7 +383,7 @@ public:
   // The destructor releases all object reference memebrs and frees
   // all string members.
 
-  TAO_Unbounded_Object_Sequence<T,T_var> &operator= (const TAO_Unbounded_Object_Sequence <T,T_var> &);
+  TAO_Unbounded_Object_Sequence<T> &operator= (const TAO_Unbounded_Object_Sequence <T> &);
   // The assignment operator first releases all object reference
   // members and frees all string members, and then performs a
   // deepcopy to create a new structure.
@@ -404,7 +401,7 @@ public:
   // the reallocation is performed. After reallocation, the release
   // flag is always set to TRUE.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -441,7 +438,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var,CORBA::ULong MAX>
+template<class T, CORBA::ULong MAX>
 class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -465,16 +462,16 @@ public:
                                CORBA::Boolean release=0);
   // Constructor from data.
 
-  TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T,T_var,MAX> &);
+  TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T,MAX> &);
   // Copy constructor.
 
   ~TAO_Bounded_Object_Sequence (void);
   // destructor
 
-  TAO_Bounded_Object_Sequence &operator= (const TAO_Bounded_Object_Sequence<T,T_var,MAX> &);
+  TAO_Bounded_Object_Sequence &operator= (const TAO_Bounded_Object_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);
@@ -500,7 +497,7 @@ public:
 
 // *************************************************************
 
-template<class T,class T_var>
+template<class T>
 class TAO_Unbounded_Pseudo_Sequence : public TAO_Unbounded_Base_Sequence
 {
   // = TITLE
@@ -529,18 +526,18 @@ public:
                                  CORBA::Boolean release=0);
   // Constructor with a given buffer.
 
-  TAO_Unbounded_Pseudo_Sequence(const TAO_Unbounded_Pseudo_Sequence<T,T_var> &);
+  TAO_Unbounded_Pseudo_Sequence(const TAO_Unbounded_Pseudo_Sequence<T> &);
   // Copy ctor, deep copies.
 
   ~TAO_Unbounded_Pseudo_Sequence (void);
   // dtor releases all the contained elements.
 
-  TAO_Unbounded_Pseudo_Sequence<T,T_var> &operator= (const TAO_Unbounded_Pseudo_Sequence <T,T_var> &);
+  TAO_Unbounded_Pseudo_Sequence<T> &operator= (const TAO_Unbounded_Pseudo_Sequence <T> &);
   // The assignment operator first releases all object reference
   // members and frees all string members, and then performs a
   // deepcopy to create a new structure.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -559,7 +556,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var,CORBA::ULong MAX>
+template<class T, CORBA::ULong MAX>
 class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -579,16 +576,16 @@ public:
                                CORBA::Boolean release=0);
   // Constructor from data.
 
-  TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T,T_var,MAX> &);
+  TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
   // Copy constructor.
 
   ~TAO_Bounded_Pseudo_Sequence (void);
   // destructor
 
-  TAO_Bounded_Pseudo_Sequence &operator= (const TAO_Bounded_Pseudo_Sequence<T,T_var,MAX> &);
+  TAO_Bounded_Pseudo_Sequence &operator= (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);

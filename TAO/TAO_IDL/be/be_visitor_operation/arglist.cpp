@@ -33,9 +33,9 @@ ACE_RCSID(be_visitor_operation, arglist, "$Id$")
 //   visitors to avoid code duplication and tight coupling
 // ************************************************************
 
-be_visitor_operation_arglist::
-be_visitor_operation_arglist (be_visitor_context *ctx)
-  : be_visitor_operation (ctx)
+be_visitor_operation_arglist::be_visitor_operation_arglist (be_visitor_context
+                                                            *ctx)
+  : be_visitor_scope (ctx)
 {
 }
 
@@ -60,59 +60,50 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the CORBA::Environment parameter for the alternative mapping 
-  if (!idl_global->exception_support ())
-    {
-      // if the operation node has parameters, then we need to insert a comma
-      if (node->argument_count () > 0)
-        *os << ",\n";
 
-      os->indent ();
-      switch (this->ctx_->state ())
-        {
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-          // last argument - is always CORBA::Environment
-          *os << "CORBA::Environment &ACE_TRY_ENV";
-          *os << " = " << be_idt_nl
-              << "TAO_default_environment ()"
-              << be_uidt;
-          break;
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-          // last argument - is always CORBA::Environment
-          *os << "CORBA::Environment &ACE_TRY_ENV";
-          break;
-        default:
-          *os << "CORBA::Environment &ACE_TRY_ENV";
-          break;
-        }
-    }
-  *os << be_uidt_nl << ")" << be_uidt;
-
-  // now generate the throw specs
-  if (this->gen_throw_spec (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_operation_arglist")
-                         ASYS_TEXT ("::visit_operation - ")
-                         ASYS_TEXT ("Failed to generate throw spec\n")),
-                        -1);
-    }
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      // last argument - is always CORBA::Environment
+      os->indent ();
+      *os << "CORBA::Environment &ACE_TRY_ENV";
+      *os << " = " << be_idt_nl
+	        << "TAO_default_environment ()"
+	        << be_uidt;
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-      *os << ";\n\n";
+      // last argument - is always CORBA::Environment
+      os->indent ();
+      *os << "CORBA::Environment &ACE_TRY_ENV";
+      break;
+    default:
+      os->indent ();
+      *os << "CORBA::Environment &ACE_TRY_ENV";
+      break;
+    }
+  *os << be_uidt_nl << ")" << be_uidt;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+      *os << ";\n";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // each method is pure virtual in the server header
-      *os << " = 0;\n\n";
+      *os << " = 0;\n";
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+      // each method is pure virtual in the server header
+      //*os << "\n\n";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+      // each method is pure virtual in the server header
+      break;
     default:
       *os << "\n";
     }
@@ -196,7 +187,6 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
-
                          "visit_argument - "
                          "codegen for arglist failed\n"),
                         -1);
@@ -204,19 +194,3 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   delete visitor;
   return 0;
 }
-
-int
-be_visitor_operation_arglist::post_process (be_decl *bd)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // if we are not the last node in the list of arguments, generate a comma
-  // else decide if we are generating code to support true exceptions - in
-  // which case there will not be any CORBA::Environment parameter
-  if (!this->last_node (bd))
-    {
-      *os << ",\n";
-    }
-  return 0;
-}
-

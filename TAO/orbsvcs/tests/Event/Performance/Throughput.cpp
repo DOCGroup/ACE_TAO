@@ -42,7 +42,7 @@ EC_Throughput::print_usage (void)
 }
 
 void
-EC_Throughput::modify_attributes (TAO_EC_Event_Channel_Attributes&)
+EC_Throughput::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 {
 }
 

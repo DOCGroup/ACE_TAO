@@ -65,6 +65,8 @@ public:
   TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
                      PortableServer::POA_ptr poa);
 
+  TAO_Thread_Policy (const TAO_Thread_Policy &new_policy);
+
   PortableServer::ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -90,6 +92,8 @@ public:
   TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
                        PortableServer::POA_ptr poa);
 
+  TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs);
+
   PortableServer::LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -113,6 +117,8 @@ public:
   TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
                             PortableServer::POA_ptr poa);
 
+  TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs);
+
   PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -135,6 +141,8 @@ class TAO_Export TAO_Id_Assignment_Policy : public virtual PortableServer::RefCo
 public:
   TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
                             PortableServer::POA_ptr poa);
+
+  TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs);
 
   PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -161,6 +169,8 @@ public:
   TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
                                   PortableServer::POA_ptr poa);
 
+  TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs);
+
   PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -184,6 +194,8 @@ public:
   TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
                                 PortableServer::POA_ptr poa);
 
+  TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs);
+
   PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -206,6 +218,8 @@ class TAO_Export TAO_Request_Processing_Policy : public virtual PortableServer::
 public:
   TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
                                  PortableServer::POA_ptr poa);
+
+  TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs);
 
   PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -741,16 +755,9 @@ class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActiv
 {
 public:
 
-  TAO_Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
-
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                   const char *name,
                                   CORBA_Environment &ACE_TRY_ENV);
-
-protected:
-
-  PortableServer::POAManager_var poa_manager_;
-  // POA Manager
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

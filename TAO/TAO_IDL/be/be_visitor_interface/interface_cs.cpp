@@ -80,7 +80,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->name () << "_ptr " << node->name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "CORBA::Environment &env" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
@@ -92,29 +92,17 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "if (obj->_is_collocated () "
       << "&& obj->_servant() != 0)" << be_idt_nl
       << "servant = obj->_servant()->_downcast (\""
-      << "IDL:omg.org/CORBA/Object:1.0\");" << be_uidt_nl;
+      << node->repoID () << "\");" << be_uidt_nl;
 
-  *os << "if (servant != 0)" << be_idt_nl << "{" << be_idt_nl
-    // The collocated object reference factory is not working right (yet)
-      << node->name () << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << node->name () << "_ptr," << be_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "PortableServer::Servant," << be_nl
-      << "servant" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "->_create_collocated_objref (" << be_idt << be_idt_nl
-      << "\"" << node->repoID () << "\"," << be_nl
-      << "TAO_ORB_Core::ORB_CONTROL," << be_nl
+  *os << "if (servant == 0)" << be_idt_nl
+      << "return new " << node->name () << "(stub);" << be_uidt_nl;
+
+  *os << "return new "
+      << coll_name << "(" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast(" << skel_name
+      << "_ptr, servant)," << be_nl
       << "stub" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "if (retv != 0)" << be_idt_nl
-      << "return retv;" << be_uidt
-    // So we are still using the old way to create collocated objref.
-      << be_uidt_nl
-      << "}" << be_uidt_nl;
-
-  *os << "return new " << node->name () << "(stub);" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _duplicate method

@@ -87,3 +87,4 @@ ACE_Connection_Recycling_Strategy::~ACE_Connection_Recycling_Strategy (void)
 }
 
 #endif /* ACE_STRATEGIES_C */
+

@@ -123,9 +123,9 @@ ACE_Log_Msg_Manager::close (void)
 }
 
 /* static */
-#if defined (ACE_HAS_THR_C_DEST)
+#if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
-#endif /* ACE_HAS_THR_C_DEST */
+#endif /* ACE_HAS_THR_C_FUNC */
 void
 ACE_TSS_cleanup (void *ptr)
 {

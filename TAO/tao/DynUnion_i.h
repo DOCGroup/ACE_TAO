@@ -161,7 +161,7 @@ private:
   CORBA::TypeCode_var type_;
   // Holds the typecode of the Union
 
-  CORBA::ULong current_index_;
+  CORBA::ULong index_;
   // Index of the active member
 
   TAO_DynUnion_i (void);

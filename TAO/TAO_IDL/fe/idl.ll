@@ -1,3 +1,4 @@
+
 %{
 /*  $Id$
 
@@ -169,42 +170,44 @@ oneway		return IDL_ONEWAY;
 		  return IDL_SCOPE_DELIMITOR;
 		}
 
-[a-ij-rs-zA-IJ-RS-Z][a-ij-rs-zA-IJ-RS-Z0-9_]*	{
-  // Make sure that this identifier is not a C++ keyword. If it is,
-  // prepend it with a _cxx_. Lookup in the perfect hash table for C++
-  // keyword and grab the mapping.  BTW, the reason for the odd
-  // regular expression is to handle EBCDIC, as well as ASCII.
+[a-zA-Z][a-zA-Z0-9_]*	{
+    /* make sure that this identifier is not a C++ keyword. If it is,
+       prepend it with a _cxx_. Lookup in the perfect hash table for
+       C++ keyword and grab the mapping*/
 
-  TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (ace_yytext,
-                        ACE_OS::strlen (ace_yytext));
-  if (entry)
-    yylval.strval = ACE_OS::strdup (entry->mapping_);
-  else
-    yylval.strval = ACE_OS::strdup (ace_yytext);
-
-  return IDENTIFIER;
+    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+    const TAO_IDL_CPP_Keyword_Entry *entry =
+            cpp_key_tbl.lookup (ace_yytext,
+                                ACE_OS::strlen (ace_yytext));
+    if (entry)
+      {
+        yylval.strval = ACE_OS::strdup (entry->mapping_);
+      }
+    else
+      {
+        yylval.strval = ACE_OS::strdup (ace_yytext);
+      }
+    return IDENTIFIER;
 }
 
-"-"?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
+-?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
-"-"?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
+-?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
-"-"?[1-9][0-9]*	{
+-?[1-9][0-9]*	{
 		  yylval.ival = idl_atoi(ace_yytext, 10);
 		  return IDL_INTEGER_LITERAL;
 	        }
-"-"?0[xX][a-fA-F0-9]+ {
+-?0[xX][a-fA-F0-9]+ {
 		  yylval.ival = idl_atoi(ace_yytext, 16);
 		  return IDL_INTEGER_LITERAL;
 	        }
-"-"?0[0-7]*	{
+-?0[0-7]*	{
 		  yylval.ival = idl_atoi(ace_yytext, 8);
 		  return IDL_INTEGER_LITERAL;
 	      	}
@@ -234,29 +237,23 @@ oneway		return IDL_ONEWAY;
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
-^#[ \t]*pragma[ \t].*{NL}	|
-^\?\?=[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
+^#[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*{NL}		|
-^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*{NL}		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
-^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
-^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
+^#line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*{NL} |
-^\?\?=[ \t]*[0-9]*{NL} {
+^#[ \t]*[0-9]*{NL} {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident.*{NL}	|
-^\?\?=[ \t]*ident.*{NL}	{
+^#[ \t]*ident.*{NL}	{
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}

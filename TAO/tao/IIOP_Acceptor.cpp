@@ -31,17 +31,21 @@ ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
-    base_acceptor_ (),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0)
+    base_acceptor_ ()
 {
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
-//    3) Create multiple profiles for wild carded endpoints (may be multiple
-//       interfaces over which we can receive requests.  Thus a profile
-//       must be made for each one.
+// @@ Fred&Ossama: Maybe not for the current round of changes, but
+//    shouldn't the acceptor know which version to create?
+//    And isn't this the right place to setup the tagged components of
+//    a v1.[12] profile?
+
+// @@ Fred&Ossama: We need to check this interface: a single
+//    TAO_Acceptor may be bound to multiple addresses (think of a
+//    multihomed machine with an acceptor listening on the wildcard
+//    address), hence the "Right Thing" seems to be that we pass an
+//    MProfile that is filled up by the TAO_Acceptor class.
+// @@ Right, I agree but for now we assume single endpoint.  fredk
 
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
@@ -60,23 +64,11 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                   TAO_IIOP_Profile (this->host_.c_str (),
                                     this->address_.get_port_number (),
                                     object_key,
-                                    this->address_,
-                                    this->version_,
-                                    this->orb_core_),
+                                    this->address_),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
     return -1;
-
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
-    return 0;
-
-  pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-  CONV_FRAME::CodeSetComponentInfo code_set_info;
-  code_set_info.ForCharData.native_code_set  = TAO_DEFAULT_CHAR_CODESET_ID;
-  code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
-  pfile->tagged_components ().set_code_sets (code_set_info);
 
   return 0;
 }
@@ -87,8 +79,15 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   const TAO_IIOP_Profile *profile =
     ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
 
-  // compare the port and sin_addr (numeric host address)
-  return profile->object_addr () == this->address_;
+  // @@ We should probably cache this value, but then again some
+  //    acceptors have multiple addresses.
+  // @@ Fred: any ideas on how to optimize that?
+  ACE_INET_Addr address;
+  if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
+    return 0;
+
+  // @@ Ossama: can you verify that this operator does the right thing?
+  return profile->object_addr () == address;
 }
 
 ACE_Event_Handler *
@@ -105,13 +104,8 @@ TAO_IIOP_Acceptor::close (void)
 
 int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
-                         int major,
-                         int minor,
                          ACE_CString &address)
 {
-  if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
-                                ACE_static_cast (CORBA::Octet,minor));
   ACE_INET_Addr addr (address.c_str ());
 
   return this->open_i (orb_core, addr);
@@ -131,8 +125,6 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
 
   addr.set (u_short(0), buffer, 1);
 
-  this->host_ = buffer;
-
   return this->open_i (orb_core, addr);
 }
 
@@ -140,8 +132,6 @@ int
 TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_INET_Addr& addr)
 {
-  this->orb_core_ = orb_core;
-
   if (this->base_acceptor_.open (orb_core, addr) == -1)
     {
       if (TAO_debug_level > 0)
@@ -191,7 +181,7 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTAO (%P|%t) IIOP_Acceptor::open_i - "
+                  "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
                   "listening on: <%s:%u>\n",
                   this->host_.c_str (),
                   this->address_.get_port_number ()));

@@ -252,21 +252,18 @@ CosEC_ServantBase::deactivate_cosec (CORBA::Environment &ACE_TRY_ENV)
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 CosEC_ServantBase::for_consumers (CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->cosec_->for_consumers (ACE_TRY_ENV);
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 CosEC_ServantBase::for_suppliers (CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->cosec_->for_suppliers (ACE_TRY_ENV);
 }
 
 void
 CosEC_ServantBase::destroy (CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate all the contained servants and ourselves.
   // The poa will "destroy" the ref counted servants.
@@ -315,7 +312,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecScheduler::handle_t supp_handle,
   // Something else: please make the EventSourceID for the
   // supplier also an option...
 
-  const char *c = " "; // space
+  char *c = " "; // space
   char *tok = 0;
 
  // if nothing was specified on the command line use defaults..
@@ -372,7 +369,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
   // them (just call insert_source() or insert_type() in the
   // parse_args routine).
 
-  const char *c = " "; // space
+  char *c = " "; // space
   char *tok = 0;
 
   consumer_qos.start_disjunction_group ();

@@ -46,28 +46,31 @@ public:
   virtual ~CORBA_Exception (void);
   // Destructor.
 
-  // = To throw the exception (when using the standard mapping).
-  virtual void _raise (void) = 0;
-
-  // = The static narrow operation.
-  static CORBA_Exception *_narrow (CORBA_Exception *x);
-
   // = These are TAO-specific extensions.
+
+  // @@ Nanbor, can you please rearrange these methods so that all the
+  // TAO-specific stuff comes in one place, e.g., at the end of the
+  // public part?
+  CORBA_Exception (CORBA::TypeCode_ptr type);
+  // Constructor from a TypeCode.
 
   const char *_id (void) const;
   // Return the repository ID of the Exception.
 
-  CORBA::TypeCode_ptr _type (void) const;
+  TAO_CONST CORBA::TypeCode_ptr _type (void) const;
   // Return the TypeCode corresponding to the currently stored.
 
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;
 
-  CORBA_Exception (CORBA::TypeCode_ptr type);
-  // Constructor from a TypeCode.
+  // = To throw the exception (when using the standard mapping).
+  virtual void _raise (void) = 0;
 
-  void _tao_print_exception (const char *info,
-                             FILE *f = stdout) const;
+  // = TAO extension.  It makes it easier to write generic code.
+  static CORBA_Exception *_narrow (CORBA_Exception *x);
+
+  void print_exception (const char *info,
+                        FILE *f = stdout) const;
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
@@ -99,9 +102,16 @@ class TAO_Export CORBA_UserException : public CORBA_Exception
   //   User exceptions are those defined by application developers
   //   using OMG-IDL.
 public:
+  // @@ Nanbor, can you please rearrange these methods so that all the
+  // TAO-specific stuff comes in one place, e.g., at the end of the
+  // public part?
+
   // = Initialization and termination methods.
   CORBA_UserException (const CORBA_UserException &src);
   // Copy ctor.
+
+  CORBA_UserException (CORBA::TypeCode_ptr tc);
+  // Constructor from a TypeCode.
 
   ~CORBA_UserException (void);
   // Destructor.
@@ -109,16 +119,10 @@ public:
   CORBA_UserException &operator= (const CORBA_UserException &src);
   // Assignment operator.
 
-  virtual void _raise (void);
-  // To throw an exception of this type.
-
   static CORBA_UserException *_narrow (CORBA_Exception *exception);
   // The narrow operation.
 
-  // = TAO specific extension.
-
-  CORBA_UserException (CORBA::TypeCode_ptr tc);
-  // Constructor from a TypeCode.
+  // = extension
 
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
@@ -139,6 +143,10 @@ class TAO_Export CORBA_SystemException : public CORBA_Exception
 public:
   // = Initialization and termination methods.
 
+  // @@ Nanbor, can you please rearrange these methods so that all the
+  // TAO-specific stuff comes in one place, e.g., at the end of the
+  // public part?
+
   CORBA_SystemException (const CORBA_SystemException &src);
   // Copy ctor.
 
@@ -154,9 +162,6 @@ public:
   void minor (CORBA::ULong m);
   // Set the minor status.
 
-  virtual void _raise (void);
-  // To throw an exception of this type.
-
   CORBA::CompletionStatus completed (void) const;
   // Get the completion status.
 
@@ -171,15 +176,18 @@ public:
   virtual int _is_a (const char *type_id) const;
   // Helper for the _narrow operation.
 
-  void _tao_print_system_exception (FILE *f = stdout) const;
+  virtual void _raise (void);
+  // @@ Nanbor, please document!
+
+  void print_exception_tao_ (FILE *f = stdout) const;
   // Print the system exception <ex> to output determined by f.  This
   // function is not CORBA compliant.
 
-  static CORBA::ULong _tao_minor_code (u_int location,
+  static CORBA::ULong minor_code_tao_ (u_int location,
                                        int errno_value);
   // Helper to create a minor status value.
 
-  static CORBA::ULong _tao_errno (int errno_value);
+  static CORBA::ULong errno_tao_ (int errno_value);
   // Helper to translate a platform-specific errno to a TAO errno
   // value.
 
@@ -210,9 +218,9 @@ public: \
                   CORBA::CompletionStatus completed) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
+  virtual void _raise (void); \
   static CORBA_##name * _narrow (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
-  virtual void _raise (void); \
 }
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);
@@ -277,20 +285,14 @@ public:
   CORBA_Any& exception (void);
   // Return the any containing the user exception.
 
-  virtual void _raise (void);
-  // To throw an UnknownUserException of this type.
-
+  // @@ Nanbor, please document these methods.
   static CORBA_UnknownUserException *_narrow (CORBA_Exception *ex);
-  // Narrow to an UnknowUserException
-
-  // = TAO specific extension.
-
   virtual int _is_a (const char *type_id) const;
-  // Helper method to implement _narrow.
+  virtual void _raise (void);
 
 private:
   CORBA_Any *exception_;
-  // Holder for the actual exception.
+  // @@ Nanbor, please document this.
 };
 
 class TAO_Export TAO_Exceptions
@@ -368,8 +370,8 @@ public:
   CORBA::ULong count ();
   // Return the number of elements.
 
+  // @@ Nanbor, can you please document these?
   CORBA_ExceptionList_ptr _duplicate (void);
-  // Increase the reference count.
 
   void _destroy (void);
 
@@ -412,10 +414,7 @@ private:
 class TAO_Export CORBA_ExceptionList_var
 {
   // = TITLE
-  //   CORBA_ExceptionList_var
-  //
-  // = DESCRIPTION
-  //   Lifecycle management helper class for ExceptionList objects.
+  //  @@ Nanbor, please document.
 public:
   CORBA_ExceptionList_var (void);
   // default constructor

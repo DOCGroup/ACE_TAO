@@ -1299,9 +1299,12 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
   if (options[ACE_Synch_Options::USE_REACTOR] == 1)
     // Asynchronous.
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
+      int error = errno;
+      // if (options[ACE_Synch_Options::USE_TIMEOUT] == 1)
+      // ACE_ERROR_RETURN ((LM_ERROR, "Timeouts not yet supported" "
+      // with asynchronous operations."), -1);
       cv.mutex ().release ();
+      errno = error;
       ACE_RETURN (-1);
     }
   else

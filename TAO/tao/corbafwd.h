@@ -348,7 +348,7 @@ typedef void (*TAO_Skeleton)(
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
-template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
+template <class T> class TAO_Unbounded_Object_Sequence;
 
 // Provide a simple function to access the TSS default environment.
 // We tried with CORBA_Environment::default_environment (),
@@ -405,9 +405,9 @@ TAO_NAMESPACE CORBA
   typedef Char *String;
 
   // = String memory management.
-  TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS Char* string_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
-  TAO_NAMESPACE_INLINE_FUNCTION void string_free (Char *);
+  TAO_NAMESPACE_STORAGE_CLASS void string_free (Char *);
 
   // This is a TAO extension and must go away....
   TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
@@ -422,9 +422,9 @@ TAO_NAMESPACE CORBA
   // Out type for WChar.
 
   // = String memory management routines.
-  TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_dup (const WChar *const);
-  TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar *const);
+  TAO_NAMESPACE_STORAGE_CLASS void wstring_free (WChar *const);
 
   typedef CORBA_WString_var WString_var;
   typedef CORBA_WString_out WString_out;
@@ -528,8 +528,8 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ValueFactoryBase *ValueFactory_ptr;
   // own invention, more readable
   typedef CORBA_DefaultValueRefCountBase  DefaultValueRefCountBase;
-  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
-  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
+  TAO_NAMESPACE_STORAGE_CLASS void add_ref (ValueBase *);
+  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (ValueBase *);
 #endif /* TAO_HAS_VALUETYPE */
 
   // enum values defined in nvlist.hh, bitwise ORed.
@@ -564,36 +564,36 @@ TAO_NAMESPACE CORBA
     typedef CORBA_UnknownUserException UnknownUserException;
 
   // = all the CORBA::is_nil methods.
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr req);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Object_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Environment_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (TypeCode_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ORB_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Principal_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NamedValue_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NVList_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = all the CORBA release methods.
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr req);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Object_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Environment_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Principal_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (TypeCode_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (ORB_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (NamedValue_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (NVList_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -892,7 +892,7 @@ TAO_NAMESPACE CORBA
 
   // = TAO extensions...
 
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA_Environment& default_environment (void);
+  TAO_NAMESPACE_STORAGE_CLASS CORBA_Environment& default_environment (void);
 
   // Obtain the thread-specific default environment.
   // This is obsolete and only left here for backwards compatibility.
@@ -901,63 +901,22 @@ TAO_NAMESPACE CORBA
 
 // ****************************************************************
 
-// Several OMG assigned numbers, for a complete list check:
-//
-// ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt
-//
-// For details on how to ask more numbers check:
-//
-// http://www.omg.org/cgi-bin/doc?ptc/99-02-01 
-//
-
-// These numbers were assigned by the OMG.  Do *NOT* change.
-// The ASCII representation is "TAO\x00", we can request more ORB
-// types later.
-#define TAO_ORB_TYPE 0x54414f00U
-
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own profile ids in TAO.
-#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
-// @@ The values below are suggestions for some of the protocols
-//    we have thought of, subject to change at any point
-// #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
-// #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
-// #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
-// #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
-// #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */
-// #define TAO_TAG_CPCI_PROFILE   0x54414f06U /* Compact/PCI */
-// #define TAO_TAG_VME_PROFILE    0x54414f07U /* VME Bus */
-// #define TAO_TAG_NTNP_PROFILE   0x54414f08U /* NT Named Pipes */
-// #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
-// #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
-// #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
-
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own profile tagged components in TAO.
-
-// Store the priority range in the *server* so the client can choose
-// the right endpoint
-#define TAO_TAG_PRIORITY_RANGE 0x54414f00U
-// #define TAO_TAG_ANOTHER_COMPONENT 0x54414f01U
-
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own service context list entries.
-// #define TAO_SOME_SVC_CONTEXT_ENTRY 0x54414f00U
-
 // This number was assigned by the OMG.  Do *NOT* change at random.
-// The ASCII representation is TA0xxxx, close enough since they only
+// The ASCII represetantion is TA0xxxx, close enough since they only
 // take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
 // that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
 // there to remind us of that.
 #define TAO_DEFAULT_MINOR_CODE 0x54410000
 #define TAO_MAX_MINOR_CODE 0x54410FFF
 
-// Minor code encoding.  Encode the location in 8 bits, and the errno
-// in 4 bits:
+// Minor code encoding.  Skip 4 bits, currently unused.  Then, encode
+// the location in 4 bits, and the errno in 4 bits:
 // 0x   0101 0100   0100 0001   0000   ____  ____     ____
 //          T           A        0      location      errno
 
-// Location encoding:  8 bits, after the errno encoding.
+// Location encoding:  next-to-last 8 bits.
+
+// For TRANSIENT...
 #define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 4)
 #define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 4)
 #define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 4)
@@ -973,26 +932,8 @@ TAO_NAMESPACE CORBA
 #define TAO_EMFILE_MINOR_CODE       0x3U
 #define TAO_EPIPE_MINOR_CODE        0x4U
 #define TAO_ECONNREFUSED_MINOR_CODE 0x5U
-#define TAO_ENOENT_MINOR_CODE       0x6U
-#define TAO_EBADF_MINOR_CODE        0x7U
-#define TAO_ENOSYS_MINOR_CODE       0x8U
-#define TAO_EPERM_MINOR_CODE        0x9U
-#define TAO_EAFNOSUPPORT_MINOR_CODE 0xAU
 #define TAO_UNKNOWN_MINOR_CODE      0xFU
 
-// These numbers are assigned by the OpenGroup, a database is
-// available at
-//
-// ftp://ftp.opengroup.orb/pub/codeset_registry/
-//
-#define TAO_CODESET_ID_ISO8859_1 0x00010001U
-#define TAO_CODESET_ID_UNICODE   0x00010109U
-
-// These are the default codesets that TAO declares, of course they
-// will be different on each platform, once the complete support for
-// character sets is implemented
-#define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
-#define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
 // ****************************************************************
 

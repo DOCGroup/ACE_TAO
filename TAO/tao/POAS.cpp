@@ -215,7 +215,6 @@ void* POA_PortableServer::ThreadPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -229,7 +228,6 @@ void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, voi
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::ThreadPolicy::_interface_repository_id (void) const
 {
@@ -503,7 +501,6 @@ void* POA_PortableServer::LifespanPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -517,7 +514,6 @@ void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, v
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::LifespanPolicy::_interface_repository_id (void) const
 {
@@ -788,7 +784,6 @@ void* POA_PortableServer::IdUniquenessPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -802,7 +797,6 @@ void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &re
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::IdUniquenessPolicy::_interface_repository_id (void) const
 {
@@ -1073,7 +1067,6 @@ void* POA_PortableServer::IdAssignmentPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -1087,7 +1080,6 @@ void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &re
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::IdAssignmentPolicy::_interface_repository_id (void) const
 {
@@ -1360,7 +1352,6 @@ void* POA_PortableServer::ImplicitActivationPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -1374,7 +1365,6 @@ void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerReque
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::ImplicitActivationPolicy::_interface_repository_id (void) const
 {
@@ -1645,7 +1635,6 @@ void* POA_PortableServer::ServantRetentionPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -1659,7 +1648,6 @@ void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::ServantRetentionPolicy::_interface_repository_id (void) const
 {
@@ -1930,7 +1918,6 @@ void* POA_PortableServer::RequestProcessingPolicy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -1944,7 +1931,6 @@ void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerReques
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_PortableServer::RequestProcessingPolicy::_interface_repository_id (void) const
 {
@@ -2049,6 +2035,20 @@ void* POA_PortableServer::POAManager::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
+}
+
+void POA_PortableServer::POAManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
 }
 
 const char* POA_PortableServer::POAManager::_interface_repository_id (void) const
@@ -2176,6 +2176,20 @@ void* POA_PortableServer::AdapterActivator::_downcast (
   return 0;
 }
 
+void POA_PortableServer::AdapterActivator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
+}
+
 const char* POA_PortableServer::AdapterActivator::_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/AdapterActivator:1.0";
@@ -2259,6 +2273,20 @@ void* POA_PortableServer::ServantManager::_downcast (
   return 0;
 }
 
+void POA_PortableServer::ServantManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
+}
+
 const char* POA_PortableServer::ServantManager::_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ServantManager:1.0";
@@ -2330,6 +2358,20 @@ void* POA_PortableServer::ServantActivator::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
+}
+
+void POA_PortableServer::ServantActivator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
 }
 
 const char* POA_PortableServer::ServantActivator::_interface_repository_id (void) const
@@ -2436,6 +2478,20 @@ void* POA_PortableServer::ServantLocator::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
+}
+
+void POA_PortableServer::ServantLocator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
 }
 
 const char* POA_PortableServer::ServantLocator::_interface_repository_id (void) const
@@ -2545,6 +2601,20 @@ void* POA_PortableServer::POA::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
+}
+
+void POA_PortableServer::POA::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
 }
 
 const char* POA_PortableServer::POA::_interface_repository_id (void) const
@@ -2954,6 +3024,20 @@ void* POA_PortableServer::Current::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
+}
+
+void POA_PortableServer::Current::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
 }
 
 const char* POA_PortableServer::Current::_interface_repository_id (void) const

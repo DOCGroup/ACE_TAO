@@ -23,6 +23,7 @@
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
+#include "tao/GIOP.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -117,28 +118,16 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
-  virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
-                              const char* opname,
-                              CORBA::ULong request_id,
-                              CORBA::Boolean is_twoway,
-                              TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a request.
-
-  virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
-                             CORBA::ULong request_id,
-                             TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a locate request.
-
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway) = 0;
   // Default action to be taken for send request.
+
+  TAO_InputCDR *input_cdr_stream (void) const;
+  // Get the CDR stream for reading the input message.
+
+  void destroy_cdr_stream (TAO_InputCDR *) const;
+  // Release a CDR stream, simply pass it to the RMS...
 
   // = Get and set methods for the ORB Core.
 
@@ -193,8 +182,53 @@ protected:
 
   TAO_Wait_Strategy *ws_;
   // Strategy for waiting for the reply after sending the request.
+
+  TAO_GIOP_Version version_;
+  // Version information found in the incoming message.
 };
 
+class TAO_Export TAO_IOP_Version
+{
+  // = TITLE
+  //   Major and Minor version number of the Inter-ORB Protocol.
+public:
+  CORBA::Octet major;
+  // Major version number
+
+  CORBA::Octet minor;
+  // Minor version number
+
+  TAO_IOP_Version (const TAO_IOP_Version &src);
+  // Copy constructor
+
+  TAO_IOP_Version (CORBA::Octet maj = 0,
+           CORBA::Octet min = 0);
+  // Default constructor.
+
+  ~TAO_IOP_Version (void);
+  // Destructor.
+
+  void set_version (CORBA::Octet maj, CORBA::Octet min);
+  // Explicitly set the major and minor version.
+
+  TAO_IOP_Version &operator= (const TAO_IOP_Version &src);
+  // Copy operator.
+
+  int operator== (const TAO_IOP_Version &src);
+  // Equality operator
+
+  int operator== (const TAO_IOP_Version *&src);
+  // Equality operator
+};
+
+// @@ Fred&Ossama: We need a *concrete* class (something that can be
+//    instantiated) that can be used to represent profiles for
+//    protocols we don't know.  This is required in the spec because
+//    we are supposed to preserve foreign profiles when communicating
+//    with other ORBs.
+//    A simple class with noops for most methods and just the basics
+//    required for marshaling and demarshaling is what we need.
+//
 class TAO_Export TAO_Profile
 {
   // = TITLE
@@ -220,6 +254,10 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Decrement the object's reference count.  When this count goes to
   // 0 this object will be deleted.
+  // @@ Fred&Ossama: guys, reference counting *should* be implemented
+  //    in the base class, otherwise you are just going to end up
+  //    repeating code and forcing the user to implement things not
+  //    directly related to protocols.
 
   void forward_to (TAO_MProfile *mprofiles);
   // Keep a pointer to the forwarded profile
@@ -236,6 +274,19 @@ public:
   // Return a string representation for this profile.  client must
   // deallocate memory.
 
+  virtual const TAO_opaque &body (void) const = 0;
+  // The body, an octet sequence that represent the marshaled
+  // profile.
+  // @@ Fred: We have to think about this method: it basically
+  //          requires the profile to keep both the <body> and the
+  //          interpreted representation (as host/port/etc.)
+  //          This is good for performance reasons, but it may consume
+  //          too much memory, maybe a method like this:
+  //
+  //          void body (TAO_opaque& return_body) const = 0;
+  //
+  //          will work better.
+
   virtual int decode (TAO_InputCDR& cdr) = 0;
   // Initialize this object using the given CDR octet string.
 
@@ -248,7 +299,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  virtual TAO_ObjectKey *_key (void) const = 0;
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by the caller!
 
@@ -262,12 +313,9 @@ public:
                              CORBA::Environment &env) = 0;
   // Return a hash value for this object.
 
-  virtual int addr_to_string(char *buffer, size_t length) = 0;
-  // Return a string representation for the address.  Returns
-  // -1 if buffer is too small.  The purpose of this method is to
-  // provide a general interface to the underlying address object's
-  // addr_to_string method.  This allowsthe protocol implementor to
-  // select the appropriate string format.
+  virtual ASYS_TCHAR *addr_to_string(void) = 0;
+  // Return a string representation for the address.
+  // @@ Fred: who owns the string returned?
 
   virtual void reset_hint (void) = 0;
   // This method is used with a connection has been reset requiring
@@ -314,15 +362,16 @@ public:
   virtual int parse_string (const char *string,
                             CORBA::Environment &env);
   virtual CORBA::String to_string (CORBA::Environment &env);
+  virtual const TAO_opaque &body (void) const;
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
-  virtual TAO_ObjectKey *_key (void) const;
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const;
   virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
                                         CORBA::Environment &env);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &env);
-  virtual int addr_to_string(char *buffer, size_t length);
+  virtual ASYS_TCHAR *addr_to_string(void);
   virtual void reset_hint (void);
 
 private:
@@ -346,10 +395,7 @@ public:
                                TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
-  virtual int open (TAO_ORB_Core *orb_core,
-                    int version_major,
-                    int version_minor,
-                    ACE_CString &address) = 0;
+  virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
   // method to initialize acceptor for address.
 
   virtual int open_default (TAO_ORB_Core *orb_core) = 0;

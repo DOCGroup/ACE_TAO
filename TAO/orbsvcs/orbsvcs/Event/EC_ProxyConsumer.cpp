@@ -180,8 +180,6 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
       const RtecEventChannelAdmin::SupplierQOS& qos,
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannelAdmin::AlreadyConnected))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -232,7 +230,6 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
 void
 TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EC_SupplierFiltering* filter = 0;
   {
@@ -270,7 +267,6 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
 void
 TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD_THROW_EX (

@@ -81,7 +81,7 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -196,7 +196,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INV_OBJREF ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -268,21 +268,21 @@ CORBA_DomainManagerList::CORBA_DomainManagerList (void)
 {}
 
 CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max) // uses max size
-  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var> (max)
+  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (max)
 {}
 
 CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max,
                                                   CORBA::ULong length,
                                                   CORBA_DomainManager_ptr *buffer,
                                                   CORBA::Boolean release)
-  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var> (max,
+  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (max,
                                                         length,
                                                         buffer,
                                                         release)
 {}
 
 CORBA_DomainManagerList::CORBA_DomainManagerList (const CORBA_DomainManagerList &seq) // copy ctor
-  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var> (seq)
+  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (seq)
 {}
 
 CORBA_DomainManagerList::~CORBA_DomainManagerList (void) // dtor
@@ -340,12 +340,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_DomainManager>;
-  template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>;
-  template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
+  template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager>;
+  template class TAO_Object_Manager<CORBA_DomainManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
-# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
-# pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
+# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager>
+# pragma instantiate TAO_Object_Manager<CORBA_DomainManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if ! defined (TAO_HAS_MINIMUM_CORBA)

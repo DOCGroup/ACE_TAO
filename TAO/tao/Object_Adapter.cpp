@@ -830,9 +830,6 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
                                 0,
                                 operation);
 
-  // We have setup the POA Current.  Record this for later use.
-  this->state_ = POA_CURRENT_SETUP;
-
   {
     ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
 
@@ -939,20 +936,11 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
 
       /** Fall through **/
 
-    case POA_CURRENT_SETUP:
-
-      // Teardown current for this request.
-      this->current_context_.teardown ();
-
-      /** Fall through **/
-
     case OBJECT_ADAPTER_LOCK_ACQUIRED:
 
       // Finally, since the object adapter lock was acquired, we must
       // release it.
       this->object_adapter_.lock ().release ();
-
-      /** Fall through **/
 
     case INITIAL_STAGE:
     default:
@@ -996,8 +984,8 @@ TAO_POA_Current_Impl::setup (TAO_POA *impl,
   this->operation_ = operation;
 
   // Set the current context and remember the old one.
-  TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
 
   this->previous_current_impl_ = tss->poa_current_impl_;
   tss->poa_current_impl_ = this;
@@ -1006,8 +994,7 @@ TAO_POA_Current_Impl::setup (TAO_POA *impl,
   this->setup_done_ = 1;
 }
 
-void
-TAO_POA_Current_Impl::teardown (void)
+TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
 {
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -1073,8 +1060,8 @@ TAO_POA_Current_Impl::teardown (void)
 
   if (this->setup_done_)
     {
-      TAO_TSS_Resources *tss =
-        TAO_TSS_RESOURCES::instance ();
+      TAO_ORB_Core_TSS_Resources *tss =
+        TAO_ORB_CORE_TSS_RESOURCES::instance ();
 
       // Reset the old context.
       tss->poa_current_impl_ = this->previous_current_impl_;
@@ -1136,14 +1123,14 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 TAO_POA_Current_Impl *
 TAO_POA_Current::implementation (void)
 {
-  return TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
+  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 }
 
 TAO_POA_Current_Impl *
 TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
 {
-  TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
 
   TAO_POA_Current_Impl *old = tss->poa_current_impl_;
   tss->poa_current_impl_ = new_current;

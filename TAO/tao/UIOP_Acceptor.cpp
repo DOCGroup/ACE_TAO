@@ -26,7 +26,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
-#include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
@@ -34,9 +33,7 @@ ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
-    base_acceptor_ (),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0)
+    base_acceptor_ ()
 {
 }
 
@@ -59,24 +56,11 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   TAO_UIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_UIOP_Profile (addr,
-                                    object_key,
-                                    this->version_,
-                                    this->orb_core_),
+                  TAO_UIOP_Profile (addr, object_key),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
     return -1;
-
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
-    return 0;
-
-  pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-  CONV_FRAME::CodeSetComponentInfo code_set_info;
-  code_set_info.ForCharData.native_code_set  = TAO_DEFAULT_CHAR_CODESET_ID;
-  code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
-  pfile->tagged_components ().set_code_sets (code_set_info);
 
   return 0;
 }
@@ -87,7 +71,9 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   const TAO_UIOP_Profile *profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
-  // for UNIX Files this is relatively cheap
+  // @@ We should probably cache this value, but then again some
+  //    acceptors have multiple addresses.
+  // @@ Fred: any ideas on how to optimize that?
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
@@ -116,13 +102,8 @@ TAO_UIOP_Acceptor::close (void)
 
 int
 TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
-                         int major,
-                         int minor,
                          ACE_CString &address)
 {
-  if (major >= 0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
-                                ACE_static_cast (CORBA::Octet,minor));
   ACE_UNIX_Addr addr (address.c_str ());
 
   return this->open_i (orb_core, addr);
@@ -145,21 +126,11 @@ int
 TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_UNIX_Addr& addr)
 {
-  this->orb_core_ = orb_core;
-
   if (this->base_acceptor_.open (orb_core, addr) != 0)
     return -1;
 
   // @@ If Profile creation is slow we may need to cache the
   //    rendezvous point here
-
-  if (TAO_debug_level > 5)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
-                  "listening on: <%s>\n",
-                  addr.get_path_name ()));
-    }
 
   return 0;
 }
@@ -167,6 +138,7 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 CORBA::ULong
 TAO_UIOP_Acceptor::endpoint_count (void)
 {
+  // @@ for now just assume one!
   return 1;
 }
 

@@ -119,19 +119,14 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
   TAO_Stub *stub = 0;
 
   TAO_POA_Current_Impl *poa_current_impl =
-    TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
-
-  CORBA::ORB_ptr servant_orb = 0;
-
-  if (poa_current_impl != 0)
-    servant_orb = poa_current_impl->orb_core ().orb () ;
+    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
     {
-      stub = servant_orb->create_stub_object (poa_current_impl->object_key (),
-                                              this->_interface_repository_id (),
-                                              ACE_TRY_ENV);
+      stub = poa_current_impl->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
+                                                                       this->_interface_repository_id (),
+                                                                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
   else
@@ -150,9 +145,6 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
       stub->_incr_refcnt ();
     }
 
-  if (servant_orb == 0)
-    servant_orb = stub->orb_core ()->orb ();
-  stub->servant_orb (CORBA::ORB::_duplicate (servant_orb));
   return stub;
 }
 
@@ -186,14 +178,6 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
       delete this->single_threaded_poa_lock_;
       this->single_threaded_poa_lock_ = 0;
     }
-}
-
-void *
-TAO_ServantBase::_create_collocated_objref (const char *,
-                                            CORBA::ULong,
-                                            TAO_Stub *)
-{
-  return 0;
 }
 
 TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
@@ -341,14 +325,6 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
                                                                ACE_TRY_ENV);
 }
 
-void
-TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &request,
-                                  void *context,
-                                  CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::BAD_OPERATION ());
-}
-
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 CORBA::Object_ptr
@@ -389,7 +365,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception.
   TAO_POA_Current_Impl *poa_current_impl =
-    TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
+    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())

@@ -48,12 +48,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (unsigned char selector)
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  : ACE_Addr (AF_ATM,
-#else
-  : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
-              sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
   this->set (sap, selector);
@@ -61,12 +55,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  : ACE_Addr (AF_ATM,
-#else
-  : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
-              sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
   this->set (sap, selector);
@@ -74,12 +62,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[],
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  : ACE_Addr (AF_ATM,
-#else
-  : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
-              sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
   this->set (sap, selector);

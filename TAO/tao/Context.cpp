@@ -13,8 +13,20 @@
 # include "tao/Context.i"
 #endif /* ! __ACE_INLINE__ */
 
+CORBA::Boolean
+CORBA::is_nil (CORBA::Context_ptr ctx)
+{
+  return ctx == 0;
+}
+
+void
+CORBA::release (CORBA::Context_ptr ctx)
+{
+  if (ctx)
+    ctx->_decr_refcnt ();
+}
+
 CORBA_Context::CORBA_Context (void)
-  : refcount_ (1)
 {
 }
 

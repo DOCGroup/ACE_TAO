@@ -280,17 +280,6 @@ TAO_POA::find_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
-  // A recursive thread lock without using a recursive thread
-  // lock.  Non_Servant_Upcall has a magic constructor and
-  // destructor.  We unlock the Object_Adapter lock for the
-  // duration of the servant activator upcalls; reacquiring
-  // once the upcalls complete.  Even though we are releasing
-  // the lock, other threads will not be able to make progress
-  // since <Object_Adapter::non_servant_upcall_in_progress_>
-  // has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
-  ACE_UNUSED_ARG (non_servant_upcall);
-
   TAO_POA *child = this->find_POA_i (adapter_name,
                                      activate_it,
                                      ACE_TRY_ENV);
@@ -741,8 +730,7 @@ TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completio
 {
   if (wait_for_completion)
     {
-      TAO_POA_Current_Impl *poa_current_impl =
-        TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
+      TAO_POA_Current_Impl *poa_current_impl = TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
       // This thread cannot currently be in an upcall.
       if (poa_current_impl != 0)
@@ -965,7 +953,7 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // ORB may always reject a request for other reasons and raise
       // some other system exception.)
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA_SystemException::_tao_minor_code (
+        CORBA_SystemException::minor_code_tao_ (
           TAO_POA_DISCARDING,
           0),
         CORBA::COMPLETED_NO));
@@ -985,7 +973,7 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA_SystemException::_tao_minor_code (
+        CORBA_SystemException::minor_code_tao_ (
           TAO_POA_HOLDING,
           0),
         CORBA::COMPLETED_NO));
@@ -2597,6 +2585,12 @@ TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
 {
 }
 
+TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
+{
+}
+
 PortableServer::ThreadPolicyValue
 TAO_Thread_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2669,6 +2663,12 @@ TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue va
                                           PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -2745,6 +2745,12 @@ TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniqueness
 {
 }
 
+TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
+{
+}
+
 PortableServer::IdUniquenessPolicyValue
 TAO_Id_Uniqueness_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2815,6 +2821,12 @@ TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignment
                                                     PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -2893,6 +2905,12 @@ TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::
 {
 }
 
+TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
+{
+}
+
 PortableServer::ImplicitActivationPolicyValue
 TAO_Implicit_Activation_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2966,6 +2984,12 @@ TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::Serv
 {
 }
 
+TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
+{
+}
+
 PortableServer::ServantRetentionPolicyValue
 TAO_Servant_Retention_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -3036,6 +3060,12 @@ TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::Re
                                                               PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -3275,11 +3305,6 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-TAO_Adapter_Activator::TAO_Adapter_Activator (PortableServer::POAManager_ptr poa_manager)
-  : poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
-{
-}
-
 CORBA::Boolean
 TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name,
@@ -3290,7 +3315,7 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
   // This assumes that the lock on the parent is recursive
   PortableServer::POA_var child = parent->create_POA (name,
-                                                      this->poa_manager_.in (),
+                                                      PortableServer::POAManager::_nil (),
                                                       default_policies,
                                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);

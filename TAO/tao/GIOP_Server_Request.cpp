@@ -40,12 +40,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_InputCDR &input,
-                            TAO_OutputCDR &output,
-                            TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version,
-                            int &parse_error)
+TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+                                                TAO_OutputCDR &output,
+                                                TAO_ORB_Core *orb_core,
+                                                CORBA::Environment &env)
   : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
@@ -60,7 +58,6 @@ TAO_GIOP_ServerRequest::
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
-    version_ (version),
     service_info_ (),
     request_id_ (0),
     object_key_ (),
@@ -68,11 +65,11 @@ TAO_GIOP_ServerRequest::
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
-  parse_error = this->parse_header ();
+  this->parse_header (env);
 }
 
-int
-TAO_GIOP_ServerRequest::parse_header_std (void)
+void
+TAO_GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -112,8 +109,6 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
   if (hdr_status)
     {
       // Do not include NULL character at the end.
-      // @@ This is not getting demarshaled using the codeset
-      //    translators!
       this->operation_.set (input.rd_ptr (),
                             length - 1,
                             0);
@@ -126,11 +121,13 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
       hdr_status = input.good_bit ();
     }
 
-  return hdr_status ? 0 : -1;
+  if (!hdr_status)
+    ACE_THROW (CORBA::COMM_FAILURE ());
+
 }
 
-int
-TAO_GIOP_ServerRequest::parse_header_lite (void)
+void
+TAO_GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_InputCDR& input = *this->incoming_;
 
@@ -160,37 +157,36 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
   if (hdr_status)
     {
       // Do not include NULL character at the end.
-      // @@ This is not getting demarshaled using the codeset
-      //    translators!
       this->operation_.set (input.rd_ptr (),
                             length - 1,
                             0);
       hdr_status = input.skip_bytes (length);
     }
 
-  return hdr_status ? 0 : -1;
+  if (!hdr_status)
+    ACE_THROW (CORBA::COMM_FAILURE ());
 }
 
-int
-TAO_GIOP_ServerRequest::parse_header (void)
+
+
+void
+TAO_GIOP_ServerRequest::parse_header (CORBA::Environment &env)
 {
   if (this->orb_core_->orb_params ()->use_lite_protocol ())
-    return this->parse_header_lite ();
+    this->parse_header_lite (env);
   else
-    return this->parse_header_std ();
+    this->parse_header_std (env);
 }
 
 // This constructor is used, by the locate request code
 
-TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
-                            CORBA::Boolean &response_expected,
-                            TAO_ObjectKey &object_key,
-                            const ACE_CString &operation,
-                            TAO_OutputCDR &output,
-                            TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version,
-                            int &parse_error)
+TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+                                                CORBA::Boolean &response_expected,
+                                                TAO_ObjectKey &object_key,
+                                                const ACE_CString &operation,
+                                                TAO_OutputCDR &output,
+                                                TAO_ORB_Core *orb_core,
+                                                CORBA::Environment &)
   : operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
@@ -206,13 +202,11 @@ TAO_GIOP_ServerRequest::
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
-    version_ (version),
     service_info_ (0),
     request_id_ (request_id),
     object_key_ (object_key),
     requesting_principal_ (0)
 {
-  parse_error = 0;
 }
 
 TAO_GIOP_ServerRequest::~TAO_GIOP_ServerRequest (void)
@@ -491,7 +485,7 @@ TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 // Extension
 
 void
-TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
+TAO_GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
                                  // ORB related exception reporting
                                  //                             CORBA::Environment &skel_env,
                                  // skeleton related exception reporting
@@ -499,7 +493,7 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
                                  // call description
                                  ...)
 {
-  // what is "ACE_TRY_ENV" and "skel_env"?
+  // what is "orb_env" and "skel_env"?
   // "skel_env" holds the exception that got raised inside the operation
   // implementation (upcall)
   //
@@ -527,67 +521,57 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
   // Setup a Reply message so that we can marshal all the outgoing parameters
   // into it. If an exception was set, then that gets marshaled into the reply
   // message and we don't do anything after that
-  this->init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->init_reply (orb_env);
 
 #if 0 /* ASG */
   // exception? nothing to do after this
   if (orb_env.exception () || skel_env.exception ())
     return;
-  ACE_CHECK;
 #endif
+  TAO_CHECK_ENV_RETURN_VOID (orb_env);
 
   CORBA::ULong i;
   const TAO_Param_Data_Skel *pdp;
   va_list param_vector;
   va_start (param_vector, info);
 
-  ACE_TRY
+  for (i = 0, pdp = info->params;
+       i < info->param_count;
+       i++, pdp++)
     {
-      for (i = 0, pdp = info->params;
-           i < info->param_count;
-           i++, pdp++)
-        {
-          void *ptr = va_arg (param_vector, void *);
+      void *ptr = va_arg (param_vector, void *);
 
-          if (pdp->mode == 0)
-            {
-              // check if the return type is not void
-              CORBA::TCKind result = pdp->tc->kind (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-              if (result != CORBA::tk_void)
-                {
-                  // Then just marshal the value.
-                  (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                }
-            }
-          else if ((pdp->mode == CORBA::ARG_INOUT)
-                   || (pdp->mode == CORBA::ARG_OUT))
+      if (pdp->mode == 0)
+        {
+          // check if the return type is not void
+          if (pdp->tc->kind (orb_env) != CORBA::tk_void)
             {
               // Then just marshal the value.
-              (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
+              (void) this->outgoing_->encode (pdp->tc, ptr, 0, orb_env);
             }
         }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_GIOP_ServerRequest::marshal - parameter encode failed");
-      return;
-    }
-  ACE_ENDTRY;
+      else if ((pdp->mode == CORBA::ARG_INOUT)
+          || (pdp->mode == CORBA::ARG_OUT))
+        {
+          // Then just marshal the value.
+          (void) this->outgoing_->encode (pdp->tc, ptr, 0, orb_env);
+        }
 
+      if (orb_env.exception ())
+        {
+          orb_env.print_exception ("TAO_GIOP_ServerRequest::marshal - parameter encode failed");
+          return;
+        }
+    }
   va_end (param_vector);
+
 }
 
 void
-TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
-  TAO_GIOP::start_message (this->version_,
-                           TAO_GIOP::Reply,
+  TAO_GIOP::start_message (TAO_GIOP::Reply,
                            *this->outgoing_,
                            this->orb_core_);
 
@@ -614,12 +598,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Any exception at all.
-  else if (this->exception_ == 0)
-    {
-      // First finish the GIOP header ...
-      this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
-    }
-  else
+  else if (this->exception_)
     {
       CORBA::TypeCode_ptr except_tc;
 
@@ -632,8 +611,11 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 
       // we use the any's ACE_Message_Block
       TAO_InputCDR cdr (this->exception_->_tao_get_cdr ());
-      (void) this->outgoing_->append (except_tc, &cdr, ACE_TRY_ENV);
+      (void) this->outgoing_->append (except_tc, &cdr, env);
     }
+  else // Normal reply
+    // First finish the GIOP header ...
+    this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 }
 
 CORBA::Object_ptr

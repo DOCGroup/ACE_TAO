@@ -237,7 +237,7 @@ be_visitor_field_ci::visit_union (be_union *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ci::"
-                             "visit_union - "
+                             "visit_struct - "
                              "Bad visitor\n"
                              ), -1);
         }
@@ -245,7 +245,7 @@ be_visitor_field_ci::visit_union (be_union *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ci::"
-                             "visit_union - "
+                             "visit_struct - "
                              "codegen failed\n"
                              ), -1);
         }

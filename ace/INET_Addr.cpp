@@ -165,7 +165,6 @@ ACE_INET_Addr::set (const ASYS_TCHAR address[])
 }
 
 ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR address[])
-  : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
@@ -174,7 +173,6 @@ ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR address[])
 // Copy constructor.
 
 ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
-  : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (sa);

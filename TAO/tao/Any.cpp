@@ -844,11 +844,7 @@ CORBA_Any::operator>>= (to_object obj) const
     {
       if (this->any_owns_data_ && this->value_)
         {
-          // CORBA 2.3 has changed the behavior of this operator. Caller
-          // is now responsible for release.
-          obj.ref_ = 
-            CORBA::Object::_duplicate (*(CORBA::Object_ptr *) this->value_);
-
+          obj.ref_ = *(CORBA::Object_ptr *) this->value_;
           return 1;
         }
       else
@@ -861,13 +857,18 @@ CORBA_Any::operator>>= (to_object obj) const
                                TAO_ORB_Core_instance ());
 
           CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
-                                                &obj.ref_, 
-                                                0, 
-                                                env)
-                                 == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
-
-          // Because of the CORBA 2.3 change mentioned above, there is no
-          // need to assing to this->value_.
+                                                &obj.ref_, 0, env)
+                                 == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;
+          if (flag)
+            {
+              CORBA::Object_ptr *tmp = new CORBA::Object_ptr;
+              *tmp = obj.ref_;
+              ACE_const_cast (CORBA_Any *,
+                              this)->value_ = tmp;
+              return 1;
+            }
+          // we own this allocated value
+          //          this->value_ = obj.ref_;
           return flag;
         }
     }
@@ -914,6 +915,8 @@ CORBA_Any_var::operator= (CORBA::Any *p)
 CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
+  // @@ Jeff, if this call can fail then maybe we shouldn't be returning
+  // Any_var & but instead be making this a "void" function?
   CORBA_Any_ptr tmp;
 
   ACE_NEW_RETURN (tmp,

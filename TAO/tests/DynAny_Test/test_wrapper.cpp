@@ -20,7 +20,6 @@
 #define TEST_WRAPPER_CPP
 
 #include "test_wrapper.h"
-#include "ace/OS.h"
 
 // Constructor
 template <class T>

@@ -991,7 +991,7 @@ be_union::compute_default_value (void)
                           break;
                         case AST_Expression::EV_bool:
                           if (this->default_value_.u.bool_val 
-                              == expr->ev ()->u.bval)
+                              == (long) expr->ev ()->u.bval)
                             {
                               this->default_value_.u.bool_val++;
                               break_loop = 1;

@@ -25,8 +25,7 @@ FILES	= Concrete_Connection_Handlers \
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LDLIBS	= -lGateway
-
-LIBS   += $(ACELIB)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 

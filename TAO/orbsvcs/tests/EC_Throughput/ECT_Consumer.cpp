@@ -122,7 +122,6 @@ Test_Consumer::accumulate (ECT_Driver::Latency_Stats& stats) const
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &TAO_IN_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -181,7 +180,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 
 void
 Test_Consumer::disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

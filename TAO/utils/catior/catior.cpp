@@ -122,10 +122,6 @@ static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
-cat_octet_seq (const char *object_name,
-               TAO_InputCDR& stream);
-
-static CORBA::Boolean
 catior (CORBA::String str,
         CORBA::Environment &env)
 {
@@ -245,23 +241,17 @@ catior (CORBA::String str,
 
         if (tag == TAO_IOP_TAG_INTERNET_IOP)
           {
-            ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_iiop_profile (stream);
-            ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else if (tag == TAO_IOP_TAG_UNIX_IOP)
           {
-            ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_uiop_profile (stream);
-            ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = stream.skip_string ();
             ACE_DEBUG ((LM_DEBUG,
-                        "%I unknown tag %d skipping\n", tag));
-            ACE_DEBUG ((LM_DEBUG, "%}"));
+                        "unknown tag %d skipping\n", tag));
           }
       }
   return 1;
@@ -518,86 +508,57 @@ main (int argc, char *argv[])
 }
 
 static CORBA::Boolean
-cat_octet_seq (const char *object_name,
-               TAO_InputCDR& stream)
+cat_object_key (TAO_InputCDR& stream)
 {
-  CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
+  // ... and object key.
+
+  CORBA::ULong objKeyLength = 0;
+  if (stream.read_ulong (objKeyLength) == 0)
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%I %s len:\t%d\n",
-              object_name,
-              length));
+              "Object Key len:\t%d\n",
+              objKeyLength));
 
   ACE_DEBUG ((LM_DEBUG,
-              "%I %s as hex:\n",
-              object_name));
+              "Object Key as hex:\n"));
 
   CORBA::Octet anOctet;
-  CORBA::String objKey = CORBA::string_alloc (length + 1);
+  CORBA::String objKey = CORBA::string_alloc (objKeyLength + 1);
 
   short counter = -1;
 
-  ACE_DEBUG ((LM_DEBUG, "%I "));
   u_int i = 0;
 
-  for (; i < length; i++)
+  for (; i < objKeyLength; i++)
     {
-      if (++counter == 16)
+      if (++counter == 8)
         {
-          ACE_DEBUG ((LM_DEBUG, "\n%I "));
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n"));
           counter = 0;
         }
       stream.read_octet (anOctet);
 
-      ACE_DEBUG ((LM_DEBUG, "%02.2x ", anOctet));
+      ACE_DEBUG ((LM_DEBUG,
+                  "%x ",
+                  anOctet));
       objKey[i] = (char) anOctet;
     }
 
   objKey[i] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n%I The %s as string:\n%I ",
-              object_name));
+              "\nThe Object Key as string:\n"));
 
-  for (i = 0; i < length; i++)
-    ACE_DEBUG ((LM_DEBUG, "%c", objKey[i]));
+  for (i = 0; i < objKeyLength; i++)
+    ACE_DEBUG ((LM_DEBUG,
+                "%c",
+                objKey[i]));
 
   CORBA::string_free (objKey);
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-
-  return 1;
-}
-
-static CORBA::Boolean
-cat_object_key (TAO_InputCDR& stream)
-{
-  // ... and object key.
-
-  return cat_octet_seq ("Object Key", stream);
-}
-
-static CORBA::Boolean
-cat_tagged_components (TAO_InputCDR& stream)
-{
-  // ... and object key.
-  CORBA::ULong len;
-  stream >> len;
-
-  for (CORBA::ULong i = 0;
-       i != len;
-       ++i)
-    {
-      CORBA::ULong tag;
-      stream >> tag;
-      ACE_DEBUG ((LM_DEBUG,
-                  "%I The component <%d> has tag <%d>\n", i, tag));
-      ACE_DEBUG ((LM_DEBUG, "%{%{"));
-      cat_octet_seq ("Component Value", stream);
-      ACE_DEBUG ((LM_DEBUG, "%}%}"));
-    }
-
+  ACE_DEBUG ((LM_DEBUG,
+              "\n"));
   return 1;
 }
 
@@ -631,12 +592,12 @@ cat_iiop_profile (TAO_InputCDR& stream)
   // encapsulation...
   CORBA::Octet iiop_version_major, iiop_version_minor;
   if (! (str.read_octet (iiop_version_major)
-         && iiop_version_major == 1
+         && iiop_version_major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
          && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= 1))
+         && iiop_version_minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d IIOP profile",
+                  "detected new v%d.%d IIOP profile",
                   iiop_version_major,
                   iiop_version_minor));
       return 1;
@@ -653,27 +614,21 @@ cat_iiop_profile (TAO_InputCDR& stream)
   if ((str >> hostname) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I problem decoding hostname\n"));
+                  "problem decoding hostname\n"));
       return 1;
     }
 
   str >> port_number;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%I Host Name:\t%s\n",
+              "Host Name:\t%s\n",
               hostname));
   ACE_DEBUG ((LM_DEBUG,
-              "%I Port Number:\t%d\n",
+              "Port Number:\t%d\n",
               port_number));
   CORBA::string_free (hostname);
 
-  if (cat_object_key (str) == 0)
-    return 0;
-
-  if (cat_tagged_components (str) == 0)
-    return 0;
-
-  return 1;
+  return cat_object_key (str);
 }
 
 static CORBA::Boolean
@@ -702,19 +657,19 @@ cat_uiop_profile (TAO_InputCDR& stream)
   // encapsulation...
   CORBA::Octet iiop_version_major, iiop_version_minor;
   if (! (str.read_octet (iiop_version_major)
-         && iiop_version_major == 1
+         && iiop_version_major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
          && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= 1))
+         && iiop_version_minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d UIOP profile",
+                  "detected new v%d.%d UIOP profile",
                   iiop_version_major,
                   iiop_version_minor));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "%I UIOP Version:\t%d.%d\n",
+              "UIOP Version:\t%d.%d\n",
               iiop_version_major,
               iiop_version_minor));
 
@@ -724,14 +679,8 @@ cat_uiop_profile (TAO_InputCDR& stream)
     return 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%I Rendezvous point:\t%s\n",
+              "Rendezvous point:\t%s\n",
               rendezvous.in ()));
 
-  if (cat_object_key (str) == 0)
-    return 0;
-
-  if (cat_tagged_components (str) == 0)
-    return 0;
-
-  return 1;
+  return cat_object_key (str);
 }

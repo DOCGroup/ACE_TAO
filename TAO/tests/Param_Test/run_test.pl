@@ -16,38 +16,27 @@ $other = "";
 $debug = "";
 $type = "";
 
-unlink $iorfile;
-
 sub run_test
 {
   my $type = shift(@_);
 
-  unlink $iorfile; # Ignore errors
   $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                          "$debug -o $iorfile");
 
-  if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-  }
+  ACE::waitforfile ($iorfile);
 
-  $CL = Process::Create ($EXEPREFIX."client",
-			 " $debug -f $iorfile  -i $invocation -t ".
-			 "$type -n $num -x");
+  system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
+          "$type -n $num -x");
 
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); $CL->TimedWait (1);
-  }
+  # @@
+  # Someday, a better way of doing this should be found.  Or at least
+  # something that can tell if a server is still alive.  There is kill -0 on
+  # Unix, but on NT ???
 
-  $server = $SV->TimedWait (2);
-  if ($server == -1) {
-    print STDERR "ERROR: server timedout\n";
-    $SV->Kill (); $SV->TimedWait (1);
-  }
-  unlink $iorfile;
+  sleep 3;
+
+  $SV->Kill (); $SV->Wait ();
+  unlink ($iorfile);
 }
 
 # Parse the arguments

@@ -43,6 +43,18 @@ TAO_ORB_Core::optimize_collocation_objects (void) const
 }
 
 ACE_INLINE void
+TAO_ORB_Core::using_collocation (CORBA::Boolean b)
+{
+  this->optimize_collocation_objects (b);
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::using_collocation (void) const
+{
+  return this->optimize_collocation_objects ();
+}
+
+ACE_INLINE void
 TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
 {
   this->use_global_collocation_ = opt;
@@ -52,12 +64,6 @@ ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::use_global_collocation (void) const
 {
   return this->use_global_collocation_;
-}
-
-ACE_INLINE CORBA::ULong
-TAO_ORB_Core::get_collocation_strategy (void) const
-{
-  return this->collocation_strategy_;
 }
 
 ACE_INLINE
@@ -114,12 +120,6 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
-ACE_INLINE TAO_GIOP_ServiceContextList&
-TAO_ORB_Core::service_context (void)
-{
-  return this->service_context_;
-}
-
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
@@ -148,12 +148,6 @@ TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-ACE_INLINE TAO_ORB_Core_TSS_Resources*
-TAO_ORB_Core::get_tss_resources (void)
-{
-  return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
-}
 
 // ****************************************************************
 

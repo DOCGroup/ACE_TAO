@@ -26,7 +26,7 @@
 // Operation visitor for argument list - generates parameters in the signature
 // ******************************************************************************
 
-class be_visitor_operation_arglist : public be_visitor_operation
+class be_visitor_operation_arglist : public be_visitor_scope
 {
   //
   // = TITLE
@@ -43,14 +43,11 @@ public:
   ~be_visitor_operation_arglist (void);
   // destructor
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node);
   // visit the operation
 
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node);
   // visit each argument
-
-  virtual int post_process (be_decl *);
-  // stuff to o/p after each element of the scope is handled
 
 };
 

@@ -179,11 +179,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
   if (servant == 0)
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
-#else
     return new CORBA_Policy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
       stub
@@ -203,18 +199,13 @@ CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
   if (servant == 0)
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
-#else
     return new CORBA_Policy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 CORBA::PolicyType CORBA_Policy::policy_type (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -223,7 +214,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -271,7 +262,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -318,7 +309,7 @@ void CORBA_Policy::destroy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INV_OBJREF ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -352,7 +343,6 @@ void CORBA_Policy::destroy (
   }
 
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
@@ -390,13 +380,13 @@ CORBA_Policy::_nil (void)
 CORBA_PolicyList::CORBA_PolicyList (void)
 {}
 CORBA_PolicyList::CORBA_PolicyList (CORBA::ULong max) // uses max size
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (max)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (max)
 {}
 CORBA_PolicyList::CORBA_PolicyList (CORBA::ULong max, CORBA::ULong length, CORBA_Policy_ptr *buffer, CORBA::Boolean release)
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (max, length, buffer, release)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (max, length, buffer, release)
 {}
 CORBA_PolicyList::CORBA_PolicyList (const CORBA_PolicyList &seq) // copy ctor
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (seq)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (seq)
 {}
 CORBA_PolicyList::~CORBA_PolicyList (void) // dtor
 {}
@@ -968,8 +958,8 @@ operator>> (
 
 template class TAO_Unbounded_Sequence<CORBA::UShort>;
 template class TAO_Unbounded_Sequence<CORBA::ULong>;
-template class TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>;
-template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
+template class TAO_Unbounded_Object_Sequence<CORBA_Policy>;
+template class TAO_Object_Manager<CORBA_Policy>;
 
 //  template class TAO_Object_Field_T<CORBA_Policy>;
 //  template class TAO_Object_Field_T<CORBA_PolicyManager>;
@@ -979,8 +969,8 @@ template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::ULong>
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
-#pragma instantiate TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy>
+#pragma instantiate TAO_Object_Manager<CORBA_Policy>
 
 //#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
 //#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>

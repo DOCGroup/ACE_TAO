@@ -46,10 +46,7 @@ public:
   TAO_UIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
-  int open (TAO_ORB_Core *orb_core,
-            int version_major,
-            int version_minor,
-            ACE_CString &address);
+  int open (TAO_ORB_Core *orb_core, ACE_CString &address);
   // initialize acceptor for this address.
 
   virtual int close (void);
@@ -75,18 +72,12 @@ public:
   typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
 
 private:
-  int open_i (TAO_ORB_Core *orb_core, const ACE_UNIX_Addr& addr);
+  int open_i (TAO_ORB_Core* orb_core, const ACE_UNIX_Addr& addr);
   // Implement the common part of the open*() methods
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
-
-  TAO_GIOP_Version version_;
-  // The GIOP version for this endpoint
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

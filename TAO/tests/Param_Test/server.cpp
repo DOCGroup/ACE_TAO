@@ -64,7 +64,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      const char *orb_name = "";
+      char *orb_name = "internet";
       CORBA::ORB_var orb_ptr =
         CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -53,13 +53,11 @@ public:
   // error.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV);
   // Returns a new ProxyPushConsumer_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer(CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  obtain_pull_consumer(CORBA::Environment &ACE_TRY_ENV);
   // Returns a new ProxyPullConsumer_ptr.
 
 private:

@@ -82,79 +82,75 @@ public:
   const RtecEventChannelAdmin::ConsumerQOS& subscriptions (void) const;
   // The QoS (subscription) used to connect to the EC.
 
-  virtual void connected (TAO_EC_ProxyPushConsumer *consumer,
-                          CORBA::Environment &env = TAO_default_environment ());
-  virtual void disconnected (TAO_EC_ProxyPushConsumer *consumer,
-                             CORBA::Environment &env = TAO_default_environment ());
+  virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
+                          CORBA::Environment &env);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
+                             CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 
-  virtual void connected (TAO_EC_ProxyPushSupplier *supplier,
-                          CORBA::Environment &env = TAO_default_environment ());
-  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                             CORBA::Environment &env = TAO_default_environment ());
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
+                          CORBA::Environment &env);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
+                             CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  virtual void shutdown (CORBA::Environment &env = TAO_default_environment ());
+  virtual void shutdown (CORBA::Environment &env);
   // The event channel is shutting down
 
   void push_to_consumer (const RtecEventComm::EventSet &event,
-                         CORBA::Environment &env = TAO_default_environment ());
+                         CORBA::Environment &env);
   void reactive_push_to_consumer (const RtecEventComm::EventSet &event,
-                                  CORBA::Environment &env = TAO_default_environment ());
+                                  CORBA::Environment &env);
   // Pushes to the consumer, verifies that it is connected and that it
   // is not suspended.
 
-  void push_timeout (TAO_EC_Filter *timeout_filter,
+  void push_timeout (TAO_EC_Filter* timeout_filter,
                      const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info,
-                     CORBA::Environment &env = TAO_default_environment ());
+                     TAO_EC_QOS_Info& qos_info,
+                     CORBA::Environment &env);
   // Callback from the timeout filters
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos,
-                CORBA::Environment & = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected,
-                       RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (CORBA::Environment & = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (CORBA::Environment & = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (CORBA::Environment & = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::ConsumerQOS& qos,
+                CORBA::Environment &);
+  virtual void disconnect_push_supplier (CORBA::Environment &);
+  virtual void suspend_connection (CORBA::Environment &);
+  virtual void resume_connection (CORBA::Environment &);
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
   // Increment and decrement the reference count.
 
   // = The TAO_EC_Filter methods, only push() is implemented...
-  virtual int filter (const RtecEventComm::EventSet &event,
+  virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
-                      CORBA::Environment &env = TAO_default_environment ());
-  virtual int filter_nocopy (RtecEventComm::EventSet &event,
-                             TAO_EC_QOS_Info &qos_info,
-                             CORBA::Environment &env = TAO_default_environment ());
-  virtual void push (const RtecEventComm::EventSet &event,
+                      CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
+  virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment &env = TAO_default_environment ());
-  virtual void push_nocopy (RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info,
-                            CORBA::Environment &env = TAO_default_environment ());
+                     CORBA::Environment& env);
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader &header,
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                CORBA::Environment &ACE_TRY_ENV);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env = TAO_default_environment ());
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
+                             TAO_default_environment ());
+  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
+                                TAO_default_environment ());
 
 private:
   CORBA::Boolean is_connected_i (void) const;

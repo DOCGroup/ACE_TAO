@@ -75,10 +75,9 @@ Server<Servant>::parse_args (void)
 template <class Servant> int
 Server<Servant>::test_for_ins (CORBA::String_var ior)
 {
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   CORBA::Object_ptr object =
-    orb->string_to_object (ior.in ());
+    this->orb_manager_.orb ()->string_to_object (ior.in ());
 
   // Add a KEY:IOR mapping to the ORB table.
   ACE_CString ins (this->ins_);
@@ -89,8 +88,8 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 		ins.c_str (),
 		ior.in ()));
 
-  if (orb->_tao_add_to_IOR_table (ins,
-                                  object) != 0)
+  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (ins,
+							object) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Simple_Util : Unable to add IOR to table\n"),
 		      -1);
@@ -201,11 +200,8 @@ Server<Servant>::run (CORBA::Environment &env)
 template <class Servant> int
 Server<Servant>::register_name (void)
 {
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
-  PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
-
-  this->naming_server_.init (orb.in (),
-                             child_poa.in ());
+  this->naming_server_.init (this->orb_manager_.orb(),
+                             this->orb_manager_.child_poa ());
   // create the name for the naming service
 
   CosNaming::Name bindName;
@@ -227,7 +223,8 @@ Server<Servant>::register_name (void)
 
       // Test for INS.
       if (this->ins_)
-	if (this->test_for_ins (orb->object_to_string (object.in ())) != 0)
+	if (this->test_for_ins (this->orb_manager_.orb ()
+				->object_to_string (object.in ())) != 0)
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "test_for_ins (): failed\n"),
 			    -1);

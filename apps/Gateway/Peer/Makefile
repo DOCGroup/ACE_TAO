@@ -17,7 +17,7 @@ FILES	= Options \
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LDLIBS	= -lPeer
-LIBS   += $(ACELIB)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 

@@ -69,7 +69,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  *os << " " << node->local_name ();
+  *os << " " << node->local_name () << ",\n";
   return 0;
 }
 

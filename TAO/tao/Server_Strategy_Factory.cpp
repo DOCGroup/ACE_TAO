@@ -44,6 +44,12 @@ TAO_Server_Strategy_Factory::server_connection_thread_count (void)
 }
 
 ACE_Lock *
+TAO_Server_Strategy_Factory::create_servant_lock (void)
+{
+  return 0;
+}
+
+ACE_Lock *
 TAO_Server_Strategy_Factory::create_event_loop_lock (void)
 {
   return 0;
@@ -74,3 +80,4 @@ TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters::Active_Objec
     use_active_hint_in_poa_names_ (1)
 {
 }
+

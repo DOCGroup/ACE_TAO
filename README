@@ -235,7 +235,6 @@ Chris Gill <cdgill@cs.wustl.edu>
 Aniruddha Gokhale <gokhale@cs.wustl.edu>
 Pradeep Gore <pradeep@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
-John Heitmann  <jwh1@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
@@ -841,6 +840,7 @@ Brian C. Olson <bolson@rtlogic.com>
 Joseph A. Condlin <jac@slpmbo.ed.ray.com>
 Serge Du <du@lal.in2p3.fr>
 Mike Mazurek <mmazurek@std.saic.com>
+Joe Golio <Joe.Golio@xylan.com>
 Christian Schuderer <Christian.Schuderer@erl9.siemens.de>
 John R. Taylor <jrtaylor@george.lbl.gov>
 Bill Tovrea <gwtovrea@west.raytheon.com>
@@ -859,14 +859,6 @@ Dale/Christine Wood <dale_wood@Mitel.COM>
 Robert Flanders <rdfa@eci.esys.com>
 Gul Onural <Gul_Onural@Mitel.COM>
 Stephen E Blake <stephen_e_blake@email.moore.com>
-Eric S Rosenthal <esr@netcom.com>
-Sridevi Subramanian <subrams@erols.com>
-Bruce Trask <BTRASK@contactsystems.com>
-Jake Hamby <jehamby@anobject.com>
-Rick Weisner <Rick.Weisner@East.Sun.COM>
-Dennis C. De Mars <demars@mminternet.com>
-V. Lakshmanan <lakshman@doplight.nssl.noaa.gov>
-Hata Yoshiaki <hatay@alpha.co.jp>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive

@@ -54,7 +54,7 @@ private:
   // Writes the server ior to a file, for the clients to pick up
   // later.
 
-  const char *ior_file_name_;
+  char *ior_file_name_;
   // The file name to save the ior to.
 
   TAO_ORB_Manager orb_manager_;

@@ -63,9 +63,6 @@ public:
   // periodically.
 
 private:
-  CORBA::ORB_var orb_;
-  // Remember our orb.
-
   int read_ior (char *filename);
   // Function to read the Notifier IOR from a file.
 
@@ -91,7 +88,7 @@ private:
   char *ior_;
   // IOR of the obj ref of the Notifier.
   
-  CORBA::Environment env_;
+    CORBA::Environment env_;
   // Environment variable.
 
   TAO_Naming_Client naming_services_client_;
@@ -104,6 +101,9 @@ private:
   
   Notifier_var notifier_;
   // Notifier object reference.
+
+   CORBA::ORB_var orb_;
+  // Remember our orb.
 
   FILE  *f_ptr_;
   // The pointer for accessing the input stream.

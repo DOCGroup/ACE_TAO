@@ -148,9 +148,7 @@ public:
   // <local_addr> be reused by passing a value <reuse_addr> ==
   // 1). <flags> and <perms> can be used to pass any flags that are
   // needed to perform specific operations such as opening a file
-  // within connect with certain permissions.  If the connection fails
-  // the <close> hook on the <svc_handler> will be called
-  // automatically to prevent resource leaks.
+  // within connect with certain permissions.
 
   virtual int connect (SVC_HANDLER *&svc_handler_hint,
                        SVC_HANDLER *&svc_handler,
@@ -161,21 +159,18 @@ public:
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
-  // This is a variation on the previous <connect> method.  On cached
-  // connectors the <svc_handler_hint> variable can be used as a hint
-  // for future lookups.  Since this variable is modified in the
-  // context of the internal cache its use is thread-safe.  But the
-  // actual svc_handler for the current connection is returned in the
-  // second parameter <svc_handler>.  If the connection fails the
-  // <close> hook on the <svc_handler> will be called automatically to
-  // prevent resource leaks.
+  // A variation on the previous connect(), on cached connectors the
+  // <svc_handler_hint> variable can be used as a hint for future
+  // lookups. Since this variable is modified in the context of the
+  // internal cache its use is thread-safe.  But the actual
+  // svc_handler for the current connection is returned in the second
+  // parameter <svc_handler>.
 
   virtual int connect_n (size_t n,
                          SVC_HANDLER *svc_handlers[],
                          ACE_PEER_CONNECTOR_ADDR remote_addrs[],
                          ASYS_TCHAR *failed_svc_handlers = 0,
-                         const ACE_Synch_Options &synch_options =
-                         ACE_Synch_Options::defaults);
+                         const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults);
   // Initiate connection of <n> <svc_handlers> to peers at
   // <remote_addrs> using <synch_options>.  Returns -1 if failure
   // occurs and 0 otherwise.  If <failed_svc_handlers> is non-NULL, a

@@ -11,7 +11,6 @@ ACE_RCSID(MT_Client, test_i, "$Id$")
 
 void
 Simple_Server_i::test_method (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -20,7 +19,6 @@ Simple_Server_i::test_method (CORBA::Environment&)
 
 CORBA::Long
 Simple_Server_i::get_number (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -30,7 +28,6 @@ Simple_Server_i::get_number (CORBA::Environment&)
 
 void
 Simple_Server_i::shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

@@ -150,8 +150,8 @@ public:
   TAO_POA_Current_Impl (void);
   // Convenience constructor combining construction & initialization.
 
-  void teardown (void);
-  // Teardown the current for this request.
+  ~TAO_POA_Current_Impl (void);
+  // Destructor
 
   void setup (TAO_POA *impl,
               const TAO_ObjectKey &key,
@@ -558,7 +558,7 @@ public:
 
   friend class Non_Servant_Upcall;
 
-  class TAO_Export Servant_Upcall
+  class Servant_Upcall
   {
     // = TITLE
     //     This class finds out the POA and the servant to perform an
@@ -600,7 +600,6 @@ public:
     {
       INITIAL_STAGE,
       OBJECT_ADAPTER_LOCK_ACQUIRED,
-      POA_CURRENT_SETUP,
       OBJECT_ADAPTER_LOCK_RELEASED,
       SERVANT_LOCK_ACQUIRED
     };
@@ -610,10 +609,6 @@ public:
     PortableServer::ObjectId id_;
 
     TAO_POA_Current_Impl current_context_;
-
-  private:
-    Servant_Upcall (const Servant_Upcall &);
-    void operator= (const Servant_Upcall &);
   };
 
   friend class Servant_Upcall;

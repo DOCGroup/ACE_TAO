@@ -78,63 +78,42 @@ sub run_test
     $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server1args");
     print STDERR ("server $server1args\n");
-
-    if (ACE::waitforfile_timed ("server1", 5) == -1) {
-      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
-      $SRV1->Kill (); $SRV1->TimedWait (1);
-      exit 1;
-    }
+    ACE::waitforfile ("server1");
 
     $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server2args");
     print STDERR ("server $server2args\n");
-
-    if (ACE::waitforfile_timed ("server2", 5) == -1) {
-      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
-      $SRV1->Kill (); $SRV1->TimedWait (1);
-      $SRV2->Kill (); $SRV2->TimedWait (1);
-      exit 1;
-    }
-
-    if ($server3args ne "") {
-      $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
-			       "$server3args");
-
-      if (ACE::waitforfile_timed ("server3", 5) == -1) {
-	print STDERR "ERROR: cannot find file <server3>\n";
-	$SRV1->Kill (); $SRV1->TimedWait (1);
-	$SRV2->Kill (); $SRV2->TimedWait (1);
-	$SRV3->Kill (); $SRV3->TimedWait (1);
-	exit 1;
-      }
-    }
-
-    # Run the client and block until completion
-    $CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
-			   " $clientargs");
-    print STDERR ("client $clientargs\n");
-
-    $client = $CL->TimedWait (60);
-    if ($client == -1) {
-      print STDERR "ERROR: client timedout\n";
-      $CL->Kill (); $CL->TimedWait (1);
-    }
-
-    # Now that the client has finished, kill off the servers
-
-    $SRV1->Kill (); $SRV1->TimedWait (1);
-    $SRV2->Kill (); $SRV2->TimedWait (1);
+    ACE::waitforfile ("server2");
 
     if ($server3args ne "")
     {
-        $SRV3->Kill (); $SRV3->TimedWait (1);
+        $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+                                 "$server3args");
+        ACE::waitforfile ("server3");
     }
 
-    if ($client != 0) {
-      print STDERR ("\n$brace Test of $testtype FAILED\n");
-      $status = -1;
-    } else {
-      print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
+    # Run the client and block until completion
+    $status  = system ("client$Process::EXE_EXT $clientargs");
+    print STDERR ("client $clientargs");
+
+    # Now that the client has finished, kill off the servers
+
+    $SRV1->Kill (); $SRV1->Wait ();
+    $SRV2->Kill (); $SRV2->Wait ();
+
+    if ($server3args ne "")
+    {
+        $SRV3->Kill (); $SRV3->Wait ();
+    }
+
+    if ($status != 0)
+    {
+        print STDERR ("\n$brace Test of $testtype FAILED\n");
+        $status = -1;
+    }
+    else
+    {
+        print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
     }
     cleanup_ior ();
     return $status;

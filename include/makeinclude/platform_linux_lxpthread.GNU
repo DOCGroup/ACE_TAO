@@ -8,13 +8,9 @@
 # to compile it yourself (no binaries included) --
 # Jan Rychter <jwr@icm.edu.pl>
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-  xt_reactor = 0
+debug = 1
+optimize = 1
+xt_reactor = 0
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -34,9 +30,6 @@ PLATFORM_GL_CPPFLAGS=
 PLATFORM_GL_LIBS=-lMesaGL
 PLATFORM_GL_LDFLAGS=
 
-PLATFORM_AIO_SUPPORT := \
-  $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
-
 ifeq ($(NO_IMPLICIT_TEMPLATES),)
       NO_IMPLICIT_TEMPLATES = -fno-implicit-templates
 endif
@@ -44,16 +37,12 @@ endif
 CC      = gcc
 CXX     = g++
 CFLAGS  += -Wall -pipe \
-           -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
-           $(PLATFORM_AIO_SUPPORT)
+           -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS += $(CFLAGS) $(NO_IMPLICIT_TEMPLATES)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
-LIBS    += -ldl -lpthread
-ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
-  LIBS += -lrt
-endif
+LIBS    += -ldl -lpthread -lrt
 OCFLAGS += -O3
 PIC     = -fPIC
 AR      = ar

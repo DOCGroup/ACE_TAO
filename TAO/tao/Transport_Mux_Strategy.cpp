@@ -54,24 +54,24 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                                CORBA::ULong reply_status,
                                const TAO_GIOP_Version& version,
                                TAO_GIOP_ServiceContextList& reply_ctx,
-                               TAO_GIOP_Message_State* message_state)
+                               TAO_InputCDR* cdr)
 {
   // @@
   return -1;
 }
 
-TAO_GIOP_Message_State *
-TAO_Muxed_TMS::get_message_state (void)
+TAO_InputCDR *
+TAO_Muxed_TMS::get_cdr_stream (void)
 {
   return 0;
 }
 
 void
-TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
+TAO_Muxed_TMS::destroy_cdr_stream (TAO_InputCDR *)
 {
   // @@ Implement.
-  // delete message_state;
-  // message_state = 0;
+  // delete cdr;
+  // cdr = 0;
 }
 
 // *********************************************************************
@@ -111,7 +111,7 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    CORBA::ULong reply_status,
                                    const TAO_GIOP_Version& version,
                                    TAO_GIOP_ServiceContextList& reply_ctx,
-                                   TAO_GIOP_Message_State* message_state)
+                                   TAO_InputCDR* cdr)
 {
   if (this->request_id_ != request_id)
     {
@@ -129,20 +129,20 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
   return rd->dispatch_reply (reply_status,
                              version,
                              reply_ctx,
-                             message_state);
+                             cdr);
 }
 
-TAO_GIOP_Message_State *
-TAO_Exclusive_TMS::get_message_state (void)
+TAO_InputCDR *
+TAO_Exclusive_TMS::get_cdr_stream (void)
 {
   if (this->rd_ == 0)
     return 0;
 
-  return this->rd_->message_state ();
+  return this->rd_->cdr ();
 }
 
 // NOOP function.
 void
-TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
+TAO_Exclusive_TMS::destroy_cdr_stream (TAO_InputCDR *)
 {
 }

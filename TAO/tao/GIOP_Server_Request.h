@@ -34,8 +34,8 @@ public:
   TAO_GIOP_ServerRequest (TAO_InputCDR &input,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Version &version,
-                          int &parse_error);
+                          CORBA_Environment &TAO_IN_ENV =
+                              TAO_default_environment ());
   // Constructor
   TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
@@ -43,8 +43,8 @@ public:
                           const ACE_CString &operation,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Version &version,
-                          int &parse_error);
+                          CORBA_Environment &TAO_IN_ENV =
+                             TAO_default_environment ());
 
   virtual ~TAO_GIOP_ServerRequest (void);
   // Destructor.
@@ -144,14 +144,14 @@ public:
   // get the exception type
 
 private:
-  int parse_header (void);
+   void parse_header (CORBA::Environment &TAO_IN_ENV);
   // Parse the request header and store the result on this object.
 
-  int parse_header_std (void);
+  void parse_header_std (CORBA::Environment &TAO_IN_ENV);
   // Parse the standard GIOP request header and store the result on
   // this object.
 
-  int parse_header_lite (void);
+  void parse_header_lite (CORBA::Environment &TAO_IN_ENV);
   // Parse the lightweight version of the GIOP request header and
   // store the result on this object.
 
@@ -190,10 +190,6 @@ private:
   TAO_ORB_Core* orb_core_;
   // A pointer to the ORB Core for the context where the request was
   // created.
-
-  TAO_GIOP_Version version_;
-  // The version for the GIOP request, the reply must have the same
-  // one.
 
   TAO_GIOP_ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?)

@@ -23,6 +23,19 @@
 
 ACE_RCSID(tao, Object, "$Id$")
 
+void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  return obj == 0;
+}
+
 CORBA_Object::~CORBA_Object (void)
 {
   this->protocol_proxy_->_decr_refcnt ();
@@ -76,7 +89,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -87,10 +100,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
 
   // Loop until we succeed or we raise an exception.
-  // @@ Nanbor: Do we still need to clear the environment variable?
-  //  ACE_TRY_ENV.clear ();         
   for (;;)
     {
+      ACE_TRY_ENV.clear ();
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
@@ -116,7 +128,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       break;
     }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-  if (!(_tao_in >> CORBA::Any::to_boolean (_tao_retval)))
+  if (!(
+    (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+  ))
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
@@ -144,9 +158,9 @@ CORBA_Object::_is_collocated (void) const
 
 CORBA::ULong
 CORBA_Object::_hash (CORBA::ULong maximum,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Environment &env)
 {
-  return this->_stubobj ()->hash (maximum, ACE_TRY_ENV);
+  return this->_stubobj ()->hash (maximum, env);
 }
 
 // Compare two object references to see if they point to the same
@@ -157,33 +171,28 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 
 CORBA::Boolean
 CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &env)
 {
   if (other_obj == this)
     {
-      //      env.clear ();
+      env.clear ();
       return 1;
     }
 
-  return this->_stubobj ()->is_equivalent (other_obj, ACE_TRY_ENV);
+  return this->_stubobj ()->is_equivalent (other_obj, env);
 }
 
 // TAO's extensions
 
 TAO_ObjectKey *
-CORBA::Object::_key (CORBA::Environment &)
+CORBA::Object::_key (CORBA::Environment &env)
 {
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
-    return this->_stubobj ()->profile_in_use ()->_key ();
+    return this->_stubobj ()->profile_in_use ()->_key (env);
 
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
 }
 
-const TAO_ObjectKey &
-CORBA::Object::_object_key (void)
-{
-  return this->_stubobj ()->profile_in_use ()->object_key ();
-}
 
 // @@ This doesn't seemed to be used anyplace! It should go away!! FRED
 void
@@ -212,7 +221,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -222,9 +231,9 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     );
 
 
-  // ACE_TRY_ENV.clear ();
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -260,20 +269,20 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::NamedValue_ptr result,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
   if (ctx)
     {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      TAO_THROW (CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this,
                                 operation,
                                 arg_list,
                                 result,
                                 req_flags,
-                                ACE_TRY_ENV);
+                                TAO_IN_ENV);
 }
 
 void
@@ -285,30 +294,30 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::ContextList_ptr,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
   if (ctx)
     {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      TAO_THROW (CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this,
                                 operation,
                                 arg_list,
                                 result,
                                 req_flags,
-                                ACE_TRY_ENV);
+                                TAO_IN_ENV);
 }
 
 CORBA::Request_ptr
 CORBA_Object::_request (const CORBA::Char *operation,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &TAO_IN_ENV)
 {
-  //  ACE_TRY_ENV.clear ();
+  TAO_IN_ENV.clear ();
   return new CORBA::Request (this,
                              operation,
-                             ACE_TRY_ENV);
+                             TAO_IN_ENV);
 }
 
 CORBA::InterfaceDef_ptr
@@ -323,7 +332,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (

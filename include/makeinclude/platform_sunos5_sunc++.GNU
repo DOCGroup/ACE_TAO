@@ -24,15 +24,9 @@
 # size should not be penalized.  We don't use it because it's not
 # necessary with automatic template instantiation.
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+debug = 1
+distrib = 0
+threads = 1
 
 tk_reactor = 0
 ace_with_x11 = 0
@@ -69,12 +63,9 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
     #### without -features=rtti, to convert dynamic_cast to static_cast.
     CCFLAGS += -DACE_LACKS_RTTI
   endif # ! rtti
-
-  #### Create template repository to avoid compiler warning.
-  TEMPLATE_REPOSITORY = Templates.DB
 else  # ! 4.2
 ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
-  #### CC 5.0 or later
+#### CC 5.0 or later
   #### Inlining appears to cause link problems with early releases of
   #### CC 5.0.
   inline = 0
@@ -128,6 +119,9 @@ AR              = CC
 ARFLAGS         = -xar -o
 RANLIB          = echo
 SOFLAGS         = -G $(CPPFLAGS)
+
+#### Create template repository to avoid compiler warning.
+TEMPLATE_REPOSITORY = Templates.DB
 
 ifdef BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files

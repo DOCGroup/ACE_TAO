@@ -20,21 +20,21 @@ TAO_Forwarding_Servant::TAO_Forwarding_Servant (CORBA::Object_ptr forward_to,
 
 void
 TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (request);
 
-  CORBA::Exception *exception = 0;
-  ACE_NEW_THROW_EX (exception,
-                    PortableServer::ForwardRequest (this->forward_to_.in ()),
-                    CORBA::NO_MEMORY ());
+  // Throw forward exception @@ Irfan, shouldn't we check for "new"
+  // failure here via ACE_NEW?
+  CORBA::Exception *exception
+    = new PortableServer::ForwardRequest (this->forward_to_.in ());
 
   CORBA::Any any (exception->_type (),
                   exception,
                   1);
 
   request->set_exception (any,
-                          ACE_TRY_ENV);
+                          env);
 }
 
 CORBA::RepositoryId

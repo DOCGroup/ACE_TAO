@@ -172,12 +172,6 @@
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) NAME = RHS;
 #endif /* ACE_HAS_USING_KEYWORD */
 
-# if defined (_MSC_VER) && defined (__ACE_INLINE__)
-#   define TAO_NAMESPACE_INLINE_FUNCTION inline
-# else
-#   define TAO_NAMESPACE_INLINE_FUNCTION TAO_NAMESPACE_STORAGE_CLASS
-# endif
-
 // Instead of replacing this with the ACE macro
 // in 20+ files, define it conditionally.
 // The TAO_OutputCDR class uses the ACE macro, which
@@ -242,6 +236,16 @@
 #  pragma warning (disable:4355) /* disable C4355 warning */
 #endif /* defined (_WIN32) */
 
+#if !defined (TAO_CONST)
+// Something to document the fact that we want to put 'const' in front
+// of a type, but that it won't turn out the way we want, e.g., we
+// really want to express that a CORBA_String is const, but since
+// CORBA_String is a char*, the const modifies the pointer and not the
+// pointed-to, and some compilers (like SGI's EDG-derived thang)
+// complain.
+#define TAO_CONST
+#endif /* TAO_CONST */
+
 // The IDL compiler can generate the classes corresponding to IDL
 // sequences in two ways:
 // + Use the TAO templates for sequences,
@@ -281,19 +285,6 @@
 #define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 
-// TAO Naming Service.
-
-// Poa id of the root Naming Context in a Naming server.
-#if !defined (TAO_ROOT_NAMING_CONTEXT)
-#  define TAO_ROOT_NAMING_CONTEXT "NameService"
-#endif /* ! TAO_ROOT_NAMING_CONTEXT */
-
-// The name under which the index of naming contexts is stored in
-// persistent naming service.
-#if !defined (TAO_NAMING_CONTEXT_INDEX)
-#  define TAO_NAMING_CONTEXT_INDEX "Naming_Context_Index"
-#endif /* ! TAO_NAMING_CONTEXT_INDEX */
-
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
@@ -303,49 +294,37 @@
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
-// Without Minimum CORBA, the user will get regular (no locality
-// constraints) policies by default.  With Minimum CORBA, the user
-// will get locality constraint policies by default.
-//
-// If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always get
-// locality constraint policies (regardless of Minimum CORBA).
-//
-// If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always get
-// regular policies (regardless of Minimum CORBA).
-
-// TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
-// should not be set by the user.
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-# undef TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-# warning TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro \
-and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-#if defined (TAO_HAS_MINIMUM_CORBA)
-
 // With minimum CORBA, we don't have the ForwardRequest exception.
 // Therefore, we can't support the INS forwarding agent.
+#if defined (TAO_HAS_MINIMUM_CORBA)
 # if !defined (TAO_NO_IOR_TABLE)
 #  define TAO_NO_IOR_TABLE
 # endif /* TAO_NO_IOR_TABLE */
-
-# if !defined (TAO_HAS_REMOTE_POLICIES)
-#  define TAO_HAS_REMOTE_POLICIES 0
-# endif /* TAO_HAS_REMOTE_POLICIES */
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Policies are not locality constraint by default.
-#if !defined (TAO_HAS_REMOTE_POLICIES)
-# define TAO_HAS_REMOTE_POLICIES 1
-#endif /* TAO_HAS_REMOTE_POLICIES */
-
-#if (TAO_HAS_REMOTE_POLICIES == 0)
-# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-#endif /* TAO_HAS_REMOTE_POLICIES */
 
 // CORBA Messaging
 #define TAO_HAS_CORBA_MESSAGING
+
+// The maximum value for an standard PolicyType, we use this trick to
+// pack the standard policies and the TAO extension in a single
+// array.
+// The motivation for such a low-level optimization is that policies
+// can be set on a per-object level, allocating a complex data
+// structure (such as a hash map) or a big array for each object is
+// not feasible.
+#define TAO_MAX_STANDARD_POLICIES 64
+
+// The number of TAO specific policies
+#define TAO_POLICIES_COUNT 32
+
+// The size of the Policy array, the number of policies supported in
+// TAO is limited by this number.
+#define TAO_MAX_POLICIES (TAO_MAX_STANDARD_POLICIES+TAO_POLICIES_COUNT)
+
+// TAO may define its own policies, they are defined in a range far
+// from the standard policies.
+#define TAO_MIN_PROPIETARY_POLICY 1024
+#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
 
 // Define the policy types as literals, so they can be used in switch
 // statements
@@ -362,21 +341,5 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_MESSAGING_ROUTING_POLICY_TYPE 33
 #define TAO_MESSAGING_MAX_HOPS_POLICY_TYPE 34
 #define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
-
-// Control the default version of GIOP used by TAO.
-// The ORB is always able to communicate with 1.0 and 1.1 servers, and
-// it creates 1.1 endpoints (and profiles).  If you need to talk to
-// old clients that only understand 1.0 (and do not attempt to use 1.0
-// with 1.1 servers), then change the values below.
-#if !defined(TAO_DEF_GIOP_MAJOR)
-#define TAO_DEF_GIOP_MAJOR 1
-#endif /* TAO_DEF_GIOP_MAJOR */
-#if !defined(TAO_DEF_GIOP_MINOR)
-#define TAO_DEF_GIOP_MINOR 1
-#endif /* TAO_DEF_GIOP_MINOR */
-
-// By default TAO generate the OMG standard profile components
-// (ORB_TYPE and CODE_SETS)
-#define TAO_STD_PROFILE_COMPONENTS
 
 #endif  /* TAO_ORB_CONFIG_H */

@@ -29,7 +29,7 @@ public:
                               CORBA::TypeCode_ptr /* returned_type */,
                               const CORBA::Any& /* extra_info */,
                               CORBA::Environment &)
-    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:
 

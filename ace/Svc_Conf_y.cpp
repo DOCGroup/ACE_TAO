@@ -19,14 +19,13 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                         const char *svc_name);
 
 #define ACE_YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = '\0', ace_yytext)
-
 /* Force the pretty debugging code to compile.*/
-/* #define ACE_YYDEBUG 1*/
+#define ACE_YYDEBUG 1
 
 /* Efficient memory allocation technique.*/
 ACE_Obstack *ace_obstack;
 
-#line 30 "Svc_Conf_y.cpp"
+#line 29 "Svc_Conf_y.cpp"
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258
 #define ACE_SUSPEND 259
@@ -170,7 +169,7 @@ short ace_yycheck[] = {                                       8,
 #endif
 #define ACE_YYMAXTOKEN 276
 #if ACE_YYDEBUG
-const char *ace_yyname[] = {
+char *ace_yyname[] = {
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -183,7 +182,7 @@ const char *ace_yyname[] = {
 "ACE_IDENT","ACE_STRING","ACE_LPAREN","ACE_RPAREN","ACE_LBRACE","ACE_RBRACE",
 "ACE_STAR","ACE_COLON",
 };
-const char *ace_yyrule[] = {
+char *ace_yyrule[] = {
 "$accept : svc_config_entries",
 "svc_config_entries : svc_config_entries svc_config_entry",
 "svc_config_entries : svc_config_entries error",
@@ -250,7 +249,7 @@ ACE_YYSTYPE ace_yylval;
 #define ace_yystacksize ACE_YYSTACKSIZE
 short ace_yyss[ACE_YYSTACKSIZE];
 ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
-#line 315 "Svc_Conf.y"
+#line 314 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -396,7 +395,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 400 "Svc_Conf_y.cpp"
+#line 399 "Svc_Conf_y.cpp"
 #define ACE_YYABORT goto ace_yyabort
 #define ACE_YYACCEPT goto ace_yyaccept
 #define ACE_YYERROR goto ace_yyerrlab
@@ -424,7 +423,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_INDENT */
 #ifndef ACE_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, const char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
+void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
 #else
 ACE_YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
 int ace_yynew_state;
@@ -454,7 +453,7 @@ int ace_yyrhs_count;
 #endif /* ACE_YYDEBUG_REDUCE */
 #ifndef ACE_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state*/, const char *ace_yytoken_string, int ace_yynew_indent)
+void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state*/, char *ace_yytoken_string, int ace_yynew_indent)
 #else
 ACE_YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
 int ace_yyold_state;
@@ -469,7 +468,7 @@ int ace_yynew_indent;
 #endif /*  ACE_YYDEBUG_SHIFT_LEXEME */
 #ifndef ACE_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, const char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -514,7 +513,7 @@ int ace_yyindent;
 #endif /* ACE_YYDEBUG_DISCARD_STATE */
 #ifndef ACE_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, const char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
 #else
 ACE_YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
@@ -550,7 +549,7 @@ ace_yyparse()
 {
     register int ace_yym, ace_yyn, ace_yystate;
 #if ACE_YYDEBUG
-    register const char *ace_yys;
+    register char *ace_yys;
 #ifndef __cplusplus
     extern char *ace_foo();
 #endif
@@ -703,7 +702,7 @@ ace_yyreduce:
     switch (ace_yyn)
     {
 case 1:
-#line 45 "Svc_Conf.y"
+#line 44 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
       {
@@ -713,13 +712,13 @@ case 1:
     }
 break;
 case 2:
-#line 53 "Svc_Conf.y"
+#line 52 "Svc_Conf.y"
 {
       ace_obstack->release ();
     }
 break;
 case 10:
-#line 70 "Svc_Conf.y"
+#line 69 "Svc_Conf.y"
 {
       if (ace_yyvsp[-1].svc_record_ != 0)
         ace_yyval.parse_node_ = new ACE_Dynamic_Node (ace_yyvsp[-1].svc_record_, ace_yyvsp[0].ident_);
@@ -728,74 +727,74 @@ case 10:
     }
 break;
 case 11:
-#line 80 "Svc_Conf.y"
+#line 79 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Static_Node (ace_yyvsp[-1].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 12:
-#line 87 "Svc_Conf.y"
+#line 86 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Suspend_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 13:
-#line 94 "Svc_Conf.y"
+#line 93 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Resume_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 14:
-#line 101 "Svc_Conf.y"
+#line 100 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Remove_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 15:
-#line 108 "Svc_Conf.y"
+#line 107 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Stream_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 16:
-#line 111 "Svc_Conf.y"
+#line 110 "Svc_Conf.y"
 { ace_yyval.static_node_ = new ACE_Static_Node (ace_yyvsp[0].ident_); }
 break;
 case 17:
-#line 112 "Svc_Conf.y"
+#line 111 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Dummy_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 18:
-#line 119 "Svc_Conf.y"
+#line 118 "Svc_Conf.y"
 {
     }
 break;
 case 19:
-#line 122 "Svc_Conf.y"
+#line 121 "Svc_Conf.y"
 {
     }
 break;
 case 20:
-#line 128 "Svc_Conf.y"
+#line 127 "Svc_Conf.y"
 {
       /* Initialize left context...*/
       ace_yyval.static_node_ = ace_yyvsp[-1].static_node_;
     }
 break;
 case 21:
-#line 133 "Svc_Conf.y"
+#line 132 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = ace_yyvsp[-1].parse_node_;
     }
 break;
 case 22:
-#line 136 "Svc_Conf.y"
+#line 135 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; }
 break;
 case 23:
-#line 141 "Svc_Conf.y"
+#line 140 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
         {
@@ -805,11 +804,11 @@ case 23:
     }
 break;
 case 24:
-#line 148 "Svc_Conf.y"
+#line 147 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; }
 break;
 case 25:
-#line 153 "Svc_Conf.y"
+#line 152 "Svc_Conf.y"
 {
       ACE_Static_Node *svc_type = ace_yyvsp[0].static_node_;
 
@@ -837,7 +836,7 @@ case 25:
     }
 break;
 case 26:
-#line 179 "Svc_Conf.y"
+#line 178 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
 
@@ -850,7 +849,7 @@ case 26:
     }
 break;
 case 27:
-#line 190 "Svc_Conf.y"
+#line 189 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_,
                                             ace_yyvsp[0].static_node_->name ());
@@ -859,7 +858,7 @@ case 27:
     }
 break;
 case 28:
-#line 197 "Svc_Conf.y"
+#line 196 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_,
                                             ace_yyvsp[0].static_node_->name ());
@@ -868,7 +867,7 @@ case 28:
     }
 break;
 case 29:
-#line 204 "Svc_Conf.y"
+#line 203 "Svc_Conf.y"
 {
       ACE_Static_Node *stream = ace_yyvsp[-2].static_node_;
       ACE_Static_Node *module = ace_yyvsp[0].static_node_;
@@ -890,7 +889,7 @@ case 29:
     }
 break;
 case 30:
-#line 227 "Svc_Conf.y"
+#line 226 "Svc_Conf.y"
 {
       u_int flags
         = ACE_Service_Type::DELETE_THIS
@@ -923,64 +922,64 @@ case 30:
     }
 break;
 case 31:
-#line 261 "Svc_Conf.y"
+#line 260 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 32:
-#line 265 "Svc_Conf.y"
+#line 264 "Svc_Conf.y"
 {
       ace_yyval.type_ = 0;
     }
 break;
 case 33:
-#line 269 "Svc_Conf.y"
+#line 268 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 34:
-#line 276 "Svc_Conf.y"
+#line 275 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Object_Node (ace_yyvsp[-2].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 35:
-#line 280 "Svc_Conf.y"
+#line 279 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Function_Node (ace_yyvsp[-4].ident_, ace_yyvsp[-2].ident_);
     }
 break;
 case 36:
-#line 284 "Svc_Conf.y"
+#line 283 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     }
 break;
 case 37:
-#line 291 "Svc_Conf.y"
+#line 290 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_MODULE_T;
     }
 break;
 case 38:
-#line 295 "Svc_Conf.y"
+#line 294 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_SVC_OBJ_T;
     }
 break;
 case 39:
-#line 299 "Svc_Conf.y"
+#line 298 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_STREAM_T;
     }
 break;
 case 41:
-#line 306 "Svc_Conf.y"
+#line 305 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 983 "Svc_Conf_y.cpp"
+#line 982 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;

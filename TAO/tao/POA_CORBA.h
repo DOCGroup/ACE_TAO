@@ -49,7 +49,7 @@ public:
 
   class Current;
   typedef Current *Current_ptr;
-  class  Current :  public virtual TAO_Local_ServantBase
+  class  Current :  public virtual TAO_ServantBase
   {
   protected:
     Current (void);
@@ -61,6 +61,8 @@ public:
     virtual void* _downcast (
         const char* logical_type_id
       );
+
+    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
 
     ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -93,12 +95,7 @@ public:
 
   class Policy;
   typedef Policy *Policy_ptr;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   class TAO_Export  Policy :  public virtual TAO_ServantBase
-#else
-  class TAO_Export  Policy :  public virtual TAO_Local_ServantBase
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   {
   protected:
     Policy (void);
@@ -163,6 +160,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -170,7 +168,6 @@ public:
         CORBA_Environment &TAO_IN_ENV =
           TAO_default_environment ()
       );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     CORBA_Policy_ptr _this (
         CORBA_Environment &TAO_IN_ENV =
@@ -214,7 +211,7 @@ public:
 
   class PolicyManager;
   typedef PolicyManager *PolicyManager_ptr;
-  class TAO_Export PolicyManager :  public virtual TAO_Local_ServantBase
+  class TAO_Export PolicyManager :  public virtual PortableServer::ServantBase
   {
   protected:
     PolicyManager (void);
@@ -240,6 +237,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
     CORBA::PolicyManager *_this (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -296,6 +300,13 @@ public:
 
     virtual void* _downcast (
         const char* logical_type_id
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
       );
 
     CORBA::PolicyCurrent *_this (
@@ -1004,6 +1015,13 @@ public:
         CORBA::Environment::default_environment ()
         ) = 0;
 
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        CORBA::Environment::default_environment ()
+    );
+
   CORBA_DynAny *_this (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
@@ -1261,6 +1279,13 @@ public:
         CORBA::Environment::default_environment ()
      ) = 0;
 
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        CORBA::Environment::default_environment ()
+    );
+
   CORBA_DynEnum *_this (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
@@ -1348,6 +1373,13 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
+
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        CORBA::Environment::default_environment ()
+    );
 
   CORBA_DynStruct *_this (
       CORBA::Environment &TAO_IN_ENV =
@@ -1456,6 +1488,13 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
+
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        CORBA::Environment::default_environment ()
+    );
 
   CORBA_DynUnion *_this (
       CORBA::Environment &TAO_IN_ENV =
@@ -1570,6 +1609,13 @@ public:
         CORBA::Environment::default_environment ()
     );
 
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &TAO_IN_ENV =
+        CORBA::Environment::default_environment ()
+    );
+
   CORBA_DynSequence *_this (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
@@ -1647,6 +1693,13 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
+
+  virtual void _dispatch (
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        CORBA::Environment::default_environment ()
+    );
 
   CORBA_DynArray *_this (
       CORBA::Environment &TAO_IN_ENV =

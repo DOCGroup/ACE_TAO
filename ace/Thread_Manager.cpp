@@ -6,7 +6,6 @@
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
 #include "ace/Singleton.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
@@ -603,7 +602,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
 #if 1
-  auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
+  ACE_Thread_Descriptor *new_thr_desc = this->thread_desc_freelist_.remove ();
   new_thr_desc->thr_state_ = ACE_THR_IDLE;
   // Get a "new" Thread Descriptor from the freelist.
 
@@ -619,31 +618,25 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                   -1);
 #endif /* 1 */
 
-  ACE_Thread_Adapter *thread_args = 0;
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_NEW_RETURN (thread_args,
-                  ACE_Thread_Adapter (func,
-                                      args,
-                                      (ACE_THR_C_FUNC) ace_thread_adapter,
-                                      this,
-                                      new_thr_desc.get (),
-                                      ACE_LOG_MSG->seh_except_selector(),
-                                      ACE_LOG_MSG->seh_except_handler()),
-                  -1);
+  ACE_Thread_Adapter *thread_args =
+    new ACE_Thread_Adapter (func,
+                            args,
+#if defined(ACE_USE_THREAD_MANAGER_ADAPTER)
+                            (ACE_THR_C_FUNC) ace_thread_manager_adapter,
 #else
-  ACE_NEW_RETURN (thread_args,
-                  ACE_Thread_Adapter (func,
-                                      args,
-                                      (ACE_THR_C_FUNC) ace_thread_adapter,
-                                      this,
-                                      new_thr_desc.get ()),
-                  -1);
+                            (ACE_THR_C_FUNC) ace_thread_adapter,
+#endif
+                            this,
+                            new_thr_desc
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                            , ACE_LOG_MSG->seh_except_selector()
+                            , ACE_LOG_MSG->seh_except_handler()
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                            );
 
-  // @@ Memory leak if the previous new failed, need an auto pointer here.
   if (thread_args == 0)
     {
-      this->thr_list_.insert_head (new_thr_desc.release ());
+      delete new_thr_desc;
       return -1;
     }
 
@@ -719,7 +712,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                grp_id,
                                task,
                                flags,
-                               new_thr_desc.release ());
+                               new_thr_desc);
     }
 }
 
@@ -1164,12 +1157,13 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
       return -1; \
     } \
   int result = OP (ptr, ARG); \
-  ACE_Errno_Guard error (errno); \
+  int error = errno; \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor *td; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td, 1); \
   } \
+  errno = error; \
   return result
 
 // Suspend a single thread.
@@ -1355,13 +1349,12 @@ ACE_Thread_Manager::apply_grp (int grp_id,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-
-      for (ACE_Thread_Descriptor *td;
-           this->thr_to_be_removed_.dequeue_head (td) != -1;
-           )
+      // Preserve errno!
+      int error = errno;
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td, 1);
+      errno = error;
     }
 
   return result;
@@ -1426,13 +1419,12 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-
-      for (ACE_Thread_Descriptor *td;
-           this->thr_to_be_removed_.dequeue_head (td) != -1;
-           )
+      // Preserve errno!
+      int error = errno;
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td, 1);
+      errno = error;
     }
 
   return result;
@@ -1872,13 +1864,12 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-
-      for (ACE_Thread_Descriptor *td;
-           this->thr_to_be_removed_.dequeue_head (td) != -1;
-           )
+      // Preserve errno!
+      int error = errno;
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td, 1);
+      errno = error;
     }
 
   return result;
@@ -2366,13 +2357,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>;
-  template class auto_ptr<ACE_Thread_Descriptor>;
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
-  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_Node<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
@@ -2385,13 +2372,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     template class ACE_TSS<ACE_Thread_Exit>;
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>
-  #pragma instantiate auto_ptr<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>

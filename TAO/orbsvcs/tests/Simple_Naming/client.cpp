@@ -41,12 +41,10 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id, CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void id (CORBA::Short id, CORBA::Environment &ACE_TRY_ENV);
   // Sets id.
 
-  CORBA::Short id (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Short id (CORBA::Environment &ACE_TRY_ENV);
   // Gets id.
 
 private:
@@ -64,14 +62,12 @@ My_Test_Object::~My_Test_Object (void)
 
 CORBA::Short
 My_Test_Object::id (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return id_;
 }
 
 void
 My_Test_Object::id (CORBA::Short id, CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   id_ = id;
 }
@@ -90,7 +86,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "pdstieylm:c:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dstieylm:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -148,24 +144,11 @@ CosNaming_Client::parse_args (void)
                           Destroy_Test,
                           -1);
         break;
-      case 'p':
-        if (this->test_ == 0)
-          ACE_NEW_RETURN (this->test_,
-                          Persistent_Test_Begin (this->orbmgr_.orb ()),
-                          -1);
-        break;
-      case 'c':
-        if (this->test_ == 0)
-          ACE_NEW_RETURN (this->test_,
-                          Persistent_Test_End (this->orbmgr_.orb (),
-                                               get_opts.optarg),
-                          -1);
-        break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Argument %c \n usage:  %s"
                            " [-d]"
-                           " [-s or -e or -t or -i or -y or -p or -c<ior> or -m<size>]"
+                           " [-s or -e or -t or -i or -y]"
                            "\n",
                            c,
                            this->argv_ [0]),
@@ -216,8 +199,7 @@ CosNaming_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      CORBA::ORB_var orb = this->orbmgr_.orb ();
-      return this->naming_client_.init (orb.in ());
+      return this->naming_client_.init (this->orbmgr_.orb ());
     }
   ACE_CATCHANY
     {
@@ -363,7 +345,8 @@ MT_Test::svc (void)
 int
 MT_Test::execute (TAO_Naming_Client &root_context)
 {
-  if (CORBA::is_nil (this->orb_.in ()))
+  // if we weren't given the orb pointer - cannot proceed.
+  if (orb_ == 0)
     return -1;
 
   // Create data which will be used by all threads.
@@ -668,19 +651,12 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
         Test_Object::_narrow (result_obj_ref.in (),
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (result_object.in ()))
+      if (CORBA::is_nil (result_object.in ())
+          || !(result_object->id (ACE_TRY_ENV) == CosNaming_Client::OBJ1_ID))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with resolving foo in Tree Test - nil object ref.\n"),
+                           "Problems with resolving foo in Tree Test\n"),
                           -1);
-
-      CORBA::Short id = result_object->id (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (id != CosNaming_Client::OBJ1_ID)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with resolving foo in Tree Test - wrong id.\n"),
-                          -1);
 
       // Unbind the object from the Naming Context and bind it back
       // in.
@@ -1205,7 +1181,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
       // Do the testing.
       not_empty_test (my_context,
-				      ACE_TRY_ENV);
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       my_context->unbind (object_name, ACE_TRY_ENV);
@@ -1220,7 +1196,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Destroy test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Exceptions test");
       return -1;
     }
   ACE_ENDTRY;
@@ -1267,119 +1243,6 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref,
     }
   ACE_ENDTRY;
   ACE_CHECK;
-}
-
-Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb)
-  : orb_ (orb)
-{
-}
-
-int
-Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Create a name structure we will reuse.
-      CosNaming::Name test_name;
-      test_name.length (1);
-      test_name[0].id = CORBA::string_dup ("level1");
-
-      // Create and bind a naming context under the <root> context.
-      CosNaming::NamingContext_var level1_context =
-        root_context->bind_new_context (test_name,
-                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Create and bind a naming context under <level1> context.
-      test_name[0].id = CORBA::string_dup ("level2");
-      CosNaming::NamingContext_var level2_context =
-        root_context->bind_new_context (test_name,
-                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Log the ior of <level1_context> for use by <Persistent_Test_End>.
-      CORBA::String_var ior =
-        orb_->object_to_string (level1_context.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "%s\n", ior.in ()));
-
-      ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 1) OK.\n"));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in Persistent Test (part 1)");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
-Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
-                                          const char *ior)
-  : orb_ (orb),
-    ior_ (ior)
-{
-}
-
-int
-Persistent_Test_End::execute (TAO_Naming_Client &root_context)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Create a name structure we will reuse.
-      CosNaming::Name test_name;
-      test_name.length (1);
-      test_name[0].id = CORBA::string_dup ("level2");
-
-      // Convert stringified ior we got from <Persistent_Test_Begin>
-      // for <level1> Naming Context to Naming Context reference.
-      CORBA::Object_var obj =
-        orb_->string_to_object (ior_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CosNaming::NamingContext_var level1_context =
-        CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (level1_context.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot narrow object to Naming Context\n"),
-                          -1);
-
-      //  Resolve for <level2> context through the persistent ior we
-      // got from part 1 of this test.
-      obj = level1_context->resolve (test_name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Now, resolve for <level2> context using the <root> context
-      // reference which we obtained through <resolve_initial_references>.
-      test_name.length (2);
-      test_name[0].id = CORBA::string_dup ("level1");
-      test_name[1].id = CORBA::string_dup ("level2");
-      CORBA::Object_var obj2 =
-        root_context->resolve (test_name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Make sure we got the same answer through both methods.
-      if (obj2->_is_equivalent (obj.in ()))
-        ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 2) OK.\n"));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in Persistent Test (part 2)");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 // This function runs the test.

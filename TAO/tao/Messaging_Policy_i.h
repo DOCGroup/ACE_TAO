@@ -28,9 +28,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public virtual PortableServer::RefCountServantBase,
-                                                        public virtual POA_Messaging::RelativeRoundtripTimeoutPolicy
-
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public POA_Messaging::RelativeRoundtripTimeoutPolicy, public TAO_RefCountServantBase
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -43,6 +41,9 @@ public:
   TAO_RelativeRoundtripTimeoutPolicy_i (PortableServer::POA_ptr poa,
                                         const TimeBase::TimeT& relative_expiry);
   // Constructor
+
+  TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i& rhs);
+  // Copy constructor
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,

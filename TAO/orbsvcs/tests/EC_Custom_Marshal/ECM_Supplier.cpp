@@ -523,7 +523,6 @@ Test_Supplier::svc ()
 
 void
 Test_Supplier::disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

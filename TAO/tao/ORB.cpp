@@ -79,6 +79,19 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+void
+CORBA::release (CORBA::ORB_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::ORB_ptr obj)
+{
+  return obj == 0;
+}
+
 // = Static initialization.
 
 // Count of the number of ORBs.
@@ -137,15 +150,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 
 CORBA_ORB::~CORBA_ORB (void)
 {
-  if (!CORBA::is_nil (this->name_service_))
-    CORBA::release (this->name_service_);
-  if (!CORBA::is_nil (this->schedule_service_))
-    CORBA::release (this->schedule_service_);
-  if (!CORBA::is_nil (this->event_service_))
-    CORBA::release (this->event_service_);
-  if (!CORBA::is_nil (this->trading_service_))
-    CORBA::release (this->trading_service_);
-
   this->orb_core_->fini ();
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
@@ -164,6 +168,14 @@ CORBA_ORB::~CORBA_ORB (void)
   delete this->shutdown_lock_;
   this->shutdown_lock_ = 0;
 
+  if (!CORBA::is_nil (this->name_service_))
+    CORBA::release (this->name_service_);
+  if (!CORBA::is_nil (this->schedule_service_))
+    CORBA::release (this->schedule_service_);
+  if (!CORBA::is_nil (this->event_service_))
+    CORBA::release (this->event_service_);
+  if (!CORBA::is_nil (this->trading_service_))
+    CORBA::release (this->trading_service_);
 # ifdef TAO_HAS_VALUETYPE
   // delete valuetype_factory_map_;
   // not really, its a singleton
@@ -1279,10 +1291,9 @@ CORBA::ORB_init (int &argc,
         {
           char *current_arg = arg_shifter.get_current ();
 
-          const char orbid_opt[] = "-ORBId";
+          const char orbid_opt[] = "-ORBid";
           const int orbid_len = sizeof (orbid_opt) - 1;
-          if (ACE_OS::strcmp (current_arg,
-                              orbid_opt) == 0)
+          if (ACE_OS::strcmp (current_arg, orbid_opt) == 0)
             {
               arg_shifter.consume_arg ();
               if (arg_shifter.is_parameter_next ())
@@ -1363,10 +1374,6 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
 
       // @@ Is BUFSIZ the right size here?
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
-#if defined(ACE_HAS_PURIFY)
-      (void) ACE_OS::memset (buf, '\0', sizeof(buf));
-#endif /* ACE_HAS_PURIFY */
-
       TAO_OutputCDR cdr (buf,  sizeof buf,
                          TAO_ENCAP_BYTE_ORDER,
                          this->orb_core_->output_cdr_buffer_allocator (),
@@ -1455,8 +1462,8 @@ CORBA_ORB::string_to_object (const char *str,
       TAO_MProfile mprofile (0);
       // It is safe to declare this on the stack since the contents of
       // mprofile get copied.  No memory is allocated for profile storage
-      // here.  The Connector Registry will determine the exact number
-      // of profiles and tell the MProfile object to allocate enough memory
+      // here.  The Connector Registry will determine the exact number 
+      // of profiles and tell the MProfile object to allocate enough memory 
       // to hold them all.
 
       if (this->orb_core_->connector_registry ()->make_mprofile (str,
@@ -1646,9 +1653,9 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
     return 0;
 
   // @@EXC@@ We should receive the <env> from the command line.
-
-  // @@ What about forwarding.  Which this approach we are never forwarded
-  //    when we use collocation!
+  // @@ Fred: why do we need an environment for the
+  //    Profile::_key() method?
+  // @@ No good reason, I will fix.
 
   CORBA::Environment ACE_TRY_ENV;
 
@@ -1668,6 +1675,9 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
            i != end;
            ++i)
         {
+          // @@ Fred&Ossama: how do we handle forwarding in this case?
+          //    What happens if we are forwarded back to this ORB, or if a
+          //    local stub is (or should) be forwarded to a remote one?
 
           const TAO_MProfile& mprofile = sobj->get_base_profiles ();
           if ((*i).int_id_->is_collocated (mprofile) == 0)
@@ -1680,7 +1690,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                ++j)
             {
               const TAO_Profile* profile = mprofile.get_profile (j);
-              TAO_ObjectKey_var objkey = profile->_key ();
+              TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
               ACE_CHECK_RETURN (0);
 
               ACE_TRY
@@ -1689,9 +1699,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                     oa->find_servant (objkey.in (), ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 
-                  // Found collocated object.  Perhaps we can get around by simply
-                  // setting the servant_orb, but let get this to work first.
-                  sobj->servant_orb (CORBA::ORB::_duplicate ((*i).int_id_->orb ()));
                   return servant;
                 }
               ACE_CATCHANY
@@ -1705,6 +1712,10 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
     }
   else
     {
+      // @@ Fred&Ossama: how do we handle forwarding in this case?
+      //    What happens if we are forwarded back to this ORB, or if a
+      //    local stub is (or should) be forwarded to a remote one?
+
       const TAO_MProfile& mprofile = sobj->get_base_profiles ();
       if (!this->orb_core_->is_collocated (mprofile))
         return 0;
@@ -1719,7 +1730,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
            ++j)
         {
           const TAO_Profile* profile = mprofile.get_profile (j);
-          TAO_ObjectKey_var objkey = profile->_key ();
+          TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
 
           ACE_TRY_EX(LOCAL_ORB)
@@ -1728,11 +1739,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                 oa->find_servant (objkey.in (), ACE_TRY_ENV);
               ACE_TRY_CHECK_EX(LOCAL_ORB);
 
-              // Found collocated object.  Perhaps we can get around by simply
-              // setting the servant_orb, but let get this to work first.
-
-              // There could only be one ORB which is us.
-              sobj->servant_orb (CORBA::ORB::_duplicate (this));
               return servant;
             }
           ACE_CATCHANY
@@ -1756,8 +1762,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t): Cannot add nil object to table <%s>\n",
-                       object_id.c_str ()),
+                       "Unable to add IOR to table\n"),
                       -1);
 
   CORBA::String_var string =
@@ -1770,8 +1775,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 
   if (this->lookup_table_.add_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t): Unable to add IOR to table <%s>\n",
-                       object_id.c_str ()),
+                       "Unable to add IOR to table\n"),
                       -1);
 
   return 0;
@@ -1790,8 +1794,7 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
 
   if (this->lookup_table_.find_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) cannot find IOR for <%s>\n",
-                       object_id.c_str ()),
+                       "No match for the given ObjectID\n"),
                       -1);
 
   obj = this->string_to_object (ior.c_str ());
@@ -1829,7 +1832,6 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   cdr.read_octet_array (x.get_buffer (), length);
 #else
   x.replace (length, cdr.start ());
-  x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
   cdr.skip_bytes (length);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   return cdr.good_bit ();

@@ -45,12 +45,10 @@ CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
            const void *source,
            const void *dest,
-           CORBA::Environment &ACE_TRY_ENV)
+           CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  // Since every exception-throwing function is followed by break and then return,
-  // we'll just skip the checking here.
   switch (param->kind_)
     {
     case CORBA::tk_null:
@@ -71,44 +69,44 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
     case CORBA::tk_wchar:
       break;
     case CORBA::tk_any:
-      retval = TAO_Marshal_Any::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Any::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_TypeCode:
-      retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_Principal:
-      retval = TAO_Marshal_Principal::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Principal::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_objref:
-      retval = TAO_Marshal_ObjRef::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_ObjRef::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_struct:
-      retval = TAO_Marshal_Struct::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
 
       // @@ It's likely that other types will need their top-level
       // memory freed as well. --- Carlos (and Seth).
       // delete source;
       break;
     case CORBA::tk_union:
-      retval = TAO_Marshal_Union::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_string:
-      retval = TAO_Marshal_String::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_String::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_sequence:
-      retval = TAO_Marshal_Sequence::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Sequence::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_array:
-      retval = TAO_Marshal_Array::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Array::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_alias:
-      retval = TAO_Marshal_Alias::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Alias::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_except:
-      retval = TAO_Marshal_Except::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Except::deep_free (param, source, dest, env);
       break;
     case CORBA::tk_wstring:
-      retval = TAO_Marshal_WString::deep_free (param, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_WString::deep_free (param, source, dest, env);
       break;
     default:
       retval = CORBA::TypeCode::TRAVERSE_STOP;
@@ -122,7 +120,7 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
                                   const void *,
                                   const void *,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &env)
 {
   CORBA::TCKind my_kind;
 
@@ -131,11 +129,11 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
-  my_kind = tc->kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  my_kind = tc->kind (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (my_kind)
     {
@@ -160,8 +158,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
@@ -171,14 +168,14 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
                                const void *source,
                                const void *dest,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
   if (!tc)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -186,22 +183,22 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::Long size;
 
   // compute the number of fields in the struct
-  int member_count = tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  int member_count = tc->member_count (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   for (int i = 0; i < member_count && retval ==
          CORBA::TypeCode::TRAVERSE_CONTINUE; i++)
     {
       // get the typecode for the ith field
-      param = tc->member_type (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      param = tc->member_type (i, env);
+
+      TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
       // get the size of the field
-      size = param->size (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      size = param->size (env);
 
-      // Since every exception-throwing function is followed by a break, we'll just
-      // check for exception after the switch.
+      TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
+
       switch (param->kind_)
         {
         case CORBA::tk_null:
@@ -222,13 +219,13 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_wchar:
           break;
         case CORBA::tk_any:
-          retval = TAO_Marshal_Any::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Any::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_TypeCode:
-          retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_Principal:
-          retval = TAO_Marshal_Principal::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Principal::deep_free (param, source, dest, env);
           break;
 
         case CORBA::tk_objref:
@@ -242,43 +239,42 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
         break;
 
         case CORBA::tk_struct:
-          retval = TAO_Marshal_Struct::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_union:
-          retval = TAO_Marshal_Union::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_string:
-          retval = TAO_Marshal_String::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_String::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_sequence:
-          retval = TAO_Marshal_Sequence::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Sequence::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_array:
-          retval = TAO_Marshal_Array::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Array::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_alias:
-          retval = TAO_Marshal_Alias::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Alias::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_except:
-          retval = TAO_Marshal_Except::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Except::deep_free (param, source, dest, env);
           break;
         case CORBA::tk_wstring:
-          retval = TAO_Marshal_WString::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_WString::deep_free (param, source, dest, env);
           break;
         default:
           retval = CORBA::TypeCode::TRAVERSE_STOP;
         } // end of switch
       source = (char *)source + size;
     } // end of loop
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
@@ -288,7 +284,7 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
                               const void *data,
                               const void *data2,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr discrim_tc;
@@ -308,11 +304,11 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
                                      ACE_const_cast (void *, 
                                                      data));
 
-  discrim_tc = tc->discriminator_type (ACE_TRY_ENV);
+  discrim_tc = tc->discriminator_type (env);
   // Get the discriminator type
   // @@EXC@@ Why are we changing the exception thrown here?
-  //  if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  //  if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   discrim_val = base_union->_discriminant ();
   // Get a pointer to the discriminator value.
@@ -320,16 +316,16 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   member_val = base_union->_access (0);
   // Get a pointer to the member, but don't allocate new storage.
 
-  default_index = tc->default_index (ACE_TRY_ENV);
+  default_index = tc->default_index (env);
   // now get ready to marshal the actual union value
   // @@EXC@@ Why are we changing the exception thrown here?
-  // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
-  ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
+  // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
 
-  member_count = tc->member_count (ACE_TRY_ENV);
+  member_count = tc->member_count (env);
   // @@EXC@@ Why are we changing the exception thrown here?
-  // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
-  ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
+  // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
 
   // check which label value matches with the discriminator
   // value. Accordingly, marshal the corresponding
@@ -337,14 +333,14 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   // and marshal accordingly. Otherwise it is an error.
   for (i = 0; member_count-- != 0; i++)
     {
-      member_label = tc->member_label (i, ACE_TRY_ENV);
+      member_label = tc->member_label (i, env);
       // @@EXC@@ Why are we changing the exception thrown here?
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
-      ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
+      // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
 
       // do the matching
       CORBA::TypeCode_var type = member_label->type ();
-      switch (type->kind (ACE_TRY_ENV))
+      switch (type->kind (env))
         {
         case CORBA::tk_short:
           if (*(CORBA::Short *)member_label->_tao_get_cdr ()->base () ==
@@ -383,15 +379,16 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
             discrim_matched = 1;
           break;
         default:
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
-                            CORBA::TypeCode::TRAVERSE_STOP);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (), 
+                                env, 
+                                CORBA::TypeCode::TRAVERSE_STOP);
         }// end of switch
 
       // get the member typecode
-      member_tc = tc->member_type (i, ACE_TRY_ENV);
+      member_tc = tc->member_type (i, env);
       // @@EXC@@ Why are we changing the exception thrown here?
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
-      ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
+      // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
 
       if (default_index >= 0 && default_index-- == 0)
         {
@@ -405,20 +402,22 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
           retval = DEEP_FREE (discrim_tc, 
                               discrim_val, 
                               data2, 
-                              ACE_TRY_ENV);
+                              env);
 
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          TAO_CHECK_ENV_RETURN (env, 
+                                CORBA::TypeCode::TRAVERSE_STOP);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
-                              CORBA::TypeCode::TRAVERSE_STOP);
+            TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
+                                  env, 
+                                  CORBA::TypeCode::TRAVERSE_STOP);
 
           // marshal according to the matched typecode
-          // @@EXC@@ No need to check ACE_TRY_ENV.
+          // @@EXC@@ No need to check env.
           return DEEP_FREE (member_tc, 
                             member_val,
                             data2, 
-                            ACE_TRY_ENV);
+                            env);
         } // end of if
     } // end of for
 
@@ -428,22 +427,26 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   retval = DEEP_FREE (discrim_tc, 
                       discrim_val, 
                       data2, 
-                      ACE_TRY_ENV);
+                      env);
 
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, 
+                        CORBA::TypeCode::TRAVERSE_STOP);
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
-                      CORBA::TypeCode::TRAVERSE_STOP);
+    TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
+                          env, 
+                          CORBA::TypeCode::TRAVERSE_STOP);
 
   if (default_tc)
     return DEEP_FREE (default_tc, 
                       member_val, 
                       data2, 
-                      ACE_TRY_ENV);
+                      env);
   else
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
+
+// @@EXC@@ Exception modification progress. -- Nanbor
 
 // deep_free for Sequence
 CORBA::TypeCode::traverse_status
@@ -472,7 +475,7 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
                               const void *source,
                               const void *dest,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
@@ -488,22 +491,21 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
-  bounds = tc->length (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  bounds = tc->length (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
  // exception getting bounds
 
   // get element typecode
-  tc2 = tc->content_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  tc2 = tc->content_type (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
   // exception computing content type
 
   // get the size of the element type
-  size = tc2->size (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  size = tc2->size (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (tc2->kind_)
     {
@@ -530,96 +532,96 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     case CORBA::tk_any:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Any::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Any::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_TypeCode:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_TypeCode::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_TypeCode::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_Principal:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Principal::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Principal::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_objref:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_ObjRef::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_ObjRef::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_struct:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Struct::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Struct::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_union:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Union::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Union::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_string:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_String::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_String::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_sequence:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Sequence::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Sequence::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_array:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Array::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Array::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_alias:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Alias::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Alias::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_except:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Except::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_Except::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
     case CORBA::tk_wstring:
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_WString::deep_free (tc2, source, dest, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          retval = TAO_Marshal_WString::deep_free (tc2, source, dest, env);
+          TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
           source = (char *)source + size;
         }
       break;
@@ -628,15 +630,17 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
       break;
     } // end of switch
   //              CORBA::release (tc2);
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  else
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Sequence::deep_free detected error\n"));
       // error exit
-      ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_NOTREACHED (return CORBA::TypeCode::TRAVERSE_STOP);
 }
 
 // deep_free alias
@@ -644,7 +648,7 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
                               const void *source,
                               const void *dest,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &env)
 {
   CORBA::TypeCode_ptr   tc2;  // typecode of the aliased type
   CORBA::TypeCode::traverse_status   retval =
@@ -655,13 +659,12 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Alias::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
   // get element type
-  tc2 = tc->content_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  tc2 = tc->content_type (env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
   // exception getting content_type
 
   // switch on the data type and handle the cases for primitives here for
@@ -687,58 +690,59 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
       //              CORBA::release (tc2);
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     case CORBA::tk_any:
-      retval = TAO_Marshal_Any::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Any::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_TypeCode:
-      retval = TAO_Marshal_TypeCode::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_TypeCode::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_Principal:
-      retval = TAO_Marshal_Principal::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Principal::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_objref:
-      retval = TAO_Marshal_ObjRef::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_ObjRef::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_struct:
-      retval = TAO_Marshal_Struct::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Struct::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_union:
-      retval = TAO_Marshal_Union::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Union::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_string:
-      retval = TAO_Marshal_String::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_String::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_sequence:
-      retval = TAO_Marshal_Sequence::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Sequence::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_array:
-      retval = TAO_Marshal_Array::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Array::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_alias:
-      retval = TAO_Marshal_Alias::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Alias::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_except:
-      retval = TAO_Marshal_Except::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_Except::deep_free (tc2, source, dest, env);
       break;
     case CORBA::tk_wstring:
-      retval = TAO_Marshal_WString::deep_free (tc2, source, dest, ACE_TRY_ENV);
+      retval = TAO_Marshal_WString::deep_free (tc2, source, dest, env);
       break;
     default:
       // anything else is an error
       retval = CORBA::TypeCode::TRAVERSE_STOP;
     }
   //      CORBA::release (tc2);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  else
     {
       // We should never reach here.
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Alias::decode detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_NOTREACHED (return CORBA::TypeCode::TRAVERSE_STOP);
 }
 
 // deep_free structs
@@ -746,7 +750,7 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
                                const void *,
                                const void *,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
 #if 0
   // temporarily commented out to make compiler happy
@@ -762,8 +766,7 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Except::deep_free detected error\n"));
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
     // XXX: Exceptions are currently leaked because of bugs lurking
     // in this area.  Keep in mind that there are two things to

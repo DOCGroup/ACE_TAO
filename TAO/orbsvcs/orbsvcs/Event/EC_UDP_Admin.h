@@ -61,8 +61,7 @@ public:
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr_out addr,
-                         CORBA::Environment& env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                         CORBA::Environment& env);
 
 private:
   CORBA::UShort port_;

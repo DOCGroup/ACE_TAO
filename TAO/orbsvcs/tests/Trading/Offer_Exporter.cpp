@@ -9,7 +9,7 @@ TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                     CORBA::Boolean verbose,
                     CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  TAO_THROW_SPEC ((CORBA::SystemException))
     : verbose_ (verbose)
 {
   // Initialize the offer sequences and structures.
@@ -34,16 +34,6 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 
 void
 TAO_Offer_Exporter::export_offers (CORBA::Environment& TAO_IN_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::InvalidObjectRef,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::Register::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting offers.\n"));
 
@@ -61,7 +51,7 @@ TAO_Offer_Exporter::export_offers (CORBA::Environment& TAO_IN_ENV)
 void
 TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
                                CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Register::InvalidObjectRef,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -121,7 +111,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
 
 void
 TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Register::InvalidObjectRef,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -196,7 +186,7 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalOfferId,
                    CosTrading::UnknownOfferId,
                    CosTrading::Register::ProxyOfferId))
@@ -230,7 +220,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Exporter::describe_offers (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalOfferId,
                    CosTrading::UnknownOfferId,
                    CosTrading::Register::ProxyOfferId))
@@ -276,7 +266,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Exporter::modify_offers (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented,
                    CosTrading::IllegalOfferId,
                    CosTrading::UnknownOfferId,
@@ -331,7 +321,7 @@ TAO_Offer_Exporter::modify_offers (CORBA::Environment& TAO_IN_ENV)
 void
 TAO_Offer_Exporter::
 withdraw_offers_using_constraints (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTrading::IllegalConstraint,
@@ -375,7 +365,7 @@ withdraw_offers_using_constraints (CORBA::Environment& TAO_IN_ENV)
 
 CosTrading::OfferIdSeq*
 TAO_Offer_Exporter::grab_offerids (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented))
 {
   if (this->verbose_)

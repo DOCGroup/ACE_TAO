@@ -44,10 +44,7 @@ public:
   TAO_IIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
-  virtual int open (TAO_ORB_Core *orb_core,
-                    int version_major,
-                    int version_minor,
-                    ACE_CString &address);
+  int open (TAO_ORB_Core *orb_core, ACE_CString &address);
   // initialize acceptor for this address.
 
   virtual int open_default (TAO_ORB_Core *orb_core);
@@ -93,12 +90,6 @@ private:
   //    endpoint. For example it the IP address is INADDR_ANY
   //    (0.0.0.0) then there will be possibly a different hostname for
   //    each interface.
-
-  TAO_GIOP_Version version_;
-  // The GIOP version for this endpoint
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
 };
 
 #if defined(__ACE_INLINE__)

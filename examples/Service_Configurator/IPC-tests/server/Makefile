@@ -27,8 +27,7 @@ FILES	= Handle_L_Dgram \
 PSRC   	= $(addsuffix .cpp,$(BIN))
 LSRC	= $(addsuffix .cpp,$(FILES))
  
-LDLIBS += -lServer
-LIBS   += $(ACELIB)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
 

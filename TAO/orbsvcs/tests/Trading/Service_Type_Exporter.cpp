@@ -8,7 +8,6 @@ TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose,
                            CORBA::Environment& TAO_IN_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   : verbose_ (verbose),
     lookup_ (lookup_if)
 {
@@ -26,7 +25,7 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 void
 TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTradingRepos::ServiceTypeRepository::HasSubTypes))
@@ -63,7 +62,7 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
                    CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
@@ -82,7 +81,7 @@ TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
                    CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
@@ -140,7 +139,7 @@ void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
                   CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
                    CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
@@ -201,7 +200,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 
 void
 TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TRY
     {
@@ -233,7 +232,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
 {
@@ -266,7 +265,7 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
 {

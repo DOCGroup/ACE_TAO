@@ -1,3 +1,4 @@
+
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
@@ -59,11 +60,6 @@ public:
   virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
-  virtual void * _create_collocated_objref (const char *repository_id,
-                                            CORBA::ULong type,
-                                            TAO_Stub *stub);
-  // Collocated object factory.
-
 protected:
   TAO_ServantBase (void);
   // Default constructor, only derived classes can be created.
@@ -96,6 +92,7 @@ protected:
   // Get this interface's repository id (TAO specific).
 
   // = Should be protected/private, but a nested class needs it.
+
 public:
   ACE_SYNCH_MUTEX &_single_threaded_poa_lock (void);
   // Access to the single threaded poa lock.
@@ -224,19 +221,14 @@ public:
   // Returns hash value.
 };
 
-class TAO_Export TAO_Local_ServantBase : public virtual TAO_ServantBase
+class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
 {
   // = TITLE
   //   Base class for local skeletons and servants.
 protected:
   TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This is an auxiliar method for _this().  Make sure *not* to
-  // register with the default POA.
-
-  void _dispatch (CORBA::ServerRequest &request,
-                  void *context,
-                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Throws CORBA::BAD_OPERATION exception.
+  // register with the default POA
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

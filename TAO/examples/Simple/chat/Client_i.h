@@ -74,11 +74,11 @@ public:
   const char* nickname_;
   // Nickname of the user chatting.
 
-  TAO_ORB_Manager orb_manager_;
-  // Our orb.
-
   Broadcaster_var server_;
   // Server object ptr.
+
+  CORBA::ORB_var orb_;
+  // Our orb.
 
   Receiver_i receiver_i_;
   // The receiver object.

@@ -14,12 +14,24 @@
 ACE_RCSID(tao, Principal, "$Id$")
 
 CORBA_Principal::CORBA_Principal (void)
-  : refcount_ (1)
 {
 }
 
 CORBA_Principal::~CORBA_Principal (void)
 {
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::Principal_ptr principal)
+{
+  return (CORBA::Boolean) (principal == 0);
+}
+
+void
+CORBA::release (CORBA::Principal_ptr principal)
+{
+  if (principal)
+    principal->_decr_refcnt ();
 }
 
 CORBA::Boolean

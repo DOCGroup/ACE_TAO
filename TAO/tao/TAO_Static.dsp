@@ -122,14 +122,6 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CONV_FRAMEC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\corbafwd.cpp
 # End Source File
 # Begin Source File
@@ -259,14 +251,6 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 # Begin Source File
 
 SOURCE=.\Invocation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS.cpp
 # End Source File
 # Begin Source File
 
@@ -414,10 +398,6 @@ SOURCE=.\Stub.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Tagged_Components.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\TAO.cpp
 # End Source File
 # Begin Source File
@@ -507,14 +487,6 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\Connector_Registry.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMEC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES.h
 # End Source File
 # Begin Source File
 
@@ -623,14 +595,6 @@ SOURCE=.\InconsistentTypeCodeC.h
 # Begin Source File
 
 SOURCE=.\Invocation.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
@@ -790,10 +754,6 @@ SOURCE=.\stub.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Tagged_Components.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
@@ -858,14 +818,6 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CONV_FRAMEC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
@@ -923,14 +875,6 @@ SOURCE=.\IIOP_ORB.i
 # Begin Source File
 
 SOURCE=.\Invocation.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
@@ -1039,10 +983,6 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\stub.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Tagged_Components.i
 # End Source File
 # Begin Source File
 

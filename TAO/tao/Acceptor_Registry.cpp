@@ -57,6 +57,11 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
 int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
+  // @@ Fred&Ossama: we should optimize this: we loop over the
+  // profiles here and in the ORB::is_collocated() method, maybe we
+  // should return the index of the profile that matched?  What
+  // happens if the address matches but the object key does not?
+  // Should we keep on searching in the ORB loop?
 
   TAO_AcceptorSetItor end = this->end ();
 
@@ -68,7 +73,6 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
         {
           const TAO_Profile *profile = mprofile.get_profile (j);
 
-          // Check the address for equality.
           if ((*i)->tag () == profile->tag ()
               && (*i)->is_collocated (profile))
             return 1;
@@ -117,10 +121,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                           -1);
       ACE_CString prefix = iop.substring (0, slot);
 
-      // IOP://address1,address2//
-      //    ^ slot
-      // check for the presence of addresses.  Get length and subtract
-      // 3 for the three chars ://
+      // @@ Fred, please document where the major number "3" comes
+      // from.
       if (slot == ACE_static_cast (int, iop.length () - 3))
         {
           // Protocol was specified without an endpoint.  According to
@@ -133,12 +135,13 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           continue;
         }
 
-      // increment slot past the "://" (i.e. add 3)
+      // @@ Fred, please document where the major number "3" comes
+      // from.
       ACE_CString addrs  = iop.substring (slot + 3);
 
       if (addrs [addrs.length () - 1] == '/')
         // Get rid of trailing '/'.
-        addrs [addrs.length () - 1] = '\0';
+        addrs [addrs.length () - 1] = '\0'; 
 
       char *last_addr=0;
       addr_str.reset (addrs.rep ());
@@ -168,29 +171,22 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     (*factory)->factory ()->make_acceptor ();
                   if (acceptor != 0)
                     {
-                      // add acceptor to list.
-                      this->acceptors_.insert (acceptor);
-
                       // Check if an "N.n@" version prefix was
                       // specified.
                       // @@ For now, we just drop the version prefix.
                       // At some point in the future it may become
                       // useful.
-                      int major = -1;
-                      int minor = -1;
                       const char *temp_iop = address.c_str ();
-                      if (isdigit (temp_iop[0])
-                          && temp_iop[1] == '.'
-                          && isdigit (temp_iop[2])
+                      if (isdigit (temp_iop[0]) 
+                          && temp_iop[1] == '.' 
+                          && isdigit (temp_iop[2]) 
                           && temp_iop[3] == '@')
-                        {
-                          major = temp_iop[0] - '0';
-                          minor = temp_iop[2] - '0';
-                          address = address.substring (4);
-                        }
+                        address = address.substring (4);
+
+                      // add acceptor to list.
+                      this->acceptors_.insert (acceptor);
 
                       if (acceptor->open (orb_core,
-                                          major, minor,
                                           address) == -1)
                         return -1;
                       break;
@@ -210,8 +206,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   return 0;
 }
 
-// Used when no endpoints were specified.  Open a default server
-// for the indicated protocol.
 int
 TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                      ACE_CString *protocol_prefix)
@@ -222,7 +216,9 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   TAO_ProtocolFactorySetItor end =
     orb_core->protocol_factories ()->end ();
 
-  // loop through loaded protocols looking for protocol_prefix
+  // @@ Fred, there should be more comments in this method so that
+  // people can tell what's going on...  Can you please fix it?
+
   for (TAO_ProtocolFactorySetItor i =
          orb_core->protocol_factories ()->begin ();
        i != end;
@@ -245,7 +241,6 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
             }
         }
 
-      // got it, make an acceptor
       TAO_Acceptor *acceptor =
         (*i)->factory ()->make_acceptor ();
 
@@ -259,9 +254,6 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
           continue;
         }
 
-      // initialize the acceptor to listen on the default endpoint.  For IIOP
-      // this will just be the default interface and let the kernel pick a port for
-      // us.
       if (acceptor->open_default (orb_core) == -1)
         {
           if (TAO_debug_level > 0)

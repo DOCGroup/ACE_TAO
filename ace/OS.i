@@ -107,55 +107,6 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 # include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
-				  int error)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (error) 
-{
-}
-
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (errno_ref) 
-{ 
-}
-
-ACE_INLINE 
-ACE_Errno_Guard::~ACE_Errno_Guard (void)
-{
-#if defined (ACE_MT_SAFE)
-  *errno_ptr_ = this->error_;
-#else
-  errno = this->error_;
-#endif /* ACE_MT_SAFE */
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator= (int error)
-{
-  return this->error_ = error;
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator== (int error)
-{
-  return this->error_ == error;
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator!= (int error)
-{
-  return this->error_ != error;
-}
-
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -746,6 +697,8 @@ ACE_OS::umask (mode_t cmask)
 
 #else /* ACE_WIN32 */
 
+// This is for Win32 exclusively!
+
 // Adapt the Win32 System Calls (which return BOOLEAN values of TRUE
 // and FALSE) into int values expected by the ACE_OSCALL macros.
 # define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) == FALSE ? -1 : 0)
@@ -1243,22 +1196,22 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
   return ::memcmp (t, s, len);
 }
 
-ACE_INLINE const void *
+ACE_INLINE void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
 #if defined (ACE_HAS_MEMCHR)
   ACE_TRACE ("ACE_OS::memchr");
   return ::memchr (s, c, len);
 #else
-  u_char *t = (u_char *) s;
-  u_char *e = (u_char *) s + len;
-
+  unsigned char *t = (unsigned char *) s;
+  unsigned char *e = (unsigned char *) s + len;
   while (t < e)
-    if (((int) *t) == c)
-      return t;
-    else
-      t++;
-
+    {
+      if (((int) *t) == c)
+        return t;
+      else
+        t++;
+    }
   return 0;
 #endif /* ACE_HAS_MEMCHR */
 }
@@ -2635,11 +2588,9 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
       m->nesting_level_++;
     }
 
-  {
-    // Save/restore errno.
-    ACE_Errno_Guard error (errno);
-    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  }
+  int error = errno;
+  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -2680,11 +2631,9 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
         }
     }
 
-  {
-    // Save/restore errno.
-    ACE_Errno_Guard error (errno);
-    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  }
+  int error = errno;
+  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -2733,12 +2682,9 @@ ACE_TRACE ("ACE_Recursive_Thread_Mutex::release");
             }
         }
     }
-
-  {
-    // Save/restore errno.
-    ACE_Errno_Guard error (errno);
-    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  }
+  int error = errno;
+  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  errno = error;
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -3675,16 +3621,16 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 
 
   int result = 0;
-  ACE_Errno_Guard error (errno, 0);
+  int error = 0;
 
   if (rw->important_writer_ && rw->ref_count_ == 1)
-    // only the reader requesting to upgrade its lock is left over.
+    // only the reader requesting to upgrade its lock is left over
     {
       result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
       error = errno;
     }
   else if (rw->num_waiting_writers_ > 0 && rw->ref_count_ == 0)
-    // give preference to writers over readers...
+    // Give preference to writers over readers...
     {
       result = ACE_OS::cond_signal (&rw->waiting_writers_);
       error = errno;
@@ -3695,13 +3641,15 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
       error = errno;
     }
 
+
   ACE_OS::mutex_unlock (&rw->lock_);
+  errno = error;
   return result;
-# endif /* ! ace_lacks_rwlock_t */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
-  ace_unused_arg (rw);
-  ace_notsup_return (-1);
-#endif /* ace_has_threads */
+  ACE_UNUSED_ARG (rw);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
 }
 
 // Note that the caller of this method *must* already possess this
@@ -4188,463 +4136,46 @@ ACE_OS::event_reset (ACE_event_t *event)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
-ACE_INLINE u_long 
-ACE_Flow_Spec::token_rate (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return this->TokenRate; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::token_rate (u_long tr) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->TokenRate = tr; 
-#else
-  ACE_UNUSED_ARG (tr);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE u_long 
-ACE_Flow_Spec::token_bucket_size (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return this->TokenBucketSize; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::token_bucket_size (u_long tbs) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->TokenBucketSize = tbs; 
-#else
-  ACE_UNUSED_ARG (tbs);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-  
-ACE_INLINE u_long 
-ACE_Flow_Spec::peak_bandwidth (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return this->PeakBandwidth; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::peak_bandwidth (u_long pb) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->PeakBandwidth = pb; 
-#else
-  ACE_UNUSED_ARG (pb);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE u_long 
-ACE_Flow_Spec::latency (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return this->Latency; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::latency (u_long l) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->Latency = l; 
-#else
-  ACE_UNUSED_ARG (l);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE u_long 
-ACE_Flow_Spec::delay_variation (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return this->DelayVariation; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-ACE_INLINE void 
-ACE_Flow_Spec::delay_variation (u_long dv) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->DelayVariation = dv; 
-#else
-  ACE_UNUSED_ARG (dv);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE ACE_SERVICE_TYPE 
-ACE_Flow_Spec::service_type (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  return this->ServiceType; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  this->ServiceType = st; 
-#else
-  ACE_UNUSED_ARG (st);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE u_long 
-ACE_Flow_Spec::max_sdu_size (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  return this->MaxSduSize; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::max_sdu_size (u_long mss) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  this->MaxSduSize = mss; 
-#else
-  ACE_UNUSED_ARG (mss);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE u_long 
-ACE_Flow_Spec::minimum_policed_size (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  return this->MinimumPolicedSize; 
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_Flow_Spec::minimum_policed_size (u_long mps) 
-{ 
-#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
-  this->MinimumPolicedSize = mps; 
-#else
-  ACE_UNUSED_ARG (mps);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE ACE_Flow_Spec
-ACE_QoS::sending_flowspec (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return (ACE_Flow_Spec &) this->SendingFlowspec; 
-#else
-  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->SendingFlowspec = (FLOWSPEC) fs; 
-#else
-  ACE_UNUSED_ARG (fs);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE ACE_Flow_Spec
-ACE_QoS::receiving_flowspec (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return (ACE_Flow_Spec &) this->ReceivingFlowspec; 
-#else
-  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->ReceivingFlowspec = (FLOWSPEC) fs; 
-#else
-  ACE_UNUSED_ARG (fs);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE iovec 
-ACE_QoS::provider_specific (void) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  return (iovec &) this->ProviderSpecific; 
-#else
-  ACE_NOTSUP_RETURN (iovec ());
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void 
-ACE_QoS::provider_specific (const iovec &ps) 
-{ 
-#if defined (ACE_HAS_WINSOCK2)
-  this->ProviderSpecific = (WSABUF) ((iovec &) ps); 
-#else
-  ACE_UNUSED_ARG (ps);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE
-ACE_Connect_QoS_Params::ACE_Connect_QoS_Params (iovec *caller_data,
-						iovec *callee_data,
-						ACE_QoS *socket_qos,
-						ACE_QoS *group_socket_qos,
-						u_long flags)
-  : caller_data_ (caller_data),
-    callee_data_ (callee_data),
-    socket_qos_ (socket_qos),
-    group_socket_qos_ (group_socket_qos),
-    flags_ (flags)
-{
-}
-
-ACE_INLINE iovec *
-ACE_Connect_QoS_Params::caller_data (void) const
-{
-  return this->caller_data_;
-}
-
-ACE_INLINE void 
-ACE_Connect_QoS_Params::caller_data (iovec *cd)
-{
-  this->caller_data_ = cd;
-}
-
-ACE_INLINE iovec *
-ACE_Connect_QoS_Params::callee_data (void) const
-{
-  return this->callee_data_;  
-}
-
-ACE_INLINE void 
-ACE_Connect_QoS_Params::callee_data (iovec *cd)
-{
-  this->callee_data_ = cd;  
-}
-
-ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::socket_qos (void) const
-{
-  return this->socket_qos_;
-}
-
-ACE_INLINE void 
-ACE_Connect_QoS_Params::socket_qos (ACE_QoS *sq)
-{
-  this->socket_qos_ = sq;
-}
-
-ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::group_socket_qos (void) const
-{
-  return this->group_socket_qos_;
-}
-
-ACE_INLINE void 
-ACE_Connect_QoS_Params::group_socket_qos (ACE_QoS *gsq)
-{
-  this->group_socket_qos_ = gsq;
-}
-
-ACE_INLINE u_long 
-ACE_Connect_QoS_Params::flags (void) const
-{
-  return this->flags_;
-}
-
-ACE_INLINE void 
-ACE_Connect_QoS_Params::flags (u_long f)
-{
-  this->flags_ = f;
-}
-
-ACE_INLINE
-ACE_Accept_QoS_Params::ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback,
-					      u_long callback_data)
-  : qos_condition_callback_ (qos_condition_callback),
-    callback_data_ (callback_data)
-{
-}
-
-ACE_INLINE ACE_QOS_CONDITION_FUNC
-ACE_Accept_QoS_Params::qos_condition_callback (void) const
-{
-  return this->qos_condition_callback_; 
-}
-
-ACE_INLINE void 
-ACE_Accept_QoS_Params::qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc)
-{
-  this->qos_condition_callback_ = qcc;
-}
-
-ACE_INLINE u_long
-ACE_Accept_QoS_Params::callback_data (void) const
-{
-  return this->callback_data_;
-}
-
-ACE_INLINE void 
-ACE_Accept_QoS_Params::callback_data (u_long cd)
-{
-  this->callback_data_ = cd;
-}
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::accept (ACE_HANDLE handle,
-		struct sockaddr *addr,
+ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
                 int *addrlen)
 {
   ACE_TRACE ("ACE_OS::accept");
 #if defined (ACE_PSOS)
 #  if !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
-				 (struct sockaddr_in *) addr,
-				 (ACE_SOCKET_LEN *) addrlen),
-		       ACE_HANDLE, 
-		       ACE_INVALID_HANDLE);
+ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
+                                (ACE_SOCKET_LEN *) addrlen),
+                      ACE_HANDLE, ACE_INVALID_HANDLE);
 #  else
-ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
-			       (struct sockaddr *) addr,
-			       (ACE_SOCKET_LEN *) addrlen),
-		     ACE_HANDLE,
-		     ACE_INVALID_HANDLE);
+ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr *) addr,
+                                (ACE_SOCKET_LEN *) addrlen),
+                      ACE_HANDLE, ACE_INVALID_HANDLE);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #else
-  // On a non-blocking socket with no connections to accept, this
-  // system call will return EWOULDBLOCK or EAGAIN, depending on the
-  // platform.  UNIX 98 allows either errno, and they may be the same
-  // numeric value.  So to make life easier for upper ACE layers as
-  // well as application programmers, always change EAGAIN to
-  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
-  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
-  // this function needs to be reviewed.  On Win32, the regular macros
-  // can be used, as this is not an issue.
+  // On a non-blocking socket with no connections to accept, this system
+  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
+  // UNIX 98 allows either errno, and they may be the same numeric value.
+  // So to make life easier for upper ACE layers as well as application
+  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
+  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
+  // macro ever changes, this function needs to be reviewed.
+  // On Win32, the regular macros can be used, as this is not an issue.
 
 #  if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
-				 addr,
-				 (ACE_SOCKET_LEN *) addrlen),
-                       ACE_HANDLE,
-		       ACE_INVALID_HANDLE);
+  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
+                       ACE_HANDLE, ACE_INVALID_HANDLE);
 #  else
-  ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
-				    addr,
-				    (ACE_SOCKET_LEN *) addrlen) ;
-  if (ace_result == ACE_INVALID_HANDLE && errno == EAGAIN)
+
+  ACE_HANDLE ace_result_;
+  ace_result_ = ::accept ((ACE_SOCKET) handle, addr,
+                          (ACE_SOCKET_LEN *) addrlen) ;
+  if (ace_result_ == ACE_INVALID_HANDLE && errno == EAGAIN)
     errno = EWOULDBLOCK;
-  return ace_result;
+  return ace_result_;
 
 #  endif /* defined (ACE_WIN32) */
 #endif /* defined (ACE_PSOS) */
-}
-
-ACE_INLINE ACE_HANDLE
-ACE_OS::accept (ACE_HANDLE handle,
-		struct sockaddr *addr,
-                int *addrlen,
-		const ACE_Accept_QoS_Params &qos_params)
-{
-#if defined (ACE_HAS_WINSOCK2)
-  ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
-				    addr,
-				    (ACE_SOCKET_LEN *) addrlen,
-				    (LPCONDITIONPROC) qos_params.qos_condition_callback (),
-				    qos_params.callback_data ()),
-                       ACE_HANDLE,
-		       ACE_INVALID_HANDLE);
-#else
-  ACE_UNUSED_ARG (qos_params);
-  return ACE_OS::accept (handle,
-			 addr,
-			 addrlen);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE ACE_HANDLE
-ACE_OS::join_leaf (ACE_HANDLE socket,
-		   const sockaddr *name,
-		   int namelen,
-		   const ACE_Connect_QoS_Params &qos_params)
-{
-#if defined (ACE_HAS_WINSOCK2)
-  ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
-				      name,
-				      namelen,
-				      (WSABUF *) qos_params.caller_data (),
-				      (WSABUF *) qos_params.callee_data (),
-				      (QOS *) qos_params.socket_qos (),
-				      (QOS *) qos_params.group_socket_qos (),
-				      qos_params.flags ()),
-                       ACE_HANDLE,
-		       ACE_INVALID_HANDLE);
-#else
-  ACE_UNUSED_ARG (socket);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (namelen);
-  ACE_UNUSED_ARG (qos_params);
-  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE int 
-ACE_OS::ioctl (ACE_HANDLE socket,
-	       u_long io_control_code,
-	       void *in_buffer_p,
-	       u_long in_buffer,
-	       void *out_buffer_p,
-	       u_long out_buffer,
-	       u_long *bytes_returned,
-	       ACE_OVERLAPPED *overlapped,
-	       ACE_OVERLAPPED_COMPLETION_FUNC func)
-{
-#if defined (ACE_HAS_WINSOCK2)
-  ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
-				   io_control_code,
-				   in_buffer_p,
-				   in_buffer,
-				   out_buffer_p,
-				   out_buffer,
-				   bytes_returned,
-				   (WSAOVERLAPPED *) overlapped,
-				   (LPWSAOVERLAPPED_COMPLETION_ROUTINE) func),
-                       int,
-		       SOCKET_ERROR);
-#else
-  ACE_UNUSED_ARG (socket);
-  ACE_UNUSED_ARG (io_control_code);
-  ACE_UNUSED_ARG (in_buffer_p);
-  ACE_UNUSED_ARG (in_buffer);
-  ACE_UNUSED_ARG (out_buffer_p);
-  ACE_UNUSED_ARG (out_buffer);
-  ACE_UNUSED_ARG (bytes_returned);
-  ACE_UNUSED_ARG (overlapped);
-  ACE_UNUSED_ARG (func);
-  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
-#endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE int
@@ -4661,9 +4192,7 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 }
 
 ACE_INLINE int
-ACE_OS::connect (ACE_HANDLE handle,
-		 struct sockaddr *addr,
-		 int addrlen)
+ACE_OS::connect (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
@@ -4673,30 +4202,6 @@ ACE_OS::connect (ACE_HANDLE handle,
 #else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
-}
-
-ACE_INLINE int
-ACE_OS::connect (ACE_HANDLE handle,
-		 const sockaddr *addr,
-		 int addrlen,
-		 const ACE_Connect_QoS_Params &qos_params)
-{
-  ACE_TRACE ("ACE_OS::connect");
-#if defined (ACE_HAS_WINSOCK2)
-  ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
-				     (const sockaddr *) addr,
-				     (ACE_SOCKET_LEN) addrlen,
-				     (WSABUF *) qos_params.caller_data (),
-				     (WSABUF *) qos_params.callee_data (),
-				     (QOS *) qos_params.socket_qos (),
-				     (QOS *) qos_params.group_socket_qos ()),
-                       int, -1);
-#else  
-  ACE_UNUSED_ARG (qos_params);
-  return ACE_OS::connect (handle,
-			  (sockaddr *) addr,
-			  addrlen);
-#endif /* ACE_HAS_WINSOCK2 */
 }
 
 #if !defined (VXWORKS)
@@ -5109,46 +4614,11 @@ ACE_OS::shutdown (ACE_HANDLE handle, int how)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::socket (int domain,
-		int type,
-		int proto)
+ACE_OS::socket (int domain, int type, int proto)
 {
   ACE_TRACE ("ACE_OS::socket");
-  ACE_SOCKCALL_RETURN (::socket (domain,
-				 type,
-				 proto),
-                       ACE_HANDLE,
-		       ACE_INVALID_HANDLE);
-}
-
-ACE_INLINE ACE_HANDLE
-ACE_OS::socket (int domain,
-		int type,
-		int proto,
-		ACE_Protocol_Info *protocolinfo,
-		ACE_SOCK_GROUP g,
-		u_long flags)
-{
-  ACE_TRACE ("ACE_OS::socket");
-
-#if defined (ACE_HAS_WINSOCK2)
-  ACE_SOCKCALL_RETURN (::WSASocket (domain,
-				    type,
-				    proto,
-				    protocolinfo,
-				    g,
-				    flags),
-                       ACE_HANDLE,
-		       ACE_INVALID_HANDLE);
-#else
-  ACE_UNUSED_ARG (protocolinfo);
-  ACE_UNUSED_ARG (g);
-  ACE_UNUSED_ARG (flags);
-
-  return ACE_OS::socket (domain,
-			 type,
-			 proto);
-#endif /* ACE_HAS_WINSOCK2 */
+  ACE_SOCKCALL_RETURN (::socket (domain, type, proto),
+                       ACE_HANDLE, ACE_INVALID_HANDLE);
 }
 
 ACE_INLINE int
@@ -5550,14 +5020,12 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-#   if defined (DIGITAL_UNIX) || \
-       (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
+#   if defined (DIGITAL_UNIX)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
-  // gethostbyname returns thread-specific storage on Digital Unix and
-  // AIX 4.3
+  // gethostbyname returns thread-specific storage on Digital Unix
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #   elif defined (AIX) || defined (HPUX_10)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
@@ -5744,8 +5212,8 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 #if defined (ACE_HAS_IP6)
   ACE_OSCALL_RETURN (::inet_ntop (family, addrptr, strptr, len), const char *, 0);
 #else
-  const u_char *p =
-    ACE_reinterpret_cast (const u_char *, addrptr);
+  const unsigned char *p =
+    ACE_reinterpret_cast (const unsigned char *, addrptr);
 
   if (family == AF_INET)
     {
@@ -6027,14 +5495,17 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   // of ACE_Log_Msg may not work correctly, so we're keeping this as
   // it is for now.
 
-  ACE_Errno_Guard error (errno);
+  int error = errno;
   *data = ::TlsGetValue (key);
 #   if !defined (ACE_HAS_WINCE)
-  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
+  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
     return -1;
   else
 #   endif /* ACE_HAS_WINCE */
-    return 0;
+    {
+      errno = error;
+      return 0;
+    }
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
@@ -6172,15 +5643,18 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   // of ACE_Log_Msg may not work correctly, so we're keeping this as
   // it is for now.
 
-  ACE_Errno_Guard error (errno);
+  int error = errno;
   *data = ::TlsGetValue (key);
 #   if !defined (ACE_HAS_WINCE)
-  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
+  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
 
     return -1;
   else
 #   endif /* ACE_HAS_WINCE */
-    return 0;
+    {
+      errno = error;
+      return 0;
+    }
 # else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
@@ -7075,7 +6549,7 @@ ACE_OS::t_error (const char *errmsg)
   ACE_TRACE ("ACE_OS::t_error");
 #if defined (ACE_HAS_TLI)
 #if defined (ACE_HAS_BROKEN_T_ERROR)
-  ::t_error (ACE_const_cast (char *, errmsg));
+  ::t_error ((char *) errmsg);
 #else
   ::t_error (errmsg);
 #endif /* ACE_HAS_BROKEN_T_ERROR */
@@ -9379,7 +8853,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # if defined (ACE_LACKS_LONGLONG_T)
   ACE_UINT32 least, most;
   ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
-  ACE_OS::memcpy (&most, (u_char *) &now + sizeof (ACE_UINT32),
+  ACE_OS::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
                   sizeof (ACE_UINT32));
 
   ACE_hrtime_t ret (least, most);
@@ -11477,5 +10951,3 @@ ACE_OS_CString::wchar_rep (void)
 {
   return this->rep_;
 }
-
-

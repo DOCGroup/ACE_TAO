@@ -26,7 +26,7 @@
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
-class be_visitor_operation_argument : public be_visitor_operation
+class be_visitor_operation_argument : public be_visitor_scope
 {
   //
   // = TITLE
@@ -43,13 +43,13 @@ public:
   ~be_visitor_operation_argument (void);
   // destructor
 
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *);
   // stuff to o/p after each element of the scope is handled
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node);
   // visit the operation
 
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node);
   // visit argument
 
 };

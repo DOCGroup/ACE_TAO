@@ -242,34 +242,23 @@ public:
   // = The RtecEventChannelAdmin::EventChannel methods.
 
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_consumers (CORBA::Environment &);
   // In this implementation of the EC this returns the interface for
   // the Consumer_Module.
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_suppliers (CORBA::Environment &);
   // Return an interface to the Supplier_Module.
 
-  virtual void destroy (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (CORBA::Environment &);
   // Shutdown the EC, free all resources, stop all threads and then
   // shutdown the server where the Servant is running.
 
   virtual RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer,
-                     CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+                     CORBA::Environment &env);
   virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle,
-                                CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+                                CORBA::Environment &env);
   // The observer manipulators
 
   // = Timer managment
@@ -835,8 +824,7 @@ public:
   // that ACE_ES_Consumer_Rep_Timeout::execute can access it.
 
 private:
-  virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment &);
   // Called when the channel disconnects us.
 
   int allocate_correlation_resources (ACE_ES_Dependency_Iterator &iter);
@@ -937,9 +925,7 @@ public:
   void open (ACE_ES_Dispatching_Module *down);
   // Link to the next module.
 
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (CORBA::Environment &)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (CORBA::Environment &);
   // Factory method for push consumer proxies.
 
   void connected (ACE_Push_Consumer_Proxy *consumer,
@@ -1210,9 +1196,7 @@ public:
   void open (ACE_ES_Subscription_Module *up);
   // Associate the module to a channel.
 
-  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (CORBA::Environment &)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (CORBA::Environment &);
   // Factory method for push supplier proxies.
 
   virtual void push (ACE_Push_Supplier_Proxy *proxy,
@@ -1282,24 +1266,19 @@ public:
 
   // = Operations public to suppliers.
 
-  virtual void connect_push_supplier (
-      RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS& qos,
-      CORBA::Environment &)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         RtecEventChannelAdmin::AlreadyConnected));
+  virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier,
+                                      const RtecEventChannelAdmin::SupplierQOS& qos,
+                                      CORBA::Environment &);
   // Suppliers connect via this interface.  <push_supplier> is a
   // reference to the supplier.  <qos> represents the publish types of
   // the supplier.
 
   virtual void push (const RtecEventComm::EventSet &event,
-                     CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &);
   // Data arriving from a PushSupplier that must be sent to
   // consumers.  This is the entry point of all events.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // Disconnect the supplier from the channel.
 
   // = Operations for the Event Channel.
@@ -1366,26 +1345,19 @@ public:
 
   // = Interfaces exported to consumers.
 
-  virtual void connect_push_consumer (
-       RtecEventComm::PushConsumer_ptr push_consumer,
-       const RtecEventChannelAdmin::ConsumerQOS& qos,
-       CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannelAdmin::AlreadyConnected,
-                     RtecEventChannelAdmin::TypeError));
+  virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer,
+                                      const RtecEventChannelAdmin::ConsumerQOS& qos,
+                                      CORBA::Environment &);
   // A push consumer is connecting.  <push_consumer> is a reference to
   // the consumer.  <qos> is the subscription types for the consumer.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment &);
   // The consumer is disconnecting.
 
-  virtual void suspend_connection (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void suspend_connection (CORBA::Environment &);
   // Stop forwarding events to the calling consumer.
 
-  virtual void resume_connection (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void resume_connection (CORBA::Environment &);
   // Resume forwarding events to the calling consumer.
 
   // = Event Channel operations.

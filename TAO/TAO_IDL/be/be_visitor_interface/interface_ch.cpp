@@ -49,11 +49,46 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
                                                    // not imported
     {
-
+      // Generate the AMI Reply Handler's forward declaration code, if
+      // the option is enabled, for this interface.
+      
+      if (idl_global->ami_call_back () == I_TRUE)
+        {
+          // Set the context.
+          be_visitor_context ctx (*this->ctx_);
+          
+          // Set the state.
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH);
+          
+          // Create the visitor.
+          be_visitor *visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "Bad visitor\n"),
+                                -1);
+            }
+          
+          // call the visitor on this interface.
+          if (node->accept (visitor) == -1)
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "code gen for ami handler fwd failed\n"),
+                                -1);
+            }
+          delete visitor;
+        }
+      
+      // Grab the stream.
       os = this->ctx_->stream ();
-
+      
       // == STEP 1:  generate the class name and class names we inherit ==
-
+      
       // generate the ifdefined macro for  the _ptr type
       os->gen_ifdef_macro (node->flatname (), "_ptr");
 

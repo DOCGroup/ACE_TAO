@@ -22,7 +22,6 @@
 #define TAO_UIOP_TRANSPORT_H
 
 #include "tao/Pluggable.h"
-#include "tao/GIOP.h"
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -39,7 +38,7 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   //   connection handler (handler_).
   //
   // = DESCRIPTION
-  //   Implements common IIOP methods for the Transport adaptor class.
+  //   @@ Fred, please fill in here.
 public:
   TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                       TAO_ORB_Core *orb_core);
@@ -111,7 +110,7 @@ class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
   //   server.
   //
   // = DESCRIPTION
-  //   Implements the methods specific to the client.
+  //   @@ Fred, please fill in here.
 public:
   TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
@@ -124,24 +123,6 @@ public:
 
   TAO_UIOP_Client_Connection_Handler *client_handler (void);
   // return a pointer to the client's connection handler.
-
-  virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
-                              const char* opname,
-                              CORBA::ULong request_id,
-                              CORBA::Boolean is_twoway,
-                              TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a request.
-
-  virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
-                             CORBA::ULong request_id,
-                             TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a locate request.
 
   int send_request (TAO_ORB_Core *orb_core,
                     TAO_OutputCDR &stream,
@@ -168,6 +149,11 @@ protected:
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
+
+  TAO_GIOP_MessageHeader message_header_;
+  CORBA::ULong current_offset_;
+  // This keep the state of the current message, to enable
+  // non-blocking reads.
 };
 
 // ****************************************************************
@@ -191,12 +177,12 @@ public:
   ~TAO_UIOP_Server_Transport (void);
   // Default destructor
 
+  TAO_UIOP_Server_Connection_Handler *server_handler (void);
+  //  Return a pointer to the underlying connection handler.
+
+private:
   TAO_UIOP_Server_Connection_Handler *server_handler_;
   // Pointer to the corresponding connection handler.
-
-  TAO_GIOP_Message_State message_state_;
-  // This keep the state of the current message, to enable
-  // non-blocking reads, fragment reassembly, etc.
 };
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

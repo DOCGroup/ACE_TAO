@@ -136,11 +136,6 @@ public:
   void default_init_ref (const ACE_CString &default_init_ref);
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
-  int std_profile_components (void) const;
-  void std_profile_components (int x);
-  // Disable the OMG standard profile components, useful for
-  // homogenous environments.
-
 private:
   // Each "endpoint" is of the form:
   //
@@ -216,9 +211,6 @@ private:
 
   int use_dotted_decimal_addresses_;
   // For selecting a address notation
-
-  int std_profile_components_;
-  // If true then the standard OMG components are not generated.
 };
 
 #if defined (__ACE_INLINE__)

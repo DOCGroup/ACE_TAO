@@ -135,9 +135,6 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannelAdmin::AlreadyConnected,
-                     RtecEventChannelAdmin::TypeError))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -205,7 +202,6 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
 void
 TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -230,7 +226,6 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
 
 void
 TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -242,7 +237,6 @@ TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,

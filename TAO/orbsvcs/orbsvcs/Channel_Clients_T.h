@@ -41,12 +41,10 @@ public:
   // Forwards all calls to <owner>.
 
   virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+                     CORBA::Environment &_env);
   // Forwards to target_.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // Forwards to target_.
 
 private:
@@ -70,8 +68,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
   // Forwards all calls to <owner>.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment &);
   // Forwards to target_.
 
 private:

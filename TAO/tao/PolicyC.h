@@ -148,7 +148,6 @@ public:
     );
   static CORBA_Policy_ptr _nil (void);
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &TAO_IN_ENV =
         TAO_default_environment ()
@@ -161,21 +160,6 @@ public:
       CORBA_Environment &TAO_IN_ENV =
         TAO_default_environment ()
     );
-#else
-  virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &TAO_IN_ENV =
-        TAO_default_environment ()
-    ) = 0;
-  virtual CORBA_Policy_ptr copy (
-      CORBA_Environment &TAO_IN_ENV =
-        TAO_default_environment ()
-    ) = 0;
-  virtual void destroy (
-      CORBA_Environment &TAO_IN_ENV =
-        TAO_default_environment ()
-    ) = 0;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA_Environment &TAO_IN_ENV =
@@ -198,7 +182,7 @@ private:
 // CORBA_PolicyList
 // *************************************************************
 
-class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
+class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy>
 {
 public:
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -239,7 +223,7 @@ public:
   operator const CORBA_PolicyList &() const;
   operator CORBA_PolicyList &();
   operator CORBA_PolicyList &() const;
-  TAO_Object_Manager <CORBA_Policy,CORBA_Policy_var > operator[] (CORBA::ULong index);
+  TAO_Object_Manager <CORBA_Policy > operator[] (CORBA::ULong index);
   // in, inout, out, _retn
   const CORBA_PolicyList &in (void) const;
   CORBA_PolicyList &inout (void);
@@ -262,7 +246,7 @@ public:
   operator CORBA_PolicyList *&();
   CORBA_PolicyList *&ptr (void);
   CORBA_PolicyList *operator-> (void);
-  TAO_Object_Manager <CORBA_Policy,CORBA_Policy_var> operator[] (CORBA::ULong index);
+  TAO_Object_Manager <CORBA_Policy > operator[] (CORBA::ULong index);
 
 private:
   CORBA_PolicyList *&ptr_;

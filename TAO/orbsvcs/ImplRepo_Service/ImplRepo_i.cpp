@@ -30,12 +30,9 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   TAO_Stub *new_stub_obj = 0;
 
   if (OPTIONS::instance()->debug () >= 1)
-    {
-      CORBA::ORB_var orb = this->orb_manager_.orb ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "Activating Object: %s\n",
-                  orb->object_to_string (obj)));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "Activating Object: %s\n",
+                this->orb_manager_.orb ()->object_to_string (obj)));
 
   ACE_TRY
     {
@@ -56,9 +53,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       // if so I will add another ctor  fred
       ACE_NEW_RETURN (new_pfile,
                       TAO_IIOP_Profile (iiop_pfile->object_addr (),
-                                        iiop_pfile->object_key (),
-                                        iiop_pfile->version (),
-                                        stub_obj->orb_core ()),
+                                        iiop_pfile->object_key ()),
                       CORBA::Object::_nil ());
 
       mp.give_profile (new_pfile);
@@ -118,10 +113,9 @@ ImplRepo_i::activate_server (const char *server,
     {
       ACE_TRY
         {
-          CORBA::ORB_var orb = this->orb_manager_.orb ();
           CORBA::Object_var object =
-            orb->string_to_object (ping_ior,
-                                   ACE_TRY_ENV);
+            this->orb_manager_.orb ()->string_to_object (ping_ior,
+                                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           Ping_Object_var ping_object = Ping_Object::_narrow (object.in (),
@@ -356,8 +350,7 @@ ImplRepo_i::server_is_running (const char *server,
   ACE_OS::strcpy (rec.host, addr.host_.in ());
   rec.port = addr.port_;
 
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
-  ASYS_TCHAR *ping_ior = orb->object_to_string (ping, ACE_TRY_ENV);
+  ASYS_TCHAR *ping_ior = this->orb_manager_.orb ()->object_to_string (ping, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   ACE_NEW_RETURN (rec.ping_ior, ASYS_TCHAR[ACE_OS::strlen (ping_ior) + 1], 0);
@@ -387,7 +380,7 @@ ImplRepo_i::server_is_running (const char *server,
   // @@ Don't use the ORB_Core_instance() keep a pointer to the ORB
   //    and use the orb_core() accessor
   TAO_Acceptor_Registry* registry =
-    orb->orb_core ()->acceptor_registry ();
+    this->orb_manager_.orb ()->orb_core ()->acceptor_registry ();
 
   TAO_Acceptor *acceptor = 0;
   TAO_AcceptorSetItor end = registry->end ();
@@ -481,11 +474,9 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       if (retval != 0)
         return retval;
 
-      CORBA::ORB_var orb = this->orb_manager_.orb ();
-      PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
       ACE_NEW_RETURN (this->forwarder_impl_,
-                      IR_Forwarder (orb.in (),
-                                    child_poa.in (),
+                      IR_Forwarder (this->orb_manager_.orb (),
+                                    this->orb_manager_.child_poa (),
                                     this),
                       -1);
 
@@ -519,24 +510,19 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       ACE_OS::fprintf (ir_file, "%s", ir_var.in ());
       ACE_OS::fclose (ir_file);
 
-      PortableServer::POAManager_var poa_manager =
-        this->orb_manager_.poa_manager ();
-
       ACE_NEW_RETURN (this->activator_,
-                      IR_Adapter_Activator (this->forwarder_impl_,
-                                            poa_manager.in ()),
+                      IR_Adapter_Activator(this->forwarder_impl_),
                       -1);
 
       PortableServer::AdapterActivator_var activator =
         this->activator_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Register the Adapter_Activator reference to be the RootPOA's
+      // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
 
-      PortableServer::POA_var root_poa = this->orb_manager_.root_poa ();
-      root_poa->the_activator (activator.in (),
-                               ACE_TRY_ENV);
+      this->orb_manager_.root_poa ()->the_activator (activator.in (),
+                                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -594,10 +580,8 @@ ImplRepo_i::~ImplRepo_i (void)
     delete this->activator_;
 }
 
-IR_Adapter_Activator::IR_Adapter_Activator (IR_Forwarder *servant,
-                                            PortableServer::POAManager_ptr poa_manager)
-  : servant_ (servant),
-    poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
+IR_Adapter_Activator::IR_Adapter_Activator (IR_Forwarder *servant)
+  : servant_ (servant)
 {
   // Nothing
 }
@@ -640,7 +624,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
       exception_message = "While create_POA";
       PortableServer::POA_var child = parent->create_POA (name,
-                                                          this->poa_manager_.in (),
+                                                          PortableServer::POAManager::_nil (),
                                                           policies,
                                                           ACE_TRY_ENV);
 

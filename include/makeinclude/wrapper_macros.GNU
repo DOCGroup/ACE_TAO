@@ -33,7 +33,7 @@
 #  rtti             Enable run-time type identification.  On some platforms,
 #                     it is enabled by default, so this is ignored.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
-#  static_libs      Build static libraries. Ignored if shared_libs_only is set.
+#  static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 #                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
@@ -384,10 +384,6 @@ ifdef shared_libs
       endif # BIN
     endif # ! SHLIB
   endif # ! static_libs
-
-  ifdef SHLIBA
-    LDLIBS := $(LDLIBS:-l%=-l%shr)
-  endif # SHLIBA
 else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
@@ -404,7 +400,11 @@ else # ! shared_libs
   endif # ! static_libs
 endif # ! shared_libs
 
-VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
+ifdef SHLIBA
+  VLDLIBS := $(LDLIBS) -lACEshr $(LIBS)
+else
+  VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
+endif # SHLIBA
 
 ifeq ($(probe),0)
   override probe =
