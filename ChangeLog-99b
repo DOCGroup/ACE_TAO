@@ -1,3 +1,10 @@
+Wed Apr  7 19:09:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T: Replaced all Foo &Foo::operator=() with void
+ 	  Foo::operator=() to avoid nasty problems with propagation of
+ 	  errors.  Thanks to Chris Schleicher <chrissch@cnd.hp.com> for
+ 	  reporting this.
+
 Wed Apr 07 17:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/connection_config: Changed the connection 1

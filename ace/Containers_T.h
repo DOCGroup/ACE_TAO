@@ -45,7 +45,7 @@ public:
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
   // The copy constructor (performs initialization).
 
-  ACE_Bounded_Stack<T> & operator= (const ACE_Bounded_Stack<T> &s);
+  void operator= (const ACE_Bounded_Stack<T> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Bounded_Stack (void);
@@ -115,8 +115,7 @@ public:
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // The copy constructor (performs initialization).
 
-  ACE_Fixed_Stack<T, ACE_SIZE> & 
-       operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Fixed_Stack (void);
@@ -265,7 +264,7 @@ public:
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
   // The copy constructor (performs initialization).
 
-  ACE_Unbounded_Stack<T> & operator= (const ACE_Unbounded_Stack<T> &s);
+  void operator= (const ACE_Unbounded_Stack<T> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Unbounded_Stack (void);
@@ -443,7 +442,7 @@ public:
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
   // Copy constructor.
 
-  ACE_Unbounded_Queue<T> & operator= (const ACE_Unbounded_Queue<T> &);
+  void operator= (const ACE_Unbounded_Queue<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Queue (void);
@@ -608,7 +607,7 @@ public:
   ACE_Double_Linked_List (ACE_Double_Linked_List<T> &);
   // Copy constructor.
 
-  ACE_Double_Linked_List<T> & operator= (ACE_Double_Linked_List<T> &);
+  void operator= (ACE_Double_Linked_List<T> &);
   // Assignment operator.
 
   ~ACE_Double_Linked_List (void);
@@ -723,8 +722,7 @@ class ACE_DLList : public ACE_DLList_Base
   friend class ACE_DLList_Iterator<T>;
 
 public:
-
-  ACE_DLList<T> & operator= (ACE_DLList<T> &l);
+  void operator= (ACE_DLList<T> &l);
   // Delegates to ACE_Double_Linked_List.
 
   // = Classic queue operations.
@@ -880,7 +878,7 @@ public:
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
   // Copy constructor.
 
-  ACE_Unbounded_Set<T> & operator= (const ACE_Unbounded_Set<T> &);
+  void operator= (const ACE_Unbounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Set (void);
@@ -1017,7 +1015,7 @@ public:
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Copy constructor.
 
-  ACE_Fixed_Set<T, ACE_SIZE> & operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Assignment operator.
 
   ~ACE_Fixed_Set (void);
@@ -1152,7 +1150,7 @@ public:
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
   // Copy constructor.
 
-  ACE_Bounded_Set<T> & operator= (const ACE_Bounded_Set<T> &);
+  void operator= (const ACE_Bounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Bounded_Set (void);
@@ -1215,12 +1213,10 @@ class ACE_Ordered_MultiSet_Iterator
 {
   // = TITLE
   //     Implement a bidirectional iterator over an ordered multiset.
-  //     This class template requires that < operator semantics be defined
-  //     for the parameterized type <T>, but does not impose any restriction
-  //     on how that ordering operator is implemented.
-
+  //     This class template requires that < operator semantics be
+  //     defined for the parameterized type <T>, but does not impose
+  //     any restriction on how that ordering operator is implemented.
 public:
-
   friend class ACE_Ordered_MultiSet<T>;
 
   // = Initialization method.
@@ -1271,14 +1267,15 @@ class ACE_Ordered_MultiSet
 {
   // = TITLE
   //     Implement a simple ordered multiset of <T> of unbounded size.
-  //     This class template requires that < operator semantics be defined
-  //     for the parameterized type <T>, but does not impose any restriction
-  //     on how that ordering operator is implemented.
+  //     This class template requires that < operator semantics be
+  //     defined for the parameterized type <T>, but does not impose
+  //     any restriction on how that ordering operator is implemented.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a circular
   //     linked list with a dummy node.  This implementation does not
-  //     allow duplicates, but it maintains FIFO ordering of insertions.
+  //     allow duplicates, but it maintains FIFO ordering of
+  //     insertions.
 public:
   friend class ACE_Ordered_MultiSet_Iterator<T>;
 
@@ -1296,7 +1293,7 @@ public:
   ~ACE_Ordered_MultiSet (void);
   // Destructor.
 
-  ACE_Ordered_MultiSet<T> & operator= (const ACE_Ordered_MultiSet<T> &);
+  void operator= (const ACE_Ordered_MultiSet<T> &);
   // Assignment operator.
 
   // = Check boundary conditions.
@@ -1412,7 +1409,7 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  ACE_Array_Base<T>& operator= (const ACE_Array_Base<T> &s);
+  void operator= (const ACE_Array_Base<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than
@@ -1493,7 +1490,6 @@ class ACE_Array : public ACE_Array_Base<T>
   // = DESCRIPTION
   //   This class extends ACE_Array_Base, it provides comparison
   //   operators.
-  //
 public:
   // Define a "trait"
   typedef T TYPE;
@@ -1515,7 +1511,7 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  ACE_Array<T> & operator= (const ACE_Array<T> &s);
+  void operator= (const ACE_Array<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than
