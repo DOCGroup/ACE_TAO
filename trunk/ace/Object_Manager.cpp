@@ -24,6 +24,11 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // doesn't allocate a new one when called.
   instance_ = this;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Allocate the main thread's TSS.
+  ACE_TSS_Emulation::tss_allocate ();
+#endif /* ACE_HAS_TSS_EMULATION */
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
@@ -59,6 +64,11 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the ACE_Allocator and ACE_Static_Object_Lock.
   ACE_Static_Object_Lock::close_singleton ();
 # endif /* ACE_HAS_THREADS */
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Delete the main thread's TSS.
+  ACE_TSS_Emulation::tss_deallocate ();
+#endif /* ACE_HAS_TSS_EMULATION */
 
   ACE_OS::fprintf (stderr, "~ACE_Object_Manager: leaving\n"); // ???? temporary
 }
