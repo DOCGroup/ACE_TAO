@@ -1,3 +1,12 @@
+Fri Sep 29 14:48:38 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+
+	  Removed TAO_SSLIOP_Handler_Base::TCP_Properties since we are
+	  using TAO_IIOP_Handler_Base::TCP_Properties.  More compilation
+	  fixes.
+
 Fri Sep 29 14:28:24 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile.bor (OBJFILES): Added new files in to this
