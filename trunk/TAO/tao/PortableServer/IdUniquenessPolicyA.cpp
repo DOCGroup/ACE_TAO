@@ -26,106 +26,61 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IdUniquenessPolicyC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/enum_typecode.cpp:34
 
-static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x64556e69), 
-  ACE_NTOHL (0x7175656e), 
-  ACE_NTOHL (0x65737350), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x7956616c), 
-  ACE_NTOHL (0x75653a32), 
-  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/IdUniquenessPolicyValue:2.3
-  24,
-  ACE_NTOHL (0x4964556e), 
-  ACE_NTOHL (0x69717565), 
-  ACE_NTOHL (0x6e657373), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
-  ACE_NTOHL (0x6c756500),  // name = IdUniquenessPolicyValue
-  2, // member count
-  10,
-  ACE_NTOHL (0x554e4951), 
-  ACE_NTOHL (0x55455f49), 
-  ACE_NTOHL (0x44000000),  // name = UNIQUE_ID
-  12,
-  ACE_NTOHL (0x4d554c54), 
-  ACE_NTOHL (0x49504c45), 
-  ACE_NTOHL (0x5f494400),  // name = MULTIPLE_ID
+static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableServer_IdUniquenessPolicyValue[] =
+  {
+    "UNIQUE_ID",
+    "MULTIPLE_ID"
+    
   };
 
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicyValue (
-    CORBA::tk_enum,
-    sizeof (_oc_PortableServer_IdUniquenessPolicyValue),
-    (char *) &_oc_PortableServer_IdUniquenessPolicyValue,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Enum<char const *,
+                           TAO::TypeCode::Enumerator<char const *> const *,
+                           TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_IdUniquenessPolicyValue (
+    "IDL:omg.org/PortableServer/IdUniquenessPolicyValue:2.3",
+    "IdUniquenessPolicyValue",
+    _tao_enumerators_PortableServer_IdUniquenessPolicyValue,
+    2);
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicyValue =
-    &_tc_TAO_tc_PortableServer_IdUniquenessPolicyValue;
+    &_tao_tc_PortableServer_IdUniquenessPolicyValue;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  50,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x64556e69), 
-  ACE_NTOHL (0x7175656e), 
-  ACE_NTOHL (0x65737350), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/IdUniquenessPolicy:2.3
-    19,
-  ACE_NTOHL (0x4964556e), 
-  ACE_NTOHL (0x69717565), 
-  ACE_NTOHL (0x6e657373), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63790000),  // name = IdUniquenessPolicy
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_PortableServer_IdUniquenessPolicy),
-    (char *) &_oc_PortableServer_IdUniquenessPolicy,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_IdUniquenessPolicy (
+    "IDL:omg.org/PortableServer/IdUniquenessPolicy:2.3",
+    "IdUniquenessPolicy");
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicy =
-    &_tc_TAO_tc_PortableServer_IdUniquenessPolicy;
+    &_tao_tc_PortableServer_IdUniquenessPolicy;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_enum/any_op_cs.cpp:52
@@ -158,7 +113,7 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -168,14 +123,14 @@ TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::demarshal_value (TAO_InputCDR &)
 {
