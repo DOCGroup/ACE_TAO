@@ -29,7 +29,7 @@ distrib = 0
 threads = 1
 
 ifeq ($(threads),1)
-  CFLAGS += -mt 
+  CFLAGS += -mt
   LDFLAGS += -mt
 endif # threads
 
@@ -60,8 +60,8 @@ ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
   inline = 0
   #### Support RTTI by default.  And, use explicit template instantiation
   #### because automatic instantiation appears to be broken, at least
-  #### with early releases of CC 5.0.
-  CCFLAGS         += $(CFLAGS) -instances=explicit
+  #### with early releases of CC 5.0.  And, use old iostreams.
+  CCFLAGS += $(CFLAGS) -library=iostream,no%Cstd -instances=explicit
 endif # CC 5.0 or later
 endif # ! 4.2
 
