@@ -1,3 +1,12 @@
+Wed May 10 18:36:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * THANKS:
+          Add a new contributor
+
+        * bin/msvc_auto_compile.pl:
+        * bin/auto_compile_win32.pl:
+          Upgraded to use the new libraries in orbsvcs.
+
 Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Asynch_Acceptor.cpp:
@@ -6,8 +15,8 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
 
-          Removed iostream.h include here.  This is not good since ACE 
-          already includes it, and ACE might already include <iostream>, 
+          Removed iostream.h include here.  This is not good since ACE
+          already includes it, and ACE might already include <iostream>,
           which is incompatible with <iostream.h>.
 
         * examples/Reactor/WFMO_Reactor/test_talker.cpp:
@@ -21,7 +30,7 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
           Regenerated it.  It seems like I changed the websvcs library
           based on what I thought was in this file.  This didn't work,
           since I was assuming that ACE_WEBSVCS_HAS_DLL was automatically
-          defined (and older versions of these export files did not do 
+          defined (and older versions of these export files did not do
           that).
 
         * apps/JAWS/server/HTTP_Helpers.cpp:
@@ -36,9 +45,9 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
           flag to msdev when it runs.
 
           Added a -ACE option that tells the script just to compile the
-          ACE directories.  
+          ACE directories.
 
-          Changed -core to -CORE to be consistent with -ACE (and the 
+          Changed -core to -CORE to be consistent with -ACE (and the
           upcoming -TAO).
 
         * apps/Gateway/Gateway/Gateway.dsp:
@@ -120,7 +129,7 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
         * performance-tests/TCP/TCP.dsp:
 
           While testing the -ACE flag in msvc_auto_compile, I found that
-          there were many dsps that were either creating precompiled 
+          there were many dsps that were either creating precompiled
           headers, didn't have the correct include paths, or even weren't
           in the CRLF format.  Fixed them up.
 
