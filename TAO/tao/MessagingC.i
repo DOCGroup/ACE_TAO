@@ -3628,6 +3628,213 @@ Messaging::ExceptionHolder_out::operator-> (void)
   return this->ptr_;
 }
 
+#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CI_)
+#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CI_
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (_tao_seq_Octet *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const ::Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size base types only
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const ::Messaging::ExceptionHolder::_tao_seq_Octet &p)
+{
+  ACE_NEW (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (p));
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (_tao_seq_Octet *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator const ::Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator ::Messaging::ExceptionHolder::_tao_seq_Octet &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator ::Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_retn (void)
+{
+  ::Messaging::ExceptionHolder::_tao_seq_Octet *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_out
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (_tao_seq_Octet *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (_tao_seq_Octet_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (const ::Messaging::ExceptionHolder::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (_tao_seq_Octet_out&, p).ptr_)
+{}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet_out &p)
+{
+  this->ptr_ = ACE_const_cast (_tao_seq_Octet_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (_tao_seq_Octet *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator ::Messaging::ExceptionHolder::_tao_seq_Octet *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
 
 #endif /* end #if !defined */
 
