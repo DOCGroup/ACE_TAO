@@ -42,4 +42,8 @@ template class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
 
 #pragma instantiate TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>
 
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template class TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex> *TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex>::singleton_;
+
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,93 +1,100 @@
+Fri Sep 17 00:11:18 2004  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/PSS/PSDL_Scope.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+          Added explicit template instantiations.
+
 Thu Sep 16 11:49:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
-        
+
           Removed code that has been long commented out.
-          
+
         * TAO_IDL/be/be_visitor_traits.cpp (visit_array):
-        
+
           Removed unused code to generate an #ifdef guard based on the
           unaliased type name of the array element and all the dimensions.
-          
+
         * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_array):
-        
+
           Added generation of #ifdef guard removed from the above visitor.
           This change eliminates a compile error when two arrays with
           identical element types are both used as operation parameters.
-          Thanks to Jean-Christophe Cota 
-          <jean-christophe.cota@eurocontrol.int> for sending in the 
+          Thanks to Jean-Christophe Cota
+          <jean-christophe.cota@eurocontrol.int> for sending in the
           example IDL file that uncovered the bug.
-          
+
         * tests/IDL_Test/array.idl:
-        
+
           Added interface with an operation containing parameters of
           arrays with identical element types which already existed in
           the IDL file.
 
 Thu Sep 16 11:03:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Miop/McastHello/README:
+        * orbsvcs/tests/Miop/McastHello/README:
 
-	  Upadted it again. 
-	
-	* orbsvcs/tests/Miop/McastHello/client.conf:
-	* orbsvcs/tests/Miop/McastHello/server.conf:	
+          Upadted it again.
 
-	  Removed them from the repo. We don't need two. 
-	
-	* orbsvcs/tests/Miop/McastHello/client.cpp:
+        * orbsvcs/tests/Miop/McastHello/client.conf:
+        * orbsvcs/tests/Miop/McastHello/server.conf:
 
-	  Added MIOP.h
-	
-	* orbsvcs/tests/Miop/McastHello/run_test.pl:
+          Removed them from the repo. We don't need two.
 
-	  Removed references to the two conf files. 
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
 
-	* orbsvcs/tests/Miop/McastHello/svc.conf:
+          Added MIOP.h
 
-	  Checked in a single svc.conf file. 
+        * orbsvcs/tests/Miop/McastHello/run_test.pl:
+
+          Removed references to the two conf files.
+
+        * orbsvcs/tests/Miop/McastHello/svc.conf:
+
+          Checked in a single svc.conf file.
 
 Thu Sep 16 10:09:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp (lookup_by_name_local):
-        
+
           Reverted inadvertent checkin that changed the scope iterator
           instantiation parameters, and added a comment about why it
           needs to be the way it is (for lookup of sequence parameter
           in the deprecated declaration of a recursive type using an
-          anonymous sequence). Thanks to Johnny Willemsen 
+          anonymous sequence). Thanks to Johnny Willemsen
           <jwillemsen@rememdy.nl> for reporting the problem in union.idl
           of IDL_Test, which contains such a recursive union.
 
 Thu Sep 16 09:28:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/MIOP.h:
+        * orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/MIOP.h:
 
-	  New file that has a magic static constructor, which when added
-	  to the application source will load UIPMC protocl factory for
-	  static builds. 
-	
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+          New file that has a magic static constructor, which when added
+          to the application source will load UIPMC protocl factory for
+          static builds.
 
-	  Cosmetic fixes. 
-	
-	* orbsvcs/tests/Miop/McastHello/server.conf:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
 
-	  Commented out the dynamic parts of the service
-	  configurator. Just retain the static directives. 
-	
-	* orbsvcs/tests/Miop/McastHello/server.cpp:
+          Cosmetic fixes.
 
-	  #included MIOP.h
+        * orbsvcs/tests/Miop/McastHello/server.conf:
 
-	* orbsvcs/tests/Miop/McastHello/README:
+          Commented out the dynamic parts of the service
+          configurator. Just retain the static directives.
 
-	  Updated the file with info on static and dynamic library
-	  configuration of MIOP.
+        * orbsvcs/tests/Miop/McastHello/server.cpp:
 
-	  Thanks to  Rob Boyer <RBOYER at euphonix dot com> for motivating
-	  this change. 
+          #included MIOP.h
+
+        * orbsvcs/tests/Miop/McastHello/README:
+
+          Updated the file with info on static and dynamic library
+          configuration of MIOP.
+
+          Thanks to  Rob Boyer <RBOYER at euphonix dot com> for motivating
+          this change.
 
 Thu Sep 16 10:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -114,42 +121,42 @@ Wed Sep 15 21:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Sep 14 17:12:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* orbsvcs/orbsvcs/CosConcurrency.mpc:
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
-	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosProperty.mpc:
-	* orbsvcs/orbsvcs/CosTime.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
-	* orbsvcs/orbsvcs/ETCL.mpc:
-	* orbsvcs/orbsvcs/FTORB.mpc:
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
-	* orbsvcs/orbsvcs/FtRtEvent.mpc:
-	* orbsvcs/orbsvcs/IFRService.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
-	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
-	* orbsvcs/orbsvcs/RTEvent.mpc:
-	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/RTKokyuEvent.mpc:
-	* orbsvcs/orbsvcs/RTOLDEvent.mpc:
-	* orbsvcs/orbsvcs/RTSched.mpc:
-	* orbsvcs/orbsvcs/RTSchedEvent.mpc:
-	* orbsvcs/orbsvcs/RT_Notification.mpc:
-	* orbsvcs/orbsvcs/SSLIOP.mpc:
-	* orbsvcs/orbsvcs/Security.mpc:
-	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTKokyuEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
 
-	  Added empty Inline_Files and Template_Files sections so that
-	  doesn't decide to add unrelated files.
+          Added empty Inline_Files and Template_Files sections so that
+          doesn't decide to add unrelated files.
 
 Tue Sep 14 13:03:54 2004  Dale Wilson  <wilson_d@ociweb.com>
 
