@@ -1286,19 +1286,12 @@ to run the tests and capture their output:<p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 
-<strong>NOTE</strong>: The ACE support for shared libraries is
-under development.  If you use any writeable global (static)
-data in a shared library, it probably won't work for you.  A
-fix is under development, and should be ready shortly after
-the release of ACE 5.0.<p>
-
-ACE now supports shared libraries for VxWorks, but only with the
-g++ compiler.  To build shared libraries instead of the default
-static libraries, added <code>shared_libs_only=1</code> to either
-your <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
-or your <code>make</code> invocation.  Then, be sure to load
-the ACE (and any other) shared library before loading your
-executable(s).<p>
+ACE supports shared libraries for VxWorks, but only with the g++
+compiler.  To build shared libraries instead of the default static
+libraries, added <code>shared_libs_only=1</code> to either your
+<code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code> or
+your <code>make</code> invocation.  Then, be sure to load the ACE (and
+any other) shared library before loading your executable(s).<p>
 
 A shared library for VxWorks uses the same code as for a static
 (non-shared) library.  However, calls to static constructors/
@@ -1314,6 +1307,20 @@ library before loading your executable(s) with a command such as:
 </code></pre>
 Shared libraries can be unloaded the same way an executable
 (module) is unloaded.<p>
+
+<strong>NOTE</strong>: Shared libraries on VxWorks aren't the same as
+shared libraries on other operating systems.  In particular, there is
+no support for creating copies of writeable global (static) data in
+the shared library.  This includes the singleton ACE_Object_Manager
+instance pointer.  If you share global data between separate programs,
+they may not work properly.  See the discussion of shared code and
+reentrancy in the VxWorks' <em>Programmers Guide</em>.<p>
+
+Instead of trying to run separate programs onto a VxWorks target, we
+recommend creating just one program, and spawning a thread for each
+task.  The TAO IDL_Cubit test <a
+href="TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
+test</a> is a good example.<p>
 
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
