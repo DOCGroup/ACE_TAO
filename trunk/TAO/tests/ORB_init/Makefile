@@ -46,7 +46,8 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ORB_init.o .obj/ORB_init.so .shobj/ORB_init.o .shobj/ORB_init.so: ORB_init.cpp $(TAO_ROOT)/tao/corba.h \
+.obj/ORB_init.o .obj/ORB_init.so .shobj/ORB_init.o .shobj/ORB_init.so: ORB_init.cpp \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -228,8 +229,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i
+ $(TAO_ROOT)/tao/PortableInterceptor.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

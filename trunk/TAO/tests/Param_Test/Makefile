@@ -317,8 +317,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -404,6 +403,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -620,8 +620,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -742,6 +741,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -951,8 +951,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -971,12 +970,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  param_testSer_T.h param_testSer_T.i param_testSer_T.cpp \
- param_testSer.i $(TAO_ROOT)/tao/debug.h \
+ param_testSer.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/param_test_i.o .obj/param_test_i.so .shobj/param_test_i.o .shobj/param_test_i.so: param_test_i.cpp param_test_i.h param_testSer.h \
- param_testCli.h $(TAO_ROOT)/tao/corba.h \
+ param_testCli.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1159,8 +1160,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1179,7 +1179,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  param_testSer_T.h param_testSer_T.i param_testSer_T.cpp \
- param_testSer.i $(TAO_ROOT)/tao/debug.h
+ param_testSer.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1365,8 +1366,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i
+ param_testCli.i
 
 .obj/param_testCli.o .obj/param_testCli.so .shobj/param_testCli.o .shobj/param_testCli.so: param_testCli.cpp param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1552,8 +1552,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -1639,6 +1638,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1863,14 +1863,13 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.h \
- param_testCli.i results.h \
+ param_testCli.h param_testCli.i results.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i client.h client.cpp \
+ $(ACE_ROOT)/ace/Profile_Timer.i client.h \
+ client.cpp \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -2102,9 +2101,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i results.h \
- $(ACE_ROOT)/ace/Profile_Timer.h \
+ results.h $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
@@ -2331,8 +2328,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
@@ -2523,8 +2518,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
@@ -2716,8 +2709,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -2939,8 +2931,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i
+ param_testCli.i
 
 .obj/any.o .obj/any.so .shobj/any.o .shobj/any.so: any.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -3126,8 +3117,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -3350,8 +3340,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -3387,7 +3376,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_long_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_long_seq.h
 
 .obj/bd_short_seq.o .obj/bd_short_seq.so .shobj/bd_short_seq.o .shobj/bd_short_seq.so: bd_short_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -3573,8 +3563,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -3610,7 +3599,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_short_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_short_seq.h
 
 .obj/bd_str_seq.o .obj/bd_str_seq.so .shobj/bd_str_seq.o .shobj/bd_str_seq.so: bd_str_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -3796,8 +3786,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -3833,7 +3822,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_str_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_str_seq.h
 
 .obj/bd_wstr_seq.o .obj/bd_wstr_seq.so .shobj/bd_wstr_seq.o .shobj/bd_wstr_seq.so: bd_wstr_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4019,8 +4009,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -4056,7 +4045,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_wstr_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_wstr_seq.h
 
 .obj/bd_string.o .obj/bd_string.so .shobj/bd_string.o .shobj/bd_string.so: bd_string.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4242,8 +4232,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -4279,7 +4268,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_string.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_string.h
 
 .obj/bd_wstring.o .obj/bd_wstring.so .shobj/bd_wstring.o .shobj/bd_wstring.so: bd_wstring.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4465,8 +4455,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -4502,7 +4491,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_wstring.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_wstring.h
 
 .obj/bd_struct_seq.o .obj/bd_struct_seq.so .shobj/bd_struct_seq.o .shobj/bd_struct_seq.so: bd_struct_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4688,8 +4678,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -4725,7 +4714,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_struct_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_struct_seq.h
 
 .obj/bd_array_seq.o .obj/bd_array_seq.so .shobj/bd_array_seq.o .shobj/bd_array_seq.so: bd_array_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4911,8 +4901,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -4948,7 +4937,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp bd_array_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ bd_array_seq.h
 
 .obj/fixed_array.o .obj/fixed_array.so .shobj/fixed_array.o .shobj/fixed_array.so: fixed_array.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -5134,8 +5124,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -5171,7 +5160,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp fixed_array.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ fixed_array.h
 
 .obj/fixed_struct.o .obj/fixed_struct.so .shobj/fixed_struct.o .shobj/fixed_struct.so: fixed_struct.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -5357,8 +5347,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -5394,7 +5383,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp fixed_struct.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ fixed_struct.h
 
 .obj/nested_struct.o .obj/nested_struct.so .shobj/nested_struct.o .shobj/nested_struct.so: nested_struct.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -5580,8 +5570,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -5617,7 +5606,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp nested_struct.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ nested_struct.h
 
 .obj/objref_struct.o .obj/objref_struct.so .shobj/objref_struct.o .shobj/objref_struct.so: objref_struct.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -5803,8 +5793,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -5840,7 +5829,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp objref_struct.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ objref_struct.h
 
 .obj/objref.o .obj/objref.so .shobj/objref.o .shobj/objref.so: objref.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6026,8 +6016,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -6063,7 +6052,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp objref.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ objref.h
 
 .obj/short.o .obj/short.so .shobj/short.o .shobj/short.so: short.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6249,8 +6239,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -6286,7 +6275,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp short.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ short.h
 
 .obj/ulonglong.o .obj/ulonglong.so .shobj/ulonglong.o .shobj/ulonglong.so: ulonglong.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6472,8 +6462,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -6509,7 +6498,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ulonglong.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ulonglong.h
 
 .obj/typecode.o .obj/typecode.so .shobj/typecode.o .shobj/typecode.so: typecode.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6695,8 +6685,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -6732,7 +6721,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp typecode.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ typecode.h
 
 .obj/ub_any_seq.o .obj/ub_any_seq.so .shobj/ub_any_seq.o .shobj/ub_any_seq.so: ub_any_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6918,8 +6908,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -6955,8 +6944,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_any_seq.h \
- $(TAO_ROOT)/tao/debug.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_any_seq.h $(TAO_ROOT)/tao/debug.h
 
 .obj/ub_long_seq.o .obj/ub_long_seq.so .shobj/ub_long_seq.o .shobj/ub_long_seq.so: ub_long_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -7142,8 +7131,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -7179,7 +7167,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_long_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_long_seq.h
 
 .obj/ub_objref_seq.o .obj/ub_objref_seq.so .shobj/ub_objref_seq.o .shobj/ub_objref_seq.so: ub_objref_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -7365,8 +7354,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -7402,7 +7390,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_objref_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_objref_seq.h
 
 .obj/ub_short_seq.o .obj/ub_short_seq.so .shobj/ub_short_seq.o .shobj/ub_short_seq.so: ub_short_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -7588,8 +7577,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -7625,7 +7613,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_short_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_short_seq.h
 
 .obj/ub_str_seq.o .obj/ub_str_seq.so .shobj/ub_str_seq.o .shobj/ub_str_seq.so: ub_str_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -7811,8 +7800,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -7848,7 +7836,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_str_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_str_seq.h
 
 .obj/ub_wstr_seq.o .obj/ub_wstr_seq.so .shobj/ub_wstr_seq.o .shobj/ub_wstr_seq.so: ub_wstr_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8034,8 +8023,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -8071,7 +8059,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_wstr_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_wstr_seq.h
 
 .obj/ub_string.o .obj/ub_string.so .shobj/ub_string.o .shobj/ub_string.so: ub_string.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8257,8 +8246,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -8294,7 +8282,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_string.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_string.h
 
 .obj/ub_wstring.o .obj/ub_wstring.so .shobj/ub_wstring.o .shobj/ub_wstring.so: ub_wstring.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8480,8 +8469,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -8517,7 +8505,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_wstring.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_wstring.h
 
 .obj/ub_struct_seq.o .obj/ub_struct_seq.so .shobj/ub_struct_seq.o .shobj/ub_struct_seq.so: ub_struct_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8703,8 +8692,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -8740,7 +8728,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_struct_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_struct_seq.h
 
 .obj/ub_array_seq.o .obj/ub_array_seq.so .shobj/ub_array_seq.o .shobj/ub_array_seq.so: ub_array_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -8926,8 +8915,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -8963,7 +8951,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp ub_array_seq.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ ub_array_seq.h
 
 .obj/var_array.o .obj/var_array.so .shobj/var_array.o .shobj/var_array.so: var_array.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9149,8 +9138,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -9186,7 +9174,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp var_array.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ var_array.h
 
 .obj/var_struct.o .obj/var_struct.so .shobj/var_struct.o .shobj/var_struct.so: var_struct.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9372,8 +9361,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -9409,10 +9397,12 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp var_struct.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ var_struct.h
 
 .obj/recursive_struct.o .obj/recursive_struct.so .shobj/recursive_struct.o .shobj/recursive_struct.so: recursive_struct.cpp recursive_struct.h \
- param_testCli.h $(TAO_ROOT)/tao/corba.h \
+ param_testCli.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9595,9 +9585,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
- helper.h \
+ param_testCli.i helper.h \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -9819,8 +9807,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -9856,8 +9843,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp except.h \
- $(TAO_ROOT)/tao/debug.h \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ except.h $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/DynamicInterface/Unknown_User_Exception.h
 
 .obj/big_union.o .obj/big_union.so .shobj/big_union.o .shobj/big_union.so: big_union.cpp helper.h param_testCli.h \
@@ -10044,8 +10031,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -10081,7 +10067,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp big_union.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ big_union.h
 
 .obj/small_union.o .obj/small_union.so .shobj/small_union.o .shobj/small_union.so: small_union.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -10267,8 +10254,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -10304,10 +10290,12 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp small_union.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ small_union.h
 
 .obj/recursive_union.o .obj/recursive_union.so .shobj/recursive_union.o .shobj/recursive_union.so: recursive_union.cpp recursive_union.h \
- param_testCli.h $(TAO_ROOT)/tao/corba.h \
+ param_testCli.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10490,9 +10478,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
- helper.h \
+ param_testCli.i helper.h \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -10714,8 +10700,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -10751,7 +10736,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp multdim_array.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ multdim_array.h
 
 .obj/complex_any.o .obj/complex_any.so .shobj/complex_any.o .shobj/complex_any.so: complex_any.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -10937,8 +10923,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -10974,8 +10959,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp complex_any.h \
- $(TAO_ROOT)/tao/debug.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ complex_any.h $(TAO_ROOT)/tao/debug.h
 
 .obj/param_testCli.o .obj/param_testCli.so .shobj/param_testCli.o .shobj/param_testCli.so: param_testCli.cpp param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -11161,8 +11146,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -11248,6 +11232,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -11464,8 +11449,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i param_testCli.i \
+ param_testCli.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -11552,6 +11536,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
