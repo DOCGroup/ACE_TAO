@@ -5,5 +5,5 @@
 # -ORBsvcconf svc.conf.static to your command line invocations
 # of the server and client.
 static Resource_Factory "-ORBresources tss -ORBinputcdrallocator tss"
-static Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
+static Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler RW"
 static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null -ORBallowreactivationofsystemids 0"

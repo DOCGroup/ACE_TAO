@@ -1,3 +1,63 @@
+Fri Apr 16 16:39:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect: Added a new connection handling strategy that
+	  simply blocks in recv() when waiting for a response from the
+	  server instead of waiting in the Reactor.  This strategy only
+	  works when the application does not have to worry about new
+	  requests showing up when waiting for a response. Therefore, this
+	  strategy is appropriate only for "pure" clients.
+
+	  Note that applications with nested upcalls are not "pure"
+	  clients. Also note that this strategy will only effect two way
+	  calls, since there is no waiting for one way calls.
+
+	  This strategy can also be used in an application that is both a
+	  client and a server, if the server side is handled by a separate
+	  thread and the client threads are "pure" clients.
+
+	  Carlos has promised to add policies that will make the selection
+	  of these connection handling policies finer grain than the "all
+	  or nothing" selection that currently exists.  The aim would be
+	  to allow some clients (maybe invocations) to use one connection
+	  handling policy and while others to use other policies.
+
+	  If applications can use this strategy, they can improve their
+	  performance since the Reactor will not get involved in this code
+	  path.
+
+	  Descriptive comparison of the different connection handling
+	  strategies is available in:
+	  http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Options.html
+
+	  Here are some numbers that compare the effect of different
+	  policies on the performance of a simple two way call:
+
+	  Policy                                            Performance        Speedup percentage
+	                                                    (calls/second)     (relative to MT)
+	  ------					    -----------        ----------------
+
+	  MT Connection Handler (with a Reactor lock)          4346                 0.0
+	  ST Connection Handler (with a Reactor lock)          4416		    1.6
+          ST Connection Handler (without a Reactor lock)       4473		    2.9
+          RW Connection Handler	                               4676		    7.6
+
+	  The above numbers were obtained from the
+	  examples/POA/Generic_Servant/client and
+	  examples/POA/Explicit_Activation/server examples (with the other
+	  usual optimizations turned on) using the following configuration
+	  in loopback mode:
+
+	  MSVC 6.0, release mode, NT4.0 SP 3, on a quad CPU Zeon (400 MHz)
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+
+	  Added the new RW connection handling option to these tests.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: Removed
+	  this file is it was now identical to the svc.conf file.
+
 Fri Apr 16 17:16:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/{DOVEMIB,Event_Supplier}/Makefile:
@@ -152,8 +212,8 @@ Thu Apr 15 10:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           The open() method receives the ORB_Core as a parameter to avoid
           recursive calls to TAO_ORB_Core_instance() during startup.
 
-        * tao/default_server.h:
-        * tao/default_server.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
           Moved the {MT,ST}_Connect_Creation_Strategy classes to this file
           because here is where they are used, not in the ORB_Core.
 

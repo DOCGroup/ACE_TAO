@@ -117,7 +117,7 @@ TAO_IIOP_Transport::_nil (void)
 void
 TAO_IIOP_Transport::resume_connection (ACE_Reactor *reactor)
 {
-  (void) reactor->resume_handler (this->handler_);
+  this->handler_->resume_handler (reactor);
 }
 
 void
