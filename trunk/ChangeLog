@@ -1,3 +1,10 @@
+Fri Mar 25 07:02:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-win32-common.h:
+
+	  Define ACE_INT64_TYPE and ACE_UINT64_TYPE macros instead of
+	  actual typedef definitions.
+
 Thu Mar 24 23:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Basic_Types.h:

@@ -240,13 +240,13 @@
 // Green Hills Native x86 does not support __int64 keyword
 // Neither does mingw32.
 #if !defined (ACE_LACKS_LONGLONG_T) && !defined (__MINGW32__)
-typedef unsigned __int64 ACE_UINT64;
-typedef   signed __int64 ACE_INT64;
+#define ACE_INT64_TYPE		signed __int64
+#define ACE_UINT64_TYPE		unsigned __int64
 #endif /* (ghs) */
 
 #if defined (__MINGW32__)
-typedef unsigned long long ACE_UINT64;
-typedef   signed long long ACE_INT64;
+#define ACE_INT64_TYPE		signed long long
+#define ACE_UINT64_TYPE		unsigned long long
 #endif
 
 // Optimize ACE_Handle_Set for select().
