@@ -319,10 +319,7 @@ dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.
 AC_SEARCH_LIBS([getservbyname],[socket xnet],,[AC_DEFINE([ACE_LACKS_GETSERVBYNAME])],[-lnsl])
 
-AC_CHECK_FUNC(inet_aton)
-if test "$ac_cv_func_inet_aton" != yes; then
-  AC_DEFINE([ACE_LACKS_INET_ATON])
-fi
+ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
 dnl may put it there.
