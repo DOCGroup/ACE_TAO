@@ -40,6 +40,24 @@ public:
 
   int parse_args(int argc, char* argv[]);
   // Parse svc.conf arguments
+  // <-ORBiiopprofilelock> <{which}>
+  //   where <{which}> is one of <thread> or <null> (default <thread>)
+
+  ACE_Lock* create_iiop_profile_lock (void);
+  // create the lock for the forwarding IIOP Profile used by 
+  // the TAO_GIOP_Invocation::location_forward and the 
+  // TAO_GIOP_Invocation::start
+
+private:
+  enum Lock_Type
+  {
+    TAO_NULL_LOCK,
+    TAO_THREAD_LOCK
+  };
+
+  Lock_Type iiop_profile_lock_type_;
+  // the lock type for forwarding IIOP Profile
+
 };
 
 #if defined (__ACE_INLINE__)

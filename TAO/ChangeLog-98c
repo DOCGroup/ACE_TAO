@@ -1,3 +1,24 @@
+Tue Jun 30 10:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/Client_Strategy_Factory.{h,cpp}: Added the create_iiop_profile_lock (void)
+
+	* tao/GIOP.cpp: Use ACE_Lock instead of ACE_SYNCH_MUTEX.
+	
+	* tao/IIOP_Object.cpp: Added the initialization of the fwd_profile_lock_ptr to 
+	  the constructor.
+	
+	* tao/IIOP_Object.h: Changed the forward profile lock to a pointer to a lock.
+
+	* tao/IIOP_Object.i: Added the initialization of the fwd_profile_lock_ptr to 
+	  the constructor.
+
+	* tao/default_client.{h,cpp}: Added the parsing of "-ORBportiiopproflielock" to
+	  the parse_args method. "thread" (default) means to use a mutex lock
+	  on the access of the forwarding iiop profile. "null" means, use a null 
+	  mutex, which is faster, but does not provide any protection.
+	  Added also the function create_iiop_profile_lock () to allow 
+	  others to create a new lock, depending on the above mentioned switch.
+
 Tue Jun 30 00:58:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.36 released.

@@ -220,14 +220,14 @@ public:
   // THREAD-SAFE.  Sets a new value for the forwarding profile and
   // returns the current value.
 
-  ACE_SYNCH_MUTEX &get_fwd_profile_lock (void);
+  ACE_Lock &get_fwd_profile_lock (void);
   // Gives reference to the lock guarding the forwarding profile.
 
 private:
   IIOP::Profile *fwd_profile_;
   // Store the forwarding profile
 
-  ACE_SYNCH_MUTEX fwd_profile_lock_;
+  ACE_Lock* fwd_profile_lock_ptr_;
   // Mutex to protect access to the forwarding profile
   
   ACE_SYNCH_MUTEX IUnknown_lock_;
