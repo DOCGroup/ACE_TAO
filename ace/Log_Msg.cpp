@@ -1102,6 +1102,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // the one seen in the debugger as well.
                   ACE_OS::sprintf (bp, ACE_TEXT ("%u"),
                                    pthread_getunique_np(&t_id));
+#  elif defined (ACE_MVS)
+                  // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
+                  // code for it.
+                  ACE_OS::sprintf (bp, ACE_TEXT ("%u"), t_id);
 #  else
                   // Yes, this is an ugly C-style cast, but the correct
                   // C++ cast is different depending on whether the t_id
