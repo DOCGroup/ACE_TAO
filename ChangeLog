@@ -1,3 +1,12 @@
+Tue Aug 14 21:30:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* apps/Makefile: Removed JAWS2 and JAWS from the Makefile. There
+	  are several reasons for reverting. This breaks the builds. The
+	  Makefiles in the recursed directories are all messed up. The
+	  library dependencies doesnt seem trivial. Nobody may have time
+	  to fix this. Further, our daily builds return too quickly and we
+	  just needed more files to compile :-).
+
 Tue Aug 14 14:19:49 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Memory_Pool.i (ACE_Local_Memory_Pool dtor): Call release()
