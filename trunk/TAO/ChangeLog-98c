@@ -1,37 +1,37 @@
 Thu Aug 27 12:38:20 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: 
-	  Fixed some problems in the generated code; the counter was
-	  compared to 0 and not the sequence length.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Fixed some problems in the generated code; the counter was
+          compared to 0 and not the sequence length.
 
-	* TAO_IDL/be/*/*.cpp: 
-	  Removed tons of warnings due to unused variables.
+        * TAO_IDL/be/*/*.cpp:
+          Removed tons of warnings due to unused variables.
 
 Thu Aug 27 12:23:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Makefile: 
-	* utils/Makefile: 
-	  Added a Makefile for the utils directory.
+        * Makefile:
+        * utils/Makefile:
+          Added a Makefile for the utils directory.
 
-	* utils/catior/catior.cpp: 
-	  Fixed some problems with EGCS and the new scope rules in for()
-	  loops.
+        * utils/catior/catior.cpp:
+          Fixed some problems with EGCS and the new scope rules in for()
+          loops.
 
-	* utils/IorParser/ior-handler.h: 
-	* utils/IorParser/ior-handler.cpp: 
-	  Removed a hardcoded ASCII code (yikes!) and moved some buffers
-	  to the class, so we don't return local variables (re-yikes!),
-	  using a fixed size buffer looks like a bad idea also; but I'm
-	  not going there yet.
+        * utils/IorParser/ior-handler.h:
+        * utils/IorParser/ior-handler.cpp:
+          Removed a hardcoded ASCII code (yikes!) and moved some buffers
+          to the class, so we don't return local variables (re-yikes!),
+          using a fixed size buffer looks like a bad idea also; but I'm
+          not going there yet.
 
-	* tao/Environment.cpp: 
-	  Fixed the initialization for the first default environment.
+        * tao/Environment.cpp:
+          Fixed the initialization for the first default environment.
 
 Thu Aug 27 11:55:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/IOR-parser/ior-handler.cpp (hexChar2int): Added a return 0
- 	  to make the compiler happy.  Thanks to Lothar Werzinger
- 	  <lwerzinger@krones.de> for reporting this.
+        * utils/IOR-parser/ior-handler.cpp (hexChar2int): Added a return 0
+          to make the compiler happy.  Thanks to Lothar Werzinger
+          <lwerzinger@krones.de> for reporting this.
 
 Thu Aug 27 09:55:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -40,6 +40,14 @@ Thu Aug 27 09:55:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/client.cpp: added
           ACE_Singleton<Globals,ACE_Null_Mutex> instantiation.
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/Makefile:
+          change all _long to long in Visibroker 3.2 idl2java output.
+          _long doesn't seem to be defined anywhere, so compilation
+          of java output with it fails.
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
+          added required fields to EventData constructor call.
 
 Thu Aug 27 07:59:18 1998  Aniruddha Gokhale  <gokhale@cs.wustl.edu>
 
