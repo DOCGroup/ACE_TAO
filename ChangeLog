@@ -1,3 +1,8 @@
+Sun Jan  2 11:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp:
+          Fixed compile problem when ACE_LACKS_MKTEMP is defined
+
 Sun Jan  2 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_client.mpb:
