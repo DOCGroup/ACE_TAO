@@ -1,3 +1,12 @@
+Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/Filecache.{cpp,h}:
+	  - debugged writing a file.
+	  - can select if mapping is desired.
+
+	* ace/OS.h: Added new #defines to facilitate forward declarations
+	  of ACE_Export classes.
+
 Thu Dec 18 14:35:24 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: The server logging daemon is implemented using TCP/IP
