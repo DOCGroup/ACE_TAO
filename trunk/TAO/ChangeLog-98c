@@ -1,5 +1,9 @@
 Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* TAO_IDL/be/be_interface.cpp: Generate the "unsigned int"
+ 	  signatures for hash() and lookup() to match the changes in
+ 	  gperf.
+
 	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Removed
  	  the -S1 flag to GPERF.  This is now implicit if GPERF can't
  	  generate a proper "lookup array" duplicate solution...
