@@ -947,6 +947,9 @@ ACE_FACTORY_DEFINE (TAO_RTEvent, TAO_EC_Default_Factory)
 template class ACE_Node<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
+template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor*>;
+template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor*>;
+template class ACE_Node<ACE_Static_Svc_Descriptor*>;
 
 template class TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushConsumer>;
 template class TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>;

@@ -387,7 +387,20 @@ Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
 template class auto_ptr<POA_RtecScheduler::Scheduler>;
+template class TAO_Objref_Var_T<PortableServer::POA, PortableServer::tao_POA_life>;
+template class TAO_Objref_Var_T<PortableServer::POAManager, PortableServer::tao_POAManager_life>;
+template class TAO_Objref_Var_T<RtecScheduler::Scheduler, RtecScheduler::tao_Scheduler_life>;
+template class TAO_Objref_Var_T<CosNaming::NamingContext, CosNaming::tao_NamingContext_life>;
+// @cjc: I don't think this should go here; it *should* go in
+// RtecEventChannelAdminS.cpp b/c that's what uses it, but I don't
+// want to deal with that can of worms right now.
+class TAO_IFR_Client_Adapter;
+template class ACE_Dynamic_Service<TAO_IFR_Client_Adapter>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
 #pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
+#pragma instantiate TAO_Objref_Var_T<PortableServer::POA, PortableServer::tao_POA_life>;
+#pragma instantiate TAO_Objref_Var_T<PortableServer::POAManager, PortableServer::tao_POAManager_life>;
+#pragma instantiate TAO_Objref_Var_T<RtecScheduler::Scheduler, RtecScheduler::tao_Scheduler_life>;
+#pragma instantiate TAO_Objref_Var_T<CosNaming::NamingContext, CosNaming::tao_NamingContext_life>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

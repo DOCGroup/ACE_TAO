@@ -1,3 +1,18 @@
+Fri Jun 20 14:48:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp:
+
+	  Added missing explicit instantiations that were causing build
+	  problems on impaired platforms.  Some of the explicit
+	  instantiations probably ought to be handled in generated code or
+	  other places, but that's a bigger issue to bite off.
+
 Fri Jun 20 12:56:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
