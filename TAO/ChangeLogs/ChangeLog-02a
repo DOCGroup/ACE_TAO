@@ -1,3 +1,10 @@
+Thu Sep 14 17:48:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * tests/POA/wait_for_completion/wait_for_completion.cpp:
+          Fixed minor problems with ACE_CHECK vs. ACE_TRY_CHECK
+          vs. ACE_CHECK_RETURN.
+
 Thu Sep 14 19:36:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
