@@ -1,3 +1,17 @@
+Tue Dec 22 02:37:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.h:
+	  Added an ACE_HASH_MAP_MANAGER member which associates an
+	  ObjectId with an dll.
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
+	  (activate_servant): The dll object is bound to the ObjectId of
+	  the servant.
+		
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
+	  (deactivate_servant): The dll object is removed from the servant
+	  hash map.
+		
 Tue Dec 22 01:12:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Defined TAO_CATCHANY as
