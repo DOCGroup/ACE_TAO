@@ -866,21 +866,8 @@ CORBA_Any::operator>>= (to_object obj) const
                                                 env)
                                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
 
-          if (flag)
-            {
-              CORBA::Object_ptr *tmp;
-
-              ACE_NEW_RETURN (tmp,
-                              CORBA::Object_ptr,
-                              0);
-
-              *tmp = obj.ref_;
-
-              ACE_const_cast (CORBA_Any *, this)->value_ = tmp;
-
-              return 1;
-            }
-
+          // Because of the CORBA 2.3 change mentioned above, there is no
+          // need to assing to this->value_.
           return flag;
         }
     }
