@@ -1,3 +1,9 @@
+Mon Mar 15 18:26:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Proactor/HA_Proactive_Status.h: Add #include
+	  "ace/Asynch_IO.h" so AIX Visual Age C++ can find things at
+	  template instantiate time.
+
 Mon Mar 15 15:42:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix5.1.h: Set this up for use with AIX 5.2 as well.
