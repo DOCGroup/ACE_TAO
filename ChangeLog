@@ -1,3 +1,16 @@
+Wed Feb  4 14:21:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+        * bin/MakeProjectCreator/config/valuetype.mpb:
+        
+          Removed all path includes except TAO_ROOT and CIAO_ROOT,
+          for IDL, CIDL and C++ compilers.
+
 Wed Feb  4 18:15:16 UTC 2004  Craig Rodrigues <crodrigu@bbn.com>
 
         * include/makeinclude/platform_linux.GNU: Allow
