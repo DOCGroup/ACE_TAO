@@ -1,3 +1,27 @@
+Fri Nov 28 04:25:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace: Removed redundant trailing commas from
+	  ACE_UNIMPLEMENTED_FUNC.
+
+	* ace/Thread_Manager.{h,i,cpp}: Delete declaration of
+	  remove_thr_self.  It is no longer in use.
+	  (wait_on_exit): Added this function to let users specify whether
+	  they want their Thread_Manager wait for spawned threads on exit
+	  or not.
+	  (wait): On Win32, handles should be closed if we decide to let
+	  the thread go wild.
+	  (remove_thr): Added another parameter to control whether
+	  remove_thr should close the handle or not.  It is only used on
+	  Win32.
+	  (close):  Removed the <automatic_wait> parameter for it has been
+	  incoporated as a member.
+	  (close_singleton): Reset <automatic_wait_> on Win32. We'll never
+	  need to wait for unfinished threads on NT.
+	  (ACE_Thread_Manager): Added initialization of member
+	  <automatic_wait_>.  It is default to 1 (wait on exit.)
+
+	* ace/Containers.h: Corrected erroneous comments.
+
 Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
 
 	* ace/Log_Msg (msg): Changed the parameters from char * to const
