@@ -98,6 +98,12 @@ public:
   /// Destructor.
   virtual ~ACE_POSIX_Asynch_Result (void);
 
+  /// Simulate error value to use in the post_completion ()
+  void set_error (u_long errcode);
+
+  /// Simulate value to use in the post_completion ()
+  void set_bytes_transferred (u_long nbytes);
+
 protected:
   /// Constructor. <Event> is not used on POSIX.
   ACE_POSIX_Asynch_Result (ACE_Handler &handler,
@@ -600,7 +606,8 @@ public:
   ACE_POSIX_AIOCB_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
+  /// will be written from the <message_block>, starting at the
+  /// message block's <rd_ptr>.
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
@@ -1222,9 +1229,9 @@ class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
                                                   public ACE_POSIX_Asynch_Result
 {
   /// Factory classes willl have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Accept;
-  friend class ACE_POSIX_SIG_Asynch_Accept;
-
+  friend class ACE_POSIX_Asynch_Accept;
+  friend class ACE_POSIX_Asynch_Accept_Handler;
+  
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
 
@@ -1330,23 +1337,24 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Accept_Handler
+ * @class ACE_POSIX_Asynch_Accept_Handler
  *
  * Forward declaration. This class is defined the in the cpp file,
  * since this is internal  to the implementation.
  */
-class ACE_POSIX_AIOCB_Asynch_Accept_Handler;
+class ACE_POSIX_Asynch_Accept_Handler;
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Accept
+ * @class ACE_POSIX_Asynch_Accept
  *
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
-                                                 public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Accept :
+  public virtual ACE_Asynch_Accept_Impl,
+  public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Accept (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
   /**
    * This <open> belongs to ACE_AIOCB_Asynch_Operation. We forward
@@ -1377,15 +1385,28 @@ public:
               int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Accept (void);
+  virtual ~ACE_POSIX_Asynch_Accept (void);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
   //   the call to the ACE_POSIX_Asynch_Operation base class.
 
-  ///
-  /// @@ Not implemented. Returns 0.
+  /**
+  *  Cancel all pending pseudo-asynchronus requests
+  *  Behavior as usual AIO request
+  */
   int cancel (void);
+
+  /**
+  *  Close performs cancellation of all pending requests
+  *  Parameter flg_notify can be 
+  *    0  - don't send notifications about canceled accepts
+  *    1  - notify user about canceled accepts
+  *         according POSIX standards we should receive notifications
+  *         on canceled AIO requests
+  */
+  int close ( int flg_notify);
+
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
@@ -1398,82 +1419,15 @@ private:
   ACE_Reactor reactor_;
 
   /// The Event Handler to do handle_input.
-  ACE_POSIX_AIOCB_Asynch_Accept_Handler* accept_handler_;
+  ACE_POSIX_Asynch_Accept_Handler* accept_handler_;
+
+  /// group id for the thread that we create for accepts
+  int grp_id_ ;
+
+  /// POSIX Proactor implementation
+  ACE_POSIX_Proactor * posix_proactor_;
 };
 
-/**
- * @class ACE_POSIX_SIG_Asynch_Accept_Handler;
- *
- * Forward declaration. This class is defined the in the cpp file,
- * since this is internal  to the implementation.
- */
-class ACE_POSIX_SIG_Asynch_Accept_Handler;
-
-/**
- * @class ACE_POSIX_SIG_Asynch_Accept
- *
- * @brief This class implements <ACE_Asynch_Accept> for Realtime
- *   Signal (<sigtimedwait>) based implementation of Proactor. 
- */
-class ACE_Export ACE_POSIX_SIG_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
-                                               public ACE_POSIX_SIG_Asynch_Operation
-{
-public:
-  /// Constructor.
-  ACE_POSIX_SIG_Asynch_Accept (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-
-  /**
-   * This <open> belongs to ACE_SIG_Asynch_Operation. We forward this
-   * call to that method. We have put this here to avoid the compiler
-   * warnings.
-   */
-  int open (ACE_Handler &handler,
-            ACE_HANDLE handle,
-            const void *completion_key,
-            ACE_Proactor *proactor = 0);
-
-  /**
-   * This starts off an asynchronous accept.  The asynchronous accept
-   * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-   * handle will be created.
-   *
-   * <message_block> must be specified. This is because the address of
-   * the new connection is placed at the end of this buffer.
-   */
-  int accept (ACE_Message_Block &message_block,
-              u_long bytes_to_read,
-              ACE_HANDLE accept_handle,
-              const void *act,
-              int priority,
-              int signal_number);
-
-  /// Destructor.
-  virtual ~ACE_POSIX_SIG_Asynch_Accept (void);
-
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
-  //   methods are defined here to avoid dominace warnings. They route
-  //   the call to the ACE_POSIX_Asynch_Operation base class.
-
-  ///
-  /// @@ Not implemented. Returns 0.
-  int cancel (void);
-
-  /// Return the underlying proactor.
-  ACE_Proactor* proactor (void) const;
-
-private:
-  /// The thread function that does handle events.
-  static void* thread_function (void* reactor);
-
-  /// Reactor to wait on the <listen_handle>.
-  ACE_Reactor reactor_;
-
-  /// The Event Handler to do handle_input.
-  ACE_POSIX_SIG_Asynch_Accept_Handler* accept_handler_;
-};
 
 /**
  * @class ACE_POSIX_Asynch_Transmit_File_Result
