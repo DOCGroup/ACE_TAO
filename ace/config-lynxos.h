@@ -170,6 +170,8 @@
 // LynxOS 3.0.0/ppc.
 #define ACE_HAS_TSS_EMULATION
 
+#define ACE_HAS_GPERF
+
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_DIRENT
 
