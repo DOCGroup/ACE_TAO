@@ -168,7 +168,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::open");
   this->high_water_mark_ = hwm;
   this->low_water_mark_  = lwm;
-  this->deactivated_ = WAS_INACTIVE;
+  this->deactivated_ = 0;
   this->cur_bytes_ = 0;
   this->cur_count_ = 0;
   this->tail_ = 0;
