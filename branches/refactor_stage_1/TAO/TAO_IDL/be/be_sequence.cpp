@@ -24,6 +24,7 @@
 #include "be_interface.h"
 #include "be_interface_fwd.h"
 #include "be_predefined_type.h"
+#include "be_field.h"
 #include "be_visitor.h"
 #include "be_helper.h"
 #include "utl_identifier.h"
@@ -36,7 +37,8 @@ ACE_RCSID (be,
 
 
 be_sequence::be_sequence (void)
-  : mt_ (be_sequence::MNG_UNKNOWN)
+  : mt_ (be_sequence::MNG_UNKNOWN),
+    field_node_ (0)
 {
   // Always the case.
   this->has_constructor (I_TRUE);
@@ -67,7 +69,8 @@ be_sequence::be_sequence (AST_Expression *v,
               I_TRUE),
     COMMON_Base (t->is_local () || local,
                  abstract),
-    mt_ (be_sequence::MNG_UNKNOWN)
+    mt_ (be_sequence::MNG_UNKNOWN),
+    field_node_ (0)
 {
   // Always the case.
   this->has_constructor (I_TRUE);
@@ -78,7 +81,7 @@ char *
 be_sequence::gen_name (void)
 {
   char namebuf [NAMEBUFSIZE];
-  be_type *bt = 0; // Base type.
+  be_type *bt = 0;
 
   // Reset the buffer.
   ACE_OS::memset (namebuf,
@@ -96,6 +99,10 @@ be_sequence::gen_name (void)
                          "bad base type\n"),
                         0);
     }
+
+  // If this is non-zero, add its local name to the generated name,
+  // for uniqueness.
+  be_field *fn = this->field_node_;
 
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
@@ -122,15 +129,18 @@ be_sequence::gen_name (void)
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
       parent->add_sequence (seq);
+
       ACE_OS::sprintf (namebuf,
-                       "_tao_seq_%s",
-                       seq->gen_name ());
+                       "_tao_seq_%s_%s",
+                       seq->gen_name (),
+                       fn ? fn->local_name ()->get_string () : "");
     }
   else
     {
       ACE_OS::sprintf (namebuf,
-                       "_tao_seq_%s",
-                       bt->local_name ()->get_string ());
+                       "_tao_seq_%s_%s",
+                       bt->local_name ()->get_string (),
+                       fn ? fn->local_name ()->get_string () : "");
     }
 
   // Append the size (if any).
@@ -618,6 +628,18 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
   }
 
   return 0;
+}
+
+be_field *
+be_sequence::field_node (void) const
+{
+  return this->field_node_;
+}
+
+void
+be_sequence::field_node (be_field *node)
+{
+  this->field_node_ = node;
 }
 
 void

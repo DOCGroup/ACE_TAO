@@ -174,7 +174,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "}";
     }
 
-  // If Any operators are generated, that code will take care of this.
   if (!bt->seen_in_sequence ())
     {
       // This is a no-op unless our element is a managed type.
