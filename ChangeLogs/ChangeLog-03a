@@ -1,3 +1,14 @@
+Tue Apr  9 22:59:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h:
+
+          Added ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES to fix errors.
+
+        * ace/config-sunos5.6.h:
+
+          Removed definition of ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION as
+          we turn it on on the command line.
+
 Tue Apr  9 19:48:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.x_cxx.GNU (LDFLAGS):
