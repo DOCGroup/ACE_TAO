@@ -45,7 +45,7 @@ CORBA_ORB::CORBA_ORB (void)
 CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_ORB_Core_instance ()->fini ();
-  
+
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
 
@@ -64,12 +64,12 @@ CORBA_ORB::open (void)
     return -1;
 
   this->open_called_ = CORBA::B_TRUE;
-  
+
   TAO_Server_Strategy_Factory *f = this->server_factory ();
 
   // Initialize the endpoint ... or try!
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
-  
+
   if (ocp->acceptor ()->open (ocp->orb_params ()->addr (),
                               ocp->reactor(),
                               f->creation_strategy (),
@@ -100,7 +100,7 @@ CORBA_ORB::client_factory (void)
     {
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
-      // platforms.  
+      // platforms.
       ACE_NEW_RETURN (this->client_factory_, TAO_Default_Client_Strategy_Factory, 0);
 
       this->client_factory_from_service_config_ = CORBA::B_FALSE;
@@ -189,7 +189,7 @@ CORBA::ORB_init (int &argc,
       || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != SIZEOF_VOID_P)
     {
-      ACE_DEBUG ((LM_DEBUG, "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n", 
+      ACE_DEBUG ((LM_DEBUG, "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
 		  sizeof (CORBA::Short),
 		  sizeof (CORBA::Long),
 		  sizeof (CORBA::LongLong),
@@ -203,19 +203,19 @@ CORBA::ORB_init (int &argc,
       return 0;
     }
 
-  TAO_ORB_Core_instance ()->init (argc, argv);
-  
+  TAO_ORB_Core_instance ()->init (argc, (char **)argv);
+
   // Call various internal initialization routines.
   // @@ Why are these names prefixed with "__"?  Shouldn't they be in
   // a class someplace, or at least have the word "TAO" in front of
   // them?
-  // 
+  //
   // @@ (CJC) Far more important that the name is whether or not it's
   // OK to call these multiple times.  Andy, can you address this?
   __TC_init_table ();
   TAO_Marshal::initialize ();
   __TC_init_standard_exceptions (env);
-  
+
   if (env.exception () != 0)
     return 0;
 
@@ -230,7 +230,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 
   retval = new CORBA::NVList;
 
-  if (count != 0) 
+  if (count != 0)
     {
       retval->len_ = 0;
       retval->max_ = (u_int) count;
@@ -246,7 +246,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
-CORBA::POA_ptr 
+CORBA::POA_ptr
 CORBA_ORB::POA_init (int &argc,
 		     char **argv,
 		     const char *poa_identifier)
@@ -267,7 +267,7 @@ CORBA_ORB::POA_init (int &argc,
     {
       // @@ Can you please add comments describing each of these options? --doug
       // @@ Andy, could you review these since you wrote the code --cjc
-      
+
       if (ACE_OS::strcmp (argv[i], "-OAid") == 0)
         {
           // Specify the name of the OA
@@ -299,7 +299,7 @@ CORBA_ORB::POA_init (int &argc,
       else
 	i++;
     }
-  
+
   if (oc->root_poa ())
     {
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
@@ -309,7 +309,7 @@ CORBA_ORB::POA_init (int &argc,
 #if defined (POA_NEEDS_REQ_KEY)
   (void) ACE_Thread::keycreate (&req_key_);
 #endif /* POA_NEEDS_REQ_KEY */
-    
+
   ACE_NEW_RETURN (rp, CORBA::POA (this, env), 0);
 
   return rp;
@@ -330,7 +330,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   // for listening!
   if (this->open () == -1)
     return -1;
-  
+
   // Loop "forever" handling client requests.
 
   while (this->should_shutdown_ == 0)
@@ -339,7 +339,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       case 0: // Timed out, so we return to caller.
 	return 0;
 	/* NOTREACHED */
-      case -1: // Something else has gone wrong, so return to caller. 
+      case -1: // Something else has gone wrong, so return to caller.
 	return -1;
 	/* NOTREACHED */
       default: // Some handlers were dispatched, so keep on processing
@@ -352,13 +352,13 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   return 0;
 }
 
-CORBA_Object_ptr 
+CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
   ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
 }
 
-CORBA_Object_ptr 
+CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (void)
 {
   // First check to see if we've already initialized this.
@@ -406,7 +406,7 @@ CORBA_ORB::resolve_name_service (void)
 
       ACE_INET_Addr remote_addr;
       // This starts out initialized to all zeros!
-      ACE_INET_Addr multicast_addr (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT, 
+      ACE_INET_Addr multicast_addr (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
                                     ACE_DEFAULT_MULTICAST_ADDR);
 
       // Subscribe to multicast address.
@@ -425,17 +425,17 @@ CORBA_ORB::resolve_name_service (void)
       // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
       ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
 
-      ssize_t n_bytes = response.recv (buf, 
-                                       BUFSIZ, 
-                                       remote_addr, 
+      ssize_t n_bytes = response.recv (buf,
+                                       BUFSIZ,
+                                       remote_addr,
                                        0,
                                        &timeout);
       if (n_bytes == -1)
         return CORBA_Object::_nil ();
 
       // null terminate message
-      buf[n_bytes] = 0; 
-      
+      buf[n_bytes] = 0;
+
       // convert ior to an object reference
       CORBA::Environment env;
       this->name_service_ =
@@ -447,12 +447,12 @@ CORBA_ORB::resolve_name_service (void)
 
       // return ior.
       return this->name_service_;
-      
+
       ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
     }
 }
 
-CORBA_Object_ptr 
+CORBA_Object_ptr
 CORBA_ORB::resolve_schedule_service (void)
 {
   // First check to see if we've already initialized this.
@@ -475,7 +475,7 @@ CORBA_ORB::resolve_schedule_service (void)
   return this->schedule_service_;
 }
 
-CORBA_Object_ptr 
+CORBA_Object_ptr
 CORBA_ORB::resolve_event_service (void)
 {
   // First check to see if we've already initialized this.
@@ -498,7 +498,7 @@ CORBA_ORB::resolve_event_service (void)
   return this->event_service_;
 }
 
-CORBA_Object_ptr 
+CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name)
 {
   if (ACE_OS::strcmp (name, "NameService") == 0)
