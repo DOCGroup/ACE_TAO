@@ -24,6 +24,7 @@
 
 #include "ace/Asynch_IO.h"
 #include "ace/Reactor.h"
+#include "ace/Countdown_Time.h"
 
 /**
  * @class ACE_Proactor_Impl
