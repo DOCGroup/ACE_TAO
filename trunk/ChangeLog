@@ -1,3 +1,32 @@
+Sat Aug 23 19:26:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ASNMP/agent/agent.mpc:
+        * ASNMP/asnmp/asnmp.mpc:
+        * ASNMP/examples/examples.mwc:
+        * ASNMP/examples/get/get.mpc:
+        * ASNMP/examples/next/next.mpc:
+        * ASNMP/examples/set/set.mpc:
+        * ASNMP/examples/trap/trap.mpc:
+        * ASNMP/examples/walk/walk.mpc:
+          Added missing mwc and mpc files.
+
+        * ASNMP/asnmp.mwc:
+          Modified workspace so it would pickup the correct subdirectories
+          automatically.
+
+        * ACE.mwc:
+          Added ASNMP subdirectory.
+
+        * ASNMP/agent/main.cpp:
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/examples/next/next.cpp:
+        * ASNMP/examples/set/set.cpp:
+        * ASNMP/examples/trap/trap.cpp:
+        * ASNMP/examples/walk/walk.cpp:
+          Fixed compile errors by adding missing #includes needed due to
+          recent subsetting, e.g., streams.h and ACE.h.
+
 Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
 
         * ace/SSL/ssl.mpc

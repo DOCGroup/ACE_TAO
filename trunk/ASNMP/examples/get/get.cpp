@@ -36,6 +36,7 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 ACE_RCSID(get, get, "$Id$")
 
