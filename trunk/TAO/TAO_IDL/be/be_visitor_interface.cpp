@@ -703,19 +703,18 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // the _is_a method
       os->indent ();
       *os << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
-          << "CORBA::Environment &env);\n";
+          << "CORBA::Environment &env);"
+	  << "virtual const char* "
+	  << "_interface_repository_id (void) const;" << be_uidt_nl;
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
-      os->decr_indent ();
-      *os << "protected:\n";
-      os->incr_indent ();
-      *os << node->local_name () << " (void); // default constructor" << be_nl
+      *os << "protected:" << be_idt_nl
+	  << node->local_name () << " (void); // default constructor" << be_nl
           << node->local_name () << " (STUB_Object *objref, "
           << "TAO_ServantBase *_tao_servant = 0, "
           << "CORBA::Boolean _tao_collocated = 0);" << be_nl
-          << "virtual ~" << node->local_name () << " (void);\n";
-      os->decr_indent ();
+          << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
@@ -735,15 +734,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // we have a scoped name
           os->indent ();
-          *os << "static CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
+          *os << "static CORBA::TypeCode_ptr "
+	      << node->tc_name ()->last_component () << ";\n\n";
         }
       else
         {
           // we are in the ROOT scope
           os->indent ();
-          *os << "extern CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
+          *os << "extern CORBA::TypeCode_ptr "
+	      << node->tc_name ()->last_component () << ";\n\n";
         }
 
       node->cli_hdr_gen (I_TRUE);
@@ -881,9 +880,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
-  *os << "if (!obj->_is_collocated () || !obj->_servant())" << be_nl
+  *os << "if (!obj->_is_collocated ()" << be_idt << be_idt << be_idt_nl
+      << " || !obj->_servant()" << be_nl
+      << " || obj->_servant()->_downcast (\""
+      << node->repoID () << "\") == 0" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << node->name () << "_ptr new_obj = new " << node->name () << "(obj->_get_parent ());" << be_nl
+  *os << node->name () << "_ptr new_obj = new "
+      << node->name () << "(obj->_get_parent ());" << be_nl
       << "return new_obj;" << be_uidt_nl
       << "} // end of if" << be_nl;
 
@@ -947,6 +951,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
   os->decr_indent ();
   *os << "}\n\n";
+
+  os->indent ();
+  *os << "const char* " << node->name ()
+      << "::_interface_repository_id (void) const"
+      << be_nl
+      << "{" << be_idt_nl
+      << "return \"" << node->repoID () << "\";" << be_uidt_nl
+      << "}\n\n";
 
   // generate the typecode information here
   os->indent (); // start from current indentation level

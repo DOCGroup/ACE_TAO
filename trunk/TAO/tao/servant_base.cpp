@@ -5,9 +5,6 @@
 
 TAO_ServantBase::TAO_ServantBase (void)
   :  optable_ (0)
-#if 0
-     , parent_ (0)
-#endif
 {
 }
 
@@ -46,21 +43,6 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
     }
   return CORBA::B_FALSE;
 }
-
-#if 0
-void
-TAO_ServantBase::_set_parent (TAO_IUnknown *p)
-{
-  this->parent_ = p;
-  ACE_ASSERT (this->parent_ != 0);
-}
-
-TAO_IUnknown *
-TAO_ServantBase::_get_parent (void) const
-{
-  return this->parent_;
-}
-#endif
 
 int
 TAO_ServantBase::_find (const CORBA::String &opname,

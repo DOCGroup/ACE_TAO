@@ -577,7 +577,8 @@ be_visitor_module_ch::visit_module (be_module *node)
 
       os->indent (); // start from whatever indentation level we were at
       // now generate the class definition
-      *os << "class " << node->local_name () << be_nl
+      *os << "class " << idl_global->export_macro ()
+	  << " " << node->local_name () << be_nl
           << "{" << be_nl
           << "public:\n";
       os->incr_indent (0);
@@ -630,10 +631,12 @@ be_visitor_module_sh::visit_module (be_module *node)
       // name only if we are the outermost module
       if (!node->is_nested ())
         // we are outermost module
-        *os << "class POA_" << node->local_name () << be_nl;
+        *os << "class "  << idl_global->export_macro ()
+	    << " POA_" << node->local_name () << be_nl;
       else
         // we are inside another module
-        *os << "class " << node->local_name () << be_nl;
+        *os << "class "  << idl_global->export_macro ()
+	    << " " << node->local_name () << be_nl;
 
       *os << "{" << be_nl
           << "public:"

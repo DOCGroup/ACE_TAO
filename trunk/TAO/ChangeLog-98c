@@ -1,3 +1,23 @@
+Mon Mar 16 15:27:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  The _narrow() method is more careful about collocation: the
+	  servant could return 0 on the call to _downcast (for instance if
+	  the servant is using DSI or is implementing the default servant
+	  posicies), in such a case a remote object is created.
+	  Generate the _interface_repository_id() method in all classes.
+
+	* TAO_IDL/be/be_visitor_module.cpp: 
+	  In some cases the export macros were not generated.
+
+	* tao/object.h: 
+	* tao/object.cpp: 
+	  Added a new method to get the interface repository id (only
+	  locally).
+
+	* tao/servant_base.cpp: 
+	  Removed some dead code.
+
 Mon Mar 16 14:28:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbconf.h: cleaned up #define of TAO_ALIGNMENT_MAGIC_NUMBER,
