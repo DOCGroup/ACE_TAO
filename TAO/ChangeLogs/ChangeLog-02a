@@ -1,6 +1,8 @@
 Tue May 23 15:04:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/Endpoint_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
 	  Updated dependencies to reflect changes in:
 	  Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
