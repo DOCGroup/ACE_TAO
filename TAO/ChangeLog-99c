@@ -1,3 +1,11 @@
+Thu Jul 15 19:09:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/param_test_i.h:
+	* TAO/tests/Param_Test/param_test_i.cpp:
+	* TAO/tests/Param_Test/client.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	  Fixed various warnings from the new version of egcs.
+
 Thu Jul 15 17:35:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB_Core.*:
