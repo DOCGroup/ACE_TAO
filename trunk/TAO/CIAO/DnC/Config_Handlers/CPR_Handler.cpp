@@ -45,9 +45,6 @@ namespace CIAO
     void CPR_Handler::process_ComponentPackageReference
     (::Deployment::ComponentPackageReference &cpr)
     {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
            node = this->iter_->nextNode())
