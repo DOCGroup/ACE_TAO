@@ -27,30 +27,37 @@ class ACE_Export ACE_URL_Locator
   //
   // = DESCRIPTION
   //     This class defines the basic URL_Locator APIs.
-// Nanbor, please make sure that you explain more about what a URL
-// Locator is in the description here.
+  //     An URL locator provides services for URL clients to
+  //     query specific URL location that has certain properties
+  //     and URL providers to export their services and a set of 
+  //     APIs to maintain their offers.
 {
 public:
+  // Request type
+  enum ACE_URL_Locator_Op_Type
+  {
+    QUERY,
+    EXPORT,
+    WITHDRAW,
+    DESCRIBE,
+    MODIFY,
+    INVALID_OPERATION		// LAST
+  };
 
   // = Specify how to select offers.
-  // Nanbor, please add comments to each of these enumerals.
   enum ACE_Selection_Criteria
   { 
-    NONE,
-    SOME,
-    ALL,
-    INVALID_SELECTION
+    NONE,			// URL that contains none of the properties.
+    SOME,			// URL that contains some of the properties.
+    ALL,			// URL that contains all of the properties.
+    INVALID_SELECTION		// Invalid.
   };
 
   enum ACE_URL_Locator_Error
-    // Nanbor, I don't think that you need to use this enum.  I
-    // recommend that you return -1 from methods that fail and set
-    // errno accordingly.
+    // errno will set to one of these value.
   {
-    OK = 0,			// everything's OK so far.
     OFFER_EXIST,		// trying to register an offer.
 				// that is already exist in repository.
-    NOMEM,			// no memory available.
     NO_SUCH_OFFER,		// No such offer in the repository.
     INVALID_ARGUMENT,		// Invalid argument encountered.
     UNIMPLEMENTED,		// function not implemented.
@@ -89,11 +96,8 @@ public:
 			    const ACE_URL_Property_Seq *modify = 0) = 0;
   // Modify a previously registered offer.
 
-  virtual char *error_status (void);
+  virtual const char *error_status (void);
   // Provide a human readable error status.
-  // Nanbor, please make sure that you explain who is responsible for
-  // the memory returned from this method.  Also, I recommend that you
-  // make this return a *const* char *.
 };
 
 #if defined (__ACE_INLINE__)

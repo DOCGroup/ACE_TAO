@@ -32,8 +32,6 @@ class ACE_Export ACE_WString_Helper
 public:
   static size_t bsize (const ACE_WString *wstr);
   // Returns the actual size required to contain the ACE_WString.
-  // Nanbor, is there a reason you called this <bsize> rather than
-  // just <size>?  I think I like <size> better!
 
   static size_t encode (void *buf, ACE_WString *wstr);
   // Encode <wstr> into <buf> for network communication.
@@ -122,8 +120,8 @@ protected:
   // Property value.
 } ;
 
-// Nanbor, please add a comment here.
 typedef ACE_Array<ACE_URL_Property> ACE_URL_Property_Seq;
+// type of URL_Property collection.
 
 class ACE_Export ACE_URL_Offer
   // = TITLE

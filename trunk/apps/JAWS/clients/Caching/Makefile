@@ -44,6 +44,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
+test_URL.o: test_URL.cpp URL_Properties.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/SString.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/ACE.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/OS.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/config.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/stdcpp.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/OS.i \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Trace.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Log_Msg.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Log_Record.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Log_Priority.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Log_Record.i \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/ACE.i \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/SString.i \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Array.h \
+ /project/cumbia/nanbor/build-sunos5.5-sunc++4.2/ace/Array.i \
+ URL_Properties.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -21,25 +21,15 @@
 #include "URL_Properties.h"
 
 class ACE_Export ACE_URL_Locator_Request
-// Nanbor, please make sure you explain what this class is *used* for!
   // = TITLE
   //     A URL request message formater/wrapper.
   //
   // = DESCRIPTION
-  //     This class defines a URL request data.
+  //     This class defines a URL request data.  It is used
+  //     to transform requests to an object so that we can 
+  //     ship them across network.  
 {
 public:
-  enum ACE_URL_Locator_Request_Type
-  {
-    QUERY,
-    EXPORT,
-    WITHDRAW,
-    DESCRIBE,
-    MODIFY,
-    INVALID_REQUEST		// LAST
-  };
-  // Request type
-
   ACE_URL_Locator_Request (void);
   // Default ctor.
 
@@ -75,22 +65,6 @@ public:
 		    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
-  int encode (void);
-  // Encode request for network communication.
-
-  int decode (void);
-  // Restore from network data.
-
-  // = A bunch of methods to access internal data.
-  int how (void);
-  int how_many (void);
-  ACE_URL_Property_Seq &seq (void);
-  ACE_URL_Property_Seq &del (void);
-  ACE_URL_Property_Seq &modify (void);
-  ACE_WString &id (void);
-  ACE_WString &url (void);
-  void *buffer (void);
-
   size_t encode (void);
   // Encode request for network communication.  If succeed,
   // returns the size of the buffer, otherwise, return 0.
@@ -101,6 +75,7 @@ public:
 
   const int how (void) const;
   const int how_many (void) const;
+  const u_int opcode (void) const;
   const ACE_URL_Property_Seq *seq (void) const;
   const ACE_URL_Property_Seq *del (void) const;
   const ACE_URL_Property_Seq *modify (void) const;
@@ -110,21 +85,33 @@ public:
   const char *buffer (void) const;
   // A bunch of methods to access internal data.
 
-  void dump (void);
+  void dump (void) const;
   // Print out this object.
 
 protected:
+  size_t bsize (void);
+  // Return the size of the buffer required to encode
+  // this request.
+
+  enum {
+    VALID_SEQ1 = 0x1,
+    VALID_SEQ2 = 0X2,
+    VALID_OFFER = 0X4
+  };
+  // These constants used to indicate which pointers are valid.
+  
   u_int code_;
   // Request type code.
 
-  // Nanbor, please make sure that you comment all of these data
-  // members.
-  size_t bsize (void) const;
-  // Return the size of buffer required to encode
-  // this request.
-
   int how_;
+  // Query method (if code_ == QUERY.)
+
   int how_many_;
+  // How many offers are we interested in in this query.
+
+  int valid_ptr_;
+  // Bit flag to mark valid pointers within this object.
+
   ACE_URL_Property_Seq *seq1_;
   // For query or del in modify_offer.
 
@@ -132,14 +119,95 @@ protected:
   // For modify seq. in modify_offer.
 
   ACE_URL_Offer *offer_;
+  // Offer to export.
 
   ACE_WString id_;
+  // Offer ID.
 
   ACE_WString url_;
-
+  // URL of this offer.
+  
   char *buffer_;
+  // Buffer to store encoded data. 
 };
 
+class ACE_Export ACE_URL_Locator_Reply
+  // = TITLE
+  //     A URL reply message formater/wrapper.
+  //
+  // = DESCRIPTION
+  //     This class defines a URL reply data.  It is used
+  //     to transform reply messages to an object so that we can 
+  //     ship them across network.  
+{
+  ACE_URL_Locator_Reply (void);
+  // Default ctor.
+
+  ~ACE_URL_Locator_Reply (void);
+  // Default dtor.
+
+  int status_reply (u_int op, int result);
+  // Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
+
+  int query_reply (int result, size_t num,
+		   const ACE_URL_Offer_Seq &offers);
+  // Setup a reply for QUERY operation.
+
+  int describe_reply (int result,
+		      const ACE_URL_Offer &offer);
+  // Construct a reply for DESCRIBE operation.
+
+  size_t encode (void);
+  // Encode request for network communication.  If succeed,
+  // returns the size of the buffer, otherwise, return 0.
+
+  size_t decode (void *buffer);
+  // Restore from network data.  Returns size of the buffer
+  // if succeed, 0 otherwise.
+
+  // Accessor function.
+  const size_t num_offers (void) const;
+  const ACE_URL_Offer *offer (void) const;
+  const ACE_URL_Offer_Seq *offers (void) const;
+  const u_int opcode (void) const;
+  const u_int status (void) const;
+  const char *buffer (void) const ;
+
+  void dump (void) const ;
+  // Print out this object.
+
+protected:
+  size_t bsize (void);
+  // Return the size of the buffer required to encode
+  // this request.
+
+  enum {
+    VALID_OFFER = 0x1,
+    VALID_OFFERS = 0x2
+  };
+  // Valid pointer masks.
+  
+  u_int code_;
+  // Holds the original op code.
+
+  int status_;
+  // Holds the result of an operation from the Location Server.
+
+  size_t num_offers_;
+  // Holds the number of valid offers in the offers_ sequence.
+
+  int valid_ptr_;
+  // Flag that marks valid internal pointers.
+
+  ACE_URL_Offer *offer_;
+  // Holds a single offer.  Used in query offer property.
+
+  ACE_URL_Offer_Seq *offers_;
+  // Holds the replying offer sequence from a Locator.
+
+  char *buffer_;
+  // Buffer to store encoded data.
+};
 #if defined (__ACE_INLINE__)
 #include "Locator_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
