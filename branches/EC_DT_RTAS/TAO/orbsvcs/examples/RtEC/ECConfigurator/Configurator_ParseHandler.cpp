@@ -410,7 +410,20 @@ Configurator_ParseHandler::parseEvent (Event* vs, void* arg)
     }
   else
     {
-      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid attributes for Event")));
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid name attribute for Event")));
+    }
+  val = alist->getValue(ACE_TEXT("type"));
+  if (val != 0)
+    {
+      std::istringstream iss(val);
+      if ((iss >> vs->type) == 0)
+        {
+          ACEXML_THROW(ACEXML_SAXException(ACE_TEXT ("Invalid number format in Event type attribute")));
+        }
+    }
+  else
+    {
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid type attribute for Event")));
     }
 
   ECConfiguration *parent = dynamic_cast<ECConfiguration*> (this->scope_.top());
@@ -797,6 +810,19 @@ Configurator_ParseHandler::parseSupplier (Supplier* vs, void* arg)
     {
       ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid attributes for Supplier")));
     }
+  val = alist->getValue(ACE_TEXT("id"));
+  if (val != 0)
+    {
+      std::istringstream iss(val);
+      if ((iss >> vs->id) == 0)
+        {
+          ACEXML_THROW(ACEXML_SAXException(ACE_TEXT ("Invalid number format in Supplier id attribute")));
+        }
+    }
+  else
+    {
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid id attribute for Supplier")));
+    }
 
   if (this->scope_.top()->getSyntaxType() == VisitableSyntax::LOCALEVENTCHANNEL)
     {
@@ -960,9 +986,8 @@ Configurator_ParseHandler::parseEventName (EventName* vs, void* arg)
   ACE_UNUSED_ARG(arg);
 
   if (this->scope_.top()->getSyntaxType() != VisitableSyntax::SUBSCRIPTIONS
-      && this->scope_.top()->getSyntaxType() != VisitableSyntax::PUBLICATIONS
-      && this->scope_.top()->getSyntaxType() != VisitableSyntax::TRIGGERS)
-    ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("EventName not child of Subscriptions, Publications, or Triggers")));
+      && this->scope_.top()->getSyntaxType() != VisitableSyntax::PUBLICATIONS)
+    ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("EventName not child of Subscriptions or Publications")));
 
   if (this->scope_.top()->getSyntaxType() == VisitableSyntax::SUBSCRIPTIONS)
     {
@@ -973,12 +998,6 @@ Configurator_ParseHandler::parseEventName (EventName* vs, void* arg)
   else if (this->scope_.top()->getSyntaxType() == VisitableSyntax::PUBLICATIONS)
     {
       Publications *parent = dynamic_cast<Publications*> (this->scope_.top());
-      ACE_ASSERT(parent);
-      parent->eventnames.push_back(vs);
-    }
-  else if (this->scope_.top()->getSyntaxType() == VisitableSyntax::TRIGGERS)
-    {
-      Triggers *parent = dynamic_cast<Triggers*> (this->scope_.top());
       ACE_ASSERT(parent);
       parent->eventnames.push_back(vs);
     }

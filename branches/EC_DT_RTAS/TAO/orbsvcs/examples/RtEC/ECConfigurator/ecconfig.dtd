@@ -6,6 +6,7 @@
 <!-- EVENT -->
   <!ELEMENT Event (Period,Phase,Criticality,Importance,WorstExecution,TypicalExecution) >
   <!ATTLIST Event name CDATA #REQUIRED >
+  <!ATTLIST Event type CDATA #REQUIRED >
 
   <!ELEMENT Criticality (EMPTY) >
   <!ATTLIST Criticality value (VERY_LOW|LOW|MEDIUM|HIGH|VERY_HIGH) #REQUIRED >
@@ -47,10 +48,11 @@
   <!-- If no Triggers is supplied (or it is empty), the Supplier is assumed to be self-triggered -->
   <!ELEMENT Supplier (Publications,Triggers?) >
   <!ATTLIST Supplier name CDATA #REQUIRED >
+  <!ATTLIST Supplier id CDATA #REQUIRED >
 
   <!ELEMENT Publications (EventName*) >
 
-  <!ELEMENT Triggers ((EventName|TimeoutName)*) >
+  <!ELEMENT Triggers (TimeoutName*) >
 
   <!ELEMENT TimeoutName (#PCDATA) >
 

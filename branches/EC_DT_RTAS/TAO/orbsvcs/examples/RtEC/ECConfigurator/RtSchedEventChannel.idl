@@ -21,6 +21,8 @@ module RtEventChannelAdmin
   typedef RtecScheduler::Threads_t Threads_t;
   typedef RtecScheduler::Info_Type_t Info_Type_t;
   typedef long Phase_t; // 100 of nanoseconds
+  typedef RtecEventComm::_EventType Event_Type;
+  typedef RtecEventComm::EventSourceID EventSourceID;
 
   struct SchedInfo {
     Criticality_t criticality;
@@ -33,35 +35,12 @@ module RtEventChannelAdmin
     Quantum_t quantum;
     Threads_t threads;
     Info_Type_t info_type;
+
+    Event_Type type;
   };
 
   interface RtSchedEventChannel
   {
-    handle_t register_consumer(in string entry_point,
-                               in SchedInfo info,
-                               in RtecEventComm::_EventType type,
-                               in RtecEventComm::PushConsumer consumer,
-                               out RtecEventChannelAdmin::ProxyPushSupplier proxy_supplier)
-      raises (RtecScheduler::UNKNOWN_TASK,
-              RtecScheduler::INTERNAL,
-              RtecScheduler::SYNCHRONIZATION_FAILURE);
-
-    handle_t register_supplier(in string entry_point,
-                               in RtecEventComm::EventSourceID source,
-                               in RtecEventComm::_EventType type,
-                               in RtecEventComm::PushSupplier supplier,
-                               out RtecEventChannelAdmin::ProxyPushConsumer proxy_consumer)
-      raises (RtecScheduler::UNKNOWN_TASK,
-              RtecScheduler::INTERNAL,
-              RtecScheduler::SYNCHRONIZATION_FAILURE);
-
-    void add_dependency(in handle_t handle,
-                        in handle_t dependency,
-                        in long number_of_calls,
-                        in RtecScheduler::Dependency_Type_t dependency_type)
-      raises (RtecScheduler::SYNCHRONIZATION_FAILURE,
-              RtecScheduler::UNKNOWN_TASK);
-
     void start()
       raises (RtecScheduler::UNKNOWN_TASK,
               RtecScheduler::INTERNAL,

@@ -89,8 +89,14 @@ ECSupplier::handler(void) const
   return this->handler_;
 }
 
-// ****************************************************************
+const ECSupplier::EventTypeVector &
+ECSupplier::getPublishedTypes (void) const
+{
+  return this->pub_types_;
+}
 
+// ****************************************************************
+/*
 ECTimeout_Consumer::ECTimeout_Consumer (ECSupplier* supplier)
   :supplier_impl_ (supplier)
 {
@@ -118,7 +124,7 @@ ECTimeout_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
-
+*/
 // ****************************************************************
 
 /// Constructor

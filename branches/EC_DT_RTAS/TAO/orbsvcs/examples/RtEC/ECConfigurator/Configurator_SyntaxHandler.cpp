@@ -4,11 +4,15 @@
 #include "SyntaxTree.h"
 #include "RtSchedEventChannelC.h"
 #include "Kokyu_EC.h"
+#include "ECDriver.h"
+#include "ECSupplier.h"
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_String.h"
 #include "ace/Hash_Map_Manager.h"
+
+#include "tao/ORB_Core.h"
 
 #include "RtecSchedulerC.h"
 
@@ -21,25 +25,24 @@ Configurator_SyntaxHandler::Configurator_SyntaxHandler (void)
   this->nametable.open();
   this->eventqostable.open();
   this->timeoutqostable.open();
+  this->suppliermap.open();
 }
-/*
+
 int
-init (CORBA::ORB_var orb, PortableServer::POA_var poa)
+Configurator_SyntaxHandler::init (CORBA::ORB_var orb, PortableServer::POA_var poa)
 {
   this->orb = orb;
   this->poa = poa;
 
-  ACE_NEW_RETURN(ginit,
-                 Gateway_Initializer(),-1);
-
   return 0;
 }
-*/
+
 Configurator_SyntaxHandler::~Configurator_SyntaxHandler (void)
 {
   this->nametable.close();
   this->eventqostable.close();
   this->timeoutqostable.close();
+  this->suppliermap.close();
 }
 
 // SyntaxVisitor FUNCTIONS //
@@ -93,10 +96,33 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
     }
 
   //remoteecs
+  Gateway_Initializer::FileNameVector remote_ior_files;
   RemoteECVector::iterator reciter = vs->remoteECs.begin();
   for (; reciter != vs->remoteECs.end(); reciter++)
     {
-      (*reciter)->visit(this,NULL);
+      (*reciter)->visit(this,&remote_ior_files);
+    }
+
+  // Initialize gateways from local ECs to remote ECs
+  KokyuECVector::iterator keciter = this->kokyuECs.begin();
+  for(; keciter != this->kokyuECs.end(); ++keciter)
+    {
+      KokyuECVector::value_type kokyuEC = *keciter;
+
+      Gateway_Initializer *ginit;
+      ACE_NEW_RETURN(ginit,
+                     Gateway_Initializer(),-1);
+      ginit->init(this->orb,this->poa,kokyuEC,
+                  kokyuEC->get_name(),remote_ior_files);
+      ACE_Time_Value gateway_delay(5,000000);
+      long timer_id = this->orb->orb_core()->reactor()->schedule_timer(this->ginitv[0],0,gateway_delay);
+      if (timer_id < 0)
+        {
+          ACE_CString error("Could not schedule Gateway_Initializer timer for Local EC ");
+          error += kokyuEC->get_name();
+          ACEXML_THROW (ACEXML_SAXException (error.c_str()));
+        }
+      this->ginitv.push_back(ginit);
     }
 
   // DEBUG -- print name table
@@ -143,6 +169,9 @@ Configurator_SyntaxHandler::parseEvent (Event* vs, void* arg)
   vs->importance->visit(this,&schedinfo);
   vs->worstexecution->visit(this,&schedinfo);
   vs->typicalexecution->visit(this,&schedinfo);
+
+  // Set EventType
+  schedinfo.type = vs->type;
 
   // Since nametable was OK, eventqostable should be too
   this->eventqostable.bind(vs->name,schedinfo);
@@ -220,35 +249,39 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   ACE_CString sched_type;
   switch (vs->schedulingstrategy->type) {
   case SchedulingStrategy::EDF:
-    sched_type += "edf";
+    sched_type = "edf";
     break;
   case SchedulingStrategy::MUF:
-    sched_type += "muf";
+    sched_type = "muf";
     break;
   case SchedulingStrategy::RMS:
-    sched_type += "rms";
+    sched_type = "rms";
     break;
   }
 
-  // TODO: set up local EC
+  // Set up local EC
   RtEventChannelAdmin::RtSchedEventChannel_var localEC;
-  /*
-  Kokyu_EC local_ec;
-  if (local_ec.init(this->driver->time_master(),
-                       sched_type.c_str(), this->poa.in(),
-                       this->orb->orb_core()->reactor()) == -1)
+
+  Kokyu_EC *local_ec;
+  ACE_NEW_RETURN(local_ec,
+                 Kokyu_EC(),-1);
+
+  if (local_ec->init(this->driver->get_time_master(),
+                     sched_type.c_str(), this->poa.in(),
+                     this->orb->orb_core()->reactor()) == -1)
     {
       ACE_CString error("Unable to initialize EC: ");
       error += vs->name;
       ACEXML_THROW (ACEXML_SAXException (error.c_str()));
     }
 
-  localEC = local_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
+  localEC = local_ec->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  CORBA::String_var ior = orb->object_to_string(local_ec.in()
+  CORBA::String_var ior = orb->object_to_string(localEC.in()
                                                 ACE_ENV_ARG_PARAMETER);
 
-  ACE_CString ior_output_filename;
+  ACE_CString ior_output_filename(vs->name);
+  ior_output_filename += ".ior";
   FILE *ior_output_file = ACE_OS::fopen (ior_output_filename.c_str(), "w");
   if (ior_output_file == 0)
     {
@@ -261,21 +294,25 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   ACE_OS::fprintf(ior_output_file, ior.in());
   ACE_OS::fclose(ior_output_file);
 
+  this->kokyuECs.push_back(local_ec);
   this->localECs.push_back(localEC);
-  */
-  // visit localEC children
-  //consumers
-  ConsumerVector::iterator citer = vs->consumers.begin();
-  for (; citer != vs->consumers.end(); citer++)
-    {
-      (*citer)->visit(this,localEC.in());
-    }
 
+  // visit localEC children
+  // suppliers go first because consumers might need them as dependants
   //suppliers
   SupplierVector::iterator siter = vs->suppliers.begin();
   for (; siter != vs->suppliers.end(); siter++)
     {
-      (*siter)->visit(this,localEC.in());
+      //(*siter)->visit(this,localEC.in());
+      (*siter)->visit(this,local_ec);
+    }
+
+  //consumers
+  ConsumerVector::iterator citer = vs->consumers.begin();
+  for (; citer != vs->consumers.end(); citer++)
+    {
+      //(*citer)->visit(this,localEC.in());
+      (*citer)->visit(this,local_ec);
     }
 
   return 0;
@@ -291,29 +328,19 @@ Configurator_SyntaxHandler::parseRemoteEventChannel (RemoteEventChannel* vs, voi
 
   // get IOR filename
   ACE_CString iorfilename(vs->iorfile->str);
-
-  // TODO: set up remote EC
+  Gateway_Initializer::FileNameVector *remote_ior_filenames =
+    static_cast<Gateway_Initializer::FileNameVector*> (arg);
+  ACE_ASSERT(remote_ior_filenames);
+  remote_ior_filenames->push_back(iorfilename.c_str());
+  /* TODO: for now, don't allow consumers and suppliers on remote EC
+  // Set up remote EC
   RtEventChannelAdmin::RtSchedEventChannel_var remoteEC;
-  /*
-  // TODO: for now, just do one gateway init
-  this->ginitv[0]->init(this->orb,this->poa,localECs[0].in(),ior_output_filename,ior_input_files);
-  ACE_Time_Value gateway_delay(5,000000);
-  long timer_id = this->orb->orb_core()->reactor()->schedule_timer(this->ginitv[0],0,gateway_delay);
-  if (timer_id < 0)
-    {
-      ACE_CString error("Could not schedule Gateway_Initializer timer for RemoteEC ");
-      error += vs->name;
-      ACEXML_THROW (ACEXML_SAXException (error.c_str()));
-    }
-  */
-  // visit remoteEC consumers and suppliers
-  //consumers
-  ConsumerVector::iterator citer = vs->consumers.begin();
-  for (; citer != vs->consumers.end(); citer++)
-    {
-      (*citer)->visit(this,remoteEC.in());
-    }
 
+  Kokyu_EC::init_remote_ec(iorfilename.c_str(),this->orb.in(),
+                           remoteEC.out());
+
+  // Visit remoteEC Children
+  // suppliers go first because consumers might need them as dependants
   //suppliers
   SupplierVector::iterator siter = vs->suppliers.begin();
   for (; siter != vs->suppliers.end(); siter++)
@@ -321,6 +348,13 @@ Configurator_SyntaxHandler::parseRemoteEventChannel (RemoteEventChannel* vs, voi
       (*siter)->visit(this,remoteEC.in());
     }
 
+  //consumers
+  ConsumerVector::iterator citer = vs->consumers.begin();
+  for (; citer != vs->consumers.end(); citer++)
+    {
+      (*citer)->visit(this,remoteEC.in());
+    }
+  */
   return 0;
 }
 
@@ -355,11 +389,55 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   SupplierVector dependants; //dependants push_back
   vs->dependants->visit(this,&dependants);
 
-  // TODO: register Consumer
+  // Register Consumer
+  /*
   RtEventChannelAdmin::RtSchedEventChannel *ec =
     static_cast<RtEventChannelAdmin::RtSchedEventChannel*> (arg);
+  */
+  Kokyu_EC *ec = static_cast<Kokyu_EC*> (arg);
 
-  // TODO: map syntax dependants to actual suppliers somehow
+  // TODO: negotiate event types
+  ECSupplier::EventTypeVector subtypes;
+  QoSVector::iterator subiter = subs.begin();
+  for (; subiter != subs.end(); ++subiter)
+    {
+      QoSVector::value_type qos = *subiter;
+      subtypes.push_back(qos.type);
+    }
+
+  ECConsumer *consumer;
+  ACE_NEW_RETURN(consumer,
+                 ECConsumer(subtypes),-1);
+
+  // for each dependant, set up the dependency
+  SupplierVector::iterator siter = dependants.begin();
+  for (; siter != dependants.end(); ++siter)
+    {
+      SupplierVector::value_type supplier = *siter;
+      SupplierMap::VALUE ecsupplier;
+      this->suppliermap.find(supplier->name,ecsupplier);
+      ACE_ASSERT(ecsupplier); // shouldn't have got here with no Supplier
+
+      //TODO: multi-type consumer subs
+      QoSVector::value_type qos = subs[0]; //for now just use this
+      // if multiple timeouts, this won't reg supplier multiple times
+      consumer->pushDependant(ecsupplier);
+      ec->add_consumer_with_supplier(consumer,
+                                     vs->name.c_str(),
+                                     subs,
+                                     /*
+                                     qos.period,
+                                     subs,
+                                     qos.criticality,
+                                     qos.importance,
+                                     */
+                                     ecsupplier,
+                                     supplier->name.c_str(),
+                                     ecsupplier->getPublishedTypes()
+                                     ACE_ENV_ARG_PARAMETER
+                                     );
+    }
+  this->consumermap.bind(vs->name,consumer);
 
   return 0;
 }
@@ -424,7 +502,7 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
         && vs->triggers))
     {
       ACE_CString error("Supplier has missing child: ");
-      error += vs->name;
+      error += vs->publications ? "Triggers" : "Publications";
       ACEXML_THROW (ACEXML_SAXException (error.c_str()));
     }
 
@@ -435,9 +513,50 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
   QoSVector trigs;
   vs->triggers->visit(this,&trigs);
 
-  // TODO: register Supplier
+  // Register Supplier
+  /*
   RtEventChannelAdmin::RtSchedEventChannel *ec =
     static_cast<RtEventChannelAdmin::RtSchedEventChannel*> (arg);
+  */
+  Kokyu_EC *ec = static_cast<Kokyu_EC*> (arg);
+
+  // TODO: negotiate event types
+  ECSupplier::EventType type = 100 * vs->id;
+
+  ECSupplier::EventTypeVector pubtypes;
+  QoSVector::iterator pubiter = pubs.begin();
+  for (; pubiter != pubs.end(); ++pubiter,++type)
+    {
+      pubtypes.push_back(type);
+    }
+
+  ECSupplier *supplier;
+  ACE_NEW_RETURN(supplier,
+                 ECSupplier(vs->id,pubtypes),-1);
+
+  //for each trigger timeout, set up a timer
+  QoSVector::iterator qositer = trigs.begin();
+  for (; qositer != trigs.end(); ++qositer)
+    {
+      QoSVector::value_type qos = *qositer;
+      // Timeout QoS only has period and phase
+      ECSupplier_Timeout_Handler *timeout;
+      ACE_NEW_RETURN(timeout,
+                     ECSupplier_Timeout_Handler(supplier),-1);
+
+      // if multiple timeouts, this won't reg supplier multiple times
+      ec->add_supplier_with_timeout(supplier,
+                                    vs->name.c_str(),
+                                    pubtypes,
+                                    timeout,
+                                    qos.phase,
+                                    qos.period,
+                                    RtecScheduler::LOW_CRITICALITY,
+                                    RtecScheduler::LOW_IMPORTANCE
+                                    ACE_ENV_ARG_PARAMETER
+                                    );
+    }
+  this->suppliermap.bind(vs->name,supplier);
 
   return 0;
 }
@@ -475,28 +594,15 @@ Configurator_SyntaxHandler::parseTriggers (Triggers* vs, void* arg)
   ACE_ASSERT(trigs);
 
   // parse Triggers
-  EventNameVector::iterator eniter = vs->eventnames.begin();
-  for (; eniter != vs->eventnames.end(); eniter++)
-    {
-      QoSVector::value_type trigqos;
-      ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Trigger Event %s\n"),(*eniter)->str.c_str()));
-      if (this->eventqostable.find((*eniter)->str,trigqos))
-        {
-          ACE_CString error("Unknown trigger event: ");
-          error += (*eniter)->str;
-          ACEXML_THROW (ACEXML_SAXException (error.c_str()));
-        }
-      trigs->push_back(trigqos);
-    }
   TimeoutNameVector::iterator tniter = vs->timeoutnames.begin();
   for (; tniter != vs->timeoutnames.end(); tniter++)
     {
       QoSVector::value_type trigqos;
-      ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Trigger Timeout %s\n"),(*eniter)->str.c_str()));
-      if (this->timeoutqostable.find((*eniter)->str,trigqos))
+      ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Trigger Timeout %s\n"),(*tniter)->str.c_str()));
+      if (this->timeoutqostable.find((*tniter)->str,trigqos))
         {
           ACE_CString error("Unknown trigger timeout: ");
-          error += (*eniter)->str;
+          error += (*tniter)->str;
           ACEXML_THROW (ACEXML_SAXException (error.c_str()));
         }
       trigs->push_back(trigqos);
@@ -526,8 +632,15 @@ Configurator_SyntaxHandler::parseTestDriver (TestDriver* vs, void* arg)
   long limit;
   vs->stopcondition->visit(this,&limit);
 
-  // TODO: Create TestDriver
-  this->testdriver = NULL;
+  // Create TestDriver
+  if (this->driver)
+    {
+      ACE_CString error("More than one TestDriver");
+      ACEXML_THROW (ACEXML_SAXException (error.c_str()));
+    }
+  ACE_NEW_RETURN (this->driver,
+                  ECTestDriver(),-1);
+  this->driver->set_time_master(vs->startcondition->master);
 
   return 0;
 }
@@ -710,10 +823,10 @@ Configurator_SyntaxHandler::parse (void)
   this->root->visit(this,NULL);
 }
 
-ECTestDriver *
-Configurator_SyntaxHandler::getTestDriver (void)
+ECDriver *
+Configurator_SyntaxHandler::getDriver (void)
 {
-  return this->testdriver;
+  return this->driver;
 }
 
 void
