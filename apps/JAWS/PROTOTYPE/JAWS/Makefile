@@ -14,7 +14,6 @@ LIB = libJAWS.a
 SHLIB = libJAWS.$(SOEXT)
 
 MYFILES  	= \
-	Assoc_Array \
 	Waiter \
 	Pipeline \
 	Pipeline_Tasks \
