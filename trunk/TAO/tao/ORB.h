@@ -883,11 +883,20 @@ public:
   // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
   // currently supported.
 
-  CORBA_Object_ptr resolve_initial_references (CORBA::String name);
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
+                                               ACE_Time_Value *timeout = 0);
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
-  // "POACurrent" via this method.
+  // "POACurrent" via this method.  The <timeout> value bounds the
+  // amount of time the ORB blocks waiting to resolve the service.
+  // This is most useful for bootstrapping remote services, such as
+  // the "NameService" or "TradingService", that are commonly resolved
+  // via multicast.  By default, the value is 0, which means "use the
+  // <TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT> timeout period".  Note
+  // that by using a default value for the <timeout> parameter, TAO
+  // will remains compliant with the CORBA
+  // <resolve_initial_references> specification.
 
   // = TAO-specific extensions to the CORBA specification.
 
@@ -967,10 +976,10 @@ protected:
   // Resolve the POA current.
 
 private:
-  CORBA_Object_ptr resolve_name_service (void);
+  CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout);
   // Resolve the name service object reference.
 
-  CORBA_Object_ptr resolve_trading_service (void);
+  CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
   // Resolve the trading object reference.
 
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,

@@ -354,7 +354,7 @@ CORBA_ORB::resolve_poa_current (void)
 
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_name_service (void)
+CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
 {
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
@@ -402,7 +402,9 @@ CORBA_ORB::resolve_name_service (void)
         }
 
       this->name_service_ =
-        this->multicast_to_service (TAO_SERVICEID_NAMESERVICE, port);
+        this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
+                                    port,
+                                    timeout);
     }
 
   // Return ior.
@@ -411,7 +413,7 @@ CORBA_ORB::resolve_name_service (void)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_trading_service (void)
+CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 {
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
@@ -458,7 +460,9 @@ CORBA_ORB::resolve_trading_service (void)
             }
 
           this->trading_service_ =
-            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, port);
+            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, 
+                                        port,
+                                        timeout);
         }
     }
 
@@ -469,7 +473,8 @@ CORBA_ORB::resolve_trading_service (void)
 
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
-                                 u_short port)
+                                 u_short port,
+                                 ACE_Time_Value *timeout)
 {
   CORBA::Environment env;
   // Use UDP multicast to locate the  service.
@@ -493,36 +498,33 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 
   // Choose any local port, we don't really care.
   if (response.open (ACE_Addr::sap_any) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "open failed.\n"));
-      return return_value;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "open failed.\n"),
+                      return_value);
 
   if (response.get_local_addr (response_addr) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
-      return return_value;
-    }
-
+    ACE_ERROR ((LM_ERROR,
+                "get_local_addr failed.\n"),
+               return_value);
   struct
   {
     u_short reply_port;
     CORBA::Short service_id;
   } mcast_info;
 
-  // Figure out what port to listen on for server replies,
-  // and convert to network byte order.
+  // Figure out what port to listen on for server replies, and convert
+  // to network byte order.
   mcast_info.reply_port = htons (response_addr.get_port_number ());
   mcast_info.service_id = htons (service_id);
 
   // Send multicast of one byte, enough to wake up server.
-  ssize_t n_bytes =
-    multicast.send (&mcast_info, sizeof (mcast_info));
-
+  ssize_t n_bytes = multicast.send (&mcast_info,
+                                    sizeof (mcast_info));
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
+    ACE_DEBUG ((LM_DEBUG,
+                "sent multicast request."));
 
-  // check for errors
+  // Check for errors.
   if (n_bytes == -1)
     return return_value;
   if (TAO_debug_level > 0)
@@ -533,22 +535,21 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 		response_addr.get_port_number (),
 		n_bytes));
 
-
-  // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
-  ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
+  // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+  ACE_Time_Value tv (timeout == 0 ? TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT : *timeout);
 
   // receive response message
   char buf[ACE_MAX_DGRAM_SIZE];
-  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &timeout);
+  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
 
   // Close endpoint for response.
   int retval = response.close ();
 
-  // check for errors
+  // Check for errors.
   if (n_bytes == -1 || retval == -1)
     return return_value;
 
-  // null terminate message
+  // Null terminate message.
   buf[n_bytes] = 0;
 
   if (TAO_debug_level > 0)
@@ -557,11 +558,11 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 		__FILE__,
 		buf));
 
-  // convert ior to an object reference
+  // Convert ior to an object reference.
   CORBA_Object_ptr objectified_ior =
     this->string_to_object ((CORBA::String) buf, env);
 
-  // check for errors
+  // Check for errors.
   if (env.exception () == 0)
     return_value = objectified_ior;
 
@@ -570,12 +571,13 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (CORBA::String name)
+CORBA_ORB::resolve_initial_references (CORBA::String name,
+                                       ACE_Time_Value *timeout)
 {
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_name_service ();
+    return this->resolve_name_service (timeout);
   if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_trading_service ();
+    return this->resolve_trading_service (timeout);
   else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa ();
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)

@@ -106,11 +106,11 @@
 #define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
 #endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
 
-// The default timeout receiving the location request to
-// the TAO Naming Service.
-#if !defined (TAO_DEFAULT_NAME_SERVER_TIMEOUT)
-#define TAO_DEFAULT_NAME_SERVER_TIMEOUT 5
-#endif /* TAO_DEFAULT_NAME_SERVER_TIMEOUT */
+// The default timeout receiving the location request to the TAO
+// Naming Service and Trading Service.
+#if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 3
+#endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
 #if !defined (TAO_DEFAULT_SERVER_PORT)
