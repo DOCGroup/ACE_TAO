@@ -146,7 +146,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Default_Factory - unknown argument"
-                          " <%s> for -ORBreactorytype\n", name));
+                          " <%s> for -ORBreactortype\n", name));
           }
       }
 

@@ -329,7 +329,7 @@ TAO_Connector::make_mprofile (const char *string,
       // Problem in IOR between protocol prefix and double slash "//"
     }
 
-  // The behind the following loop is to split the IOR into several
+  // The idea behind the following loop is to split the IOR into several
   // strings that can be parsed by each profile.
   // For example,
   //    `1.3//moo,shu,chicken/arf'
