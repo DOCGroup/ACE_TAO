@@ -27,7 +27,7 @@
 #include "ace/Containers.h"
 #include "time_export.h"
 
-#include "orbsvcs/TimeServiceS.h"
+#include "orbsvcs/orbsvcs/TimeServiceS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -6,9 +6,9 @@
 #include "TTestS.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Read_Buffer.h"
-#include "orbsvcs/CosTradingC.h"
-#include "orbsvcs/CosTradingReposC.h"
-#include "orbsvcs/CosTradingDynamicC.h"
+#include "orbsvcs/orbsvcs/CosTradingC.h"
+#include "orbsvcs/orbsvcs/CosTradingReposC.h"
+#include "orbsvcs/orbsvcs/CosTradingDynamicC.h"
 #include "ttest_export.h"
 
 class TAO_TTest_Export TT_Info

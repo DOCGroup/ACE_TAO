@@ -17,8 +17,8 @@
 #ifndef TLS_CLIENT_H
 #define TLS_CLIENT_H
 
-#include "orbsvcs/DsLogAdminC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 class TLS_Client
 {

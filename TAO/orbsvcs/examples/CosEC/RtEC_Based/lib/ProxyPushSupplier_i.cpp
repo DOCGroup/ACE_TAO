@@ -1,10 +1,10 @@
 // $Id$
 //
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
 #include "ProxyPushSupplier_i.h"
 #include "ace/Auto_Ptr.h"
 

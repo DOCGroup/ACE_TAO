@@ -6,10 +6,12 @@
 #include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Event, "$Id$")
+ACE_RCSID (Notify, 
+           TAO_Notify_Event, 
+           "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
 
 TAO_Notify_Event::TAO_Notify_Event (void)
   :priority_ (CosNotification::Priority, CosNotification::DefaultPriority),

@@ -21,6 +21,8 @@ endif
 
 TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
 
+TAO_IDLFLAGS += -I$(TAO_ROOT)
+
 ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
   LDFLAGS += -L$(TAO_ROOT)/tao
 endif

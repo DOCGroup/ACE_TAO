@@ -13,7 +13,9 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_RTEC_PERF_TCP_Baseline, client, "$Id$")
+ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline, 
+           client, 
+           "$Id$")
 
 char const * hi_endpoint = "localhost:12345";
 char const * lo_endpoint = "localhost:23456";

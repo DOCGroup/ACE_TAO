@@ -12,14 +12,16 @@
 #include "Auto_Functor.h"
 #include "Auto_Disconnect.h"
 
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_RTEC_Perf, Control, "$Id$")
+ACE_RCSID (TAO_RTEC_Perf, 
+           Control, 
+           "$Id$")
 
 Control::Control (size_t peers_expected,
                   size_t iterations,

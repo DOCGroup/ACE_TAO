@@ -12,7 +12,7 @@
 
 
 #include "testSchedC.h"
-#include <orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h>
+#include <orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h>
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
 #include "ace/OS_main.h"

@@ -7,19 +7,21 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
 
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Event_Service, Event_Service, "$Id$")
+ACE_RCSID (Event_Service, 
+           Event_Service, 
+           "$Id$")
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

@@ -22,8 +22,8 @@
 #define EVENTCHANNEL_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 #include "ConsumerAdmin_i.h"
 #include "SupplierAdmin_i.h"
 

@@ -14,7 +14,7 @@
 #ifndef FT_TESTREPLICA_IDL
 #define FT_TESTREPLICA_IDL
 
-#include "orbsvcs/FT_Replica.idl"
+#include "orbsvcs/orbsvcs/FT_Replica.idl"
 
 module FT_TEST
 {

@@ -23,8 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 #include "ace/Task.h"
 
 class CEC_Test_Export CEC_Counting_Supplier : public POA_CosEventComm::PushSupplier

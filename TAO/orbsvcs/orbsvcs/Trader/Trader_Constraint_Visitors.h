@@ -17,7 +17,7 @@
 #include "Constraint_Visitors.h"
 #include "Trader.h"
 #include "Trader_Utils.h"
-#include "orbsvcs/CosTradingC.h"
+#include "orbsvcs/orbsvcs/CosTradingC.h"
 
 class TAO_Trading_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
 {

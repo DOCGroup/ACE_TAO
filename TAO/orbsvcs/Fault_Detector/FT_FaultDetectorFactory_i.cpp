@@ -13,8 +13,8 @@
 #include "FT_FaultDetectorFactory_i.h"
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/PortableGroup/PG_Property_Set.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h"
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.

@@ -11,7 +11,7 @@
 //=============================================================================
 
 #include "Object1_i.h"
-#include <orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h>
+#include <orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"

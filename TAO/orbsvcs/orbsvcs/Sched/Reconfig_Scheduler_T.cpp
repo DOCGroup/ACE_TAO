@@ -19,7 +19,7 @@
 #define TAO_RECONFIG_SCHEDULER_T_C
 
 #include "Reconfig_Scheduler_T.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -6,14 +6,14 @@
 #include "Scheduler_Runtime2.h"
 #include "Scheduler_Runtime_Dynamic.h" /* infos_3 */
 
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
 
 #include "tao/ORB_Core.h"
 
@@ -27,7 +27,9 @@
 # include <sys/lwp.h> /* for _lwp_self */
 #endif /* sun */
 
-ACE_RCSID(EC_Multiple, EC_Multiple, "$Id$")
+ACE_RCSID (EC_Multiple, 
+           EC_Multiple, 
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;

@@ -15,7 +15,7 @@
 
 #include "UpdateableHandler.h"
 #include "Replication_Strategy.h"
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

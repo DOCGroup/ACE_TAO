@@ -6,12 +6,12 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Flows_T.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Flows_T.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/AV/sfp.h"
+#include "orbsvcs/orbsvcs/AV/MCast.h"
 
 class FTP_Client_Callback;
 class FTP_Client_Producer

@@ -20,16 +20,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsNotifyLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "notifylog_export.h"
 

@@ -3,12 +3,14 @@
 #include "Connect.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(EC_Tests_Performance, Connect, "$Id$")
+ACE_RCSID (EC_Tests_Performance, 
+           Connect, 
+           "$Id$")
 
 int
 main (int argc, char *argv [])

@@ -19,13 +19,13 @@
 #include "EC_Reactive_ConsumerControl.h"
 #include "EC_Reactive_SupplierControl.h"
 
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
-#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
-#include "orbsvcs/ESF/ESF_Delayed_Changes.h"
-#include "orbsvcs/ESF/ESF_Delayed_Command.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h"
 
 #include "tao/ORB_Core.h"
 

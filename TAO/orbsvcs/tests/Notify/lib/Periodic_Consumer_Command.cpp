@@ -2,7 +2,9 @@
 
 #include "Periodic_Consumer_Command.h"
 
-ACE_RCSID(lib, TAO_Periodic_Consumer_Command, "$Id$")
+ACE_RCSID (lib, 
+           TAO_Periodic_Consumer_Command, 
+           "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"
@@ -11,7 +13,7 @@ ACE_RCSID(lib, TAO_Periodic_Consumer_Command, "$Id$")
 #include "Direct_Consumer.h"
 #include "Activation_Manager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command (void)
 {

@@ -1,5 +1,5 @@
 // $Id$
-#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 #include "FTEC_Event_Channel.h"
 #include "FTEC_Factory.h"
 #include "FTEC_ProxySupplier.h"

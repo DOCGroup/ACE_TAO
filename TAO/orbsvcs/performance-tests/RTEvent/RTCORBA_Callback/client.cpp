@@ -25,7 +25,9 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_PERF_RTEC_RTCORBA_Baseline, client, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline, 
+           client, 
+           "$Id$")
 
 class Roundtrip_Task : public ACE_Task_Base
 {

@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 #include "EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
 

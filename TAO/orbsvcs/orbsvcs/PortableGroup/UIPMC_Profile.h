@@ -26,7 +26,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/target_specification.h"
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #include "UIPMC_Endpoint.h"
 #include "portablegroup_export.h"

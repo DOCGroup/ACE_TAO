@@ -4,15 +4,17 @@
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel_Base.h"
-#include "orbsvcs/ESF/ESF_Peer_Workers.h"
-#include "orbsvcs/ESF/ESF_Peer_Admin.h"
-#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_ConsumerAdmin, "$Id$")
+ACE_RCSID (Event, 
+           EC_ConsumerAdmin, 
+           "$Id$")
 
 TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base *ec)
   :  TAO_ESF_Peer_Admin<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier,RtecEventChannelAdmin::ProxyPushSupplier,TAO_EC_ProxyPushConsumer> (ec)

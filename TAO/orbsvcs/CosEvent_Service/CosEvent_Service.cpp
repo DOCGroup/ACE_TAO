@@ -1,14 +1,16 @@
 // $Id$
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "orbsvcs/CosEvent/CEC_Event_Loader.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(CosEvent_Service, CosEvent_Service, "$Id$")
+ACE_RCSID (CosEvent_Service, 
+           CosEvent_Service, 
+           "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])

@@ -1,8 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway.h"
 
-ACE_RCSID(Event, EC_Gateway, "$Id$")
+ACE_RCSID (Event, 
+           EC_Gateway, 
+           "$Id$")
 
 TAO_EC_Gateway::TAO_EC_Gateway (void)
   :  handle_ (0)

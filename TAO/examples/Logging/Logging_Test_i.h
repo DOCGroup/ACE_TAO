@@ -28,9 +28,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "LoggerC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 
 class Logger_Client
 {

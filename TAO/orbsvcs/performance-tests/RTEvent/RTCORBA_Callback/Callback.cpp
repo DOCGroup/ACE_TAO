@@ -5,7 +5,9 @@
 #include "Implicit_Deactivator.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(TAO_RTEC_Perf_RTCORBA_Callback, Callback, "$Id$")
+ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback, 
+           Callback, 
+           "$Id$")
 
 Callback::Callback (int iterations,
                     PortableServer::POA_ptr poa)

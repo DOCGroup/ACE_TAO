@@ -2,12 +2,12 @@
 // $Id$
 //
 
-#include <tao/corba.h>
-#include "IFR_Client/IFR_BasicC.h"
+#include "tao/NVList.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "ace/OS_NS_string.h"
-int main( int argc, char* argv[] )
-{
 
+int main (int argc, char* argv[])
+{
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
    {

@@ -3,12 +3,14 @@
 
 // Ossama Othman <ossama@uci.edu>
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Web_ServerS.h"
 
 #include "Iterator_Factory_i.h"
 
-ACE_RCSID (AMI_Iterator, server, "$Id$")
+ACE_RCSID (AMI_Iterator, 
+           server, 
+           "$Id$")
 
 int
 main (int argc, char *argv[])

@@ -22,8 +22,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_CORBAC.h"
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 #include "FT_ReplicationManagerLib_export.h"
 
 namespace TAO

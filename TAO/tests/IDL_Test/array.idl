@@ -52,3 +52,24 @@ interface tdef
     }; 
 };
 
+// To test that all the octet arrays build and link as
+// unique types.
+module ABCModule
+{
+  struct RmtPhysicalInfo
+  {
+    octet rmtNodeId[22];
+    octet rmtDetails[22];
+  };
+  
+  struct bbbBubBubBubBaby
+  {
+    octet rmtNodeId[22];
+    octet rmtDetails[22];
+  };
+};
+
+typedef octet oa1[22];
+typedef octet oa2[22];
+
+

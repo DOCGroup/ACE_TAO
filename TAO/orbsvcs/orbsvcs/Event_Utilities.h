@@ -16,8 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 
 #include "Event/event_export.h"
 

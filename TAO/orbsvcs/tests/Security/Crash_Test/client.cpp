@@ -5,7 +5,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
-ACE_RCSID(Send_File, client, "$Id$")
+ACE_RCSID (Send_File, 
+           client, 
+           "$Id$")
 
 const char *ior = "file://test.ior";
 CORBA::Boolean call_shutdown = 0;

@@ -1,9 +1,9 @@
 // $Id$
 
 #include "Gateway_EC.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h"
+#include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
 

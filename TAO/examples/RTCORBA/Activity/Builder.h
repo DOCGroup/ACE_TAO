@@ -13,7 +13,7 @@
 #ifndef BUILDER_H
 #define BUILDER_H
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 class Periodic_Task;

@@ -1,10 +1,12 @@
 // $Id$
 
 #include "Supplier.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(CosEC_Examples, Supplier, "$Id$")
+ACE_RCSID (CosEC_Examples, 
+           Supplier, 
+           "$Id$")
 
 int
 main (int argc, char* argv[])

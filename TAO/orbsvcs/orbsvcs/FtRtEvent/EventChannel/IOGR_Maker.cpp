@@ -9,7 +9,7 @@
 #include "tao/Tagged_Components.h"
 #include <algorithm>
 #include "../Utils/resolve_init.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,

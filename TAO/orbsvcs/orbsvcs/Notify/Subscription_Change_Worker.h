@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotificationC.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_Notify_Proxy;
 
