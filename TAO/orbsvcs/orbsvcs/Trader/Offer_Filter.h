@@ -17,7 +17,6 @@
 #ifndef TAO_OFFER_FILTER_H
 #define TAO_OFFER_FILTER_H
 
-#include "CosTradingC.h"
 #include "Policies.h"
 #include "Property_Evaluator.h"
 
@@ -45,7 +44,8 @@ public:
   typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
   
   TAO_Offer_Filter (SERVICE_TYPE_REPOS::TypeStruct* type_struct,
-		    TAO_Policies& policies);
+		    TAO_Policies& policies,
+		    CORBA::Environment& _env);
   // Glean from the TypeStruct and Policy setting the appropriate way
   // to screen unsuitable offers from consideration.
   

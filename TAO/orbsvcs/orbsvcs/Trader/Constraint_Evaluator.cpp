@@ -267,21 +267,21 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
   // the stack.
   
   TAO_Literal_Constraint& result =
-    (operation <= NE)
+    (operation <= TAO_NE)
     ?
     TAO_Literal_Constraint
     ((CORBA::Boolean)
-     ((operation == GT) ? l_op > r_op :
-      (operation == GE) ? l_op >= r_op :
-      (operation == LT) ? l_op < r_op :
-      (operation == LE) ? l_op <= r_op :
-      (operation == NE) ? l_op != r_op :
-      (operation == EQ) ? l_op == r_op : 0))
+     ((operation == TAO_GT) ? l_op > r_op :
+      (operation == TAO_GE) ? l_op >= r_op :
+      (operation == TAO_LT) ? l_op < r_op :
+      (operation == TAO_LE) ? l_op <= r_op :
+      (operation == TAO_NE) ? l_op != r_op :
+      (operation == TAO_EQ) ? l_op == r_op : 0))
     :    
-    ((operation == PLUS) ? l_op + r_op :
-     (operation == MINUS) ? l_op - r_op :
-     (operation == MULT) ? l_op * r_op :
-     (operation == DIV) ? l_op / r_op :
+    ((operation == TAO_PLUS) ? l_op + r_op :
+     (operation == TAO_MINUS) ? l_op - r_op :
+     (operation == TAO_MULT) ? l_op * r_op :
+     (operation == TAO_DIV) ? l_op / r_op :
      TAO_Literal_Constraint ());
     
   this->queue_.pop_back ();
@@ -317,28 +317,28 @@ int
 TAO_Constraint_Evaluator::
 visit_add(TAO_Binary_Constraint* boolean_add)
 {
-  return this->visit_bin_op (boolean_add, PLUS);  
+  return this->visit_bin_op (boolean_add, TAO_PLUS);  
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_sub(TAO_Binary_Constraint* boolean_sub)
 {
-  return this->visit_bin_op (boolean_sub, MINUS);
+  return this->visit_bin_op (boolean_sub, TAO_MINUS);
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_mult(TAO_Binary_Constraint* boolean_mult)
 {
-  return this->visit_bin_op (boolean_mult, MULT);  
+  return this->visit_bin_op (boolean_mult, TAO_MULT);  
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_div(TAO_Binary_Constraint* boolean_div)
 {
-  return this->visit_bin_op (boolean_div, DIV);  
+  return this->visit_bin_op (boolean_div, TAO_DIV);  
 }
 
 int
@@ -413,42 +413,42 @@ int
 TAO_Constraint_Evaluator::
 visit_less_than(TAO_Binary_Constraint* boolean_lt)
 {
-  return this->visit_bin_op (boolean_lt, LT);
+  return this->visit_bin_op (boolean_lt, TAO_LT);
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_less_than_equal(TAO_Binary_Constraint* boolean_lte)
 {
-  return this->visit_bin_op (boolean_lte, LE);
+  return this->visit_bin_op (boolean_lte, TAO_LE);
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_greater_than(TAO_Binary_Constraint* boolean_gt)
 {
-  return this->visit_bin_op (boolean_gt, GT);
+  return this->visit_bin_op (boolean_gt, TAO_GT);
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_greater_than_equal(TAO_Binary_Constraint* boolean_gte)
 {
-  return this->visit_bin_op (boolean_gte, GE); 
+  return this->visit_bin_op (boolean_gte, TAO_GE); 
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_equal(TAO_Binary_Constraint* boolean_eq)
 {
-  return this->visit_bin_op (boolean_eq, EQ); 
+  return this->visit_bin_op (boolean_eq, TAO_EQ); 
 }
 
 int
 TAO_Constraint_Evaluator::
 visit_not_equal(TAO_Binary_Constraint* boolean_neq)
 {
-  return this->visit_bin_op (boolean_neq, NE); 
+  return this->visit_bin_op (boolean_neq, TAO_NE); 
 }
 
 int
@@ -470,7 +470,7 @@ visit_property(TAO_Property_Constraint* literal)
 
   if (prop_iter != this->props_.end())
     {
-      CORBA::Enviroment& env;
+      CORBA::Environment env;
       // Retrieve the value of the property from the Property_Evaluator
       int prop_index = (*prop_iter).second;
 
@@ -538,16 +538,25 @@ sequence_does_contain(CORBA::Any* sequence,
   // any into a sequence type locally compiled from idl. The sequence
   // wrapper uses the [] operator to locate the target element in the
   // sequence. 
-  
-  CORBA::Boolean return_value = (CORBA::Boolean) 0;
+
+  CORBA::Environment env;
+  CORBA::Boolean return_value = CORBA::B_FALSE;
   CORBA::TypeCode_ptr type = sequence->type ();
-  CORBA::TypeCode_ptr content = type->content_type ();
-  CORBA::TCKind sequence_type = content->kind ();
+  CORBA::TypeCode_ptr content = type->content_type (env);
+  TAO_CHECK_ENV_RETURN (env, return_value);
+  CORBA::TCKind sequence_type = content->kind (env);
+  TAO_CHECK_ENV_RETURN (env, return_value);
 
   // What's up with this?
   if (sequence_type == CORBA::tk_sequence)
-    sequence_type = content ->content_type ()->kind ();
-  
+    {
+      CORBA::TypeCode_ptr tmp = content->content_type (env);
+      TAO_CHECK_ENV_RETURN (env, return_value);
+      sequence_type = tmp->kind (env);
+      TAO_CHECK_ENV_RETURN (env, return_value);
+    }
+
+  /*
   switch(sequence_type)
     {
     case CORBA::tk_short:
@@ -608,11 +617,11 @@ sequence_does_contain(CORBA::Any* sequence,
 	    return_value = ::TAO_find (string_seq, (const char *)element);
 #else
 	    return_value = ::TAO_find_string (string_seq, (const char*) element);
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+#endif // ACE_HAS_TEMPLATE_SPECIALIZATION 
 	  }
 	break;
       }
-    }
-
-  return return_value;
+      }
+            */
+return return_value;
 }

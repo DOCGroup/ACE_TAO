@@ -17,10 +17,19 @@
 #ifndef TAO_OFFER_ID_ITERATOR_H
 #define TAO_OFFER_ID_ITERATOR_H
 
-#include "CosTradingS.h"
 #include <deque>
 #include <queue>
 #include <string>
+
+#if defined (OS_NO_NAMESPACE)
+#define queue foobar
+#endif /* OS_NO_NAMESPACE */
+
+#include "orbsvcs/CosTradingS.h"
+
+#if defined (OS_NO_NAMESPACE)
+#undef queue
+#endif /* OS_NO_NAMESPACE */
 
 class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
 // = TITLE
@@ -45,8 +54,8 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   ~TAO_Offer_Id_Iterator (void);
   
   virtual CORBA::ULong max_left(CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException,
-		    CosTrading::UnknownMaxLeft);
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::UnknownMaxLeft));
   // The max_left operation returns the number of offer identifiers
   // remaining in the iterator. The exception UnknownMaxLeft is raised
   // if the iterator cannot determine the remaining number of offer
@@ -54,7 +63,7 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   // identifiers through lazy evaluation). 
   
   virtual void destroy(CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // The destroy operation destroys the iterator. No further
   // operations can be invoked on an iterator after it has been
   // destroyed. 
@@ -62,7 +71,7 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   virtual CORBA::Boolean next_n(CORBA::ULong _n,
 				CosTrading::OfferIdSeq_out _ids,
 				CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // The next_n operation returns a set of offer identifiers in the
   // output parameter "ids." The operation returns n offer identifiers
   // if there are at least n offer identifiers remaining in the

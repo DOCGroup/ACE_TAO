@@ -18,6 +18,7 @@
 #if !defined (TAO_SERVICE_TYPE_REPOSITORY_C)
 #define TAO_SERVICE_TYPE_REPOSITORY_C
 
+#include "Locking.h"
 #include "Service_Type_Repository.h"
 
 template <class MAP_LOCK_TYPE>
@@ -43,9 +44,11 @@ SERVICE_TYPE_REPOS::IncarnationNumber
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 incarnation (CORBA::Environment& _env)
 {
-  ACE_READ_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  SERVICE_TYPE_REPOS::IncarnationNumber inc_num;
+  TAO_READ_GUARD_RETURN (MAP_LOCK_TYPE, 
+			 ace_mon, 
+			 this->type_map_.lock (),
+			 inc_num);
   return incarnation_;
 }
 
@@ -57,7 +60,7 @@ add_type (const char * name,
 	  const SERVICE_TYPE_REPOS::PropStructSeq& props, 
 	  const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
 	  CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
 		  SERVICE_TYPE_REPOS::ServiceTypeExists, 
 		  SERVICE_TYPE_REPOS::InterfaceTypeMismatch, 
@@ -65,33 +68,37 @@ add_type (const char * name,
 		  CosTrading::DuplicatePropertyName, 
 		  SERVICE_TYPE_REPOS::ValueTypeRedefinition, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::DuplicateServiceTypeName)
+		  SERVICE_TYPE_REPOS::DuplicateServiceTypeName))
 {
   PROP_MAP prop_map;
   SUPER_TYPE_MAP super_map;
   SERVICE_TYPE_REPOS::TypeStruct info;
   SERVICE_TYPE_MAP::iterator type_iterator;
+  SERVICE_TYPE_REPOS::IncarnationNumber inc_num;
   
-  ACE_WRITE_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  TAO_WRITE_GUARD_RETURN (MAP_LOCK_TYPE, 
+			  ace_mon, 
+			  this->type_map_.lock (),
+			  inc_num);
 
   // make sure Type name is valid
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW (CosTrading::IllegalServiceType (name));
+    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name),
+		      this->incarnation_);
 
   // check if the service type already exists.
   type_iterator = this->type_map_.find (name);
   if (type_iterator != this->type_map_.end ())
-    TAO_THROW (SERVICE_TYPE_REPOS::ServiceTypeExists (name));
+    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::ServiceTypeExists (name),
+		      this->incarnation_);
   
   // make sure all property names are valid and appear only once.
   this->validate_properties (props, prop_map, _env);
-  TAO_CHECK_ENV_RETURN (_env);
+  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
   
   // check that all super_types exist, and none are duplicated.
   this->validate_supertypes (super_types, super_map, _env);
-  TAO_CHECK_ENV_RETURN (_env)
+  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
 
   // make sure interface name is legal.
   // this->validate_interface (if_name) forthcoming
@@ -99,7 +106,7 @@ add_type (const char * name,
   // collect and make sure that properties of all supertypes and this type
   // are compatible.  We can use prop_map and super_types_map for the job.
   this->validate_inheritance (prop_map, super_map, _env);
-  TAO_CHECK_ENV_RETURN (_env);
+  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
   
   // we can now use prop_map to construct a sequence of all properties the
   // this type.
@@ -107,14 +114,14 @@ add_type (const char * name,
   info.props = props;
   info.super_types = super_types;
   info.masked = 0;
-  info.incarnation = incarnation_; 
+  info.incarnation = this->incarnation_; 
   this->update_type_map (name, info, prop_map, super_map);
 
   // increment incarnation number
-  incarnation_.low++;
+  this->incarnation_.low++;
   // if we wrapped around in lows...
-  if (incarnation_.low == 0)
-    incarnation_.high++;
+  if (this->incarnation_.low == 0)
+    this->incarnation_.high++;
 
   return this->type_map_[name].type_info_.incarnation;
 }
@@ -124,17 +131,17 @@ void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 remove_type (const char * name,
 	     CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException, 
+  TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::HasSubTypes)
+		  SERVICE_TYPE_REPOS::HasSubTypes))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
 
-  ACE_WRITE_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  TAO_WRITE_GUARD (MAP_LOCK_TYPE, 
+		   ace_mon, 
+		   this->type_map_.lock ());
 
   // check if the type exists.
   SERVICE_TYPE_MAP::iterator type_iterator = this->type_map_.find (name);
@@ -172,11 +179,12 @@ SERVICE_TYPE_REPOS::ServiceTypeNameSeq*
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
 	    CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_READ_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  TAO_READ_GUARD_RETURN (MAP_LOCK_TYPE, 
+			 ace_mon, 
+			 this->type_map_.lock (),
+			 (SERVICE_TYPE_REPOS::ServiceTypeNameSeq*) 0);
   
   SERVICE_TYPE_REPOS::ServiceTypeNameSeq_ptr result =
     new SERVICE_TYPE_REPOS::ServiceTypeNameSeq ();
@@ -221,22 +229,25 @@ SERVICE_TYPE_REPOS::TypeStruct*
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 describe_type (const char * name,
 	       CORBA::Environment& _env) 
-  throw (CORBA::SystemException,
-	 CosTrading::IllegalServiceType, 
-	 CosTrading::UnknownServiceType)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		  CosTrading::IllegalServiceType, 
+		  CosTrading::UnknownServiceType))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW_SPEC (CosTrading::IllegalServiceType (name));
+    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name),
+		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
 
-  ACE_READ_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  TAO_READ_GUARD_RETURN (MAP_LOCK_TYPE, 
+			 ace_mon, 
+			 this->type_map_.lock (),
+			 (SERVICE_TYPE_REPOS::TypeStruct*) 0);
 
   // make sure the type exists.
   SERVICE_TYPE_MAP::iterator type_iterator = this->type_map_.find (name);
   if (type_iterator == this->type_map_.end ())
-    TAO_THROW (CosTrading::UnknownServiceType (name));
-
+    TAO_THROW_RETURN (CosTrading::UnknownServiceType (name),
+		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+  
   // return appropriate information about the type.
   SERVICE_TYPE_REPOS::TypeStruct* descr = new SERVICE_TYPE_REPOS::TypeStruct;
   SERVICE_TYPE_REPOS::TypeStruct & s = (*type_iterator).second.type_info_;
@@ -251,21 +262,24 @@ SERVICE_TYPE_REPOS::TypeStruct*
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 fully_describe_type (const char * name,
 		     CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
-		  CosTrading::UnknownServiceType)
+		  CosTrading::UnknownServiceType))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW (CosTrading::IllegalServiceType (name));
+    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name),
+		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
   
-  ACE_READ_GUARD (MAP_LOCK_TYPE, 
-		  ace_mon, 
-		  this->type_map_.lock ());
+  TAO_READ_GUARD_RETURN (MAP_LOCK_TYPE, 
+			 ace_mon, 
+			 this->type_map_.lock (),
+			 (SERVICE_TYPE_REPOS::TypeStruct*) 0);
 
   // make sure the type exists.
   SERVICE_TYPE_MAP::iterator type_iterator = this->type_map_.find (name);
   if (type_iterator == this->type_map_.end ())
-    TAO_THROW (CosTrading::UnknownServiceType (name));
+    TAO_THROW_RETURN (CosTrading::UnknownServiceType (name),
+		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
 
   // return appropriate information about the type.
   SERVICE_TYPE_REPOS::TypeStruct* descr =
@@ -289,15 +303,15 @@ void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 mask_type (const char * name,
 	   CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException, 
+  TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::AlreadyMasked)
+		  SERVICE_TYPE_REPOS::AlreadyMasked))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
 
-  ACE_WRITE_GUARD (MAP_LOCK_TYPE, 
+  TAO_WRITE_GUARD (MAP_LOCK_TYPE, 
 		   ace_mon, 
 		   this->type_map_.lock ());
 
@@ -320,15 +334,15 @@ void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
 unmask_type (const char * name,
 	     CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::NotMasked)
+		  SERVICE_TYPE_REPOS::NotMasked))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
 
-  ACE_WRITE_GUARD (MAP_LOCK_TYPE, 
+  TAO_WRITE_GUARD (MAP_LOCK_TYPE, 
 		   ace_mon, 
 		   this->type_map_.lock ());
 
@@ -348,11 +362,11 @@ unmask_type (const char * name,
 
 template <class MAP_LOCK_TYPE> void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
-validate_properties (SERVICE_TYPE_REPOS::PropStructSeq& props,
+validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
 		     PROP_MAP& prop_map,
-		     CORBA::Environment& _env) const
-  TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-		  CosTrading::DuplicatePropertyName)
+		     CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		   CosTrading::DuplicatePropertyName))
 {
   for (CORBA::ULong i = 0; i < props.length (); i++)
     {
@@ -362,7 +376,11 @@ validate_properties (SERVICE_TYPE_REPOS::PropStructSeq& props,
       else
 	{
 	  string prop_name (n);
-	  if (! prop_map.insert (make_pair (prop_name, &props[i])).second)
+	  SERVICE_TYPE_REPOS::PropStruct* prop_struct =
+	    (SERVICE_TYPE_REPOS::PropStruct *) &props[i];
+
+	  if (! prop_map.insert
+	      (make_pair (prop_name, prop_struct)).second)
 	    TAO_THROW (CosTrading::DuplicatePropertyName (n));
 	}
     }
@@ -370,16 +388,16 @@ validate_properties (SERVICE_TYPE_REPOS::PropStructSeq& props,
 
 template <class MAP_LOCK_TYPE> void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
-validate_supertypes (SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+validate_supertypes (const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
 		     SUPER_TYPE_MAP& super_map,
 		     CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalServiceType,
+  TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
 		  CosTrading::UnknownServiceType,
-		  CosTrading::DuplicatePropertyName)
+		  CosTrading::DuplicatePropertyName))
 {
   for (CORBA::ULong i = 0; i < super_types.length (); i++)
     {
-      char* type = super_types[i];
+      char* type = (char*)((const char*)super_types[i]);
       
       if (! TAO_Trader_Base::is_valid_identifier_name (type))
 	TAO_THROW (CosTrading::IllegalServiceType (type));
@@ -402,8 +420,8 @@ template <class MAP_LOCK_TYPE> void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>
 ::validate_inheritance (PROP_MAP& prop_map,
 			SUPER_TYPE_MAP& super_map,
-			CORBA::Environment& _env) const
-  TAO_THROW (SERVICE_TYPE_REPOS::ValueTypeRedefinition)
+			CORBA::Environment& _env)
+  TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::ValueTypeRedefinition))
 {
   SERVICE_TYPE_REPOS::PropertyMode mode;
   // for each super_type
@@ -429,39 +447,25 @@ TAO_Service_Type_Repository<MAP_LOCK_TYPE>
 	      SERVICE_TYPE_REPOS::PropStruct& property_in_map =
 		*(prop_map[prop_name]);
 	      
-	      if (! property.value_type->equal (property_in_map.value_type))
+	      if (! property.value_type->equal (property_in_map.value_type, _env))
 		{
-		  this->value_type_redef (property, property_in_map, _env);
-		  TAO_CHECK_ENV_RETURN (_env);
+		  TAO_THROW (SERVICE_TYPE_REPOS::ValueTypeRedefinition
+			     (property.name, property,
+			      property_in_map.name, property_in_map));
 		}
 	      
 	      // Mode of the parent type has to be the same or less
 	      // restrictive. 
 	      if (property.mode >= property_in_map.mode)
 		{
-		  this->value_type_redef (property, property_in_map, _env);
-		  TAO_CHECK_ENV_RETURN (_env);
+		  TAO_THROW (SERVICE_TYPE_REPOS::ValueTypeRedefinition
+			     (property.name, property,
+			      property_in_map.name, property_in_map));
 		}
 	    }
 	}
     }
 }
-
-template <class MAP_LOCK_TYPE> void
-TAO_Service_Type_Repository<MAP_LOCK_TYPE>::
-value_type_redef (const SERVICE_TYPE_REPOS::PropStruct& prop1,
-		  const SERVICE_TYPE_REPOS::PropStruct& prop2,
-		  CORBA::Environment& _env) const
-  TAO_THROW_SPEC (SERVICE_TYPE_REPOS::ValueTypeRedefinition)
-{
-  SERVICE_TYPE_REPOS::ValueTypeRedefinition excep;
-  excep.definition_1 = prop1;
-  excep.definition_2 = prop2;
-  excep.type_1 = prop1.name;
-  excep.type_2 = prop2.name;
-  TAO_THROW (excep);
-}
-
 
 template <class MAP_LOCK_TYPE> void
 TAO_Service_Type_Repository<MAP_LOCK_TYPE>::

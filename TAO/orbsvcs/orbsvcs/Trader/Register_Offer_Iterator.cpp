@@ -48,8 +48,8 @@ TAO_Register_Offer_Iterator<TRADER>::add_offer (CosTrading::OfferId id,
 
 template <class TRADER> CORBA::ULong 
 TAO_Register_Offer_Iterator<TRADER>::max_left (CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException, 
-		  CosTrading::UnknownMaxLeft)
+  TAO_THROW_SPEC ((CORBA::SystemException, 
+		  CosTrading::UnknownMaxLeft))
 {
   return this->offer_ids_.size ();
 }

@@ -4,11 +4,12 @@
 
 TAO_Offer_Filter::
 TAO_Offer_Filter (SERVICE_TYPE_REPOS::TypeStruct* type_struct,
-		  TAO_Policies& policies)
-  : search_card_ (policies.search_card ()),
-    match_card_ (policies.match_card ()),
-    dp_ (policies.use_dynamic_properties ()),
-    mod_ (policies.use_modifiable_properties ())
+		  TAO_Policies& policies,
+		  CORBA::Environment& _env)
+  : search_card_ (policies.search_card (_env)),
+    match_card_ (policies.match_card (_env)),
+    dp_ (policies.use_dynamic_properties (_env)),
+    mod_ (policies.use_modifiable_properties (_env))
 {
   SERVICE_TYPE_REPOS::PropStructSeq& prop_seq = type_struct->props;
 
