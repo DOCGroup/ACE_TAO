@@ -8,16 +8,16 @@
 CFG=ACE LIB - Win32 PharLap ETS Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ace_lib.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE LIB - Win32 PharLap ETS Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "ACE LIB - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Unicode Debug" (based on "Win32 (x86) Static Library")
@@ -28,7 +28,7 @@ CFG=ACE LIB - Win32 PharLap ETS Debug
 !MESSAGE "ACE LIB - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Static Library")
 !MESSAGE "ACE LIB - Win32 PharLap ETS Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 PharLap ETS Release" (based on "Win32 (x86) Static Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -281,7 +281,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\aces.lib"
 # ADD LIB32 /nologo /out:".\aces.lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -322,7 +322,7 @@ SOURCE=.\ACE.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -349,7 +349,7 @@ SOURCE=.\Activation_Queue.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -376,7 +376,7 @@ SOURCE=.\Active_Map_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -403,7 +403,7 @@ SOURCE=.\Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -430,7 +430,7 @@ SOURCE=.\Arg_Shifter.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -457,7 +457,7 @@ SOURCE=.\ARGV.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -484,7 +484,7 @@ SOURCE=.\Asynch_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -511,7 +511,7 @@ SOURCE=.\Asynch_IO_Impl.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -538,7 +538,34 @@ SOURCE=.\Basic_Types.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Based_Pointer_Repository.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -565,7 +592,7 @@ SOURCE=.\CDR_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -592,7 +619,7 @@ SOURCE=.\Containers.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -619,7 +646,7 @@ SOURCE=.\CORBA_Handler.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -646,7 +673,7 @@ SOURCE=.\CORBA_Ref.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -673,7 +700,7 @@ SOURCE=.\Date_Time.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -700,7 +727,7 @@ SOURCE=.\DEV.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -727,7 +754,7 @@ SOURCE=.\DEV_Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -754,7 +781,7 @@ SOURCE=.\DEV_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -781,7 +808,7 @@ SOURCE=.\DEV_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -808,7 +835,7 @@ SOURCE=.\Dirent.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -835,7 +862,7 @@ SOURCE=.\DLL.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -862,7 +889,7 @@ SOURCE=.\Dump.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -889,7 +916,7 @@ SOURCE=.\Dynamic.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -916,7 +943,7 @@ SOURCE=.\Dynamic_Service.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -943,7 +970,7 @@ SOURCE=.\Event_Handler.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -970,7 +997,7 @@ SOURCE=.\Event_Handler_T.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -997,7 +1024,7 @@ SOURCE=.\FIFO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1024,7 +1051,7 @@ SOURCE=.\FIFO_Recv.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1051,7 +1078,7 @@ SOURCE=.\FIFO_Recv_Msg.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1078,7 +1105,7 @@ SOURCE=.\FIFO_Send.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1105,7 +1132,7 @@ SOURCE=.\FIFO_Send_Msg.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1132,7 +1159,7 @@ SOURCE=.\FILE.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1159,7 +1186,7 @@ SOURCE=.\FILE_Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1186,7 +1213,7 @@ SOURCE=.\FILE_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1213,7 +1240,7 @@ SOURCE=.\FILE_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1240,7 +1267,7 @@ SOURCE=.\Filecache.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1267,7 +1294,7 @@ SOURCE=.\Functor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1294,7 +1321,7 @@ SOURCE=.\Get_Opt.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1321,7 +1348,7 @@ SOURCE=.\Handle_Set.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1348,7 +1375,7 @@ SOURCE=.\Hash_Map_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1375,7 +1402,7 @@ SOURCE=.\High_Res_Timer.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1402,7 +1429,7 @@ SOURCE=.\INET_Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1429,7 +1456,7 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1456,7 +1483,7 @@ SOURCE=.\IO_SAP.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1483,7 +1510,7 @@ SOURCE=.\IOStream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1510,7 +1537,7 @@ SOURCE=.\IPC_SAP.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1537,7 +1564,7 @@ SOURCE=.\Local_Name_Space.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1564,7 +1591,7 @@ SOURCE=.\Local_Tokens.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1591,7 +1618,7 @@ SOURCE=.\Log_Msg.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1618,7 +1645,7 @@ SOURCE=.\Log_Record.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1645,7 +1672,7 @@ SOURCE=.\LSOCK.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1672,7 +1699,7 @@ SOURCE=.\LSOCK_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1699,7 +1726,7 @@ SOURCE=.\LSOCK_CODgram.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1726,7 +1753,7 @@ SOURCE=.\LSOCK_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1753,7 +1780,7 @@ SOURCE=.\LSOCK_Dgram.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1780,7 +1807,7 @@ SOURCE=.\LSOCK_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1807,7 +1834,7 @@ SOURCE=.\Malloc.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1834,7 +1861,7 @@ SOURCE=.\Map.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1861,7 +1888,7 @@ SOURCE=.\Mem_Map.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1888,7 +1915,7 @@ SOURCE=.\Memory_Pool.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1915,7 +1942,7 @@ SOURCE=.\Message_Block.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1942,7 +1969,7 @@ SOURCE=.\Message_Queue.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1969,7 +1996,7 @@ SOURCE=.\Method_Request.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1996,7 +2023,7 @@ SOURCE=.\Msg_WFMO_Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2023,7 +2050,7 @@ SOURCE=.\Multiplexor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2050,7 +2077,7 @@ SOURCE=.\Name_Proxy.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2077,7 +2104,7 @@ SOURCE=.\Name_Request_Reply.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2104,7 +2131,7 @@ SOURCE=.\Name_Space.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2131,7 +2158,7 @@ SOURCE=.\Naming_Context.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2158,7 +2185,7 @@ SOURCE=.\NT_Service.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2185,7 +2212,7 @@ SOURCE=.\Object_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2212,7 +2239,7 @@ SOURCE=.\Obstack.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2239,7 +2266,7 @@ SOURCE=.\OS.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2266,7 +2293,7 @@ SOURCE=.\Pair.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2293,7 +2320,7 @@ SOURCE=.\Parse_Node.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2320,7 +2347,7 @@ SOURCE=.\Pipe.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2347,7 +2374,7 @@ SOURCE=.\Priority_Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2374,7 +2401,7 @@ SOURCE=.\Proactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2401,7 +2428,7 @@ SOURCE=.\Process.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2428,7 +2455,7 @@ SOURCE=.\Process_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2455,7 +2482,7 @@ SOURCE=.\Profile_Timer.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2482,7 +2509,7 @@ SOURCE=.\Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2509,7 +2536,7 @@ SOURCE=.\Read_Buffer.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2536,7 +2563,7 @@ SOURCE=.\Registry.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2563,7 +2590,7 @@ SOURCE=.\Registry_Name_Space.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2590,7 +2617,7 @@ SOURCE=.\Remote_Name_Space.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2617,7 +2644,7 @@ SOURCE=.\Remote_Tokens.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2644,7 +2671,7 @@ SOURCE=.\Sched_Params.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2671,7 +2698,7 @@ SOURCE=.\Select_Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2698,7 +2725,7 @@ SOURCE=.\Select_Reactor_Base.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2725,7 +2752,7 @@ SOURCE=.\Service_Config.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2752,7 +2779,7 @@ SOURCE=.\Service_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2779,7 +2806,7 @@ SOURCE=.\Service_Object.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2806,7 +2833,7 @@ SOURCE=.\Service_Repository.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2833,7 +2860,7 @@ SOURCE=.\Service_Types.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2860,7 +2887,7 @@ SOURCE=.\Shared_Memory.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2887,7 +2914,7 @@ SOURCE=.\Shared_Memory_MM.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2914,7 +2941,7 @@ SOURCE=.\Shared_Memory_SV.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2941,7 +2968,7 @@ SOURCE=.\Shared_Object.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2968,7 +2995,7 @@ SOURCE=.\Signal.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -2995,7 +3022,7 @@ SOURCE=.\SOCK.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3022,7 +3049,7 @@ SOURCE=.\SOCK_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3049,7 +3076,7 @@ SOURCE=.\SOCK_CODgram.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3076,7 +3103,7 @@ SOURCE=.\SOCK_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3103,7 +3130,7 @@ SOURCE=.\SOCK_Dgram.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3130,7 +3157,7 @@ SOURCE=.\SOCK_Dgram_Bcast.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3157,7 +3184,7 @@ SOURCE=.\SOCK_Dgram_Mcast.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3184,7 +3211,7 @@ SOURCE=.\SOCK_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3211,7 +3238,7 @@ SOURCE=.\SOCK_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3238,7 +3265,7 @@ SOURCE=.\SPIPE.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3265,7 +3292,7 @@ SOURCE=.\SPIPE_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3292,7 +3319,7 @@ SOURCE=.\SPIPE_Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3319,7 +3346,7 @@ SOURCE=.\SPIPE_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3346,7 +3373,7 @@ SOURCE=.\SPIPE_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3373,7 +3400,7 @@ SOURCE=.\SString.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3400,7 +3427,7 @@ SOURCE=.\Stats.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3427,7 +3454,7 @@ SOURCE=.\Strategies.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3454,7 +3481,7 @@ SOURCE=.\SV_Message.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3481,7 +3508,7 @@ SOURCE=.\SV_Message_Queue.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3508,7 +3535,7 @@ SOURCE=.\SV_Semaphore_Complex.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3535,7 +3562,7 @@ SOURCE=.\SV_Semaphore_Simple.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3562,7 +3589,7 @@ SOURCE=.\SV_Shared_Memory.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3589,7 +3616,7 @@ SOURCE=.\Svc_Conf_l.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3616,7 +3643,7 @@ SOURCE=.\Svc_Conf_y.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3643,7 +3670,7 @@ SOURCE=.\Svc_Handler.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3670,7 +3697,7 @@ SOURCE=.\Synch.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3697,7 +3724,7 @@ SOURCE=.\Synch_Options.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3724,7 +3751,7 @@ SOURCE=.\System_Time.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3751,7 +3778,7 @@ SOURCE=.\Task.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3778,7 +3805,7 @@ SOURCE=.\Template_Instantiations.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3805,7 +3832,7 @@ SOURCE=.\Thread.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3832,7 +3859,7 @@ SOURCE=.\Thread_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3859,7 +3886,7 @@ SOURCE=.\Time_Request_Reply.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3886,7 +3913,7 @@ SOURCE=.\Timeprobe.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3913,7 +3940,7 @@ SOURCE=.\Timer_Hash.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3940,7 +3967,7 @@ SOURCE=.\Timer_Heap.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3967,7 +3994,7 @@ SOURCE=.\Timer_List.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -3994,7 +4021,7 @@ SOURCE=.\Timer_Queue.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4021,7 +4048,7 @@ SOURCE=.\Timer_Queue_Adapters.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4048,7 +4075,7 @@ SOURCE=.\Timer_Wheel.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4075,7 +4102,7 @@ SOURCE=.\TLI.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4102,7 +4129,7 @@ SOURCE=.\TLI_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4129,7 +4156,7 @@ SOURCE=.\TLI_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4156,7 +4183,7 @@ SOURCE=.\TLI_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4183,7 +4210,7 @@ SOURCE=.\Token.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4210,7 +4237,7 @@ SOURCE=.\Token_Collection.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4237,7 +4264,7 @@ SOURCE=.\Token_Invariants.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4264,7 +4291,7 @@ SOURCE=.\Token_Manager.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4291,7 +4318,7 @@ SOURCE=.\Token_Request_Reply.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4318,7 +4345,7 @@ SOURCE=.\TP_Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4345,7 +4372,7 @@ SOURCE=.\Trace.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4372,7 +4399,7 @@ SOURCE=.\TTY_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4399,7 +4426,7 @@ SOURCE=.\Typed_SV_Message.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4426,7 +4453,7 @@ SOURCE=.\Typed_SV_Message_Queue.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4453,7 +4480,7 @@ SOURCE=.\UNIX_Addr.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4480,7 +4507,7 @@ SOURCE=.\UPIPE_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4507,7 +4534,7 @@ SOURCE=.\UPIPE_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4534,7 +4561,7 @@ SOURCE=.\UPIPE_Stream.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4561,7 +4588,7 @@ SOURCE=.\WFMO_Reactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4588,7 +4615,7 @@ SOURCE=.\WIN32_Asynch_IO.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4615,7 +4642,7 @@ SOURCE=.\WIN32_Proactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -4642,7 +4669,7 @@ SOURCE=.\XtReactor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -4700,6 +4727,14 @@ SOURCE=.\Auto_Ptr.h
 # Begin Source File
 
 SOURCE=.\Basic_Types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Based_Pointer_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Based_Pointer_Repository_T.h
 # End Source File
 # Begin Source File
 
@@ -6227,7 +6262,7 @@ SOURCE=.\Acceptor.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6276,7 +6311,7 @@ SOURCE=.\Active_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6325,7 +6360,7 @@ SOURCE=.\Asynch_Acceptor.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6374,7 +6409,56 @@ SOURCE=.\Auto_Ptr.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Based_Pointer_Repository_T.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6423,7 +6507,7 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6472,7 +6556,7 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6521,7 +6605,7 @@ SOURCE=.\Caching_Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6570,7 +6654,7 @@ SOURCE=.\Caching_Utility_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6619,7 +6703,7 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6668,7 +6752,7 @@ SOURCE=.\Connector.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6717,7 +6801,7 @@ SOURCE=.\Containers_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6766,7 +6850,7 @@ SOURCE=.\Dump_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6815,7 +6899,7 @@ SOURCE=.\Free_List.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6864,7 +6948,7 @@ SOURCE=.\Functor_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6913,7 +6997,7 @@ SOURCE=.\Future.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -6962,7 +7046,7 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7011,7 +7095,7 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7060,7 +7144,7 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7109,7 +7193,7 @@ SOURCE=.\IOStream_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7158,7 +7242,7 @@ SOURCE=.\Local_Name_Space_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7207,7 +7291,7 @@ SOURCE=.\Malloc_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7256,7 +7340,7 @@ SOURCE=.\Managed_Object.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7305,7 +7389,7 @@ SOURCE=.\Map_Manager.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7354,7 +7438,7 @@ SOURCE=.\Map_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7403,7 +7487,7 @@ SOURCE=.\Message_Block_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7452,7 +7536,7 @@ SOURCE=.\Message_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7501,7 +7585,7 @@ SOURCE=.\Module.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7550,7 +7634,7 @@ SOURCE=.\Pair_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7599,7 +7683,7 @@ SOURCE=.\RB_Tree.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7648,7 +7732,7 @@ SOURCE=.\Select_Reactor_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7697,7 +7781,7 @@ SOURCE=.\Singleton.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7746,7 +7830,7 @@ SOURCE=.\Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7795,7 +7879,7 @@ SOURCE=.\Stream.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7844,7 +7928,7 @@ SOURCE=.\Stream_Modules.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7893,7 +7977,7 @@ SOURCE=.\Synch_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7942,7 +8026,7 @@ SOURCE=.\Task_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -7991,7 +8075,7 @@ SOURCE=.\Timer_Hash_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -8040,7 +8124,7 @@ SOURCE=.\Timer_Heap_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -8089,7 +8173,7 @@ SOURCE=.\Timer_List_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -8138,7 +8222,7 @@ SOURCE=.\Timer_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -8187,7 +8271,7 @@ SOURCE=.\Timer_Wheel_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
