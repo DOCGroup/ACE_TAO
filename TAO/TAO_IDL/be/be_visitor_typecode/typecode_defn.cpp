@@ -1418,7 +1418,7 @@ be_visitor_typecode_defn::gen_typecode (be_string *node)
   os->indent (); // start from the current indentation level
 
   // emit the enumeration
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::tk_string, " << be_nl;
     }

@@ -314,7 +314,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   os->indent ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "char *" << ub->local_name () << "_;\n";
     }

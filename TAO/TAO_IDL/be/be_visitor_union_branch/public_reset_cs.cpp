@@ -337,7 +337,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::string_free (this->u_.";
     }

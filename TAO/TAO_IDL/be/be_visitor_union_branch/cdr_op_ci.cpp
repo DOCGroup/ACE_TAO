@@ -640,7 +640,7 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (node->width () == sizeof (char))
+      if (node->width () == (long) sizeof (char))
         {
           *os << "CORBA::String_var _tao_union_tmp;" << be_nl;
         }

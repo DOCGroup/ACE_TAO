@@ -257,7 +257,7 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
   os->indent ();
   if (this->ctx_->exception ()) // special ctor
     {
-      if (node->width () == sizeof (char))
+      if (node->width () == (long) sizeof (char))
         {
           *os << "this->" << bd->local_name () 
               << " = CORBA::string_dup (_tao_"
@@ -272,7 +272,7 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
     }
   else
     {
-      if (node->width () == sizeof (char))
+      if (node->width () == (long) sizeof (char))
         {
           *os << "this->" << bd->local_name ()
               << " = CORBA::string_dup (_tao_excp." 

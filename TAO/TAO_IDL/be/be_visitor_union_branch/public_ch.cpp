@@ -541,7 +541,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   os->indent ();
 
   // three methods to set the string value
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "void " << ub->local_name () << " (char *); // set" << be_nl;
       *os << "void " << ub->local_name () << " (const char *); // set"

@@ -2043,7 +2043,7 @@ dump_expr_val(ostream &o, AST_Expression::AST_ExprValue *ev)
     o << ev->u.oval;
     break;
   case AST_Expression::EV_bool:
-    o << (ev->u.bval == I_TRUE) ? "TRUE" : "FALSE";
+    o << (ev->u.bval == I_TRUE ? "TRUE" : "FALSE");
     break;
   case AST_Expression::EV_string:
     if (ev->u.strval != NULL)

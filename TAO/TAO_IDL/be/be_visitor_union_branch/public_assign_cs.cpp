@@ -477,7 +477,7 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name () << "_ = ";
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::string_dup (u.u_.";
     }
