@@ -4,6 +4,9 @@
 
 #include "tao/corba.h"
 
+// Timeprobes class
+#include "tao/Timeprobe.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
@@ -54,6 +57,8 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     object_key_ (),
     requesting_principal_ (0)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_REQUEST_HEADER_INIT_START);
+
   CORBA::Boolean hdr_status;
 
   // Tear out the service context ... we currently ignore it, but it

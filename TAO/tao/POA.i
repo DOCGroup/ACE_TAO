@@ -498,6 +498,8 @@ TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
                            void *context,
                            CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
+
   // Lock access to the POAManager for the duration of this transaction
   TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
 

@@ -260,10 +260,6 @@ SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timeprobe.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Typecode.cpp
 # End Source File
 # Begin Source File
