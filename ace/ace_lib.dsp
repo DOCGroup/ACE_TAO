@@ -55,7 +55,7 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /Gm /vd1 /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
