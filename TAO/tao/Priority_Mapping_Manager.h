@@ -39,7 +39,7 @@ typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
 
 
 class TAO_Export TAO_Priority_Mapping_Manager :
-  public virtual CORBA::LocalObject
+  public virtual TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   Priority_Mapping_Manager pseudo-objref.
