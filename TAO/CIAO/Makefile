@@ -45,9 +45,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
-CONTROLLED_FILES = TAO/CIAO
+CONTROLLED_FILES = CIAO
 
-RELEASE_FILES = $(CONTROLLED_FILES)
+RELEASE_FILES = $(addprefix ACE_wrappers/TAO/,$(CONTROLLED_FILES)) 
 
 .PHONY: release tag
 
