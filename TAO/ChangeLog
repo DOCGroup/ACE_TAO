@@ -1,7 +1,7 @@
 Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 
-	This checkin is aimed to help with the following 
+	This check-in is aimed to help with the following 
 
 	- Reduce the TAO_HAS_SOME_POLICY madness 
 	- Make the compiler do the work of linking in the pieces that it
@@ -11,7 +11,7 @@ Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	All the policies that are implemented in TAO are placed in
         seperate pidl files. The compiler should link in only pieces that
         are required. More work is required to achieve that. This is just
-	a temporary checkin to facilitate stuff. 
+	a temporary check-in to facilitate stuff. 
 
 	* tao/Messaging/Messaging_RT_Policy.pidl: 
 	* tao/Messaging/Messaging_SyncScope_Policy.pidl: These two files
