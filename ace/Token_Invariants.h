@@ -166,11 +166,11 @@ public:
 
 protected:
   int get_mutex (const char *token_name, 
-		 ACE_Mutex_Invariants *&inv);
+                 ACE_Mutex_Invariants *&inv);
   // Return or create.
 
   int get_rwlock (const char *token_name, 
-		  ACE_RWLock_Invariants *&inv);
+                  ACE_RWLock_Invariants *&inv);
   // Return or create.
 
   ACE_TOKEN_CONST::MUTEX lock_;
@@ -209,9 +209,6 @@ protected:
   RWLOCK_COLLECTION rwlock_collection_;
   // MUTEX_COLLECTION maintains a mapping from token names to mutexes.
 
-  static ACE_TOKEN_CONST::MUTEX creation_lock_;
-  // Lock the creation of the Singleton.
-  
   static ACE_Token_Invariant_Manager *instance_;
   // Singleton pointer.
 };
@@ -221,4 +218,3 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_TOKEN_INVARIANTS_H */
-

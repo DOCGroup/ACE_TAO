@@ -22,21 +22,23 @@
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #include "ace/Object_Manager.h"
 
-// This is lock defines a monitor that is shared by all threads
-// calling certain ACE_OS methods.
-static ACE_Thread_Mutex ace_os_monitor_lock;
-
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int 
 ACE_OS::netdb_acquire (void)
 {
-  return ace_os_monitor_lock.acquire ();
+  ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+  return ace_os_monitor_lock->acquire ();
 }
 
 int 
 ACE_OS::netdb_release (void)
 {
-  return ace_os_monitor_lock.release ();
+  ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+  return ace_os_monitor_lock->release ();
 }
 #endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 #endif /* defined (ACE_MT_SAFE) */
@@ -2806,7 +2808,10 @@ ACE_OS::pread (ACE_HANDLE handle,
   return ::pread (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */  
 #elif defined (ACE_HAS_THREADS)
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
     return -1;
@@ -2851,7 +2856,10 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   return ::pwrite (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */  
 #elif defined (ACE_HAS_THREADS)
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
   if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
     return -1;
@@ -2873,7 +2881,11 @@ ACE_OS::mktime (struct tm *t)
 #if defined (ACE_HAS_MT_SAFE_MKTIME) || !defined (ACE_HAS_THREADS)
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #else
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, (time_t) -1);
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, (time_t) -1));
+
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #endif /* ACE_HAS_MT_SAFE_MKTIME */
 }
