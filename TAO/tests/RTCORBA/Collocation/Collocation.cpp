@@ -427,7 +427,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
 
   CORBA::Policy_var priority_model_policy =
     this->rt_orb_->create_priority_model_policy (priority_model,
-                                                 0,
+                                                 default_thread_priority,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
