@@ -1,3 +1,11 @@
+Mon Oct 21 14:27:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/DLL_ORB/Makefile.Test_Client_Module:
+	* tests/DLL_ORB/Makefile.Test_Server_Module: Fix for the makefile
+	  problem that lead to a link being created for a library that
+	  didnt exist. Thaks to Craig Rodrigues <crodrigu@bbn.com> for
+	  providing the patch.
+
 Mon Oct 21 06:38:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Fixed link errors in Win32
