@@ -289,6 +289,14 @@ The scripts may work on earlier versions of perl, but we cannot say for sure
 that they do.</P>
 
 <HR>
+<H3>Native Exceptions</H3>
+
+<P>TAO will use native exceptions if TAO_HAS_EXCEPTIONS is defined when it is
+compiled. This can be accomplished in two ways: by defining ACE_HAS_EXCEPTIONS 
+in the config.h or config-*.h files (such as on Windows) or by using 
+<CODE>make exceptions=1</CODE> when you compile TAO.</P>
+
+<HR>
 <P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
