@@ -14,7 +14,7 @@ www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Smart_Proxies.html
 Smart Proxy Example
 -------------------
 
-This director contains a simple example that demostrats how the TAO
+This directory contains a simple example that demostrats how the TAO
 Smart Proxy feature can be used.  In this example, just a single
 method has been "smartified" to illustrate how you just implement the
 methods you wish to customize since the rest will be taken care of the
@@ -27,18 +27,13 @@ TAO_Default_Proxy_Factory class.
 
 For execution of the test:
 
-% Kirthika, please update this example to have a run_test.pl automated
-% perl script and update the following instructions.
+1) ./server -o test.ior
 
-1) Generate the stubs:
-      
-   ../../TAO_IDL/tao_idl -Ge 1 test.idl
+2) ./client
 
-2) make
+or simply use:
 
-3) ./server -o test.ior
-
-4) ./client
+run_test.pl
 
 Happy troubleshooting!
 
