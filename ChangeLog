@@ -1,5 +1,15 @@
 Tue Apr 25 00:02:08 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Log_Msg.h (ACE_Log_Msg): Split msg_ostream() into two functions,
+	  one of which allows the delete_ostream_ flag to be reset and the
+ 	  other that doesn't.  Thanks to Boris Sukholitko
+ 	  <palisander@hotmail.com> for reporting this.
+
+	* ace/Message_Block.i (replace_data_block): If a data block is replaced
+	  with a NULL pointer then don't bother doing certain operations!
+  	  Thanks to Boris Sukholitko <palisander@hotmail.com> for
+ 	  reporting this.
+
 	* ace/OS.i (dlerror): Changed sizeof buf to sizeof buf / sizeof buf[0]
 	  to avoid over-allocating a buffer in the
  	  ACE_TEXT_FormateMessage() function.  Thanks to Valery

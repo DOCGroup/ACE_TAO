@@ -1711,6 +1711,12 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 }
 
 void
+ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m)
+{
+  this->ostream_ = m;
+}
+
+void
 ACE_Log_Msg::local_host (const ACE_TCHAR *s)
 {
   if (s)

@@ -10,7 +10,7 @@
 //    Log_Msg.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -287,7 +287,10 @@ public:
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
-  void msg_ostream (ACE_OSTREAM_TYPE *, int delete_ostream = 0);
+  void msg_ostream (ACE_OSTREAM_TYPE *);
+  // Update the ostream without overwriting the delete_ostream_ flag.
+
+  void msg_ostream (ACE_OSTREAM_TYPE *, int delete_ostream);
   // delete_stream == 1, forces Log_Msg.h to delete the stream in
   // its own ~dtor (assumes control of the stream)
   // use only with proper ostream (eg: fstream), not (cout, cerr)

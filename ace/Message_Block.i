@@ -357,10 +357,13 @@ ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
   ACE_Data_Block *old = this->data_block_;
   this->data_block_ = db;
 
-  // Set the read and write pointers in the <Message_Block> to point
-  // to the buffer in the <ACE_Data_Block>.
-  this->rd_ptr (this->data_block ()->base ());
-  this->wr_ptr (this->data_block ()->base ());
+  if (db != 0)
+    {
+      // Set the read and write pointers in the <Message_Block> to point
+      // to the buffer in the <ACE_Data_Block>.
+      this->rd_ptr (this->data_block ()->base ());
+      this->wr_ptr (this->data_block ()->base ());
+    }
 
   return old;
 }
