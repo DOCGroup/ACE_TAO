@@ -7,7 +7,7 @@
 #include "Messaging_PolicyValueC.h"
 #include "Stub.h"
 #include "debug.h"
-#include "tao/target_specification.h"
+#include "target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Profile.i"
@@ -20,6 +20,8 @@ ACE_RCSID(tao, Profile, "$Id$")
 
 TAO_Profile::~TAO_Profile (void)
 {
+  if (this->tagged_profile_)
+    delete this->tagged_profile_;
 }
 
 void
@@ -37,6 +39,58 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
 
   // Add the given tagged component to this profile.
   this->tagged_components ().set_component (component);
+}
+
+IOP::TaggedProfile *
+TAO_Profile::create_tagged_profile (void)
+{
+  if (this->tagged_profile_ == 0)
+    {
+      ACE_NEW_RETURN (this->tagged_profile_,
+                      IOP::TaggedProfile,
+                      0);
+
+      // As we have not created we will now create the TaggedProfile
+      this->tagged_profile_->tag = this->tag_;
+
+      // Create the encapsulation....
+      TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
+                           TAO_ENCAP_BYTE_ORDER,
+                           this->orb_core ()->output_cdr_buffer_allocator (),
+                           this->orb_core ()->output_cdr_dblock_allocator (),
+                           this->orb_core ()->output_cdr_msgblock_allocator (),
+                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
+                           this->orb_core ()->to_iso8859 (),
+                           this->orb_core ()->to_unicode ());
+
+      // Create the profile body
+      this->create_profile_body (encap);
+
+      CORBA::ULong length =
+        ACE_static_cast(CORBA::ULong,encap.total_length ());
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      // Place the message block in to the Sequence of Octets that we
+      // have
+      this->tagged_profile_->profile_data.replace (length,
+                                                   encap.begin ());
+#else
+      this->tagged_profile_->profile_data.length (length);
+      CORBA::Octet *buffer =
+        this->tagged_profile_.profile_data.get_buffer ();
+      for (const ACE_Message_Block *i = encap.begin ();
+           i != encap.end ();
+           i = i->next ())
+        {
+          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          buffer += i->length ();
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+    }
+
+  return this->tagged_profile_;
 }
 
 void
@@ -350,8 +404,7 @@ TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
                                           TAO_ORB_Core *orb_core)
   : TAO_Profile (tag,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    tagged_profile_ ()
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR))
 {
 }
 
@@ -443,12 +496,9 @@ TAO_Unknown_Profile::hash (CORBA::ULong max
                          this->body_.length ()) % max);
 }
 
-IOP::TaggedProfile&
-TAO_Unknown_Profile::create_tagged_profile (void)
+void
+TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
 {
-  this->tagged_profile_.tag = this->tag ();
-
-  // I dont know about the rest, so we return our copy
-  return this->tagged_profile_;
-
+  // No idea about the profile body! Just return
+  return;
 }

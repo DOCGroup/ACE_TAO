@@ -39,8 +39,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
   : TAO_Profile (TAO_TAG_UIOP_PROFILE, orb_core, version),
     endpoint_ (addr),
     count_ (1),
-    object_key_ (object_key),
-    tagged_profile_ ()
+    object_key_ (object_key)
 {
 }
 
@@ -52,8 +51,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
   : TAO_Profile (TAO_TAG_UIOP_PROFILE, orb_core, version),
     endpoint_ (addr),
     count_ (1),
-    object_key_ (object_key),
-    tagged_profile_ ()
+    object_key_ (object_key)
 {
 }
 
@@ -64,8 +62,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
                                    TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
-    object_key_ (),
-    tagged_profile_ ()
+    object_key_ ()
 {
 }
 
@@ -398,55 +395,6 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   stream.write_octet_array_mb (encap.begin ());
 
   return 1;
-}
-
-IOP::TaggedProfile &
-TAO_UIOP_Profile::create_tagged_profile (void)
-{
-  // Check whether we have already created the TaggedProfile
-  if (this->tagged_profile_.profile_data.get_buffer () == 0)
-    {
-      // As we have not created we will now create the TaggedProfile
-      this->tagged_profile_.tag = TAO_TAG_UIOP_PROFILE;
-
-      // Create the encapsulation....
-      TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
-                           TAO_ENCAP_BYTE_ORDER,
-                           this->orb_core ()->output_cdr_buffer_allocator (),
-                           this->orb_core ()->output_cdr_dblock_allocator (),
-                           this->orb_core ()->output_cdr_msgblock_allocator (),
-                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           this->orb_core ()->to_iso8859 (),
-                           this->orb_core ()->to_unicode ());
-
-      // Create the profile body
-      this->create_profile_body (encap);
-
-      CORBA::ULong length =
-        ACE_static_cast(CORBA::ULong, encap.total_length ());
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      // Place the message block in to the Sequence of Octets that we
-      // have
-      this->tagged_profile_.profile_data.replace (length,
-                                                  encap.begin ());
-#else
-      this->tagged_profile_.profile_data.length (length);
-      CORBA::Octet *buffer =
-        this->tagged_profile_.profile_data.get_buffer ();
-      for (const ACE_Message_Block *i = encap.begin ();
-           i != encap.end ();
-           i = i->next ())
-        {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
-          buffer += i->length ();
-        }
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1*/
-    }
-
-  return this->tagged_profile_;
 }
 
 void
