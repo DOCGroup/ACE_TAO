@@ -130,12 +130,12 @@ Input_Task::add_timer (void *argument)
 int
 Input_Task::cancel_timer (void *argument)
 {
-  return  this->queue_->cancel (*(int *)argument);
+  return  this->queue_->cancel (*(int *) argument);
 }
 
-// lists the timers in the queue.  Ignores the argument. This 
-// method will be called from inside the <Timer_Queue_Test_Driver> 
-// class.  (see Command pattern)
+// Lists the timers in the queue.  Ignores the argument. This method
+// will be called from inside the <Timer_Queue_Test_Driver> class.
+// (see Command pattern)
 
 int
 Input_Task::list_timer (void *argument)

@@ -237,23 +237,23 @@ public:
 typedef ACE_Singleton<be_state_sequence, ACE_SYNCH_MUTEX>
                                     TAO_BE_STATE_SEQUENCE;
 
-class be_state_attribute: public be_state
+class be_state_attribute : public be_state
 {
   // =TITLE
   // be_state_attribute
   // =DESCRIPTION
   // attribute code generation
 public:
-  
   be_state_attribute (void);
   // constructor
 
   virtual int gen_code (be_type *bt, be_decl *d, be_type *type=0);
-  // code generation for node "d" whose type is "bt". The third parameter is
-  // used for recursive invocation involving a typedef
+  // code generation for node "d" whose type is "bt". The third
+  // parameter is used for recursive invocation involving a typedef
 };
-typedef ACE_Singleton<be_state_attribute, ACE_SYNCH_MUTEX>
-                                    TAO_BE_STATE_ATTRIBUTE;
 
-#endif // end of be_state
+typedef ACE_Singleton<be_state_attribute, ACE_SYNCH_MUTEX>
+	TAO_BE_STATE_ATTRIBUTE;
+
+#endif /* end of be_state */
 

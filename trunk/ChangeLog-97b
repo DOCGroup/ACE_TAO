@@ -1,5 +1,20 @@
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+        * netsvcs/clients/Naming/Client/Makefile
+	  netsvcs/clients/Naming/Dump_Restore/Makefile
+ 
+          The lines:
+ 
+          SHLIB   = libClient_Test.so
+	  SHLIB   = libDump_Restore.so
+ 
+          need to be
+ 
+          SHLIB   = libClient_Test.$(SOEXT)
+          SHLIB   = libDump_Restore.$(SOEXT)
+
+          Thanks to Stephen Coy <stevec@magna.com.au> for reporting this. 
+
 	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
 
 	  if (iter.next ()->thr_handle_ == h_id)

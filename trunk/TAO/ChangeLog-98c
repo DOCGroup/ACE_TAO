@@ -1,3 +1,11 @@
+Fri Oct 24 01:02:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* be_state.h: Added definitions for the methods in class
+ 	be_state_attribute.  For some reason, they were missing.
+
+	* TAO_IDL/be/be_state.cpp: Added the necessary template
+ 	specializations so that the TAO IDL compiler will work with GCC.
+
 Thu Oct 23 22:46:10 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO IDL Compiler: More progress in terms of getting the Cubit
