@@ -73,10 +73,10 @@ main (int argc, char *argv[])
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  
+
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
-  
+
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
 
@@ -103,7 +103,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -119,7 +121,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
