@@ -2801,15 +2801,19 @@ typedef char TCHAR;
 #   define ACE_PLATFORM_EXE_SUFFIX_W ""
 # endif /* ACE_HAS_UNICODE */
 
-# define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
-# define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+# if !defined (ACE_LD_SEARCH_PATH)
+#   define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+# endif /* ACE_LD_SEARCH_PATH */
+# if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+# endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
 
-# if defined (__hpux)
-#   define ACE_DLL_SUFFIX ".sl"
-# else
+# if !defined (ACE_DLL_SUFFIX)
 #   define ACE_DLL_SUFFIX ".so"
-# endif /* __hpux */
-# define ACE_DLL_PREFIX "lib"
+# endif /* ACE_DLL_SUFFIX */
+# if !defined (ACE_DLL_PREFIX)
+#   define ACE_DLL_PREFIX "lib"
+# endif /* ACE_DLL_PREFIX */
 
 // The following 3 defines are used by the ACE Name Server...
 # if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
