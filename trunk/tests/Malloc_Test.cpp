@@ -29,7 +29,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
+#if !defined (ACE_LACKS_FORK) || defined (ACE_WIN32)
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
@@ -37,11 +37,11 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
 // If the platform supports position-independent malloc, choose
-// another base address that's 32k higher so that <ACE_Malloc> will be
+// another base address that's 64k higher so that <ACE_Malloc> will be
 // mapped into a different address in the child's virtual memory.
 static const void *CHILD_BASE_ADDR =
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-       32 * 1024 + 
+       64 * 1024 + 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
        ACE_DEFAULT_BASE_ADDR;
 
@@ -278,4 +278,4 @@ main (int argc, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32) */
+#endif /* !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) */
