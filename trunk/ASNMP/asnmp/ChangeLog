@@ -1,3 +1,33 @@
+Wed Jul 15 20:27:23 1998  Mike MacFaden  <mrm@tango.cs.wustl.edu>
+    * asn1.cpp - Hien Nguyen <hnguyen@apexgrp.com> fixed these bugs:
+
+    Problem: The V1 trap agent-addr field tag value is OCTET STRING
+    instead of IPADDRESS, and the time stamp field tag value is INTEGER
+    instead of TIME TICKS.
+
+    Fix: Change cmu_snmp::build() to pass in the correct type for agent-addr
+    and time stamp.
+
+    2.  Problem: The V1 trap enterprise OID is corrupted after is was set in
+    wpdu constructor.
+
+    Fix: In wpdu::set_trap_info(), the raw_pdu enterprise OID pointer was
+    assigned to the raw data of an enterprise Oid object on the stack.
+    Changed to perform an ACE_NEW_RETURN on the raw_pdu->enterprise and
+    perform a memcpy to copy the OID.  The allocated memory is freed in
+    cmu_snmp::free_pdu() as currently implemented.
+
+    3.  The V1 trap agent-addr field is currently initialized to "0.0.0.0". 
+    I changed wpdu::set_trap_info to initialize it to the local host IP
+    Address.
+
+    4.  I noticed that the memory allocation for OID in asn1.cpp using
+    ACE_NEW consistently use (OID length * size(oid)) as the size. 
+    Shouldn't it be simply OID length ?  Since there are numerous instances
+    of this usage in asn1.cpp, I have not fixed those.  If you can double
+    check and fix these, I appreciate it.
+
+
 Wed Aug 20 15:11:23 1997  Mike MacFaden  <mrm@tango.cs.wustl.edu>
 
 	* rebuilt Makefile using g++dep
