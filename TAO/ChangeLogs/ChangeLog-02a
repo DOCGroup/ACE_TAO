@@ -1,3 +1,11 @@
+Sun Sep 17 15:16:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile: Updated dependencies.
+
 Sun Sep 17 11:52:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IORManipulation/IORC.h:

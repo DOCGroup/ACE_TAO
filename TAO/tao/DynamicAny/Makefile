@@ -62,8 +62,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/DynamicAny.o .obj/DynamicAny.so .shobj/DynamicAny.o .shobj/DynamicAny.so: DynamicAny.cpp DynamicAny.h \
- $(ACE_ROOT)/ace/pre.h \
- dynamicany_export.h \
+ $(ACE_ROOT)/ace/pre.h dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -177,8 +178,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -295,19 +295,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -336,14 +338,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h
 
 .obj/DynAnyFactory.o .obj/DynAnyFactory.so .shobj/DynAnyFactory.o .shobj/DynAnyFactory.so: DynAnyFactory.cpp DynAnyFactory.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -457,8 +460,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -575,19 +577,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -616,11 +620,10 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAny_i.h DynStruct_i.h DynSequence_i.h DynEnum_i.h \
- DynArray_i.h DynUnion_i.h DynUnion_i_T.h DynUnion_i_T.cpp \
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAny_i.h DynStruct_i.h DynSequence_i.h DynEnum_i.h DynArray_i.h \
+ DynUnion_i.h DynUnion_i_T.h DynUnion_i_T.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -628,6 +631,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -741,8 +746,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -859,19 +863,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -900,14 +906,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h
 
 .obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp DynStruct_i.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1021,8 +1028,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1139,19 +1145,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1180,17 +1188,17 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h \
- $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynSequence_i.o .obj/DynSequence_i.so .shobj/DynSequence_i.o .shobj/DynSequence_i.so: DynSequence_i.cpp DynSequence_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1221,8 +1229,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Exit.h \
  $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
- DynamicAny.h dynamicany_export.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl DynamicAny.h \
+ dynamicany_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1303,8 +1311,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1421,19 +1428,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1462,16 +1471,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h \
- $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp DynEnum_i.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1585,8 +1594,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1703,19 +1711,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1744,14 +1754,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h
 
 .obj/DynArray_i.o .obj/DynArray_i.so .shobj/DynArray_i.o .shobj/DynArray_i.so: DynArray_i.cpp DynArray_i.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1865,8 +1876,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1983,19 +1993,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -2024,16 +2036,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynAnyFactory.h \
- $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp DynUnion_i.h \
  $(ACE_ROOT)/ace/pre.h DynamicAny.h \
  dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2147,8 +2159,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2265,19 +2276,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -2306,16 +2319,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i DynUnion_i_T.h DynUnion_i_T.cpp DynAnyFactory.h \
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i \
+ DynUnion_i_T.h DynUnion_i_T.cpp DynAnyFactory.h \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynamicAnyC.o .obj/DynamicAnyC.so .shobj/DynamicAnyC.o .shobj/DynamicAnyC.so: DynamicAnyC.cpp DynamicAny.h \
- $(ACE_ROOT)/ace/pre.h \
- dynamicany_export.h \
+ $(ACE_ROOT)/ace/pre.h dynamicany_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2429,8 +2442,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DynamicAnyC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DynamicAnyC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2547,19 +2559,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -2588,9 +2602,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- DynamicAnyC.i
+ $(TAO_ROOT)/tao/BoundsC.i DynamicAnyC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
