@@ -13,6 +13,7 @@ Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	which resulted in a huge number of compile errors from SunCC. This
 	is now fixed.
 
+	* tao/append.cpp: Unused variables in Union::append removed.
 
 Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
