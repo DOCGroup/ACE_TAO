@@ -4,6 +4,11 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
           inside ACE_HAS_XT, because the #includes are all inside
           ACE_HAS_XT also.
 
+        * tests/XtReactor_Test.cpp: without ACE_HAS_XT, replaced
+          ACE_ERROR_RETURN with ACE_ERROR.  This makes it consistent
+          with other tests, and allows the following ACE_END_TEST
+          statement to be reached.
+
         * tests/Process_Mutex_Test.cpp (main): specify full path to
           spawned children.  Removed Solaris/i386-specific code because
           it should no longer be needed now that the test is fixed by
