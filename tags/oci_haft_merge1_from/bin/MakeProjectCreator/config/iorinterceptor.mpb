@@ -1,0 +1,4 @@
+project {
+  after += IORInterceptor
+  libs  += TAO_IORInterceptor
+}

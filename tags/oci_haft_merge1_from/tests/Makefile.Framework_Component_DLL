@@ -1,0 +1,54 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Makefile for the DLL library in the Framework_Component_Test test
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
+LIB     = libFramework_Component_DLL.a
+SHLIB   = libFramework_Component_DLL.$(SOEXT)
+FILES   = Framework_Component_DLL
+LSRC    = $(addsuffix .cpp,$(FILES))
+LIBS   += $(ACELIB)
+
+BUILD   = $(VLIB) $(VSHLIB)
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+# To remake the Framework_Component_DLL source with xlC on AIX, it works
+# best to wipe out any previously-created tempinc directory.
+# The compiler/linker isn't too smart about instantiating templates...
+ifdef TEMPINCDIR
+COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
+endif
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DFRAMEWORK_COMPONENT_DLL_BUILD_DLL
+endif
+endif
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

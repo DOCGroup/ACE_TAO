@@ -1,0 +1,17 @@
+#
+# $Id$
+#
+
+NAME = Service_Config_DLL
+
+TARGET = $(BINDIR)\$(NAME).dll
+
+OBJFILES = $(OBJDIR)\Service_Config_DLL.obj
+
+CFLAGS = $(ACE_CFLAGS) -DSERVICE_CONFIG_DLL_HAS_DLL=1 -DSERVICE_CONFIG_DLL_BUILD_DLL=1
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>

@@ -1,0 +1,113 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+MSG_INTERVAL=5000 # 50000
+# The interval between the messages, in usecs
+
+UTL_COUNT=50000 # 500000
+# The number of iterations in the scavenger thread; each iteration is
+# (roughly) 20 usecs (On a Sparc Ultra 30); and the number of
+# iterations must be high enough so all the messages are sent while
+# the scavenger is still running.
+
+MSG_COUNTS="1 50 100 150 200 250 300 350 400 450 500 550 600 650 700 "
+"750 800 850 900 950 1000"
+# The number of messages sent on each test...
+
+RPT_ITER="01 02 03 04 05 06 07 08 09 10"
+# The iterations for the final test.
+
+RPT_MSGS=1000
+# The number of messages in the final test.
+
+/bin/rm -f NameService.ior NameService.pid EC1.pid EC2.pid EC.pid
+
+for i in $RPT_ITER; do
+  echo Short circuit RPT test $i
+  sleep 1
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
+    -a 1 -b 2 -c 2 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
+    -i $MSG_INTERVAL -x > OVH.RPT.X.${i}.log 2>&1
+
+  echo Local RPT EC test $i
+  ../../Naming_Service/Naming_Service \
+    -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+  sleep 2
+  NameService=`cat NameService.ior`
+  export NameService
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
+    -a 1 -b 2 -c 2 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
+    -i $MSG_INTERVAL > OVH.RPT.LCL.${i}.log 2>&1
+  kill `cat NameService.pid`
+
+  echo Remote RPT EC test $i
+  ../../Naming_Service/Naming_Service \
+    -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+  sleep 2
+  NameService=`cat NameService.ior`
+  export NameService
+  ./EC_Multiple -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
+    -a 1 -b 2 -c 3 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
+    -i $MSG_INTERVAL > OVH.RPT.RMT1.${i}.log 2>&1 &
+  ./EC_Multiple -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
+    -a 4 -b 3 -c 2 -p EC2.pid -m $RPT_MSGS -u $UTL_COUNT \
+    -i $MSG_INTERVAL > OVH.RPT.RMT2.${i}.log 2>&1 &
+  sleep 2
+  wait `cat EC1.pid`
+  wait `cat EC2.pid`
+  kill `cat NameService.pid`
+  wait
+done
+
+exit 0
+
+# This tests prove that the overhead is linear on the number of
+# messages...
+
+# Generate the baseline data, i.e. shortcircuit the EC.
+
+for i in $MSG_COUNTS; do
+  echo Short circuit test $i
+  sleep 1
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
+    -a 1 -b 2 -c 2 -m $i -u $UTL_COUNT \
+    -i $MSG_INTERVAL -x > OVH.X.${i}.log 2>&1
+done
+
+# Generate the local data, i.e. what is the overhead of using the local EC.
+for i in $MSG_COUNTS; do
+  echo Local EC test $i
+  ../../Naming_Service/Naming_Service \
+    -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+  sleep 2
+  NameService=`cat NameService.ior`
+  export NameService
+  ./EC_Multiple -ORBport 0 -l EC1 -s RUNTIME1 \
+    -a 1 -b 2 -c 2 -m $i -u $UTL_COUNT \
+    -i $MSG_INTERVAL -p EC1.pid > OVH.LCL.${i}.log 2>&1
+  kill `cat NameService.pid`
+done
+
+# Generate the remote data, this test is much slower since the latency
+# can be as high as 2 msec
+for i in $MSG_COUNTS; do
+  echo Remote EC test $i
+  ../../Naming_Service/Naming_Service \
+    -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+  sleep 2
+  NameService=`cat NameService.ior`
+  export NameService
+  ./EC_Multiple -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
+    -a 1 -b 2 -c 3 -p EC1.pid -m $i -u $UTL_COUNT \
+    -i $MSG_INTERVAL > OVH.RMT1.${i}.log 2>&1 &
+  ./EC_Multiple -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
+    -a 4 -b 3 -c 2 -p EC2.pid -m $i -u $UTL_COUNT \
+    -i $MSG_INTERVAL > OVH.RMT2.${i}.log 2>&1 &
+  sleep 2
+  wait `cat EC1.pid`
+  wait `cat EC2.pid`
+  kill `cat NameService.pid`
+  wait
+done

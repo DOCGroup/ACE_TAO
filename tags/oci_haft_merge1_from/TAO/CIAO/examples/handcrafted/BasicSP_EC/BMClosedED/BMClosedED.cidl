@@ -1,0 +1,19 @@
+//$Id$
+
+#ifndef BMCLOSEDED_CIDL
+#define BMCLOSEDED_CIDL
+
+#include "BMClosedED.idl"
+
+composition session BMClosedED_Impl
+{
+  home executor BMClosedEDHome_Exec
+  {
+    implements BasicSP::BMClosedEDHome;
+    manages BMClosedED_Exec;
+  };
+};
+
+#endif /* BMCLOSEDED_CIDL */
+
+

@@ -1,0 +1,6 @@
+project : event, etcl, dynamicany {
+  after     += CosNotification
+  libs      += TAO_CosNotification
+  comps     += Notify
+  tagchecks += Notify
+}

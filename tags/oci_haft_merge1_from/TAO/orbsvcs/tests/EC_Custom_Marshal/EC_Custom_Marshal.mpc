@@ -1,0 +1,16 @@
+project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
+  exename  = ECM_Supplier
+  Source_Files {
+    ECM_Data.cpp
+    ECM_Supplier.cpp
+  }
+}
+
+project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging {
+  exename  = ECM_Consumer
+  Source_Files {
+    ECM_Data.cpp
+    ECM_Consumer.cpp
+  }
+}
+

@@ -1,0 +1,91 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p Benchmark -i -c RoundTripClient"
+
+project(RoundTripClient_stub): ciao_client {
+  after += Benchmark_stub
+  sharedname = RoundTripClient_stub
+  idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export -Wb,stub_export_include=RoundTripClient_stub_export.h -Wb,skel_export_macro=ROUNDTRIPCLIENT_SVNT_Export -Wb,skel_export_include=RoundTripClient_svnt_export.h
+  dynamicflags   = ROUNDTRIPCLIENT_STUB_BUILD_DLL
+
+  IDL_Files {
+    RoundTripClient.idl
+  }
+
+  Source_Files {
+    RoundTripClientC.cpp
+  }
+}
+
+project(RoundTripClient_svnt) : ciao_servant {
+  after += Benchmark_svnt RoundTripClient_stub
+  sharedname  = RoundTripClient_svnt
+  libs    += RoundTripClient_stub Benchmark_stub Benchmark_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=ROUNDTRIPCLIENT_SVNT_Export -Wb,export_include=RoundTripClient_svnt_export.h
+  dynamicflags = ROUNDTRIPCLIENT_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    RoundTripClient.cidl
+  }
+
+  IDL_Files {
+    RoundTripClientE.idl
+  }
+
+  Source_Files {
+    RoundTripClientEC.cpp
+    RoundTripClientS.cpp
+    RoundTripClient_svnt.cpp
+  }
+}
+
+
+project(RoundTripClient_exec) : ciao_component {
+  after += RoundTripClient_svnt
+  sharedname = RoundTripClient_exec
+  libs      += RoundTripClient_stub Benchmark_stub RoundTripClient_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export -Wb,export_include=RoundTripClient_exec_export.h
+  dynamicflags   = ROUNDTRIPCLIENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+    RoundTripClientEI.idl
+  }
+
+  Source_Files {
+    RoundTripClientEIC.cpp
+    RoundTripClient_exec.cpp
+  }
+}
+
+
+
+project (RoundTripClient_client) : ciao_client, valuetype {
+  exename = client
+  after += RoundTripClient_stub
+  libs += RoundTripClient_stub Benchmark_stub
+  libpaths += ..
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
+
+
+//project (RoundTripClient_controller) : ciao_client, valuetype {
+//  exename = controller
+//  after += RoundTripClient_stub
+//  libs += RoundTripClient_stub Benchmark_stub
+//  libpaths += ..
+//
+//  IDL_Files {
+//  }
+//
+//  Source_Files {
+//    controller.cpp
+//  }
+//}
+

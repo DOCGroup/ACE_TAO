@@ -1,0 +1,3 @@
+project : orbsvcsexe, core, lifecycle, naming, trading {
+  exename  = LifeCycle_Service
+}

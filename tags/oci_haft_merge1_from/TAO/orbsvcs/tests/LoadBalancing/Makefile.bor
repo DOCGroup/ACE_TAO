@@ -1,0 +1,12 @@
+#
+# Makefile for building the TAO Load Balancer tests
+#
+# $Id$
+#
+
+
+DIRS = \
+	GenericFactory
+
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

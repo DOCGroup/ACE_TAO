@@ -1,0 +1,4 @@
+project : taolib {
+  after   += ETCL
+  libs    += TAO_ETCL
+}

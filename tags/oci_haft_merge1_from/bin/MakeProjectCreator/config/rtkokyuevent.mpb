@@ -1,0 +1,4 @@
+project : rtevent, rtsched, kokyu {
+  after   += RTKokyuEvent
+  libs    += TAO_RTKokyuEvent
+}

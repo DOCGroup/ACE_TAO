@@ -1,0 +1,5 @@
+project : taolib, core {
+  sharedname   = TAO_IORTable
+  dynamicflags = TAO_IORTABLE_BUILD_DLL
+  include_dir  = tao/IORTable
+}
