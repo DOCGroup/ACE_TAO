@@ -29,12 +29,9 @@ enum ACE_Filecache_Flag
   MAPIT = 1
 };
 
-// = Forward declarations.
-ACE_DECLARE_EXPORT(class, ACE_Filecache);
-ACE_DECLARE_EXPORT(class, ACE_Filecache_Handle);
 class ACE_Filecache_Object;
 
-class ACE_Filecache_Handle
+class ACE_Export ACE_Filecache_Handle
 {
   // = TITLE
   //     Abstraction over a real file.  This is meant to be the entry
@@ -162,7 +159,7 @@ typedef ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex
         ACE_Filecache_Hash;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
-class ACE_Filecache
+class ACE_Export ACE_Filecache
 {
   // = TITLE
   //     A hash table holding the information about entry point into
