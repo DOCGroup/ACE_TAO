@@ -54,9 +54,9 @@ extern "C"
    int msgctl (int, int, struct msqid_ds *);
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_MSQID_DS_T)
    struct msqid_ds {};
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_MSQID_DS_T */
 
 #ifdef __cplusplus
 }
