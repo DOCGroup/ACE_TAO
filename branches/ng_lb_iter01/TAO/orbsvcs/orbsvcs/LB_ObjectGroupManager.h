@@ -22,9 +22,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "LB_Location_Map.h"
+
 
 /// Forward declarations.
-class TAO_LB_Location_Map;
 class TAO_LB_ObjectGroup_Map;
 class TAO_LB_PropertyManager;
 

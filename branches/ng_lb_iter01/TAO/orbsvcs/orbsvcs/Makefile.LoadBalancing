@@ -521,7 +521,7 @@ realclean: clean
  Naming/naming_export.h \
  CosNamingC.i \
  LoadBalancingC.i \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -549,6 +549,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Hash.h \
+ LoadBalancing/LB_Location_Hash.inl \
+ LoadBalancing/LB_Location_Equal_To.h \
+ LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -568,7 +573,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_PropertyManager.h \
+ LoadBalancing/LB_ObjectGroup_Map.inl \
+ LoadBalancing/LB_PropertyManager.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -1442,7 +1448,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1470,6 +1476,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Hash.h \
+ LoadBalancing/LB_Location_Hash.inl \
+ LoadBalancing/LB_Location_Equal_To.h \
+ LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -1489,7 +1500,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h
+ LoadBalancing/LB_ObjectGroup_Map.inl
 
 .obj/LB_ObjectGroupManager.o .obj/LB_ObjectGroupManager.so .shobj/LB_ObjectGroupManager.o .shobj/LB_ObjectGroupManager.so: LoadBalancing/LB_ObjectGroupManager.cpp \
  LoadBalancing/LB_ObjectGroupManager.h \
@@ -1691,7 +1702,7 @@ realclean: clean
  Naming/naming_export.h \
  CosNamingC.i \
  LoadBalancingC.i \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1719,6 +1730,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Hash.h \
+ LoadBalancing/LB_Location_Hash.inl \
+ LoadBalancing/LB_Location_Equal_To.h \
+ LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1741,10 +1757,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Map.h \
- LoadBalancing/LB_Location_Hash.h LoadBalancing/LB_Location_Hash.inl \
- LoadBalancing/LB_Location_Equal_To.h \
- LoadBalancing/LB_Location_Equal_To.inl
+ LoadBalancing/LB_ObjectGroup_Map.inl
 
 .obj/LB_ObjectGroup_Map.o .obj/LB_ObjectGroup_Map.so .shobj/LB_ObjectGroup_Map.o .shobj/LB_ObjectGroup_Map.so: LoadBalancing/LB_ObjectGroup_Map.cpp \
  LoadBalancing/LB_ObjectGroup_Map.h \
@@ -1995,7 +2008,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_ObjectGroup_Map.inl
 
 .obj/LB_PropertyManager.o .obj/LB_PropertyManager.so .shobj/LB_PropertyManager.o .shobj/LB_PropertyManager.so: LoadBalancing/LB_PropertyManager.cpp \
  LoadBalancing/LB_PropertyManager.h \
@@ -2247,7 +2260,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_ObjectGroup_Map.inl
 
 .obj/LB_RPMS_Monitor.o .obj/LB_RPMS_Monitor.so .shobj/LB_RPMS_Monitor.o .shobj/LB_RPMS_Monitor.so: LoadBalancing/LB_RPMS_Monitor.cpp \
  LoadBalancing/LB_RPMS_Monitor.h \
@@ -3521,7 +3534,7 @@ realclean: clean
  LoadBalancingS_T.i \
  LoadBalancingS_T.cpp \
  LoadBalancingS.i \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3549,6 +3562,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Hash.h \
+ LoadBalancing/LB_Location_Hash.inl \
+ LoadBalancing/LB_Location_Equal_To.h \
+ LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -3568,12 +3586,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_PropertyManager.h \
- LoadBalancing/LB_GenericFactory.h \
- LoadBalancing/LB_ObjectGroupManager.h LoadBalancing/LB_Location_Map.h \
- LoadBalancing/LB_Location_Hash.h LoadBalancing/LB_Location_Hash.inl \
- LoadBalancing/LB_Location_Equal_To.h \
- LoadBalancing/LB_Location_Equal_To.inl
+ LoadBalancing/LB_ObjectGroup_Map.inl \
+ LoadBalancing/LB_PropertyManager.h LoadBalancing/LB_GenericFactory.h \
+ LoadBalancing/LB_ObjectGroupManager.h LoadBalancing/LB_Pull_Handler.h
 
 .obj/LoadBalancingI.o .obj/LoadBalancingI.so .shobj/LoadBalancingI.o .shobj/LoadBalancingI.so: LoadBalancing/LoadBalancingI.cpp \
  LoadBalancing/LoadBalancingI.h \
@@ -3801,7 +3816,7 @@ realclean: clean
  LoadBalancingS_T.i \
  LoadBalancingS_T.cpp \
  LoadBalancingS.i \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3829,6 +3844,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_Location_Hash.h \
+ LoadBalancing/LB_Location_Hash.inl \
+ LoadBalancing/LB_Location_Equal_To.h \
+ LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -3848,12 +3868,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_PropertyManager.h \
- LoadBalancing/LB_GenericFactory.h \
- LoadBalancing/LB_ObjectGroupManager.h LoadBalancing/LB_Location_Map.h \
- LoadBalancing/LB_Location_Hash.h LoadBalancing/LB_Location_Hash.inl \
- LoadBalancing/LB_Location_Equal_To.h \
- LoadBalancing/LB_Location_Equal_To.inl \
+ LoadBalancing/LB_ObjectGroup_Map.inl \
+ LoadBalancing/LB_PropertyManager.h LoadBalancing/LB_GenericFactory.h \
+ LoadBalancing/LB_ObjectGroupManager.h LoadBalancing/LB_Pull_Handler.h \
  LoadBalancing/LB_ReplicaLocator.h \
  LoadBalancing/LB_Balancing_Strategy.h \
  LoadBalancing/LoadBalancing_export.h \
@@ -3862,7 +3879,48 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/LoadBalancingS.o .obj/LoadBalancingS.so .shobj/LoadBalancingS.o .shobj/LoadBalancingS.so: LoadBalancingS.cpp LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \

@@ -2,7 +2,6 @@
 
 #include "LB_GenericFactory.h"
 #include "LB_ReplicaInfo.h"
-#include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
 #include "LB_PropertyManager.h"
 
@@ -187,7 +186,7 @@ TAO_LB_GenericFactory::delete_object (
       // The ObjectId for the newly created object group is comprised
       // solely of the FactoryCreationId.
       PortableServer::ObjectId_var oid;
-      this->get_ObjectId (fcid, oid.out ());      
+      this->get_ObjectId (fcid, oid.out ());
 
       TAO_LB_ObjectGroup_Map_Entry *object_group = 0;
 
@@ -198,7 +197,7 @@ TAO_LB_GenericFactory::delete_object (
 
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, guard, object_group->lock);
-        for (TAO_LB_ReplicaInfo_Set_Iterator i = replica_infos.begin ();
+        for (TAO_LB_ReplicaInfo_Set::iterator i = replica_infos.begin ();
              i != replica_infos.end ();
              ++i)
           {
@@ -251,6 +250,9 @@ TAO_LB_GenericFactory::populate_object_group (
   CORBA::ULong factory_infos_count = factory_infos.length ();
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
     {
+      TAO_LB_Location_Map_Entry *location_entry = 0;
+      auto_ptr<TAO_LB_Location_Map_Entry> safe_location_entry;
+
       const LoadBalancing::FactoryInfo &factory_info =
         factory_infos[j];
 
@@ -273,6 +275,7 @@ TAO_LB_GenericFactory::populate_object_group (
                                     location_entry) != 0)
         {
           ACE_NEW_THROW_EX (location_entry,
+                            TAO_LB_Location_Map_Entry,
                             CORBA::NO_MEMORY (
                               CORBA::SystemException::_tao_minor_code (
                                 TAO_DEFAULT_MINOR_CODE,
@@ -280,13 +283,15 @@ TAO_LB_GenericFactory::populate_object_group (
                               CORBA::COMPLETED_NO));
           ACE_CHECK;
 
-          safe_location_entry = location_entry;
+          ACE_AUTO_PTR_RESET (safe_location_entry,
+                              location_entry,
+                              TAO_LB_Location_Map_Entry);
 
           if (this->location_map_.bind (factory_info.the_location,
                                         location_entry) != 0)
             ACE_THROW (LoadBalancing::ObjectNotCreated ());
         }
-        
+
 #if 0
       // @@ Should an "_is_a()" be performed here?  While it appears
       //    to be the right thing to do, it can be expensive.

@@ -25,6 +25,9 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
+// Forward declarations.
+struct TAO_LB_Location_Map_Entry;
+
 class TAO_LB_ReplicaInfo;
 typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set;
 

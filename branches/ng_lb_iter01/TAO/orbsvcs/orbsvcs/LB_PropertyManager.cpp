@@ -121,7 +121,7 @@ TAO_LB_PropertyManager::set_properties_dynamically (
   this->validate_properties (overrides, ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 LoadBalancing::Properties *
