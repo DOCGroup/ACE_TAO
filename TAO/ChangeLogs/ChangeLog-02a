@@ -1,3 +1,28 @@
+Sat Nov  4 18:04:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_typedef.cpp:
+	* TAO_IDL/include/ast_typedef.h:
+
+	  Added a method to find the primitive base type
+	  (looping if there are nested typedefs) similar
+	  to that in be_typedef, but with a different return
+	  type. Needed for IfR administration.
+
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/include/ast_union.h:
+
+	  Moved code to store and compute the default label
+	  value from be_union to ast_union. Needed for IfR
+	  administration.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Switch case for wchar discriminators was using the
+	  short member of the union node's union member that 
+	  stores the default label value. Changed this to use 
+	  the union's wchar member.
+
 Sat Nov  4 15:21:52 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/DSI_Gateway/gateway.bor:
