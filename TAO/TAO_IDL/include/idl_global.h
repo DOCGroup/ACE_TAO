@@ -1,3 +1,4 @@
+
 // $Id$
 
 /*
@@ -453,6 +454,17 @@ public:
   // strips off any command line -I prefix that may have been
   // prepended.
 
+  virtual idl_bool preserve_cpp_keywords (void);                           
+  // Whether we should not mung idl element names that are                 
+  // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.            
+  // Should be true when being used by the IFR Service                     
+                                                                         
+  virtual void preserve_cpp_keywords (idl_bool);                           
+  // Set whether we should not mung idl element names that are C++         
+  // keywords e.g. delete, operator etc. with _cxx_ prefix.                
+  // Is set by the IFR Service.
+ 
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
@@ -525,6 +537,9 @@ private:
 
   idl_bool repeat_include_;
   // Has this IDL file been included before?
+
+  idl_bool preserve_cpp_keywords_;
+  // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 };
 
 

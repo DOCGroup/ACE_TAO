@@ -202,9 +202,12 @@ oneway		return IDL_ONEWAY;
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (ace_yytext,
-                        ACE_OS::strlen (ace_yytext));
+  const TAO_IDL_CPP_Keyword_Entry *entry = 0;
+  if (!idl_global->preserve_cpp_keywords())
+    {
+      entry = cpp_key_tbl.lookup (ace_yytext,
+                         ACE_OS::strlen (ace_yytext));
+    }  
   if (entry)
     yylval.strval = ACE_OS::strdup (entry->mapping_);
   else
