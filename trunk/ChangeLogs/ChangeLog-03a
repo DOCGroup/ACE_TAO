@@ -1,3 +1,14 @@
+Mon Oct  7 17:29:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Scatter_Gather_Test.cpp (initiate_read_file):
+
+	  Cast one of the operands in a subtraction operation to a size_t
+	  to address a problem exhibited by Borland C++ where the ACE_MIN
+	  template expects two parameters of the same type, but was
+	  getting two parameter of different types.  This problem occurred
+	  on platforms where "unsigned int" and "unsigned long" are
+	  different types.
+
 Mon Oct 07 15:21:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/apps/svcconf/XML_Svc_Conf_Parser.dsp:
