@@ -55,6 +55,7 @@
 #define _IFR_BASIC_IDL_
 
 #include "IFR_Base.pidl"
+#include "ParameterMode.pidl"
 
 module CORBA
 {
@@ -203,14 +204,14 @@ module CORBA
     attribute IDLType element_type_def;
   };
 
-  interface ArrayDef : IDLType 
+  interface ArrayDef : IDLType
   {
   attribute unsigned long length;
   readonly attribute TypeCode element_type;
   attribute IDLType element_type_def;
   };
 
-  interface ExceptionDef : Contained, Container 
+  interface ExceptionDef : Contained, Container
   {
     readonly attribute TypeCode type;
     attribute StructMemberSeq members;
@@ -218,20 +219,20 @@ module CORBA
 
   typedef sequence <ExceptionDef> ExceptionDefSeq;
 
-  enum AttributeMode 
+  enum AttributeMode
   {
-    ATTR_NORMAL, 
+    ATTR_NORMAL,
     ATTR_READONLY
   };
 
-  interface AttributeDef : Contained 
+  interface AttributeDef : Contained
   {
     readonly attribute TypeCode type;
     attribute IDLType type_def;
     attribute AttributeMode mode;
   };
 
-  struct AttributeDescription 
+  struct AttributeDescription
   {
     Identifier name;
     RepositoryId id;
@@ -241,7 +242,7 @@ module CORBA
     AttributeMode mode;
   };
 
-  struct ExtAttributeDescription 
+  struct ExtAttributeDescription
   {
     Identifier name;
     RepositoryId id;
@@ -253,7 +254,7 @@ module CORBA
     ExcDescriptionSeq put_exceptions;
   };
 
-  interface ExtAttributeDef : AttributeDef 
+  interface ExtAttributeDef : AttributeDef
   {
     // read/write interface
     attribute ExcDescriptionSeq get_exceptions;
@@ -262,22 +263,22 @@ module CORBA
     ExtAttributeDescription describe_attribute ();
   };
 
-  enum OperationMode 
+  enum OperationMode
   {
-    OP_NORMAL, 
+    OP_NORMAL,
     OP_ONEWAY
   };
 
 // Already defined in corbafwd.h, included from orb.idl
 /*
-  enum ParameterMode 
+  enum ParameterMode
   {
-    PARAM_IN, 
-    PARAM_OUT, 
+    PARAM_IN,
+    PARAM_OUT,
     PARAM_INOUT
   };
 */
-  struct ParameterDescription 
+  struct ParameterDescription
   {
     Identifier name;
     TypeCode type;
@@ -289,7 +290,7 @@ module CORBA
   typedef Identifier ContextIdentifier;
   typedef sequence <ContextIdentifier> ContextIdSeq;
 
-  interface OperationDef : Contained 
+  interface OperationDef : Contained
   {
     readonly attribute TypeCode result;
     attribute IDLType result_def;
@@ -299,7 +300,7 @@ module CORBA
     attribute ExceptionDefSeq exceptions;
   };
 
-  struct OperationDescription 
+  struct OperationDescription
   {
     Identifier name;
     RepositoryId id;
@@ -317,9 +318,9 @@ module CORBA
   typedef sequence <AttributeDescription> AttrDescriptionSeq;
   typedef sequence <ExtAttributeDescription> ExtAttrDescriptionSeq;
 
-  interface InterfaceDef : Container, 
-			   Contained, 
-			   IDLType 
+  interface InterfaceDef : Container,
+			   Contained,
+			   IDLType
   {
     // read/write interface
     attribute InterfaceDefSeq base_interfaces;
@@ -328,7 +329,7 @@ module CORBA
         in RepositoryId interface_id
       );
 
-    struct FullInterfaceDescription 
+    struct FullInterfaceDescription
     {
       Identifier name;
       RepositoryId id;
@@ -362,7 +363,7 @@ module CORBA
       );
   };
 
-  struct InterfaceDescription 
+  struct InterfaceDescription
   {
     Identifier name;
     RepositoryId id;
@@ -371,10 +372,10 @@ module CORBA
     RepositoryIdSeq base_interfaces;
   };
 
-  interface InterfaceAttrExtension 
+  interface InterfaceAttrExtension
   {
     // read interface
-    struct ExtFullInterfaceDescription 
+    struct ExtFullInterfaceDescription
     {
       Identifier name;
       RepositoryId id;
@@ -401,25 +402,25 @@ module CORBA
   };
 
   interface ExtInterfaceDef : InterfaceDef,
-			      InterfaceAttrExtension 
+			      InterfaceAttrExtension
   {
   };
 
-  interface AbstractInterfaceDef : InterfaceDef 
+  interface AbstractInterfaceDef : InterfaceDef
   {
   };
 
   interface ExtAbstractInterfaceDef : AbstractInterfaceDef,
-				      InterfaceAttrExtension 
+				      InterfaceAttrExtension
   {
   };
 
-  interface LocalInterfaceDef : InterfaceDef 
+  interface LocalInterfaceDef : InterfaceDef
   {
   };
 
   interface ExtLocalInterfaceDef : LocalInterfaceDef,
-				   InterfaceAttrExtension 
+				   InterfaceAttrExtension
   {
   };
 };

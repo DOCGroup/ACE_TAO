@@ -40,7 +40,6 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "ORB_Core.h"
-#include "ParameterMode.h"
 #include "DynamicC.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"

@@ -150,7 +150,7 @@ ORB_Core = \
   PICurrent_Copy_Callback.cpp \
   PICurrent_ORBInitializer.cpp \
   PI_ForwardC.cpp \
-  ParameterMode.cpp \
+  ParameterModeC.cpp \
   Parser_Registry.cpp \
   PolicyA.cpp \
   PolicyC.cpp \
@@ -521,7 +521,7 @@ nobase_include_HEADERS += \
   PICurrent_Copy_Callback.h \
   PICurrent_ORBInitializer.h \
   PI_ForwardC.h \
-  ParameterMode.h \
+  ParameterModeC.h \
   Parser_Registry.h \
   Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
@@ -706,7 +706,7 @@ nobase_include_HEADERS += \
   DomainC.i \
   DoubleSeqC.inl \
   DynamicC.inl \
-  Dynamic_ParameterC.i \
+  Dynamic_ParameterC.inl \
   Endpoint.i \
   Environment.i \
   Exception.i \
@@ -785,6 +785,7 @@ nobase_include_HEADERS += \
   OctetSeqC.inl \
   PICurrent.inl \
   PI_ForwardC.inl \
+  ParameterModeC.inl \
   Parser_Registry.i \
   Pluggable_Messaging.i \
   Pluggable_Messaging_Utils.i \
@@ -936,6 +937,7 @@ nobase_include_HEADERS += \
   ObjectIdList.pidl \
   Object_Key.pidl \
   OctetSeq.pidl \
+  ParameterMode.pidl \
   PI_Forward.pidl \
   Policy.pidl \
   Policy_Forward.pidl \
