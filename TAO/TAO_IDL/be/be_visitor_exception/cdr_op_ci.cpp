@@ -160,6 +160,9 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
       << "return 0;" << be_uidt << be_uidt_nl
       << "}\n\n";
 
+  // Generate the iostream operator overload for this exception.
+  node->gen_iostream_op_impl (os);
+
   node->cli_inline_cdr_op_gen (1);
   return 0;
 }
