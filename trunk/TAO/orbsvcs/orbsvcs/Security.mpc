@@ -1,10 +1,11 @@
-project(Security) : orbsvcslib {
-  depends   += PortableServer
-  sharedname = TAO_Security
-  libs      += TAO_PortableServer TAO
-  idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h
-  dllflags   = TAO_SECURITY_BUILD_DLL
-  tagchecks  = Security
+project(Security) : orbsvcslib, core {
+  depends    += PortableServer
+  sharedname  = TAO_Security
+  libs       += TAO_PortableServer TAO
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h
+  dllflags    = TAO_SECURITY_BUILD_DLL
+  tagchecks   = Security
+  include_dir = orbsvcs
 
   IDL_Files {
     Security.idl

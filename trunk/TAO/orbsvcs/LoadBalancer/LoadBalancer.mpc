@@ -1,4 +1,4 @@
-project(CosLoadManager): namingexe, messaging {
+project(CosLoadManager): namingexe, messaging, core {
   libs     += TAO_CosLoadBalancing TAO_PortableGroup
   depends  += LoadBalancing PortableGroup
   requires += ami interceptors
@@ -11,7 +11,7 @@ project(CosLoadManager): namingexe, messaging {
   }
 }
 
-project(CosLoadMonitor): namingexe, messaging {
+project(CosLoadMonitor): namingexe, messaging, core {
   libs     += TAO_CosLoadBalancing TAO_PortableGroup
   depends  += LoadBalancing PortableGroup
   requires += ami interceptors

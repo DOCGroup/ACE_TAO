@@ -1,11 +1,12 @@
-project(SSLIOP) : orbsvcslib {
-  ssl        = 1
-  depends   += Security PortableServer SSL
-  sharedname = TAO_SSLIOP
-  libs      += TAO_Security TAO_PortableServer TAO ACE_SSL
-  idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h
-  dllflags   = TAO_SSLIOP_BUILD_DLL
-  tagchecks  = SSLIOP
+project(SSLIOP) : orbsvcslib, core {
+  ssl         = 1
+  depends    += Security PortableServer SSL
+  sharedname  = TAO_SSLIOP
+  libs       += TAO_Security TAO_PortableServer TAO ACE_SSL
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h
+  dllflags    = TAO_SSLIOP_BUILD_DLL
+  tagchecks   = SSLIOP
+  include_dir = orbsvcs
 
   IDL_Files {
     SSLIOP.idl

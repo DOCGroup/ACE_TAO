@@ -1,4 +1,4 @@
-project(IFR_Service) : orbsvcsexe {
+project(IFR_Service) : orbsvcsexe, core {
   depends += IFRService TypeCodeFactory Svc_Utils IFR_Client IORTable PortableServer
   exename  = IFR_Service
   libs    += TAO_IFRService TAO_TypeCodeFactory TAO_Svc_Utils TAO_IFR_Client TAO_IORTable TAO_PortableServer
@@ -10,7 +10,7 @@ project(IFR_Service) : orbsvcsexe {
 }
 
 
-project(TAO_IFR_BE) : taolib {
+project(TAO_IFR_BE) : taolib, core {
   depends   += TAO_IDL_FE TAO_IFR_Client
   sharedname = TAO_IFR_BE
   libs      += TAO_IDL_FE TAO_IFR_Client TAO
@@ -30,7 +30,7 @@ project(TAO_IFR_BE) : taolib {
 }
 
 
-project(TAO_IFR_EXE) : taoexe {
+project(TAO_IFR_EXE) : taoexe, core {
   depends        += TAO_IFR_BE IFR_Client TAO_IDL_FE
   exename         = tao_ifr
   idlpreprocessor = 1
