@@ -28,7 +28,7 @@ ACE_RCSID(MT_Cubit, client, "$Id$")
 u_int ctx = 0;
 u_int ct = 0;
 
-typedef struct 
+typedef struct
 {
   char name[15];
   WIND_TCB *tcb;
@@ -75,7 +75,7 @@ initialize (void)
                 "ERROR on call to vmeDrv()\n"));
   status = vmeDevCreate ("/vme");
   if (status != OK)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "ERROR on call to vmeDevCreate()\n"));
 #endif /* VXWORKS && VME_DRIVER */
 
@@ -160,11 +160,11 @@ output_latency (Task_State *ts)
 int
 start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
 {
-  char high_thread_args[BUFSIZ];   
+  char high_thread_args[BUFSIZ];
 
-  static char hostname[BUFSIZ]; 
+  static char hostname[BUFSIZ];
 
-  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)         
+  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "hostname"),
@@ -181,13 +181,13 @@ start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
-		  Cubit_Task ((const char *)high_thread_args,
-			      (const char *)"internet",
-			      (u_int) 1,
-			      &thread_manager,
-			      (u_int) 0), //task id 0.
-		  -1);
-  
+                  Cubit_Task ((const char *)high_thread_args,
+                              (const char *)"internet",
+                              (u_int) 1,
+                              &thread_manager,
+                              (u_int) 0), //task id 0.
+                  -1);
+
   // @@ Naga, can you please generalize this #ifdef so that it doesn't
   // go into the code, but goes into a header file or inline function
   // or something instead?!
@@ -289,10 +289,10 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   for (j = 0; j < ts->argc_; j++)
     if (ACE_OS::strcmp (ts->argv_[j], "-u") == 0)
       {
-	start_servant (ts, server_thread_manager);
-	break;
+        start_servant (ts, server_thread_manager);
+        break;
       }
-  
+
   // Create the clients.
   Client high_priority_client (thread_manager, ts, 0);
 
@@ -430,7 +430,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       // the priority, since we don't want the utlization thread and a
       // "low priority thread" to have the same priority.
       if (priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                      ACE_SCOPE_THREAD) 
+                                                      ACE_SCOPE_THREAD)
           && ts->use_utilization_test_ == 1)
         priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                     priority,
@@ -509,7 +509,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
         }
     } /* end of for () */
 
-  if (ts->use_utilization_test_ == 1) 
+  if (ts->use_utilization_test_ == 1)
     // Activate the utilization thread only if specified.  See
     // description of this variable in header file.
     {
@@ -688,7 +688,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                   "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
                   util_thread.get_number_of_computations (),
                   ts->loop_count_,
-		  ts->util_test_time_,
+                  ts->util_test_time_,
                   util_thread.get_number_of_computations () / ts->loop_count_,
                   (util_thread.get_number_of_computations () % ts->loop_count_) * 100 / ts->loop_count_
                   ));
@@ -938,7 +938,7 @@ ACE_DEBUG ((LM_DEBUG, "argv[1]=%s\n", argv[1]));
 
 #if defined (CHORUS)
   if (pccTimer (PCC2_TIMER1_STOP, &pTime) != K_OK)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "pccTimer has a pending bench mark\n"));
 #elif defined (VXWORKS)
   // Shoot myself.  Otherwise, there's a General Protection Fault.
@@ -955,3 +955,9 @@ ACE_DEBUG ((LM_DEBUG, "argv[1]=%s\n", argv[1]));
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Globals,ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
