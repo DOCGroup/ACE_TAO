@@ -1,5 +1,12 @@
-2001-11-19  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
+Mon Nov 19 21:16:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
+	  Just helping Jaiganesh add the new files to the MSVC project
+	  files.
+
+	* orbsvcs/orbsvcs/Event/README:
+	  Removed obsolete file.
 
 Mon Nov 19 20:19:48 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 

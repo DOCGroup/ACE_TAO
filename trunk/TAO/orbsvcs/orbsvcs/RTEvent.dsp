@@ -324,6 +324,10 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Utilities.cpp
 # End Source File
 # Begin Source File
@@ -533,6 +537,10 @@ SOURCE=.\Event\EC_Type_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_UDP_Admin.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_EH.h
 # End Source File
 # Begin Source File
 
@@ -1413,6 +1421,10 @@ SOURCE=.\Event\EC_Trivial_Supplier_Filter.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Type_Filter.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_EH.i
 # End Source File
 # Begin Source File
 
