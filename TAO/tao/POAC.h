@@ -2450,7 +2450,7 @@ TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterInactive*
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterInactive *&);
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POAManager::AdapterInactive &_tao_aggregate);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,PortableServer::POAManager::AdapterInactive);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,PortableServer::POAManager::AdapterInactive &);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
