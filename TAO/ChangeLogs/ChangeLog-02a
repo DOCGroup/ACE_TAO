@@ -1,3 +1,19 @@
+Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
+
+	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
+	libTAO_PortableServer and libTAO_IORTable to LinkList to make QNX
+	happy.
+
+Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
+
+	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
+	libTAO_IORTable to LinkList to make QNX happy.
+
+Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
+
+	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
+	LinkList to make QNX happy.
+
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Multiple/Multiple_Impl.cpp:
@@ -406,6 +422,7 @@ Tue Mar 27 15:56:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Protocols_Hooks.cpp: Added #includes to get it compile fine
           on platforms where messaging and RTCORBA has been turned off.
 
+>>>>>>> 1.3007
 Tue Mar 27 15:08:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Wait_On_Leader_Follower.cpp: Added an ACE_TEXT () wrapper
