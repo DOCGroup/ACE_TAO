@@ -1,3 +1,9 @@
+Sun Nov 28 18:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+          Replaced NULL with 0, more portable. Also replaced ofstream usage
+          with fopen/fprintf to write the IOR to disk.
+
 Sun Nov 28 18:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/RTCosScheduling/Object1_i.{h,cpp}:
