@@ -28,7 +28,14 @@ Task_State::Task_State (int argc, char **argv)
     use_multiple_priority_ (0),
     utilization_task_started_ (0),
     run_server_utilization_test_ (0),
-    util_time_ (0)
+    util_time_ (0),
+    ready_ (0),
+    ready_cnd_ (ready_mtx_)
+{
+}
+
+int
+Task_State::parse_args (int argc,char **argv)
 {
   ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1c");
   int c;
@@ -44,9 +51,6 @@ Task_State::Task_State (int argc, char **argv)
     case 'U':
       run_server_utilization_test_ = 1;
       util_time_ = ACE_OS::atoi (opts.optarg);
-      break;
-    case 'm':
-      use_multiple_priority_ = 1;
       break;
     case 'c':
       context_switch_test_ = 1;
@@ -69,9 +73,6 @@ Task_State::Task_State (int argc, char **argv)
       break;
     case 'x':
       shutdown_ = 1;
-      break;
-    case 'r':
-      thread_per_rate_ = 1;
       break;
     case 'd':
       datatype = ACE_OS::atoi (opts.optarg);
@@ -98,6 +99,7 @@ Task_State::Task_State (int argc, char **argv)
       continue;
     case 'n':                   // loop count
       loop_count_ = (u_int) ACE_OS::atoi (opts.optarg);
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Loop_count:%d\n",loop_count_));
       continue;
     case 't':
       thread_count_ = (u_int) ACE_OS::atoi (opts.optarg);
@@ -113,7 +115,8 @@ Task_State::Task_State (int argc, char **argv)
                   " [-o] // makes client use oneway calls instead"
                   " [-s] // makes client *NOT* use the name service"
                   " [-g granularity_of_timing]"
-                  "\n", argv [0]));
+                  "\n", this->argv_ [0]));
+      return -1;
     }
 
   if (thread_per_rate_ == 1)
@@ -132,8 +135,9 @@ Task_State::Task_State (int argc, char **argv)
     }
 
   // allocate the array of character pointers.
-  ACE_NEW (iors_,
-           char *[thread_count_]);
+  ACE_NEW_RETURN (iors_,
+                  char *[thread_count_],
+                  -1);
 
   if (ior_file_ != 0)
     {
@@ -143,13 +147,13 @@ Task_State::Task_State (int argc, char **argv)
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
-        {
-          j = ACE_OS::strlen (buf);
-          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
-          iors_[i] = ACE_OS::strdup (buf);
-          i++;
-        }
-
+	{
+          ACE_DEBUG ((LM_DEBUG,buf));
+	  j = ACE_OS::strlen (buf);
+	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+	  iors_[i] = ACE_OS::strdup (buf);
+	  i++;
+	}
       ACE_OS::fclose (ior_file);
     }
 
@@ -164,30 +168,39 @@ Task_State::Task_State (int argc, char **argv)
         // barrier count.  See description of this variable in header
         // file.
         {
-          ACE_NEW (barrier_,
-                   ACE_Barrier (thread_count_ + 2));
+          ACE_NEW_RETURN (barrier_,
+                   ACE_Barrier (thread_count_ + 2),
+                   -1);
         }
       else
         {
-          ACE_NEW (barrier_,
-                   ACE_Barrier (thread_count_ + 1));
+          ACE_NEW_RETURN (barrier_,
+                   ACE_Barrier (thread_count_ + 1),
+                   -1);
         }
     }
   else
     {
-      ACE_NEW (barrier_,
-               ACE_Barrier (thread_count_));
+      ACE_NEW_RETURN (barrier_,
+               ACE_Barrier (thread_count_),
+                      -1);
     }
 
-  ACE_NEW (semaphore_,
-           ACE_Thread_Semaphore (0));
-  ACE_NEW (latency_,
-           double [thread_count_]);
-  ACE_NEW (global_jitter_array_,
-           double *[thread_count_]);
-  ACE_NEW (count_,
-           u_int [thread_count_]);
+  ACE_NEW_RETURN (semaphore_,
+           ACE_Thread_Semaphore (0),
+                  -1);
+  ACE_NEW_RETURN (latency_,
+           double [thread_count_],
+                  -1);
+  ACE_NEW_RETURN (global_jitter_array_,
+           double *[thread_count_],
+           -1);
+  ACE_NEW_RETURN (count_,
+           u_int [thread_count_],
+           -1);
+  return 0;
 }
+
 
 Client::Client (ACE_Thread_Manager *thread_manager, Task_State *ts, u_int id)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
@@ -355,6 +368,7 @@ Client::svc (void)
 
   double frequency = 0.0;
 
+  ACE_DEBUG ((LM_DEBUG,"I'm thread %t\n"));
   /// Add "-ORBobjrefstyle url" argument to the argv vector for the
   //orb to / use a URL style to represent the ior.
 
@@ -371,6 +385,7 @@ Client::svc (void)
                   " -ORBrcvsock 32768 "
                   " -ORBsndsock 32768 ");
 
+  ACE_DEBUG ((LM_DEBUG,tmp_buf));
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
@@ -390,6 +405,21 @@ Client::svc (void)
       return -1;
     }
 
+  if (this->id_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
+      int result;
+      result = this->ts_->parse_args (argc,argv);
+      if (result < 0)
+        return -1;
+      ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_, 1));
+      this->ts_->ready_ = 1;
+      this->ts_->ready_cnd_.broadcast ();
+      ready_mon.release ();
+    }
+
+  ACE_DEBUG ((LM_DEBUG,"(%t) ORB_init success\n"));
   if (ts_->use_name_service_ != 0)
     {
       naming_obj =
@@ -404,8 +434,11 @@ Client::svc (void)
     }
 
   {
+    //    ACE_DEBUG ((LM_DEBUG,"(%t) Not using Naming service\n"));
+
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1));
 
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Out of ACE_MT\n"));
     if (ts_->thread_per_rate_ == 0)
       {
         if (this->id_ == 0)
@@ -537,10 +570,23 @@ Client::svc (void)
                                  " naming service, or ior filename\n"),
                                 -1);
 
-            objref = orb->string_to_object (my_ior,
-                                            TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-          }
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) my ior is:%s\n",my_ior));
+	    // if we are running the "1 to n" test make sure all low
+	    // priority clients use only 1 low priority servant.
+	    if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
+	      my_ior = ts_->iors_[1];
+
+	    if (my_ior == 0)
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "Must specify valid factory ior key with -k option,"
+				 " naming service, or ior filename\n"),
+				-1);
+
+	    objref = orb->string_to_object (my_ior,
+					    TAO_TRY_ENV);
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t)  String_to_object success\n"));
+	    TAO_CHECK_ENV;
+	  }
 
         if (CORBA::is_nil (objref.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -552,6 +598,8 @@ Client::svc (void)
         cb = Cubit::_narrow (objref.in (),
                              TAO_TRY_ENV);
         TAO_CHECK_ENV;
+
+        ACE_DEBUG ((LM_DEBUG,"(%t) _narrow done\n"));
 
         if (CORBA::is_nil (cb))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -645,9 +693,15 @@ Client::run_tests (Cubit_ptr cb,
                     double [loop_count/ts_->granularity_*15],
                     -1);
 
+#if defined (CHORUS)
+  long latency = 0;
+  long sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
+  long delta = 0;
+#else
   double latency = 0;
   double sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
   double delta = 0;
+#endif
 
   // time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (ts_->util_time_, 0);
@@ -656,14 +710,17 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (CHORUS)
   int pstartTime = 0;
   int pstopTime = 0;
-#endif /* CHORUS */
+  long real_time = 0;
+#else /* CHORUS */
   double real_time = 0.0;
+#endif
 
   ACE_High_Res_Timer timer_;
 
   // Make the calls in a loop.
 
-  for (i = 0;
+  //  ACE_DEBUG((LM_DEBUG,"(%P|%t)loop_count:%d",loop_count));
+  for (i = 0; 
        // keep running for loop count, OR
        i < loop_count ||
          // keep running if we are the highest priority thread and at
@@ -708,6 +765,7 @@ Client::run_tests (Cubit_ptr cb,
             {
             case CB_OCTET:
               {
+                //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) Cubing Octet\n"));
                 // Cube an octet.
                 CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
@@ -729,6 +787,7 @@ Client::run_tests (Cubit_ptr cb,
                                        env.exception ()),
                                       2);
                   }
+                //                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Cube_Octed  call success\n"));
 
                 arg_octet = arg_octet * arg_octet * arg_octet;
 
@@ -919,7 +978,7 @@ Client::run_tests (Cubit_ptr cb,
           latency += real_time * ts_->granularity_;
           my_jitter_array [i/ts_->granularity_] = real_time; // in units of microseconds.
           // update the latency array, correcting the index using the granularity
-#else /* ACE_LACKS_FLOATING_POINT */
+#else /* !ACE_LACKS_FLOATING_POINT */
 
           // Store the time in secs.
 
@@ -1009,10 +1068,11 @@ Client::run_tests (Cubit_ptr cb,
       if (error_count == 0)
         {
 #if defined (ACE_LACKS_FLOATING_POINT)
-          double calls_per_second = (call_count * ACE_ONE_SECOND_IN_USECS) / latency;
-#endif /* ACE_LACKS_FLOATING_POINT */
-
+          long calls_per_second = (call_count * ACE_ONE_SECOND_IN_USECS) / latency;
+          latency = latency/call_count;//calc average latency
+#else
           latency /= call_count; // calc average latency
+#endif /* ACE_LACKS_FLOATING_POINT */
 
           if (latency > 0)
             {
