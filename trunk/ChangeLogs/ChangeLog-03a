@@ -1,3 +1,24 @@
+Sun Nov 12 12:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Codeset_IBM1047.h:
+        * ace/Date_Time.h:
+        * ace/Dump_T.h:
+        * ace/Flag_Manip.h:
+        * ace/Hash_Cache_Map_Manager_T.h:
+        * ace/LSOCK_Acceptor.h:
+        * ace/Memory_Pool.h:
+        * ace/QoS_Decorator.h:
+        * ace/SV_Semaphore_Complex.h:
+        * ace/Strategies_T.h:
+        * ace/Synch_Options.h:
+        * ace/Time_Request_Reply.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/WIN32_Proactor.h:
+        * ace/ace_wchar.h:
+
+          Fixed @file comments.
+
 Sat Nov 11 18:55:04 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/Profile_Timer.cpp: 

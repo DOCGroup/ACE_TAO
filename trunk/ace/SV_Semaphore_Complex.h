@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file     ACE_SV_Semaphore_Complex.h
+ *  @file   SV_Semaphore_Complex.h
  *
  *  $Id$
  *
