@@ -1,3 +1,16 @@
+Tue Oct 31 08:14:33 2000  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* wrapper_macros.GNU: 
+
+	Set defaults for exceptions, rtti, and fast to all be zero (0),
+	i.e., off.  Henceforth, if you're creating a new port and you want 
+	exceptions to be on, you must explicitly have "exceptions=1" in
+	your platform_*.GNU file.
+	
+	* platform_irix6.x_common.GNU:
+
+	Added an "exceptions=1" directive per the comment above.
+
 Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.cpp:

@@ -144,19 +144,22 @@ ifeq ($(static_libs),)
   static_libs = 0
 endif # static_libs
 
-#### Let platform just look at whether or not exceptions is defined.
-#### With the following override, it doesn't have to check for 0.
-#ifeq ($(exceptions),0)
-#  override exceptions =
-#endif # exceptions
+####
+#### Defaults are exceptions off (0), fast off (0), and rtti off (0)
+####
+ifndef exceptions
+  exceptions = 0
+endif
 
-#ifeq ($(fast),0)
-#  override fast =
-#endif # fast
+ifndef fast
+  fast = 0
+endif
 
-#ifeq ($(rtti),0)
-#  override rtti =
-#endif # rtti
+# @@@ Should this really be the default?  Or should we let the
+# compiler choose?
+ifndef rtti
+  rtti = 0
+endif
 
 #### Defined versioned_so = 1 if your platform requires version number
 #### be appended after so library.
