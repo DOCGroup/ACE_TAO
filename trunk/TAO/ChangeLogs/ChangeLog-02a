@@ -1,3 +1,9 @@
+Fri Jun 22 01:07:02 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/client.h (MT_Priority):
+
+	  Made the destructor virtual to fix warning under gcc-3.0.
+
 Thu Jun 21 21:31:59 2001  Ossama Othman  <ossama@uci.edu>
 
         * utils/nslist/nslist.cpp:
