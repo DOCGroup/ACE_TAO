@@ -352,7 +352,8 @@ CORBA_TypeCode::member_type (CORBA::ULong slot,
       && this->private_state_->tc_member_type_list_known_)
     {
       if (slot < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_type_list_[slot];
+        typecode = CORBA::TypeCode::_duplicate (
+                                                this->private_state_->tc_member_type_list_[slot]);
       else
         ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
     }
