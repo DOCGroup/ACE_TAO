@@ -1,3 +1,53 @@
+Wed Aug 25 16:49:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Let *C.cpp include *S.h when
+	  generating LC objref.
+
+	* TAO_IDL/be/be_helper.cpp: Added the RCS $Id$ keyword in the
+	  first line of copyright info so it's easier to check in
+	  generated files.
+
+	* Using the -Gl flag of tao_idl:  For protable interceptor, I use
+	  the following lines to process the Interceptor.pidl file:
+
+	      tao_idl -Gl -Wb,export_macro=TAO_Export Interceptor.pidl
+
+	  The following manually tweakings on the generated files are
+	  necessary:
+
+	  + Delete the InterceptorS_T.* and InterceptorS.i.
+
+	  + InterceptorC.h: Removed inclusions of "CORBAC.h" and
+	    "IOPC.h".  Removed implementations of CDR insert/extract
+	    oeprators for Cookies.
+
+	  + InterceptorC.{i,cpp}: Removed definitions of CDR
+	    insert/extract operators for Cookies.
+
+	  + InterceptorS.h: Removed inclusions of "CORBAC.h" and
+	    "IOPC.h".
+
+	    Removed inclusions of "InterceptorS_T.h" and
+	    "InterceptorS.i".
+
+	  + InterceptorS.cpp: Removed inclusion of "InterceptorS.i"
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): Fixed generating of locality constraint
+	  objref in _narrow.
+
+	  We need _duplicate method for lc objref also.
+
+	* tao/CORBA.pidl: Added some missing definitions for it to work
+	  with Interceptor.pidl.
+
+	* tao/Interceptor.pidl: Portable Interceptor IDL definitons.
+
+	* tao/InterceptorC.{h,i,cpp}:
+	* tao/InterceptorS.{h,cpp}: Added new interceptor IDL generated files.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 Wed Aug 25 10:16:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/EC_Gateway_UDP.cpp (handle_input):

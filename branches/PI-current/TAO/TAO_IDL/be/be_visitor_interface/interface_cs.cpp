@@ -101,17 +101,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_nl << "if (retv != 0)" << be_idt_nl << "return retv;"
           << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
 
-      *os << "return new " << node->full_name () << "(stub);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-
-      // The _duplicate method
-      *os << node->full_name () << "_ptr " << be_nl
-          << node->full_name () << "::_duplicate ("
-          << node->full_name () << "_ptr obj)" << be_nl
-          << "{" << be_idt_nl
-          << "if (!CORBA::is_nil (obj))" << be_idt_nl
-          << "obj->_incr_refcnt ();" << be_uidt_nl
-          << "return obj;" << be_uidt_nl;
+      *os << "return new " << node->full_name () << "(stub);" << be_uidt_nl;
     }
   else
     {
@@ -128,11 +118,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       // Locality constraint objects alway use "direct" collocated
       // implementation.
       *os << "return new " << node->full_coll_name (be_interface::DIRECT)
-          << "(" << be_idt << be_idt_nl << "ACE_reinterpret_cast ("
+          << "(" << be_idt << be_idt_nl << "ACE_reinterpret_cast (POA_"
           << node->full_name () << "_ptr, servant)," << be_nl
           << "0" << be_uidt_nl << ");" << be_uidt << be_uidt_nl;
     }
   *os << "}" << be_nl << be_nl;
+
+  // The _duplicate method
+  *os << node->full_name () << "_ptr " << be_nl
+      << node->full_name () << "::_duplicate ("
+      << node->full_name () << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "if (!CORBA::is_nil (obj))" << be_idt_nl
+      << "obj->_incr_refcnt ();" << be_uidt_nl
+      << "return obj;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->visit_scope (node) == -1)
