@@ -5,8 +5,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
 
   // Override the defaults due to the
   // existence of orb.idl
-  IDL_Files {
-  }
+  //IDL_Compiler {
+  //}
 
   Source_Files(TAO_COMPONENTS) {
     Pluggable_Protocols {

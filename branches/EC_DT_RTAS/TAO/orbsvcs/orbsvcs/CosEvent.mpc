@@ -3,8 +3,8 @@
 project (CosEvent) : ec_typed_events, orbsvcslib, messaging, core, naming {
   sharedname   = TAO_CosEvent
   // Warning : The idlflags must match exactly those used in CosNotification, because
-  //           we don't know which project will actually generate the IDL. 
-  //           For this reason we also just use the event_export.h and macros for 
+  //           we don't know which project will actually generate the IDL.
+  //           For this reason we also just use the event_export.h and macros for
   //           both services.
   idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
 
@@ -13,7 +13,6 @@ project (CosEvent) : ec_typed_events, orbsvcslib, messaging, core, naming {
 
   tagchecks   += CosEvent
   // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     CosEventComm.idl

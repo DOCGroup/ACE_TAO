@@ -5,7 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Thread.h"
 #include "ace/Time_Value.h"
-
+#include "ace/OS_NS_sys_time.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -19,6 +19,7 @@
 #include <dsui.h>
 #include "federated_config.h"
 #include "federated_dsui_families.h"
+#include <stdlib.h>
 #endif //ACE_HAS_DSUI
 
 namespace
@@ -40,7 +41,15 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
+#ifdef ACE_HAS_DSUI
   ds_control* ds_cntl = new ds_control ("Federated_Test_Consumer","consumer_enabled.dsui");
+  int result = system("dstream_daemon -y d 300 -r 305 -v /tmp/Federated_Test_DSKI.binary -f 2 -e 3 -f 2 -e 4");
+  if (WIFSIGNALED(ret) && (WTERMSIG(ret) == SIGINT || WTERMSIG(ret) == SIGQUIT))
+    {
+      ACE_DEUBG((LM_ERROR, "Unable to access DSKI daemon. Please double check the kernel was configured with DSKI.\n"));
+    }
+
+#endif // ACE_HAS_DSUI
 
   TAO_EC_Kokyu_Factory::init_svcs ();
 
