@@ -1,10 +1,10 @@
 Mon May 10 11:35:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* COPYING: 
+        * COPYING:
 
-	  Made some updates suggested by Richard Stallman of the Free
-	  Software Foundation (http://www.fsf.org/).
-	
+          Made some updates suggested by Richard Stallman of the Free
+          Software Foundation (http://www.fsf.org/).
+
 Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/New_Fail_Test.cpp: DEC cxx catches its default,
@@ -15,6 +15,10 @@ Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
           superuser privilege to use it.  Also, wait a maximum
           of 1 second per iteration.  And, replaced some u_longs with
           u_ints.
+
+        * tests/Thread_Manager_Test.cpp (main): wait a maximum of
+          60 seconds, because the test sometimes hangs on SunOS 5.5.1
+          and SunOS 5.7.
 
 Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
