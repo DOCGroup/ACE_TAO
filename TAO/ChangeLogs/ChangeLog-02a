@@ -1,98 +1,103 @@
-Fri Jun 16 13:10:17 2000  Ossama Othman  <ossama@uci.edu>
-	
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h (preinvoke,
-	  postinvoke):
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke,
-	  postinvoke):
+Fri Jun 16 14:34:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	  Use the TAO_ENV_ARG_DECL macro to allow the ReplicaLocator
-	  implementation to be compiled with or without exceptions
-	  transparently.
+        * docs/configurations.html:
+          Removed reference to the obsolete orbsvcs library.
+
+Fri Jun 16 13:10:17 2000  Ossama Othman  <ossama@uci.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h (preinvoke,
+          postinvoke):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke,
+          postinvoke):
+
+          Use the TAO_ENV_ARG_DECL macro to allow the ReplicaLocator
+          implementation to be compiled with or without exceptions
+          transparently.
 
 Fri Jun 16 15:33:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Connectors.cpp (write_request_header): 
-	* tao/GIOP_Message_Accept_State.cpp: Adjusted the padding of the
-	  request header to generate right GIOP 1.2 messages. This should
-	  solve the interoperability problem that was reported by Hamed
-	  Azizadah <Azizadah@ix.netcom.com>.
+        * tao/GIOP_Message_Connectors.cpp (write_request_header):
+        * tao/GIOP_Message_Accept_State.cpp: Adjusted the padding of the
+          request header to generate right GIOP 1.2 messages. This should
+          solve the interoperability problem that was reported by Hamed
+          Azizadah <Azizadah@ix.netcom.com>.
 
 Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* The following changes fix the [BUGID:175] and [BUGID:266] bugs.
+        * The following changes fix the [BUGID:175] and [BUGID:266] bugs.
 
         * tao/Makefile:
         * tao/Makefile.am:
         * tao/Makefile.bor:
-	  Add new files to the Makefiles
+          Add new files to the Makefiles
 
         * tao/Reply_Dispatcher.h:
         * tao/Reply_Dispatcher.i:
         * tao/Reply_Dispatcher.cpp:
-	  Moved each one of the reply dispatcher implementations to a
-	  separate file.
-	  Removed the leader_follower_condition_variable method because it
-	  only make sense for synchronous reply dispatchers.
-	  Add new methods to:
-	    + get a callback when the dispatcher is bound to the transport
-	      muxing strategy: this simplifies the interactions with other
-	      components in the pluggable protocol framework.
+          Moved each one of the reply dispatcher implementations to a
+          separate file.
+          Removed the leader_follower_condition_variable method because it
+          only make sense for synchronous reply dispatchers.
+          Add new methods to:
+            + get a callback when the dispatcher is bound to the transport
+              muxing strategy: this simplifies the interactions with other
+              components in the pluggable protocol framework.
             + get a callback is the connection is closed: this is the main
-	      change to fix [BUGID:266]
+              change to fix [BUGID:266]
 
         * tao/Asynch_Reply_Dispatcher.h:
         * tao/Asynch_Reply_Dispatcher.i:
         * tao/Asynch_Reply_Dispatcher.cpp:
-	  The asynchronous reply dispatchers.
-	  When the connection_closed() method is invoked a COMM_FAILURE
-	  exception is raised.
+          The asynchronous reply dispatchers.
+          When the connection_closed() method is invoked a COMM_FAILURE
+          exception is raised.
 
         * tao/Synch_Reply_Dispatcher.h:
         * tao/Synch_Reply_Dispatcher.i:
         * tao/Synch_Reply_Dispatcher.cpp:
-	  The synchornous reply dispatchers.
-	  The connection_closed() method simply sets the reply_received
-	  flag and signals the waiting thread (throught the
-	  Waiting_Strategy).
-	  Then the dispatcher is bound to the waiting thread the right
-	  condition variable is fetched.
+          The synchornous reply dispatchers.
+          The connection_closed() method simply sets the reply_received
+          flag and signals the waiting thread (throught the
+          Waiting_Strategy).
+          Then the dispatcher is bound to the waiting thread the right
+          condition variable is fetched.
 
         * tao/DII_Reply_Dispatcher.h:
         * tao/DII_Reply_Dispatcher.i:
         * tao/DII_Reply_Dispatcher.cpp:
-	  Very similar to the asynchornous reply dispatchers, but using
-	  DII under the hood.
+          Very similar to the asynchornous reply dispatchers, but using
+          DII under the hood.
 
         * tao/Leader_Follower.h:
         * tao/Leader_Follower.i:
-	  Add new set_upcall_thread.  If the leader thread is invoking a
-	  possibly long running upcall (such as a Request, LocateRequest
-	  or AMI Reply) the method should be invoked to elect a new leader
-	  thread and avoid dead-locks.
-	  Refactor the reset_event_loop_thread() to a separate method.
-	  Moved some of the inline methods around so they are defined in
-	  the right order.
+          Add new set_upcall_thread.  If the leader thread is invoking a
+          possibly long running upcall (such as a Request, LocateRequest
+          or AMI Reply) the method should be invoked to elect a new leader
+          thread and avoid dead-locks.
+          Refactor the reset_event_loop_thread() to a separate method.
+          Moved some of the inline methods around so they are defined in
+          the right order.
 
         * tao/GIOP_Message_Acceptors.cpp:
-	  Whenever an upcall is received the set_upcall_thread() method is
-	  invoked on the leader follower set.
-	  That give us an opportunity to wake up another thread to become
-	  the leader.
-	  This is part of the fixes for [BUGID:175]
+          Whenever an upcall is received the set_upcall_thread() method is
+          invoked on the leader follower set.
+          That give us an opportunity to wake up another thread to become
+          the leader.
+          This is part of the fixes for [BUGID:175]
 
         * tao/Invocation.h:
-	  This file needs to include Synch_Reply_Dispatcher now.
+          This file needs to include Synch_Reply_Dispatcher now.
 
-	* tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.h:
         * tao/Asynch_Invocation.i:
         * tao/Asynch_Invocation.cpp:
-	  Move the DII Invocation to its own file.
+          Move the DII Invocation to its own file.
 
         * tao/DII_Invocation.h:
         * tao/DII_Invocation.i:
         * tao/DII_Invocation.cpp:
-	  New file for the DII (deferred) invocations.  This decouples
-	  other components in the ORB from the DII support.
+          New file for the DII (deferred) invocations.  This decouples
+          other components in the ORB from the DII support.
 
         * tao/Transport_Mux_Strategy.h:
         * tao/Transport_Mux_Strategy.cpp:
@@ -100,9 +105,9 @@ Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
         * Exclusive_TMS.cpp:
         * Muxed_TMS.h:
         * Muxed_TMS.cpp:
-	  Moved the transport muxing strategies to their own files.
-	  The muxing strategy propagate the connection_closed() message to
-	  all the reply dispatchers waiting on that connection.
+          Moved the transport muxing strategies to their own files.
+          The muxing strategy propagate the connection_closed() message to
+          all the reply dispatchers waiting on that connection.
 
         * tao/Wait_Strategy.h:
         * tao/Wait_Strategy.cpp:
@@ -112,63 +117,63 @@ Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Wait_On_Reactor.cpp:
         * tao/Wait_On_Leader_Follower.h:
         * tao/Wait_On_Leader_Follower.cpp:
-	  Move the waiting strategies to separate files.
-	  Remove the handle_input() method.
-	  The Event_Handlers for each protocol call the Transport's
-	  handle_client_input directly.
-	  In the old days the handle_input method ensured that the leader
-	  follower mutex was acquired during the event processing, so when
-	  signaling a Synch_Reply_Dispatcher the changes were protected by
-	  the right mutex.  Now we just acquire the mutex when needed, 
-	  the Reply_Dispatcher invokes the new <reply_dispatched> method
-	  to let us change the state and signal the condition variables in
-	  a thread safe way.
+          Move the waiting strategies to separate files.
+          Remove the handle_input() method.
+          The Event_Handlers for each protocol call the Transport's
+          handle_client_input directly.
+          In the old days the handle_input method ensured that the leader
+          follower mutex was acquired during the event processing, so when
+          signaling a Synch_Reply_Dispatcher the changes were protected by
+          the right mutex.  Now we just acquire the mutex when needed,
+          the Reply_Dispatcher invokes the new <reply_dispatched> method
+          to let us change the state and signal the condition variables in
+          a thread safe way.
 
-	  So in the old days we had the following control flow:
-		Reactor -> Event_Handler
-			-> Wait_Strategy (acquire lock)
-			-> Transport (read data)
-			-> Reply_Dispatcher
-	  now we have
-		Reactor -> Event_Handler
-			-> Transport
-			-> Reply_Dispatcher
-			-> Wait_Strategy (lock and signal)
-			<- return to Reply Dispatcher
+          So in the old days we had the following control flow:
+                Reactor -> Event_Handler
+                        -> Wait_Strategy (acquire lock)
+                        -> Transport (read data)
+                        -> Reply_Dispatcher
+          now we have
+                Reactor -> Event_Handler
+                        -> Transport
+                        -> Reply_Dispatcher
+                        -> Wait_Strategy (lock and signal)
+                        <- return to Reply Dispatcher
 
-	  the new path is easier to analyze and understand.  It could be
-	  simplified even further, but that would require more classes and
-	  a better understanding of how we will implement pluggable
-	  messaging.
-	  Add a new connection_closed() method to wake up any threads when
-	  the connection is suddenly closed, in the old days we did this
-	  by detecting that the handle_client_input() method returned an
-	  error.
+          the new path is easier to analyze and understand.  It could be
+          simplified even further, but that would require more classes and
+          a better understanding of how we will implement pluggable
+          messaging.
+          Add a new connection_closed() method to wake up any threads when
+          the connection is suddenly closed, in the old days we did this
+          by detecting that the handle_client_input() method returned an
+          error.
 
         * tao/ORB_Core.cpp:
-	  The event loop thread can loose its leader role as part of
-	  making an upcall (see the new set_upcall_thread) method.
-	  We need to acquire the event loop thread role after each return
-	  from handle_events().
-	  This is part of the fixes for [BUGID:175]
+          The event loop thread can loose its leader role as part of
+          making an upcall (see the new set_upcall_thread) method.
+          We need to acquire the event loop thread role after each return
+          from handle_events().
+          This is part of the fixes for [BUGID:175]
 
         * tao/IIOP_Connect.cpp:
         * tao/SHMIOP_Connect.cpp:
         * tao/UIOP_Connect.cpp:
-	  Must invoke the transport's handle_client_input directly.
+          Must invoke the transport's handle_client_input directly.
 
         * tao/IIOP_Transport.cpp:
         * tao/SHMIOP_Transport.cpp:
         * tao/UIOP_Transport.cpp:
-	  If the connection is closed invoke the connection_closed()
-	  callback on the transport muxing strategy.
+          If the connection is closed invoke the connection_closed()
+          callback on the transport muxing strategy.
 
         * tao/default_client.cpp:
-	  This is the only place where the new header files for all the
-	  strategies (Wait, Muxing, etc.) are needed.
+          This is the only place where the new header files for all the
+          strategies (Wait, Muxing, etc.) are needed.
 
         * tao/Stub.cpp:
-	  Neeeds the new DII_Invocation header file.
+          Neeeds the new DII_Invocation header file.
 
         * tao/GIOP_Message_Lite.h:
         * tao/IIOP_Profile.cpp:
@@ -177,10 +182,10 @@ Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/UIOP_Transport.h:
         * tao/SHMIOP_Transport.h:
         * tests/Connection_Purging/Connection_Purging.cpp:
-	  Cosmetic fixes, mostly white space at the end of lines.
+          Cosmetic fixes, mostly white space at the end of lines.
 
         * tao/InterfaceC.cpp:
-	  After cleaning up some header files this #include was missing.
+          After cleaning up some header files this #include was missing.
 
         * tests/Makefile:
         * tests/LongUpcalls/Makefile:
@@ -204,28 +209,28 @@ Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/LongUpcalls/blocking_client.dsp:
         * tests/LongUpcalls/blocking_server.cpp:
         * tests/LongUpcalls/blocking_server.dsp:
-	  New test to check that there are no dead-locks during long
-	  callbaks.
-	  One of the tests (ami_client) is not working, but is not part of
-	  the bugs that I tried to fix.  We need something like
-	  [BUGID:575] to get this one right.
+          New test to check that there are no dead-locks during long
+          callbaks.
+          One of the tests (ami_client) is not working, but is not part of
+          the bugs that I tried to fix.  We need something like
+          [BUGID:575] to get this one right.
 
         * tests/InterOp-Naming/Makefile:
-	  Update dependencies
+          Update dependencies
 
         * tests/Endpoint_Per_Priority/client.cpp:
         * tests/Endpoint_Per_Priority/server.cpp:
-	  Fixed comments and debug messages.
+          Fixed comments and debug messages.
 
         * tests/MT_Client/client.conf:
-	  Using a null lock is not a good idea here.
+          Using a null lock is not a good idea here.
 
 Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp: 
+        * tao/RT_Policy_i.cpp:
 
-	  Changed <_tao_encode> methods implementation for the
-	  client exposed policies.
+          Changed <_tao_encode> methods implementation for the
+          client exposed policies.
 
         * TAO/tests/Exposed_Policies/client.cpp:
         * TAO/tests/Exposed_Policies/Client.dsp:
@@ -239,7 +244,7 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * TAO/tests/Exposed_Policies/README:
         * TAO/tests/Exposed_Policies/server.cpp:
         * TAO/tests/Exposed_Policies/Server.dsp:
-        
+
           Added files for testing the client exposed policies.
 
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -250,247 +255,247 @@ Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jun 16 10:02:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  
-	  Fixed a couple of missed changes necessitated by the
-	  recent switch of Any.type_ from TypeCode_ptr to
-	  TypeCode_var.
+        * tao/Any.cpp:
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	   
-	  Removed an unnecessary 'const' from an enum definition.
+          Fixed a couple of missed changes necessitated by the
+          recent switch of Any.type_ from TypeCode_ptr to
+          TypeCode_var.
 
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
 
-	  Had cases reversed when selecting 'throw' or 'ACE_THROW'.
+          Removed an unnecessary 'const' from an enum definition.
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+
+          Had cases reversed when selecting 'throw' or 'ACE_THROW'.
 
 Thu Jun 15 22:49:21 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i:
+        * tao/ORB_Core.cpp
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i:
 
-	  Added the following methods for quick access to ORB default RT
-	  policies:
-	    default_client_protocol ()
-	    default_priority_banded_connection ()
-	    default_private_policy ()
-	    default_threadpool ()
+          Added the following methods for quick access to ORB default RT
+          policies:
+            default_client_protocol ()
+            default_priority_banded_connection ()
+            default_private_policy ()
+            default_threadpool ()
 
-	  Added <threadpool> method to obtain effective threadpool policy.
-	  Removed unnecessary code from  <server_protocol> and
-	  <priority_model>.
+          Added <threadpool> method to obtain effective threadpool policy.
+          Removed unnecessary code from  <server_protocol> and
+          <priority_model>.
 
-	* tao/Policy_Manager.h
-	* tao/Policy_Manager.i:
+        * tao/Policy_Manager.h
+        * tao/Policy_Manager.i:
 
- 	  Removed the following methods from TAO_Policy_Current_Impl and
-	  TAO_Policy_Current classes because the corresponding policies
-	  are not available at the Current scope:
-	  - threadpool
-	  - priority_model
-	  - server_protocol
+          Removed the following methods from TAO_Policy_Current_Impl and
+          TAO_Policy_Current classes because the corresponding policies
+          are not available at the Current scope:
+          - threadpool
+          - priority_model
+          - server_protocol
 
-	  Added checks to <get_policy_overrides> and
-	  <set_policy_overrides> methods on TAO_Policy_Current_Impl to
-	  disallow setting/getting of certain RT policies at this scope.
-	  Moved the methods from .i to .cpp file.
+          Added checks to <get_policy_overrides> and
+          <set_policy_overrides> methods on TAO_Policy_Current_Impl to
+          disallow setting/getting of certain RT policies at this scope.
+          Moved the methods from .i to .cpp file.
 
-	* tao/RT_Policy_i.h
-	* tao/RT_Policy_i.i:
+        * tao/RT_Policy_i.h
+        * tao/RT_Policy_i.i:
 
-	  Added <TAO_PriorityBandedConnectionPolicy::priority_bands_rep>
-	  and <TAO_ClientProtocolPolicy::protocols_rep> accessors.  These
-	  methods return underlying bands/protocols sequences, avoiding making
-	  costly copies.
+          Added <TAO_PriorityBandedConnectionPolicy::priority_bands_rep>
+          and <TAO_ClientProtocolPolicy::protocols_rep> accessors.  These
+          methods return underlying bands/protocols sequences, avoiding making
+          costly copies.
 
-	* tao/Stub.cpp
-	* tao/Stub.h:
+        * tao/Stub.cpp
+        * tao/Stub.h:
 
-	  Added the following methods for obtaining effective overrides
-	  for corresponding policies:
-	  - private_connection ()
-	  - priority_banded_connection ()
-	  - client_protocol ()
+          Added the following methods for obtaining effective overrides
+          for corresponding policies:
+          - private_connection ()
+          - priority_banded_connection ()
+          - client_protocol ()
 
-	  Added the following methods for obtaining effective policies, i.e.,
-	  reconciliation between effective overrides and values exported
-	  in the Object's IOR:
-	  - effective_priority_banded_connection ()
-	  - effective_client_protocol ()
+          Added the following methods for obtaining effective policies, i.e.,
+          reconciliation between effective overrides and values exported
+          in the Object's IOR:
+          - effective_priority_banded_connection ()
+          - effective_client_protocol ()
 
-	  Modified <get_policy> to return effective policy for all RT client
-	  exposed policies and effective override for all other policies.
+          Modified <get_policy> to return effective policy for all RT client
+          exposed policies and effective override for all other policies.
 
-	  Added check to disallow setting/getting of certain RT policies
-	  in <set_policy_overrides>, <get_policy_overrides> and
-	  <get_client_policy>.
+          Added check to disallow setting/getting of certain RT policies
+          in <set_policy_overrides>, <get_policy_overrides> and
+          <get_client_policy>.
 
 Thu Jun 15 21:18:06 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/LoadBalancer/LoadBalancer.h:
-	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
+        * orbsvcs/LoadBalancer/LoadBalancer.h:
+        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
 
-	  Minor variable name update.
+          Minor variable name update.
 
-	* orbsvcs/LoadBalancer/Makefile:
+        * orbsvcs/LoadBalancer/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Jun 15 15:27:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
 
-	  `ReplicaLocator' replaced `DSI_ForwardingProxy', and it no
-	  longer exists.
+          `ReplicaLocator' replaced `DSI_ForwardingProxy', and it no
+          longer exists.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp (init):
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp (init):
 
-	  Create child POA that is configured for use with a
-	  ServantLocator (i.e. the new ReplicaLocator described below).
+          Create child POA that is configured for use with a
+          ServantLocator (i.e. the new ReplicaLocator described below).
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
 
-	  Added comment that states that the ReplicaProxy should be
-	  deactivated in this method.
+          Added comment that states that the ReplicaProxy should be
+          deactivated in this method.
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
 
-	  Added an ACE_SYNCH_MUTEX member to this class.  This lock is
-	  used to ensure that access to state retained by the
-	  corresponding class is atomic.
+          Added an ACE_SYNCH_MUTEX member to this class.  This lock is
+          used to ensure that access to state retained by the
+          corresponding class is atomic.
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp (disconnect,
-	  connect):
-	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp
-	  (~TAO_LB_Minimum_Dispersion_Strategy, replica, insert, remove,
-	  load_changed):
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp
-	  (~TAO_LB_Round_Robin_Strategy, replica, insert, remove):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp (disconnect,
+          connect):
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp
+          (~TAO_LB_Minimum_Dispersion_Strategy, replica, insert, remove,
+          load_changed):
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp
+          (~TAO_LB_Round_Robin_Strategy, replica, insert, remove):
 
-	  Made these methods thread-safe.
+          Made these methods thread-safe.
 
-	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
 
-	  Removed these files.  The Load Balancer no longer uses DSI to
-	  forward requests.
+          Removed these files.  The Load Balancer no longer uses DSI to
+          forward requests.
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h:
 
-	  Added these files.  The Load Balancer now uses a ServantLocator
-	  to forward requests to the appropriate replica.  The DSI
-	  implementation that it replaces was a bit of a hack, and not
-	  compliant with the specification, particularly because it threw
-	  a PortableServer::ForwardRequest exception, but things such as
-	  ServantLocators are supposed to do so.
+          Added these files.  The Load Balancer now uses a ServantLocator
+          to forward requests to the appropriate replica.  The DSI
+          implementation that it replaces was a bit of a hack, and not
+          compliant with the specification, particularly because it threw
+          a PortableServer::ForwardRequest exception, but things such as
+          ServantLocators are supposed to do so.
 
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Jun 15 19:41:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCORBA/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCORBA/Oneways/Reliable/run_test.pl:
-	* performance-tests/RTCORBA/Oneways/Reliable/README:
+        * performance-tests/RTCORBA/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCORBA/Oneways/Reliable/run_test.pl:
+        * performance-tests/RTCORBA/Oneways/Reliable/README:
 
-	  Added command line option to set the SyncScope policy
-	  at the ORB and thread level, in addition to the
-	  (existing and still the default) object level.
+          Added command line option to set the SyncScope policy
+          at the ORB and thread level, in addition to the
+          (existing and still the default) object level.
 
 Thu Jun 15 17:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/driver/drv_args.cpp:
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp:
-	* docs/releasenotes/index.html:
-	* docs/compiler.html:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * docs/releasenotes/index.html:
+        * docs/compiler.html:
 
-	  It was reported by Lorin Hochstein <lmh@xiphos.ca> that, with some
-	  tools (UML reverse engineering, documentation generation), the
-	  preprocessor is not smart enough to handle ACE_THROW_SPEC. So
-	  a new option -Ge 2 has been added to the IDL compiler, which
-	  generates the raw 'throw' keyword instead of ACE_THROW_SPEC,
-	  ACE_THROW, and ACE_RETHROW. Since the expansion of
-	  ACE_THROW_RETURN is platform-dependent, and
-	  TAO_INTERCEPTOR_THROW may expand to ACE_THROW_RETURN,
-	  these two macros were left unchanged. Documentation was added to the
-	  appropriate files.
+          It was reported by Lorin Hochstein <lmh@xiphos.ca> that, with some
+          tools (UML reverse engineering, documentation generation), the
+          preprocessor is not smart enough to handle ACE_THROW_SPEC. So
+          a new option -Ge 2 has been added to the IDL compiler, which
+          generates the raw 'throw' keyword instead of ACE_THROW_SPEC,
+          ACE_THROW, and ACE_RETHROW. Since the expansion of
+          ACE_THROW_RETURN is platform-dependent, and
+          TAO_INTERCEPTOR_THROW may expand to ACE_THROW_RETURN,
+          these two macros were left unchanged. Documentation was added to the
+          appropriate files.
 
-	  Also, an extra set of parentheses was removed around two instances of
-	  CDR extraction in operation_ss.cpp.
+          Also, an extra set of parentheses was removed around two instances of
+          CDR extraction in operation_ss.cpp.
 
 Thu Jun 15 16:23:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
 
-	  In the _tao_QueryInterface() function, we had two cases
-	  for generating the address of the ancestor's _narrow()
-	  function - if the ancestor was defined in the root scope,
-	  we used it's local name, and otherwise we used the
-	  ACE_NESTED_CLASS macro. However, the macro doesn't work
-	  when the ancestor is defined in a different scope from
-	  that of the derived class. In this case, we now use the
-	  fully scoped name. Thanks to Irfan for coming up with
-	  this use case.
+          In the _tao_QueryInterface() function, we had two cases
+          for generating the address of the ancestor's _narrow()
+          function - if the ancestor was defined in the root scope,
+          we used it's local name, and otherwise we used the
+          ACE_NESTED_CLASS macro. However, the macro doesn't work
+          when the ancestor is defined in a different scope from
+          that of the derived class. In this case, we now use the
+          fully scoped name. Thanks to Irfan for coming up with
+          this use case.
 
 Thu Jun 15 12:44:55 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Any.h (type_):
+        * tao/Any.h (type_):
 
-	  Changed the variable that contains the type for the Any from a
-	  TypeCode_ptr to a TypeCode_var to improve exception safety, and
-	  to simplify memory management.
+          Changed the variable that contains the type for the Any from a
+          TypeCode_ptr to a TypeCode_var to improve exception safety, and
+          to simplify memory management.
 
-	* tao/Any.cpp (type, operator=, ~CORBA_Any, _tao_replace):
+        * tao/Any.cpp (type, operator=, ~CORBA_Any, _tao_replace):
 
-	  No need to explicitly release the member TypeCode before
-	  assigning a new value to it since the variable is a now "_var"
-	  type.
+          No need to explicitly release the member TypeCode before
+          assigning a new value to it since the variable is a now "_var"
+          type.
 
-	  (_tao_encode, _tao_decode):
+          (_tao_encode, _tao_decode):
 
-	  Use ".in()" accessor method when passing the type_ member as an
-	  argument to fix compiler warnings.
+          Use ".in()" accessor method when passing the type_ member as an
+          argument to fix compiler warnings.
 
-	* tao/IIOP_Connector.cpp (make_profile):
-	* tao/ORB.cpp (_get_collocated_servant):
+        * tao/IIOP_Connector.cpp (make_profile):
+        * tao/ORB.cpp (_get_collocated_servant):
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Jun 15 14:23:53 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/diffs/PolicyC.h.diff:
-	* tao/diffs/PolicyC.cpp.diff:
-	* tao/diffs/RTCORBAC.h.diff:
-	* tao/diffs/RTCORBAC.cpp.diff:
+        * tao/diffs/PolicyC.h.diff:
+        * tao/diffs/PolicyC.cpp.diff:
+        * tao/diffs/RTCORBAC.h.diff:
+        * tao/diffs/RTCORBAC.cpp.diff:
 
-	  Created diffs file for modified pidl generated files.
+          Created diffs file for modified pidl generated files.
 
 Thu Jun 15 13:39:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
 
-	  Changed the generation of a native type as a
-	  return type in an operation to be a non-pointer.
-	  Thanks to Irfan for pointing this out.
+          Changed the generation of a native type as a
+          return type in an operation to be a non-pointer.
+          Thanks to Irfan for pointing this out.
 
 Thu Jun 15 13:33:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
