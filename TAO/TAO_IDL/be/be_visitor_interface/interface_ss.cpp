@@ -140,7 +140,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
 
-  *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
+  *os << "  TAO_Abstract_ServantBase (rhs)," << be_nl
+      << "   TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}" << be_nl << be_nl;
 
   *os << full_skel_name << "::~"
