@@ -1,3 +1,8 @@
+Wed Dec 31 12:30:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Export/dll.h:
+          Removed not needed ; to fix Tru64 warning
+
 Tue Dec 30 18:14:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_TLI.inl (t_alloc): For XPG5, the t_alloc() return type
@@ -166,7 +171,7 @@ Tue Dec 30 18:14:39 2003  Steve Huston  <shuston@riverace.com>
 Tue Dec 30 15:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp (set_interface):
-	  
+
 	  Check for multicast link local in addition to unicast link local
 	  before calling a if_nametoindex (). Thanks to Andre Kostur
 	  <Andre@incognito.com > for providing the patch.
