@@ -26,7 +26,7 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 use Cwd;
 
-$server_ior = $getcwd . "/server.ior";
+$server_ior = PerlACE::LocalFile ("server.ior");
 unlink $server_ior;
 
 $SV = new PerlACE::Process ("server", "-o $server_ior");
@@ -85,7 +85,7 @@ the PerlACE::Process module.
 @verbatim
 use Cwd;
 
-$server_ior = $getcwd . "/server.ior";
+$server_ior = PerlACE::LocalFile ("server.ior");
 
 unlink $server_ior;
 @endverbatim

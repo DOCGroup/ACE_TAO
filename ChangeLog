@@ -1,3 +1,15 @@
+Sun Jan  7 16:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_dll.dsp:
+
+          Removed the PACE libraries from linking.  We are going to come
+          up with a different solution for pace.
+
+        * docs/run_test.txt:
+
+          Changed the instructions a little to use PerlACE::LocalFile
+          for the server's IOR file.
+
 Sun Jan  7 08:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp: Added a message in a ACE_ERROR statement.  
