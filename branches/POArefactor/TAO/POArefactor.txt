@@ -1,8 +1,15 @@
+Wed Sep  8 14:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+        * tao/PortableServer/POA_Guard.{h,cpp}:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Moved TAO_POA_Guard to its own file
+
 Wed Sep  8 14:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Adapter_Activator.{h,cpp}:
         * tao/PortableServer/POA.{h,cpp}:
-          Moved the TAO_Adapater_Activator to its own file
+          Moved the TAO_Adapter_Activator to its own file
 
 Wed Sep  8 12:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
