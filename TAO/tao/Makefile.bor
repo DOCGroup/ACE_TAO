@@ -147,6 +147,7 @@ OBJFILES = \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\Policy_Set.obj \
+	$(OBJDIR)\Policy_Validator.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\Principal.obj \

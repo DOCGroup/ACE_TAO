@@ -28,7 +28,6 @@ OBJFILES = \
 	$(OBJDIR)\POA_Policies.obj \
 	$(OBJDIR)\POA_Policy_Set.obj \
 	$(OBJDIR)\PolicyS.obj \
-	$(OBJDIR)\Policy_Validator.obj \
         $(OBJDIR)\PortableGroup_Hooks.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
