@@ -46,13 +46,7 @@ be_visitor_field_cdr_op_cs::~be_visitor_field_cdr_op_cs (void)
 int
 be_visitor_field_cdr_op_cs::visit_field (be_field *node)
 {
-  TAO_OutStream *os; // output stream
-
-  be_type *bt; // field's type
-
-  os = this->ctx_->stream ();
-  // first generate the type information
-  bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -79,18 +79,6 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
       // or manual template instatiation
       os->gen_ifdef_AHETI();
   
-      // this is the instantiation branch
-      be_type *pt; // base types
-      
-      if (bt->node_type () == AST_Decl::NT_typedef)
-      {
-        // get the primitive base type of this typedef node
-        be_typedef *t = be_typedef::narrow_from_decl (bt);
-        pt = t->primitive_base_type ();
-      }
-      else
-        pt = bt;
-
       if (this->ctx_->state() != TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
       {
         if (this->ctx_->scope()->fullname())
@@ -144,18 +132,6 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
   // or manual template instatiation
   os->gen_ifdef_AHETI();
 
-  // this is the instantiation branch
-  be_type *pt; // base types
-      
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
-  else
-    pt = bt;
-
   if (this->ctx_->state() != TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
   {
     if (this->ctx_->scope()->fullname())
@@ -189,18 +165,6 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
     bt = node;
 
   os->gen_ifdef_AHETI();
-
-  // this is the instantiation branch
-  be_type *pt; // base types
-     
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
-  else
-    pt = bt;
 
   if (this->ctx_->state() != TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
   {

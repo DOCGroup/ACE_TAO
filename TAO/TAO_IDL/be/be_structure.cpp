@@ -45,7 +45,6 @@ int
 be_structure::compute_member_count (void)
 {
   UTL_ScopeActiveIterator *si;  // iterator
-  AST_Decl *d;  // temp node
 
   this->member_count_ = 0;
 
@@ -57,8 +56,6 @@ be_structure::compute_member_count (void)
 
       while (!(si->is_done ()))
         {
-          // get the next AST decl node
-          d = si->item ();
           this->member_count_++;
           si->next ();
         } // end of while

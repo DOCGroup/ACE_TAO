@@ -93,7 +93,6 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);

@@ -84,7 +84,7 @@ int be_visitor_root::visit_root (be_root *node)
       (void) tao_cg->end_server_header ();
       (void) tao_cg->end_server_template_header ();
       return 0;
-      break;
+
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
@@ -99,7 +99,6 @@ int be_visitor_root::visit_root (be_root *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -151,7 +150,6 @@ int be_visitor_root::visit_root (be_root *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   visitor = tao_cg->make_visitor (&ctx);
@@ -228,7 +226,6 @@ be_visitor_root::visit_constant (be_constant *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -300,7 +297,6 @@ be_visitor_root::visit_enum (be_enum *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -374,7 +370,6 @@ be_visitor_root::visit_exception (be_exception *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -453,7 +448,6 @@ be_visitor_root::visit_interface (be_interface *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -517,7 +511,6 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -596,7 +589,6 @@ be_visitor_root::visit_module (be_module *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -670,7 +662,6 @@ be_visitor_root::visit_structure (be_structure *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -744,7 +735,6 @@ be_visitor_root::visit_union (be_union *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -818,7 +808,6 @@ be_visitor_root::visit_typedef (be_typedef *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);

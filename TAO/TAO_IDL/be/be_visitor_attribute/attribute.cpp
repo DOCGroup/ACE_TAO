@@ -65,10 +65,6 @@ be_visitor_attribute::~be_visitor_attribute (void)
 int
 be_visitor_attribute::visit_attribute (be_attribute *node)
 {
-  TAO_OutStream *os; // output stream
-  //  be_type *bt;       // type node
-
-  os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
   this->ctx_->attribute (node); // save this attribute node
 

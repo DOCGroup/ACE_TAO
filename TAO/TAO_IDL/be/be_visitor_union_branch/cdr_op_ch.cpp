@@ -47,12 +47,7 @@ be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch (void)
 int
 be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt; // union_branch's type
-
-  os = this->ctx_->stream ();
-  // first generate the type information
-  bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,16 +76,6 @@ be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_cdr_op_ch::visit_array (be_array *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
 
   if (!this->ctx_->alias () // not a typedef
@@ -133,17 +118,6 @@ be_visitor_union_branch_cdr_op_ch::visit_array (be_array *node)
 int
 be_visitor_union_branch_cdr_op_ch::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
@@ -183,16 +157,6 @@ be_visitor_union_branch_cdr_op_ch::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_cdr_op_ch::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
@@ -232,16 +196,6 @@ be_visitor_union_branch_cdr_op_ch::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_cdr_op_ch::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
 
   if (!this->ctx_->alias () // not a typedef
@@ -305,16 +259,6 @@ be_visitor_union_branch_cdr_op_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_cdr_op_ch::visit_union (be_union *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
