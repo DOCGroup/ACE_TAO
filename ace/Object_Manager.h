@@ -20,7 +20,9 @@
 #include "ace/OS.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  class ACE_Null_Mutex;
   class ACE_Thread_Mutex;
+  class ACE_Recursive_Thread_Mutex;
 #endif /* ACE_MT_SAFE */
 
 // Forward declaration.
@@ -164,6 +166,9 @@ public:
       ACE_DUMP_LOCK,
       ACE_OS_MONITOR_LOCK,
       ACE_SIG_HANDLER_LOCK,
+      ACE_SINGLETON_NULL_LOCK,
+      ACE_SINGLETON_RECURSIVE_THREAD_LOCK,
+      ACE_SINGLETON_THREAD_LOCK,
       ACE_SVC_HANDLER_LOCK,
       ACE_THREAD_EXIT_LOCK,
       ACE_TOKEN_MANAGER_CREATION_LOCK,
@@ -197,12 +202,47 @@ public:
   // ace/Managed_Object.h for information on accessing preallocated
   // arrays.
 
+  static int starting_up ();
+  // Returns 1 before ACE_Object_Manager has been constructed.  This
+  // flag can be used to determine if the program is constructing
+  // static objects.  If no static object spawns any threads, the
+  // program will be single-threaded when this flag returns 1.  (Note
+  // that the program still might construct some static objects when
+  // this flag returns 0, if ACE_HAS_NON_STATIC_OBJECT_MANAGER is not
+  // defined.)
+
+  static int shutting_down ();
+  // Returns 1 after ACE_Object_Manager has been destroyed.  This flag
+  // can be used to determine if the program is in the midst of
+  // destroying static objects.  (Note that the program might destroy
+  // some static objects before this flag can return 1, if
+  // ACE_HAS_NON_STATIC_OBJECT_MANAGER is not defined.)
+
 private:
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+public:
+  // The get_singleton_lock accessors are for internal use by
+  // ACE_Singleton _only_.  The arguments are ignored; they are
+  // only used for overload resolution.
+
+  static ACE_Null_Mutex *get_singleton_lock (ACE_Null_Mutex *);
+  // Accesses a null lock to be used for construction of ACE_Singletons.
+
+  static ACE_Thread_Mutex *get_singleton_lock (ACE_Thread_Mutex *);
+  // Accesses a non-recursve lock to be used for construction of
+  // ACE_Singletons.
+
+  static ACE_Recursive_Thread_Mutex *get_singleton_lock
+    (ACE_Recursive_Thread_Mutex *);
+  // Accesses a recursive lock to be used for construction of ACE_Singletons.
+
+private:
+
+#endif /* ACE_MT_SAFE */
+
   ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
   // Keeps track of all registered objects.
-
-  int shutting_down_;
-  // Non-zero if this being destroyed
 
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.
@@ -211,10 +251,16 @@ private:
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 
+  static int starting_up_;
+  // Flag indicating whether the program is starting up.
+
+  static int shutting_down_;
+  // Flag indicating whether the program is shutting down.
+
 public:
   // For internal use only by ACE_Managed_Objects.
 
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex *lock_;
   // Lock that is used to guard internal structures.  Just a pointer
   // is declared here in order to minimize the headers that this one

@@ -33,6 +33,9 @@
 // Static data.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
+int ACE_Object_Manager::starting_up_ = 1;
+int ACE_Object_Manager::shutting_down_ = 0;
+
 void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
 
 u_int ACE_Object_Manager::next_managed_object = 0;
@@ -79,8 +82,8 @@ void *ACE_Object_Manager::preallocated_array[
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
+
 ACE_Object_Manager::ACE_Object_Manager (void)
-  : shutting_down_(0)
   // , lock_ is initialized in the function body.
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call
   // to ACE_OS::tss_open () in the function body.
@@ -106,6 +109,10 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_OS_MONITOR_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_SIG_HANDLER_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
+                          ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_SINGLETON_THREAD_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_SVC_HANDLER_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
@@ -129,6 +136,10 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
   // Open the main thread's ACE_Log_Msg.
   (void) ACE_LOG_MSG;
+
+  // Finally, indicate that the ACE_Object_Manager instance has been
+  // constructed.
+  ACE_Object_Manager::starting_up_ = 0;
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
@@ -136,26 +147,32 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // No mutex here.  Only the main thread should destroy the
   // singleton ACE_Object_Manager instance.
 
+  // First, indicate that the ACE_Object_Manager instance is (being)
+  // destroyed.  If an object tries to register after this, it will
+  // be refused.
+  ACE_Object_Manager::shutting_down_ = 1;
+
+  ACE_Trace::stop_tracing ();
+
   ACE_Cleanup_Info info;
 
   // Call all registered cleanup hooks, in reverse order of
-  // registration.  Before starting, mark this object as being
-  // destroyed - then if during the course of shutting things down,
-  // some object tries to register, it won't be.
-  shutting_down_ = 1;
-  ACE_Trace::stop_tracing ();
-
+  // registration.
   while (registered_objects_ &&
          registered_objects_->dequeue_head (info) != -1)
-    if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
-      // The object is an ACE_Cleanup.
-      ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
-    else
-      (*info.cleanup_hook_) (info.object_, info.param_);
+    {
+      if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
+        {
+          // The object is an ACE_Cleanup.
+          ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
+        }
+      else
+        {
+          (*info.cleanup_hook_) (info.object_, info.param_);
+        }
+    }
 
-  // This call closes and deletes all ACE library services and
-  // singletons.  This closes the ACE_Thread_Manager, which cleans up
-  // all running threads.
+  // Close and delete all ACE library services and singletons.
   ACE_Service_Config::close ();
 
   // Close the main thread's TSS, including its Log_Msg instance.
@@ -199,6 +216,10 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_OS_MONITOR_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_SIG_HANDLER_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                  ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_SINGLETON_THREAD_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_SVC_HANDLER_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
@@ -224,13 +245,25 @@ ACE_Object_Manager::instance (void)
 }
 
 int
+ACE_Object_Manager::starting_up ()
+{
+  return ACE_Object_Manager::starting_up_;
+}
+
+int
+ACE_Object_Manager::shutting_down ()
+{
+  return ACE_Object_Manager::shutting_down_;
+}
+
+int
 ACE_Object_Manager::at_exit_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
                                void *param)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, -1));
 
-  if (shutting_down_)
+  if (shutting_down ())
     {
       errno = EAGAIN;
       return -1;
@@ -259,6 +292,34 @@ ACE_Object_Manager::at_exit_i (void *object,
   // at the head and dequeue from the head to get LIFO ordering.
   return registered_objects_->enqueue_head (new_info);
 }
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
+ACE_Null_Mutex *
+ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *)
+{
+  // Use the Object_Manager's preallocated lock.
+  return ACE_Managed_Object<ACE_Null_Mutex>::get_preallocated_object
+    (ACE_Object_Manager::ACE_SINGLETON_NULL_LOCK);
+}
+
+ACE_Thread_Mutex *
+ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *)
+{
+  // Use the Object_Manager's preallocated lock.
+  return ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+    (ACE_Object_Manager::ACE_SINGLETON_THREAD_LOCK);
+}
+
+ACE_Recursive_Thread_Mutex *
+ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex*)
+{
+  // Use the Object_Manager's preallocated lock.
+  return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
+   get_preallocated_object (ACE_Object_Manager::
+                            ACE_SINGLETON_RECURSIVE_THREAD_LOCK);
+}
+#endif /* ACE_MT_SAFE */
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 class ACE_Export ACE_Object_Manager_Destroyer
@@ -297,25 +358,44 @@ static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Recursive_Thread_Mutex *
-  ACE_Static_Object_Lock::instance (void)
-  {
-#if 1
-    // Temporary hack until we get rid of all statics from ACE library.
-    // The ACE static services need this . . .
-    static ACE_Recursive_Thread_Mutex _mutex;
-    return &_mutex;
-#else /* ! 1 */
-    return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
-      get_preallocated_object(ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
-#endif /* ! 1 */
-  }
+ACE_Recursive_Thread_Mutex *
+ACE_Static_Object_Lock::instance (void)
+{
+  if (ACE_Object_Manager::starting_up ())
+    {
+      // The preallocated ACE_STATIC_OBJECT_LOCK has not been
+      // constructed yet.  The program is single-threaded at this
+      // point.  Allocate a lock to use, for interface compatibility,
+      // though there should be no contention on it.
+      static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *lock = 0;
+
+      if (lock == 0)
+        {
+          ACE_NEW_RETURN (lock,
+                          ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
+                          0);
+
+          // Register for destruction with ACE_Object_Manager.
+          ACE_Object_Manager::at_exit (lock);
+        }
+
+      return &lock->object ();
+    }
+  else
+    {
+      // Return the preallocated ACE_STATIC_OBJECT_LOCK.
+      return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
+        get_preallocated_object(ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
+    }
+}
 #endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+    template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Thread_Mutex>;
+    template class ACE_Managed_Object<ACE_Null_Mutex>;
     template class ACE_Managed_Object<ACE_Recursive_Thread_Mutex>;
     template class ACE_Managed_Object<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
@@ -326,8 +406,10 @@ template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
 template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Thread_Mutex>
+#   pragma instantiate ACE_Managed_Object<ACE_Null_Mutex>
 #   pragma instantiate ACE_Managed_Object<ACE_Recursive_Thread_Mutex>
 #   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
