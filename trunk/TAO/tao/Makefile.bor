@@ -22,10 +22,10 @@ OBJFILES = \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
-        $(OBJDIR)\BiDir_ORBInitializer.obj \
-        $(OBJDIR)\BiDir_Policy_i.obj \
-        $(OBJDIR)\BiDir_PolicyFactory.obj \
-        $(OBJDIR)\BiDirPolicyC.obj \
+	$(OBJDIR)\BiDir_ORBInitializer.obj \
+	$(OBJDIR)\BiDir_Policy_i.obj \
+	$(OBJDIR)\BiDir_PolicyFactory.obj \
+	$(OBJDIR)\BiDirPolicyC.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
@@ -49,6 +49,7 @@ OBJFILES = \
 	$(OBJDIR)\CurrentC.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \
+	$(OBJDIR)\Default_Protocols_Hooks.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
 	$(OBJDIR)\DLL_ORB.obj \
@@ -75,7 +76,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_State.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
-        $(OBJDIR)\IIOPC.obj \
+	$(OBJDIR)\IIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
@@ -141,6 +142,7 @@ OBJFILES = \
 	$(OBJDIR)\Private_Connection_Descriptor.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
+	$(OBJDIR)\Protocols_Hooks.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
@@ -148,11 +150,13 @@ OBJFILES = \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
 	$(OBJDIR)\RT_Current.obj \
+	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \
-	$(OBJDIR)\RT_Policy_i.obj \
 	$(OBJDIR)\RT_ORBInitializer.obj \
+	$(OBJDIR)\RT_Policy_i.obj \
 	$(OBJDIR)\RT_PolicyFactory.obj \
+	$(OBJDIR)\RT_Protocols_Hooks.obj \
 	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \
