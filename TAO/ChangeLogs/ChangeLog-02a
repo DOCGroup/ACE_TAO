@@ -1,3 +1,11 @@
+Sat Apr 21 01:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/tests/Performance/Makefile:
+        * examples/PluggableUDP/tests/Basic/Makefile:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile:
+
+	  Fixed the Makfiles to properly compile and link.
+
 Sat Apr 21 01:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Performance/UDP_i.cpp:
