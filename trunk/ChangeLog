@@ -1,3 +1,10 @@
+Thu Jun 26 02:22:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * etc/ace.doxygen:
+          Added ace/pre.h and ace/post.h to the exclude list.  This will
+          clean up the file dependency graphs a bit and make the more
+          complex ones a bit easier to read.
+
 Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-freebsd.h:
