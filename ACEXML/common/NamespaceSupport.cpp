@@ -32,7 +32,7 @@ int
 ACEXML_Namespace_Context_Stack::push (ACEXML_NS_CONTEXT *nsc)
 {
   struct NS_Node_T *temp = 0;
-  ACE_NEW_RETURN (temp, struct NS_Node_T, -1);
+  ACE_NEW_RETURN (temp, NS_Node_T, -1);
 
   temp->item_ = nsc;
   temp->next_ = this->head_;
