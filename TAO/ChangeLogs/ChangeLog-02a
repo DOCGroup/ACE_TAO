@@ -1,3 +1,12 @@
+Fri Jun 15 11:11:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/orb.idl:
+
+          Changed the contents of struct NamedValue to conform to
+          the current IDL given in the spec (CORBA 2.4.2 section 7.1.1). 
+          This change also eliminates a name clash. Thanks to Xavier MONTET 
+          <montet@cena.fr> for reporting the name clash.
+
 Thu Jun 14 17:44:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/rtcorbafwd.h:
