@@ -325,9 +325,14 @@ public:
    * Called by the cache when the ORB is shuting down.
    *
    * @param handlers The TAO_Connection_Handler_Set into which the
-   *        transport should place its handler
+   *        transport should place its handler if the transport has RW
+   *        strategy on.
+   *
+   * @return true indicates a handler was added to the handler set.
+   *         false indocates that the transport did not have a
+   *         blockable handler that could be added.
    */
-  void provide_blockable_handler (TAO::Connection_Handler_Set &handlers);
+  bool provide_blockable_handler (TAO::Connection_Handler_Set &handlers);
 
   /// Register the handler with the reactor.
   /**

@@ -1,3 +1,15 @@
+Fri Mar 18 10:34:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Transport.cpp:
+	* tao/Transport.h (provide_blockable_handler):
+
+	  Return a bool instead of void. 
+	
+	* tao/Transport_Cache_Manager.cpp:
+
+	  Check for the return value from provide_blockable_handler before
+	  marking the entry as closed.  
+
 Fri Mar 18 09:26:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Faults/client.cpp:
