@@ -2,7 +2,7 @@ Fri Jan 29 09:07:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: use
           RtecScheduler::Criticality_t, Importance_t, and Info_Type_T.
-          Thanks to gwross@west.raytheon.com for providing this
+          Thanks to gwross <gwross@west.raytheon.com> for providing this
           fix, which solves a compilation problem with MSVC++ 6.0.
 
 Thu Jan 28 21:36:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
