@@ -124,17 +124,13 @@ socksap:	os $(addsuffix .java,$(pkg_socksap))
 
 pkg_svcconfig = \
         ServiceLoader \
-        ClassNameGenerator \
         ClassReader \
-        parser \
-	sym \
 	ParseNode \
 	SuspendNode \
 	ResumeNode \
 	RemoveNode \
 	ServiceRecord \
         ServiceObjectRecord \
-        Yylex \
         AddServiceObjectNode \
         ServiceObject \
         ServiceConfig \
@@ -151,7 +147,7 @@ packages = JACE \
 	   JACE.OS \
 	   JACE.Reactor \
 	   JACE.SOCK_SAP \
-	   JACE.Service_Configurator \
+	   JACE.ServiceConfigurator \
 	   JACE.Timers
 
 

@@ -7,8 +7,7 @@
  *    ParseNode.java
  *
  * Base class for the data types used in the parse tree for adjusting 
- * services.  Things like SuspendNode extend this.  They help connect
- * CUP/JLex with the service configurator system.
+ * services.  Things like SuspendNode extend this. 
  *
  *@author Everett Anderson
  *
@@ -17,18 +16,15 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import JACE.OS.*;
-import java_cup.runtime.*;
 
-public class ParseNode extends java_cup.runtime.symbol 
+public class ParseNode 
 {
   /** 
    * Constructor
    *
    */
-  public ParseNode (int number)
+  public ParseNode ()
   {
-    super(number);
-
     this.name_ = new String("Uninitialized");
   }
 

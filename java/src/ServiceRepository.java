@@ -7,8 +7,8 @@
  *    ServiceRepository.java
  *
  * The service repository stores the network services, allowing them to be removed, suspended,
- * resumed, etc.  To reload a service, the caller must remove it from the repository and then
- * call prepareForReload().
+ * resumed, etc.  To reload a service, ServiceConfig.prepareForReload() must be called.  This is
+ * already done in the ServiceConfig.remove method.
  *
  *@see JACE.ServiceConfigurator.ServiceRecord;
  *@see JACE.ServiceConfigurator.ServiceConfig;
@@ -116,9 +116,9 @@ public class ServiceRepository
 
   /** Take the given service out of the repository.  This also sets the
    * reference in the repository to null to ensure there are no
-   * hidden references to the old ServiceObject.  To reload, the user must
-   * still run prepareToReload on ServiceConfig if they don't want any
-   * problems.
+   * hidden references to the old ServiceObject.  To reload, the
+   * ServiceConfig.prepareToReload method must be called.  This is already
+   * done in the ServiceConfig.remove method.
    */
   public int remove (String name)
   {

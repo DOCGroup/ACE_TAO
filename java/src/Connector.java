@@ -22,7 +22,7 @@ import JACE.ServiceConfigurator.*;
  * <h2>SYNOPSIS</h2>
  *<blockquote>
  * Abstract factory for connecting a
- * (<a href="ACE.Connection.SvcHandler.html"><tt>SvcHandler</tt></a>),
+ * (<a href="JACE.Connection.SvcHandler.html"><tt>SvcHandler</tt></a>),
  * to an application.
  *</blockquote>
  *
@@ -34,7 +34,7 @@ import JACE.ServiceConfigurator.*;
  * control to that instance.
  *<p>
  * TCP is the transport mechanism used, via
- * <a href="ACE.SOCK_SAP.SOCKConnector.html#_top_"><tt>SOCKConnector</tt></a>.
+ * <a href="JACE.SOCK_SAP.SOCKConnector.html#_top_"><tt>SOCKConnector</tt></a>.
  *</blockquote>
  *
  *<h2>NOTES</h2>
@@ -43,7 +43,8 @@ import JACE.ServiceConfigurator.*;
  * Future versions are expected to rectify this discrepancy.
  *</blockquote>
  *
- *@see SOCKConnector,SvcHandler
+ *@see SOCKConnector
+ *@see SvcHandler
  */
 public class Connector extends ServiceObject
 {
@@ -82,6 +83,11 @@ public class Connector extends ServiceObject
   /**
    * Connect to the server.
    *@param sh Svc Handler to use to handle the connection
+   *@exception UnknownHostException Bad host
+   *@exception SocketException Socket error
+   *@exception InstantiationException Couldn't create new SOCKConnector
+   *@exception IllegalAccessException No strategy available
+   *@exception IOException Socket error
    */
   public void connect (SvcHandler sh) throws UnknownHostException, 
       SocketException,
@@ -103,6 +109,8 @@ public class Connector extends ServiceObject
    * strategy, if needed.
    *@param sh Svc Handler to use to handle the connection
    *@return 0
+   *@exception SocketException Socket error
+   *@exception IOException Socket error
    */
   protected int connectSvcHandler (SvcHandler sh) throws
   SocketException, IOException
