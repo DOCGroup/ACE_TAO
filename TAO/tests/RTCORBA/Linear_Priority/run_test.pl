@@ -78,11 +78,11 @@ sub run_client
 sub run_server 
 {
     $SV = new PerlACE::Process ("server", @_);
-
     $SV->Spawn ();
-    check_supported_priorities($SV);
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1)
+
+    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
     {
+        check_supported_priorities ($SV);
 	print STDERR "ERROR: cannot find ior file: $iorfile\n";
 	$status = 1;
 	zap_server (1);
@@ -110,7 +110,7 @@ sub zap_server
 sub check_supported_priorities
 {
   $process = shift;
-  $returnVal = $process->TimedWait(10);
+  $returnVal = $process->TimedWait (1);
   if ($returnVal == 2) {
     print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
     # Mark as no longer running to avoid errors on exit.

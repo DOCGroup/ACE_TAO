@@ -59,50 +59,57 @@ sub run_clients
 $SV = new PerlACE::Process ("server");
 
 $SV->Spawn ();
-$server = $SV->TimedWait(10);
-if ($server == 2) {
-  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
-  # Mark as no longer running to avoid errors on exit.
-  $SV->{RUNNING} = 0;
-} else {
-  for $test (@configurations)
+
+for $test (@configurations)
+{
+    if (PerlACE::waitforfile_timed ($test->{file}, 10) == -1)
     {
-      if (PerlACE::waitforfile_timed ($test->{file}, 5) == -1)
-	{
-	  print STDERR "ERROR: cannot find ior file: $test->{file}\n";
-	  $status = 1;
-	  goto kill_server;
+        $server = $SV->TimedWait (1);
+        if ($server == 2) 
+        {
+            print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+            # Mark as no longer running to avoid errors on exit.
+            $SV->{RUNNING} = 0;
+            exit $status;
+        } 
+        else 
+        {
+            print STDERR "ERROR: cannot find ior file: $test->{file}\n";
+            $status = 1;
+            goto kill_server;
 	}
     }
   
   for $test (@configurations)
-    {
+  {
       print STDERR "\n*************************************************************\n";
       print STDERR "$test->{description}\n";
       print STDERR "*************************************************************\n\n";
       
       run_clients ("-k file://$test->{file}", $number_of_clients);
-    }
-  
-  print STDERR "\n************************\n";
-  print STDERR "Shutting down the server\n";
-  print STDERR "************************\n\n";
-  
-  run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
-  
- kill_server:
-  
-  $server = $SV->WaitKill (5);
-  
-  if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1
   }
+    
+    print STDERR "\n************************\n";
+    print STDERR "Shutting down the server\n";
+    print STDERR "************************\n\n";
+    
+    run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
+    
+  kill_server:
+    
+    $server = $SV->WaitKill (5);
   
-  for $test (@configurations)
+    if ($server != 0) 
     {
-      unlink $test->{file};
+        print STDERR "ERROR: server returned $server\n";
+        $status = 1;
+    }
+    
+    for $test (@configurations)
+    {
+        unlink $test->{file};
     }
 }
+
 exit $status
 

@@ -61,7 +61,7 @@ sub run_server
 
     for $file (@$iorfiles)
     {
-        if (PerlACE::waitforfile_timed ($file, 5) == -1)
+        if (PerlACE::waitforfile_timed ($file, 10) == -1)
         {
             print STDERR "ERROR: cannot find ior file: $file\n";
             $status = 1;

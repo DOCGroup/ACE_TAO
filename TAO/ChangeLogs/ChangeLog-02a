@@ -1,9 +1,19 @@
 Tue Jun 25 16:29:44 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/: Elimilated the 10 second wait for platforms were
-	  multiple priorities are supported.
+	* tests/RTCORBA/: Eliminated an unnecessary 10 second wait for
+	  platforms were multiple priorities are supported.  The following
+	  file were changed.
 
+	  - Banded_Connections/run_test.pl
+	  - Client_Propagated/run_test.pl
+	  - Collocation/run_test.pl
+	  - Linear_Priority/run_test.pl
+	  - MT_Client_Protocol_Priority/run_test.pl
+	  - Persistent_IOR/run_test.pl
 	  - Policy_Combinations/run_test.pl
+	  - Private_Connection/run_test.pl
+	  - Server_Declared/run_test.pl
+	  - Thread_Pool/run_test.pl
 
 Tue Jun 25 15:30:03 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
