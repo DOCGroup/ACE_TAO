@@ -90,6 +90,14 @@ public:
   /// Accessor to our IIOP counterpart.
   TAO_IIOP_Endpoint *iiop_endpoint (void) const;
 
+  /// Mutator to our IIOP counterpart.
+  /**
+   * @param destroy If set to a non-zero value, then the
+   *                TAO_SSLIOP_Endpoint object retains ownership of
+   *                the given TAO_IIOP_Endpoint.
+   */
+  void iiop_endpoint (TAO_IIOP_Endpoint *endpoint, int destroy);
+
   /// Return the SSLIOP-specific ACE_INET_Addr.
   const ACE_INET_Addr &object_addr (void) const;
   //@}
@@ -115,6 +123,10 @@ private:
    * IIOP_Endpoint containing the IIOP portion of our address.
    */
   TAO_IIOP_Endpoint *iiop_endpoint_;
+
+  /// Flag that determines whether or not the iiop_endpoint_ member is
+  /// deallocated with delete().
+  int destroy_iiop_endpoint_;
 
 };
 

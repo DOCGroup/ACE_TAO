@@ -26,7 +26,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
                       orb_core),
   ssl_endpoint_ (ssl_component, 0)
 {
-  this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
+  this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
@@ -44,7 +44,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
                       orb_core),
   ssl_endpoint_ (ssl_component, 0)
 {
-  this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
+  this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core,
@@ -52,14 +52,14 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core,
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (ssl_component, 0)
 {
-  this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
+  this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (0, 0)
 {
-  this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
+  this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
 TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile (void)
@@ -117,9 +117,8 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
     {
       // This profile contains only one endpoint.  Finish initializing
       // it.
-      this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
-      this->ssl_endpoint_.priority
-        (this->ssl_endpoint_.iiop_endpoint_->priority ());
+      this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
+      this->ssl_endpoint_.priority (this->endpoint_.priority ());
       return 1;
     }
   else
@@ -159,7 +158,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
                ssl_endp != 0;
                ssl_endp = ssl_endp->next_)
             {
-              ssl_endp->iiop_endpoint_ = iiop_endp;
+              ssl_endp->iiop_endpoint (iiop_endp, 1);
               ssl_endp->priority (iiop_endp->priority ());
               iiop_endp = iiop_endp->next_;
             }
@@ -317,7 +316,7 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
            ssl_endp != 0;
            ssl_endp = ssl_endp->next_)
         {
-          ssl_endp->iiop_endpoint_ = iiop_endp;
+          ssl_endp->iiop_endpoint (iiop_endp, 1);
           ssl_endp->priority (iiop_endp->priority ());
           iiop_endp = iiop_endp->next_;
         }

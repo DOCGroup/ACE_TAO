@@ -1,3 +1,35 @@
+Thu Dec 13 16:20:52 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (iiop_endpoint):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (iiop_endpoint):
+
+	  New method that sets the IIOP-specific endpoint counterpart.
+	  The given TAO_IIOP_Endpoint is duplicated if necessary.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (duplicate):
+
+	  Use the new iiop_endpoint() method to force the newly created
+	  TAO_SSLIOP_Endpoint retain ownership of its TAO_IIOP_Endpoint
+	  member.  This fixes a segmentation fault that occurred when a
+	  TAO_SSLIOP_Endpoint was duplicated, re-cached in the transport
+	  cache, and then later checked for equivalence.  The problem was
+	  that the TAO_IIOP_Endpoint pointer member of the
+	  TAO_SSLIOP_Endpoint was being "yanked out from under it" when
+	  the TAO_SSLIOP_Profile that actually owned the TAO_IIOP_Endpoint
+	  was destroyed.
+
+	  (~TAO_SSLIOP_Endpoint):
+
+	  Delete the iiop_endpoint_ member if the TAO_SSLIOP_Endpoint
+	  "owns" it.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (TAO_SSLIOP_Profile,
+	  decode, decode_endpoints):
+
+	  Use the new TAO_SSLIOP_Endpoint::iiop_endpoint() mutator method
+	  to force the TAO_SSLIOP_Endpoint to copy the given
+	  TAO_IIOP_Endpoint, and thus retain ownership.
+
 Thu Dec 13 13:42:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Scalability/Coordinator.cpp:
