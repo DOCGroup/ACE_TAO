@@ -24,7 +24,7 @@ static int n_readers = 6;
 static int n_writers = 2;
 
 // Thread id of last writer.
-volatile static int shared_data;  
+static volatile int shared_data;  
 
 // Lock for shared_data.
 static ACE_RW_Mutex rw_mutex;     
@@ -85,7 +85,7 @@ reader (void *)
   for (int iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
-      int n = ++current_readers;
+      //int n = ++current_readers;
       //ACE_DEBUG ((LM_DEBUG, "(%t) I'm reader number %d\n", n));
 
       if (current_writers > 0)
