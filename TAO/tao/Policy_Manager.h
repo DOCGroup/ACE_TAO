@@ -25,6 +25,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/POA_CORBA.h"
+#include "tao/MessagingS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,12 +72,22 @@ public:
     );
   // Obtain a single policy.
 
+  // = Direct accesors to the policy implementations, for speedy
+  //   lookups.
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
+
 private:
-  CORBA::Policy_var policies_[TAO_MAX_POLICIES];
-  // The policies
+  // The known policies are kept as pointers to the implementation
+  // objects, this allow us to query the supported policies really
+  // fast, without memory allocations.
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
+
+  CORBA::PolicyList other_policies_;
+  // Other policies that are not optimized for fast querying
 
   CORBA::ULong count_;
-  // The number of non-nil policies...
+  // The number of non-nil policies
 };
 
 // ****************************************************************
@@ -107,6 +118,8 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
 private:
   TAO_Policy_Manager_Impl impl_;
@@ -128,17 +141,18 @@ public:
   // = The CORBA::PolicyManager operations
 
   CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & ts,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::Environment::default_environment ()
-    );
-
+        const CORBA::PolicyTypeSeq & ts,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
   void set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::Environment::default_environment ()
-    );
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -170,9 +184,11 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
   // = Set and get the implementation.
-  TAO_Policy_Current_Impl &implementation (void);
+  TAO_Policy_Current_Impl &implementation (void) const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
 

@@ -35,6 +35,11 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+#include "tao/MessagingS.h"
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
@@ -267,6 +272,10 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::default_environment ()
     );
+
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+     relative_roundtrip_timeout (void);
+
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =

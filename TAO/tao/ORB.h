@@ -547,7 +547,17 @@ public:
   CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
                                                     CORBA::default_environment ());
 
+#if defined(TAO_HAS_CORBA_MESSAGING)
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   const CORBA::Any& val,
+                                   CORBA_Environment &ACE_TRY_ENV =
+                                       CORBA::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+  // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
+  // ----------------------------------------------------------------
 
   virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
   // Return the object pointer of an collocated object it there is
