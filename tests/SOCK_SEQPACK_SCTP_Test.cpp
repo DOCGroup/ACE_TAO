@@ -264,8 +264,11 @@ spawn_test(bool ipv6_test)
 #else /* ! ACE_HAS_IPV6 */
                                  AF_INET,
 #endif /* ! ACE_HAS_IPV6 */
-                                 ACE_DEFAULT_BACKLOG,
-                                 IPPROTO_SCTP))
+                                 ACE_DEFAULT_BACKLOG
+#if defined (IPPROTO_SCTP)
+                                 ,IPPROTO_SCTP
+#endif /* IPPROTO_SCTP */
+                                ))
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
