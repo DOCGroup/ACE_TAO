@@ -1,3 +1,10 @@
+Mon May 26 10:43:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          Cleanup of setting and usage of TEMPLATES_FLAG. Also do this after
+          the include of the g++_common file because it is set in that
+          file.
+
 Sun May 25 14:53:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
