@@ -145,13 +145,21 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
               temp_ptr = temp_ptr->next_;
 
-              ACE_DES_FREE_TEMPLATE (hold_ptr, this->allocator_->free,
-                                     ACE_Hash_Map_Entry, <EXT_ID, INT_ID>);
+              // Explicitly call the destructor.
+#if defined (ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR)
+              ACE_Destructor_Template_For_HPUX_aCC_Only (hold_ptr);
+#else
+              hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
+#endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
+              this->allocator_->free (hold_ptr);
             }
           // Now deal with the sentinal
           // Explicitly call the destructor.
-          ACE_DES_NOFREE_TEMPLATE (&table[i], ACE_Hash_Map_Entry,
-                                   <EXIT_ID, INT_ID>);
+#if defined (ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR)
+          ACE_Destructor_Template_For_HPUX_aCC_Only (&table[i]);
+#else
+          this->table_[i].ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
+#endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
         }
 
       // Free table memory
