@@ -1,5 +1,10 @@
 Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Process_Manager_Test.cpp: Made some minor changes in 
+	  this test so that it'll compile.  We still need to update it so
+ 	  it'll run correctly with the new version of ACE_Process_Manager,
+ 	  however.
+
 	* ace/Process_Manager: Integrated the latest and greatest
 	  ACE_Process_Manager from Dave Madden <dhm@mersenne.com>.  This
  	  should now work relatively transparently on all OS platforms
