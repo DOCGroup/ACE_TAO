@@ -398,7 +398,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::cancel (const TYPE &type,
       --this->size_;
     }
 
-  delete timer_ids;
+  delete [] timer_ids;
 
   return pos;
 }
