@@ -2,7 +2,7 @@
 // $Id$
 
 project : aceexe {
-
+  exename = main
   verbatim(gnuace, top) {
     ifneq ($(MAKE),)
     include $(ACE_ROOT)/include/makeinclude/macros.GNU

@@ -2,12 +2,14 @@
 // $Id$
 
 project : aceexe {
+  exename = workers
   source_files {
     workers.cpp
   }
 }
 
 project(*RTCorba) : aceexe {
+  exename = RT_CORBA_Workers
   source_files {
     RT_CORBA_Workers.cpp
   }
