@@ -1,8 +1,19 @@
+
+Wed Jun 18 17:06:40 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/*: 
+          
+          New test for the sequence of different data types. This is based
+          on performance-tests/Latency/Thread_Per_Connection, but uses 
+          different data types.
+
+
 Wed Jun 18 17:10:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTEvent:
 	* orbsvcs/orbsvcs/RTEvent.bor: Added CRC.cpp for compilation in
 	  various builds.
+
 
 Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -37,6 +48,7 @@ Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	 Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
          Noseworthy <j.russell.noseworthy@objectsciences.com> for
 	 providing these patches.
+
 
 Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
 
