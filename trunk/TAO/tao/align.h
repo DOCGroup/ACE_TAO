@@ -40,7 +40,7 @@ typedef u_long long ptr_arith_t;
 
 #else
 #	error "Can't find a suitable type for doing pointer arithmetic."
-#endif
+#endif /* error */
 
 // Efficiently align "value" up to "alignment", knowing that all such
 // boundaries are binary powers and that we're using two's complement
@@ -55,7 +55,7 @@ align_binary (const ptr_arith_t value,
 
   return (value + temp) & ~temp;
 }
-#endif
+#endif /* 0 */
 #define align_binary(ptr, alignment) \
     ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
 
@@ -73,7 +73,7 @@ ptr_align_binary (const u_char *ptr,
 {
   return (u_char *) align_binary ((ptr_arith_t) ptr, alignment);
 }
-#endif
+#endif /* 0 */
 #define ptr_align_binary(ptr, alignment) \
         ((u_char *) align_binary(((ptr_arith_t) (ptr)), (alignment)))
 

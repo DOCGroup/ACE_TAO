@@ -25,7 +25,7 @@
 #include "tao/giop.h"
 #include "tao/debug.h"
 
-#if     defined (HAVE_WIDEC_H)
+#if defined (HAVE_WIDEC_H)
 #               include <widec.h>
 #else
 extern "C" 
@@ -33,7 +33,7 @@ extern "C"
   u_int wslen (const CORBA_WChar *);
   CORBA_WChar *wscpy (CORBA_WChar *, const CORBA_WChar *);
 }
-#endif
+#endif /* HAVE_WIDEC_H */
 
 extern CORBA_TypeCode TC_opaque;
 
@@ -409,7 +409,7 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
 #if 0
                         (*tcp)->_parent = parent;
                         parent->AddRef ();
-#endif
+#endif /* 0 */
                       }
                   }
                 break;

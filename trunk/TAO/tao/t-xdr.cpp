@@ -9,9 +9,9 @@
 
 #include "tao/orb.h"
 
-#if defined(HAVE_WIDEC_H)
+#if defined (HAVE_WIDEC_H)
 #  include	<widec.h>
-#endif
+#endif /* HAVE_WIDEC_H */
 
 #include "tao/cdr.h"
 #include "tao/debug.h"

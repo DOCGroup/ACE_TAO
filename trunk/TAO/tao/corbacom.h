@@ -19,14 +19,14 @@
 #if !defined (TAO_CORBACOM_H)
 #define TAO_CORBACOM_H
 
-#if !defined(TAO_CONST)
+#if !defined (TAO_CONST)
 //Something to document the fact that we want to put 'const' in front
 // of a type, but that it won't turn out the way we want, e.g., we
 // really want to express that a CORBA_String is const, but since CORBA_String
 // is a char*, the const modifies the pointer and not the pointed-to, and
 // some compilers (like SGI's EDG-derived thang) complain.
 #  define TAO_CONST
-#endif
+#endif /* TAO_CONST */
 
 #  if	SIZEOF_BOOL != 0
 typedef bool			CORBA_Boolean;
@@ -77,13 +77,13 @@ typedef unsigned __int64 CORBA_ULongLong;
 // itself.
 
 #    define	NONNATIVE_LONGLONG
-#    if	defined (WORDS_BIGENDIAN)
+#    if	defined (TAO_WORDS_BIGENDIAN)
 struct CORBA_LongLong { CORBA_Long h, l; };
 struct CORBA_ULongLong { CORBA_Long h, l; };
 #    else
 struct CORBA_LongLong { CORBA_Long l, h; };
 struct CORBA_ULongLong { CORBA_ULong l, h; };
-#    endif /* !WORDS_BIGENDIAN */
+#    endif /* !TAO_WORDS_BIGENDIAN */
 #  endif /* no native 64 bit integer type */
 
 typedef float CORBA_Float;
@@ -144,10 +144,10 @@ public:
   CORBA_String_var &operator= (const CORBA_String_var &s);
   // assignment operator
 
-  operator char* () { return ptr_; }
+  operator char *() { return ptr_; }
   // access and modify
 
-  operator const char* () const {return ptr_; };
+  operator const char *() const {return ptr_; };
   // only read privileges
 
   char &operator[] (CORBA_ULong index);

@@ -40,26 +40,16 @@ TAO_OA_Parameters::demux_strategy (const char* strategy)
 {
   // Determine the demux strategy based on the given name
   if (!ACE_OS::strcmp (strategy, "linear"))
-    {
-      this->demux_ = TAO_LINEAR;
-    }
+    this->demux_ = TAO_LINEAR;
   else if (!ACE_OS::strcmp (strategy, "dynamic_hash"))
-    {
-      this->demux_ = TAO_DYNAMIC_HASH;
-    }
+    this->demux_ = TAO_DYNAMIC_HASH;
   else if (!ACE_OS::strcmp (strategy, "user_def"))
-    {
-      this->demux_ = TAO_USER_DEFINED;
-    }
+    this->demux_ = TAO_USER_DEFINED;
   else if (!ACE_OS::strcmp (strategy, "active_demux"))
-    {
-      this->demux_ = TAO_ACTIVE_DEMUX;
-    }
+    this->demux_ = TAO_ACTIVE_DEMUX;
   else
-    {
-      // Provide fallback!
-      this->demux_ = TAO_DYNAMIC_HASH;
-    }
+    // Provide fallback!
+    this->demux_ = TAO_DYNAMIC_HASH;
 }
 
 // Pointer to the Singleton instance.
@@ -68,7 +58,7 @@ TAO_OA_Parameters *TAO_OA_Parameters::instance_ = 0;
 // Lock the creation of the singleton.  
 ACE_SYNCH_MUTEX TAO_OA_Parameters::ace_singleton_lock_;
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "params.i"
-#endif
+#endif /* __ACE_INLINE__ */
 

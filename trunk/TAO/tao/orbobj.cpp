@@ -28,7 +28,7 @@ extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 #if defined (SIG_IGN_BROKEN)
 #	undef SIG_IGN 
 #	define SIG_IGN ((RETSIGTYPE (*) (int))1)
-#endif	// NeXT
+#endif /* NeXT */
 
 // COM's IUnknown support
 
@@ -41,22 +41,24 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-TAO_Client_Strategy_Factory&
-CORBA_ORB::client_factory(void)
+TAO_Client_Strategy_Factory &
+CORBA_ORB::client_factory (void)
 {
   if (client_factory_ == 0)
     {
-      // Look in the service repository for an instance
+      // Look in the service repository for an instance.
       client_factory_ =
-        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance("Client_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
       client_factory_from_service_config_ = CORBA_B_TRUE;
     }
 
   if (client_factory_ == 0)
     {
-      // Still don't have one
-      ACE_NEW(client_factory_, TAO_Default_Client_Strategy_Factory);
-      // this will throw an exception if it fails on exception-throwing platforms
+      // Still don't have one, so let's allocate the default.  This
+      // will throw an exception if it fails on exception-throwing
+      // platforms.  
+      ACE_NEW (client_factory_, TAO_Default_Client_Strategy_Factory);
+
       client_factory_from_service_config_ = CORBA_B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
@@ -66,22 +68,25 @@ CORBA_ORB::client_factory(void)
   return *client_factory_;
 }
 
-TAO_Server_Strategy_Factory&
-CORBA_ORB::server_factory(void)
+TAO_Server_Strategy_Factory &
+CORBA_ORB::server_factory (void)
 {
   if (server_factory_ == 0)
     {
-      // Look in the service repository for an instance
+      // Look in the service repository for an instance.
       server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance("Server_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
+
       server_factory_from_service_config_ = CORBA_B_TRUE;
     }
 
   if (server_factory_ == 0)
     {
-      // Still don't have one
-      ACE_NEW(server_factory_, TAO_Default_Server_Strategy_Factory);
-      // this will throw an exception if it fails on exception-throwing platforms
+      // Still don't have one, so let's allocate the default.  This
+      // will throw an exception if it fails on exception-throwing
+      // platforms.
+      ACE_NEW (server_factory_, TAO_Default_Server_Strategy_Factory);
+
       server_factory_from_service_config_ = CORBA_B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
@@ -116,9 +121,11 @@ CORBA_ORB::Release (void)
 
 // Little convenience function use in parsing arguments
 inline static void
-argvec_shift(int& argc, char *argv[], int numslots)
+argvec_shift (int& argc, char *argv[], int numslots)
 {
-  ACE_OS::memmove(&argv[0], &argv[numslots], (argc - numslots)*sizeof(argv[0]));
+  ACE_OS::memmove (&argv[0],
+		   &argv[numslots],
+		   (argc - numslots) * sizeof argv[0]);
   argc -= numslots;
 }
   
@@ -189,24 +196,24 @@ CORBA_ORB_init (int &argc,
             // @@ Should we dup the string before assigning?
 	    svc_config_argv[svc_config_argc++] = argv[i + 1];
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAdaemon") == 0)
         {
           // Be a daemon
           svc_config_argv[svc_config_argc++] = "-b";
 
-          argvec_shift(argc, argv[i], 1);
+          argvec_shift (argc, argv[i], 1);
         }
       else if (ACE_OS::strcmp (argv[i], "-d") == 0)
         {
           // Turn on debugging
           svc_config_argv[svc_config_argc++] = "-d";
-          argvec_shift(argc, argv[i], 1);
+          argvec_shift (argc, argv[i], 1);
         }
     }
 
-#ifdef	DEBUG
+#if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
     char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
@@ -236,20 +243,21 @@ CORBA_ORB_init (int &argc,
   // is readable by mortals).
   CORBA_Boolean	use_ior;
 
-  if (orb_name != 0 && ACE_OS::strcmp (orb_name, "internet") == 0)
+  if (orb_name != 0
+      && ACE_OS::strcmp (orb_name, "internet") == 0)
     use_ior = CORBA_B_FALSE;
   else
     use_ior = CORBA_B_TRUE;
 
-#ifdef	SIGPIPE
+#if defined (SIGPIPE)
   // @@ Is there a better way to deal with this in a portable manner? --cjc
   //
   // Impractical to have each call to the ORB protect against the
   // implementation artifact of potential writes to dead connections,
   // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
   // these kinds of applications, anyway?
-  (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
-#endif	// SIGPIPE
+ (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
+#endif /* SIGPIPE */
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
@@ -262,7 +270,7 @@ CORBA_ORB_init (int &argc,
     return 0;
 
   // Initialize the Service Configurator
-  ACE_Service_Config::open(svc_config_argc, svc_config_argv);
+  ACE_Service_Config::open (svc_config_argc, svc_config_argv);
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
@@ -275,7 +283,7 @@ void
 CORBA_ORB::create_list (CORBA_Long count,
                         CORBA_NVList_ptr &retval)
 {
-  assert (CORBA_ULong(count) <= UINT_MAX);
+  assert (CORBA_ULong (count) <= UINT_MAX);
 
   retval = new CORBA_NVList;
 
@@ -331,7 +339,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    id = CORBA_string_dup (argv[i + 1]);
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAhost") == 0)
 	{
@@ -340,7 +348,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    host = CORBA_string_dup (argv[i + 1]);
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAport") == 0)
 	{
@@ -349,7 +357,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
             // @@ We shouldn't limit this to being specified as an int! --cjc
 	    port = ACE_OS::atoi (argv[i + 1]);
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
@@ -358,7 +366,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    demux = CORBA_string_dup (argv[i+1]);
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
@@ -366,7 +374,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    tablesize = ACE_OS::atoi (argv[i+1]);
 
-          argvec_shift(argc, argv[i], 2);
+          argvec_shift (argc, argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OArcvsock") == 0)
 	{
@@ -380,7 +388,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	{
           // Specify whether or not threads should be used.
 	  use_threads = CORBA_B_TRUE;
-          argvec_shift(argc, argv[i], 1);
+          argvec_shift (argc, argv[i], 1);
 	}
       else
 	i++;
@@ -409,7 +417,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 
 #if defined (ROA_NEEDS_REQ_KEY)
  (void) ACE_Thread::keycreate (&req_key_);
-#endif
+#endif /* ROA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, ROA (this, env), 0);
 
@@ -418,4 +426,4 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 
 #if !defined (__ACE_INLINE__)
 #  include "orbobj.i"
-#endif
+#endif /* __ACE_INLINE__ */

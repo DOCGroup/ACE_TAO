@@ -15,7 +15,7 @@
 //     $Id$
 // ============================================================================
 
-#if !defined(TAO_CLIENT_FACTORY_H)
+#if !defined (TAO_CLIENT_FACTORY_H)
 #  define TAO_CLIENT_FACTORY_H
 
 #  include "ace/SOCK_Acceptor.h"
@@ -28,18 +28,18 @@
 #  include "tao/params.h"
 
 class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-// = TITLE
-//      <Svc_Handler> used on the client side and returned
-//      by the <TAO_Client_Factory::CONNECTOR>.
-// @@ Should this be in here or in the default_client.*?
+  // = TITLE
+  //      <Svc_Handler> used on the client side and returned
+  //      by the <TAO_Client_Factory::CONNECTOR>.
+  // @@ Should this be in here or in the default_client.*?
 {
 public:
   // = Intialization method.
-  TAO_Client_Connection_Handler (ACE_Thread_Manager* = 0);
+  TAO_Client_Connection_Handler (ACE_Thread_Manager * = 0);
   // Do-nothing constructor
 
   // = <Connector> hook.
-  virtual int open (void*);
+  virtual int open (void *);
   // Initialization hook
 
   void in_use (CORBA_Boolean);
@@ -53,16 +53,15 @@ private:
   // True value indicates that something is using this handler.
 };
 
-
 class TAO_Client_Strategy_Factory : public ACE_Service_Object
   // = TITLE
-  //    Abstract factory used by the client to turn out various
-  //    strategies used on the client side.
+  //    Abstract factory used by the client to manufacture various
+  //    strategies used on the client-side.
 {
 public:
   // = Intialization and termination methods.
   TAO_Client_Strategy_Factory (void);
-  // Constructor
+  // Constructor.
   
   virtual ~TAO_Client_Strategy_Factory (void);
   // Destructor
@@ -76,12 +75,13 @@ public:
   // = Factory methods for ORB strategies.
 
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
+  // @@ Chris, shouldn't this always be "potentially" the case, even
+  // if a client didn't want to use it? 
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
-#endif
+#endif /* TAO_HAS_CLIENT_CONCURRENCY */
   
   virtual CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
-
 };
 
 #endif /* TAO_CLIENT_FACTORY_H */

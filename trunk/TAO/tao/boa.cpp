@@ -178,4 +178,4 @@ CORBA_BOA::bind (const CORBA_OctetSeq &key,
 
 #if !defined (__ACE_INLINE__) 
 #  include "boa.i"
-#endif
+#endif /* __ACE_INLINE__ */

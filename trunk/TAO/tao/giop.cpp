@@ -152,7 +152,7 @@ GIOP::send_message (CDR &stream,
 
       writelen = peer.send ((char _FAR *) buf, buflen);
 
-#ifdef	DEBUG
+#if defined (DEBUG)
       //      dmsg_filter (6, "wrote %d bytes to connection %d",
       //	   writelen, connection);
       dmsg_filter (6, "wrote %d bytes", writelen);
@@ -190,14 +190,14 @@ GIOP::send_message (CDR &stream,
       if ((buflen -= writelen) != 0)
 	buf += writelen;
 
-#ifdef	DEBUG
+#if defined (DEBUG)
       //
       // NOTE:  this should never be seen.  However, on Linux
       // it's been seen with UNIX domain sockets.
       //
       if (buflen)
 	dmsg_filter (8, "%u more bytes to write...\n", buflen);
-#endif
+#endif /* DEBUG */
     }
   return CORBA_B_TRUE;
 }
@@ -296,9 +296,9 @@ read_buffer (ACE_SOCK_Stream &peer,
 
       retval = peer.recv (buf, len);
 
-#ifdef	DEBUG
+#if defined (DEBUG)
       dmsg_filter (6, "read %d bytes from connection: %d", retval, peer.get_handle ());
-#endif
+#endif /* DEBUG */
       if (retval <= 0)			// EOF or error
 	return retval;
 
@@ -306,7 +306,7 @@ read_buffer (ACE_SOCK_Stream &peer,
       buf += retval;
       bytes_read += retval;
     }
-#endif
+#endif /* 1 */
   return bytes_read;
 }
 
@@ -1168,7 +1168,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	// XXX check whether hdr_status identifies a header
 	// unmarshaling error, and handle appropriately
 
-#ifdef	DEBUG
+#if defined (DEBUG)
 	if (TAO_debug_level >= 3) 
 	  {
             ACE_DEBUG ((LM_DEBUG, " (%P|%t) %sRequest ID %#lx from FD %d\n",

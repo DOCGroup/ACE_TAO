@@ -18,7 +18,7 @@
 
 #if defined (HAVE_WIDEC_H)
 #  include <widec.h>
-#endif
+#endif /* HAVE_WIDEC_H */
 
 // {77420082-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Exception,

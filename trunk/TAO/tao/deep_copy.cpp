@@ -39,7 +39,7 @@ extern "C"
   u_int wslen (const CORBA_WChar *);
   CORBA_WChar *wscpy (CORBA_WChar *, const CORBA_WChar *);
 }
-#endif
+#endif /* HAVE_WIDEC_H */
 
 extern CORBA_TypeCode TC_opaque;
 

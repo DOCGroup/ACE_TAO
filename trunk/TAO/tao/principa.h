@@ -64,12 +64,12 @@ private:
   CORBA_Principal &operator = (const CORBA_Principal_ptr &);
   CORBA_Principal (const CORBA_Principal_ptr &);
 
-#if	defined (__GNUG__)
+#if defined (__GNUG__)
   //
   // G++ (even 2.6.3) stupidly thinks instances can't be
   // created.  This de-warns.
   //
   friend class everyone_needs_a_friend;
-#endif
+#endif /* __GNUG__ */
 };
 #endif /* TAO_PRINCIPAL_H */

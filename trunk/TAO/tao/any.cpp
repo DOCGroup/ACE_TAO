@@ -42,7 +42,7 @@
 
 #if !defined (__ACE_INLINE__)
 #  include "any.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 CORBA_TypeCode_ptr
 CORBA_Any::type (void) const
@@ -436,7 +436,7 @@ deep_free (CORBA_TypeCode_ptr tc,
       break;
 
     case tk_any:
-#ifdef  __BORLANDC__
+#if defined (__BORLANDC__)
       // XXX BC++ doesn't yet accept explicit calls to destructors
       // with this syntax.  A simple workaround must exist, though;
       // other explicit destructor calls work.
@@ -444,7 +444,7 @@ deep_free (CORBA_TypeCode_ptr tc,
       dmsg ("Delete Any-in-Any ... memory leak with BC++ 4.5");
 #else
       ((CORBA_Any *) value)->~CORBA_Any ();
-#endif
+#endif /* __BORLANDC__ */
       break;
 
     default:
