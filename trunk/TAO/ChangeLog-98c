@@ -1,3 +1,9 @@
+Wed Aug 26 22:29:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/tao.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Changed the destination directories
+	for release libraries to the default directories.
+
 Wed Aug 26 22:04:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include): declare

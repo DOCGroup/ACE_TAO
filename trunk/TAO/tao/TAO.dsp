@@ -29,6 +29,7 @@ CFG=TAO - Win32 Alpha Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -39,7 +40,7 @@ CFG=TAO - Win32 Alpha Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -109,9 +110,9 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -311,7 +312,6 @@ DEP_CPP_ANY_C=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -411,6 +411,9 @@ DEP_CPP_ANY_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ANY_C=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -563,7 +566,6 @@ DEP_CPP_APPEN=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -663,6 +665,9 @@ DEP_CPP_APPEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_APPEN=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -817,7 +822,6 @@ DEP_CPP_CDR_C=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -921,6 +925,9 @@ DEP_CPP_CDR_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CDR_C=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -1073,7 +1080,6 @@ DEP_CPP_CLIEN=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -1173,6 +1179,9 @@ DEP_CPP_CLIEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CLIEN=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -1327,7 +1336,6 @@ DEP_CPP_CONNE=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -1432,6 +1440,9 @@ DEP_CPP_CONNE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CONNE=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -1584,7 +1595,6 @@ DEP_CPP_CURRE=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -1684,6 +1694,9 @@ DEP_CPP_CURRE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURRE=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -1836,7 +1849,6 @@ DEP_CPP_CURREN=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -1936,6 +1948,9 @@ DEP_CPP_CURREN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURREN=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -2088,7 +2103,6 @@ DEP_CPP_DEBUG=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -2188,6 +2202,9 @@ DEP_CPP_DEBUG=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEBUG=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -2340,7 +2357,6 @@ DEP_CPP_DECOD=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -2440,6 +2456,9 @@ DEP_CPP_DECOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DECOD=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -2592,7 +2611,6 @@ DEP_CPP_DEEP_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -2692,6 +2710,9 @@ DEP_CPP_DEEP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEEP_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -2844,7 +2865,6 @@ DEP_CPP_DEFAU=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -2944,6 +2964,9 @@ DEP_CPP_DEFAU=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAU=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -3096,7 +3119,6 @@ DEP_CPP_DEFAUL=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -3196,6 +3218,9 @@ DEP_CPP_DEFAUL=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAUL=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -3348,7 +3373,6 @@ DEP_CPP_ENCOD=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -3448,6 +3472,9 @@ DEP_CPP_ENCOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENCOD=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -3600,7 +3627,6 @@ DEP_CPP_ENVIR=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -3700,6 +3726,9 @@ DEP_CPP_ENVIR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENVIR=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -3852,7 +3881,6 @@ DEP_CPP_EXCEP=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -3952,6 +3980,9 @@ DEP_CPP_EXCEP=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_EXCEP=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -4104,7 +4135,6 @@ DEP_CPP_FORWA=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -4205,6 +4235,9 @@ DEP_CPP_FORWA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_FORWA=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -4359,7 +4392,6 @@ DEP_CPP_GIOP_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -4464,6 +4496,9 @@ DEP_CPP_GIOP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_GIOP_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -4616,7 +4651,6 @@ DEP_CPP_IIOP_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -4716,6 +4750,9 @@ DEP_CPP_IIOP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_IIOP_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -4870,7 +4907,6 @@ DEP_CPP_IIOP_O=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -4975,6 +5011,9 @@ DEP_CPP_IIOP_O=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_IIOP_O=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -5127,7 +5166,6 @@ DEP_CPP_IIOP_OR=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -5227,6 +5265,9 @@ DEP_CPP_IIOP_OR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_IIOP_OR=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -5381,7 +5422,6 @@ DEP_CPP_INVOC=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -5486,6 +5526,9 @@ DEP_CPP_INVOC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_INVOC=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -5638,7 +5681,6 @@ DEP_CPP_MARSH=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -5738,6 +5780,9 @@ DEP_CPP_MARSH=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_MARSH=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -5890,7 +5935,6 @@ DEP_CPP_NVLIS=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -5990,6 +6034,9 @@ DEP_CPP_NVLIS=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_NVLIS=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -6142,7 +6189,6 @@ DEP_CPP_OBJEC=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -6242,6 +6288,9 @@ DEP_CPP_OBJEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJEC=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -6394,7 +6443,6 @@ DEP_CPP_OBJECT=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -6494,6 +6542,9 @@ DEP_CPP_OBJECT=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJECT=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -6646,7 +6697,6 @@ DEP_CPP_OBJECT_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -6746,6 +6796,9 @@ DEP_CPP_OBJECT_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJECT_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -6898,7 +6951,6 @@ DEP_CPP_OPERA=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -6998,6 +7050,9 @@ DEP_CPP_OPERA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OPERA=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -7156,7 +7211,6 @@ DEP_CPP_ORB_C=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -7262,6 +7316,9 @@ DEP_CPP_ORB_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_C=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -7424,7 +7481,6 @@ DEP_CPP_ORB_CO=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -7527,6 +7583,9 @@ DEP_CPP_ORB_CO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_CO=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -7679,7 +7738,6 @@ DEP_CPP_PARAM=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -7779,6 +7837,9 @@ DEP_CPP_PARAM=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PARAM=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -7933,7 +7994,6 @@ DEP_CPP_POA_C=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -8039,6 +8099,9 @@ DEP_CPP_POA_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POA_C=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -8191,7 +8254,6 @@ DEP_CPP_POAC_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -8291,6 +8353,9 @@ DEP_CPP_POAC_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAC_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -8443,7 +8508,6 @@ DEP_CPP_POAS_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -8543,6 +8607,9 @@ DEP_CPP_POAS_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAS_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -8695,7 +8762,6 @@ DEP_CPP_POLIC=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -8795,6 +8861,9 @@ DEP_CPP_POLIC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLIC=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -8947,7 +9016,6 @@ DEP_CPP_POLICY=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -9047,6 +9115,9 @@ DEP_CPP_POLICY=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLICY=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -9199,7 +9270,6 @@ DEP_CPP_PRINC=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -9299,6 +9369,9 @@ DEP_CPP_PRINC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PRINC=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -9451,7 +9524,6 @@ DEP_CPP_REQUE=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -9551,6 +9623,9 @@ DEP_CPP_REQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_REQUE=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -9703,7 +9778,6 @@ DEP_CPP_SEQUE=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -9803,6 +9877,9 @@ DEP_CPP_SEQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SEQUE=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -9957,7 +10034,6 @@ DEP_CPP_SERVA=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -10062,6 +10138,9 @@ DEP_CPP_SERVA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVA=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -10216,7 +10295,6 @@ DEP_CPP_SERVE=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -10321,6 +10399,9 @@ DEP_CPP_SERVE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVE=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -10473,7 +10554,6 @@ DEP_CPP_SERVER=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -10573,6 +10653,9 @@ DEP_CPP_SERVER=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVER=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -10725,7 +10808,6 @@ DEP_CPP_SKIP_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -10825,6 +10907,9 @@ DEP_CPP_SKIP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SKIP_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -10977,7 +11062,6 @@ DEP_CPP_STUB_=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -11077,6 +11161,9 @@ DEP_CPP_STUB_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_STUB_=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -11229,7 +11316,6 @@ DEP_CPP_TAO_C=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -11330,6 +11416,9 @@ DEP_CPP_TAO_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_C=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -11482,7 +11571,6 @@ DEP_CPP_TAO_I=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -11583,6 +11671,9 @@ DEP_CPP_TAO_I=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_I=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -11735,7 +11826,6 @@ DEP_CPP_TYPEC=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -11835,6 +11925,9 @@ DEP_CPP_TYPEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPEC=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -11987,7 +12080,6 @@ DEP_CPP_TYPECO=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -12087,6 +12179,9 @@ DEP_CPP_TYPECO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPECO=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
@@ -12239,7 +12334,6 @@ DEP_CPP_UNION=\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
-	"..\..\ace\sys_conf.h"\
 	"..\..\ace\Task.h"\
 	"..\..\ace\Task.i"\
 	"..\..\ace\Task_T.cpp"\
@@ -12339,6 +12433,9 @@ DEP_CPP_UNION=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_UNION=\
+	"..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"

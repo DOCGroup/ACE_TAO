@@ -30,6 +30,7 @@ CFG=orbsvcs - Win32 Alpha Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
@@ -40,7 +41,7 @@ CFG=orbsvcs - Win32 Alpha Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -141,9 +142,9 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /WX /YX
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MDd /c
 # SUBTRACT CPP /WX /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -206,11 +207,13 @@ DEP_CPP_BCU_C=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Event\BCU.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_BCU_C=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -245,11 +248,13 @@ DEP_CPP_BCU_C=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Event\BCU.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_BCU_C=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -400,7 +405,6 @@ DEP_CPP_CC_LO=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -512,6 +516,9 @@ DEP_CPP_CC_LO=\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
 	
+NODEP_CPP_CC_LO=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -557,7 +564,6 @@ DEP_CPP_CC_LO=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Token.h"\
@@ -565,6 +571,9 @@ DEP_CPP_CC_LO=\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Concurrency\CC_LockSet.h"\
+	
+NODEP_CPP_CC_LO=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -715,7 +724,6 @@ DEP_CPP_CC_LOC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -828,6 +836,9 @@ DEP_CPP_CC_LOC=\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
 	
+NODEP_CPP_CC_LOC=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -873,7 +884,6 @@ DEP_CPP_CC_LOC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Token.h"\
@@ -882,6 +892,9 @@ DEP_CPP_CC_LOC=\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Concurrency\CC_LockSet.h"\
 	".\Concurrency\CC_LockSetFactory.h"\
+	
+NODEP_CPP_CC_LOC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -1032,7 +1045,6 @@ DEP_CPP_CONCU=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -1142,6 +1154,9 @@ DEP_CPP_CONCU=\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CONCU=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -1281,7 +1296,6 @@ DEP_CPP_CONCU=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -1383,6 +1397,9 @@ DEP_CPP_CONCU=\
 	"..\..\tao\varout.i"\
 	".\Concurrency\CC_LockSetFactory.h"\
 	".\Concurrency\Concurrency_Utils.h"\
+	
+NODEP_CPP_CONCU=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -1533,7 +1550,6 @@ DEP_CPP_CONFI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -1668,6 +1684,9 @@ DEP_CPP_CONFI=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_CONFI=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -1747,7 +1766,6 @@ DEP_CPP_CONFI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -1774,6 +1792,9 @@ DEP_CPP_CONFI=\
 	".\Scheduler_Factory.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_CONFI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -1924,7 +1945,6 @@ DEP_CPP_CONST=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -2039,6 +2059,9 @@ DEP_CPP_CONST=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_CONST=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -2115,7 +2138,6 @@ DEP_CPP_CONST=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -2131,6 +2153,9 @@ DEP_CPP_CONST=\
 	".\Trader\Constraint_Visitors.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONST=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -2281,7 +2306,6 @@ DEP_CPP_CONSTR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -2396,6 +2420,9 @@ DEP_CPP_CONSTR=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_CONSTR=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -2472,7 +2499,6 @@ DEP_CPP_CONSTR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -2488,6 +2514,9 @@ DEP_CPP_CONSTR=\
 	".\Trader\Constraint_Visitors.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTR=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -2638,7 +2667,6 @@ DEP_CPP_CONSTRA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -2752,6 +2780,9 @@ DEP_CPP_CONSTRA=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_CONSTRA=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -2828,7 +2859,6 @@ DEP_CPP_CONSTRA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -2843,6 +2873,9 @@ DEP_CPP_CONSTRA=\
 	".\Trader\Constraint_Visitors.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -2993,7 +3026,6 @@ DEP_CPP_CONSTRAI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -3117,6 +3149,9 @@ DEP_CPP_CONSTRAI=\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_CONSTRAI=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -3193,7 +3228,6 @@ DEP_CPP_CONSTRAI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -3218,6 +3252,9 @@ DEP_CPP_CONSTRAI=\
 	".\Trader\Trader_T.cpp"\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRAI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3368,7 +3405,6 @@ DEP_CPP_CONSTRAIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -3483,6 +3519,9 @@ DEP_CPP_CONSTRAIN=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_CONSTRAIN=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -3559,7 +3598,6 @@ DEP_CPP_CONSTRAIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -3575,6 +3613,9 @@ DEP_CPP_CONSTRAIN=\
 	".\Trader\Constraint_Visitors.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRAIN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3725,7 +3766,6 @@ DEP_CPP_COSCO=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -3833,6 +3873,9 @@ DEP_CPP_COSCO=\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCO=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -3972,7 +4015,6 @@ DEP_CPP_COSCO=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -4080,6 +4122,9 @@ DEP_CPP_COSCO=\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCO=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4230,7 +4275,6 @@ DEP_CPP_COSCON=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -4338,6 +4382,9 @@ DEP_CPP_COSCON=\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCON=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -4477,7 +4524,6 @@ DEP_CPP_COSCON=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -4585,6 +4631,9 @@ DEP_CPP_COSCON=\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCON=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4735,7 +4784,6 @@ DEP_CPP_COSLI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -4850,6 +4898,9 @@ DEP_CPP_COSLI=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -4989,7 +5040,6 @@ DEP_CPP_COSLI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -5104,6 +5154,9 @@ DEP_CPP_COSLI=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5254,7 +5307,6 @@ DEP_CPP_COSLIF=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -5369,6 +5421,9 @@ DEP_CPP_COSLIF=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -5508,7 +5563,6 @@ DEP_CPP_COSLIF=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -5623,6 +5677,9 @@ DEP_CPP_COSLIF=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5773,7 +5830,6 @@ DEP_CPP_COSNA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -5883,6 +5939,9 @@ DEP_CPP_COSNA=\
 	".\Naming\CosNaming_i.h"\
 	".\Naming\Entries.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -6022,7 +6081,6 @@ DEP_CPP_COSNA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -6124,6 +6182,9 @@ DEP_CPP_COSNA=\
 	"..\..\tao\varout.i"\
 	".\Naming\CosNaming_i.h"\
 	".\Naming\Entries.h"\
+	
+NODEP_CPP_COSNA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -6274,7 +6335,6 @@ DEP_CPP_COSNAM=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -6382,6 +6442,9 @@ DEP_CPP_COSNAM=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAM=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -6521,7 +6584,6 @@ DEP_CPP_COSNAM=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -6629,6 +6691,9 @@ DEP_CPP_COSNAM=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAM=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -6779,7 +6844,6 @@ DEP_CPP_COSNAMI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -6887,6 +6951,9 @@ DEP_CPP_COSNAMI=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAMI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -7026,7 +7093,6 @@ DEP_CPP_COSNAMI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -7134,6 +7200,9 @@ DEP_CPP_COSNAMI=\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAMI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7284,7 +7353,6 @@ DEP_CPP_COSTI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -7392,6 +7460,9 @@ DEP_CPP_COSTI=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -7531,7 +7602,6 @@ DEP_CPP_COSTI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -7639,6 +7709,9 @@ DEP_CPP_COSTI=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7789,7 +7862,6 @@ DEP_CPP_COSTIM=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -7897,6 +7969,9 @@ DEP_CPP_COSTIM=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTIM=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -8036,7 +8111,6 @@ DEP_CPP_COSTIM=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -8144,6 +8218,9 @@ DEP_CPP_COSTIM=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTIM=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8294,7 +8371,6 @@ DEP_CPP_COSTR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -8402,6 +8478,9 @@ DEP_CPP_COSTR=\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTR=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -8541,7 +8620,6 @@ DEP_CPP_COSTR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -8649,6 +8727,9 @@ DEP_CPP_COSTR=\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTR=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8799,7 +8880,6 @@ DEP_CPP_COSTRA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -8907,6 +8987,9 @@ DEP_CPP_COSTRA=\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTRA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -9046,7 +9129,6 @@ DEP_CPP_COSTRA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -9154,6 +9236,9 @@ DEP_CPP_COSTRA=\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTRA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -9314,7 +9399,6 @@ DEP_CPP_DISPA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -9482,6 +9566,7 @@ DEP_CPP_DISPA=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_DISPA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -9632,7 +9717,6 @@ DEP_CPP_DISPA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -9770,6 +9854,7 @@ DEP_CPP_DISPA=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_DISPA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -9923,7 +10008,6 @@ DEP_CPP_DYNSC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -10036,6 +10120,9 @@ DEP_CPP_DYNSC=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_DYNSC=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -10117,7 +10204,6 @@ DEP_CPP_DYNSC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -10134,6 +10220,9 @@ DEP_CPP_DYNSC=\
 	".\Sched\SchedEntry.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_DYNSC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -10284,7 +10373,6 @@ DEP_CPP_EC_GA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -10413,6 +10501,9 @@ DEP_CPP_EC_GA=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_EC_GA=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -10477,7 +10568,6 @@ DEP_CPP_EC_GA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Trace.h"\
@@ -10492,6 +10582,9 @@ DEP_CPP_EC_GA=\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_EC_GA=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -10648,7 +10741,6 @@ DEP_CPP_EC_GAT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -10784,6 +10876,9 @@ DEP_CPP_EC_GAT=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_EC_GAT=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -10864,7 +10959,6 @@ DEP_CPP_EC_GAT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Trace.h"\
@@ -10876,6 +10970,9 @@ DEP_CPP_EC_GAT=\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_EC_GAT=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -11026,7 +11123,6 @@ DEP_CPP_ENTRI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -11130,6 +11226,9 @@ DEP_CPP_ENTRI=\
 	".\CosNamingC.i"\
 	".\Naming\Entries.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_ENTRI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -11269,7 +11368,6 @@ DEP_CPP_ENTRI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -11370,6 +11468,9 @@ DEP_CPP_ENTRI=\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
 	".\Naming\Entries.h"\
+	
+NODEP_CPP_ENTRI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -11528,7 +11629,6 @@ DEP_CPP_EVENT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -11703,6 +11803,7 @@ DEP_CPP_EVENT=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_EVENT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -11851,7 +11952,6 @@ DEP_CPP_EVENT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -11996,6 +12096,7 @@ DEP_CPP_EVENT=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_EVENT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -12147,7 +12248,6 @@ DEP_CPP_EVENT_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -12262,6 +12362,9 @@ DEP_CPP_EVENT_=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_EVENT_=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -12326,7 +12429,6 @@ DEP_CPP_EVENT_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Trace.h"\
@@ -12337,6 +12439,9 @@ DEP_CPP_EVENT_=\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_EVENT_=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -12491,7 +12596,6 @@ DEP_CPP_IOR_M=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -12593,6 +12697,9 @@ DEP_CPP_IOR_M=\
 	"..\..\tao\varout.i"\
 	".\IOR_Multicast.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_IOR_M=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -12736,7 +12843,6 @@ DEP_CPP_IOR_M=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -12838,6 +12944,9 @@ DEP_CPP_IOR_M=\
 	"..\..\tao\varout.i"\
 	".\IOR_Multicast.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_IOR_M=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -12988,7 +13097,6 @@ DEP_CPP_LIFEC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -13110,6 +13218,9 @@ DEP_CPP_LIFEC=\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -13249,7 +13360,6 @@ DEP_CPP_LIFEC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -13371,6 +13481,9 @@ DEP_CPP_LIFEC=\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -13521,7 +13634,6 @@ DEP_CPP_LIFECY=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -13643,6 +13755,9 @@ DEP_CPP_LIFECY=\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -13782,7 +13897,6 @@ DEP_CPP_LIFECY=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -13904,6 +14018,9 @@ DEP_CPP_LIFECY=\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -14054,7 +14171,6 @@ DEP_CPP_LOCAL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -14190,6 +14306,9 @@ DEP_CPP_LOCAL=\
 	".\RtecSchedulerS_T.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_LOCAL=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -14329,7 +14448,6 @@ DEP_CPP_LOCAL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -14435,6 +14553,9 @@ DEP_CPP_LOCAL=\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_LOCAL=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -14585,7 +14706,6 @@ DEP_CPP_LOGGE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -14695,6 +14815,9 @@ DEP_CPP_LOGGE=\
 	".\LoggerS_T.i"\
 	".\orbsvcs_export.h"\
 	
+NODEP_CPP_LOGGE=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -14728,10 +14851,12 @@ DEP_CPP_LOGGE=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Log\Logger_i.h"\
+	
+NODEP_CPP_LOGGE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -14882,7 +15007,6 @@ DEP_CPP_LOGGER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -14990,6 +15114,9 @@ DEP_CPP_LOGGER=\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGER=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -15129,7 +15256,6 @@ DEP_CPP_LOGGER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -15237,6 +15363,9 @@ DEP_CPP_LOGGER=\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGER=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -15387,7 +15516,6 @@ DEP_CPP_LOGGERS=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -15495,6 +15623,9 @@ DEP_CPP_LOGGERS=\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGERS=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -15634,7 +15765,6 @@ DEP_CPP_LOGGERS=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -15742,6 +15872,9 @@ DEP_CPP_LOGGERS=\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGERS=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -15900,7 +16033,6 @@ DEP_CPP_MEMOR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -16066,6 +16198,7 @@ DEP_CPP_MEMOR=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_MEMOR=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -16214,7 +16347,6 @@ DEP_CPP_MEMOR=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -16350,6 +16482,7 @@ DEP_CPP_MEMOR=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_MEMOR=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -16509,7 +16642,6 @@ DEP_CPP_MODUL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -16674,6 +16806,7 @@ DEP_CPP_MODUL=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_MODUL=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -16822,7 +16955,6 @@ DEP_CPP_MODUL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -16957,6 +17089,7 @@ DEP_CPP_MODUL=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_MODUL=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -17113,7 +17246,6 @@ DEP_CPP_NAMIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -17225,6 +17357,9 @@ DEP_CPP_NAMIN=\
 	".\Naming\Entries.h"\
 	".\Naming\Naming_Utils.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_NAMIN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -17369,7 +17504,6 @@ DEP_CPP_NAMIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -17474,6 +17608,9 @@ DEP_CPP_NAMIN=\
 	".\Naming\Entries.h"\
 	".\Naming\Naming_Utils.h"\
 	".\orbsvcs_export.h"\
+	
+NODEP_CPP_NAMIN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -17624,7 +17761,6 @@ DEP_CPP_OFFER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -17736,6 +17872,9 @@ DEP_CPP_OFFER=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_OFFER=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -17812,7 +17951,6 @@ DEP_CPP_OFFER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -17825,6 +17963,9 @@ DEP_CPP_OFFER=\
 	".\Trader\Offer_Iterators.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_OFFER=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -17983,7 +18124,6 @@ DEP_CPP_REACT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -18140,6 +18280,7 @@ DEP_CPP_REACT=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_REACT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -18288,7 +18429,6 @@ DEP_CPP_REACT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -18415,6 +18555,7 @@ DEP_CPP_REACT=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_REACT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -18576,7 +18717,6 @@ DEP_CPP_RT_TA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -18745,6 +18885,7 @@ DEP_CPP_RT_TA=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_RT_TA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -18895,7 +19036,6 @@ DEP_CPP_RT_TA=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -19034,6 +19174,7 @@ DEP_CPP_RT_TA=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_RT_TA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -19185,7 +19326,6 @@ DEP_CPP_RTECE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -19314,6 +19454,9 @@ DEP_CPP_RTECE=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -19453,7 +19596,6 @@ DEP_CPP_RTECE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -19582,6 +19724,9 @@ DEP_CPP_RTECE=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -19732,7 +19877,6 @@ DEP_CPP_RTECEV=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -19861,6 +20005,9 @@ DEP_CPP_RTECEV=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECEV=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -20000,7 +20147,6 @@ DEP_CPP_RTECEV=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -20129,6 +20275,9 @@ DEP_CPP_RTECEV=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECEV=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20279,7 +20428,6 @@ DEP_CPP_RTECEVE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -20394,6 +20542,9 @@ DEP_CPP_RTECEVE=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
+	
+NODEP_CPP_RTECEVE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -20533,7 +20684,6 @@ DEP_CPP_RTECEVE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -20648,6 +20798,9 @@ DEP_CPP_RTECEVE=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
+	
+NODEP_CPP_RTECEVE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20798,7 +20951,6 @@ DEP_CPP_RTECEVEN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -20913,6 +21065,9 @@ DEP_CPP_RTECEVEN=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
+	
+NODEP_CPP_RTECEVEN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -21052,7 +21207,6 @@ DEP_CPP_RTECEVEN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -21167,6 +21321,9 @@ DEP_CPP_RTECEVEN=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
+	
+NODEP_CPP_RTECEVEN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21317,7 +21474,6 @@ DEP_CPP_RTECS=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -21432,6 +21588,9 @@ DEP_CPP_RTECS=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECS=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -21571,7 +21730,6 @@ DEP_CPP_RTECS=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -21686,6 +21844,9 @@ DEP_CPP_RTECS=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECS=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21836,7 +21997,6 @@ DEP_CPP_RTECSC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -21951,6 +22111,9 @@ DEP_CPP_RTECSC=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECSC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -22090,7 +22253,6 @@ DEP_CPP_RTECSC=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -22205,6 +22367,9 @@ DEP_CPP_RTECSC=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
+	
+NODEP_CPP_RTECSC=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -22355,7 +22520,6 @@ DEP_CPP_RUNTI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -22479,6 +22643,9 @@ DEP_CPP_RUNTI=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_RUNTI=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -22512,7 +22679,6 @@ DEP_CPP_RUNTI=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\orbsvcs_export.h"\
@@ -22522,6 +22688,9 @@ DEP_CPP_RUNTI=\
 	".\Scheduler_Factory.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_RUNTI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -22672,7 +22841,6 @@ DEP_CPP_SCHED=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -22783,6 +22951,9 @@ DEP_CPP_SCHED=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_SCHED=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -22847,7 +23018,6 @@ DEP_CPP_SCHED=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Trace.h"\
@@ -22858,6 +23028,9 @@ DEP_CPP_SCHED=\
 	".\Sched\SchedEntry.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHED=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -23010,7 +23183,6 @@ DEP_CPP_SCHEDU=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -23121,6 +23293,9 @@ DEP_CPP_SCHEDU=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_SCHEDU=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -23202,7 +23377,6 @@ DEP_CPP_SCHEDU=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -23217,6 +23391,9 @@ DEP_CPP_SCHEDU=\
 	".\Sched\Scheduler.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHEDU=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -23367,7 +23544,6 @@ DEP_CPP_SCHEDUL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -23489,6 +23665,9 @@ DEP_CPP_SCHEDUL=\
 	".\Scheduler_Factory.h"\
 	".\Scheduler_Factory.i"\
 	
+NODEP_CPP_SCHEDUL=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -23537,7 +23716,6 @@ DEP_CPP_SCHEDUL=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Trace.h"\
@@ -23546,6 +23724,9 @@ DEP_CPP_SCHEDUL=\
 	".\Runtime_Scheduler.i"\
 	".\Scheduler_Factory.h"\
 	".\Scheduler_Factory.i"\
+	
+NODEP_CPP_SCHEDUL=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -23698,7 +23879,6 @@ DEP_CPP_SCHEDULE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -23811,6 +23991,9 @@ DEP_CPP_SCHEDULE=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_SCHEDULE=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -23892,7 +24075,6 @@ DEP_CPP_SCHEDULE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -23909,6 +24091,9 @@ DEP_CPP_SCHEDULE=\
 	".\Sched\Scheduler_Generic.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHEDULE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -24059,7 +24244,6 @@ DEP_CPP_SCHEDULER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -24167,6 +24351,9 @@ DEP_CPP_SCHEDULER=\
 	".\Scheduler_Utilities.h"\
 	".\Scheduler_Utilities.i"\
 	
+NODEP_CPP_SCHEDULER=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -24200,12 +24387,14 @@ DEP_CPP_SCHEDULER=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\orbsvcs_export.h"\
 	".\Scheduler_Utilities.h"\
 	".\Scheduler_Utilities.i"\
+	
+NODEP_CPP_SCHEDULER=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -24356,7 +24545,6 @@ DEP_CPP_SERVI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -24467,6 +24655,9 @@ DEP_CPP_SERVI=\
 	".\Trader\Service_Type_Repository.h"\
 	".\Trader\Trader.h"\
 	
+NODEP_CPP_SERVI=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -24543,7 +24734,6 @@ DEP_CPP_SERVI=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -24555,6 +24745,9 @@ DEP_CPP_SERVI=\
 	".\orbsvcs_export.h"\
 	".\Trader\Service_Type_Repository.h"\
 	".\Trader\Trader.h"\
+	
+NODEP_CPP_SERVI=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -24707,7 +24900,6 @@ DEP_CPP_STRAT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -24822,6 +25014,9 @@ DEP_CPP_STRAT=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_STRAT=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -24903,7 +25098,6 @@ DEP_CPP_STRAT=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -24922,6 +25116,9 @@ DEP_CPP_STRAT=\
 	".\Sched\Strategy_Scheduler.i"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_STRAT=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -25078,7 +25275,6 @@ DEP_CPP_TASK_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -25230,6 +25426,7 @@ DEP_CPP_TASK_=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_TASK_=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -25376,7 +25573,6 @@ DEP_CPP_TASK_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -25498,6 +25694,7 @@ DEP_CPP_TASK_=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_TASK_=\
+	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -25649,7 +25846,6 @@ DEP_CPP_TIME_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -25755,6 +25951,9 @@ DEP_CPP_TIME_=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_TIME_=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -25788,12 +25987,14 @@ DEP_CPP_TIME_=\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
 	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
+	
+NODEP_CPP_TIME_=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -25945,7 +26146,6 @@ DEP_CPP_TRADE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -26069,6 +26269,9 @@ DEP_CPP_TRADE=\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_TRADE=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -26146,7 +26349,6 @@ DEP_CPP_TRADE=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -26171,6 +26373,9 @@ DEP_CPP_TRADE=\
 	".\Trader\Trader_T.cpp"\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADE=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -26321,7 +26526,6 @@ DEP_CPP_TRADER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -26432,6 +26636,9 @@ DEP_CPP_TRADER=\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
 	
+NODEP_CPP_TRADER=\
+	"..\..\..\ace\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -26508,7 +26715,6 @@ DEP_CPP_TRADER=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
 	"..\..\..\ace\Timer_Queue.h"\
@@ -26520,6 +26726,9 @@ DEP_CPP_TRADER=\
 	".\orbsvcs_export.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADER=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -26886,7 +27095,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26926,7 +27135,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26956,7 +27165,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26995,7 +27204,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27032,7 +27241,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27072,7 +27281,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27102,7 +27311,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27141,7 +27350,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27178,7 +27387,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27218,7 +27427,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27248,7 +27457,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27287,7 +27496,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27324,7 +27533,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27364,7 +27573,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27394,7 +27603,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27433,7 +27642,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27470,7 +27679,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27510,7 +27719,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27549,7 +27758,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27588,7 +27797,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27634,7 +27843,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27674,7 +27883,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27704,7 +27913,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27743,7 +27952,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27780,7 +27989,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27820,7 +28029,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27850,7 +28059,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27889,7 +28098,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27926,7 +28135,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27967,7 +28176,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27997,7 +28206,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28037,7 +28246,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28074,7 +28283,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28114,7 +28323,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28144,7 +28353,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28183,7 +28392,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28220,7 +28429,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28260,7 +28469,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28290,7 +28499,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28329,7 +28538,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28529,7 +28738,6 @@ DEP_CPP_OFFER_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -28641,6 +28849,9 @@ DEP_CPP_OFFER_=\
 	".\Trader\Offer_Iterators.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_OFFER_=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -28798,7 +29009,6 @@ DEP_CPP_OFFER_I=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -28912,6 +29122,9 @@ DEP_CPP_OFFER_I=\
 	".\Trader\Offer_Iterators_T.h"\
 	".\Trader\Trader.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_OFFER_I=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -29069,7 +29282,6 @@ DEP_CPP_TRADER_=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -29191,6 +29403,9 @@ DEP_CPP_TRADER_=\
 	".\Trader\Trader_T.cpp"\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADER_=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -29348,7 +29563,6 @@ DEP_CPP_TRADER_T=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -29470,6 +29684,9 @@ DEP_CPP_TRADER_T=\
 	".\Trader\Trader_Interfaces.h"\
 	".\Trader\Trader_T.h"\
 	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADER_T=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
