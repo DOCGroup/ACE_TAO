@@ -186,7 +186,6 @@ be_visitor_operation_direct_collocated_ss::gen_check_exception (be_type *bt)
   if (!this->void_return_type (bt))
     {
       *os << "ACE_CHECK_RETURN (";
-      // << "_tao_environment, ";
 
       // return the appropriate return value
       ctx = *this->ctx_;
@@ -206,7 +205,6 @@ be_visitor_operation_direct_collocated_ss::gen_check_exception (be_type *bt)
   else
     {
       *os << "ACE_CHECK;\n";
-      //<< "_tao_environment);\n";
     }
 
   return 0;
