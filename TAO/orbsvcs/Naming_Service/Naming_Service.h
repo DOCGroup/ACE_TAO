@@ -21,7 +21,7 @@
 #include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Naming_Service:public TAO_ORB_Manager
+class Naming_Service
 {
   // =TITLE
   //   Defines a class that encapsulates the implementation of a
@@ -52,8 +52,14 @@ public:
   // Destructor.
 	
 private:
+  int parse_args (int argc,char **argv);
+  // parses the arguments.
+  TAO_ORB_Manager orb_manager_;
+  // The ORB manager.
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
+  FILE *ior_output_file_;
+  // File to output the Naming Service IOR.
 };
 
 #endif /* _NAMING_SERVICE_H */

@@ -1,3 +1,9 @@
+Thu Apr  9 20:14:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Added a
+	naming_service_ior () method to return the ior of the Naming
+	Service.
+
 Thu Apr  9 19:25:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,

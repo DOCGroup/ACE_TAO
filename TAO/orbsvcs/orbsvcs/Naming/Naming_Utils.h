@@ -54,6 +54,9 @@ public:
   // Returns the "NameService" NamingContext implementation object
   // reference.
 
+  CORBA::String naming_service_ior (void);
+  // Returns the ior of the naming service.
+
   CosNaming::NamingContext *operator -> (void) const;
   // Returns a NamingContext_ptr.
 
@@ -69,6 +72,9 @@ private:
 
   TAO_IOR_Multicast *ior_multicast_;
   // The ior_multicast event handler.
+
+  CORBA::String_var naming_service_ior_;
+  // The IOR string of the naming service.
 };
 
 #endif /* _NAMING_SERVER_H */
