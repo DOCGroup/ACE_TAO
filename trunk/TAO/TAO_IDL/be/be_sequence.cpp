@@ -291,8 +291,8 @@ be_sequence::tc_encap_len (void)
 /*
  * Add this be_sequence to the locally defined types in this scope
  */
-be_sequence *
-be_sequence::fe_add_sequence (be_sequence *t)
+AST_Sequence *
+be_sequence::fe_add_sequence (AST_Sequence *t)
 {
   if (t == NULL)
     return NULL;

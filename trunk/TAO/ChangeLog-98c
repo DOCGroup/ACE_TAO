@@ -8,6 +8,12 @@ Sun Jul 12 01:40:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Declared a temporary buffer as CORBA::Octet* instead of void*,
 	  otherwise HP/aCC balks.
 
+	* TAO_IDL/be_include/be_sequence.h: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	  fe_add_sequence() was redefined with different arguments and
+	  return value. It was not the intention and it triggered warnings
+	  on several compilers (HP/aCC, SGI/CC).
+
 	* TAO_IDL/fe/y.tab.cpp: 
 	  Removed indent pragma.
 	  Declared tao_yyerror as taking a const char*, it is not used
