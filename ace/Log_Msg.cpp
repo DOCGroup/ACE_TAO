@@ -947,9 +947,13 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::STDERR)
           && !suppress_stderr) // This is taken care of by our caller.
-        log_record.print (ACE_Log_Msg::local_host_,
-                          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
-                          stderr);
+        log_record.print (ACE_Log_Msg::local_host_
+                          ,ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE)
+#if defined (ACE_HAS_WINCE)
+                          );
+#else
+                          ,stderr);
+#endif
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::LOGGER))
