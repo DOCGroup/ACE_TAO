@@ -26,11 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_CORBA_CURRENT___CI_)
-#define _CORBA_CURRENT___CI_
-
-#endif /* end #if !defined */
-

@@ -45,3 +45,7 @@
   TAO_USE_LOCAL_MEMORY_POOL will eliminate the problem, if
   set to 0. Memory is not leaked, but cached in the ORB
   until shutdown, which looks like the same thing to TaskManager.
+
+
+. Add an option to the IDL compiler to generate the Any operators in a
+  seperate file. We will make use of that in TAO alone.

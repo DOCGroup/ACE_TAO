@@ -1,3 +1,22 @@
+Mon Nov  3 19:42:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Generate ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION for
+	  Objref_Traits<> member specializations.
+
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/CurrentC.i:
+          
+	  Regenerated the code for a start with the above macro. 
+
+	* tao/Current.pidl: 
+
+	  Fixed commment about including corbafwd.h, since it is not
+	  required. 
+
 Mon Nov  3 19:20:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: 
