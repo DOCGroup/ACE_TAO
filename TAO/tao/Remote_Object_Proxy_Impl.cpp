@@ -20,7 +20,7 @@ TAO_Remote_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
   // Here we go remote to answer the question.
   CORBA::Boolean _tao_retval = 0;
-  
+
   TAO_Stub *istub = target->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (

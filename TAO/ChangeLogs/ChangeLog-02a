@@ -1,3 +1,102 @@
+Mon Oct 30 17:47:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Policy_Manager.h: 
+	* tao/Policy_Manager.cpp (TAO_Policy_Manager_Impl): 
+	  Changed the type of relative_roundtrip_timeout_ and sync_scope_ to 
+	  CORBA::Policy *. 
+	  Hence instead of calling TAO_RelativeTimeoutPolicy::clone or
+	  TAO_Sync_Scope_Policy::clone,	calling CORBA::Policy::copy.
+	  Made related changes.
+
+	  Modify the return parameter for
+	  relative_roundtrip_timeout () and sync_scope () to
+	  CORBA::Policy_ptr in all the classes in the file.
+	  
+	* tao/ORB_Core.h  : 
+	* tao/ORB_Core.cpp: 
+	  Declare and define TAO_ORB_Core::call_timeout_hook, 
+	  TAO_ORB_Core::set_timeout_hook, 
+	  TAO_ORB_Core::call_sync_scope_hook,
+	  TAO_ORB_Core::set_sync_scope_hook which are used to call the
+	  hooks to set and get the values of timeout/scope and save the
+	  hook for the respective policies so that they can be used later
+	  in need.
+	  
+	  Also, get_sync_strategy is defined as a helper to get the
+	  TAO_Sync_Strategy related to the Sync_Scope passed to it.
+		
+	  The function TAO_ORB_Core::stubless_sync_scope helps get the
+	  scope when the stub is nil.
+
+	  Modify the return parameter for
+	  TAO_ORB_Core::relative_roundtrip_timeout (),
+	  TAO_ORB_Core::default_relative_roundtrip_timeout (),
+	  TAO_ORB_Core::stubless_relative_roundtrip_timeout (), 
+	  TAO_ORB_Core::default_sync_scope () and
+	  TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
+	  
+	  The same change recursively in all the classes which call these
+	  functions.
+	
+	* tao/Stub.h: 
+	* tao/Stub.cpp (sync_scope): 
+	  Modified TAO_Stub::sync_strategy () to call
+	  TAO_ORB_Core::call_sync_scope_hook to get the scope value. 
+	  This scope value is passed to TAO_ORB_Core::get_sync_strategy ()
+	  to get the TAO_Sync_Strategy.
+
+	  Modify the return parameter for
+	  TAO_ORB_Core::relative_roundtrip_timeout (), 
+	  TAO_ORB_Core::sync_scope () to CORBA::Policy_ptr.
+
+	  Modified TAO::Sync_scope to call
+ 	  TAO_ORB_Core::stubless_sync_scope to avoid code repetition.
+	
+	* tao/Messaging_Policy_i.h (SyncScopePolicy,): 
+	* tao/Messaging_Policy_i.cpp: 
+	  Declare and define TAO_RelativeRoundtripTimeoutPolicy::hook
+	  and TAO_Sync_Scope_Policy::hook functions. The
+	  functions are called to set the hooks for the respective policies
+	  to indicate that the policies are set and also to know the Timeout
+	  and scope values in the respective cases.
+		
+	* tao/Messaging_PolicyFactory.cpp (create_policy): 
+	  Remove the if-defs for TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+	  and TAO_HAS_SYNC_SCOPE_POLICY in the switch-case block.
+
+	* tao/Messaging_ORBInitializer.cpp: 
+	  Save the pointers to hooks for 
+	  TAO_RelativeRoundtripTimeout and TAO_Sync_Scope
+	  policies in the
+	  TAO_Messaging_ORBInitializer::pre_init by calling the
+	  TAO_ORB_Core::set_timeout_hook and
+	  TAO_ORB_Core::set_sync_scope_hook.
+	
+	* tao/UIOP_Connect.h: 
+	* tao/UIOP_Connect.cpp:
+	
+	* tao/SHMIOP_Connect.h:
+	* tao/SHMIOP_Connect.cpp (handle_timeout): 
+	
+	* tao/IIOP_Connect.h: 
+	* tao/IIOP_Connect.cpp (handle_timeout): 
+	  Set the timeout value by calling TAO_ORB_Core::call_timeout_hook
+	  instead of getting a TAO_RelativeRoundtripPolicy pointer and
+	  proceeding from there.
+
+	* tao/Invocation.h: 
+	* tao/Invocation.cpp: 
+	  Same as IIOP_Connect for TAO_RelativeRoundtripTimeoutPolicy. 
+	  Similar change with sync_scope. Instead of getting a
+	  TAO_Sync_Scope_Policy_ptr and gettting the sync_scope
+	  value, call the hook for the sync_scope which is
+	  TAO_ORB_Core::call_sync_scope_hook.
+	
+	* tao/ClientRequestInfo.h : 
+	* tao/ClientRequestInfo.cpp (sync_scope): 
+	  Modified the return value of sync_scope from
+	  Messaging::SyncScope to CORBA::Short.
+
 Mon Oct 30 18:57:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/POA: Removed the Forwarding Servant.  The

@@ -83,6 +83,7 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 class TAO_Transport_Sync_Strategy;
+class TAO_Sync_Strategy;
 
 // ****************************************************************
 
@@ -405,16 +406,26 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+  CORBA::Policy *default_relative_roundtrip_timeout (void) const;
 
-  TAO_RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
-
-  TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
+  CORBA::Policy *stubless_relative_roundtrip_timeout (void);
   // Access to the RoundtripTimeoutPolicy policy set on the thread or
   // on the ORB.  In this method, we do not consider the stub since we
   // do not have access to it.
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  void call_timeout_hook (TAO_Stub *stub,
+                          int &has_timeout,
+                          ACE_Time_Value &time_value);
+
+  typedef void (*Timeout_Hook) (TAO_ORB_Core *,
+                                TAO_Stub *,
+                                int&,
+                                ACE_Time_Value&);
+
+  static void set_timeout_hook (Timeout_Hook hook);
+
+  static Timeout_Hook timeout_hook_;
+  // The hook to be set for the RelativeRoundtripTimeoutPolicy
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -422,11 +433,23 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+  CORBA::Policy *default_sync_scope (void) const;
 
-  TAO_Sync_Scope_Policy *default_sync_scope (void) const;
+  void call_sync_scope_hook (TAO_Stub *stub,
+                             int &has_synchronization,
+                             int &scope);
 
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
+                                        int &scope);
+
+  typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *, TAO_Stub *, int&, int&);
+
+  static void set_sync_scope_hook (Sync_Scope_Hook hook);
+
+  void stubless_sync_scope (CORBA::Policy *&result);
+
+  static Sync_Scope_Hook sync_scope_hook_;
+  // The hook to be set for the SyncScopePolicy
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -821,7 +844,7 @@ protected:
   CORBA::ULong collocation_strategy_;
   // Default collocation policy.  This should never be ORB_CONTROL.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+  #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_Policy_Manager *policy_manager_;
   // The Policy_Manager for this ORB.
@@ -832,7 +855,7 @@ protected:
   TAO_Policy_Current *policy_current_;
   // Policy current.
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+  #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   CORBA::Object_var poa_current_;
   // POA current.

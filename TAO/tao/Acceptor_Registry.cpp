@@ -135,7 +135,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 {
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
-
   TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
 
   TAO_EndpointSetIterator endpoints = endpoint_set.begin ();
@@ -210,7 +209,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       int found = 0;
       // If usable protocol (factory) is found then this will be
       // set equal to 1.
-
+ 
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
            factory != end;
@@ -252,7 +251,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             -1);
         }
     }
-
+ 
   // No longer need the endpoint set since all associated acceptors
   // have been opened by now.  Reclaim the memory used by the endpoint
   // set.

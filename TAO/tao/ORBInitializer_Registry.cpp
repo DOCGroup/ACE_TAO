@@ -116,7 +116,6 @@ TAO_ORBInitializer_Registry::post_init (
     }
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Singleton<TAO_ORBInitializer_Registry, ACE_SYNCH_MUTEX>;

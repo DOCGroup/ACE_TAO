@@ -32,8 +32,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
     public TAO_Local_RefCounted_Object
@@ -51,6 +49,13 @@ public:
 
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
   // Copy constructor.
+
+  /// Implement the timeout hook, this is set in the ORB_Core at
+  /// initialization time.
+  static void hook (TAO_ORB_Core *orb_core,
+                    TAO_Stub *stub,
+                    int &has_timeout,
+                    ACE_Time_Value &time_value);
 
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -81,11 +86,7 @@ private:
   // The attribute
 };
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
 ////////////////////////////////////////////////////////////////////////////////
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 class TAO_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
@@ -104,6 +105,13 @@ public:
 
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
+
+  /// Implement the Sync_Scope hook, this is set in the ORB_Core at
+  /// initialization time.
+  static void hook (TAO_ORB_Core *orb_core,
+                    TAO_Stub *stub,
+                    int &has_synchronization,
+                    int &scope);
 
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -142,8 +150,6 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_MESSAGING_POLICY_I_H */

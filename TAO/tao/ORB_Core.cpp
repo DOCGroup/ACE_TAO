@@ -61,6 +61,9 @@ TAO_default_environment ()
 
 // ****************************************************************
 
+TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
+TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
+
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : lock_ (),
     connector_registry_ (0),
@@ -209,7 +212,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
 
-  //  this->parser_registry_.open (this);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -1589,7 +1591,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
          CORBA::COMPLETED_NO ),
                         0);
     }
-  
+
   // Make sure we have at least one profile.  <mp> may end up being
   // empty if none of the acceptor endpoints have the right priority
   // for this object, for example.
@@ -2500,14 +2502,97 @@ TAO_ORB_Core::implrepo_service (void)
   return CORBA::Object::_duplicate (this->implrepo_service_);
 }
 
+void
+TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
+                                    int &has_synchronization,
+                                    int &scope)
+{
+  if (TAO_ORB_Core::sync_scope_hook_ == 0)
+    {
+      has_synchronization = 0;
+      return;
+    }
 
+  (*TAO_ORB_Core::sync_scope_hook_) (this, stub, has_synchronization, scope);
+}
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+TAO_Sync_Strategy &
+TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
+                                 int &scope)
+{
+  if (scope == TAO::SYNC_WITH_TRANSPORT ||
+      scope == TAO::SYNC_WITH_SERVER ||
+      scope == TAO::SYNC_WITH_TARGET)
+    return this->transport_sync_strategy ();
 
-TAO_RelativeRoundtripTimeoutPolicy *
+  if (scope == TAO::SYNC_NONE ||
+      scope == TAO::SYNC_EAGER_BUFFERING)
+    return this->eager_buffering_sync_strategy ();
+
+  if (scope == TAO::SYNC_DELAYED_BUFFERING)
+    return this->delayed_buffering_sync_strategy ();
+
+  return this->transport_sync_strategy ();
+}
+
+void
+TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
+{
+  TAO_ORB_Core::sync_scope_hook_ = hook;
+  return;
+}
+
+void
+TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
+{
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.sync_scope ();
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->sync_scope ();
+    }
+
+  if (result == 0)
+    result = this->default_sync_scope ();
+
+  return;
+}
+
+void
+TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
+                                 int &has_timeout,
+                                 ACE_Time_Value &time_value)
+{
+  if (TAO_ORB_Core::timeout_hook_ == 0)
+    {
+      has_timeout = 0;
+      return;
+    }
+  (*TAO_ORB_Core::timeout_hook_) (this, stub, has_timeout, time_value);
+}
+
+void
+TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
+{
+  TAO_ORB_Core::timeout_hook_ = hook;
+  // Saving the hook pointer so that we can use it later when needed.
+
+  return;
+}
+
+CORBA::Policy *
 TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 {
-  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
+  CORBA::Policy *result = 0;
 
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
@@ -2530,8 +2615,6 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
   return result;
 }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_RT_CORBA == 1)
 
