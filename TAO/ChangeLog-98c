@@ -1,3 +1,16 @@
+Wed Jun 24 18:13:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
+	  The multiple EC is not shutting dows cleanly, apparently it is
+	  a synchronization problem between the two processes. These
+	  changes try to minimize the problem by making shutdown() (and
+	  activate) nilpotent in the EC internal threads.
+
 Wed Jun 24 15:55:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_root_poa): Changed resolve_poa() to

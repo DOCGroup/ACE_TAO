@@ -496,10 +496,8 @@ Test_ECG::run (int argc, char* argv[])
 
       this->test_stop_ = ACE_OS::gethrtime ();
 
-      // Wait for EC threads to terminate....
-      ACE_DEBUG ((LM_DEBUG, "waiting for EC threads\n"));
-      if (ACE_Thread_Manager::instance ()->wait () == -1)
-        return -1;
+      ACE_DEBUG ((LM_DEBUG, "shutdown the EC\n"));
+      ec_impl.shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
@@ -963,7 +961,7 @@ Test_ECG::shutdown_consumer (int id)
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
   this->running_consumers_--;
   if (this->running_consumers_ == 0)
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 int

@@ -428,9 +428,6 @@ protected:
   ACE_ES_Dispatch_Queue *queues_[ACE_Scheduler_MAX_PRIORITIES];
   // Pointers to dispatch queues.
 
-  ACE_ES_Dispatch_Queue *delete_me_queues_[ACE_Scheduler_MAX_PRIORITIES];
-  // Pointers to dispatch queues that want to die.
-
   int queue_count_[ACE_Scheduler_MAX_PRIORITIES];
   // The number of consumers using each queue.
 

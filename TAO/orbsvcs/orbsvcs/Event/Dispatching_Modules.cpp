@@ -119,18 +119,14 @@ ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *chan
     ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Priority_Dispatching"));
 
   // Initialize the queues.
-  for (int x=0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
+  for (int x = 0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
-      queues_[x] = 0;
-      delete_me_queues_[x] = 0;
+      this->queues_[x] = 0;
     }
 }
 
 ACE_ES_Priority_Dispatching::~ACE_ES_Priority_Dispatching (void)
 {
-  // Delete the queues.
-  for (int x=0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
-    delete delete_me_queues_[x];
 }
 
 
@@ -139,6 +135,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 {
   for (int x = 0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
+      if (this->queues_[x] != 0)
+	continue;
+
       // Convert ACE_Scheduler_Rate (it's really a period, not a rate!)
       // to a form we can easily work with.
       ACE_Time_Value period_tv;
@@ -411,6 +410,15 @@ ACE_ES_Priority_Dispatching::shutdown (void)
   if (this->thr_mgr_.wait () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n",
 		"Priority_Dispatching::shutdown - waiting"));
+
+  for (int i = 0; i <= this->highest_priority_; ++i)
+    {
+      if (this->queues_[i] != 0)
+	{
+	  delete this->queues_[i];
+	  this->queues_[i] = 0;
+	}
+    }
 }
 
 // This gets called every time a Dispatch Queue closes down.  We
@@ -420,37 +428,6 @@ ACE_ES_Priority_Dispatching::shutdown (void)
 void
 ACE_ES_Priority_Dispatching::dispatch_queue_closed (ACE_ES_Dispatch_Queue *queue)
 {
-  ACE_ES_GUARD ace_mon (lock_);
-
-  // Find the queue.
-  for (int x = 0; x <= highest_priority_; x++)
-    {
-      if (queues_[x] == queue)
-        {
-          ACE_DEBUG ((LM_DEBUG, "(%t) Dispatch queue %d is closed.\n", x));
-
-          // Store the queue for deleting in this object's destructor.
-          delete_me_queues_[x] = queues_[x];
-          queues_[x] = 0;
-
-          // Reset highest_priority_.
-          if (x == highest_priority_)
-            {
-              while ((--highest_priority_ >= 0) &&
-                     (queues_[highest_priority_] == 0));
-
-              if (highest_priority_ < 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "Dispatching module shut down.\n"));
-                  up_->shutdown ();
-                  return;
-                }
-            }
-
-          // If we found the queue, we can exit the for loop.
-          break;
-        }
-    }
 }
 
 /*

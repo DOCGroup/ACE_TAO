@@ -13,6 +13,11 @@ ACE_Task_Manager::ACE_Task_Manager (void)
     this->reactorTasks[i] = 0;
 }
 
+ACE_Task_Manager::~ACE_Task_Manager (void)
+{
+  this->shutdown ();
+}
+
 void ACE_Task_Manager::activate (void)
 {
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
