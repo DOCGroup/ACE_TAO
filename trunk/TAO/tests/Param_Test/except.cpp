@@ -44,7 +44,7 @@ Test_Exception::opname (void) const
 
 int
 Test_Exception::init_parameters (Param_Test_ptr,
-				 CORBA::Environment &)
+                                 CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -64,14 +64,14 @@ Test_Exception::reset_parameters (void)
 
 int
 Test_Exception::run_sii_test (Param_Test_ptr objref,
-			      CORBA::Environment &_env)
+                              CORBA::Environment &_env)
 {
   TAO_TRY
     {
       this->ret_ = objref->test_exception (this->in_,
-					   this->inout_,
-					   this->out_,
-					   TAO_TRY_ENV);
+                                           this->inout_,
+                                           this->out_,
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       return 0;
@@ -79,15 +79,15 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
   TAO_CATCH (Param_Test::Ooops, ex)
     {
       if (TAO_debug_level > 0)
-	{
-	  const char *reason = ex.reason.in ();
-	  if (reason == 0)
-	    reason = "nil";
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Test_Exception::run_sii_test - "
-		      "expected user exception"
-		      " (%s,%d)\n", reason, ex.input));
-	}
+        {
+          const char *reason = ex.reason.in ();
+          if (reason == 0)
+            reason = "nil";
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test_Exception::run_sii_test - "
+                      "expected user exception"
+                      " (%s,%d)\n", reason, ex.input));
+        }
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -98,10 +98,10 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
   TAO_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
-	{
-	  TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-				       "expected system exception\n");
-	}
+        {
+          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
+                                       "expected system exception\n");
+        }
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -112,18 +112,18 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
   TAO_CATCH (Param_Test::BadBoy, ex)
     {
       TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-				   " unexpected exception\n");
+                                   " unexpected exception\n");
       TAO_RETHROW_RETURN (-1);
     }
   TAO_ENDTRY;
 
-  return -1;
+  ACE_NOTREACHED (return -1);
 }
 
 int
 Test_Exception::add_args (CORBA::NVList_ptr param_list,
-			  CORBA::NVList_ptr retval,
-			  CORBA::Environment &env)
+                          CORBA::NVList_ptr retval,
+                          CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_ulong,
