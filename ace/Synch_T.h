@@ -674,7 +674,7 @@ public:
  * variable.  The waiting threads, upon awakening, reacquire the
  * mutex and re-evaluate the condition.
  * Note, you can only parameterize <ACE_Condition> with
- * <ACE_Thread_Mutex> or <ACE_Null_Mutex>.
+ * @a ACE_Thread_Mutex, @a ACE_Recursive_Thread_Mutex, or @a ACE_Null_Mutex.
  */
 template <class MUTEX>
 class ACE_Condition
