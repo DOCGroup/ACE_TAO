@@ -16,15 +16,15 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const char * location,
   CosLoadBalancing::LoadManager_ptr lm,
   const char * orb_id,
-  TAO_LB_LoadAlert & /* load_alert */)
+  TAO_LB_LoadAlert & load_alert)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
     location_ (location),
     lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
-    orb_id_ (CORBA::string_dup (orb_id))
-//   , load_alert_ (load_alert)
-//   , la_ref_ ()
-//   , lock_ ()
+    orb_id_ (CORBA::string_dup (orb_id)),
+    load_alert_ (load_alert),
+    la_ref_ (),
+    lock_ ()
 {
 }
 
@@ -95,91 +95,92 @@ TAO_LB_IORInterceptor::components_established (
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
     PortableInterceptor::AdapterManagerId,
-    PortableInterceptor::AdapterState /* state */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState state
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-//   if (state == PortableInterceptor::ACTIVE)
-//     {
-//       this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
-//       ACE_CHECK;
-//     }
+  if (state == PortableInterceptor::ACTIVE)
+    {
+      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
 TAO_LB_IORInterceptor::adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState /* state */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState state
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-//   if (state == PortableInterceptor::ACTIVE)
-//     {
-//       this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
-//       ACE_CHECK;
-//     }
+  if (state == PortableInterceptor::ACTIVE)
+    {
+      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
-TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
 {
-//   {
-//     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-//     if (!CORBA::is_nil (this->la_ref_.in ()))
-//       return;
-//   }
+    if (!CORBA::is_nil (this->la_ref_.in ()))
+      return;
+  }
 
-//   ACE_TRY_EX (foo)
-//     {
-//       // By now, the RootPOA has been fully initialized, so it is safe
-//       // to activate the LoadAlert object.
-//       CosLoadBalancing::LoadAlert_var la =
-//         this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-//       ACE_TRY_CHECK_EX (foo);
+  ACE_TRY_EX (foo)
+    {
+      // By now, the RootPOA has been fully initialized, so it is safe
+      // to activate the LoadAlert object.
+      CosLoadBalancing::LoadAlert_var la =
+        this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK_EX (foo);
 
-//       {
-//         ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-//         this->la_ref_ = la;
-//       }
+        this->la_ref_ = la;
+      }
 
-//     }
-//   ACE_CATCHANY
-//     {
-//       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-//                            "LoadAlert::_this()");
-//     }
-//   ACE_ENDTRY;
-//   ACE_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "LoadAlert::_this()");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 
-//   ACE_TRY
-//     {
-//       PortableGroup::Location location (1);
-//       location.length (1);
-//       location[0].id = CORBA::string_dup (this->location_.in ());
+  ACE_TRY
+    {
+      PortableGroup::Location location (1);
+      location.length (1);
+      location[0].id = CORBA::string_dup (this->location_.in ());
 
-//       this->lm_->register_load_alert (location,
-//                                       this->la_ref_.in ()
-//                                       ACE_ENV_ARG_PARAMETER);
-//       ACE_TRY_CHECK;
-//     }
-//   ACE_CATCH (CosLoadBalancing::LoadAlertAlreadyPresent, ex)
-//     {
-//       if (TAO_debug_level > 0)
-//         ACE_PRINT_EXCEPTION (ex,
-//                              "LoadManager::register_load_alert");
+      this->lm_->register_load_alert (location,
+                                      this->la_ref_.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CosLoadBalancing::LoadAlertAlreadyPresent, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex,
+                             "LoadManager::register_load_alert");
 
-//       ACE_TRY_THROW (CORBA::BAD_INV_ORDER ());
-//     }
-//   ACE_CATCH (CosLoadBalancing::LoadAlertNotAdded, ex)
-//     {
-//       if (TAO_debug_level > 0)
-//         ACE_PRINT_EXCEPTION (ex,
-//                              "LoadManager::register_load_alert");
+      ACE_TRY_THROW (CORBA::BAD_INV_ORDER ());
+    }
+  ACE_CATCH (CosLoadBalancing::LoadAlertNotAdded, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex,
+                             "LoadManager::register_load_alert");
 
-//       ACE_TRY_THROW (CORBA::INTERNAL ());
-//     }
-//   ACE_ENDTRY;
-//   ACE_CHECK;
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }

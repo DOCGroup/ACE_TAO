@@ -9,8 +9,8 @@
 #include "tao/Pseudo_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Pseudo_VarOut_T, 
+ACE_RCSID (tao,
+           Pseudo_VarOut_T,
            "$Id$")
 
 template <typename T>

@@ -84,7 +84,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
         CORBA::SystemException
-    )); 
+    ));
 
   virtual void components_established (
       PortableInterceptor::IORInfo_ptr info
@@ -132,14 +132,14 @@ private:
   /// ORBid of the ORB this IORInterceptor is registered with.
   CORBA::String_var orb_id_;
 
-//   /// Reference to the LoadAlert servant.
-//   TAO_LB_LoadAlert & load_alert_;
+  /// Reference to the LoadAlert servant.
+  TAO_LB_LoadAlert & load_alert_;
 
-//   /// Reference to the LoadAlert object.
-//   CosLoadBalancing::LoadAlert_var la_ref_;
+  /// Reference to the LoadAlert object.
+  CosLoadBalancing::LoadAlert_var la_ref_;
 
-//   /// Synchronize access to the class state.
-//   TAO_SYNCH_MUTEX lock_;
+  /// Synchronize access to the class state.
+  TAO_SYNCH_MUTEX lock_;
 
 };
 

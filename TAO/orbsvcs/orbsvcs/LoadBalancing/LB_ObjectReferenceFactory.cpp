@@ -175,67 +175,65 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
   PortableGroup::ObjectGroup_out object_group
   ACE_ENV_ARG_DECL)
 {
-  if (this->load_managed_object (repository_id, index))
-    {
-      PortableGroup::ObjectGroup_var group;
-      if (this->table_.find (repository_id, group) != 0)
-        {
-          if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
-                                  "CREATE") == 0)
-            {
-              PortableGroup::Criteria criteria (1);
-              criteria.length (1);
-
-              PortableGroup::Property & property = criteria[0];
-              property.nam.length (1);
-
-              property.nam[0].id =
-                CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
-
-              // Configure for application-controlled membership.
-              PortableGroup::MembershipStyleValue msv =
-                PortableGroup::MEMB_APP_CTRL;
-              property.val <<= msv;
-
-              PortableGroup::GenericFactory::FactoryCreationId_var fcid;
-
-              group =
-                this->lm_->create_object (repository_id,
-                                          criteria,
-                                          fcid.out ()
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (0);
-
-              const CORBA::ULong len = this->fcids_.size ();
-              this->fcids_.size (len + 1); // Incremental growth.  Yuck!
-              this->fcids_[len] = fcid;
-            }
-          else
-            {
-              group =
-                this->orb_->string_to_object (this->object_groups_[index].in ()
-                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (0);
-            }
-
-          if (this->table_.bind (repository_id, group) != 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            "TAO_LB_ObjectReferenceFactory::"
-                            "find_object_group - "
-                            "Couldn't bind object group reference.\n"));
-
-              ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
-            }
-
-         object_group = group.out ();
-       }
-
-      return 1;
-    }
-  else
+  if (!this->load_managed_object (repository_id, index))
     return 0;
+
+  PortableGroup::ObjectGroup_var group;
+  if (this->table_.find (repository_id, group) != 0)
+    {
+      if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
+                              "CREATE") == 0)
+        {
+          PortableGroup::Criteria criteria (1);
+          criteria.length (1);
+
+          PortableGroup::Property & property = criteria[0];
+          property.nam.length (1);
+
+          property.nam[0].id =
+            CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+
+          // Configure for application-controlled membership.
+          PortableGroup::MembershipStyleValue msv =
+            PortableGroup::MEMB_APP_CTRL;
+          property.val <<= msv;
+
+          PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+
+          group =
+            this->lm_->create_object (repository_id,
+                                      criteria,
+                                      fcid.out ()
+                                      ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          const CORBA::ULong len = this->fcids_.size ();
+          this->fcids_.size (len + 1); // Incremental growth.  Yuck!
+          this->fcids_[len] = fcid;
+        }
+      else
+        {
+          group =
+            this->orb_->string_to_object (this->object_groups_[index].in ()
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->table_.bind (repository_id, group) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO_LB_ObjectReferenceFactory::"
+                        "find_object_group - "
+                        "Couldn't bind object group reference.\n"));
+
+          ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+        }
+
+      object_group = group._retn ();
+    }
+
+  return 1;
 }
 
 CORBA::Boolean
