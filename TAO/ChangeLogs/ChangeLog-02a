@@ -1,3 +1,17 @@
+Tue Nov 21 17:37:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Nested_Event_Loop/Makefile: 
+
+	  Updated to link TAO_Strategies.
+	
+	* tests/Nested_Event_Loop/client.cpp: 
+	* tests/Nested_Event_Loop/server.cpp: 
+
+	  Included tao/Stratgies/advanced_resource.h
+	
+	* tests/Nested_Event_Loop/svc.conf: 
+	  Passed -ORBReactorType select_mt as the argument.
+	
 Tue Nov 21 17:23:45 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Client_Protocol/server.dsp
