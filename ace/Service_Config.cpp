@@ -308,6 +308,10 @@ ACE_Service_Config::process_directives (void)
     }
   else
     {
+      // AC 970827 Skip the heap check because yacc allocates a buffer
+      // here which will be reported as a memory leak for some reason.
+      ACE_NO_HEAP_CHECK 
+
       ace_yyrestart (fp);
 
       ace_yyerrno = 0;

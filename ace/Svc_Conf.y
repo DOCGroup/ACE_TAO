@@ -140,6 +140,11 @@ module
       ACE_ARGV args ($<static_node_>1->parameters ());
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
 
+      // Make sure that the Module has the same name as the
+      // Module_Type object from the svc.conf file.
+      MT_Module *mp = (MT_Module *) mt->object ();
+      mp->name ($<static_node_>1->name ());
+
       if (mt->init (args.argc (), args.argv ()) == -1
 	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	{
@@ -151,6 +156,11 @@ module
   | static  
     { 
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+
+      // Make sure that the Module has the same name as the
+      // Module_Type object from the svc.conf file.
+      MT_Module *mp = (MT_Module *) mt->object ();
+      mp->name ($<static_node_>1->name ());
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	yyerrno++;
@@ -190,7 +200,7 @@ svc_location
 
       if (sym != 0)
 	{
-	  ACE_Service_Type_Impl *stp = ace_create_service_type ($1, $2, $3->symbol (), flags);
+	  ACE_Service_Type_Impl *stp = ace_create_service_type ($1, $2, sym, flags);
 	  $$ = new ACE_Service_Type ($1, stp, $3->handle (), $4);
 	}
       else
