@@ -117,7 +117,8 @@ public:
   // TAO_Property_Evaluator_By_Name
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
+class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : 
+  public TAO_Property_Evaluator
 //
 // = TITLE
 //    This class extends the TAO_Property_Evaluator to allow lookups
@@ -181,8 +182,7 @@ class TAO_ORBSVCS_Export TAO_Dynamic_Property :
   public POA_CosTradingDynamic::DynamicPropEval
 // = TITLE
 //   Little helper class that you can extend to have your dynamic
-//   property handler construct CosTradingDynamic::DynamicProp structs 
-//   on demand.
+//   property handler construct CosTradingDynamic::DynamicProp structs.
 {
 public:
 
