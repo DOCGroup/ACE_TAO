@@ -229,8 +229,8 @@ TAO_AV_SourceManager::init (ACE_UINT32 localid, ACE_UINT32 localaddr)
                                    localid,
                                    localid,
                                    localaddr);
-//   ACE_NEW (localsrc_,
-//            TAO_AV_Source (localid, localid, localaddr));
+  //   ACE_NEW (localsrc_,
+  //            TAO_AV_Source (localid, localid, localaddr));
   enter (localsrc_);
   remove_from_hashtable (localsrc_);
   /*
@@ -328,7 +328,9 @@ TAO_AV_SourceManager::demux (ACE_UINT32 srcid, ACE_UINT32 addr, ACE_UINT16 seq)
     /* it takes two in-seq packets to activate TAO_AV_Source */
     s->fs (seq);
     s->cs (seq);
-    return  (0);
+    //   @@@Naga:We should take care of this using a policy for the
+    // number of packets to be validated before we accept a source.
+    //    return  (0);
   } else {
     /*
      * check for a srcid conflict or loop:

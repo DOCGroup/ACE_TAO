@@ -41,7 +41,14 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/Null_MediaCtrlS.h"
+
+#if defined (TAO_ORBSVCS_HAS_Trader)
 #include "orbsvcs/Trader/Trader.h"
+#endif /* TAO_ORBSVCS_HAS_Trader */
+
+#include "FlowSpec_Entry.h"
+
+#define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -50,131 +57,53 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
+#if !defined (TAO_ORBSVCS_HAS_Trader)
+
+// =  Classes to deal with the ACE_Hash_Map_Manager.
+class TAO_ORBSVCS_Export TAO_String_Hash_Key : public CORBA::String_var
+{
+  // = TITLE
+  //     Key for the Hash Table. The EXT_ID of the
+  //     ACE_Hash_Map_Manager.
+public:
+  // = Initialization and termination methods.
+  TAO_String_Hash_Key (void);
+  // Default constructor.
+
+  TAO_String_Hash_Key (char * name);
+  // Constructor from a const string.
+
+  TAO_String_Hash_Key (const char * name);
+  // Constructor from a const string.
+
+  TAO_String_Hash_Key (const CORBA::String_var &hash_key);
+  // Copy constructor.
+
+  ~TAO_String_Hash_Key (void);
+  // Destructor.
+
+  int operator == (const TAO_String_Hash_Key &hash_key) const;
+  // The operator for hash binding and "find"ing.
+
+  friend int operator < (const TAO_String_Hash_Key &left,
+                         const TAO_String_Hash_Key &right);
+  // The operator for hash binding and "find"ing.
+
+  u_long hash (void) const;
+  // The function that computes a hash value.
+};
+#endif /* !TAO_ORBSVCS_HAS_Trader */
+
 typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map;
 typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr> FlowEndPoint_Map_Entry;
 typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
-//forward declaration.
-class TAO_FlowSpec_Entry;
-class TAO_AV_Protocol_Factory;
-
-typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
-typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
-
-class TAO_Export TAO_AV_Protocol_Item
-{
-public:
-  TAO_AV_Protocol_Item (const ACE_CString &name);
-  // creator method, the protocol name can only be set when the
-  // object is created.
-
-  const ACE_CString &protocol_name (void);
-  // return a reference to the character representation of the protocol
-  // factories name.
-
-  TAO_AV_Protocol_Factory *factory (void);
-  // return a pointer to the protocol factory.
-
-  void factory (TAO_AV_Protocol_Factory *factory);
-  // set the factory pointer's valus.
-
-private:
-  ACE_CString name_;
-  // protocol factory name.
-
-  TAO_AV_Protocol_Factory *factory_;
-  // pointer to factory object.
-};
-
-// typedefs for containers containing the list of loaded protocol
-// factories.
-typedef ACE_Unbounded_Set<TAO_AV_Protocol_Item*>
-        TAO_AV_ProtocolFactorySet;
-
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>
-        TAO_AV_ProtocolFactorySetItor;
-
-class TAO_Base_StreamEndPoint;
-class TAO_AV_Connector_Registry;
-class TAO_AV_Acceptor_Registry;
-class TAO_AV_Acceptor;
-class TAO_AV_Connector;
-
-class TAO_ORBSVCS_Export TAO_AV_Core
-{
-public:
-  enum EndPoint {TAO_AV_ENDPOINT_A,TAO_AV_ENDPOINT_B};
-
-  enum Protocol
-  {
-    TAO_AV_NOPROTOCOL = -1,
-    TAO_AV_TCP        =  0,
-    TAO_AV_UDP        =  1,
-    TAO_AV_AAL5       =  2,
-    TAO_AV_AAL3_4     =  3,
-    TAO_AV_AAL1       =  4,
-    TAO_AV_RTP_UDP    =  5,
-    TAO_AV_RTP_AAL5   =  6,
-    TAO_AV_IPX        =  7,
-    TAO_AV_SFP_UDP    =  8,
-    TAO_AV_UDP_MCAST  =  9,
-    TAO_AV_RTP_UDP_MCAST = 10
-  };
-
-  TAO_AV_Core (void);
-  // = Get the connector registry
-
-  ~TAO_AV_Core (void);
-  // Destructor.
-
-  int init (int &argc,
-            char **argv,
-            CORBA::Environment &env);
-  int run (void);
-  int stop_run (void);
-  int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
-                          TAO_AV_FlowSpecSet &flow_spec_set,
-                          EndPoint direction,
-                          AVStreams::flowSpec &flow_spec);
-  int init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
-                          TAO_AV_FlowSpecSet &forward_flow_spec_set,
-                          TAO_AV_FlowSpecSet &reverse_flow_spec_set,
-                          EndPoint direction);
-  int init_protocol_factories (void);
-
-  TAO_AV_Acceptor *get_acceptor (const char *flowname);
-  TAO_AV_Connector *get_connector (const char *flowname);
-  TAO_AV_Connector_Registry *connector_registry (void);
-  TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
-                                           const char *flowname);
-  // = Get the acceptor registry
-  TAO_AV_Acceptor_Registry  *acceptor_registry  (void);
-
-  // = Get the protocol factories
-  TAO_AV_ProtocolFactorySet *protocol_factories (void);
-  // = Set/get the <ACE_Reactor>.
-  void reactor (ACE_Reactor *r);
-  ACE_Reactor *reactor (void);
-  TAO_ORB_Manager *orb_manager (void);
-protected:
-  TAO_AV_Connector_Registry *connector_registry_;
-  // The connector registry which all active connecters must register
-  // themselves with.
-
-  TAO_AV_Acceptor_Registry *acceptor_registry_;
-  // The registry which maintains a list of acceptor factories for each
-  // loaded protocol.
-
-  TAO_AV_ProtocolFactorySet protocol_factories_;
-  // Pointer to the list of protocol loaded into this ORB instance.
-
-  ACE_Reactor *reactor_;
-  CORBA::ORB_var orb_;
-  TAO_ORB_Manager orb_manager_;
-  CORBA::Boolean stop_run_;
-};
+#include "AV_Core.h"
 
 typedef ACE_Singleton <TAO_AV_Core,ACE_Null_Mutex> TAO_AV_CORE;
+
+int deactivate_servant (PortableServer::Servant servant);
+char *get_flowname (const char *flow_spec_entry_str);
 
 class TAO_ORBSVCS_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl,
@@ -456,6 +385,7 @@ protected:
   TAO_MCastConfigIf *mcastconfigif_;
   AVStreams::MCastConfigIf_var mcastconfigif_ptr_;
   AVStreams::StreamCtrl_var streamctrl_;
+  CORBA::ULong source_id_;
 };
 
 class TAO_ORBSVCS_Export TAO_MCastConfigIf
@@ -465,11 +395,14 @@ class TAO_ORBSVCS_Export TAO_MCastConfigIf
 {
 public:
 
+  enum Peer_Interface {VDEV = 0, FLOWENDPOINT=1};
   struct Peer_Info
   {
     AVStreams::VDev_var peer_;
+    AVStreams::FlowEndPoint_var fep_;
     AVStreams::streamQoS qos_;
     AVStreams::flowSpec flow_spec_;
+    Peer_Interface interface_;
   };
 
   TAO_MCastConfigIf (void);
@@ -532,6 +465,7 @@ class TAO_AV_Callback;
 class TAO_AV_SourceManager;
 class TAO_AV_Source;
 class TAO_AV_RTP_State;
+class TAO_AV_Flow_Handler;
 
 class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 {
@@ -586,6 +520,8 @@ public:
                               ACE_UINT32 srcid,
                               ACE_UINT32 ssrc,
                               ACE_UINT32 addr);
+  virtual void set_handler (const char *flowname,
+                            TAO_AV_Flow_Handler *handler);
 };
 
 // Forward declarations.
@@ -761,6 +697,8 @@ protected:
   AVStreams::StreamEndPoint_var peer_sep_;
   AVStreams::SFPStatus *sfp_status_;
   AVStreams::StreamCtrl_var streamctrl_;
+  TAO_Forward_FlowSpec_Entry forward_entries_ [FLOWSPEC_MAX];
+  TAO_Reverse_FlowSpec_Entry reverse_entries_ [FLOWSPEC_MAX];
 };
 
 
@@ -1200,6 +1138,9 @@ public:
 
   int set_flowname (const char *flowname);
 
+  virtual void set_handler (const char *flowname,
+                            TAO_AV_Flow_Handler *handler);
+
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 
@@ -1213,15 +1154,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // unlock the flow endpoint for subsequent use.
 
-  virtual void stop (CORBA::Environment &env =
-                     CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // stop this flow, to be overridden by the application.
-
-  virtual void start (CORBA::Environment &env =
-                      CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // start this flow, to be overridden by the application.
 
   virtual void destroy (CORBA::Environment &env =
                         CORBA::Environment::default_environment ())
@@ -1325,7 +1257,7 @@ public:
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
-                               AVStreams::FlowProducer_ptr peer,
+                               AVStreams::FlowEndPoint_ptr peer,
                                char *& flowProtocol,
                                CORBA::Environment &env =
                                CORBA::Environment::default_environment ())
@@ -1362,6 +1294,8 @@ protected:
   CORBA::String_var flowname_;
   CosPropertyService::Properties dev_params_;
   TAO_AV_Protocol_Object *protocol_object_;
+  TAO_AV_Flow_Handler *handler_;
+  CORBA::String_var reverse_channel_;
 };
 
 class TAO_ORBSVCS_Export TAO_FlowProducer:
@@ -1377,6 +1311,25 @@ public:
                     AVStreams::protocolSpec protocols,
                     const char *format);
 
+  virtual char * get_rev_channel (const char * pcol_name,
+                                  CORBA::Environment &env = CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // get the reverse channel, to be used for feedback for protocols like UDP.
+  // @@Naga: In the spec this is defined in the TAO_FlowProducer but it seems more reasonable for this
+  // to be in a FlowEndPoint since any of the flowendpoints can be made to listen. So in the case of
+  // UDP if the producer is listening and the consumer connects (logically) then the producer needs to
+  // know the reverse channel on its peer fep to send data to.
+
+  virtual void stop (CORBA::Environment &env =
+                     CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // stop this flow, to be overridden by the application.
+
+  virtual void start (CORBA::Environment &env =
+                      CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // start this flow, to be overridden by the application.
+
   virtual char * connect_mcast (AVStreams::QoS & the_qos,
                                 CORBA::Boolean_out is_met,
                                 const char * address,
@@ -1390,10 +1343,6 @@ public:
 
   // connect to the multicast address, not implemented.
 
-  virtual char * get_rev_channel (const char * pcol_name,
-                                  CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // get the reverse channel, to be used for feedback for protocols like UDP.
 
   virtual void set_key (const AVStreams::key & the_key,
                         CORBA::Environment &env = CORBA::Environment::default_environment ())
@@ -1409,6 +1358,7 @@ public:
 protected:
   CORBA::Long source_id_;
   // source id of this producer.
+  CORBA::String_var peer_address_;
 };
 
 class TAO_ORBSVCS_Export TAO_FlowConsumer :
@@ -1423,96 +1373,18 @@ public:
   TAO_FlowConsumer (const char *flowname,
                     AVStreams::protocolSpec protocols,
                     const char *format);
+
+  virtual void stop (CORBA::Environment &env =
+                     CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // stop this flow, to be overridden by the application.
+
+  virtual void start (CORBA::Environment &env =
+                      CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // start this flow, to be overridden by the application.
 };
 
-class TAO_ORBSVCS_Export TAO_FDev :
-  public virtual POA_AVStreams::FDev,
-  public virtual TAO_PropertySet,
-  public virtual PortableServer::RefCountServantBase
-{
-public:
-  TAO_FDev (void);
-  // default constructor
-
-  TAO_FDev (const char *flowname);
-  // constructor taking a flowname.
-
-  ~TAO_FDev (void);
-  // Destructor..
-
-  AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::streamOpDenied,
-                     AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed));
-  // create a flow producer object.
-
-  virtual AVStreams::FlowProducer_ptr make_producer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // bridge method for the application to override the producer object
-  // creation. Default implementation creates a TAO_FlowProducer.
-
-  virtual AVStreams::FlowConsumer_ptr create_consumer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::streamOpDenied,
-                     AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed));
-  // create a flow consumer object.
-
-  virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // bridge method for the application to override the consumer object
-  // creation. Default implementation creates a TAO_FlowConsumer.
-
-  virtual AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
-                                              AVStreams::QoS & the_qos,
-                                              CORBA::Boolean_out is_met,
-                                              CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::QoSRequestFailed));
-  // bind this FDev with another FDev.
-
-  virtual AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
-                                                    AVStreams::QoS & the_qos,
-                                                    CORBA::Boolean_out is_met,
-                                                    CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::QoSRequestFailed));
-  // multicast bind is not implemented yet.
-
-  virtual void destroy (AVStreams::FlowEndPoint_ptr the_ep,
-                        const char * fdev_name,
-                        CORBA::Environment &env =
-                        CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
-  // destroys this FDev.
-
-protected:
-  ACE_DLList <TAO_FlowProducer> producer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowProducer> PRODUCER_LIST_ITERATOR;
-  ACE_DLList <TAO_FlowConsumer> consumer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowConsumer> CONSUMER_LIST_ITERATOR;
-  CORBA::String_var flowname_;
-};
 
 class TAO_ORBSVCS_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl,
@@ -1562,236 +1434,6 @@ public:
 
 };
 
-class TAO_ORBSVCS_Export TAO_Tokenizer
-{
-public:
-  TAO_Tokenizer (const char *string,char delimiter);
-  // constructor.
-
-  ~TAO_Tokenizer ();
-  // destructor.
-
-  int parse (const char *string,char delimiter);
-  // parses the string and tokenizes it.
-
-  char *token (void);
-  // Returns the next token.
-
-  int num_tokens (void);
-  // Number of tokens.
-
-  char *operator [] (size_t index) const;
-
-protected:
-  ACE_Array<char*> token_array_;
-  size_t count_;
-  size_t num_tokens_;
-  char string_ [BUFSIZ];
-};
-
-// Forward declaration.
-class TAO_SFP;
-class TAO_AV_Transport;
-class TAO_AV_Flow_Handler;
-
-class TAO_ORBSVCS_Export TAO_FlowSpec_Entry
-{
-public:
-  // = TITLE
-  //     An helper entry class in the flow spec sequence passed to bind_devs.
-  enum Direction
-  {
-    TAO_AV_INVALID   = -1,
-    TAO_AV_DIR_IN    =  0,
-    TAO_AV_DIR_OUT   =  1
-  };
-
-
-  TAO_FlowSpec_Entry (void);
-  // default constructor.
-
-  TAO_FlowSpec_Entry (const char *flowname,
-                      const char *direction,
-                      const char *format_name,
-                      const char *flow_protocol,
-                      const char *carrier_protocol,
-                      ACE_Addr *address);
-  // constructor to construct an entry from the arguments.
-
-  TAO_FlowSpec_Entry (const char *flowname,
-                      const char *direction,
-                      const char *format_name,
-                      const char *flow_protocol,
-                      const char *address);
-
-  virtual int parse (const char* flowSpec_entry) = 0;
-  // construct the entry from a string specified by the flowSpec grammar.
-
-  virtual ~TAO_FlowSpec_Entry (void);
-  // virtual destructor.
-
-  int direction (void);
-  // accessor to the direction.
-
-  char * direction_str (void);
-  // string version of direction .
-
-  char *flow_protocol_str (void);
-  // accesor to the flow protocol string.
-
-  ACE_Addr *address (void);
-  // Address of the carrier protocol.
-
-  char * address_str (void);
-  // Address in string format i. hostname:port.
-
-  TAO_AV_Core::Protocol carrier_protocol (void);
-  // carrier protocol i.e TCP,UDP,RTP/UDP.
-
-  char * carrier_protocol_str (void);
-  // string version of carrier protocol.
-
-  char *format (void);
-  // format to be used for this flow.
-
-  const char *flowname (void);
-  // name of this flow.
-
-  virtual char *entry_to_string (void) = 0;
-  // converts the entry to a string.
-
-  int set_peer_addr (ACE_Addr *peer_addr);
-  ACE_Addr *get_peer_addr (void);
-  int set_local_addr (ACE_Addr *peer_addr);
-  ACE_Addr *get_local_addr (void);
-  char *get_local_addr_str (void);
-  TAO_AV_Transport *transport (void);
-  void transport (TAO_AV_Transport *transport);
-  TAO_AV_Flow_Handler* handler (void);
-  void handler (TAO_AV_Flow_Handler *handler);
-  TAO_AV_Protocol_Object* protocol_object (void);
-  void protocol_object (TAO_AV_Protocol_Object *object);
-
-  int parse_address (char *format_string);
-  // sets the address for this flow.
-protected:
-  int parse_flow_protocol_string (char *flow_options_string);
-  // parses the flow protocol string with tokens separated by :
-
-  int set_direction (char *direction_string);
-  // sets the direction flag.
-
-
-  int set_protocol (void);
-  // sets the protocol_ enum from the carrier_protocol_ string.
-
-  ACE_Addr *address_;
-  // Addr information for the carrier protocol.
-
-  char *address_str_;
-  // Addr in string format i.e hostname:port.
-
-  char *format_;
-  // format string.
-
-  Direction direction_;
-  // Direction of this flow.
-
-  char *direction_str_;
-  // string representation of the direction.
-
-  char *flowname_;
-  // name of this flow.
-
-  TAO_AV_Core::Protocol protocol_;
-  // name of the protocol used.
-
-  char *carrier_protocol_;
-  // carrier protocol string.
-
-  char *flow_protocol_;
-  // flow protocol string.
-
-  int use_flow_protocol_;
-  char *entry_;
-  // The flowspec entry;
-
-  ACE_Addr *peer_addr_;
-  ACE_Addr *local_addr_;
-  TAO_AV_Transport *transport_;
-  TAO_AV_Flow_Handler *handler_;
-  TAO_AV_Protocol_Object *protocol_object_;
-};
-
-class TAO_ORBSVCS_Export TAO_Forward_FlowSpec_Entry
-  :public TAO_FlowSpec_Entry
-{
-public:
-  enum Position {TAO_AV_FLOWNAME = 0,
-                 TAO_AV_DIRECTION = 1,
-                 TAO_AV_FORMAT = 2,
-                 TAO_AV_FLOW_PROTOCOL = 3,
-                 TAO_AV_ADDRESS = 4};
-
-  TAO_Forward_FlowSpec_Entry (void);
-  // default constructor.
-
-  TAO_Forward_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *carrier_protocol,
-                              ACE_Addr *address);
-  // constructor to construct an entry from the arguments.
-
-  TAO_Forward_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *address);
-
-  virtual char *entry_to_string (void);
-  // converts the entry to a string.
-
-  virtual int parse (const char* flowSpec_entry);
-  // construct the entry from a string specified by the flowSpec grammar.
-};
-
-class TAO_ORBSVCS_Export TAO_Reverse_FlowSpec_Entry
-  :public TAO_FlowSpec_Entry
-{
-public:
-  enum Position {TAO_AV_FLOWNAME = 0,
-                 TAO_AV_ADDRESS = 1,
-                 TAO_AV_FLOW_PROTOCOL = 2,
-                 TAO_AV_DIRECTION = 3,
-                 TAO_AV_FORMAT = 4};
-
-  TAO_Reverse_FlowSpec_Entry (void);
-  // default constructor.
-
-  TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *carrier_protocol,
-                              ACE_Addr *address);
-  // constructor to construct an entry from the arguments.
-
-  TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *address);
-  // Takes the address in protocol=endpoint form.
-
-  virtual char *entry_to_string (void);
-  // converts the entry to a string.
-
-  virtual int parse (const char* flowSpec_entry);
-  // construct the entry from a string specified by the flowSpec grammar.
-};
-
 class TAO_ORBSVCS_Export TAO_AV_QoS
 {
 public:
@@ -1817,5 +1459,11 @@ protected:
 
   ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
 };
+
+#include "Transport.h"
+
+#if defined (__ACE_INLINE__)
+#include "AVStreams_i.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* AVSTREAMS_I_H */

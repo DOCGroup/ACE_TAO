@@ -19,11 +19,9 @@
 #ifndef TAO_AV_NIL_H
 #define TAO_AV_NIL_H
 
-#include "Transport.h"
 #include "Policy.h"
 
-class TAO_ORBSVCS_Export TAO_AV_TCP_Object
-  :public TAO_AV_Protocol_Object
+class TAO_ORBSVCS_Export TAO_AV_TCP_Object : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_TCP_Object (TAO_AV_Callback *callback,
@@ -36,13 +34,16 @@ public:
                           TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
 
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
   virtual int end_stream (void);
   // end the stream.
 
 };
 
-class TAO_ORBSVCS_Export TAO_AV_UDP_Object
-  :public TAO_AV_Protocol_Object
+class TAO_ORBSVCS_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
@@ -55,12 +56,15 @@ public:
                           TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
 
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
   virtual int end_stream (void);
   // end the stream.
 };
 
-class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object
-  :public TAO_AV_Protocol_Object
+class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,
@@ -72,6 +76,10 @@ public:
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
+
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
 
   virtual int end_stream (void);
   // end the stream.

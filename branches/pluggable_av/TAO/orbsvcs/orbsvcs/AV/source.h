@@ -197,14 +197,15 @@ public:
 
   ACE_UINT32 clock (void) const;
   TAO_AV_Source* localsrc (void) const;
+  void localsrc (TAO_AV_Source* src);
 
   void sortactive (char*) const;
   void remove (TAO_AV_Source*);
   void keep_sites (int keep);
   void site_drop_time (int time);
+  TAO_AV_Source* enter (TAO_AV_Source* s);
 protected:
   static int compare (const void*, const void*);
-  TAO_AV_Source* enter (TAO_AV_Source* s);
   void remove_from_hashtable (TAO_AV_Source* s);
 
   TAO_AV_Source* lookup_duplicate (ACE_UINT32 srcid, ACE_UINT32 addr);

@@ -124,7 +124,7 @@
 #define MAXHDR 24
 
 #include "Policy.h"
-#include "Transport.h"
+#include "FlowSpec_Entry.h"
 #include "MCast.h"
 #include "RTCP.h"
 //------------------------------------------------------------
@@ -145,6 +145,7 @@ public:
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry);
 protected:
+  ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_RTCP_UDP_Flow_Handler*,ACE_Null_Mutex> rtcp_map_;
   int make_rtp_handler_;
   ACE_Reactor *reactor_;
 };
@@ -348,20 +349,26 @@ public:
 
   static int handle_input (TAO_AV_Transport *transport,
                            ACE_Message_Block *&data,
+                           TAO_AV_frame_info *&frame_info,
                            ACE_Addr &addr,
                            TAO_AV_SourceManager *source_manager,
                            TAO_AV_RTP_State *state);
 
-  static int write_header (rtphdr &header,
-                           int format,
-                           ACE_UINT16 &sequence_num,
-                           ACE_UINT32 ts,
-                           ACE_UINT32 ssrc,
-                           CORBA::Boolean boundary_marker);
+  static  int write_header (rtphdr &header,
+                            int format,
+                            ACE_UINT16 &sequence_num,
+                            ACE_UINT32 ts,
+                            ACE_UINT32 ssrc,
+                            CORBA::Boolean boundary_marker);
 
   static int send_frame (TAO_AV_Transport *transport,
                          rtphdr &header,
                          ACE_Message_Block *frame);
+
+  static int send_frame (TAO_AV_Transport *transport,
+                         rtphdr &header,
+                         const iovec *iov,
+                         int iovcnt);
 
   static int demux (rtphdr* rh,
                      ACE_Message_Block *data,
@@ -379,8 +386,13 @@ public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
 
-  int send_frame (ACE_Message_Block *frame,
-                  TAO_AV_frame_info *frame_info = 0);
+  virtual int send_frame (ACE_Message_Block *frame,
+                          TAO_AV_frame_info *frame_info = 0);
+
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
   int end_stream (void);
   virtual int set_policies (const PolicyList &policy_list);
 protected:

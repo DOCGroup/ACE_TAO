@@ -52,7 +52,9 @@
 #define TAO_AV_RTCP_H
 
 #include "source.h"
+#include "AVStreams_i.h"
 #include <math.h>
+#include <stdlib.h>
 
 // TAO_AV_RTP_State
 class TAO_AV_RTP_State
@@ -227,8 +229,12 @@ public:
                            TAO_AV_RTP_State *state,
                            TAO_AV_RTCP_Flow_Handler *handler);
 
-  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex> RTCP_Map;
-  static RTCP_Map rtcp_map_;
+  static ACE_UINT32 alloc_srcid (ACE_UINT32 addr);
+
+  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_RTCP_UDP_MCast_Flow_Handler*,ACE_Null_Mutex> RTCP_MCast_Map;
+  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_RTCP_UDP_Flow_Handler*,ACE_Null_Mutex> RTCP_UDP_Map;
+  static RTCP_MCast_Map rtcp_mcast_map_;
+  static RTCP_UDP_Map rtcp_udp_map_;
 };
 
 #endif /* TAO_AV_RTCP_H */

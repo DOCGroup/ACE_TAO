@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Nil.h"
+#include "FlowSpec_Entry.h"
 
 //------------------------------------------------------------
 // TAO_AV_TCP_Object
@@ -14,6 +15,14 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
   if (result < 0)
     return result;
   return 0;
+}
+
+int 
+TAO_AV_TCP_Object::send_frame (const iovec *iov,
+                               int iovcnt,
+                               TAO_AV_frame_info *frame_info)
+{
+  return this->transport_->send (iov,iovcnt);
 }
 
 TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
@@ -41,11 +50,19 @@ int
 TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
                                TAO_AV_frame_info *frame_info)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
   int result = this->transport_->send (frame);
   if (result < 0)
     return result;
   return 0;
+}
+
+int 
+TAO_AV_UDP_Object::send_frame (const iovec *iov,
+                               int iovcnt,
+                               TAO_AV_frame_info *frame_info)
+{
+  return this->transport_->send (iov,iovcnt);
 }
 
 TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
@@ -90,6 +107,14 @@ TAO_AV_UDP_MCast_Object::send_frame (ACE_Message_Block *frame,
   if (result < 0)
     return result;
   return 0;
+}
+
+int 
+TAO_AV_UDP_MCast_Object::send_frame (const iovec *iov,
+                                     int iovcnt,
+                                     TAO_AV_frame_info *frame_info)
+{
+  return this->transport_->send (iov,iovcnt);
 }
 
 int

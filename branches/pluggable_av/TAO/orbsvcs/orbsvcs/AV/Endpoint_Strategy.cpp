@@ -117,7 +117,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                    this->host_,
                    this->pid_);
 
-  ACE_DEBUG ((LM_DEBUG,
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
               sem_str));
   // Create the semaphore
@@ -220,7 +220,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &ACE_TRY_ENV)
                        this->host_,
                        this->pid_);
 
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
 
       // Create the name
       CosNaming::Name VDev_Name (1);
@@ -302,7 +302,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &ACE
                        this->host_,
                        this->pid_);
 
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
       // Create the name
       CosNaming::Name Stream_Endpoint_A_Name (1);
@@ -366,7 +366,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
                          "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                         -1);
 
-    ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
+    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
                                                                     ACE_TRY_ENV)));
     ACE_TRY_CHECK;
@@ -396,7 +396,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &ACE
                        this->host_,
                        this->pid_);
 
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
       // Create the name
       CosNaming::Name Stream_Endpoint_B_Name (1);
