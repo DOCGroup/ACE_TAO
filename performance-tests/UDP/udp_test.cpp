@@ -21,6 +21,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 #include <math.h>
 
@@ -195,8 +196,7 @@ Client::run (void)
   char *sbuf = SendBuf;
   char *rbuf = RxBuf;
 
-  ACE_hrtime_t start;
-  ACE_hrtime_t end;
+  ACE_High_Res_Timer timer;
   ACE_hrtime_t sample;
 
 #if defined (ACE_LACKS_FLOATING_POINT)
@@ -208,7 +208,8 @@ Client::run (void)
   double sample_mean = 0.0;
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 
-  ACE_hrtime_t last_over = 0;
+  int                tracking_last_over = 0;
+  ACE_High_Res_Timer since_over;
   ACE_hrtime_t psum = 0;
   ACE_hrtime_t sum = 0;
   ACE_hrtime_t max = 0;
@@ -236,29 +237,29 @@ Client::run (void)
 
   for (i = -1, *seq = 0, j = 0;
        i < (ACE_INT32) nsamples;
-       (*seq)++, i++, j++)
+       (*seq)++, i++, j++, timer.reset ())
     {
-      start = ACE_OS::gethrtime ();
+      timer.start ();
       if (send (sbuf, bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
 
       if ((n = get_response (rbuf, bufsz)) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
 
-      end = ACE_OS::gethrtime ();
+      timer.stop ();
 
       if (n <= 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\nTrouble receiving from socket!\n\n"),
                           -1);
 
-      sample = end - start; // in nanoseconds.
+      timer.elapsed_time (sample);     // in nanoseconds.
 
       if (i < 0 )
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Ignoring first sample of %u usecs\n",
-                      (ACE_UINT32) (sample / (ACE_UINT32) 1000)));
+                      (ACE_UINT32) (sample)));
           continue;
         }
       else if (max_allow > 0  &&  sample > max_allow)
@@ -269,12 +270,19 @@ Client::run (void)
                       (ACE_UINT32) (sample / (ACE_UINT32) 1000000),
                       (ACE_UINT32) (max_allow / (ACE_UINT32) 1000000)));
 
-          if (last_over > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "\tTime since last over = %u msec!\n",
-                        (ACE_UINT32) ((end - last_over) /
-                                      (ACE_UINT32) 1000000)));
-          last_over = end;
+          if (tracking_last_over)
+            {
+              since_over.stop ();
+              ACE_Time_Value over_time;
+              since_over.elapsed_time (over_time);
+              ACE_DEBUG ((LM_DEBUG,
+                          "\tTime since last over = %u msec!\n",
+                          over_time.msec ()));
+              since_over.reset ();
+            }
+
+          tracking_last_over = 1;
+          since_over.start ();
           i--;
           continue;
         }
