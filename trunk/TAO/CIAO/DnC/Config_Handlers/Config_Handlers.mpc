@@ -1,13 +1,13 @@
 //$Id$
 
-project (Config_Handlers) : taolib {
+project (Config_Handlers) : ciao_deployment_stub {
 
   requires += dnc
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC
-  libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/lib
+  includes += $(XERCESCROOT)/include 
+  libpaths += $(XERCESCROOT)/lib
   libs     += xerces-c
 
   Source_Files {
