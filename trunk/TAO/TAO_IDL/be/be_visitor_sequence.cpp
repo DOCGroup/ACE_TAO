@@ -71,28 +71,22 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF: // sequence of objrefs
-      if (node->unbounded ())
-        os << "TAO_Unbounded_ObjectSequence <";
-      else
-        os << "TAO_Bounded_ObjectSequence <";
-      break;
     case be_sequence::MNG_STRING: // sequence of objrefs
       if (node->unbounded ())
-        os << "TAO_Unbounded_StringSequence ";
+        os << "TAO_Unbounded_Managed_Sequence<";
       else
-        os << "TAO_Bounded_StringSequence <";
+        os << "TAO_Bounded_Managed_Sequence<";
       break;
     default: // not a managed type
       if (node->unbounded ())
-        os << "TAO_Unbounded_Sequence <";
+        os << "TAO_Unbounded_Sequence<";
       else
-        os << "TAO_Bounded_Sequence <";
+        os << "TAO_Bounded_Sequence<";
     }
 
-  be_visitor *visitor_sequence_base_ch = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
-  visitor_sequence_base_ch->be_node (node); // save the sequence node
-  if (bt->accept (visitor_sequence_base_ch) == -1)
+  
+  be_visitor_sequence_base_ch base (&os, node, bt);
+  if (bt->accept (&base) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence.cpp - "
@@ -102,14 +96,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   if (node->unbounded ())
     {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << " >";
+      os << " >";
     }
   else
     {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << ", ";
-      os << node->max_size () << " >";
+      os << ", " << node->max_size () << " >";
     }
 
   os << " " << node->local_name () << ";" << nl;
@@ -164,12 +155,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-// sequence base visitor for client header
-be_visitor_sequence_base_ch::be_visitor_sequence_base_ch (void)
+// ****************************************************************
+// We have to generate the parameters for the template that implements
+// each sequence type.
+// ****************************************************************
+
+be_visitor_sequence_base_ch::
+be_visitor_sequence_base_ch (TAO_OutStream *stream,
+			     be_decl *sequence_scope,
+			     be_type *base_type)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->client_header ();
+  this->os_ = stream;
+  this->be_node (sequence_scope);
+  this->current_type_ = base_type;
 }
 
 be_visitor_sequence_base_ch::~be_visitor_sequence_base_ch (void)
@@ -192,7 +190,7 @@ be_visitor_sequence_base_ch::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      os << "CORBA::Object, CORBA::Object_ptr";
+      os << "CORBA::Object, TAO_Object_Manager<CORBA::Object> ";
     default:
       os << node->name ();
     }
@@ -202,87 +200,27 @@ be_visitor_sequence_base_ch::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_sequence_base_ch::visit_sequence (be_sequence *node)
 {
-  TAO_NL  nl;        // end line
-  be_type *bt;       // type node
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  TAO_OutStream &os = this->stream ();
-
-  // retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_base_ch - "
-                         "Bad base type\n"),
-                        -1);
-    }
-
-  // generate the appropriate sequence type
-  switch (node->managed_type ())
-    {
-    case be_sequence::MNG_OBJREF: // sequence of objrefs
-      if (node->unbounded ())
-        os << "TAO_Unbounded_ObjectSequence <";
-      else
-        os << "TAO_Bounded_ObjectSequence <";
-      break;
-    case be_sequence::MNG_STRING: // sequence of objrefs
-      if (node->unbounded ())
-        os << "TAO_Unbounded_StringSequence ";
-      else
-        os << "TAO_Bounded_StringSequence <";
-      break;
-    default: // not a managed type
-      if (node->unbounded ())
-        os << "TAO_Unbounded_Sequence <";
-      else
-        os << "TAO_Bounded_Sequence <";
-    }
-
-  be_visitor *visitor_sequence_base_ch = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
-  visitor_sequence_base_ch->be_node (node); // save the sequence node
-  if (bt->accept (visitor_sequence_base_ch) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_base_ch - "
-                         "base type visit failed\n"),
-                        -1);
-    }
-
-  if (node->unbounded ())
-    {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << " >";
-    }
-  else
-    {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << ", ";
-      os << node->max_size () << " >";
-    }
-
+  return this->visit_node (node);
 }
 
 // helper
 int
-be_visitor_sequence_base_ch::visit_node (be_type *node)
+be_visitor_sequence_base_ch::visit_node (be_type * /* node */)
 {
   TAO_OutStream &os = this->stream ();
-  os << node->nested_type_name (this->seq_scope ());
+  os << this->current_type_->nested_type_name (this->seq_scope ());
   return 0;
 }
 
 int
-be_visitor_sequence_base_ch::visit_interface (be_interface *node)
+be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
 {
   TAO_OutStream &os = this->stream ();
-  os << node->nested_type_name (this->seq_scope ());
+  os << this->current_type_->nested_type_name (this->seq_scope ());
   os << ", ";
-  os << node->nested_type_name (this->seq_scope (), "_ptr");
+  os << "TAO_Object_Manager<"
+     << this->current_type_->nested_type_name (this->seq_scope ())
+     << "> ";
   return 0;
 }
 
@@ -290,11 +228,22 @@ int
 be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream &os = this->stream ();
-  os << node->nested_type_name (this->seq_scope ());
+  os << this->current_type_->nested_type_name (this->seq_scope ());
   os << ", ";
-  os << node->nested_type_name (this->seq_scope (), "_ptr");
+  os << "TAO_Object_Manager<"
+     <<  this->current_type_->nested_type_name (this->seq_scope ())
+     << "> ";
   return 0;
 }
+
+int
+be_visitor_sequence_base_ch::visit_string (be_string * /* node */)
+{
+  TAO_OutStream &os = this->stream ();
+  os << "char*, TAO_String_Manager ";
+  return 0;
+}
+
 
 int
 be_visitor_sequence_base_ch::visit_structure (be_structure *node)
@@ -323,18 +272,22 @@ be_visitor_sequence_base_ch::visit_array (be_array *node)
 int
 be_visitor_sequence_base_ch::visit_typedef (be_typedef *node)
 {
-  return this->visit_node (node);
+  return node->primitive_base_type ()->accept (this);
 }
 
 // ***********************************************************
 // sequence element type visitor for return typs of [] methods
 // ***********************************************************
 
-be_visitor_sequence_elemtype::be_visitor_sequence_elemtype (void)
+
+be_visitor_sequence_elemtype::
+be_visitor_sequence_elemtype (TAO_OutStream *stream,
+			      be_decl *sequence_scope,
+			      be_type *base_type)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->client_header (); // default
+  this->os_ = stream;
+  this->be_node (sequence_scope);
+  this->current_type_ = base_type;
 }
 
 be_visitor_sequence_elemtype::~be_visitor_sequence_elemtype (void)
@@ -362,10 +315,9 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
       if (seq->unbounded ())
-        os << "TAO_Unbounded_ObjectSequence<CORBA::Object, " <<
-          "CORBA::Object_ptr>::TAO_ObjRefMngType ";
+        os << "TAO_Object_Manager<CORBA::Object> ";
     default:
-      os << node->name () << " &";
+      os << this->current_type_->name () << " &";
     }
   return 0;
 }
@@ -373,69 +325,7 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_sequence_elemtype::visit_sequence (be_sequence *node)
 {
-  TAO_NL  nl;        // end line
-  be_type *bt;       // type node
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  TAO_OutStream &os = this->stream ();
-
-  // retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_elemtype - "
-                         "Bad base type\n"),
-                        -1);
-    }
-
-  // generate the appropriate sequence type
-  switch (node->managed_type ())
-    {
-    case be_sequence::MNG_OBJREF: // sequence of objrefs
-      if (node->unbounded ())
-        os << "TAO_Unbounded_ObjectSequence <";
-      else
-        os << "TAO_Bounded_ObjectSequence <";
-      break;
-    case be_sequence::MNG_STRING: // sequence of objrefs
-      if (node->unbounded ())
-        os << "TAO_Unbounded_StringSequence ";
-      else
-        os << "TAO_Bounded_StringSequence <";
-      break;
-    default: // not a managed type
-      if (node->unbounded ())
-        os << "TAO_Unbounded_Sequence <";
-      else
-        os << "TAO_Bounded_Sequence <";
-    }
-
-  be_visitor *visitor_sequence_base_ch = cg->make_visitor
-    (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
-  visitor_sequence_base_ch->be_node (node); // save the sequence node
-  if (bt->accept (visitor_sequence_base_ch) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_elemtype - "
-                         "base type visit failed\n"),
-                        -1);
-    }
-
-  if (node->unbounded ())
-    {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << " > &";
-    }
-  else
-    {
-      if (node->managed_type () != be_sequence::MNG_STRING)
-        os << ", ";
-      os << node->max_size () << " > &";
-    }
-
+  return this->visit_node (node);
 }
 
 // helper
@@ -445,9 +335,9 @@ be_visitor_sequence_elemtype::visit_node (be_type *node)
   TAO_OutStream &os = this->stream ();
 
   if (os.stream_type () == TAO_OutStream::TAO_CLI_HDR)
-    os << node->nested_type_name (this->seq_scope ()) << " &";
+    os << this->current_type_->nested_type_name (this->seq_scope ()) << " &";
   else
-    os << node->name () << " &";
+    os << this->current_type_->name () << " &";
   return 0;
 }
 
@@ -459,26 +349,10 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
   if (!seq)
     return -1;
 
-  if (seq->unbounded ())
-    os << "TAO_Unbounded_ObjectSequence <";
-  else
-    os << "TAO_Bounded_ObjectSequence <";
-  if (os.stream_type () == TAO_OutStream::TAO_CLI_HDR)
-    {
-      os << node->nested_type_name (this->seq_scope ());
-      os << ", ";
-      os << node->nested_type_name (this->seq_scope (), "_ptr");
-    }
-  else
-    {
-      os << node->name () << ", " << node->name () << "_ptr";
-    }
+  os << "TAO_Object_Manager <"
+     << this->current_type_->nested_type_name (this->seq_scope ())
+     << " > ";
 
-  if (!seq->unbounded ())
-    {
-      os << ", " << seq->max_size ();
-    }
-  os << ">::TAO_ObjRefMngType ";
   return 0;
 }
 
@@ -490,26 +364,10 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
   if (!seq)
     return -1;
 
-  if (seq->unbounded ())
-    os << "TAO_Unbounded_ObjectSequence <";
-  else
-    os << "TAO_Bounded_ObjectSequence <";
-  if (os.stream_type () == TAO_OutStream::TAO_CLI_HDR)
-    {
-      os << node->nested_type_name (this->seq_scope ());
-      os << ", ";
-      os << node->nested_type_name (this->seq_scope (), "_ptr");
-    }
-  else
-    {
-      os << node->name () << ", " << node->name () << "_ptr";
-    }
+  os << "TAO_Object_Manager <"
+     << this->current_type_->nested_type_name (this->seq_scope ())
+     << " > ";
 
-  if (!seq->unbounded ())
-    {
-      os << ", " << seq->max_size ();
-    }
-  os << ">::TAO_ObjRefMngType ";
   return 0;
 }
 
@@ -521,15 +379,7 @@ be_visitor_sequence_elemtype::visit_string (be_string * /*node*/)
   if (!seq)
     return -1;
 
-  if (seq->unbounded ())
-    os << "TAO_Unbounded_StringSequence";
-  else
-    os << "TAO_Bounded_ObjectSequence <";
-  if (!seq->unbounded ())
-    {
-      os << seq->max_size () << ">";
-    }
-  os << "::TAO_StringMngType ";
+  os << "TAO_String_Manager ";
   return 0;
 }
 
@@ -560,15 +410,11 @@ be_visitor_sequence_elemtype::visit_array (be_array *node)
 int
 be_visitor_sequence_elemtype::visit_typedef (be_typedef *node)
 {
-  return this->visit_node (node);
+  return node->primitive_base_type ()->accept (this);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<be_visitor_sequence_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_sequence_base_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_sequence_elemtype, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<be_visitor_sequence_ch, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_sequence_base_ch, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_sequence_elemtype, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif

@@ -1,3 +1,29 @@
+Wed Jan 14 17:54:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_sequence.h: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_interpretive.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	  The compiler generates code using the new managed sequence
+	  parametric classes.
+	  Also handled typedefs correctly while generating sequence code
+	  specially template arguments and return types for operator[] in
+	  _var and _out classes.
+	  Simplified code generation for sequences of sequences: the
+	  generated typedefs can be used to instantiate the templates.
+	  Finally made some of the visitors more generic, so less
+	  knowledge on the stream files gets distributed.
+
+	* tao/sequence.h: 
+	* tao/sequence.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  Re-implemented the Managed_Sequence classes using the "Manager"
+	  as a parameter instead of a nested type.
+	  Still requires some work because the sequences need privileged
+	  access (friend) to the Managers.
+
 Tue Jan 13 15:55:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* Makefile (INSTALL): Added a rule to build the INSTALL file from
