@@ -436,7 +436,6 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
                                             this->reactor_mask_signals_),
                       0);
       break;
-      break;
     }
   return impl;
 }
