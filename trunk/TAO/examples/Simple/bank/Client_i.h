@@ -54,11 +54,13 @@ private:
   CORBA::Float check_accounts (void);
   // Checks the various operations of the account.
 
-  void deposit (CORBA::Float deposit_amount,
+  void deposit (Bank::Account_ptr server,
+		CORBA::Float deposit_amount,
 		CORBA::Environment &env);
   // Deposit in the account.
 
-  void withdraw (CORBA::Float withdrawl_amount);
+  void withdraw (Bank::Account_ptr server,
+		 CORBA::Float withdrawl_amount);
   // Withdraw from the account.
 
   Bank::Account_ptr open (const char *name,
@@ -71,8 +73,15 @@ private:
 	      CORBA::Environment &env);
   // Close a given Account.
 
-  CORBA::Float balance (CORBA::Environment &env);
-  // Returns the current balance in the account.
+  void test_for_different_name (CORBA::Environment &env);
+  // Tests if accounts opened with different names return a different account reference.
+
+  void test_for_same_name (CORBA::Environment &env);
+  // Tests if accounts opened with the same name return the same object reference.
+
+  void test_for_overdraft (CORBA::Environment &env);
+  // Tests for the Overdraft Exception when the client tries to
+  // withdraw more money than the current balance.
 
   int obtain_initial_references (void);
   // To initialize the naming service and get a ptr to server.
@@ -95,8 +104,11 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  Bank::Account_var server_;
-  // Account Server object ptr.
+  Bank::Account_var server1_;
+  // Account Server object ptr #1.
+
+  Bank::Account_var server2_;
+  // Account Serverobject ptr #2.
 
   Bank::AccountManager_var accountmanager_server_;
   // Account Manager server object ptr.
@@ -111,6 +123,10 @@ private:
   CORBA::Float initial_balance_;
   // Filled up by a command line argument.
 
-  char *account_holder_name_;
-  // Name of the Account Holder.
+  char *account_holder_name1_;
+  // Name of the first Account Holder.
+
+  char *account_holder_name2_;
+  // Name of the second Account Holder.
+
 };

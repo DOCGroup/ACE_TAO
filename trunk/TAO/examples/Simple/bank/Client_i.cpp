@@ -12,7 +12,8 @@ Client_i::Client_i (void)
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
-    server_ ()
+    server1_ (),
+    server2_ ()
 {
 }
 
@@ -51,7 +52,7 @@ Client_i::read_ior (char *filename)
 int
 Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:b:o:f:xk:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:b:y:z:f:xk:");
   int c;
   int result;
 
@@ -71,8 +72,11 @@ Client_i::parse_args (void)
 	ACE_DEBUG((LM_DEBUG,"bal = %f",
 			    initial_balance_));
       break;
-      case 'o': // Name of the account holder.
-	this->account_holder_name_ = ACE_OS::strdup (get_opts.optarg);
+      case 'y': // Name of one account holder.
+	this->account_holder_name1_ = ACE_OS::strdup (get_opts.optarg);
+	break;
+      case 'z': // Name of another account holder.
+	this->account_holder_name2_ = ACE_OS::strdup (get_opts.optarg);
 	break;
       case 'k':  // ior provide on command line
         this->ior_ = ACE_OS::strdup (get_opts.optarg);
@@ -94,8 +98,9 @@ Client_i::parse_args (void)
                            "usage:  %s"
                            " [-d]"
 			   " [-b Initial Balance]"
-			   " [-o Account Holder's Name]"
-                           " [-n loopcount]"
+			   " [-y First Account Holder's Name]"
+			   " [-z Second Account Holder's Name]"
+			   " [-n loopcount]"
                            " [-f ior-file]"
                            " [-k ior]"
                            " [-x]"
@@ -109,20 +114,22 @@ Client_i::parse_args (void)
 }
 
 void
-Client_i::deposit (CORBA::Float deposit_amount,
+Client_i::deposit (Bank::Account_ptr server,
+                   CORBA::Float deposit_amount,
 		   CORBA::Environment &env)
 {
-  server_->deposit (deposit_amount,
-		    this->env_);
+  server->deposit (deposit_amount,
+                   this->env_);
 }
 
 void
-Client_i::withdraw (CORBA::Float withdrawl_amount)
+Client_i::withdraw (Bank::Account_ptr server,
+                    CORBA::Float withdrawl_amount)
 {
   TAO_TRY
     {
-      server_->withdraw (withdrawl_amount,
-			 TAO_TRY_ENV);
+      server->withdraw (withdrawl_amount,
+			TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -132,7 +139,7 @@ Client_i::withdraw (CORBA::Float withdrawl_amount)
 	(TAO_TRY_ENV.exception ());
 
       ACE_DEBUG ((LM_DEBUG,
-		  "exception%s",
+		  "Exception : %s",
 		  (char *) except->reason));
     }
   TAO_ENDTRY;
@@ -156,82 +163,81 @@ Client_i::close (Bank::Account_ptr account,
 				       env);
 }
 
-CORBA::Float
-Client_i::balance (CORBA::Environment &env)
+
+// This method tests if opening an account with the same name returns
+// the same IOR.
+
+void
+Client_i::test_for_same_name (CORBA::Environment &env)
 {
-  return server_->balance (env);
+  this->server1_ = this->open (this->account_holder_name1_,
+			       this->initial_balance_,
+			       this->env_);
+  this->server2_ = this->open (this->account_holder_name1_,
+			       this->initial_balance_,
+			       this->env_);
+  ACE_ASSERT (server1_->_is_equivalent ((CORBA::Object *) server2_.in ()) != 0);
+
+  this->close (server1_.in (),
+	       this->env_);
+  this->close (server2_.in (),
+	       this->env_);
 }
 
-// Call the remote methods on the Account and AccountManager
-// interface.
+// This method tests if opening an account with different names
+// returns a different IOR.
+void
+Client_i::test_for_different_name (CORBA::Environment &env)
+{
+  this->server1_ = this->open (this->account_holder_name1_,
+			       this->initial_balance_,
+			       this->env_);
+  this->server2_ = this->open (this->account_holder_name2_,
+			       this->initial_balance_,
+			       this->env_);
+
+  ACE_ASSERT (server1_->_is_equivalent ((CORBA::Object *)server2_.in ()) == 0);
+
+  this->close (server1_.in (),
+	       this->env_);
+  this->close (server2_.in (),
+	       this->env_);
+}
+
+// This method tests the Overdraft exception.
+
+void
+Client_i::test_for_overdraft (CORBA::Environment &env)
+{
+  this->server1_ = this->open (this->account_holder_name1_,
+			       this->initial_balance_,
+			       this->env_);
+  this->deposit (server1_.in (),
+		 100.00,
+		 this->env_);
+  this->withdraw (server1_.in (),
+		  server1_->balance(this->env_) + 20);
+  this->close (server1_.in (),
+	       this->env_);
+}
+
 
 CORBA::Float
 Client_i::check_accounts (void)
 {
   TAO_TRY
     {
-      this->server_ = this->open (this->account_holder_name_,
-				  this->initial_balance_,
-				  this->env_);
+      this->test_for_same_name (this->env_);
       TAO_CHECK_ENV;
-
-      CORBA::Float my_balance = this->balance (this->env_);
-
-      ACE_ASSERT (this->initial_balance_ == my_balance);
-
-      this->deposit (100.00, this->env_);
+      this->test_for_different_name (this->env_);
       TAO_CHECK_ENV;
-
-      my_balance = this->balance (this->env_);
-
-      ACE_ASSERT (my_balance == this->initial_balance_ + 100.00);
-
-      this->withdraw (50.00);
-
-      my_balance = this->balance (this->env_);
+      this->test_for_overdraft (this->env_);
       TAO_CHECK_ENV;
-
-      ACE_ASSERT (my_balance == initial_balance_ + 50.00);
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "%s\n",
-		  this->server_->name()
-		  ));
-
-      TAO_CHECK_ENV;
-
-      // Make sure we get back the same object reference!
-
-      //ACE_ASSERT (server2->_is_equivalent (server_.in (),
-      //				   TAO_TRY_ENV));
-      //TAO_CHECK_ENV;
-
-      //this->deposit (150.00, this->env_);
-      //TAO_CHECK_ENV;
-
-      //my_balance = this->balance (this->env_);
-      //TAO_CHECK_ENV;
-
-      //ACE_ASSERT (my_balance = this->initial_balance_ + 200.00);
-
-      // Following assertion checks if we get back a DIFFERENT object
-      // reference for a different account.
-
-      // ACE_ASSERT (server_->_is_equivalent (server.in (),
-      //				   TAO_TRY_ENV) == FALSE);
-      //TAO_CHECK_ENV;
-
-      // Close the Account.
-
-      this->close (server_.in (),
-		   this->env_);
-      TAO_CHECK_ENV;
-
     }
   TAO_CATCHANY
     {
       if (this->env_.exception () != 0)
-	this->env_.print_exception ("from Client_i::balance");
+	this->env_.print_exception ("From Client_i::check_accounts()");
     }
   TAO_ENDTRY;
 
@@ -250,7 +256,7 @@ Client_i::run (void)
   TAO_TRY
     {
       if (this->shutdown_)
-      this->accountmanager_server_->shutdown (TAO_TRY_ENV);
+	this->accountmanager_server_->shutdown (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY

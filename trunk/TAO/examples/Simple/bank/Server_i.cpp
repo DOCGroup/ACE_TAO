@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-//#include "tao/ORB.h"
 #include "Server_i.h"
 
 ACE_RCSID(Bank, Server_i, "$Id$")
@@ -91,7 +90,8 @@ Server_i::init_naming_service (CORBA::Environment& env)
                                                  this->account_manager_impl_,
                                                  env);
 
-  // @@ Please add relevant comments here explaining what you're doing.
+  // @@ Converting the stringified IOR to an IOR.
+
   Bank::AccountManager_var account_manager =
     Bank::AccountManager::_narrow (orb->string_to_object (str,env));
 
@@ -131,7 +131,6 @@ Server_i::init_naming_service (CORBA::Environment& env)
 			       account_manager.in (),
 			       env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
   return 0;
 }
 

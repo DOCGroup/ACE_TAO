@@ -1,10 +1,10 @@
 $Id$
 
 This is a simple CORBA example that has a module Bank with two
-interfaces Account and AccountManager. The Account interface has a
-method to return the balance in that account. The AccountManager
-interface has a method to create a new Account and return the IORof
-this to the client. The two interfaces also have methods to shutdown
+interfaces Account and AccountManager.  The Account interface has a
+method to return the balance in that account.  The AccountManager
+interface has a method to create a new Account and return the IOR of
+this to the client.  The two interfaces also have methods to shutdown
 the server.
 
 server:
@@ -32,10 +32,17 @@ options are ignored.
 client:
 -------
 
-client [-d] [-x] [-n iterations]
+client [-d] [-x] [-n iterations] [-b initial_balance] [-o Name_of_account_holder]
+       [-f IOR_file_name ] [-k IOR]
 
 Options:
 -------
 -d    Debug flag
 -x    Tells the server to shutdown at the end of the test.
 -n    no. of iterations
+-b    initial balance
+-o    Name of the Account Holder
+-k    Read IOR from the command line
+-f    Read IOR from the specified file
+
+

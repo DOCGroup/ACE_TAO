@@ -46,7 +46,7 @@ AccountManager_i::open (const char *name,
 			CORBA::Float initial_balance,
 			CORBA::Environment &_env)
 {
-  Account_i* result = 0;
+  Account_i *result = 0;
 
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value.
@@ -60,7 +60,8 @@ AccountManager_i::open (const char *name,
 		      initial_balance));
 
 	  ACE_NEW_THROW_RETURN (result,
-				Account_i (name,initial_balance),
+				Account_i (name,
+					   initial_balance),
 				CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 				Bank::Account::_nil ());
 
@@ -85,13 +86,14 @@ AccountManager_i::open (const char *name,
       // the POA.  In case the object already exists then the
       // previously generated IOR is returned.
 
-      return result->_this ();
     }
   TAO_CATCHANY
     {
       _env.print_exception("Exception in OPen");
     }
   TAO_ENDTRY;
+
+ return result->_this ();
 }
 
 // Shutdown.
@@ -102,12 +104,12 @@ AccountManager_i::close (Bank::Account_ptr account,
 {
   TAO_TRY
     {
-      // @@ Please take a look at the CORBA::String_var and see if you
-      // can use that...
-      const char *name = account->name (TAO_TRY_ENV);
+      CORBA::String_var name =
+	CORBA::string_dup (account->name (TAO_TRY_ENV));
+
       TAO_CHECK_ENV;
 
-      if (hash_map_.unbind (name) == -1)
+      if (hash_map_.unbind ((const char *) name) == -1)
 	{
 	  if (TAO_debug_level > 0)
 	    ACE_DEBUG((LM_DEBUG,
@@ -116,10 +118,9 @@ AccountManager_i::close (Bank::Account_ptr account,
       else if (TAO_debug_level > 0)
 	ACE_DEBUG((LM_DEBUG,
 		   "Closing Account for %s\n",
-		   name));
+		   (char *) name));
 
-      CORBA::string_free ((char *) name);
-    }
+       }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Unable to close Account\n");
@@ -137,3 +138,17 @@ AccountManager_i::shutdown (CORBA::Environment &)
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Manager <ACE_CString,Account_i *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator <ACE_CString,Account_i *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, Account_i *>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<ACE_CString, Account_i *, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager <ACE_CString,Account_i *,ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator <ACE_CString,Account_i *,ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Account_i *>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString, Account_i *, ACE_Null_Mutex>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

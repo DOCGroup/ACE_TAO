@@ -29,9 +29,7 @@ module Bank
       // Add <amount> to this account.
 
       void withdraw (in float amount) raises (Overdraft);
-
-      //void withdraw (in float amount);
-      // Withdraw <amount> from this account.
+      // Withdraw <amount from this account.
 
       attribute string name;
       // The <name> of this account.
