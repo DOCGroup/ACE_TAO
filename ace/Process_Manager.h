@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
 #include "ace/pre.h"
