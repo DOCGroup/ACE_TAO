@@ -1,3 +1,17 @@
+Thu May 24 15:37:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_identifier.cpp:
+
+          Fixed another problem in the constructor of
+          UTL_Identifier, caused by recent changes. This
+          one showed up in generated OBV code.
+
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/AMI_Buffering/client.dsp:
+        * tests/AMI_Buffering/server.dsp:
+
+          Added missing files to the FileView window.
+
 Thu May 24 10:30:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
