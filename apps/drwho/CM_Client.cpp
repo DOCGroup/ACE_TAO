@@ -47,12 +47,12 @@ CM_Client::receive (int timeout)
       else
 	{
 	  int sin_len = sizeof this->sin_;
-	  ssize_t n = ACE_OS::recvfrom (Comm_Manager::sokfd_,
-                                        this->recv_packet_,
-                                        UDP_PACKET_SIZE,
-                                        0,
-                                        (sockaddr *) &this->sin_,
-                                        &sin_len);
+	  int n = ACE_OS::recvfrom (Comm_Manager::sokfd_,
+                                    this->recv_packet_,
+                                    UDP_PACKET_SIZE,
+                                    0,
+                                    (sockaddr *) &this->sin_,
+                                    &sin_len);
 	  if (n < 0)
 	    return -1;
 	  else
