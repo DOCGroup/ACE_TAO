@@ -255,11 +255,17 @@ get_windows_version()
 
 int
 ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
-                             ACE_UINT32 ip_addr)
+                             ACE_UINT32 ip_addr, 
+                             int address_family)
 {
   ACE_TRACE ("ACE_Sock_Connect::bind_port");
 
-  ACE_INET_Addr addr ((u_short)0, ip_addr);
+  ACE_INET_Addr addr;
+
+  if (address_family != PF_INET6)
+    {
+      addr = ACE_INET_Addr ((u_short)0, ip_addr);
+    }
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.

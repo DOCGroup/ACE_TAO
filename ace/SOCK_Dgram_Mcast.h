@@ -390,6 +390,21 @@ protected:
                                const ACE_INET_Addr &mcast_addr,
                                const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
 
+#if defined (ACE_HAS_IPV6)
+  /// Create a multicast addr/if pair, in format useful for system calls.
+  /// If mreq param is NULL, just verify the passed addr/interface specs.
+  int make_multicast_ifaddr6 (ipv6_mreq *mreq,   // Put result here, if != NULL.
+                              const ACE_INET_Addr &mcast_addr,
+                              const ACE_TCHAR *net_if);
+
+  /// Create a multicast addr/if pair.  This method factors out common
+  /// code called by <make_multicast_address> and <subscribe>.
+  int make_multicast_ifaddr6_i (ipv6_mreq* mreq, // Put result here, if != NULL.
+                                const ACE_INET_Addr &mcast_addr,
+                                const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
+
+#endif /* ACE_HAS_IPV6 */
+
   /// Empty the dynamic subscription list.
   int clear_subs_list (void);
 
