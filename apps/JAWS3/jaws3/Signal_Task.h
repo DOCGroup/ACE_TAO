@@ -4,7 +4,6 @@
 #ifndef JAWS_SIGNAL_TASK_H
 #define JAWS_SIGNAL_TASK_H
 
-#include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 #include "ace/Singleton.h"
