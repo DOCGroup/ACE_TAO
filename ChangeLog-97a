@@ -1,3 +1,8 @@
+Tue Jun 24 16:52:22 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: reverted ACE_hrtime_t to unsigned __int64 with VC++.
+	  This might break something, but we need to know what.
+
 Tue Jun 24 16:38:52 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* Added Visual C++ 5.0 specific workspace (.dsw) and project (.dsp)
