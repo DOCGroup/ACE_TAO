@@ -3,7 +3,28 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Bug 1395 Server EXE"=Bug_1395_Server.dsp - Package Owner=<4>
+Project: "Bug 1395 Client EXE"=".\Bug_1395_Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name tao DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_EXE EXE
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Bug 1395 Server EXE"=".\Bug_1395_Server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -22,72 +43,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ace DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Bug 1395 Server Static EXE"=Bug_1395_Server_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name PortableServer LIB
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name tao LIB
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_EXE Static EXE
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ace LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Bug 1395 Client EXE"=Bug_1395_Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name tao DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_EXE EXE
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ace DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Bug 1395 Client Static EXE"=Bug_1395_Client_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name tao LIB
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_EXE Static EXE
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ace LIB
     End Project Dependency
 }}}
 
