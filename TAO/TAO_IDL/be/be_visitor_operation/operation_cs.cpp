@@ -359,16 +359,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << ");" << be_uidt_nl;
   os->decr_indent ();
 
-  if (this->gen_check_exception (bt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for checking exception failed\n"),
-                        -1);
-
-    }
-
   *os << be_nl;
 
   // Obtain the scope.
