@@ -1628,8 +1628,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero);
-	msec_timeout = 0
+      if (relative_time < ACE_Time_Value::zero)
+	msec_timeout = 0;
       else
 	msec_timeout = relative_time.msec ();
     }
@@ -1770,7 +1770,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero);
+      if (relative_time < ACE_Time_Value::zero)
 	msec_timeout = 0;
       else
 	msec_timeout = relative_time.msec ();
