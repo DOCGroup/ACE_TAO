@@ -86,8 +86,8 @@ Task_State::Task_State (int argc, char **argv)
     }
 
   // allocate the array of character pointers.
-  ACE_NEW (iors_, 
-	   char *[thread_count_]);
+  ACE_NEW (iors_,
+           char *[thread_count_]);
 
   if (ior_file_ != 0)
     {
@@ -97,12 +97,12 @@ Task_State::Task_State (int argc, char **argv)
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0)
-	{ 
-	  j = ACE_OS::strlen (buf); 
-	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
-          iors_[i] = ACE_OS::strdup (buf); 
-	  i++;  
-	}
+        {
+          j = ACE_OS::strlen (buf);
+          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+          iors_[i] = ACE_OS::strdup (buf);
+          i++;
+        }
 
       ACE_OS::fclose (ior_file);
     }
@@ -113,7 +113,7 @@ Task_State::Task_State (int argc, char **argv)
            ACE_Barrier (thread_count_ + 1));
   ACE_NEW (latency_,
            double [thread_count_]);
-  ACE_NEW (global_jitter_array_, 
+  ACE_NEW (global_jitter_array_,
            double *[thread_count_]);
   ACE_NEW (ave_latency_,
            int [thread_count_]);
@@ -178,13 +178,13 @@ Client::get_latency (u_int thread_id)
 }
 
 double
-Client::get_high_priority_jitter (void) 
+Client::get_high_priority_jitter (void)
 {
   double jitter = 0;
   double average = get_high_priority_latency ();
 
   // Compute the standard deviation (i.e. jitter) from the values
-  // stored in the global_jitter_array_. 
+  // stored in the global_jitter_array_.
 
   // we first compute the sum of the squares of the differences
   // each latency has from the average
@@ -194,20 +194,20 @@ Client::get_high_priority_jitter (void)
         ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
-  
+
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
   return sqrt (jitter);
 }
 
 double
-Client::get_low_priority_jitter (void) 
+Client::get_low_priority_jitter (void)
 {
   double jitter = 0;
   double average = get_low_priority_latency ();
 
   // Compute the standard deviation (i.e. jitter) from the values
-  // stored in the global_jitter_array_. 
+  // stored in the global_jitter_array_.
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
@@ -226,7 +226,7 @@ Client::get_low_priority_jitter (void)
 int
 Client::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) Thread created\n"));
 
   u_int thread_id;
@@ -359,7 +359,7 @@ Client::svc (void)
             TAO_CHECK_ENV;
 
             this->mt_cubit_context_ =
-              CosNaming::NamingContext::_narrow (objref.in (), 
+              CosNaming::NamingContext::_narrow (objref.in (),
                                                  TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
@@ -416,7 +416,7 @@ Client::svc (void)
             // Narrow the CORBA::Object reference to the stub object,
             // checking the type along the way using _is_a.
             Cubit_Factory_var cb_factory =
-              Cubit_Factory::_narrow (objref.in (), 
+              Cubit_Factory::_narrow (objref.in (),
                                       TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
@@ -429,17 +429,17 @@ Client::svc (void)
                         "(%t) >>> Factory binding succeeded\n"));
 
 
-	    char * tmp_ior = cb_factory->create_cubit (thread_id,
+            char * tmp_ior = cb_factory->create_cubit (thread_id,
                                                        TAO_TRY_ENV);
-	    TAO_CHECK_ENV;
+            TAO_CHECK_ENV;
 
-	    if (tmp_ior == 0)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "create_cubit() returned a null pointer!\n"),
-				 -1);
+            if (tmp_ior == 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "create_cubit() returned a null pointer!\n"),
+                                 -1);
 
             char *my_ior = ACE_OS::strdup (tmp_ior);
-                                           
+
             TAO_CHECK_ENV;
 
             objref = orb->string_to_object (my_ior,
@@ -477,9 +477,9 @@ Client::svc (void)
                              "Create cubit failed\n"),
                             1);
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "(%t) Binding succeeded\n"));
-        
+
         CORBA::String_var str =
           orb->object_to_string (cb, TAO_TRY_ENV);
         TAO_CHECK_ENV;
@@ -514,7 +514,7 @@ Client::svc (void)
   int result = this->run_tests (cb,
                                 ts_->loop_count_,
                                 thread_id,
-				ts_->datatype_,
+                                ts_->datatype_,
                                 frequency);
 
   if (result == -1)
@@ -550,7 +550,7 @@ Client::run_tests (Cubit_ptr cb,
 
   ACE_NEW_RETURN (my_jitter_array,
                   double [loop_count],
-                  -1); 
+                  -1);
 
   double latency = 0;
   double sleep_time = (1 / frequency) * (1000 * 1000);
@@ -570,9 +570,9 @@ Client::run_tests (Cubit_ptr cb,
       ACE_OS::sleep (tv);
 
       // Elapsed time will be in microseconds.
-      ACE_Time_Value delta_t; 
+      ACE_Time_Value delta_t;
 
-      timer_.start (); 
+      timer_.start ();
       // ACE_OS::ACE_HRTIMER_START; not using sysBench when CHORUS
       // defined.
 
@@ -739,6 +739,10 @@ Client::run_tests (Cubit_ptr cb,
 
                 break;
               }
+            default:
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%P|%t); %s:%d; unexpected datatype: %d\n",
+                                 datatype), -1);
             }
         }
       else
@@ -761,7 +765,7 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-      timer_.stop (); 
+      timer_.stop ();
       // ACE_OS::ACE_HRTIMER_STOP; not using sysBench when CHORUS defined
       timer_.elapsed_time (delta_t);
 
@@ -818,18 +822,18 @@ Client::run_tests (Cubit_ptr cb,
                                  thread_id);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
-	  else
-	    {
-	      // still we have to call this function to store a valid array pointer.
-	      this->put_latency (my_jitter_array,
-				 0,
+          else
+            {
+              // still we have to call this function to store a valid array pointer.
+              this->put_latency (my_jitter_array,
+                                 0,
                                  thread_id);
-	      ACE_DEBUG ((LM_DEBUG,
-			  "*** Warning: Latency is less than or equal to zero."
+              ACE_DEBUG ((LM_DEBUG,
+                          "*** Warning: Latency is less than or equal to zero."
                           "  Precision may have been lost.\n"));
-	    }
+            }
         }
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "%d calls, %d errors\n",
                   call_count,
                   error_count));
