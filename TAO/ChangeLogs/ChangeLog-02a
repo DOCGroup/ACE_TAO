@@ -1,3 +1,9 @@
+Mon Jun 18 22:03:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/Big_Reply.dsw:
+	* tests/Big_Reply/server.dsp:
+	* tests/Big_Reply/client.dsp: Win32 files for compilation.
+
 Mon Jun 18 20:32:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply: A new test for testing whether the server ORB
