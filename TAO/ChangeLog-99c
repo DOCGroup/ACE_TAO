@@ -1,3 +1,13 @@
+Mon Jun 28 18:35:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/append.cpp:
+	* tao/skip.cpp:
+	  Changed declaration of discrim_val in TAO_Marshal_Union to be
+	  CORBA::ULongLong instead of CORBA::Long. A CORBA::Long
+	  discriminator holder would decode incorrectly if the
+	  real disicriminator were a CORBA::ULong and perhaps
+	  crash if it were a 64-bit type.
+
 ]Mon Jun 28 18:24:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/README: Updated this to describe all the examples.
