@@ -190,14 +190,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (virtual int peek_dequeue_head
                             (ACE_Message_Block *&first_item,
                              ACE_Time_Value *tv = 0))
-
-  ACE_UNIMPLEMENTED_FUNC (virtual int enqueue_tail
-                            (ACE_Message_Block *new_item,
-                             ACE_Time_Value *timeout = 0))
-
-  ACE_UNIMPLEMENTED_FUNC (virtual int enqueue_head
-                            (ACE_Message_Block *new_item,
-                             ACE_Time_Value *timeout = 0))
 };
 #endif /* VXWORKS */
 
