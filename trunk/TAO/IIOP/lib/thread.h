@@ -1,20 +1,33 @@
 // This may look like C, but it's really -*- C++ -*-
+
+// ============================================================================
 //
-// @(#) $Id$
-// Copyright 1995 by Sun Microsystems, Inc
-// All Rights Reserved
+// = LIBRARY
+//    TAO
+// 
+// = FILENAME
+//    thread.h
 //
-// THREADING:	simple thread utility classes
+// = DESCRIPTION
+//     
+//    Simple thread utility classes
 //
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems, Inc.
+// 
+// ============================================================================
+
+// @@ Please remove this file...
+
 // Instances of these classes are placed at the beginning of a lexical
 // scope to ensure that all exits from that scope restore thread or
-// synchronization state to its original values.  Thread state includes
-// ansynchronous cancellability, synchronization state includes locks
-// that cover data structures that are shared between threads.
+// synchronization state to its original values.  Thread state
+// includes ansynchronous cancellability, synchronization state
+// includes locks that cover data structures that are shared between
+// threads.
 //
-// NOTE:  supports only POSIX and SVR4 threads for the moment.  Win32
+// NOTE: supports only POSIX and SVR4 threads for the moment.  Win32
 // threads can be supported sometime later.
-//
 
 #ifndef	_THREAD_HH
 #define	_THREAD_HH
