@@ -76,10 +76,19 @@ public:
   const RtecEventChannelAdmin::SupplierQOS& publications (void) const;
   // The QoS (subscription) used to connect to the EC.
 
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
+			  CORBA::Environment &env) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
+			     CORBA::Environment &env) = 0;
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
+
+  virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
+			  CORBA::Environment &env);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
+			     CORBA::Environment &env);
+  // Usually implemented as no-ops, but some configurations may
+  // require this methods.
 
   void set_default_poa (PortableServer::POA_ptr poa);
   // Set this servant's default POA
