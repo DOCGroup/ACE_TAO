@@ -500,13 +500,38 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 <TR>
   <TD><CODE>-ORBConnectionCachingStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBConnectionCachingStrategy"></a>
-      This option is not supported in the present beta.
+      Opened connections are added to the transport cache so they can be
+      reused.  However, if a process continues to run and these
+      connections are not reused, the cache will continue to grow. 
+      Therefore, before each new connection, the cache is checked and
+      purged if it has reached the limit specified by the
+      -ORBConnectionCacheMax option or the system default if that option was
+      not used.  The possible values for type are lru, lfu, fifo and null.
+      The default is lru (Least Recently Used).  The others lfu (Least
+      Frequently Used), fifo (First In First Out) and null (No connections
+      are purged) are contained within the TAO Strategies library.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBCacheMax</CODE> <EM>limit</EM></TD>
+  <TD><a name="-ORBCacheMax"></a>
+      The transport cache will grow to a maximum of the specified limit.
+      The default is system dependent, but can be overridden at compile
+      time by defining the preprocessor macro TAO_CONNECTION_CACHE_MAXIMUM.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBConnectionCachePurgePercentage</CODE> <EM>percent</EM></TD>
+  <TD><a name="-ORBConnectionCachePurgePercentage"></a>
+      If the transport cache is purged, the specified percentage (20 by
+      default) of the total number of connections cached will be closed.
   </TD>
 </TR>
 <TR>
   <TD><CODE>-ORBPurgePercentage</CODE> <EM>percent</EM></TD>
   <TD><a name="-ORBPurgePercentage"></a>
-      This option is not supported in the present beta.
+      This option is deprecated and will automatically forward to
+      -ORBConnectionCachePurgePercentage.
   </TD>
 </TR>
 <TR>

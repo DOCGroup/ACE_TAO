@@ -14,7 +14,7 @@
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
 #include "tao/Leader_Follower.h"
-
+#include "tao/LRU_Connection_Purging_Strategy.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -34,6 +34,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     parser_names_ (0),
     protocol_factories_ (),
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
+    cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM),
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
@@ -179,7 +180,19 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPurgePercentage") == 0)
+                                 "-ORBConnectionCacheMax") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+            this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
+        else
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                       ACE_TEXT ("for -ORBConnectionCacheMax\n")));
+      }
+
+   else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectionCachePurgePercentage") == 0)
       {
         curarg++;
         if (curarg < argc)
@@ -187,7 +200,24 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         else
            ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                       ACE_TEXT ("for -ORBPurgePercentage\n")));
+                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
+      }
+
+   else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBPurgePercentage") == 0)
+      {
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) This option has been ")
+                     ACE_TEXT ("deprecated\n")
+                     ACE_TEXT ("using -ORBConnectionCachePurgePercentage ")
+                     ACE_TEXT ("instead ")));
+        curarg++;
+        if (curarg < argc)
+            this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
+        else
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -708,7 +738,13 @@ TAO_Default_Resource_Factory::connection_caching_strategy_type (void) const
   return this->connection_caching_type_;
 }
 
-double
+int
+TAO_Default_Resource_Factory::cache_maximum (void) const
+{
+  return this->cache_maximum_;
+}
+
+int
 TAO_Default_Resource_Factory::purge_percentage (void) const
 {
   return this->purge_percentage_;
@@ -746,6 +782,27 @@ TAO_Default_Resource_Factory::create_flushing_strategy (void)
   return strategy;
 }
 
+TAO_Connection_Purging_Strategy *
+TAO_Default_Resource_Factory::create_purging_strategy (void)
+{
+  TAO_Connection_Purging_Strategy *strategy = 0;
+
+  if (this->connection_caching_type_ == TAO_Resource_Factory::LRU)
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_LRU_Connection_Purging_Strategy (this),
+                      0);
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("no usable purging strategy ")
+                  ACE_TEXT ("was found.\n")));
+    }
+
+  return strategy;
+}
 
 TAO_LF_Strategy *
 TAO_Default_Resource_Factory::create_lf_strategy (void)

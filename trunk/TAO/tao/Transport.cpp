@@ -15,6 +15,7 @@
 #include "Synch_Queued_Message.h"
 #include "Asynch_Queued_Message.h"
 #include "Flushing_Strategy.h"
+#include "Connection_Purging_Strategy.h"
 #include "debug.h"
 
 #include "ace/Message_Block.h"
@@ -563,8 +564,12 @@ TAO_Transport::connection_handler_closing (void)
 
     this->transition_handler_state_i ();
 
-    this->orb_core_->transport_cache ().purge_entry (
-      this->cache_map_entry_);
+    // Avoid making the call if we can
+    if (this->cache_map_entry_ != 0)
+      {
+        this->orb_core_->purging_strategy ()->purge_from_cache (
+          this->cache_map_entry_);
+      }
   }
   // Can't hold the lock while we release, b/c the release could
   // invoke the destructor!
@@ -609,25 +614,27 @@ int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
   // First purge our entry
-  this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+  this->orb_core_->purging_strategy ()->purge_from_cache (
+    this->cache_map_entry_);
 
   // Then add ourselves to the cache
-  return this->orb_core_->transport_cache ().cache_transport (desc,
-                                                              this);
+  return this->orb_core_->purging_strategy ()->add_to_cache (desc,
+                                                             this);
 }
 
 void
 TAO_Transport::mark_invalid (void)
 {
   // @@ Do we need this method at all??
-  this->orb_core_->transport_cache ().mark_invalid (
+  this->orb_core_->purging_strategy ()->mark_invalid (
     this->cache_map_entry_);
 }
 
 int
 TAO_Transport::make_idle (void)
 {
-  return this->orb_core_->transport_cache ().make_idle (this->cache_map_entry_);
+  return this->orb_core_->purging_strategy ()->make_idle (
+           this->cache_map_entry_);
 }
 
 void
@@ -670,7 +677,14 @@ TAO_Transport::close_connection (void)
   //       this->connection_handler_closing(), that performs the same
   //       work, for some reason they hold the mutex while they do
   //       that work though.
-  this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport::close_connection () - "
+                  "Is this redundant?\n"));
+      this->orb_core_->purging_strategy ()->purge_from_cache (
+        this->cache_map_entry_);
+    }
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {

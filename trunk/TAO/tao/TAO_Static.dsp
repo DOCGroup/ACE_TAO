@@ -195,6 +195,10 @@ SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Purging_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Impl.h
 # End Source File
 # Begin Source File
@@ -452,6 +456,10 @@ SOURCE=.\Leader_Follower.h
 # Begin Source File
 
 SOURCE=.\LocalObject.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LRU_Connection_Purging_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -984,6 +992,10 @@ SOURCE=.\Client_Priority_Policy.i
 # Begin Source File
 
 SOURCE=.\Connection_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Purging_Strategy.inl
 # End Source File
 # Begin Source File
 
@@ -1631,6 +1643,10 @@ SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Purging_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Impl.cpp
 # End Source File
 # Begin Source File
@@ -1864,6 +1880,10 @@ SOURCE=.\Leader_Follower.cpp
 # Begin Source File
 
 SOURCE=.\LocalObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LRU_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 

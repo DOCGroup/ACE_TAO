@@ -1,38 +1,7 @@
 #
-# Makefile for building the Connection_Purging test
+# Makefile for building the Faults test executables
 #
 
-NAME = Connection_Purging
+MAKEFILES = server.bor client.bor
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I..\.. -Ge 1
-
-OBJFILES = \
-	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\testC.obj \
-	$(OBJDIR)\Connection_Purging.obj
-
-CFLAGS = \
-	$(ACE_CFLAGS) \
-	$(TAO_CFLAGS) \
-	$(TAO_PORTABLESERVER_CFLAGS)
-
-LIBFILES = \
-	$(ACE_LIB) \
-	$(TAO_LIB) \
-	$(TAO_PORTABLESERVER_LIB)
-
-IDLFILES = \
-        $(IDLDIR)\test.idl
-
-CPPDIR = .
-
-IDLDIR = .
-
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-
-#
-# IDL Build rules
-#
-
-$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
-	$(TAO_IDL) $**
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

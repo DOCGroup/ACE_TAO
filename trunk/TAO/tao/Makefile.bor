@@ -42,6 +42,7 @@ OBJFILES = \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
+	$(OBJDIR)\Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Transport_Cache_Manager.obj \
 	$(OBJDIR)\Transport_Descriptor_Interface.obj \
 	$(OBJDIR)\Connection_handler.obj \
@@ -104,6 +105,7 @@ OBJFILES = \
 	$(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\LocalObject.obj \
+	$(OBJDIR)\LRU_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\Messaging_ORBInitializer.obj \

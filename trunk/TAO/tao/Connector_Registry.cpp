@@ -7,7 +7,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
-
+#include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"

@@ -61,7 +61,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp Context.h \
  $(ACE_ROOT)/ace/pre.h \
  dynamicinterface_export.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -69,6 +68,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -206,7 +206,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -214,6 +213,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -420,7 +420,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -429,19 +434,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
- $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
@@ -485,6 +477,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Asynch_Invocation.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
@@ -530,7 +530,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -538,6 +537,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -824,7 +824,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -832,6 +831,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1058,7 +1058,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1067,19 +1072,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
- $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
@@ -1123,7 +1115,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1131,6 +1122,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1348,7 +1340,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1357,19 +1354,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
- $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
@@ -1422,7 +1406,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ExceptionList.o .obj/ExceptionList.so .shobj/ExceptionList.o .shobj/ExceptionList.so: ExceptionList.cpp ExceptionList.h \
  $(ACE_ROOT)/ace/pre.h \
  dynamicinterface_export.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1430,6 +1413,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1534,7 +1518,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1542,6 +1525,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -1757,7 +1741,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1766,19 +1755,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
- $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
@@ -1822,6 +1798,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Asynch_Invocation.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
@@ -1857,7 +1841,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1865,6 +1848,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2041,7 +2025,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  Unknown_User_Exception.h \
  $(ACE_ROOT)/ace/pre.h \
  dynamicinterface_export.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2049,6 +2032,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
