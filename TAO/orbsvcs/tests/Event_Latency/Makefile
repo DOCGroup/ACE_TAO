@@ -23,11 +23,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifdef quantify
-  CCFLAGS += -Dquantify
-  CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2
-endif # quantify
-
 #### Local rules and variables...
 
 ifndef TAO_ROOT

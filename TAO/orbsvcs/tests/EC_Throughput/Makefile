@@ -16,11 +16,6 @@ ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer)
 
 SRC =   $(addsuffix .cpp, $(BIN))
 
-ifdef quantify
-  CCFLAGS += -Dquantify
-  CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2
-endif # quantify
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
