@@ -1,11 +1,28 @@
+Mon Oct 18 18:28:23 2004  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+
 Sat Oct 16 18:40:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
-	* orbsvcs/Logging_Service/Event_Logging_Service/README:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/README:
+        * orbsvcs/Logging_Service/Event_Logging_Service/README:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/README:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
 
-	  Convert from DOS to UNIX text format.
+          Convert from DOS to UNIX text format.
 
 Sat Oct 16 13:22:54 MST 2004 Trevor Fields  <fields_t@ociweb.com>
 
@@ -15,16 +32,16 @@ Sat Oct 16 13:22:54 MST 2004 Trevor Fields  <fields_t@ociweb.com>
 
 Fri Oct 15 20:37:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Synch_Invocation.cpp:
-	* tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
 
-	  Fixed a subtle bug that prevented the service context list from
-	  being marshalled to the server. This was from the following
-	  change
+          Fixed a subtle bug that prevented the service context list from
+          being marshalled to the server. This was from the following
+          change
 
           Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-	  Thanks to Chad Elliott for pointing out the problem from our
-	  daily builds.
+          Thanks to Chad Elliott for pointing out the problem from our
+          daily builds.
 
 Fri Oct 15 13:08:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
