@@ -1,3 +1,11 @@
+Tue Jun 20 02:06:15 2000  Craig Rodrigues <crodrigu@bbn.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU
+        * include/makeinclude/platform_sunos5_sunc++.GNU
+
+          Updated PLATFORM_X11_CPPFLAGS to include the standard
+          include path for X11 and Motif headers under Solaris.
+
 Mon Jun 19 22:14:26 2000  Alex Arulanthu  <Alex.Arulanthu@sylantro.com>
 
 	* ace/POSIX_Asynch_IO.h:

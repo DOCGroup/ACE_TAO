@@ -1,3 +1,49 @@
+Tue Jun 20 00:25:51 2000  Craig Rodrigues <crodrigu@bbn.com>
+  
+        * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile
+
+          Updated Makefile dependencies.  Removed X11 hardcoded paths.
+          vcrs now builds. 
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ab.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/audio.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/file.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/para.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/prog.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp
+
+          Lots of cleanups to remove compiler warnings/errors under
+          gcc 2.95.  Fixed files so that TAO mpeg client builds properly
+          under Linux.  Commented out a few XmStringFree() and
+          XmFontListFree() Motif statements that were causing crashes
+          under Linux.
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.cpp
+
+          Yamuna fixed flow specification parsing problems in these files.
+          I added more Linux/gcc 2.95 fixes
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/server/vcrs.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/README 
+ 
+          More Linux and gcc 2.95 fixes
+
 Mon Jun 19 20:35:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.dsw:
