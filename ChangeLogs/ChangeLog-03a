@@ -1,3 +1,16 @@
+Sun Dec 23 23:02:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/QOS/Diffserv/Diffserv.dsw:
+	* examples/QOS/Diffserv/diffserv_test.dsp:
+	* examples/QOS/Diffserv/server.dsp:
+	* examples/Reactor/FIFO/FIFO.dsw:
+	* examples/Reactor/FIFO/client.dsp:
+	* examples/Reactor/FIFO/server.dsp:
+	* examples/Shared_Memory/Shared_Memory.dsw:
+	* examples/Shared_Memory/test_MM.dsp:
+	* examples/Shared_Memory/test_SV.dsp:
+	  Add more missing project files and workspaces.
+
 Mon Dec 24 00:48:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
