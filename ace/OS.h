@@ -1614,6 +1614,10 @@ typedef fd_set ACE_FD_SET_TYPE;
 #define GETVAL 0
 #endif /* GETVAL */
 
+#if !defined (F_GETFL)
+#define F_GETFL 0
+#endif /* F_GETFL */
+
 #if !defined (SETVAL)
 #define SETVAL 0
 #endif /* SETVAL */

@@ -26,6 +26,12 @@ class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_2>
   //    Standard module that acts as the head of a ustream.
 {
 public:
+  ACE_Stream_Head ();
+  // Construction 
+
+  ~ACE_Stream_Head ();
+  // Destruction
+
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
@@ -55,6 +61,12 @@ class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_2>
   //    Standard module that acts as the head of a ustream.
 {
 public:
+  ACE_Stream_Tail ();
+  // Construction 
+
+  ~ACE_Stream_Tail ();
+  // Destruction
+
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
@@ -85,6 +97,12 @@ class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_2>
   //    data to its adjacent neighbor.
 {
 public:
+  ACE_Thru_Task ();
+  // Construction 
+
+  ~ACE_Thru_Task ();
+  // Destruction
+
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);

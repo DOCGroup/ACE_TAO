@@ -13,6 +13,18 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Head)
 
+template <ACE_SYNCH_1> 
+ACE_Stream_Head<ACE_SYNCH_2>::ACE_Stream_Head (void) 
+{
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::ACE_Stream_Head");
+}
+
+template <ACE_SYNCH_1> 
+ACE_Stream_Head<ACE_SYNCH_2>::~ACE_Stream_Head (void) 
+{
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::~ACE_Stream_Head");
+}
+
 template <ACE_SYNCH_1> void
 ACE_Stream_Head<ACE_SYNCH_2>::dump (void) const
 {
@@ -139,6 +151,18 @@ ACE_Stream_Head<ACE_SYNCH_2>::fini (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Tail)
 
+template <ACE_SYNCH_1> 
+ACE_Stream_Tail<ACE_SYNCH_2>::ACE_Stream_Tail (void) 
+{
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::ACE_Stream_Tail");
+}
+
+template <ACE_SYNCH_1> 
+ACE_Stream_Tail<ACE_SYNCH_2>::~ACE_Stream_Tail (void) 
+{
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::~ACE_Stream_Tail");
+}
+
 template <ACE_SYNCH_1> void
 ACE_Stream_Tail<ACE_SYNCH_2>::dump (void) const
 {
@@ -263,6 +287,18 @@ ACE_Stream_Tail<ACE_SYNCH_2>::fini (void)
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thru_Task)
+
+template <ACE_SYNCH_1> 
+ACE_Thru_Task<ACE_SYNCH_2>::ACE_Thru_Task (void) 
+{
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::ACE_Thru_Task");
+}
+
+template <ACE_SYNCH_1> 
+ACE_Thru_Task<ACE_SYNCH_2>::~ACE_Thru_Task (void) 
+{
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::~ACE_Thru_Task");
+}
 
 template <ACE_SYNCH_1> void
 ACE_Thru_Task<ACE_SYNCH_2>::dump (void) const
