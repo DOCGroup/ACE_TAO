@@ -42,7 +42,7 @@ client (void *arg)
 #if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
   ACE_Time_Value *timeout = 0;
 #else
-  ACE_Time_value timeout = &tv;
+  ACE_Time_Value *timeout = &tv;
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting timed connect\n"));

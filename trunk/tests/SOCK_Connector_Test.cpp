@@ -98,7 +98,7 @@ fail_no_listener_nonblocking (void)
 		      "Connect which should fail didn't\n"));
 	  status = -1;
 	}
-      else if (!(errno == ECONNREFUSED || errno == ENOTCONN || errno ETIMEDOUT)
+      else if (!(errno == ECONNREFUSED || errno == ENOTCONN || errno ETIMEDOUT))
 	{
 	  ACE_DEBUG ((LM_DEBUG, "%p at errno %d, but expected ECONNREFUSED or ENOTCONN\n",
 		      "Failed with", errno));

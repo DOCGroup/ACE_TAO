@@ -1,4 +1,13 @@
-Sat Oct 11 11:14:42 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+Sat Oct 11 14:38:16 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK_Connector.cpp (complete): Fixed a typo with
+ 	  ACE_NON_BLOCKING_BUG_DELAY.  Thanks to John Zeb Dhom"
+ 	  <zeb@ibm.net> for reporting this.
+
+	* tests/MT_SOCK_Test.cpp (client): Slightly revised the client
+ 	  function so that it doesn't try to use non-blocking connects if
+ 	  it's on a Win32 platform that has bugs with non-blocking
+ 	  connects.
 
 	* ace/SOCK_Connector.cpp: It appears that connect() can set the
  	  ETIMEDOUT errno if the connection times out (whatever that

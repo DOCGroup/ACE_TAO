@@ -109,7 +109,7 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   // Win32 has a timing problem - if you check to see if the
   // connection has completed too fast, it will fail - so wait 1
   // millisecond to let it catch up.
-  ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DEALY);
+  ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DELAY);
   ACE_OS::sleep (time);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
   ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
