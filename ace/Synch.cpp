@@ -936,14 +936,14 @@ ACE_Static_Object_Lock::instance (void)
       ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_,
 		      ACE_Recursive_Thread_Mutex, 0);
 #if ! defined (ACE_HAS_BROKEN_ATEXIT)
-      /* On DEC CXX, HP/UX, and AIX.
-         It should be done through the Object_Manager, but then
-         all "statics" will have to play that game as well. */
+      // On DEC CXX, HP/UX, and AIX.  It should be done through the
+      // Object_Manager, but then all "statics" will have to play that
+      // game as well.
 #if defined (ACE_HAS_SIG_C_FUNC)
       ::atexit (ace_static_object_lock_atexit);
 #else
       ::atexit (ACE_Static_Object_Lock::atexit);
-#endif
+#endif /* ACE_HAS_SIG_C_FUNC */
 #endif /* ACE_HAS_BROKEN_ATEXIT */
     }
   return ACE_Static_Object_Lock::mutex_;

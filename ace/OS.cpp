@@ -215,7 +215,7 @@ ACE_OS::gethrtime (void)
   asm ("movl %eax, -4(%ebp)");  // least
   asm ("movl %edx, -8(%ebp)");  // most
 
-  return (u_long long) most << 32  |  least;
+  return (ACE_hrtime_t) most << 32  |  least;
 }
 #endif /* ACE_HAS_PENTIUM && __GNUC__ */
 
