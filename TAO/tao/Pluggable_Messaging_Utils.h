@@ -18,6 +18,7 @@
 // ============================================================================
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
+#include "tao/IOPC.h"
 
 class TAO_Export TAO_Pluggable_Connector_Params
 {
