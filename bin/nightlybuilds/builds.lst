@@ -58,26 +58,6 @@ LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
-[Win2000_LIB_Debug]
-LIST   = http://ringil.ece.uci.edu/bugzilla/lib_debug/
-WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_debug
-STATUS = http://ringil.ece.uci.edu/bugzilla/lib_debug/status.txt
-
-[Win2000_LIB_Release]
-LIST   = http://ringil.ece.uci.edu/bugzilla/lib_release/
-WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
-STATUS = http://ringil.ece.uci.edu/bugzilla/lib_release/status.txt
-
-[Win2000_Legacy]
-LIST   = http://ringil.ece.uci.edu/bugzilla/legacy/
-WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
-STATUS = http://ringil.ece.uci.edu/bugzilla/legacy/status.txt
-
-[Win2000_Unicode]
-LIST   = http://ringil.ece.uci.edu/bugzilla/unicode/
-WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?unicode
-STATUS = http://ringil.ece.uci.edu/bugzilla/unicode/status.txt
-
 [WinCE_All]
 LIST   = http://ringil.ece.uci.edu/bugzilla/wince/
 WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
