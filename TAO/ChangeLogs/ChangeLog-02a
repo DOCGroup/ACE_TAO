@@ -1,3 +1,20 @@
+Sat Mar 03 22:56:20 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/AMI_Timeouts/client.cpp (main):
+	* tests/AMI_Timeouts/timeout_client.cpp (svc, init):
+	* tests/AMI_Timeouts/server.cpp (main):
+
+	  Fixed compile-time problems related to emulated exceptions.
+	  ACE_TRY_NEW_ENV declares a CORBA::Environment within a do-while
+	  loop scope, so that Environment is not available outside of the
+	  loop.  However, an ACE_CHECK_RETURN is done outside of the
+	  ACE_TRY_NEW_ENV block.  Use ACE_DECLARE_NEW_CORBA_ENV instead.
+	
+	  Added missing ACE_TRY_ENV parameter to the
+	  resolve_initial_references() and shutdown() calls.
+
+	  Corrected spelling.  "Caught," not "Catched!"
+
 Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/TAO-metrics.html:

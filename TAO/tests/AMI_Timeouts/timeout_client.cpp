@@ -1,25 +1,17 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    timeout_client.cpp
-//
-// = DESCRIPTION
-//    Tests for proper handling of timeouts with AMI
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
-
+//=============================================================================
+/**
+ *  @file    timeout_client.cpp
+ *
+ *  $Id$
+ *
+ *  Tests for proper handling of timeouts with AMI
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
 
 #include "timeout_client.h"
-
-
 
 TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
                               Timeout_ptr timeoutObject,
@@ -27,13 +19,13 @@ TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
                               TimeoutHandler_i *timeoutHandler_i,
                               unsigned long timeToWait)
 : orb_(CORBA::ORB::_duplicate (orb))
-, timeoutObject_(Timeout::_duplicate (timeoutObject))
-, replyHandlerObject_(AMI_TimeoutHandler::_duplicate (replyHandlerObject))
-, timeoutHandler_i_(timeoutHandler_i)
-, local_reply_excep_counter_ (0)
-, INVOKE_SYNCH(false)
-, INVOKE_ASYNCH(true)
-, timeToWait_ (timeToWait)
+  , timeoutObject_(Timeout::_duplicate (timeoutObject))
+  , replyHandlerObject_(AMI_TimeoutHandler::_duplicate (replyHandlerObject))
+  , timeoutHandler_i_(timeoutHandler_i)
+  , local_reply_excep_counter_ (0)
+  , INVOKE_SYNCH(false)
+  , INVOKE_ASYNCH(true)
+  , timeToWait_ (timeToWait)
 {
 
 }
@@ -51,7 +43,8 @@ TimeoutClient::svc ()
 {
   this->init ();
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       
       // Tests timeouts for synchronous
@@ -74,12 +67,12 @@ TimeoutClient::svc ()
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (false);
-
+      orb_->shutdown (false, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -95,7 +88,8 @@ TimeoutClient::svc ()
 int
 TimeoutClient::init ()
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Object_var object =
         orb_->resolve_initial_references ("ORBPolicyManager",
@@ -108,7 +102,7 @@ TimeoutClient::init ()
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -139,8 +133,7 @@ TimeoutClient::send (bool async,
      
   CORBA::PolicyList policy_list (1);
 
-  CORBA::Environment ACE_TRY_ENV;
-
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_EX (normal)
     {
       if (local_timeout != 0)
@@ -153,8 +146,8 @@ TimeoutClient::send (bool async,
           policy_list.length (1);
           policy_list[0] =
             orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                any_orb,
-                                ACE_TRY_ENV);
+                                 any_orb,
+                                 ACE_TRY_ENV);
           ACE_TRY_CHECK_EX (normal);
 
           policy_manager_->set_policy_overrides (policy_list,
