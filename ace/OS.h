@@ -1090,7 +1090,7 @@ void _gobble_##SERVICE_CLASS (void *p) { \
   ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
-extern "C" ACE_Service_Object *\
+extern "C" CLS##_Export ACE_Service_Object *\
 _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 { \
   ACE_TRACE (#SERVICE_CLASS); \
