@@ -134,6 +134,16 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_VXWORKS_GCC/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_VXWORKS_GCC
 
+[VxWorks_5.4_GCC]
+TYPE = TIMEONLY
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/krusty_VXWORKS_GCC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?krusty_VXWORKS_GCC
+
+[Chorus_4.0.1_GCC]
+TYPE = TIMEONLY
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/lisa_CHORUS_4_0_1_GCC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?lisa_CHORUS_4_0_1_GCC
+
 [Lynx_I386]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/
