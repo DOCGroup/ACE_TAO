@@ -50,11 +50,11 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 
     <P> Current status:
     <UL>
-      <LI> Many IDL constructs supported including primitive types,
-          typedefs, sequences, structures, and unions. </LI>
-
       <LI> Generated code closely follows the C++ Mapping specified in
           the POA Specification (ORBOS/97-05-15). </LI>
+
+      <LI> Many IDL constructs supported including primitive types,
+          typedefs, sequences, structures, and unions. </LI>
 
       <LI> Generates C++ stubs and skeletons that use TAO's <A
           HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive IIOP protocol
@@ -77,6 +77,10 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           supported properly. We think the same approach should work
           for sequences, structs, and unions. </LI>
 
+      <LI> The latest success story is that the compiler
+          generates correct code for COSS Naming service and it
+          runs properly. Correct code also gets generated for the
+          Event Channel program </LI>
     </UL>
 
   <P> Known bugs:
@@ -85,7 +89,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
             bugs/incomplete tasks are:
             <UL>
               <LI>
-                  Sequences of strings and object references may still
+                  Sequences of strings and object references still
                   pose problems </LI>
 
               <LI>
@@ -96,6 +100,11 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
                   Exceptions are not well-supported. TAO does not use
                   C++ Exceptions. Instead we use the alternative
                   mapping that uses CORBA::Environment. </LI>
+
+              <LI> Unions with default cases yet to be handled  </LI>
+
+              <LI> The <<= and >>= operators for user-defined types
+                  are not generated yet. </LI>
 
             </UL>
         </LI>
