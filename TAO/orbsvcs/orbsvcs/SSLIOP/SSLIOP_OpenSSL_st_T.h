@@ -29,11 +29,11 @@ namespace TAO
   namespace SSLIOP
   {
     /**
-     * @class OpenSSL_traits
+     * @struct OpenSSL_traits
      *
-     * @brief Template traits class for OpenSSL data structures.
+     * @brief Template traits structure for OpenSSL data structures.
      *
-     * Template traits class containing constants and functions
+     * Template traits structure containing constants and functions
      * specific to a given OpenSSL data structure.
      */
     template <typename T>
