@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Connection_Manager.h"
+#include "tao/debug.h"
 
 Connection_Manager::Connection_Manager (void)
 {

@@ -1,3 +1,8 @@
+Sun May  6 12:36:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+	  Added #include "tao/debug.h" to get it compiling on SunCC4.2. 
+
 Sun May  6 10:33:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
