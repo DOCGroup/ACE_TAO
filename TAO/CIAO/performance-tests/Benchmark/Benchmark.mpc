@@ -28,7 +28,7 @@ project(Benchmark_svnt) : ciao_server {
   }
 }
 
-project (server) : taoserver, strategies {
+project (*server) : taoserver, strategies {
   Source_Files {
     server.cpp
     LatencyTest.cpp
