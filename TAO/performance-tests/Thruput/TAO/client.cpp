@@ -16,6 +16,7 @@
 // ============================================================================
 
 #include "ace/ACE.h"
+#include "ace/Read_Buffer.h"
 #include "ttcpC.h"
 #include "ttcp_decl.h"
 
@@ -23,14 +24,16 @@ ACE_RCSID(TAO, client, "$Id$")
 
 int print_usage (void);
 
+char * read_ior (char *filename);
 char Usage[] =
      "Usage: client [-options] \n"
      "Common options:\n"
      "-i <ior> Object reference string that the server outputs when started\n"
+     " -f ior_file"
      "-l ##    length of bufs read from or written to network (default 8192)\n"
      "-v       verbose: print more statistics\n"
      "-d ##    debug level\n"
-     "-f X     format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n"
+     "-m X     format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n"
      "-L ##    Output file name to store results\n"
      "-S ##    Total Data Size to be sent\n"
      "-q <type> Send Sequence: Enumeration for various data types:\n"
@@ -77,66 +80,69 @@ main (int argc, char *argv[])
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object
   CORBA::Environment    env;       // environment
 
-  fstream iorfile;
+  FILE * ior_file;
 
   ACE_UNUSED_ARG (objkey);
 
   // parse the arguments
-  ACE_Get_Opt get_opt (argc, argv, "d:vf:l:L:S:q:i:"); // Command line options
+  ACE_Get_Opt get_opt (argc, argv, "d:vm:l:L:S:q:i:f:"); // Command line options
   TAO_debug_level = 0;
   while ((c = get_opt ()) != -1)
     {
       switch (c)
-        {
-        case 'i':
-          ior = ACE_OS::strdup (get_opt.optarg);
-          break;
-        case 'L':
-          title = ACE_OS::strdup (get_opt.optarg);
-          break;
-        case 'd':
-          TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
-          if (TAO_debug_level > 10)
-            TAO_debug_level = 10;
-          break;
-        case 'l':
-          buflen = ACE_OS::atoi (get_opt.optarg);
-          break;
-        case 'v':
-          verbose = 1;
-          break;
+	{
+	case 'i':
+	  ior = ACE_OS::strdup (get_opt.optarg);
+	  break;
+	case 'L':
+	  title = ACE_OS::strdup (get_opt.optarg);
+	  break;
+	case 'd':
+	  TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
+	  if (TAO_debug_level > 10)
+	    TAO_debug_level = 10;
+	  break;
+	case 'l':
+	  buflen = ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 'v':
+	  verbose = 1;
+	  break;
+	case 'm':
+	  fmt = *get_opt.optarg;
+	  break;
+	case 'S':       /* total source data to send. */
+	  srcDataSize = ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 'q':       /* Send sequence of desired data type */
+	  switch(*get_opt.optarg){
+	  case 's':
+	    dt = SEND_SHORT;
+	    break;
+	  case 'l':
+	    dt = SEND_LONG;
+	    break;
+	  case 'd':
+	    dt = SEND_DOUBLE;
+	    break;
+	  case 'c':
+	    dt = SEND_CHAR;
+	    break;
+	  case 'o':
+	    dt = SEND_OCTET;
+	    break;
+	  case 'S':
+	    dt = SEND_STRUCT;
+	    break;
+	  case 'C':
+	    dt = SEND_COMPOSITE;
+	    break;
+	  }
+	  break;
         case 'f':
-          fmt = *get_opt.optarg;
+          ior = read_ior (get_opt.optarg);
           break;
-        case 'S':       /* total source data to send. */
-          srcDataSize = ACE_OS::atoi (get_opt.optarg);
-          break;
-        case 'q':       /* Send sequence of desired data type */
-          switch(*get_opt.optarg){
-          case 's':
-            dt = SEND_SHORT;
-            break;
-          case 'l':
-            dt = SEND_LONG;
-            break;
-          case 'd':
-            dt = SEND_DOUBLE;
-            break;
-          case 'c':
-            dt = SEND_CHAR;
-            break;
-          case 'o':
-            dt = SEND_OCTET;
-            break;
-          case 'S':
-            dt = SEND_STRUCT;
-            break;
-          case 'C':
-            dt = SEND_COMPOSITE;
-            break;
-          }
-          break;
-        default:
+	default:
           return print_usage ();
         }
     }
@@ -168,6 +174,11 @@ main (int argc, char *argv[])
     {
       // if it is a valid obj ref, narrow it to a ttcp_sequence CORBA object
       ttcp_seq = ttcp_sequence::_narrow (objref, env);
+      if (env.exception () != 0)
+        {
+          env.print_exception ("ttcp_sequence::_narrow");
+          return  -1;
+        }
 
       if (!CORBA::is_nil (ttcp_seq))
         {
@@ -196,6 +207,7 @@ main (int argc, char *argv[])
           //
 
           prep_timer ();  // start our time
+          env.clear ();
           ttcp_seq->start_timer (env); // ask the server to start its timer
           if (env.exception () != 0)
             {
@@ -277,4 +289,31 @@ int print_usage (void)
   ACE_ERROR ((LM_ERROR, "Usage error\n"));
   ACE_ERROR ((LM_ERROR, "%s\n", Usage));
   return -1;
+}
+
+char*
+read_ior (char *filename)
+{
+  ACE_HANDLE f_handle;
+  // Open the file for reading.
+  f_handle = ACE_OS::open (filename,0);
+
+  if (f_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open %s for reading: %p\n",
+                       filename),
+                      0);
+  ACE_Read_Buffer ior_buffer (f_handle);
+  char *data = ior_buffer.read ();
+
+  if (data == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to allocate memory to read ior: %p\n"),
+                      0);
+
+  char *ior = 0;
+  ior = ACE_OS::strdup (data);
+  ior_buffer.alloc ()->free (data);
+
+  return ior;
 }
