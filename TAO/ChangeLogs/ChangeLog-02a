@@ -1,17 +1,3 @@
-Mon Oct 30 18:12:37 2000  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* tao/Exception.cpp:
-
-	 Plugged a memory leak in TAO_Exceptions::make_standard_typecode
-	 by removing an extra CORBA::TypeCode::_duplicate.
-
-	* tao/ORB.cpp:
-
-	 Plugged two memory leaks by removing two _retn() calls on
-	 PortableInterceptor::ORBInitializer_var orb_initializer
-	 (made after two separate assignments) that have no lhs. All
-	 this occurs in ORB_init.
-
 Mon Oct 30 10:40:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/tutorials/Quoter/AMI/Makefile: 
