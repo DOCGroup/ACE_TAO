@@ -1,3 +1,9 @@
+Mon Jan 26 17:12:38 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_stat.inl (filesize): Declare sb using ACE_stat instead
+	  of struct stat to pick up whatever gets set up for that platform.
+	  Fixes compile error on HP-UX aCC.
+
 Mon Jan 26 15:18:06 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * bin/count_lines (initfiletypes):
