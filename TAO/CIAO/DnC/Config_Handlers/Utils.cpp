@@ -167,7 +167,7 @@ CIAO::Config_Handler::Utils::create_document (const char * url)
 }
 
 DOMBuilder*
-CIAO::Config_Handler::Utils::create_parser (const char*)
+CIAO::Config_Handler::Utils::create_parser ()
 {
   xercesc::XMLPlatformUtils::Initialize();
   static const XMLCh gLS[] = { xercesc::chLatin_L,

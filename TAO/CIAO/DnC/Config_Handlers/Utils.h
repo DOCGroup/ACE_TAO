@@ -84,7 +84,7 @@ namespace CIAO {
       static DOMDocument* create_document (const char * url);
       // Create a document from the URL
 
-      static DOMBuilder* create_parser (const char * url);
+      static DOMBuilder* create_parser ();
       // Create a parser from the URL
 
       static DOMNodeIterator * parse_href_tag (XMLURL xml_url,
