@@ -1,3 +1,19 @@
+Tue Nov  4 16:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tools/Daemon/controller_i.cpp:
+
+	  #included "ace/OS_NS_strings.h"
+	
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/RTConfig_Handlers.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.cpp:
+	* tools/XML_Helpers/XML_Utils.cpp:
+
+	  #included "ace/OS_String.h" to get the above files compiling
+	  with g++. We still get a link error that Don is looking at.
+
 Tue Nov  4 16:34:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Active_Objref_Map.h:

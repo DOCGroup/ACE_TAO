@@ -5,6 +5,7 @@
 #include "Softpkg_Commands.h"
 #include "Client_init.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_strings.h"
 #include "CCM_DeploymentC.h"
 
 #if !defined (__ACE_INLINE__)
