@@ -208,13 +208,13 @@ ACE_Select_Reactor::alertable_handle_events (ACE_Time_Value &max_wait_time)
 }
 
 ACE_INLINE size_t 
-ACE_Select_Reactor::size (void)
-{
-  return this->handler_rep_.size ();
-}
-
-ACE_INLINE size_t 
 ACE_Select_Reactor_Handler_Repository::size (void)
 {
   return this->max_size_;
+}
+
+ACE_INLINE size_t 
+ACE_Select_Reactor::size (void)
+{
+  return this->handler_rep_.size ();
 }
