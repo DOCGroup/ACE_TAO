@@ -141,6 +141,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       this->begin_public ();
 
+      *os << be_nl << "virtual ~OBV_" << node->local_name () << " (void);";
+
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
         {
@@ -155,7 +157,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // we have to add this to avoid ambiguity.
       if (node->supports_abstract ())
         {
-          *os << "virtual void _add_ref (void);" << be_nl;
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ ;
+
+          *os << be_nl << be_nl << "virtual void _add_ref (void);" << be_nl;
           *os << "virtual void _remove_ref (void);";
         }
 
@@ -185,7 +190,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuetype_obv_ch::visit_field (be_field *node)

@@ -637,20 +637,27 @@ AST_InterfaceFwd *
 AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
 {
   AST_Decl *d = 0;
-  AST_Interface *itf = 0;
 
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (i, I_FALSE)) != 0)
     {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_interface_fwd)
+        {
+          AST_InterfaceFwd *ifwd = AST_InterfaceFwd::narrow_from_decl (d);
+          i->set_full_definition (ifwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (d->node_type () == AST_Decl::NT_interface)
+      if (nt == AST_Decl::NT_interface)
         {
-          itf = AST_Interface::narrow_from_decl (d);
+          AST_Interface *itf = AST_Interface::narrow_from_decl (d);
 
           if (itf == 0)
             {
@@ -711,20 +718,27 @@ AST_ValueTypeFwd *
 AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
 {
   AST_Decl *d = 0;
-  AST_ValueType *vtf = 0;
 
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (v, I_FALSE)) != 0)
     {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_valuetype_fwd)
+        {
+          AST_ValueTypeFwd *vfwd = AST_ValueTypeFwd::narrow_from_decl (d);
+          v->set_full_definition (vfwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (d->node_type () == AST_Decl::NT_valuetype)
+      if (nt == AST_Decl::NT_valuetype)
         {
-          vtf = AST_ValueType::narrow_from_decl (d);
+          AST_ValueType *vtf = AST_ValueType::narrow_from_decl (d);
 
           if (vtf == 0)
             {
@@ -785,20 +799,27 @@ AST_EventTypeFwd *
 AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
 {
   AST_Decl *d = 0;
-  AST_EventType *vtf = 0;
 
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (v, I_FALSE)) != 0)
     {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_eventtype_fwd)
+        {
+          AST_EventTypeFwd *efwd = AST_EventTypeFwd::narrow_from_decl (d);
+          v->set_full_definition (efwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (d->node_type () == AST_Decl::NT_eventtype)
+      if (nt == AST_Decl::NT_eventtype)
         {
-          vtf = AST_EventType::narrow_from_decl (d);
+          AST_EventType *vtf = AST_EventType::narrow_from_decl (d);
 
           if (vtf == 0)
             {
@@ -859,20 +880,27 @@ AST_ComponentFwd *
 AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
 {
   AST_Decl *d = 0;
-  AST_Component *cf = 0;
 
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (c, I_FALSE)) != 0)
     {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_component_fwd)
+        {
+          AST_ComponentFwd *cfwd = AST_ComponentFwd::narrow_from_decl (d);
+          c->set_full_definition (cfwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (d->node_type () == AST_Decl::NT_component)
+      if (nt == AST_Decl::NT_component)
         {
-          cf = AST_Component::narrow_from_decl (d);
+          AST_Component *cf = AST_Component::narrow_from_decl (d);
 
           if (cf == 0)
             {
@@ -1114,23 +1142,19 @@ AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
+      if (nt == AST_Decl::NT_union_fwd)
+        {
+          AST_UnionFwd *ufwd = AST_UnionFwd::narrow_from_decl (d);
+          t->set_full_definition (ufwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add() calls only
+      // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (nt == AST_Decl::NT_union_fwd)
-        {
-          // It's legal to forward declare something more than once,
-          // but we need only one entry in the scope for lookup.
-          AST_UnionFwd *fd = AST_UnionFwd::narrow_from_decl (d);
-          t->destroy ();
-          delete t;
-          t = 0;
-          return fd;
-        }
-      else if (nt == AST_Decl::NT_union)
+      if (nt == AST_Decl::NT_union)
         {
           AST_Union *s = AST_Union::narrow_from_decl (d);
           t->set_full_definition (s);
@@ -1278,23 +1302,19 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
+      if (nt == AST_Decl::NT_struct_fwd)
+        {
+          AST_StructureFwd *sfwd = AST_StructureFwd::narrow_from_decl (d);
+          t->set_full_definition (sfwd->full_definition ());
+        }
+
       // There used to be another check here ANDed with the one below:
-      // d->defined_in () == this. But lookup_for_add() calls only
+      // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
       // and look_in_previous() for modules. If look_in_previous()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
-      if (nt == AST_Decl::NT_struct_fwd)
-        {
-          // It's legal to forward declare something more than once,
-          // but we need only one entry in the scope for lookup.
-          AST_StructureFwd *fd = AST_StructureFwd::narrow_from_decl (d);
-          t->destroy ();
-          delete t;
-          t = 0;
-          return fd;
-        }
-      else if (nt == AST_Decl::NT_struct)
+      if (nt == AST_Decl::NT_struct)
         {
           AST_Structure *s = AST_Structure::narrow_from_decl (d);
           t->set_full_definition (s);
