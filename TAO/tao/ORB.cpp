@@ -535,12 +535,8 @@ CORBA_Object_ptr
 CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Current *policy_current =
-    this->orb_core_->policy_current ();
-  if (policy_current == 0)
-    return CORBA_Object::_nil ();
-
-  return policy_current->_this (ACE_TRY_ENV);
+  TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
+  return policy_current._this (ACE_TRY_ENV);
 #else
   return CORBA_Object::_nil ();
 #endif /* TAO_HAS_CORBA_MESSAGING */

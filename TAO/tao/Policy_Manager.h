@@ -52,7 +52,7 @@ public:
     );
   // Modify the list of policies to include <policies>.
   // If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
-  // policies. If it is CORBA::ADD_OVERRIDE we simply add the policies 
+  // policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
   // in <policies>.
   // No attempt is made to validate the policies for consitency.
 
@@ -115,12 +115,9 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Policy_Current : public POA_CORBA::PolicyCurrent
+class TAO_Export TAO_Policy_Current_Impl
 {
 public:
-  TAO_Policy_Current (void);
-  // constructor
- 
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
@@ -143,8 +140,39 @@ public:
       );
 
 private:
-  TAO_Policy_Manager_Impl impl_;
+  TAO_Policy_Manager_Impl manager_impl_;
   // The implementation.
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_Policy_Current : public POA_CORBA::PolicyCurrent
+{
+public:
+  CORBA::Policy_ptr get_policy (
+      CORBA::PolicyType policy,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  // Obtain a single policy.
+
+  // = The CORBA::PolicyManager operations
+
+  virtual CORBA::PolicyList * get_policy_overrides (
+        const CORBA::PolicyTypeSeq & ts,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+  virtual void set_policy_overrides (
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+  // = Set and get the implementation.
+  TAO_Policy_Current_Impl &implementation (void);
+  TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
 
 #if defined (__ACE_INLINE__)
