@@ -26,7 +26,11 @@ ACE_RCSID(Param_Test, objref, "$Id$")
 // ************************************************************************
 
 Test_ObjRef::Test_ObjRef (void)
-  : opname_ (CORBA::string_dup ("test_objref"))
+  : opname_ (CORBA::string_dup ("test_objref")),
+    in_courier (new CORBA::Object_ptr),
+    inout_courier (new CORBA::Object_ptr),
+    out_courier (new CORBA::Object_ptr),
+    ret_courier (new CORBA::Object_ptr)
 {
 }
 
@@ -34,6 +38,11 @@ Test_ObjRef::~Test_ObjRef (void)
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
+
+  delete this->in_courier;
+  delete this->inout_courier;
+  delete this->out_courier;
+  delete this->ret_courier;
 }
 
 const char *
@@ -66,16 +75,26 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       return -1;
     }
 
-  // get some sequence length (not more than 10)
+  // Get some index into Coffee_Flavor [].
   CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
   desc.name = Coffee_Flavor [index];
   // set the attribute of the object
   this->in_->description (desc, env); // set the attribute for the in object
+
   if (env.exception ())
     {
       env.print_exception ("set coffee attribute");
       return -1;
     }
+
+  this->inout_ = Coffee::_nil ();
+  this->out_ = Coffee::_nil ();
+  this->ret_ = Coffee::_nil ();
+
+  // DII
+  *this->in_courier = this->in_.in ();
+  *this->inout_courier = this->inout_.in ();
+
   return 0;
 }
 
@@ -86,11 +105,12 @@ Test_ObjRef::reset_parameters (void)
   Coffee::Desc desc;
   Generator *gen = GENERATOR::instance (); // value generator
 
-  // get some sequence length (not more than 10)
+  // Get some index into Coffee_Flavor [].
   CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
   desc.name = Coffee_Flavor [index];
   // set the attribute of the object
   this->in_->description (desc, env); // set the attribute for the in object
+
   if (env.exception ())
     {
       env.print_exception ("set coffee attribute");
@@ -98,14 +118,19 @@ Test_ObjRef::reset_parameters (void)
     }
 
   this->inout_ = Coffee::_nil ();
-  this->out_ =  Coffee::_nil ();
-  this->ret_ =  Coffee::_nil ();
+  this->out_ = Coffee::_nil ();
+  this->ret_ = Coffee::_nil ();
+
+  // DII
+  *this->in_courier = this->in_.in ();
+  *this->inout_courier = this->inout_.in ();
+
   return 0;
 }
 
 int
 Test_ObjRef::run_sii_test (Param_Test_ptr objref,
-                          CORBA::Environment &env)
+                           CORBA::Environment &env)
 {
   Coffee_out out (this->out_.out ());
   this->ret_ = objref->test_objref (this->in_.in (),
@@ -121,18 +146,18 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
 		       CORBA::Environment &env)
 {
   CORBA::Any in_arg (_tc_Coffee,
-                     &this->in_,
+                     this->in_courier,
                      CORBA::B_FALSE);
 
   CORBA::Any inout_arg (_tc_Coffee,
-                        &this->inout_,
+                        this->inout_courier,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (_tc_Coffee,
-                      &this->out_,
+                      this->out_courier,
                       CORBA::B_FALSE);
 
-  // add parameters
+  // Add parameters.
   param_list->add_value ("o1",
                          in_arg,
                          CORBA::ARG_IN,
@@ -148,11 +173,12 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
                          CORBA::ARG_OUT,
                          env);
 
-  // add return value
+  // Add return value.
   retval->item (0, env)->value ()->replace (_tc_Coffee,
-                                            &this->ret_,
+                                            this->ret_courier,
                                             CORBA::B_FALSE, // does not own
                                             env);
+
   return 0;
 }
 
@@ -209,25 +235,27 @@ Test_ObjRef::check_validity (void)
 CORBA::Boolean
 Test_ObjRef::check_validity (CORBA::Request_ptr req)
 {
+  ACE_UNUSED_ARG (req);
   CORBA::Environment env;
-  this->inout_ = Coffee::_narrow ((CORBA::Object_ptr) req->arguments ()->item
-                                  (1, env)->value ()->value (), env);
+
+  // Narrow each checked variable into its _var before
+  // calling check_validity().
+
+  this->inout_ = Coffee::_narrow (*this->inout_courier, env);
   if (env.exception ())
     {
       env.print_exception ("_narrow from DII result");
       return 0;
     }
 
-  this->out_ = Coffee::_narrow ((CORBA::Object_ptr) req->arguments ()->item
-                                (2, env)->value ()->value (), env);
+  this->out_ = Coffee::_narrow (*this->out_courier, env);
   if (env.exception ())
     {
       env.print_exception ("_narrow from DII result");
       return 0;
     }
 
-  this->ret_ = Coffee::_narrow ((CORBA::Object_ptr)req->result ()->value
-                                ()->value (), env);
+  this->ret_ = Coffee::_narrow (*this->ret_courier, env);
   if (env.exception ())
     {
       env.print_exception ("_narrow from DII result");
