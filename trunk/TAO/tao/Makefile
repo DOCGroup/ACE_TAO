@@ -11,8 +11,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
-PUB_HDRS = Align CDR \
-	   Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector IIOP_Acceptor \
+PUB_HDRS = Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector IIOP_Acceptor \
 	   GIOP Invocation IIOP_ORB Connect Params \
 	   Marshal Debug \
 	   Default_Client Default_Server \
