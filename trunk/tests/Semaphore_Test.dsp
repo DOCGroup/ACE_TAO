@@ -37,7 +37,7 @@ CFG=Semaphore_Test - Win32 Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -144,7 +144,6 @@ DEP_CPP_SEMAP=\
 	"..\ace\Signal.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\SV_Semaphore_Complex.h"\
 	"..\ace\SV_Semaphore_Complex.i"\
 	"..\ace\SV_Semaphore_Simple.h"\
@@ -162,6 +161,9 @@ DEP_CPP_SEMAP=\
 	"..\ace\Version.h"\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
+	
+NODEP_CPP_SEMAP=\
+	"..\ace\stdcpp.h"\
 	
 
 !ENDIF 

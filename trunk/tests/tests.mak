@@ -2587,7 +2587,7 @@ LINK32_OBJS= \
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir ".\Debug"
+# PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Enum_Interfaces_Test"
 OUTDIR=.\.
 INTDIR=.\Debug
@@ -2613,7 +2613,7 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\.\Debug/
+CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -2647,7 +2647,7 @@ LINK32_OBJS= \
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir ".\Debug"
+# PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Hash_Map_Manager_Test"
 OUTDIR=.\.
 INTDIR=.\Debug
@@ -2673,7 +2673,7 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\.\Debug/
+CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -2707,7 +2707,7 @@ LINK32_OBJS= \
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir ".\Debug"
+# PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Semaphore_Test"
 OUTDIR=.\.
 INTDIR=.\Debug
@@ -2733,7 +2733,7 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\.\Debug/
+CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -2826,10 +2826,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "MT_SOCK_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "MT_SOCK_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\MT_SOCK_Test.exe"
@@ -2841,6 +2841,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\MT_SOCK_Test.exe"
 	-@erase "$(OUTDIR)\MT_SOCK_Test.ilk"
 	-@erase "$(OUTDIR)\MT_SOCK_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -2883,10 +2886,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "Priority_Reactor_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Priority_Reactor_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\Priority_Reactor_Test.exe"
@@ -2898,6 +2901,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\Priority_Reactor_Test.exe"
 	-@erase "$(OUTDIR)\Priority_Reactor_Test.ilk"
 	-@erase "$(OUTDIR)\Priority_Reactor_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -3001,10 +3007,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "Notify_Performance_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Notify_Performance_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\Notify_Performance_Test.exe"
@@ -3016,6 +3022,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\Notify_Performance_Test.exe"
 	-@erase "$(OUTDIR)\Notify_Performance_Test.ilk"
 	-@erase "$(OUTDIR)\Notify_Performance_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -3116,10 +3125,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "SOCK_Connector_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "SOCK_Connector_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\SOCK_Connector_Test.exe"
@@ -3131,6 +3140,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\SOCK_Connector_Test.exe"
 	-@erase "$(OUTDIR)\SOCK_Connector_Test.ilk"
 	-@erase "$(OUTDIR)\SOCK_Connector_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -3232,11 +3244,11 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "Env_Value_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Env_Value_Test\Debug"
-# PROP Intermediate_Dir "Env_Value_Test\Debug"
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Env_Value_Test"
-OUTDIR=.\Env_Value_Test\Debug
-INTDIR=.\Env_Value_Test\Debug
+OUTDIR=.\.
+INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\Env_Value_Test.exe"
 
@@ -3251,11 +3263,14 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Env_Value_Test\Debug/
+CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -3288,10 +3303,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "OrdMultiSet_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "OrdMultiSet_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\OrdMultiSet_Test.exe"
@@ -3303,6 +3318,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\OrdMultiSet_Test.exe"
 	-@erase "$(OUTDIR)\OrdMultiSet_Test.ilk"
 	-@erase "$(OUTDIR)\OrdMultiSet_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -3363,6 +3381,9 @@ LINK32_OBJS= \
 # Begin Source File
 
 SOURCE=.\Handle_Set_Test.cpp
+
+!IF  "$(CFG)" == "Handle_Set_Test - Win32 Debug"
+
 DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3431,12 +3452,13 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Handle_Set_Test.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3448,6 +3470,9 @@ DEP_CPP_HANDL=\
 # Begin Source File
 
 SOURCE=.\Mem_Map_Test.cpp
+
+!IF  "$(CFG)" == "Mem_Map_Test - Win32 Debug"
+
 DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3480,12 +3505,13 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Mem_Map_Test.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3497,6 +3523,9 @@ DEP_CPP_MEM_M=\
 # Begin Source File
 
 SOURCE=.\Naming_Test.cpp
+
+!IF  "$(CFG)" == "Naming_Test - Win32 Debug"
+
 DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3598,12 +3627,13 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Naming_Test.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3615,6 +3645,9 @@ DEP_CPP_NAMIN=\
 # Begin Source File
 
 SOURCE=.\Reactor_Timer_Test.cpp
+
+!IF  "$(CFG)" == "Reactor_Timer_Test - Win32 Debug"
+
 DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3685,12 +3718,13 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3702,6 +3736,9 @@ DEP_CPP_REACT=\
 # Begin Source File
 
 SOURCE=.\Reactors_Test.cpp
+
+!IF  "$(CFG)" == "Reactors_Test - Win32 Debug"
+
 DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3765,6 +3802,8 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -3806,7 +3845,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -3814,6 +3852,8 @@ DEP_CPP_REACTO=\
 
 "$(INTDIR)\Reactors_Test.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3825,6 +3865,9 @@ DEP_CPP_REACTO=\
 # Begin Source File
 
 SOURCE=.\SString_Test.cpp
+
+!IF  "$(CFG)" == "SString_Test - Win32 Debug"
+
 DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3855,12 +3898,13 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SString_Test.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3872,6 +3916,9 @@ DEP_CPP_SSTRI=\
 # Begin Source File
 
 SOURCE=.\Time_Value_Test.cpp
+
+!IF  "$(CFG)" == "Time_Value_Test - Win32 Debug"
+
 DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3902,12 +3949,13 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Time_Value_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3919,6 +3967,9 @@ DEP_CPP_TIME_=\
 # Begin Source File
 
 SOURCE=.\Timer_Queue_Test.cpp
+
+!IF  "$(CFG)" == "Timer_Queue_Test - Win32 Debug"
+
 DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4001,12 +4052,13 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Timer_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4018,6 +4070,9 @@ DEP_CPP_TIMER=\
 # Begin Source File
 
 SOURCE=.\UPIPE_SAP_Test.cpp
+
+!IF  "$(CFG)" == "UPIPE_SAP_Test - Win32 Debug"
+
 DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4085,6 +4140,8 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -4144,7 +4201,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\UPIPE_Connector.i"\
 	{$(INCLUDE)}"\ace\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\ace\UPIPE_Stream.i"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4152,6 +4208,8 @@ DEP_CPP_UPIPE=\
 
 "$(INTDIR)\UPIPE_SAP_Test.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4163,6 +4221,9 @@ DEP_CPP_UPIPE=\
 # Begin Source File
 
 SOURCE=.\Priority_Buffer_Test.cpp
+
+!IF  "$(CFG)" == "Priority_Buffer_Test - Win32 Debug"
+
 DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4223,6 +4284,8 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -4256,7 +4319,6 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4264,6 +4326,8 @@ DEP_CPP_PRIOR=\
 
 "$(INTDIR)\Priority_Buffer_Test.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4275,6 +4339,9 @@ DEP_CPP_PRIOR=\
 # Begin Source File
 
 SOURCE=.\Time_Service_Test.cpp
+
+!IF  "$(CFG)" == "Time_Service_Test - Win32 Debug"
+
 DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4307,12 +4374,13 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Time_Service_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_S) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4324,6 +4392,9 @@ DEP_CPP_TIME_S=\
 # Begin Source File
 
 SOURCE=.\SPIPE_Test.cpp
+
+!IF  "$(CFG)" == "SPIPE_Test - Win32 Debug"
+
 DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4400,12 +4471,13 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SPIPE_Test.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4417,6 +4489,9 @@ DEP_CPP_SPIPE=\
 # Begin Source File
 
 SOURCE=.\Buffer_Stream_Test.cpp
+
+!IF  "$(CFG)" == "Buffer_Stream_Test - Win32 Debug"
+
 DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4480,6 +4555,8 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -4525,7 +4602,6 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4533,6 +4609,8 @@ DEP_CPP_BUFFE=\
 
 "$(INTDIR)\Buffer_Stream_Test.obj" : $(SOURCE) $(DEP_CPP_BUFFE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4544,6 +4622,9 @@ DEP_CPP_BUFFE=\
 # Begin Source File
 
 SOURCE=.\Barrier_Test.cpp
+
+!IF  "$(CFG)" == "Barrier_Test - Win32 Debug"
+
 DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4607,12 +4688,13 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Barrier_Test.obj" : $(SOURCE) $(DEP_CPP_BARRI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4624,6 +4706,9 @@ DEP_CPP_BARRI=\
 # Begin Source File
 
 SOURCE=.\Reader_Writer_Test.cpp
+
+!IF  "$(CFG)" == "Reader_Writer_Test - Win32 Debug"
+
 DEP_CPP_READE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4689,12 +4774,13 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Reader_Writer_Test.obj" : $(SOURCE) $(DEP_CPP_READE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4706,6 +4792,9 @@ DEP_CPP_READE=\
 # Begin Source File
 
 SOURCE=.\Recursive_Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Recursive_Mutex_Test - Win32 Debug"
+
 DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4771,12 +4860,13 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Recursive_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_RECUR) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4788,6 +4878,9 @@ DEP_CPP_RECUR=\
 # Begin Source File
 
 SOURCE=.\Task_Test.cpp
+
+!IF  "$(CFG)" == "Task_Test - Win32 Debug"
+
 DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4851,6 +4944,8 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -4892,7 +4987,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4900,6 +4994,8 @@ DEP_CPP_TASK_=\
 
 "$(INTDIR)\Task_Test.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4911,6 +5007,9 @@ DEP_CPP_TASK_=\
 # Begin Source File
 
 SOURCE=.\Thread_Manager_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Manager_Test - Win32 Debug"
+
 DEP_CPP_THREA=\
 	".\Thread_Manager_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -4975,12 +5074,13 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Thread_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -4992,6 +5092,9 @@ DEP_CPP_THREA=\
 # Begin Source File
 
 SOURCE=.\TSS_Test.cpp
+
+!IF  "$(CFG)" == "TSS_Test - Win32 Debug"
+
 DEP_CPP_TSS_T=\
 	".\TSS_Test_Errno.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -5056,12 +5159,13 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\TSS_Test.obj" : $(SOURCE) $(DEP_CPP_TSS_T) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5073,6 +5177,9 @@ DEP_CPP_TSS_T=\
 # Begin Source File
 
 SOURCE=.\Thread_Pool_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Pool_Test - Win32 Debug"
+
 DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5136,6 +5243,8 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -5177,7 +5286,6 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5185,6 +5293,8 @@ DEP_CPP_THREAD=\
 
 "$(INTDIR)\Thread_Pool_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5196,6 +5306,9 @@ DEP_CPP_THREAD=\
 # Begin Source File
 
 SOURCE=.\Future_Test.cpp
+
+!IF  "$(CFG)" == "Future_Test - Win32 Debug"
+
 DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5263,6 +5376,8 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -5304,7 +5419,6 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5312,6 +5426,8 @@ DEP_CPP_FUTUR=\
 
 "$(INTDIR)\Future_Test.obj" : $(SOURCE) $(DEP_CPP_FUTUR) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5323,6 +5439,9 @@ DEP_CPP_FUTUR=\
 # Begin Source File
 
 SOURCE=.\Tokens_Test.cpp
+
+!IF  "$(CFG)" == "Tokens_Test - Win32 Debug"
+
 DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5435,12 +5554,13 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5452,6 +5572,9 @@ DEP_CPP_TOKEN=\
 # Begin Source File
 
 SOURCE=.\Message_Queue_Test.cpp
+
+!IF  "$(CFG)" == "Message_Queue_Test - Win32 Debug"
+
 DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5512,6 +5635,8 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -5545,7 +5670,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5553,6 +5677,8 @@ DEP_CPP_MESSA=\
 
 "$(INTDIR)\Message_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5564,6 +5690,9 @@ DEP_CPP_MESSA=\
 # Begin Source File
 
 SOURCE=.\Map_Manager_Test.cpp
+
+!IF  "$(CFG)" == "Map_Manager_Test - Win32 Debug"
+
 DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5651,12 +5780,13 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5668,6 +5798,9 @@ DEP_CPP_MAP_M=\
 # Begin Source File
 
 SOURCE=.\Pipe_Test.cpp
+
+!IF  "$(CFG)" == "Pipe_Test - Win32 Debug"
+
 DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5704,12 +5837,13 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5721,6 +5855,9 @@ DEP_CPP_PIPE_=\
 # Begin Source File
 
 SOURCE=.\Process_Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Process_Mutex_Test - Win32 Debug"
+
 DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5769,12 +5906,13 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Process_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5786,6 +5924,9 @@ DEP_CPP_PROCE=\
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory_Test.cpp
+
+!IF  "$(CFG)" == "SV_Shared_Memory_Test - Win32 Debug"
+
 DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5847,12 +5988,13 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SV_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5864,6 +6006,9 @@ DEP_CPP_SV_SH=\
 # Begin Source File
 
 SOURCE=.\MM_Shared_Memory_Test.cpp
+
+!IF  "$(CFG)" == "MM_Shared_Memory_Test - Win32 Debug"
+
 DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5930,12 +6075,13 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\MM_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_MM_SH) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -5947,6 +6093,9 @@ DEP_CPP_MM_SH=\
 # Begin Source File
 
 SOURCE=.\Service_Config_Test.cpp
+
+!IF  "$(CFG)" == "Service_Config_Test - Win32 Debug"
+
 DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6024,12 +6173,13 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Service_Config_Test.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6041,6 +6191,9 @@ DEP_CPP_SERVI=\
 # Begin Source File
 
 SOURCE=.\SOCK_Test.cpp
+
+!IF  "$(CFG)" == "SOCK_Test - Win32 Debug"
+
 DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6123,12 +6276,13 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6140,6 +6294,9 @@ DEP_CPP_SOCK_=\
 # Begin Source File
 
 SOURCE=.\Message_Block_Test.cpp
+
+!IF  "$(CFG)" == "Message_Block_Test - Win32 Debug"
+
 DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6207,6 +6364,8 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6249,7 +6408,6 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6257,6 +6415,8 @@ DEP_CPP_MESSAG=\
 
 "$(INTDIR)\Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAG) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6268,6 +6428,9 @@ DEP_CPP_MESSAG=\
 # Begin Source File
 
 SOURCE=.\Reactor_Notify_Test.cpp
+
+!IF  "$(CFG)" == "Reactor_Notify_Test - Win32 Debug"
+
 DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6333,6 +6496,8 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6374,7 +6539,6 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6382,6 +6546,8 @@ DEP_CPP_REACTOR=\
 
 "$(INTDIR)\Reactor_Notify_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6393,6 +6559,9 @@ DEP_CPP_REACTOR=\
 # Begin Source File
 
 SOURCE=.\IOStream_Test.cpp
+
+!IF  "$(CFG)" == "IOStream_Test - Win32 Debug"
+
 DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -6471,6 +6640,8 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6529,7 +6700,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6537,6 +6707,8 @@ DEP_CPP_IOSTR=\
 
 "$(INTDIR)\IOStream_Test.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6548,6 +6720,9 @@ DEP_CPP_IOSTR=\
 # Begin Source File
 
 SOURCE=.\Process_Strategy_Test.cpp
+
+!IF  "$(CFG)" == "Process_Strategy_Test - Win32 Debug"
+
 DEP_CPP_PROCES=\
 	".\Process_Strategy_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -6625,6 +6800,8 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6683,7 +6860,6 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6691,6 +6867,8 @@ DEP_CPP_PROCES=\
 
 "$(INTDIR)\Process_Strategy_Test.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6702,6 +6880,9 @@ DEP_CPP_PROCES=\
 # Begin Source File
 
 SOURCE=.\Conn_Test.cpp
+
+!IF  "$(CFG)" == "Conn_Test - Win32 Debug"
+
 DEP_CPP_CONN_=\
 	"..\ace\LOCK_SOCK_Acceptor.cpp"\
 	".\Conn_Test.h"\
@@ -6787,6 +6968,8 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6845,7 +7028,6 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6853,6 +7035,8 @@ DEP_CPP_CONN_=\
 
 "$(INTDIR)\Conn_Test.obj" : $(SOURCE) $(DEP_CPP_CONN_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6864,6 +7048,9 @@ DEP_CPP_CONN_=\
 # Begin Source File
 
 SOURCE=.\Simple_Message_Block_Test.cpp
+
+!IF  "$(CFG)" == "Simple_Message_Block_Test - Win32 Debug"
+
 DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6927,13 +7114,14 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Simple_Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_SIMPL)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -6945,6 +7133,9 @@ DEP_CPP_SIMPL=\
 # Begin Source File
 
 SOURCE=.\Reactor_Exceptions_Test.cpp
+
+!IF  "$(CFG)" == "Reactor_Exceptions_Test - Win32 Debug"
+
 DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7027,13 +7218,14 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Reactor_Exceptions_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7045,6 +7237,9 @@ DEP_CPP_REACTOR_=\
 # Begin Source File
 
 SOURCE=.\Priority_Task_Test.cpp
+
+!IF  "$(CFG)" == "Priority_Task_Test - Win32 Debug"
+
 DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7110,6 +7305,8 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -7151,7 +7348,6 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7159,6 +7355,8 @@ DEP_CPP_PRIORI=\
 
 "$(INTDIR)\Priority_Task_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7170,6 +7368,9 @@ DEP_CPP_PRIORI=\
 # Begin Source File
 
 SOURCE=.\Sigset_Ops_Test.cpp
+
+!IF  "$(CFG)" == "Sigset_Ops_Test - Win32 Debug"
+
 DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7200,12 +7401,13 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7217,6 +7419,9 @@ DEP_CPP_SIGSE=\
 # Begin Source File
 
 SOURCE=.\Message_Queue_Notifications_Test.cpp
+
+!IF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Debug"
+
 DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7280,6 +7485,8 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -7321,7 +7528,6 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7330,6 +7536,8 @@ DEP_CPP_MESSAGE=\
 "$(INTDIR)\Message_Queue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAGE)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7341,6 +7549,9 @@ DEP_CPP_MESSAGE=\
 # Begin Source File
 
 SOURCE=.\Enum_Interfaces_Test.cpp
+
+!IF  "$(CFG)" == "Enum_Interfaces_Test - Win32 Debug"
+
 DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7375,12 +7586,13 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Enum_Interfaces_Test.obj" : $(SOURCE) $(DEP_CPP_ENUM_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7392,6 +7604,9 @@ DEP_CPP_ENUM_=\
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager_Test.cpp
+
+!IF  "$(CFG)" == "Hash_Map_Manager_Test - Win32 Debug"
+
 DEP_CPP_HASH_=\
 	".\Hash_Map_Manager_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -7472,12 +7687,13 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Hash_Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_HASH_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7489,6 +7705,9 @@ DEP_CPP_HASH_=\
 # Begin Source File
 
 SOURCE=.\Semaphore_Test.cpp
+
+!IF  "$(CFG)" == "Semaphore_Test - Win32 Debug"
+
 DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7554,12 +7773,13 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Semaphore_Test.obj" : $(SOURCE) $(DEP_CPP_SEMAP) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7571,6 +7791,9 @@ DEP_CPP_SEMAP=\
 # Begin Source File
 
 SOURCE=.\Atomic_Op_Test.cpp
+
+!IF  "$(CFG)" == "Atomic_Op_Test - Win32 Debug"
+
 DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7615,12 +7838,13 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Atomic_Op_Test.obj" : $(SOURCE) $(DEP_CPP_ATOMI) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7632,6 +7856,9 @@ DEP_CPP_ATOMI=\
 # Begin Source File
 
 SOURCE=.\MT_SOCK_Test.cpp
+
+!IF  "$(CFG)" == "MT_SOCK_Test - Win32 Debug"
+
 DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7714,12 +7941,13 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\MT_SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_MT_SO) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7731,6 +7959,9 @@ DEP_CPP_MT_SO=\
 # Begin Source File
 
 SOURCE=.\Priority_Reactor_Test.cpp
+
+!IF  "$(CFG)" == "Priority_Reactor_Test - Win32 Debug"
+
 DEP_CPP_PRIORIT=\
 	".\Priority_Reactor_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -7822,6 +8053,8 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -7882,7 +8115,6 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7891,6 +8123,8 @@ DEP_CPP_PRIORIT=\
 "$(INTDIR)\Priority_Reactor_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORIT)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -7902,6 +8136,9 @@ DEP_CPP_PRIORIT=\
 # Begin Source File
 
 SOURCE=.\Reactor_Performance_Test.cpp
+
+!IF  "$(CFG)" == "Reactor_Performance_Test - Win32 Debug"
+
 DEP_CPP_REACTOR_P=\
 	".\Reactor_Performance_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -7995,6 +8232,8 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -8055,7 +8294,6 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -8064,6 +8302,8 @@ DEP_CPP_REACTOR_P=\
 "$(INTDIR)\Reactor_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_P)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -8075,6 +8315,9 @@ DEP_CPP_REACTOR_P=\
 # Begin Source File
 
 SOURCE=.\Notify_Performance_Test.cpp
+
+!IF  "$(CFG)" == "Notify_Performance_Test - Win32 Debug"
+
 DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8150,6 +8393,8 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -8186,7 +8431,6 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -8195,6 +8439,8 @@ DEP_CPP_NOTIF=\
 "$(INTDIR)\Notify_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_NOTIF)\
  "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -8206,6 +8452,9 @@ DEP_CPP_NOTIF=\
 # Begin Source File
 
 SOURCE=.\Thread_Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Mutex_Test - Win32 Debug"
+
 DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8269,12 +8518,13 @@ DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Thread_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD_) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -8286,6 +8536,9 @@ DEP_CPP_THREAD_=\
 # Begin Source File
 
 SOURCE=.\SOCK_Connector_Test.cpp
+
+!IF  "$(CFG)" == "SOCK_Connector_Test - Win32 Debug"
+
 DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8331,12 +8584,13 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SOCK_Connector_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -8348,6 +8602,9 @@ DEP_CPP_SOCK_C=\
 # Begin Source File
 
 SOURCE=.\Basic_Types_Test.cpp
+
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 Debug"
+
 DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8378,12 +8635,13 @@ DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Basic_Types_Test.obj" : $(SOURCE) $(DEP_CPP_BASIC) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 # End Target
@@ -8395,6 +8653,9 @@ DEP_CPP_BASIC=\
 # Begin Source File
 
 SOURCE=.\Env_Value_Test.cpp
+
+!IF  "$(CFG)" == "Env_Value_Test - Win32 Debug"
+
 DEP_CPP_ENV_V=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8430,12 +8691,8 @@ DEP_CPP_ENV_V=\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
-
-!IF  "$(CFG)" == "Env_Value_Test - Win32 Debug"
-
 
 "$(INTDIR)\Env_Value_Test.obj" : $(SOURCE) $(DEP_CPP_ENV_V) "$(INTDIR)"
 
@@ -8513,7 +8770,6 @@ DEP_CPP_ORDMU=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
