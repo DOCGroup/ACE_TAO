@@ -89,7 +89,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am being called to remove the component\n"));
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
 

@@ -132,19 +132,15 @@ Receiver_Impl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     receiver->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
-  ACE_DEBUG ((LM_DEBUG, "i am here\n"));
-
   CORBA::ULong cons_len = cons_desc->length ();
   CORBA::ULong facet_len = facet_desc->length ();
-  ACE_DEBUG ((LM_DEBUG, "cons length is %d\n", cons_len));
-  ACE_DEBUG ((LM_DEBUG, "facet length is %d\n", facet_len));
   for (CORBA::ULong i = 0; i < cons_len; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "consumer name is %s\n", cons_desc[i]->name ()));
+      // ACE_DEBUG ((LM_DEBUG, "consumer name is %s\n", cons_desc[i]->name ()));
     }
   for (CORBA::ULong i = 0; i < facet_len; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
+      // ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
     }
 }
 
@@ -171,16 +167,16 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   Components::EnterpriseComponent_ptr tmp;
-  /*
+  
   ACE_NEW_THROW_EX (tmp,
                     Receiver_Impl::ReceiverSwap_exec_i,
                     CORBA::NO_MEMORY ());
-  */
-  
+  /*  
   ACE_NEW_THROW_EX (tmp,
                     Receiver_Impl::Receiver_exec_i,
                     CORBA::NO_MEMORY ());
-  
+  */
+ 
   return tmp;
 }
 

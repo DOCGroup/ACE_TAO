@@ -68,8 +68,6 @@ namespace CIAO
     Components::SessionComponent_var temp = this->get_executor ();
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-    ACE_DEBUG ((LM_DEBUG, "i called the remove from the servant base \n"));
-
     CORBA::Object_var objref =
       this->container_->get_objref (this);
 

@@ -250,19 +250,14 @@ namespace CIAO
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG , " i am being called to uninstall\n"));
-    ACE_DEBUG ((LM_DEBUG , " i am being called to uninstall\n"));
     PortableServer::POA_ptr tmp = this->home_servant_poa_.in ();
-    ACE_DEBUG ((LM_DEBUG , " i am being called to uninstall\n"));
     PortableServer::ObjectId_var oid =
       tmp->reference_to_id (homeref
                             ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    ACE_DEBUG ((LM_DEBUG , " i am being called to uninstall\n"));
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
-    ACE_DEBUG ((LM_DEBUG , " i am being called to uninstall\n"));
   }
 
   CORBA::Object_ptr

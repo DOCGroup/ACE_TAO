@@ -65,7 +65,6 @@ namespace CIAO
     if (this->servant_map_.find (oid, servant) == 0)
       {
         servant->remove ();
-        ACE_DEBUG ((LM_DEBUG, "called the remove on the servant\n"));
         component_removed_ = 1;
       }
   }
@@ -80,6 +79,8 @@ namespace CIAO
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::create (PortableServer::ObjectId &oid)
   {
+    ACE_DEBUG ((LM_DEBUG, 
+                "i am being asked to create a new servant here\n\n"));
     CIAO::Swap_Exec_var swap_exec = CIAO::Swap_Exec::_narrow
        (this->executor_.in ()
         ACE_ENV_ARG_PARAMETER);

@@ -196,8 +196,8 @@ Sender_Impl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "%P|%t) creating SenderHome \n"));
-  //return new Sender_Impl::SenderSwap_exec_i;
-   return new Sender_Impl::Sender_exec_i;
+  return new Sender_Impl::SenderSwap_exec_i;
+  //return new Sender_Impl::Sender_exec_i;
 }
 
 extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
