@@ -455,7 +455,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
   ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
 
-  TAO_GIOP_ReplyStatusType status = 0;
+  TAO_GIOP_ReplyStatusType status = TAO_GIOP_NO_EXCEPTION;
 
   // Do a locate_request if necessary/wanted.
   if (this->use_locate_request_ && this->first_locate_request_)
