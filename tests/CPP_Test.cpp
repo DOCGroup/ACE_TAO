@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -127,7 +127,8 @@ server (void *)
   ACE_DEBUG ((LM_DEBUG, "starting server at port %d\n",
 	      server_addr.get_port_number ()));
 
-  // Keep these objects out here to prevent excessive constructor calls...
+  // Keep these objects out here to prevent excessive constructor
+  // calls...
   ACE_SOCK_Stream new_stream;                                   
   ACE_INET_Addr cli_addr;
   ACE_Handle_Set handle_set;
@@ -254,11 +255,9 @@ int
 main (int, char *argv[])
 {
   ACE_START_TEST ("CPP_Test.cpp");
-  ACE_DEBUG ((LM_DEBUG, "starting %s test at %u\n", argv[0], ACE_OS::time (0)));
 
   spawn ();
 
   ACE_END_TEST;
   return 0;
 }
-

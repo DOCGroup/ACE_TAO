@@ -85,7 +85,7 @@ static ACE_Null_Mutex cout_lock;
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
-static void 
+extern "C" void 
 cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
@@ -182,7 +182,7 @@ worker (void *c)
   return 0;
 }
 
-static void 
+extern "C" void 
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
@@ -202,11 +202,11 @@ main (int, char *argv[])
   
 #if defined (ACE_MT_SAFE)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
-  
-  int threads = ACE_MAX_THREADS;
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
+  if (ACE_Service_Config::thr_mgr ()->spawn_n (ACE_MAX_THREADS, 
 					       ACE_THR_FUNC (&worker), 
 					       (void *) ITERATIONS,
 					       THR_BOUND | THR_DETACHED) == -1)
@@ -220,4 +220,3 @@ main (int, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-
