@@ -19,9 +19,11 @@ project(Hello_Base_Sender_DnC_Upgradeable_stub): ciao_client_dnc {
 }
 
 project(Hello_Base_Sender_DnC_Upgradeable_svnt) : ciao_servant_dnc {
-  after += Hello_Base_DnC_Upgradeable_svnt Hello_Base_Sender_DnC_Upgradeable_stub
+  after += Hello_Base_DnC_Upgradeable_svnt \
+           Hello_Base_Sender_DnC_Upgradeable_stub
   sharedname  = Sender_DnC_Upgradeable_svnt
-  libs    += Sender_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
+  libs    += Sender_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_stub \
+             Hello_Base_DnC_Upgradeable_svnt
 
   idlflags  +=  -Wb,export_macro=SENDER_SVNT_Export -Wb,export_include=Sender_svnt_export.h
   dynamicflags = SENDER_SVNT_BUILD_DLL
@@ -62,9 +64,12 @@ project(Hello_Base_Sender_DnC_Upgradeable_exec) : ciao_component_dnc {
 project(Hello_Base_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
   after   += Hello_Base_Sender_DnC_Upgradeable_svnt
   sharedname = Sender_DnC_Upgradeable_exec_1
-  libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
+  libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt \
+               Sender_DnC_Upgradeable_exec Hello_Base_DnC_Upgradeable_stub \
+               Hello_Base_DnC_Upgradeable_svnt
 
-  idlflags  +=  -Wb,export_macro=SENDER_EXEC_1_Export -Wb,export_include=Sender_exec_1_export.h
+  idlflags  +=  -Wb,export_macro=SENDER_EXEC_1_Export -Wb,\
+                export_include=Sender_exec_1_export.h
   dynamicflags   = SENDER_EXEC_1_BUILD_DLL
 
   IDL_Files {
@@ -78,9 +83,12 @@ project(Hello_Base_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
 project(Hello_Base_Sender_DnC_Upgradeable_exec_2) : ciao_component_dnc {
   after   += Hello_Base_Sender_DnC_Upgradeable_svnt
   sharedname = Sender_DnC_Upgradeable_exec_2
-  libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
+  libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt \
+               Sender_DnC_Upgradeable_exec Hello_Base_DnC_Upgradeable_stub \
+               Hello_Base_DnC_Upgradeable_svnt
 
-  idlflags  +=  -Wb,export_macro=SENDER_EXEC_2_Export -Wb,export_include=Sender_exec_2_export.h
+  idlflags  +=  -Wb,export_macro=SENDER_EXEC_2_Export -Wb,\
+                export_include=Sender_exec_2_export.h
   dynamicflags   = SENDER_EXEC_2_BUILD_DLL
 
   IDL_Files {

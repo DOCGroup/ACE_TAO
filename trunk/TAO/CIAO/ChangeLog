@@ -1,3 +1,9 @@
+Wed Mar 23 12:39:43 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Swapping/Sender/Sender.mpc:
+
+          Added a missing library include.
+
 Wed Mar 23 11:19:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender.mpc:
