@@ -19,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Exception.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 
