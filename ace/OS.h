@@ -3111,7 +3111,7 @@ public:
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
                       ACE_Thread_Manager *tmgr = 0,
-		      ACE_Thread_Descriptor *td = 0);
+                      ACE_Thread_Descriptor *td = 0);
   // Constructor.
 
   void *invoke (void);
@@ -4274,11 +4274,11 @@ private:
   // Location of current thread's TSS array.
 
 #if ! defined (VXWORKS)
+public:
   // This implementation only works if ::thr_self () returns a small
   // integer.  It is intended for use in testing on Solaris only.
   enum { ACE_TSS_THREADS_MAX = 1024 };
 
-public:
   static void **tss_collection_ [ACE_TSS_THREADS_MAX];
   // Array, indexed by thread handle, of TSS object arrays.  Those
   // are indexed by key.  This is for testing only.
