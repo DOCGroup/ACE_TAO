@@ -670,7 +670,8 @@ CORBA_Any::operator<<= (from_octet o)
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Octet insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -694,7 +695,7 @@ CORBA_Any::operator<<= (from_char c)
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Exception in CORBA::Octet insertion\n"));
+                  "Exception in CORBA::Char insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
