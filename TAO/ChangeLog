@@ -1,3 +1,205 @@
+Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/NotifyExt.idl:
+	  Extended the ConsumerAdmin and SupplierAdmin interfaces with
+	  create methods for Proxys with initial QoS parameters.
+	
+	* orbsvcs/orbsvcs/Notify/Builder.h:
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Revised the <build_proxy> to accept an inital QoS value.
+	
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+	  Implemented the method to create Proxys with initial QoS
+	  parameters.
+	
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	  Overload the <activate> and <deactivate> methods to use the <proxy_poa_>.
+
+	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
+	* orbsvcs/tests/Notify/lib/Activation_Manager.idl:
+	  Manages start and shutdown of Periodic Supplier and consumers.
+	
+	* orbsvcs/tests/Notify/lib/Command.cpp:
+	* orbsvcs/tests/Notify/lib/Command.h:
+  	  Base class of Command objects in the test lib.
+
+	* orbsvcs/tests/Notify/lib/Command_Builder.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Builder.h:
+	  A builder for creating command objects.
+	
+	* orbsvcs/tests/Notify/lib/Command_Factory.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Factory.h:
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
+	  Base classes for specifying Factory objects for command objects.	  
+
+	* orbsvcs/tests/Notify/lib/Application_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Application_Command.h:
+	  Command object for specify Application specific commands.
+	
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h:
+	  Command object for specify ConsumerAdmin specific commands.
+
+	* orbsvcs/tests/Notify/lib/Driver_Base.h:
+	  A base interface for the driver that runs the owns the <main>
+	  entry point.
+	
+	* orbsvcs/tests/Notify/lib/Driver.cpp:
+	* orbsvcs/tests/Notify/lib/Driver.h:
+	  A generic Driver implementation useful for most applications.
+	  
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+	  Command object for specify ConsumerAdmin specific commands.
+	
+	* orbsvcs/tests/Notify/lib/Factories_Define.cpp:
+	* orbsvcs/tests/Notify/lib/Factories_Define.h:
+	  Factory definitions are listed here.
+	
+	* orbsvcs/tests/Notify/lib/Filter_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Filter_Command.h:
+	  Command object for specify Filter specific commands.
+	
+	* orbsvcs/tests/Notify/lib/LookupManager.cpp:
+	* orbsvcs/tests/Notify/lib/LookupManager.h:
+	  Objects of interest to command objects can be registered and
+	  resolved here.
+	
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_NotifyTests:
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_NotifyTests.bor:
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests:
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests.bor:
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests_Filter:
+	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests_Filter.bor:
+	  Makefiles.
+	
+	* orbsvcs/tests/Notify/lib/Name.cpp:
+	* orbsvcs/tests/Notify/lib/Name.h:
+	  Command names are listed here.
+	
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+	  Added a <connect> method that accepts a Proxy reference and its ID.
+	
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+	  Corrected return of nil interface pointers.
+	
+	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+	
+	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+	* orbsvcs/tests/Notify/lib/Options_Parser.h:
+	  A Parser for parsing subscription and QoS options used by
+	  several command objects.
+	
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+	  A periodic consumer.
+	
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h:
+	  Command object to specify Periodic Consumer specific commands.
+
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+	  A periodic supplier.
+	
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+	  Command object to specify Periodic Supplier specific commands.
+	
+	* orbsvcs/tests/Notify/lib/Priority_Mapping.cpp:
+	* orbsvcs/tests/Notify/lib/Priority_Mapping.h:
+	  Priority mapping that returns the same number. 
+	 
+	* orbsvcs/tests/Notify/lib/RT_Application_Command.cpp:
+	* orbsvcs/tests/Notify/lib/RT_Application_Command.h:
+	  Command object to specify RT Application specific
+	  commands.
+	
+	* orbsvcs/tests/Notify/lib/RT_Factories_Define.cpp:
+	  List of RT specific command objects.
+	
+	* orbsvcs/tests/Notify/lib/RT_POA_Command.cpp:
+	* orbsvcs/tests/Notify/lib/RT_POA_Command.h:
+	  Command object to specify RT POA specific commands.
+	
+	* orbsvcs/tests/Notify/lib/RT_Priority_Mapping.cpp:
+	* orbsvcs/tests/Notify/lib/RT_Priority_Mapping.h:
+	  A priority mapper that delegates to RTCORBA.
+	
+	* orbsvcs/tests/Notify/lib/RT_Test_Filter.cpp:
+	* orbsvcs/tests/Notify/lib/RT_Test_Filter.h:
+	  An implementation of Filter for verifying ThreadPools and lanes.
+	
+	* orbsvcs/tests/Notify/lib/RT_Test_FilterFactory.cpp:
+	* orbsvcs/tests/Notify/lib/RT_Test_FilterFactory.h:
+	  An implementation of FilterFactory.
+	
+	* orbsvcs/tests/Notify/lib/StructuredEvent.cpp:
+	* orbsvcs/tests/Notify/lib/StructuredEvent.h:
+	  A helper class for populating a Structured Event.
+	
+	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp:
+	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h:
+	  A command object for SupplierAdmin specific commands.
+	
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests_Filter.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests_Filter_Static.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests_Static.dsp:
+	  VC6 projects.
+	
+	* orbsvcs/tests/Notify/lib/Task_Callback.h:
+	  A callback that is invoked when a periodic supplier/consumer
+	  ends.
+	
+	* orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+	* orbsvcs/tests/Notify/lib/Task_Stats.h:
+	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
+	  A class for collecting performance numbers.
+	
+	* orbsvcs/tests/Notify/lib/rt_notify_test_export.h:
+	* orbsvcs/tests/Notify/lib/rt_test_filter_export.h:
+	  Export files.
+
+	* orbsvcs/tests/Notify/Driver/main.cpp:
+	* orbsvcs/tests/Notify/Driver/Driver.mpc:
+	* orbsvcs/tests/Notify/Driver/Driver.dsp:
+	* orbsvcs/tests/Notify/Driver/Driver_Static.dsp:
+	  Driver program for the scripting based tests.
+
+	* orbsvcs/tests/Notify/Driver/ThreadPool/README:
+	  README
+	* orbsvcs/tests/Notify/Driver/ThreadPool/supplier.conf:
+	  Supplier configuration. 
+	* orbsvcs/tests/Notify/Driver/ThreadPool/consumer.conf:
+	  Consumer configuration. 	
+	* orbsvcs/tests/Notify/Driver/ThreadPool/notify.conf:
+	  RT Notification conf.
+	* orbsvcs/tests/Notify/Driver/ThreadPool/run_test.pl:
+	  perl script to run the test.
+
+	* orbsvcs/tests/Notify/Driver/Lanes/README:
+	  README
+	* orbsvcs/tests/Notify/Driver/Lanes/supplier.conf:
+	  Supplier configuration. 
+	* orbsvcs/tests/Notify/Driver/Lanes/consumer.conf:
+	  Consumer configuration. 	
+	* orbsvcs/tests/Notify/Driver/Lanes/notify.conf:
+	  RT Notification conf.
+	* orbsvcs/tests/Notify/Driver/Lanes/run_test.pl:
+	  perl script to run the test.
+
 Wed Feb 19 12:52:06 2003  Heather Drury  <oci@cs.wustl.edu>
 
         * TAO version 1.3.1 released.
