@@ -30,17 +30,6 @@ TAO_Connection_Handler::make_idle (void)
 }
 
 
-void
-TAO_Connection_Handler::remove_handle (ACE_HANDLE handle)
-{
-  TAO_Server_Strategy_Factory *f =
-    this->orb_core_->server_factory ();
-
-  /*if (f->activate_server_connections () == 0)
-    (void) this->orb_core_->remove_handle (handle);*/
-}
-
-
 int
 TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                                            int snd_size,

@@ -98,8 +98,19 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
 {
-
   delete this->acceptor_factory_;
+
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 int
@@ -110,12 +121,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
                                uiop_properties_->recv_buffer_size) == -1)
     return -1;
 
-  (void) this->peer ().enable (ACE_CLOEXEC);
-  // Set the close-on-exec flag for that file descriptor. If the
-  // operation fails we are out of luck (some platforms do not support
-  // it and return -1).
-
-  // Called by the <Strategy_Acceptor> when the handler is completely
+   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
   ACE_UNIX_Addr addr;
 

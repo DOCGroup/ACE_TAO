@@ -97,11 +97,6 @@ public:
 
 protected:
 
-  void remove_handle (ACE_HANDLE handle);
-  // Remove the handle from the ORB Core's handle set so that it
-  // isn't included in the set that is passed to the reactor upon
-  // ORB destruction.
-
   TAO_ORB_Core *orb_core (void);
   // Return our TAO_ORB_Core pointer
 
