@@ -666,8 +666,14 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
       this->private_equal_alias (tc, env);
     case CORBA::tk_except:
       this->private_equal_except (tc, env);
+    case ~0: // indirection
+      {
+        // indirection offset must be same
+        return CORBA::B_TRUE;
+      }
+      break;
     default:
-      return CORBA::B_TRUE;
+      return CORBA::B_FALSE;
     }
 }
 
@@ -677,8 +683,16 @@ CORBA_TypeCode::private_equal_objref (CORBA::TypeCode_ptr tc,
 {
   env.clear ();
   // compare the repoID and name, of which the name is optional as per GIOP
-  // spec
-  if (!ACE_OS::strcmp (this->id (env), tc->id (env)))
+  // spec. However, the repoID is mandatory.
+  const char *my_id = this->id (env);
+  if (env.exception ())
+    return 0;
+
+  const char *tc_id = tc->id (env);
+  if (env.exception ())
+    return 0;
+
+  if (!ACE_OS::strcmp (my_id, tc_id))
     {
       // same repository IDs. Now check their names
       const char *myname = this->name (env);
@@ -696,7 +710,7 @@ CORBA_TypeCode::private_equal_objref (CORBA::TypeCode_ptr tc,
           else
             return 0; // failed
         }
-      return 1; // equal
+      return 1; // equal (success)
     }
   return 0; // failed
 }
@@ -715,10 +729,10 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   const char *tc_id = tc->id (env);
   if (env.exception ())
     return 0;
-  const char *my_name = this->id (env);
+  const char *my_name = this->name (env);
   if (env.exception ())
     return 0;
-  const char *tc_name = tc->id (env);
+  const char *tc_name = tc->name (env);
   if (env.exception ())
     return 0;
 
@@ -749,15 +763,17 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
       if (env.exception ())
         return 0;
 
-      const char *tc_member_name = this->member_name (i, env);
+      const char *tc_member_name = tc->member_name (i, env);
       if (env.exception ())
         return 0;
 
       if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
           (tc_member_name) > 1)
+        // both specify member names
         if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
           return 0;
 
+      // now compare the typecodes of the members
       CORBA::TypeCode_ptr my_member_tc = this->member_type (i, env);
       if (env.exception ())
         return 0;
@@ -771,79 +787,354 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
         return 0;
     }
 
-  return 1;
+  return 1; // success (equal)
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
                                      CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  env.clear ();
+
+  // for unions the repoID and names are optional. However, if provided, we
+  // must compare them
+  const char *my_id = this->id (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_id = tc->id (env);
+  if (env.exception ())
+    return 0;
+  const char *my_name = this->name (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_name = tc->name (env);
+  if (env.exception ())
+    return 0;
+
+  // compare repoIDs if they exist
+  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
+    if (ACE_OS::strcmp (my_id, tc_id)) // not same
+      return 0;
+
+  // compare names if they exist
+  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
+    if (ACE_OS::strcmp (my_name, tc_name)) // not same
+      return 0;
+
+  // check if the discriminant type is same
+  CORBA::TypeCode_ptr my_discrim = this->discriminator_type (env);
+  if (env.exception ())
+    return 0;
+  CORBA::TypeCode_ptr tc_discrim = tc->discriminator_type (env);
+  if (env.exception ())
+    return 0;
+  if (!my_discrim->equal (tc_discrim, env))
+    return 0;
+
+  // check the default used
+  CORBA::Long my_default = this->default_index (env);
+  if (env.exception ())
+    return 0;
+  CORBA::Long tc_default = tc->default_index (env);
+  if (env.exception ())
+    return 0;
+  if (my_default != tc_default)
+    return 0;
+
+  // check if the member count is same
+  CORBA::ULong my_count = this->member_count (env);
+  if (env.exception ())
+    return 0;
+  CORBA::ULong tc_count = tc->member_count (env);
+  if (env.exception ())
+    return 0;
+
+  if (my_count != tc_count)
+    return 0; // number of members don't match
+
+  for (CORBA::ULong i=0; i < my_count; i++)
+    {
+      // first check if labels are same
+
+      // check if member names are same
+      const char *my_member_name = this->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      const char *tc_member_name = tc->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
+          (tc_member_name) > 1)
+        // both specify member names
+        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
+          return 0;
+
+      // now compare the typecodes of the members
+      CORBA::TypeCode_ptr my_member_tc = this->member_type (i, env);
+      if (env.exception ())
+        return 0;
+
+      CORBA::TypeCode_ptr tc_member_tc = tc->member_type (i, env);
+      if (env.exception ())
+        return 0;
+
+      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, env);
+      if (!flag || env.exception ())
+        return 0;
+    }
+
+  return 1; // success (equal)
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
                                     CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  env.clear ();
+
+  // for enum the repoID and names are optional. However, if provided, we
+  // must compare them
+  const char *my_id = this->id (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_id = tc->id (env);
+  if (env.exception ())
+    return 0;
+  const char *my_name = this->name (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_name = tc->name (env);
+  if (env.exception ())
+    return 0;
+
+  // compare repoIDs if they exist
+  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
+    if (ACE_OS::strcmp (my_id, tc_id)) // not same
+      return 0;
+
+  // compare names if they exist
+  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
+    if (ACE_OS::strcmp (my_name, tc_name)) // not same
+      return 0;
+
+  // check if the member count is same
+  CORBA::ULong my_count = this->member_count (env);
+  if (env.exception ())
+    return 0;
+  CORBA::ULong tc_count = tc->member_count (env);
+  if (env.exception ())
+    return 0;
+
+  if (my_count != tc_count)
+    return 0; // number of members don't match
+
+  for (CORBA::ULong i=0; i < my_count; i++)
+    {
+      // now check if the member names are same
+      const char *my_member_name = this->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      const char *tc_member_name = tc->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
+          (tc_member_name) > 1)
+        // both specify member names
+        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
+          return 0;
+    }
+
+  return 1; // success (equal)
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_string (CORBA::TypeCode_ptr tc,
                                       CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  // compare the lengths
+  CORBA::ULong my_len = this->length (env);
+  if (env.exception ())
+    return 0;
+
+  CORBA::ULong tc_len = tc->length (env);
+  if (env.exception ())
+    return 0;
+
+  return (my_len == tc_len);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_wstring (CORBA::TypeCode_ptr tc,
                                        CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  // compare the lengths
+  CORBA::ULong my_len = this->length (env);
+  if (env.exception ())
+    return 0;
+
+  CORBA::ULong tc_len = tc->length (env);
+  if (env.exception ())
+    return 0;
+
+  return (my_len == tc_len);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
                                         CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  // this involves comparing the typecodes of the element type as well as the
+  // bounds
+  CORBA::TypeCode_ptr my_elem = this->content_type (env);
+  if (env.exception ())
+    return 0;
+
+  CORBA::TypeCode_ptr tc_elem = tc->content_type (env);
+  if (env.exception ())
+    return 0;
+
+  if (!my_elem->equal (tc_elem, env))
+    return 0;
+
+  // now check if bounds are same
+  CORBA::ULong my_len = this->length (env);
+  if (env.exception ())
+    return 0;
+
+  CORBA::ULong tc_len = tc->length (env);
+  if (env.exception ())
+    return 0;
+
+  return (my_len == tc_len);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_array (CORBA::TypeCode_ptr tc,
                                      CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  // exactly like sequence
+  return this->private_equal_sequence (tc, env);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
                                      CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  env.clear ();
+
+  // for structs the repoID and names are optional. However, if provided, we
+  // must compare them
+  const char *my_id = this->id (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_id = tc->id (env);
+  if (env.exception ())
+    return 0;
+  const char *my_name = this->name (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_name = tc->name (env);
+  if (env.exception ())
+    return 0;
+
+  // compare repoIDs if they exist
+  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
+    if (ACE_OS::strcmp (my_id, tc_id)) // not same
+      return 0;
+
+  // compare names if they exist
+  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
+    if (ACE_OS::strcmp (my_name, tc_name)) // not same
+      return 0;
+
+  // now compare element typecodes
+  CORBA::TypeCode_ptr my_elem = this->content_type (env);
+  if (env.exception ())
+    return 0;
+
+  CORBA::TypeCode_ptr tc_elem = tc->content_type (env);
+  if (env.exception ())
+    return 0;
+
+  return my_elem->equal (tc_elem, env);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
                                       CORBA::Environment &env) const
 {
-  ACE_UNUSED_ARG (tc);
-  ACE_UNUSED_ARG (env);
-  return 1;
+  // exactly similar to structs, except that the repository ID is mandatory
+  env.clear ();
+
+  const char *my_id = this->id (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_id = tc->id (env);
+  if (env.exception ())
+    return 0;
+
+  if (ACE_OS::strcmp (my_id, tc_id))
+    return 0; // failed
+
+  // now compare names. They may be optional
+  const char *my_name = this->name (env);
+  if (env.exception ())
+    return 0;
+  const char *tc_name = tc->name (env);
+  if (env.exception ())
+    return 0;
+
+  // compare names if they exist
+  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
+    if (ACE_OS::strcmp (my_name, tc_name)) // not same
+      return 0;
+
+  // check if the member count is same
+  CORBA::ULong my_count = this->member_count (env);
+  if (env.exception ())
+    return 0;
+  CORBA::ULong tc_count = tc->member_count (env);
+  if (env.exception ())
+    return 0;
+
+  if (my_count != tc_count)
+    return 0; // number of members don't match
+
+  for (CORBA::ULong i=0; i < my_count; i++)
+    {
+      const char *my_member_name = this->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      const char *tc_member_name = tc->member_name (i, env);
+      if (env.exception ())
+        return 0;
+
+      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
+          (tc_member_name) > 1)
+        // both specify member names
+        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
+          return 0;
+
+      // now compare the typecodes of the members
+      CORBA::TypeCode_ptr my_member_tc = this->member_type (i, env);
+      if (env.exception ())
+        return 0;
+
+      CORBA::TypeCode_ptr tc_member_tc = tc->member_type (i, env);
+      if (env.exception ())
+        return 0;
+
+      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, env);
+      if (!flag || env.exception ())
+        return 0;
+    }
+
+  return 1; // success (equal)
 }
 
 // Return the type ID (RepositoryId) for the TypeCode; it may be empty.
@@ -1209,7 +1500,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
             {
               // skip the id, name, and member_count part
               if (!stream.skip_string ()        // type ID, hidden
-                  || !stream.skip_string ()     // typedef name
+                  || !stream.skip_string ()     // enum name
                   || !stream.get_ulong (temp))  // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -1223,7 +1514,16 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                     {
                       // the ith entry will have the name of the ith member
                       this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + CDR::LONG_SIZE); // just point ot it
+                        (stream.next + 4); // just point to it. The string
+                                           // starts after 4 bytes that encodes
+                                           // the length
+                      // now skip this name
+                      if (!stream.skip_string ())
+                        {
+                          env.exception (new CORBA::BAD_TYPECODE
+                                         (CORBA::COMPLETED_NO));
+                          return (char *)0;
+                        }
                     }
 
                   this->private_state_->tc_member_name_list_known_ = CORBA::B_TRUE;
@@ -1262,7 +1562,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
             {
               // skip the id, name, and member_count part
               if (!stream.skip_string ()        // type ID, hidden
-                  || !stream.skip_string ()     // typedef name
+                  || !stream.skip_string ()     // struct/except name
                   || !stream.get_ulong (temp))  // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -1276,9 +1576,10 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                     {
                       // the ith entry will have the name of the ith member
                       this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + CDR::LONG_SIZE); // just point ot it
-                      if (!skip_typecode (stream)  // skip the typecode
-                          != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        (stream.next + 4); // just point to it
+                      if (!stream.skip_string () // skip this name
+                          || (!skip_typecode (stream)  // skip the typecode
+                              != CORBA::TypeCode::TRAVERSE_CONTINUE))
                         {
                           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                           return 0;
@@ -1354,9 +1655,10 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                           return 0;
                         }
                       this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + CDR::LONG_SIZE);
+                        (stream.next + 4); // just point to it.
                       // skip typecode for member
-                      if (!skip_typecode (stream))
+                      if (!stream.skip_string () // skip this name
+                          || (!skip_typecode (stream))) // skip typecode
                         {
                           env.exception (new CORBA::BAD_TYPECODE
                                          (CORBA::COMPLETED_NO));
