@@ -87,7 +87,7 @@
 #if defined (ACE_WIN32)
 typedef CString ACE_IOStream_String;
 #else
-#include <String.h>
+#include /**/ <String.h>
 typedef String ACE_IOStream_String;
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_STRING_CLASS */
@@ -95,7 +95,7 @@ typedef String ACE_IOStream_String;
 #if defined (ACE_HAS_STRING_CLASS)
 
 #if defined (DIGITAL_UNIX) && defined (DEC_CXX)
-#include <stl_macros>
+#include /**/ <stl_macros>
 #endif /* DIGITAL_UNIX && DEC_CXX */
 
 class QuotedString : public ACE_IOStream_String
