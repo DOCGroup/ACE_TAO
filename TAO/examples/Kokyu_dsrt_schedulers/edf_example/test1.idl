@@ -2,7 +2,7 @@
 
 interface Simple_Server1
 {
-  oneway void test_method (in long x);
+  oneway void test_method (in long x, in long y);
 
   void shutdown ();
 };

@@ -5,6 +5,9 @@
 #include "ace/Task.h"
 #include "ace/ACE.h"
 #include "tao/debug.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "EDF_Scheduler.h"
+#include "Task_Stats.h"
 
 #include "dt_oneway_config.h"
 #include "dt_oneway_dsui_families.h"
@@ -16,16 +19,14 @@
 
 ACE_RCSID(MT_Server, test1_i, "test1_i.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
+int Deadline_missed = 0;
+
 void
-Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server1_i::test_method (CORBA::Long exec_duration, CORBA::Long deadline ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-/*DTTIME
-  record the entering service time on the server side.
-  Thirteenth Time. 
-*/
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 1, 0, NULL);
+
 
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -36,6 +37,8 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
     memcpy (&guid,
             this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
             sizeof (this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -68,7 +71,7 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
 
   //Applicable only for CV based implementations
   //yield every 1 sec
-  ACE_Time_Value yield_interval (1,0);
+  ACE_Time_Value yield_interval (0,100000);
 
   ACE_Time_Value yield_count_down_time (yield_interval);
   ACE_Countdown_Time yield_count_down (&yield_count_down_time);
@@ -84,11 +87,11 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0) 
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
-        }
+//      if (j%1000 == 0) 
+//        {
+//          ACE_DEBUG ((LM_DEBUG, 
+//            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
+//        }
 #endif
       if (j%1000 == 0)
         {
@@ -109,10 +112,10 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
               
               const char * name = 0;
               
-              CORBA::Policy_ptr implicit_sched_param = 0;
+              CORBA::Policy_var implicit_sched_param = sched_param_policy;
               current_->update_scheduling_segment (name,
                                                    sched_param_policy.in (),
-                                                   implicit_sched_param
+                                                   implicit_sched_param.in ()
                                                    ACE_ENV_ARG_PARAMETER);
               yield_count_down_time = yield_interval;
               yield_count_down.start ();
@@ -120,18 +123,31 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
         }
     }
 
+  TimeBase::TimeT current;
+  ORBSVCS_Time::Time_Value_to_TimeT (current, ACE_OS::gettimeofday ());
+  CORBA::Long temp = (long) current;
+  if(temp > deadline )
+    Deadline_missed=Deadline_missed +1;
+
   timer.stop ();
   timer.elapsed_time (elapsed_time);
-  
+ 
+ 
   ACE_DEBUG ((LM_DEBUG, 
 	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec\n", 
-	      prio, exec_duration, elapsed_time.msec () ));
+	      "prio = %d, load = %d, elapsed time = %umsec, deadline_missed = %d\n", 
+	      prio, exec_duration, elapsed_time.msec (),Deadline_missed ));
 /*DTTIME:
-  recording the finishing service time on the server side.
-  Fourteenth Time.
+  recording the finishing time on the server side. please also record the deadline_missed variable.
 */
-//  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 1,0,NULL);
+  char* format = "Deadline missed: %d";
+  char* extra_info = (char*) ACE_Allocator::instance()->malloc (strlen(format) + sizeof (Deadline_missed) - 2);
+  if (extra_info != 0) {
+    ACE_OS::sprintf(extra_info, "Deadline missed: %d", Deadline_missed);
+    DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
+  }
+  ACE_Allocator::instance()->free(extra_info);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
 }
 
 void

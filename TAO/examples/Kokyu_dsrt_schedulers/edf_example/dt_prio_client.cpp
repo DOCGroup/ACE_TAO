@@ -12,8 +12,8 @@ ACE_RCSID(MT_Server, client, "client.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
-int do_shutdown = 0;
-int enable_dynamic_scheduling = 0;
+int do_shutdown = 1;
+int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
 
 class Worker : public ACE_Task_Base
@@ -54,7 +54,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:ds");
+  ACE_Get_Opt get_opts (argc, argv, "xk:i:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,10 +70,6 @@ parse_args (int argc, char *argv[])
 
       case 'i':
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'd':
-        enable_dynamic_scheduling = 1;
         break;
 
       case 's':

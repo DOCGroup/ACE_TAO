@@ -1,4 +1,5 @@
 # TEST_ONE
+DSTRM_EVENT	TEST_ONE	3	DEADLINE_MISSED		2	"Deadline missed"	print_string
 DSTRM_EVENT	TEST_ONE	3	STOP_SERVICE		1       "Stop service time"     print_string
 DSTRM_EVENT	TEST_ONE	3	START_SERVICE		0       "Start service time"    print_string
 

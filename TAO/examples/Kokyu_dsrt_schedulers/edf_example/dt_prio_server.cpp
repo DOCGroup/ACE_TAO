@@ -12,15 +12,15 @@ ACE_RCSID(MT_Server, server, "server.cpp,v 1.3 2003/10/14 05:57:01 jwillemsen Ex
 
 const char *ior_output_file = "test.ior";
 
-int nthreads = 2;
-int enable_dynamic_scheduling = 0;
+int nthreads = 3;
+int enable_dynamic_scheduling = 1;
 const CORBA::Short max_importance = 100;
 int enable_yield = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:ds");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -32,10 +32,6 @@ parse_args (int argc, char *argv[])
 
       case 'n':
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'd':
-        enable_dynamic_scheduling = 1;
         break;
 
       case 's':
@@ -192,6 +188,8 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG((LM_DEBUG,"(%t|%T) NOW I AM IN THE MAIN THREAD!\n"));
+
       Worker worker (orb.in ());
       if (worker.activate (flags,
                            nthreads,
@@ -226,6 +224,8 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T) NOW I AM ABOUT TO EXIT MAIN!\n"));
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
   task_stats.dump_samples ("timeline.txt",

@@ -73,11 +73,11 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0) 
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
-        }
+//      if (j%1000 == 0) 
+//        {
+//          ACE_DEBUG ((LM_DEBUG, 
+//            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
+//        }
 #endif
       if (j%1000 == 0)
         {
