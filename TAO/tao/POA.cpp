@@ -530,11 +530,13 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       if (this->server_object_)
         {
+          TAO_POA *root_poa = this->orb_core ().root_poa ();
+  
           PortableServer::ObjectId_var id =
-            this->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
+            root_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->deactivate_object_i (id.in (), ACE_TRY_ENV);
+          root_poa->deactivate_object_i (id.in (), ACE_TRY_ENV);
           ACE_CHECK;
 
           this->server_object_->_remove_ref ();
@@ -4025,23 +4027,19 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  // @@ (brunsch) The server should really be in the root poa, but
-  // there are locking issues...
-
-  PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId ("_tao_imr_server_object");
-
-  this->activate_object_with_id_i (id.in (),
-                                   this->server_object_,
-                                   TAO_INVALID_PRIORITY,
-                                   ACE_TRY_ENV);
+  // Activate the servant in the root poa.
+  TAO_POA *root_poa = this->orb_core ().root_poa ();
+  PortableServer::ObjectId_var id = 
+    root_poa->activate_object_i (this->server_object_,
+                                 TAO_INVALID_PRIORITY,
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::Object_var obj = this->id_to_reference_i (id.in (),
-                                                   ACE_TRY_ENV);
+  CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  (),
+                                                       ACE_TRY_ENV);
   ACE_CHECK;
 
-  ImplementationRepository::ServerObject_ptr svr
+  ImplementationRepository::ServerObject_var svr
     = ImplementationRepository::ServerObject::_narrow (obj.in (),
                                                        ACE_TRY_ENV);
   ACE_CHECK;
@@ -4083,7 +4081,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   imr_admin->server_is_running (this->name ().c_str (),
                                 curr_addr.in (),
-                                svr,
+                                svr.in (),
                                 ACE_TRY_ENV);
   ACE_CHECK;
 

@@ -1,3 +1,20 @@
+Sun Jul 16 16:17:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/POA.cpp:  
+
+          Thanks to the help of Alex Hornby <alex@anvil.co.uk>, one of
+          my @@ TODO comments about the server_object has been resolved.
+          Irfan suggested a long time back to put the servant object in
+          the root_poa instead of the current poa.  I tried an initial
+          implementation, but wasn't using the correct API's, and 
+          deadlocks occurred on non-windows platforms (IOW, those that 
+          do not use recursive mutex's by default).  So I put in a 
+          comment to look at later.
+
+          Alex then noticed that this change needed to be done to use 
+          the H&V Evictor pattern with the ImR, and submitted a patch
+          to do this.
+
 Sun Jul 16 14:30:07 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
