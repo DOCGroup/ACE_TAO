@@ -49,13 +49,10 @@ be_visitor_union_branch_public_assign_cs::~be_visitor_union_branch_public_assign
 int
 be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
-  be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
 
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // This visitor is used when we are generating the copy ctor and
   // assignment operator for the union.

@@ -44,8 +44,6 @@ endif # TAO_ORBSVCS
 #### Macro customization.
 ####
 ifeq ($(findstring g++,$(CXX)),g++)
-  CCFLAGS += -Wno-unused
-
   ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
 
     #### egcs 2.91.57 seems to go overboard:

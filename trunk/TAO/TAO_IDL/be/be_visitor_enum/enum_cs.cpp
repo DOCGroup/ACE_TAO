@@ -45,8 +45,6 @@ be_visitor_enum_cs::~be_visitor_enum_cs (void)
 int
 be_visitor_enum_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
   if (!node->cli_stub_gen () && !node->imported ())
     {
       // by using a visitor to declare and define the TypeCode, we have the

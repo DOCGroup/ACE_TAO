@@ -44,7 +44,6 @@ int be_visitor_array_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_type *bt;  // base type
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   unsigned long i;
 
   // nothing to do if we are imported or code is already generated

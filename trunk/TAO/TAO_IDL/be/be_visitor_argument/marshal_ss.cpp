@@ -42,7 +42,6 @@ be_visitor_args_marshal_ss::~be_visitor_args_marshal_ss (void)
 
 int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
   // retrieve the type

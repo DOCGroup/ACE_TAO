@@ -41,7 +41,6 @@ be_visitor_args_post_upcall_ss::~be_visitor_args_post_upcall_ss (void)
 
 int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
   // retrieve the type
@@ -72,8 +71,6 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
 
 int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -88,8 +85,6 @@ int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
 
 int be_visitor_args_post_upcall_ss::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -187,8 +182,6 @@ int be_visitor_args_post_upcall_ss::visit_predefined_type (be_predefined_type *n
 
 int be_visitor_args_post_upcall_ss::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -203,8 +196,6 @@ int be_visitor_args_post_upcall_ss::visit_sequence (be_sequence *node)
 
 int be_visitor_args_post_upcall_ss::visit_string (be_string *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -219,8 +210,6 @@ int be_visitor_args_post_upcall_ss::visit_string (be_string *)
 
 int be_visitor_args_post_upcall_ss::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -235,8 +224,6 @@ int be_visitor_args_post_upcall_ss::visit_structure (be_structure *node)
 
 int be_visitor_args_post_upcall_ss::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

@@ -58,8 +58,6 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
     pt = bt;
     
 
-  const char * class_name = node->instance_name ();
-
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);

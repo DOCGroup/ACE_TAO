@@ -141,7 +141,7 @@ UTL_ScopeStack::pop()
 {
   if (pd_stack_top <= 0)
     return;
-  pd_stack_data[--pd_stack_top];
+  --pd_stack_top;
 }
 
 // Return top element on stack

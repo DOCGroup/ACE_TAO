@@ -1,3 +1,34 @@
+Wed Feb 10 14:22:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* rules.tao.GNU: 
+	  Enabled the unused variable warning again. It compiles cleanly
+	  enough on Linux/EGCS.
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp: 
+	* TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp: 
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp: 
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp: 
+	* TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp: 
+	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp: 
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp: 
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp: 
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp: 
+	* TAO_IDL/be/be_visitor_enum/enum_cs.cpp: 
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp: 
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp: 
+	* TAO_IDL/util/utl_stack.cpp: 
+	  Fixed bunch of warnings about unused variables.
+
 Wed Feb 10 14:11:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Any.{h,cpp}:
