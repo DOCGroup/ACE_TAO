@@ -1,3 +1,15 @@
+Thu May 14 14:10:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/Quoter/{Factory_Trader.cpp, Factory_Trader.h 
+	  Makefile, run_test.sh}: Factored out the code depending
+	  on the Trading Service. The standard compilation does
+	  now not use the Trading Service. The Makefile has
+	  to be called using the "trader=1" option to activate
+	  compilation of the parts using the Trading Service.
+	  "run_test.sh" will not use by default the 
+ 	  creation service "lifecycle service object", instead
+	  it will ask the Generic Factory directly
+
 Thu May 14 14:10:26 1998  Carlos O'Ryan  <coryan@watusi.cs.wustl.edu>
 
 	* tests/Param_Test/tests.cpp: 
