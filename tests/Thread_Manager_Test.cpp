@@ -89,7 +89,6 @@ worker (int iterations)
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
 
-ACE_DEBUG((LM_DEBUG, "%T (%t) up, waiting on start barrier\n"));
   // After setting up the signal catcher, block on the start barrier.
   thread_start->wait ();
 
@@ -112,9 +111,7 @@ ACE_DEBUG((LM_DEBUG, "%T (%t) up, waiting on start barrier\n"));
               break;
             }
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
-ACE_DEBUG((LM_DEBUG, "%T (%t) going to sleep\n"));
           ACE_OS::sleep (1);
-ACE_DEBUG((LM_DEBUG, "%T (%t) awake again\n"));
         }
     }
 
