@@ -1,3 +1,8 @@
+Tue Jan 15 14:28:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableInterceptorC.h: 
+	  Fixed by inserting a space where needed.
+
 Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
