@@ -88,8 +88,6 @@ public:
   // Return an iterator that will traverse and return all the offer
   // ids in the service type map.
 
- private:
-  
   struct Offer_Map_Entry 
   {
     TAO_Offer_Map* offer_map_;
@@ -104,6 +102,9 @@ public:
     ACE_Null_Mutex
     >
     Offer_Database;
+
+private:
+  
   // The internal id is a pointer here, not only to avoid copying,
   // since we would only copy on insertion, and we only insert once
   // --- with an empty Offer_Map_Entry --- but also since most locks
