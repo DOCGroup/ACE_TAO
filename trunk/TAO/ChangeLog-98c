@@ -1,9 +1,22 @@
+Fri Oct 30 13:50:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_exception/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_structure/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_union/any_op_cs.cpp (operator <<=):
+          removed "return 0" in TAO_TRY block in generated code, and
+          therefore the ACE_NOTREACHED wrapper around the "return 0"
+          at the end of the function.  Thanks to Carlos for suggesting
+          this simplification.
+
 Fri Oct 30 09:35:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/orbconf.h: Changed TAO_USE_EXCEPTIONS to TAO_HAS_EXCEPTIONS
- 	  to be consistent with ACE_HAS_EXCEPTIONS.  Thanks to
- 	  Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
- 	  suggesting this.
+        * tao/orbconf.h: Changed TAO_USE_EXCEPTIONS to TAO_HAS_EXCEPTIONS
+          to be consistent with ACE_HAS_EXCEPTIONS.  Thanks to
+          Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
+          suggesting this.
 
 Thu Oct 29 18:19:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -16,26 +29,26 @@ Thu Oct 29 18:02:36 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Oct 29 16:25:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile: 
-	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ci.h: 
-	  A forward declaration of an interface also generates the forward
-	  declaration of its << and >> operators.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ci.h:
+          A forward declaration of an interface also generates the forward
+          declaration of its << and >> operators.
 
-	* TAO_IDL/be_include/be_visitor_interface_fwd.h: 
-	* TAO_IDL/be_include/be_interface_fwd.h: 
-	* TAO_IDL/be_include/be_decl.h: 
-	* TAO_IDL/be_include/be_codegen.h: 
-	* TAO_IDL/be/be_visitor_root/root.cpp: 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
-	* TAO_IDL/be/be_visitor_module/module.cpp: 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_scope.cpp: 
-	* TAO_IDL/be/be_visitor_interface_fwd.cpp: 
-	* TAO_IDL/be/be_visitor_factory.cpp: 
-	* TAO_IDL/be/be_decl.cpp: 
-	  Some cleanup and added support for the new additions above.
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+          Some cleanup and added support for the new additions above.
 
 Thu Oct 29 07:49:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -565,13 +578,13 @@ Tue Oct 20 18:04:30 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/driver/drv_args.cpp: Fixed the problem with separating
           suffix from the mail file name. It was hard coded assuming that
- 	  all files will end with .cpp which may not be true when somebody
- 	  uses -sT or -st option to specify someother suffix like .cxx or
- 	  something. So, we now use "." to separate the main name from the
- 	  suffix. If . is also not there (sanity check), we just take the
- 	  whole name as it is.  Thanks to
- 	  Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
- 	  reporting this problem.
+          all files will end with .cpp which may not be true when somebody
+          uses -sT or -st option to specify someother suffix like .cxx or
+          something. So, we now use "." to separate the main name from the
+          suffix. If . is also not there (sanity check), we just take the
+          whole name as it is.  Thanks to
+          Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
+          reporting this problem.
 
 1998-10-20  Seth Widoff  <swidoff@cs.cmu.edu>
 
