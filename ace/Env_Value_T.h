@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
 
@@ -25,6 +24,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Global_Macros.h"
 
 /**
  * @class ACE_Env_Value
