@@ -6,13 +6,12 @@
 //    examples
 // 
 // = FILENAME
-//    test_timeout.cpp
+//    test_multiple_loops.cpp
 //
 // = DESCRIPTION
 //
-//    This example application shows how to write event loops that
-//    handle events for some fixed amount of time. Note that any
-//    thread in the Proactor thread pool can call back the handler
+//    This example application shows how to write programs that
+//    combine the Proactor and ReactorEx event loops
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -23,7 +22,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
-class Timeout_Handler : public ACE_Handler
+class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
   // = TITLE
   //     Generic timeout handler.
 {
@@ -33,15 +32,26 @@ public:
     }
 
   virtual void handle_time_out (const ACE_Time_Value &tv,
-				const void *arg)
+			       const void *arg)
     // Print out when timeouts occur.
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n", 
 		  ++count_,
 		  (char *) arg,
 		  tv.sec ()));
-      // Sleep for a while
-      ACE_OS::sleep (4);
+
+      // Since there is only one thread that can do the timeouts in
+      // ReactorEx, lets keep the handle_timeout short for that
+      // thread.
+      if (ACE_OS::strcmp ((char *) arg, "Proactor") == 0)
+	// Sleep for a while
+	ACE_OS::sleep (4);
+    }
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+			      const void *arg)
+    {
+      this->handle_time_out (tv, arg);
+      return 0;
     }
   
 private:
@@ -56,7 +66,10 @@ public:
     // Handle events for 13 seconds.
     ACE_Time_Value run_time (13);
 
-    if (ACE_Service_Config::run_proactor_event_loop (run_time) == -1)
+    // Try to become the owner
+    ACE_Service_Config::reactorEx ()->owner (ACE_Thread::self ());
+
+    if (ACE_Service_Config::run_reactorEx_event_loop (run_time) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "Worker::svc"), -1);
     else
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
@@ -69,24 +82,27 @@ int
 main ()
 {
   Timeout_Handler handler;
+  ACE_Proactor proactor (0, 0, 1);
 
+  ACE_Service_Config::reactorEx ()->register_handler (&proactor);
+  
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  ACE_Service_Config::proactor ()->schedule_timer (handler,
-						   (void *) "Foo",
-						   ACE_Time_Value::zero,
-						   foo_tv);
+  proactor.schedule_timer (handler,
+			   (void *) "Proactor",
+			   ACE_Time_Value::zero,
+			   foo_tv);
+
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_Service_Config::proactor ()->schedule_timer (handler,
-						   (void *) "Bar",
-						   ACE_Time_Value::zero,
-						   bar_tv);
-
+  ACE_Service_Config::reactorEx ()->schedule_timer (&handler,
+						    (void *) "ReactorEx",
+						    ACE_Time_Value::zero,
+						    bar_tv);  
   Worker worker;
   if (worker.activate (THR_NEW_LWP, 10) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
-
+  
   ACE_Service_Config::thr_mgr ()->wait ();
   return 0;
 }
