@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    PortableServer
-//
-// = FILENAME
-//    Strategized_Object_Proxy_Broker.h
-//
-// = DESCRIPTION
-//    This files contains the strategized proxy broker implementation.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Strategized_Object_Proxy_Broker.h
+ *
+ *  $Id$
+ *
+ *  This files contains the strategized proxy broker implementation.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
 #define TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
@@ -39,8 +36,10 @@ class TAO_PortableServer_Export TAO_Strategized_Object_Proxy_Broker : public TAO
 {
 public:
 
-  // -- Ctor/Dtor --
+  /// Constructor.
   TAO_Strategized_Object_Proxy_Broker (void);
+
+  /// Destructor.
   ~TAO_Strategized_Object_Proxy_Broker (void);
 
   virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object

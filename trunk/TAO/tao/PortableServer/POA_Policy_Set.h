@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    POA.h
-//
-// = DESCRIPTION
-//     POA
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    POA.h
+ *
+ *  $Id$
+ *
+ *   POA
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef TAO_POA_POLICY_SET_H
 #define TAO_POA_POLICY_SET_H
@@ -67,7 +64,7 @@ public:
                           TAO_ORB_Core &orb_core
                           ACE_ENV_ARG_DECL);
 
-  // Add all of the client exposed policies to the specified list.
+  /// Add all of the client exposed policies to the specified list.
   void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies
                                           ACE_ENV_ARG_DECL);
 

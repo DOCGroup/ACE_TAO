@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    ThruPOA_Object_Proxy_Impl.h
-//
-// = DESCRIPTION
-//    This files contains the definition of the ThruPOA proxy
-//    for the CORBA::Object class.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ThruPOA_Object_Proxy_Impl.h
+ *
+ *  $Id$
+ *
+ *  This files contains the definition of the ThruPOA proxy
+ *  for the CORBA::Object class.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
 #define TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
@@ -34,13 +31,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+/**
+ * @class TAO_ThruPOA_Object_Proxy_Impl
+ *
+ * @brief TAO_ThruPOA_Object_Proxy_Impl
+ *
+ * This class implements the ThruPOA proxy for the CORBA::Object class.
+ */
 class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
-  // = TITLE
-  //    TAO_ThruPOA_Object_Proxy_Impl
-  //
-  // = DESCRIPTION
-  //    This class implements the ThruPOA proxy for the CORBA::Object class.
 public:
 
   TAO_ThruPOA_Object_Proxy_Impl (void);
