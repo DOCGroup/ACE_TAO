@@ -31,7 +31,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (void)
 #else
   : ACE_Addr (AF_UNSPEC,
 #endif /* ACE_HAS_FORE_ATM_XTI */
-
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
