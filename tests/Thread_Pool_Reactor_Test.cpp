@@ -288,7 +288,7 @@ worker (void *)
 int
 main (int argc, ACE_TCHAR *argv[])
 {
-//  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
   parse_arg (argc, argv);
 
   // Changed the default
@@ -314,7 +314,7 @@ main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  //ACE_END_TEST;
+  ACE_END_TEST;
   return 0;
 }
 
