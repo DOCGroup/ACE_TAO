@@ -1,3 +1,11 @@
+Fri Sep 24 16:16:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/UIOP_Transport.cpp:
+	* tao/IIOP_Transport.cpp:
+	  The GIOP::write_locate_request_header() method returns 1 to
+	  indicate success, but the start_locate() method was expecting
+	  0.  Thanks to Marina for pointing this out.
+
 Fri Sep 24 12:28:26 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp
