@@ -10447,7 +10447,7 @@ ACE_OS::bsearch (const void *key,
                  const void *base,
                  size_t nel,
                  size_t size,
-                 int (*compar)(const  void  *,  const  void *))
+                 ACE_COMPARE_FUNC compar)
 {
 #if !defined (ACE_LACKS_BSEARCH)
   return ::bsearch (key, base, nel, size, compar);
@@ -10465,7 +10465,7 @@ ACE_INLINE void
 ACE_OS::qsort (void *base,
                size_t nel,
                size_t width,
-               int (*compar) (const void *, const void *))
+               ACE_COMPARE_FUNC compar)
 {
 #if !defined (ACE_LACKS_QSORT)
   ::qsort (base, nel, width, compar);
