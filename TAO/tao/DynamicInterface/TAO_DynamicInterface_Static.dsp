@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\DynamicInterface"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "_WINDOWS" /D "_CONSOLE" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\DynamicInterface"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "_WINDOWS" /D "_CONSOLE" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -92,10 +92,6 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=.\Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
 
@@ -136,10 +132,6 @@ SOURCE=.\Unknown_User_Exception.cpp
 # Begin Source File
 
 SOURCE=.\Context.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_ClientRequestInfo.h
 # End Source File
 # Begin Source File
 
