@@ -1,12 +1,25 @@
+Fri Sep  3 11:57:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h,
+	* ace/config-win32-common.h: Added a #ifndef for __IBMCPP__ to
+	  make things work for Visual Age C++.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+
+	* ace/{ACE,OS}: Added ACE_HAS_UNICODE to conditionally compile the
+ 	  strnew() definition.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+
+	* ace: Added a new optimized ace-dll.icc file so that ACE will
+	  build better with IBM's Visual Age C++.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for contributing this.
+
 1999-09-03  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Added a new overloaded ACE_OS::ioctl () function that takes in 
-	  ACE_QoS as one of the parameters, constructs a windows QOS from 
-	  it and passes it to WSAIoctl (). This function can be used when
-	  the I/O control code is SIO_SET_QOS.
-	
-	* ace/OS.i: 
-	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.h: Added a new overloaded ACE_OS::ioctl () function that
+	  takes in ACE_QoS as one of the parameters, constructs a windows
+ 	  QOS from it and passes it to WSAIoctl (). This function can be
+ 	  used when the I/O control code is SIO_SET_QOS.
 
 Fri Sep  3 14:58:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
