@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    Obstack.h
@@ -45,10 +44,10 @@ public:
 
 private:
   /// Pointer to the end of the chunk.
-  ACE_TCHAR *end_;
+  char *end_;
 
   /// Pointer to the current location in the chunk.
-  ACE_TCHAR *cur_;
+  char *cur_;
 
   /// Next chunk in the chain.
   ACE_Obchunk *next_;
@@ -58,7 +57,7 @@ private:
    * actually overlayed by the memory allocated by
    * <ACE_Obstack::new_chunk>.  Therefore, it *must* come last.
    */
-  ACE_TCHAR contents_[4];
+  char contents_[4];
 };
 
 /**
@@ -78,8 +77,13 @@ public:
   ~ACE_Obstack (void);
 
   /// Copy the data into the current Obchunk.
-  ACE_TCHAR *copy (const ACE_TCHAR *data,
-                   size_t len);
+  char *copy (const char *data,
+              size_t len);
+
+#if defined (ACE_HAS_WCHAR)
+  /// Version of copy that takes in a wchar_t * (used in Svc_Conf)
+  wchar_t *copy (const wchar_t *data, size_t len);
+#endif /* ACE_HAS_WCHAR */
 
   /// "Release" the entire stack of Obchunks, putting it back on the
   /// free list.
@@ -100,17 +104,11 @@ protected:
   /// Current size of the Obstack;
   size_t size_;
 
-  // = Don't change the order of the following two fields.
-/**
- * @class ACE_Obchunk
- Head of the Obchunk chain.
- */
+  // Don't change the order of the following two fields.
+  /// Head of the Obchunk chain.
   class ACE_Obchunk *head_;
 
-/**
- * @class ACE_Obchunk
- Pointer to the current Obchunk.
- */
+  /// Pointer to the current Obchunk.
   class ACE_Obchunk *curr_;
 };
 
