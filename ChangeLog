@@ -1,3 +1,9 @@
+Tue Jan 14 11:07:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/generate_export_file.pl: Added a patch from
+	  Gonzalo Diethelm <gonzalo.diethelm@aditiva.com> which generates
+	  an empty $Id$.
+
 Mon Jan 13 12:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
