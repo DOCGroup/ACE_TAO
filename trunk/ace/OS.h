@@ -2076,9 +2076,9 @@ struct stat
 #       define ACE_THR_PRI_OTHER_DEF ((ACE_THR_PRI_OTHER_MIN + ACE_THR_PRI_OTHER_MAX)/2)
 #     endif
 
-      // Typedefs to help compatibility with Windows NT and Pthreads.
-      typedef pthread_t ACE_hthread_t;
-      typedef pthread_t ACE_thread_t;
+// Typedefs to help compatibility with Windows NT and Pthreads.
+typedef pthread_t ACE_hthread_t;
+typedef pthread_t ACE_thread_t;
 
 #     if defined (ACE_HAS_TSS_EMULATION)
         typedef pthread_key_t ACE_OS_thread_key_t;
@@ -2088,8 +2088,8 @@ struct stat
 #     endif /* ! ACE_HAS_TSS_EMULATION */
 
 #     if !defined (ACE_LACKS_COND_T)
- typedef pthread_mutex_t ACE_mutex_t;
- typedef pthread_cond_t ACE_cond_t;
+typedef pthread_mutex_t ACE_mutex_t;
+typedef pthread_cond_t ACE_cond_t;
 #     endif /* ! ACE_LACKS_COND_T */
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
@@ -2196,10 +2196,12 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #     if !defined (ACE_HAS_STHREADS)
 #       if !defined (ACE_HAS_POSIX_SEM)
-// This is used to implement semaphores for POSIX pthreads, but
-// without POSIX semaphores.  It is different than the POSIX sem_t.
 class ACE_Export ACE_sema_t
 {
+  // = TITLE
+  //   This is used to implement semaphores for platforms that support
+  //   POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
+  //   it's a different type than the POSIX <sem_t>.
 friend class ACE_OS;
 protected:
   ACE_mutex_t lock_;
@@ -2375,7 +2377,7 @@ typedef SEM_ID ACE_mutex_t;
 // one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
 #     if !defined (ACE_HAS_POSIX_SEM)
-// Use VxWorks semaphores, wrapped . . .
+// Use VxWorks semaphores, wrapped ...
 typedef struct
 {
   SEM_ID sema_;
@@ -2461,7 +2463,8 @@ class ACE_Export ACE_cond_t
 {
   // = TITLE
   //     This structure is used to implement condition variables on
-  //     VxWorks and Win32.
+  //     platforms that lack it natively, such as VxWorks, pSoS, and
+  //     Win32.
   //
   // = DESCRIPTION
   //     At the current time, this stuff only works for threads
@@ -2493,7 +2496,7 @@ protected:
   // for the waiting thread(s) to wake up and get a chance at the
   // semaphore.
 #     else
-#       error "SOMEONE FIX ME!"
+#       error "Please implement this feature or check your config.h file!"
 #     endif /* VXWORKS || ACE_PSOS */
 
   size_t was_broadcast_;
