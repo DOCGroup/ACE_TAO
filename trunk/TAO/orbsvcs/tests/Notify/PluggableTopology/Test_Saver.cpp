@@ -15,14 +15,14 @@ Test_Saver::begin_object(CORBA::Long id,
       bool changed
       ACE_ENV_ARG_DECL_NOT_USED)
 {
-  cout << "Test_Saver::begin_object type=\"" << type << "\" "
-    << " id=" << id
-    << " changed=\"" << changed << "\"";
+  ACE_OS::fprintf (stdout, "Test_Saver::begin_object type=\"%s\""
+                   "  id=%d changed=\"%d\"", type.c_str(), id, changed);
   for (size_t idx = 0; idx < attrs.size(); idx++)
   {
-    cout << " " << attrs[idx].name << "=\"" << attrs[idx].value << "\"";
+    ACE_OS::fprintf (stdout, " %s=\"%s\"", attrs[idx].name.c_str(),
+                     attrs[idx].value.c_str());
   }
-  cout << endl;
+  ACE_OS::fprintf (stdout, "\n");
   return true;
 }
 
@@ -30,8 +30,7 @@ void
 Test_Saver::end_object (CORBA::Long id,
       const ACE_CString &type ACE_ENV_ARG_DECL_NOT_USED)
 {
-  cout << "Test_Saver::end_object type=\"" << type << "\""
-  << " id=" << id
-  << endl;
+  ACE_OS::fprintf (stdout, "Test_Saver::end_object type=\"%s\" id=%d\n",
+                   type.c_str(), id);
 }
 

@@ -1,3 +1,13 @@
+Sat Nov 27 12:52:57 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+          Fixed problems with use of iostreams for
+	  ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
 Sat Nov 27 14:34:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* utils/examples/mfc/client.cpp:
