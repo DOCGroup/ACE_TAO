@@ -1,3 +1,9 @@
+Fri Mar  5 11:06:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Always print out an error message when we
+ 	  increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
+ 	  for reporting this.
+
 Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/Makefile: Removed test_guard from the
@@ -6,8 +12,6 @@ Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  ACE_Guard to ACE_Thread_Mutex_Guard (obsolete).
 
 	* ace/OS.h: Removed ACE_THREAD_GUARD*.
-
-Fri Mar  5 03:25:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-psos-{diab,tm}.h: Removed
 	  ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE.  It is no longer
