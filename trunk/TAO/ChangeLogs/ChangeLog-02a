@@ -1,3 +1,8 @@
+Tue Dec 12 17:05:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/ReactorTask.h (ReactorEx.): Added a
+	  missing include  to get it compiling on Win32.
+
 Wed Dec 12 12:54:51 2001  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event_Utilities.cpp:
