@@ -1,3 +1,16 @@
+Mon Nov 10 08:40:59 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+          Undo the build fix that didn't work.
+
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+        * orbsvcs/orbsvcs/FT_Notifier.idl:
+        * orbsvcs/orbsvcs/FT_Replica.idl:
+        * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
+          Add the missing files.
+
 Sun Nov  9 12:40:10 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
