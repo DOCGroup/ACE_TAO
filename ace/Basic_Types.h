@@ -370,7 +370,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_INT64_FORMAT_SPECIFIER)
-# define ACE_INT64_FORMAT_SPECIFIER "%ll"
+# define ACE_INT64_FORMAT_SPECIFIER "%lld"
 #endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
