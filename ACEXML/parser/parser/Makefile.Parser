@@ -1,7 +1,6 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
-
 MAKEFILE        = Makefile.Parser
 DEPENDENCY_FILE = .depend.Makefile.Parser
 LIB_UNCHECKED   = libACEXML_Parser.a
@@ -10,17 +9,17 @@ SHLIB_UNCHECKED = libACEXML_Parser.$(SOEXT)
 
 
 FILES = \
-  Entity_Manager \
   Parser \
+  Entity_Manager \
   ParserContext \
   ParserInternals
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
 
 LIB   = $(LIB_UNCHECKED)
 SHLIB = $(SHLIB_UNCHECKED)
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 LSRC   = $(addsuffix .cpp, $(FILES))
 ACELIB = -lACE
@@ -32,18 +31,25 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../../..
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS += -DACEXML_PARSER_BUILD
+  endif
+endif
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
 LDFLAGS      += -L../../../ace
 
-ACE_SHLIBS = -lACEXML $(ACELIB)
+ACE_SHLIBS  = -lACEXML $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
 
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+realclean: clean 
 
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

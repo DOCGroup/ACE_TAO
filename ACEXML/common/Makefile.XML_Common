@@ -1,7 +1,6 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
-
 MAKEFILE        = Makefile.XML_Common
 DEPENDENCY_FILE = .depend.Makefile.XML_Common
 LIB_UNCHECKED   = libACEXML.a
@@ -10,37 +9,37 @@ SHLIB_UNCHECKED = libACEXML.$(SOEXT)
 
 
 FILES = \
-  AttributesImpl \
+  SAXExceptions \
   Attributes_Def_Builder \
-  CharStream \
-  DTD_Manager \
-  DefaultHandler \
-  Element_Def_Builder \
-  Encoding \
-  Env \
+  AttributesImpl \
+  Transcode \
+  Mem_Map_Stream \
+  Validator \
   Exception \
-  FileCharStream \
-  HttpCharStream \
+  CharStream \
+  XMLFilterImpl \
   InputSource \
   LocatorImpl \
-  Mem_Map_Stream \
   NamespaceSupport \
-  SAXExceptions \
-  StrCharStream \
-  StreamFactory \
-  Transcode \
   URL_Addr \
-  Validator \
-  XMLFilterImpl \
-  XML_Codecs \
-  ZipCharStream
+  StrCharStream \
+  DTD_Manager \
+  DefaultHandler \
+  Env \
+  FileCharStream \
+  Element_Def_Builder \
+  StreamFactory \
+  HttpCharStream \
+  ZipCharStream \
+  Encoding \
+  XML_Codecs
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
 
 LIB   = $(LIB_UNCHECKED)
 SHLIB = $(SHLIB_UNCHECKED)
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 LSRC   = $(addsuffix .cpp, $(FILES))
 ACELIB = -lACE
@@ -52,18 +51,25 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../..
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS += -DACEXML_BUILD
+  endif
+endif
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
 LDFLAGS      += -L../../ace
 
-ACE_SHLIBS = -lz -lzzip $(ACELIB)
+ACE_SHLIBS  = -lz -lzzip $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
 
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+realclean: clean 
 
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
