@@ -24,6 +24,7 @@ CFG=TAO - Win32 Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -169,6 +170,10 @@ SOURCE=.\IIOP_Object.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
