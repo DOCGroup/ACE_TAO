@@ -52,10 +52,6 @@
 #  endif /* MAXNAMLEN */
 #endif /* !NAME_MAX */
 
-#if !defined (MAXNAMLEN)
-#  define MAXNAMLEN NAME_MAX
-#endif /* !MAXNAMLEN */
-
 #if !defined (MAXNAMELEN)
 #  define MAXNAMELEN NAME_MAX
 #endif /* MAXNAMELEN */
@@ -63,10 +59,6 @@
 #if !defined (HOST_NAME_MAX)
 #  define HOST_NAME_MAX 256
 #endif /* !HOST_NAME_MAX */
-
-# if !defined(MAXHOSTNAMELEN)
-#   define MAXHOSTNAMELEN  HOST_NAME_MAX
-# endif /* MAXHOSTNAMELEN */
 
 // Note that we are using PATH_MAX instead of _POSIX_PATH_MAX, since
 // _POSIX_PATH_MAX is the *minimun* maximum value for PATH_MAX and is

@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/netinet/in.h"
+#include "ace/os_include/limits.h"
 
 #if !defined (ACE_LACKS_NETDB_H)
 #  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
@@ -74,6 +75,10 @@
    typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
    typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
 #endif /* ACE_HAS_STRUCT_NETDB_DATA */
+
+# if !defined(MAXHOSTNAMELEN)
+#   define MAXHOSTNAMELEN  HOST_NAME_MAX
+# endif /* MAXHOSTNAMELEN */
 
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_NETDB_H */
