@@ -153,7 +153,7 @@ TAO_DynAny_i::copy (CORBA::Environment &ACE_TRY_ENV)
   TAO_DynAny_i* tmp = new TAO_DynAny_i (this->value_);
 
   CORBA_DynAny_ptr retval = tmp->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   return retval;
 }
@@ -744,7 +744,7 @@ TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (val.out (),
                     CORBA_Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+  ACE_CHECK_RETURN (CORBA_Any::_nil ());
 
   if (!(this->value_ >>= *val.out ()))
     {

@@ -1,3 +1,13 @@
+Sat Jun 26 12:43:26 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/DynAny_i.cpp:
+	  
+	  Fixed the following compile errors.
+	  copy: Used ACE_CHECK_RETURN instead of ACE_CHECK because the operation
+	        required a return value.
+	
+	  get_any: Return value expected is an Any_ptr and not DynAny_ptr.
+	
 Sat Jun 26 09:35:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: on LynxOS/ppc only, for POA.cpp only,
