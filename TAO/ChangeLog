@@ -1,3 +1,8 @@
+Sun Jan  4 08:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+	  Fixed this borland makefile for static build
+
 Sat Jan  3 23:56:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
@@ -5,8 +10,8 @@ Sat Jan  3 23:56:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
 
 	  The last checkin actually broke g++ builds. Slightly corrected
-	  the fix by calling the cast operator so that it works in both 
-	  the compilers. 
+	  the fix by calling the cast operator so that it works in both
+	  the compilers.
 
 Sat Jan  3 11:23:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
