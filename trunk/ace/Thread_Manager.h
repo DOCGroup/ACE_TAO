@@ -131,10 +131,11 @@ public:
   long flags (void) const;
   // Get the thread creation flags.
 
-  void set_next (ACE_Thread_Descriptor *td);
-  ACE_Thread_Descriptor *get_next (void);
+  ACE_INLINE void set_next (ACE_Thread_Descriptor *td);
+  ACE_INLINE ACE_Thread_Descriptor *get_next (void);
   // Set/get the <next_> pointer.  These are required by the
-  // ACE_Free_List.
+  // ACE_Free_List.  ACE_INLINE is specified here because one version
+  // of g++ couldn't grok this code without it.
 
 private:
   ACE_thread_t thr_id_;
