@@ -1225,17 +1225,17 @@ TAO_Container_i::create_interface (const char *id,
 }
 
 IR::ValueDef_ptr 
-TAO_Container_i::create_value (const char *id,
-                               const char *name,
-                               const char *version,
-                               CORBA::Boolean is_custom,
-                               CORBA::Boolean is_abstract,
-                               IR::ValueDef_ptr base_value,
-                               CORBA::Boolean is_truncatable,
-                               const IR::ValueDefSeq &abstract_base_values,
-                               const IR::InterfaceDefSeq &supported_interfaces,
-                               const IR::InitializerSeq &initializers,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_Container_i::create_value (const char * /* id */,
+                               const char * /* name */,
+                               const char * /* version */,
+                               CORBA::Boolean /* is_custom */,
+                               CORBA::Boolean /* is_abstract */,
+                               IR::ValueDef_ptr /* base_value */,
+                               CORBA::Boolean /* is_truncatable */,
+                               const IR::ValueDefSeq & /* abstract_base_values */,
+                               const IR::InterfaceDefSeq & /* supported_interfaces */,
+                               const IR::InitializerSeq & /* initializers */,
+                               CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 { 
   // TODO
