@@ -115,8 +115,8 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       throw_spec_close = "))";
     }
 
-  be_decl *scope = this->ctx_->scope ();
-  be_interface *iface = be_interface::narrow_from_decl (scope);
+  UTL_Scope *scope = node->defined_in ();
+  be_interface *iface = be_interface::narrow_from_scope ( scope );
 
   // Check if this is IF and it's not VT.
   if (iface != 0 && !iface->is_valuetype ())
@@ -147,17 +147,15 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
             }
 
-          if (i == 0 && iface != 0 && iface->is_valuetype ())
-            {
-              *os << be_idt_nl;
-            }
-
-          if (i != 0 || !(iface != 0 && iface->is_valuetype ()))
+          if (i != 0 || (iface != 0 && !iface->is_valuetype ()))
             {
               *os << be_nl << ", ";
             }
 
-          *os << excp->name ();
+          if (iface != 0 && !iface->is_valuetype ())
+            {
+              *os << excp->name ();
+	    }
           ++i;
         }
     }
