@@ -1440,12 +1440,10 @@ CORBA::ORB_init (int &argc,
       return CORBA::ORB::_nil ();
     }
 
-  CORBA::Environment & env (TAO_default_environment ());
-
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,
-                          env);
+                          TAO_default_environment ());
 }
 
 CORBA::ORB_ptr
