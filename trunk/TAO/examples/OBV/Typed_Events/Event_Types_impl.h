@@ -118,7 +118,7 @@ public:
 
   virtual ~Temperature_impl ();
 
-  virtual void do_print (void);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
   // Overrides Event_impl::do_print (). Note that a new declaration
   // in IDL in a derived class is not allowed.
 };
@@ -144,15 +144,15 @@ public:
   Position_impl (Point &p);
   virtual ~Position_impl ();
 
-  virtual CORBA::Float x ();
-  virtual void x (CORBA::Float);
-  virtual CORBA::Float y ();
-  virtual void y (CORBA::Float);
-  virtual CORBA::Float z ();
-  virtual void z (CORBA::Float);
+  virtual CORBA::Float x (CORBA::Environment &ACE_TRY_ENV);
+  virtual void x (CORBA::Float, CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::Float y (CORBA::Environment &ACE_TRY_ENV);
+  virtual void y (CORBA::Float, CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::Float z (CORBA::Environment &ACE_TRY_ENV);
+  virtual void z (CORBA::Float, CORBA::Environment &ACE_TRY_ENV);
   //These are the attributes
 
-  virtual void do_print (void);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Position_factory : public Position_init
@@ -177,7 +177,7 @@ public:
   Log_Msg_impl (CORBA::Short urgency_p, const char *message_p);
   virtual ~Log_Msg_impl ();
 
-  virtual void do_print (void);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Log_Msg_factory : public Log_Msg_init
@@ -209,12 +209,12 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
   Event_List_Link_impl (Event *e);
   virtual ~Event_List_Link_impl ();
 
-  Event *get_event (void);
+  Event *get_event (CORBA::Environment &ACE_TRY_ENV);
 
  private:
-  Event_List_Link *get_next_link (void);
+  Event_List_Link *get_next_link (CORBA::Environment &ACE_TRY_ENV);
 
-  void attach_next_link (Event_List_Link * chain);
+  void attach_next_link (Event_List_Link * chain, CORBA::Environment &ACE_TRY_ENV);
   // Attach a chain at the end.
 };
 
@@ -238,9 +238,9 @@ class Event_List_impl : public virtual OBV_Event_List,
   Event_List_impl ();
   virtual ~Event_List_impl ();
 
-  void store_event (Event* e);
+  void store_event (Event* e, CORBA::Environment &ACE_TRY_ENV);
 
-  Event_List_Link *get_first_link();
+  Event_List_Link *get_first_link(CORBA::Environment &ACE_TRY_ENV);
   // The iterator needs it.
 
  private:
@@ -316,8 +316,8 @@ public:
 
   virtual ~Temperature_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e);
-  virtual void do_print (void);
+  CORBA::Boolean is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Temperature_Criterion_factory : public Temperature_Criterion_init
@@ -342,8 +342,8 @@ public:
                            Position *tr);
   virtual ~Position_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e);
-  virtual void do_print (void);
+  CORBA::Boolean is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Position_Criterion_factory : public Position_Criterion_init
@@ -364,8 +364,8 @@ public:
   Log_Msg_Criterion_impl ();
   virtual ~Log_Msg_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e);
-  virtual void do_print (void);
+  CORBA::Boolean is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV);
+  virtual void do_print (CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Log_Msg_Criterion_factory : public Log_Msg_Criterion_init
@@ -384,8 +384,8 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
   Criterion_List_impl ();
   virtual ~Criterion_List_impl ();
 
-  void store_criterion (Criterion *c);
-  CORBA::Boolean is_critical (Event *e);
+  void store_criterion (Criterion *c, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Boolean is_critical (Event *e, CORBA::Environment &ACE_TRY_ENV);
 };
 
 
