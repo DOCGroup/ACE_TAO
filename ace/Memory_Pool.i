@@ -51,6 +51,13 @@ ACE_MMAP_Memory_Pool::round_up (size_t nbytes)
   return ACE::round_to_pagesize (nbytes);
 }
 
+ACE_INLINE void *
+ACE_MMAP_Memory_Pool::base_addr (void) const
+{
+  ACE_TRACE ("ACE_MMAP_Memory_Pool::base_addr");
+  return this->base_addr_;
+}
+
 // Ask system for initial chunk of local memory.
 
 ACE_INLINE void *
@@ -196,14 +203,14 @@ ACE_Sbrk_Memory_Pool::protect (void *, size_t, int)
 
 #if defined (ACE_WIN32)
 
-ACE_INLINE size_t 
+ACE_INLINE size_t
 ACE_Pagefile_Memory_Pool::round_to_chunk_size (size_t nbytes)
 {
-  return (nbytes + ACE_DEFAULT_PAGEFILE_POOL_CHUNK - 1) 
+  return (nbytes + ACE_DEFAULT_PAGEFILE_POOL_CHUNK - 1)
           & (~(ACE_DEFAULT_PAGEFILE_POOL_CHUNK - 1));
 }
 
-ACE_INLINE size_t 
+ACE_INLINE size_t
 ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
 {
   return ACE::round_to_pagesize (nbytes);
