@@ -1,28 +1,92 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    utils
-//
-// = FILENAME
-//    nslist.cpp
-//
-// = DESCRIPTION
-//    Naming Service listing utility
-//
-// = AUTHOR
-//     Written 1999-06-03 by Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    nslist.cpp
+ *
+ *  $Id$
+ *
+ *  Naming Service listing utility
+ *
+ *
+ *  @author  Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
+ *  @date 1999-06-03 
+ */
+//=============================================================================
 
+
+#include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
+#include "tao/Endpoint.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
 
 CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
 
 static void list_context (CosNaming::NamingContext_ptr nc, int level);
+
+static void
+get_tag_name(CORBA::ULong tag, ACE_CString& tag_string)
+{
+  switch(tag)
+    {
+    case TAO_TAG_IIOP_PROFILE:
+      tag_string = "IIOP";
+      break;
+    case TAO_TAG_UIOP_PROFILE:
+      tag_string = "UIOP";
+      break;
+    case TAO_TAG_SHMEM_PROFILE:
+      tag_string = "SHMEM";
+      break;
+#ifdef TAO_TAG_UDP_PROFILE 
+    case TAO_TAG_UDP_PROFILE:
+      tag_string = "GIOP over UDP";
+#endif /* TAO_TAG_UDP_PROFILE */
+    default:
+      tag_string = "Unknown tag: " + tag;
+      break;
+    }
+}
+
+
+static void
+display_endpoint_info(CORBA::Object_ptr obj)
+{
+
+  TAO_Stub* stub = obj->_stubobj();
+  if( !stub ){
+    ACE_DEBUG((LM_DEBUG, "Invalid stub\n"));
+    return;
+  }
+
+  TAO_Profile* profile = stub->profile_in_use();
+  if( !profile ){
+    ACE_DEBUG((LM_DEBUG, "Invalid profile\n"));
+    return;
+  }
+
+
+  TAO_Endpoint* endpoint = profile->endpoint(); 
+  if( !endpoint ){
+    ACE_DEBUG((LM_DEBUG, "Invalid profile\n"));
+    return;
+  }
+
+  CORBA::ULong tag = endpoint->tag();
+  ACE_CString tag_name;
+  get_tag_name(tag, tag_name); 
+
+  char buf[255];
+  if(endpoint->addr_to_string(buf, 255) < 0){
+    ACE_DEBUG((LM_DEBUG, "Could not put endpoint address in string.\n"));
+    return;
+  }
+    
+  ACE_DEBUG((LM_DEBUG, "Protocol: %s,   Endpoint: %s\n", tag_name.c_str(), buf));
+
+}
 
 // Display NS entries from a finite list.
 
@@ -62,7 +126,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       if (bl[i].binding_type == CosNaming::ncontext)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ": context\n"));
+                      ": naming context\n"));
 
           CosNaming::NamingContext_var xc =
             CosNaming::NamingContext::_narrow (obj.in ());
@@ -83,8 +147,9 @@ show_chunk (CosNaming::NamingContext_ptr nc,
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ": reference\n"));
-            }
+                          ": object reference:   "));
+	      display_endpoint_info( obj.in() );
+	    }
         }
     }
 }
