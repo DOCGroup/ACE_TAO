@@ -29,8 +29,28 @@ TAO_Admin<TRADER>::TAO_Admin (TRADER &trader)
     TAO_Trader_Components <POA_CosTrading::Admin> (trader.trading_components ()),
     TAO_Import_Attributes <POA_CosTrading::Admin> (trader.import_attributes ()),
     TAO_Support_Attributes <POA_CosTrading::Admin> (trader.support_attributes ()),
-    TAO_Link_Attributes <POA_CosTrading::Admin> (trader.link_attributes ())
+    TAO_Link_Attributes <POA_CosTrading::Admin> (trader.link_attributes ()),
+    sequence_number_ (0)
 {
+  // Because a servant is uniquely identified by a POA name and an
+  // ObjectID number, the concatenation of the two prefixed before a
+  // sequence number will ensure the request_id_stem space between
+  // traders will not overlap. The sequence number space will be four
+  // octets.
+  CORBA::Environment _env;
+  PortableServer::POA_var poa = this->_default_POA (_env);
+  PortableServer::ObjectId_var id = poa->servant_to_id (this, _env);
+  CORBA::String_var poa_name = poa->the_name (_env);
+  int name_length = ACE_OS::strlen (poa_name.in ()),
+    id_length = id->length (),
+    total_length = name_length + id_length + sizeof (CORBA::ULong);
+  
+  this->stem_id_.length (total_length);
+  for (int i = total_length - 1, j = name_length - 1; j >= 0; i--, j--)
+    this->stem_id_[i] = (CORBA::Octet) poa_name[j];
+  
+  for (j = id_length - 1; j >= 0; j--, i--)
+    this->stem_id_[i] = id[j];
 }
 
 template <class TRADER>
@@ -42,7 +62,14 @@ template <class TRADER> CosTrading::Admin::OctetSeq *
 TAO_Admin<TRADER>::request_id_stem (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  // Add one to the sequence_number and concatenate it to the unique
+  // prefix. The sequence number is four octets long.
+  for (int i = sizeof (CORBA::ULong) - 1; i >= 0; i--)
+    this->stem_id_[i] = (this->sequence_number_ >> (8*i)) & 0xff;
+
+  // Increment the sequence number and return a copy of the stem_id.
+  this->sequence_number_++;
+  return new CosTrading::Admin::OctetSeq (this->stem_id_);
 }
 
 template <class TRADER> CORBA::ULong 

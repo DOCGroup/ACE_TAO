@@ -13,7 +13,8 @@ const char* TAO_Policies::POLICY_NAMES[] =
   "starting_trader",
   "use_dynamic_properties",
   "use_modifiable_properties",
-  "use_proxy_offers"
+  "use_proxy_offers",
+  "request_id"
 };
 
 TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
@@ -104,6 +105,10 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
       return_value = import_attrs.def_return_card ();
       max_value = import_attrs.max_return_card ();
       break;
+    case HOP_COUNT:
+      return_value = import_attrs.def_hop_count ();
+      max_value = import_attrs.max_hop_count ();
+      break;
     }
   
   if (this->policies_[pol] != 0)
@@ -122,7 +127,7 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
       if (max_value < return_value)
 	return_value = max_value;
       else
-	this->limits_.push_back ((char *) POLICY_NAMES[pol]);
+	this->limits_.insert (string(POLICY_NAMES[pol]));
     }
   
   return return_value;
@@ -187,7 +192,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       if (def_value == (CORBA::Boolean) 0)
 	return_value = (CORBA::Boolean) 0;
       else
-	this->limits_.push_back ((char *) POLICY_NAMES[pol]);
+	this->limits_.insert (string (POLICY_NAMES[pol]));
     }
 
   return return_value;
@@ -226,29 +231,85 @@ TAO_Policies::exact_type_match (CORBA::Environment& _env)
 CosTrading::TraderName*
 TAO_Policies::starting_trader (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-	 CosTrading::Lookup::InvalidPolicyValue))
+		   CosTrading::Lookup::InvalidPolicyValue))
 {
-  return 0;
+  CosTrading::TraderName* trader_name = 0;
+  
+  if (this->policies_[STARTING_TRADER] != 0)
+    {
+      CosTrading::Policy* policy = this->policies_[STARTING_TRADER];
+      CosTrading::PolicyValue& value = policy->value;
+      CORBA::TypeCode* type = value.type ();
+      
+      if (!type->equal (CosTrading::_tc_TraderName, _env))
+	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
+			  trader_name);
+      else
+	{
+	  ACE_NEW_RETURN (trader_name, CosTrading::TraderName, 0);
+	  //	  value >>= *trader_name;
+	  this->limits_.insert (string (POLICY_NAMES[STARTING_TRADER]));
+	}
+    }
+
+  return trader_name;
 }
+
+CosTrading::FollowOption
+TAO_Policies::link_follow_rule (CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+{
+  CosTrading::FollowOption return_value = 
+    this->trader_.import_attributes ().def_follow_policy ();
+
+  if (this->policies_[LINK_FOLLOW_RULE] != 0)
+    {
+      CosTrading::FollowOption max_follow_policy = 
+	this->trader_.import_attributes ().max_follow_policy ();
+
+      CosTrading::Policy* policy = this->policies_[LINK_FOLLOW_RULE];
+      CosTrading::PolicyValue& value = policy->value;
+      CORBA::TypeCode* type = value.type ();
+
+      // Extract the link follow rule 
+      if (!type->equal (CosTrading::_tc_FollowOption, _env))
+	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
+			  return_value);
+      else
+	//	    value >>= return_value;
+	;
+
+      if (return_value > max_follow_policy)
+	{
+	  this->limits_.insert (string (POLICY_NAMES[LINK_FOLLOW_RULE]));
+	  return_value = max_follow_policy;
+	}
+    }
+
+  return return_value;
+}
+
 
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (const char* link_name,
 				CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-		   CosTrading::Lookup::InvalidPolicyValue))
+		   CosTrading::Lookup::InvalidPolicyValue,
+		   CosTrading::Link::IllegalLinkName,
+		   CosTrading::Link::UnknownLinkName))
 {
   CosTrading::FollowOption return_value = CosTrading::local_only;
   CosTrading::Link_var link
     (this->trader_.trading_components ().link_if ());
-  TAO_CHECK_ENV_RETURN (_env, return_value);
 
   if (link != CosTrading::Link::_nil ())
     {
       CosTrading::Link::LinkInfo_var
 	link_info (link->describe_link (link_name, _env));
+      TAO_CHECK_ENV_RETURN (_env, return_value);
       CosTrading::FollowOption trader_max_follow_policy = 
 	this->trader_.import_attributes ().max_follow_policy ();
-
+      
       if (this->policies_[LINK_FOLLOW_RULE] != 0)
 	{
 	  CosTrading::FollowOption query_link_follow_rule;
@@ -288,21 +349,161 @@ CORBA::ULong
 TAO_Policies::hop_count (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
-  return (CORBA::ULong) 0;
+  return this->ulong_prop (HOP_COUNT, _env);
 }
 
+CosTrading::Admin::OctetSeq*
+TAO_Policies::request_id (CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
+{
+  CosTrading::Admin::OctetSeq* request_id = 0;
+  
+  if (this->policies_[REQUEST_ID] != 0)
+    {
+      CosTrading::Policy* policy = this->policies_[REQUEST_ID];
+      CosTrading::PolicyValue& value = policy->value;
+      CORBA::TypeCode* type = value.type ();
+      
+      if (!type->equal (CosTrading::Admin::_tc_OctetSeq_seq, _env))
+	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
+			  request_id);
+      else
+	{
+	  ACE_NEW_RETURN (request_id, CosTrading::Admin::OctetSeq, 0);
+	  //	value >>= *request_id;
+	}
+	;
+    }
+
+  return request_id;
+}
 
 CosTrading::PolicyNameSeq*
 TAO_Policies::limits_applied (void)
 {
   int i = 0;
   CORBA::ULong size = this->limits_.size ();
-  CosTrading::PolicyName* temp = CosTrading::PolicyNameSeq::allocbuf (size);
+  CosTrading::PolicyName* temp =
+    CosTrading::PolicyNameSeq::allocbuf (size);
 
-  for (POL_QUEUE::iterator p_iter = this->limits_.begin();
+  for (POL_SET::iterator p_iter = this->limits_.begin();
        p_iter != this->limits_.end ();
        p_iter++)  
-    temp[i++] = CORBA::string_dup (*p_iter);
+    temp[i++] = CORBA::string_dup ((*p_iter).data ());
   
   return new CosTrading::PolicyNameSeq (i, i, temp, 1);
+}
+
+CosTrading::PolicySeq*
+TAO_Policies::policies_to_forward (void)
+{
+  // Create a new policy sequence, shortening the starting trader
+  // policy by one link.
+  
+  CORBA::Environment env;
+  CORBA::ULong counter = 0;
+  CosTrading::Policy* policy_buffer =
+    CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
+  
+  if (policy_buffer == 0)
+    return 0;
+  
+  for (int i = EXACT_TYPE_MATCH; i <= REQUEST_ID; i++)
+    {
+      CosTrading::Policy& new_policy = policy_buffer[counter];
+      
+      if (this->policies_[i] != 0)
+	{
+	  // Copy in the existing policies.
+	  new_policy.name = this->policies_[i]->name;
+
+	  if (i == STARTING_TRADER)
+	    {
+	      TAO_TRY
+		{
+		  // Eliminate the first link of the trader name.
+		  CosTrading::TraderName* trader_name =
+		    this->starting_trader (env);
+		  CORBA::ULong length = trader_name->length ();
+		  
+		  for (int j = 1; j < length; j++)
+		    trader_name[j - 1] = trader_name[j];		  
+		  trader_name->length (length - 1);
+
+		  //		  new_policy.value <<= *trader_name;
+		}
+	      TAO_CATCHANY {}
+	      TAO_ENDTRY;	      
+	    }
+	  else
+	    new_policy.value = this->policies_[i]->value;
+	}
+    }
+
+  // Create the new sequence
+  return new CosTrading::PolicySeq (REQUEST_ID + 1, counter,
+				    policy_buffer, CORBA::B_TRUE);
+}
+
+CosTrading::PolicySeq*
+TAO_Policies::
+policies_to_pass (CosTrading::FollowOption def_pass_on_follow_rule,
+		  CORBA::ULong offers_returned,
+		  CosTrading::Admin_ptr admin_if)
+{
+  // Create a new policy sequence to pass to a federated
+  // query. Decrement the hop count, add a stem id if none exists, and 
+  // add a follow rule if none exists. Also adjust the return_card to
+  // account for previous queries.
+  CORBA::Environment env;
+  CORBA::ULong counter = 0;
+  CosTrading::Policy* policy_buffer =
+    CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
+
+  if (policy_buffer == 0)
+    return 0;
+  
+  for (int i = EXACT_TYPE_MATCH; i <= REQUEST_ID; i++)
+    {
+      CosTrading::Policy& new_policy = policy_buffer[counter];
+      
+      if (this->policies_[i] != 0)
+	{
+	  // Add an existing query.
+	  new_policy.name = this->policies_[i]->name;
+	  new_policy.value = this->policies_[i]->value;
+	}
+      else
+	{	  
+	  if (i == LINK_FOLLOW_RULE)
+	    {
+	      // Add a link follow rule if one didn't exist.
+	      new_policy.name = POLICY_NAMES[i];
+	      //	      new_policy.value <<= def_pass_on_follow_rule;
+	    }
+	  else if (i == REQUEST_ID)
+	    {
+	      // Add the request id if one didn't exist.
+	      new_policy.name = POLICY_NAMES[i];
+	      //	      new_policy.value <<= *(admin_if->request_id_stem (env));
+	    }
+	}    
+
+      if (i == HOP_COUNT)
+	{
+	  // Decrement the hop count.
+	  new_policy.name =  POLICY_NAMES[i];
+	  new_policy.value <<= this->hop_count (env) - 1;
+	}
+      else if (i == RETURN_CARD)
+	{
+	  // Adjust the return card.
+	  new_policy.name =  POLICY_NAMES[i];
+	  new_policy.value <<= this->return_card (env) - offers_returned;
+	}
+    }
+
+  // Create the new sequence.
+  return new CosTrading::PolicySeq (REQUEST_ID + 1, counter,
+				    policy_buffer, CORBA::B_TRUE);
 }
