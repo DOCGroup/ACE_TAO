@@ -7,6 +7,7 @@
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
+#include "tao/CDR.h"
 
 
 #ifndef __ACE_INLINE__
