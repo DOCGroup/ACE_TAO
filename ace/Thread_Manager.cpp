@@ -728,7 +728,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
-  return this->apply_grp (grp_id,
+  return this->apply_grp (grp_id, 
 			  THR_FUNC (&ACE_Thread_Manager::join_thr));
 }
 
