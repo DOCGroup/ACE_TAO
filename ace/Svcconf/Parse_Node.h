@@ -15,8 +15,8 @@
 #define ACE_PARSE_NODE_H
 #include "ace/pre.h"
 
-#include "ace/Service_Types.h"
-#include "ace/DLL.h"
+#include "ace/Svcconf/Service_Types.h"
+#include "ace/Svcconf/DLL.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -329,7 +329,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Parse_Node.i"
+#include "ace/Svcconf/Parse_Node.i"
 #endif /* __ACE_INLINE__ */
 
 // Keeps track of the number of errors encountered so far.

@@ -22,10 +22,10 @@
 
 // $Id$
 
-#include "ace/ARGV.h"
-#include "ace/Svc_Conf.h"
-#include "ace/Module.h"
-#include "ace/Stream.h"
+#include "ace/Utils/ARGV.h"
+#include "ace/Svcconf/Svc_Conf.h"
+#include "ace/Streams/Module.h"
+#include "ace/Streams/Stream.h"
 
 ACE_RCSID (ace,
            Svc_Conf_y,
