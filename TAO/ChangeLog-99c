@@ -1,7 +1,9 @@
 Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/orbconf.h: By default generate a no-op macro for
-	  TAO_EXPORT_NESTED_MACRO.
+	  TAO_EXPORT_NESTED_MACRO.  This can be overridden if
+ 	  ACE_EXPORT_NESTED_CLASSES is enabled in the
+ 	  $ACE_ROOT/ace/config.h file.
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp,
 	  tao/Sequence.i: Updated all ACE_TEMPLATE_SPECIALIZATION
