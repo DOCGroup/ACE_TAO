@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    ucontext.h
+ *  @file    os_ucontext.h
  *
  *  user context
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_UCONTEXT_H
-#define ACE_OS_INCLUDE_UCONTEXT_H
+#ifndef ACE_OS_INCLUDE_OS_UCONTEXT_H
+#define ACE_OS_INCLUDE_OS_UCONTEXT_H
 
 #include "ace/pre.h"
 
@@ -24,13 +24,23 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @todo need to define sigset_t both here and in signal.h, but 
+// @todo need to define sigset_t both here and in signal.h, but
 // there is a circular dependancy since signal.h needs to include ucontext.h
 //#include "ace/os_include/signal.h"
 
 #if !defined (ACE_LACKS_UCONTEXT_H)
-# include /**/ <ucontext.h>
+#  include /**/ <ucontext.h>
 #endif /* !ACE_LACKS_ucontext_H */
 
+// Place all additions (especially function declarations) within extern "C" {}
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_UCONTEXT_H */
+#endif /* ACE_OS_INCLUDE_OS_UCONTEXT_H */

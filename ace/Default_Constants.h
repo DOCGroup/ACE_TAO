@@ -26,7 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You can change these values by
 // defining the macros in your config.h file.
@@ -223,6 +222,12 @@
 #   define ACE_DEFAULT_SHM_KEY 1234
 # endif /* ACE_DEFAULT_SHM_KEY */
 
+// Default address for shared memory mapped files and SYSV shared memory
+// (defaults to 64 M).
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
+# endif /* ACE_DEFAULT_BASE_ADDR */
+
 // Default segment size used by SYSV shared memory (128 K)
 # if !defined (ACE_DEFAULT_SEGMENT_SIZE)
 #   define ACE_DEFAULT_SEGMENT_SIZE 1024 * 128
@@ -387,6 +392,132 @@
 #if !defined (ACE_CONNECTOR_HANDLER_MAP_SIZE)
 const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 #endif /*ACE_CONNECTOR_HANDLER_MAP_SIZE*/
+
+#if defined (ACE_WIN32)
+   // Define the pathname separator characters for Win32 (ugh).
+#  define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
+#  define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
+#else
+   // Define the pathname separator characters for UNIX.
+#  define ACE_DIRECTORY_SEPARATOR_STR_A ACE_LIB_TEXT ("/")
+#  define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+#endif /* ACE_WIN32 */
+
+// Define the Wide character and normal versions of some of the string macros
+#if defined (ACE_HAS_WCHAR)
+#  define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
+#  define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#endif /* ACE_HAS_WCHAR */
+
+#define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+#define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
+
+#if !defined (ACE_DEFAULT_THREAD_PRIORITY)
+#  define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
+#endif /* ACE_DEFAULT_THREAD_PRIORITY */
+
+#if !defined (ACE_MAX_DEFAULT_PORT)
+#  define ACE_MAX_DEFAULT_PORT 65535
+#endif /* ACE_MAX_DEFAULT_PORT */
+
+#if defined (ACE_WIN32)
+   // We're on WinNT or Win95
+#  define ACE_PLATFORM_A "Win32"
+#  define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
+#elif defined (ACE_PSOS)
+#  define ACE_PLATFORM_A "pSOS"
+#  define ACE_PLATFORM_EXE_SUFFIX_A ""
+#else /* !ACE_WIN32 && !ACE_PSOS */
+   // We're some kind of UNIX...
+#  define ACE_PLATFORM_A "UNIX"
+#  define ACE_PLATFORM_EXE_SUFFIX_A ""
+#endif /* ACE_WIN32 */
+
+// Define the Wide character and normal versions of some of the string macros
+#if defined (ACE_HAS_WCHAR)
+#  define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
+#  define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
+#endif /* ACE_HAS_WCHAR */
+
+#define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
+#define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
+
+#if defined (ACE_WIN32)
+#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
+#  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
+#  define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+#  if defined (__MINGW32__)
+#    define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#  else /* __MINGW32__ */
+#    define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
+#  endif /* __MINGW32__ */
+#else /* !ACE_WIN32 */
+#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
+#endif /* ACE_WIN32 */
+
+#if !defined (ACE_DLL_SUFFIX)
+#  define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
+#endif /* ACE_DLL_SUFFIX */
+
+#if !defined (ACE_DLL_PREFIX)
+#  define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#endif /* ACE_DLL_PREFIX */
+
+#if defined (ACE_WIN32)
+// Used for dynamic linking
+#   if !defined (ACE_DEFAULT_SVC_CONF)
+#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#     else
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
+#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
+#   endif /* ACE_DEFAULT_SVC_CONF */
+#endif /* ACE_WIN32 */
+
+ // Used for dynamic linking.
+#if !defined (ACE_DEFAULT_SVC_CONF)
+#  if (ACE_USES_CLASSIC_SVC_CONF == 1)
+#    define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#  else
+#    define ACE_DEFAULT_SVC_CONF "./svc.conf.xml"
+#  endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
+#endif /* ACE_DEFAULT_SVC_CONF */
+
+#if !defined (ACE_LOGGER_KEY)
+#  define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
+#endif /* ACE_LOGGER_KEY */
+
+// Theses defines are used by the ACE Name Server.
+#if !defined (ACE_DEFAULT_LOCALNAME_A)
+#  define ACE_DEFAULT_LOCALNAME_A "localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_A */
+#if !defined (ACE_DEFAULT_GLOBALNAME_A)
+#  define ACE_DEFAULT_GLOBALNAME_A "globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
+// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
+// this directory may not exist
+#if defined (ACE_LEGACY_MODE)
+#  if defined (ACE_WIN32)
+#    define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
+#  else /* ACE_WIN32 */
+#    define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#  endif /* ACE_WIN32 */
+#  if defined (ACE_HAS_WCHAR)
+#    define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
+#  endif /* ACE_HAS_WCHAR */
+#    define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
+#endif /* ACE_LEGACY_MODE */
+
+#if defined (ACE_HAS_WCHAR)
+#  define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
+#  define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
+#endif /* ACE_HAS_WCHAR */
+
+#define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
+#define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
 
 #include "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/
