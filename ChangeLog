@@ -1,3 +1,22 @@
+Fri Jan  7 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Set_Ex.{h,cpp,inl}:
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Removed the ACE_Unbounded_Set_Ex. It gives the false idea
+          that the iterators can be used thread safe. If you used this,
+          use ACE_Unbounded_Set and handle thread safety in your own
+          code
+
+        * ace/Node.{h,cpp}:
+          Removed deleted_, this was there for ACE_Unbounded_Set_Ex, which
+          is now removed.
+
+        * tests/Unbounded_Set_Test_Ex.{h,cpp}:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Removed the ACE_Unbounded_Set_Ex test
+
 Fri Jan  7 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_math.inl:
