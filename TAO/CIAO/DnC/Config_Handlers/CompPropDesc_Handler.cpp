@@ -61,14 +61,14 @@ namespace CIAO
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "label"
-	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+	            node = this->iter_->nextNode();
+      	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), comppropdesc);
-	    }
-	  else if (node_name == XStr (ACE_TEXT ("type")))
+	          }
+	        else if (node_name == XStr (ACE_TEXT ("type")))
             {
-	      // TODO: How to implement this?
-	      // DataType ???
+	            // TODO: How to implement this?
+	            // DataType ???
             }
           else
             {
