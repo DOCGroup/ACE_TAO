@@ -64,6 +64,41 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               arg_shifter.consume_arg ();
             }
+          //if Kokyu dispatching - look for sched policy
+          if (this->dispatching_ == 2)
+            {
+              if (arg_shifter.is_parameter_next ())
+                {
+                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("SCHED_FIFO")) == 0)
+                    {
+                      this->disp_sched_policy_ = ACE_SCHED_FIFO;
+                    }
+                  else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("SCHED_RR")) == 0)
+                    {
+                      this->disp_sched_policy_ = ACE_SCHED_RR;
+                    }
+                  else
+                    {
+                      this->disp_sched_policy_ = ACE_SCHED_OTHER;
+                    }
+                  arg_shifter.consume_arg ();
+
+                  if (arg_shifter.is_parameter_next ())
+                    {
+                      const ACE_TCHAR* opt = arg_shifter.get_current ();
+                      if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("SYSTEM")) == 0)
+                        {
+                          this->disp_sched_policy_ = ACE_SCOPE_THREAD;
+                        }
+                      else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("PROCESS")) == 0)
+                        {
+                          this->disp_sched_policy_ = ACE_SCOPE_PROCESS;
+                        }
+                      arg_shifter.consume_arg ();
+                    }
+                }
+            }
         }
 
       else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECFiltering")) == 0)
@@ -178,7 +213,9 @@ TAO_EC_Dispatching*
 TAO_EC_Kokyu_Factory::create_dispatching (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->dispatching_ == 2)
-    return new TAO_EC_Kokyu_Dispatching (ec);
+    return new TAO_EC_Kokyu_Dispatching (ec, 
+                                         this->disp_sched_policy_, 
+                                         this->disp_sched_scope_);
   return this->TAO_EC_Default_Factory::create_dispatching (ec);
 }
 

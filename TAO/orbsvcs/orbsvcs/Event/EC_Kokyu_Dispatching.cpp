@@ -19,10 +19,12 @@
 
 ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
-TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec)
+TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
   :allocator_ (0),
    dispatcher_ (0),
-   lanes_setup_ (0)
+   lanes_setup_ (0),
+   disp_sched_policy_ (sched_policy),
+   disp_sched_scope_ (sched_scope)
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
@@ -30,7 +32,7 @@ TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *e
   //@@VS - need to revisit this - should be some other allocator
   if (this->allocator_ == 0)
     {
-      this->allocator_ = new ACE_New_Allocator ();
+      this->allocator_ = ACE_Allocator::instance ();
     }
 }
 
@@ -85,6 +87,8 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
 
   Kokyu::Dispatcher_Attributes attrs;
   attrs.config_info_set_ = kconfigs;
+  attrs.sched_policy (disp_sched_policy_);
+  attrs.sched_scope (disp_sched_scope_);
 
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr 
