@@ -1,3 +1,18 @@
+Sat Jun 12 17:16:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp (dequeue_prio_i): Change the use of
+	 < to <= so that we'll find the earliest message in a group of
+ 	  messages with the same priority to preserve FIFO order.  Thanks
+ 	  to Olivier Brunet <o.brunet@free.fr> for reporting this problem.
+
+	* ace/Message_Queue_T.h (class ACE_Message_Queue): Updated the
+	  documentation to be accurate about preserving FIFO order within
+ 	  a priority level.
+
+	* ace/Message_Queue_T.cpp (enqueue_i): Fixed an incorrect comment
+	  - the tail is where the lowest priority message is and the head
+	  is where the higest priority message is!
+
 Fri Jun 11 17:16:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/README.tutorials:

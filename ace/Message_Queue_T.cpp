@@ -152,7 +152,7 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue (ACE_MESSAGE_TYPE *new_item,
                                                                 ACE_Time_Value *timeout)
 {
-  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio");
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue");
 
   return this->enqueue_prio (new_item, timeout);
 }
@@ -734,8 +734,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
       ACE_Message_Block *temp;
 
       // Figure out where the new item goes relative to its priority.
-      // We start looking from the highest priority to the lowest
-      // priority.
+      // We start looking from the lowest priority (at the tail) to
+      // the highest priority (at the head).
 
       for (temp = this->tail_;
            temp != 0;
@@ -757,8 +757,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
         return this->enqueue_tail_i (new_item);
       else
         {
-          // Insert the new message behind the message of
-          // greater or equal priority.  This ensures that FIFO order is
+          // Insert the new message behind the message of greater or
+          // equal priority.  This ensures that FIFO order is
           // maintained when messages of the same priority are
           // inserted consecutively.
           new_item->prev (temp);
@@ -889,38 +889,44 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
     return this->cur_count_;
 }
 
-// Actually get the ACE_Message_Block with the lowest priority (no locking,
-// so must be called with locks held).  This method assumes that the queue
-// has at least one item in it when it is called.
+// Get the earliest (i.e., FIFO) ACE_Message_Block with the lowest
+// priority (no locking, so must be called with locks held).  This
+// method assumes that the queue has at least one item in it when it
+// is called.
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
 {
-  if (this->head_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
-                      -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i");
 
-  // Find the last message enqueued with the lowest priority
-  ACE_Message_Block* chosen = 0;
+  if (this->head_ == 0)
+    return -1;
+
+  // Find the earliest (i.e., FIFO) message enqueued with the lowest
+  // priority.
+  ACE_Message_Block *chosen = 0;
   u_long priority = ULONG_MAX;
-  for (ACE_Message_Block *temp = this->tail_; temp != 0; temp = temp->prev ())
+
+  for (ACE_Message_Block *temp = this->tail_;
+       temp != 0;
+       temp = temp->prev ())
     {
-      if (temp->msg_priority () < priority)
+      // Find the first version of the earliest message (i.e.,
+      // preserve FIFO order for messages at the same priority).
+      if (temp->msg_priority () <= priority)
         {
           priority = temp->msg_priority ();
           chosen = temp;
         }
     }
 
-  // If every message block is the same priority, pass back the first one
+  // If every message block is the same priority, pass back the first
+  // one.
   if (chosen == 0)
     chosen = this->head_;
 
-
-  // Patch up the queue.  If we don't have a previous
-  // then we are at the head of the queue.
+  // Patch up the queue.  If we don't have a previous then we are at
+  // the head of the queue.
   if (chosen->prev () == 0)
     this->head_ = chosen->next ();
   else
