@@ -53,7 +53,8 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -96,10 +97,11 @@ endif
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl Options.h \
- ../Gateway/Event.h
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h ../Gateway/Event.h
 
-.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h $(ACE_ROOT)/ace/Service_Config.h \
+.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -295,7 +297,7 @@ endif
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i Options.h \
- ../Gateway/Event.h
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ Options.h ../Gateway/Event.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
