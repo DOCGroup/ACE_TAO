@@ -427,6 +427,12 @@ ACE_OutputCDR::end (void) const
   return this->current_->cont ();
 }
 
+ACE_INLINE const ACE_Message_Block*
+ACE_OutputCDR::current (void) const
+{
+  return this->current_;
+}
+
 ACE_INLINE size_t
 ACE_OutputCDR::total_length (void) const
 {
