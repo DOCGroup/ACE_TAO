@@ -47,6 +47,9 @@
 #include "be_visitor_typecode/typecode_decl.cpp"
 #include "be_visitor_typecode/typecode_defn.cpp"
 
+#include "be_visitor_typecode/alias_typecode.cpp"
+
+
 ACE_RCSID (be, 
            be_visitor_typecode, 
            "$Id$")

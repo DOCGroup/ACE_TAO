@@ -58,7 +58,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
           *os << "static ";
         }
 
-      *os << "::CORBA::TypeCode_ptr "
+      *os << "::CORBA::TypeCode_ptr const "
           << node->tc_name ()->last_component ()
           << ";";
     }
@@ -66,7 +66,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
     {
       // We are in the ROOT scope.
       *os << "extern " << be_global->stub_export_macro ()
-          << " ::CORBA::TypeCode_ptr "
+          << " ::CORBA::TypeCode_ptr const"
           << " " << node->tc_name ()->last_component ()
           << ";";
     }

@@ -28,5 +28,7 @@
 #include "be_visitor_typecode/typecode_decl.h"
 #include "be_visitor_typecode/typecode_defn.h"
 
+#include "be_visitor_typecode/alias_typecode.h"
+
 
 #endif /* TAO_BE_VISITOR_TYPECODE_H */
