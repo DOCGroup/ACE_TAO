@@ -1,3 +1,10 @@
+Wed May 12 09:31:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl:
+	  Another case of simulated exceptions not working well with
+	  Auto_Functor.
+
 Wed May 12 12:04:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (process_parsed_messages):

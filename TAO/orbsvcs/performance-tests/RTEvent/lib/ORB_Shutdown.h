@@ -20,8 +20,7 @@
 class ORB_Shutdown
 {
 public:
-  void operator() (CORBA::ORB_ptr orb
-                   ACE_ENV_ARG_DECL);
+  void operator() (CORBA::ORB_ptr orb);
 };
 
 #if defined(__ACE_INLINE__)
