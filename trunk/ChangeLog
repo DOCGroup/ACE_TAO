@@ -1,6 +1,11 @@
+Tue Aug  3 14:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.cpp:
+          Fixed incorrect trace macro
+
 Tue Aug  3 08:22:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/config-aix-5.x.h: 
+	* ace/config-aix-5.x.h:
 	  ace/OS_NS_dirent.inl (readdir_r): Added support for AIX and G++.
 	  Thanks to Raz Ben-Yehuda <raz.b@corigin.com>.
 
