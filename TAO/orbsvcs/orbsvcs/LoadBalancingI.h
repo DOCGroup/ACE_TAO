@@ -253,6 +253,17 @@ public:
 
   //@}
 
+public:
+
+  /// Return a reference to the replica to which the current client
+  /// request will be forwarded.
+  /**
+   * The load balancer does the right thing and figures which object
+   * group the replica should be chosen from.
+   */
+  CORBA::Object_ptr replica (const PortableServer::ObjectId &oid,
+                             CORBA::Environment &ACE_TRY_ENV);
+
 private:
 
   /// Extract the value of the InitialNumberReplicas property from

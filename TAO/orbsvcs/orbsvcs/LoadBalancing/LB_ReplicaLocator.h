@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ReplicaLocator.h
+ *  @file LB_ReplicaLocator.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_REPLICA_LOCATOR_H
-#define TAO_REPLICA_LOCATOR_H
+#ifndef TAO_LB_REPLICA_LOCATOR_H
+#define TAO_LB_REPLICA_LOCATOR_H
 
 #include "ace/pre.h"
 
@@ -44,9 +44,10 @@ public:
   TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *load_balancer);
 
   /**
-   * @name The ServantLocator methods
+   * @name The PortableServer::ServantLocator methods.
    */
   //@{
+
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
   virtual PortableServer::Servant preinvoke (
@@ -67,6 +68,7 @@ public:
       PortableServer::Servant the_servant
       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   //@}
 
 private:
@@ -78,4 +80,4 @@ private:
 
 #include "ace/post.h"
 
-#endif  /* TAO_REPLICA_LOCATOR_H */
+#endif  /* TAO_LB_REPLICA_LOCATOR_H */

@@ -2,11 +2,11 @@
 
 // $Id$
 
-#include "ReplicaLocator.h"
+#include "LB_ReplicaLocator.h"
 #include "LoadBalancer_i.h"
 
 ACE_RCSID (LoadBalancing,
-           ReplicaLocator,
+           LB_ReplicaLocator,
            "$Id$")
 
 TAO_LB_ReplicaLocator::TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *lb)

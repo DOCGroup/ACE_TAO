@@ -25,7 +25,7 @@
 #include "orbsvcs/LoadBalancingC.h"
 
 class TAO_LB_PropertyManager
-  : public virtual TAO_LoadBalancing::PropertManager
+  : public virtual LoadBalancing::PropertManager
 {
 public:
 
@@ -36,41 +36,41 @@ public:
 
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const TAO_LoadBalancing::Properties & props,
+      const LoadBalancing::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::UnsupportedProperty));
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
 
   /// Get the default properties used by all object groups.
-  virtual TAO_LoadBalancing::Properties * get_default_properties (
+  virtual LoadBalancing::Properties * get_default_properties (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const TAO_LoadBalancing::Properties & props,
+      const LoadBalancing::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::UnsupportedProperty));
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
 
   /// Set properties associated with a given Replica type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const TAO_LoadBalancing::Properties & overrides,
+      const LoadBalancing::Properties & overrides,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::UnsupportedProperty));
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
 
   /**
    * Return the properties associated with a give Replica type.  These
    * properties include the type-specific properties in use, in
    * addition to the default properties that were not overridden.
    */
-  virtual TAO_LoadBalancing::Properties * get_type_properties (
+  virtual LoadBalancing::Properties * get_type_properties (
       const char * type_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -78,11 +78,11 @@ public:
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const TAO_LoadBalancing::Properties & props,
+      const LoadBalancing::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::UnsupportedProperty));
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
 
   /**
    * Dynamically set the properties associated with a given object
@@ -91,13 +91,13 @@ public:
    * properties.
    */
   virtual void set_properties_dynamically (
-      TAO_LoadBalancing::ObjectGroup_ptr object_group,
-      const TAO_LoadBalancing::Properties & overrides,
+      LoadBalancing::ObjectGroup_ptr object_group,
+      const LoadBalancing::Properties & overrides,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::ObjectGroupNotFound,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::UnsupportedProperty));
+                     LoadBalancing::ObjectGroupNotFound,
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::UnsupportedProperty));
 
   /**
    * Return the properties currently in use by the given object
@@ -106,11 +106,11 @@ public:
    * were used when the Replica was created, and default properties
    * that weren't overridden.
    */
-  virtual TAO_LoadBalancing::Properties * get_properties (
-      TAO_LoadBalancing::ObjectGroup_ptr object_group,
+  virtual LoadBalancing::Properties * get_properties (
+      LoadBalancing::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::ObjectGroupNotFound));
+                     LoadBalancing::ObjectGroupNotFound));
 
   //@}
 
@@ -125,26 +125,26 @@ public:
   //@{
 
   /// Return the membership style for the given object group.
-  TAO_LoadBalancing::MembershipStyle membership_style (
+  LoadBalancing::MembershipStyle membership_style (
     CORBA::Object_ptr object_group) const;
 
   /// Return the load monitoring style for the given object group.
-  TAO_LoadBalancing::LoadMonitoringStyle load_monitoring_style (
+  LoadBalancing::LoadMonitoringStyle load_monitoring_style (
     CORBA::Object_ptr object_group) const;
 
   /// Return the load monitoring granularity for the given object
   /// group.
-  TAO_LoadBalancing::LoadMonitoringGranularity
+  LoadBalancing::LoadMonitoringGranularity
     load_monitoring_granularity (CORBA::Object_ptr object_group) const;
 
   /// Return the initial number of replicas for the given object
   /// group.
-  TAO_LoadBalancing::InitialNumberReplicas
+  LoadBalancing::InitialNumberReplicas
     initial_number_replicas (CORBA::Object_ptr object_group) const;
 
   /// Return the minimum number of replicas for the given object
   /// group.
-  TAO_LoadBalancing::MinimumNumberReplicas
+  LoadBalancing::MinimumNumberReplicas
     minimum_number_replicas (CORBA::Object_ptr object_group) const;
 
   //@}
@@ -152,14 +152,14 @@ public:
   /// Type-specific property hash map.
   typedef ACE_Hash_Map_Manager_Ex<
     const char *,
-    TAO_LoadBalancing::Property,
+    LoadBalancing::Property,
     ACE_Hash<const ACE_TCHAR *>,
     TAO_LB_Property_Equal_To,
     ACE_SYNCH_MUTEX> Type_Prop_Table;
 
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_UINT32,                // Use the FactoryCreationId as the hash.
-    TAO_LoadBalancing::Property,
+    LoadBalancing::Property,
     ACE_Hash<ACE_UINT32>,
     TAO_LB_Property_Equal_To,
     ACE_SYNCH_MUTEX> Creation_Prop_Table;

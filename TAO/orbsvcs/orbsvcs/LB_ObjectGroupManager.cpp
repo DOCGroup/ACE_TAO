@@ -16,102 +16,102 @@ TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
 {
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::create_member (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & /* the_location */,
     const char * /* type_id */,
-    const TAO_LoadBalancing::Criteria & /* the_criteria */,
+    const LoadBalancing::Criteria & /* the_criteria */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberAlreadyPresent,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::CannotMeetCriteria))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberAlreadyPresent,
+                   LoadBalancing::NoFactory,
+                   LoadBalancing::ObjectNotCreated,
+                   LoadBalancing::InvalidCriteria,
+                   LoadBalancing::CannotMeetCriteria))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::add_member (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & /* the_location */,
     CORBA::Object_ptr /* member */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberAlreadyPresent,
-                   TAO_LoadBalancing::ObjectNotAdded))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberAlreadyPresent,
+                   LoadBalancing::ObjectNotAdded))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::remove_member (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & /* the_location */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::set_primary_member (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & /* the_location */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound,
-                   TAO_LoadBalancing::PrimaryNotSet,
-                   TAO_LoadBalancing::BadReplicationStyle))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound,
+                   LoadBalancing::PrimaryNotSet,
+                   LoadBalancing::BadReplicationStyle))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::Locations *
+LoadBalancing::Locations *
 TAO_LB_ObjectGroupManager::locations_of_members (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::ObjectGroupId
+LoadBalancing::ObjectGroupId
 TAO_LB_ObjectGroupManager::get_object_group_id (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::get_object_group_ref (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA::Object_ptr
 TAO_LB_ObjectGroupManager::get_member_ref (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & loc,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & loc,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
