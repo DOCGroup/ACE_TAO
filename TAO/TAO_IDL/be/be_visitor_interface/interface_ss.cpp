@@ -368,7 +368,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // The _this operation is much more simpler for locality constraint
   // interface.
   if (idl_global->gen_locality_constraint ())
-    *os << node->full_name () << " *retval = 0;" << be_nl
+    *os << "::" << node->full_name () << " *retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
         << "retval," << be_nl
         << node->full_coll_name (be_interface::DIRECT)
@@ -387,7 +387,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       // Thru POA stub
       if (idl_global->gen_thru_poa_collocation ())
         *os << "{" << be_idt_nl
-            << node->full_name () << "_ptr retval = 0;" << be_nl
+            << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
             << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
             << "retval," << be_nl
             << node->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl
@@ -402,7 +402,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
       if (idl_global->gen_direct_collocation ())
         *os << "{" << be_idt_nl
-            << node->full_name () << "_ptr retval = 0;" << be_nl
+            << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
             << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
             << "retval," << be_nl
             << node->full_coll_name (be_interface::DIRECT) << " (this, stub)," << be_nl
@@ -422,7 +422,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
           << "ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);" << be_nl
           << "CORBA::Object_var obj = tmp;" << be_nl
-          << "return " << node->full_name ()
+          << "return " << "::" << node->full_name ()
           << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl
           << "}\n\n";

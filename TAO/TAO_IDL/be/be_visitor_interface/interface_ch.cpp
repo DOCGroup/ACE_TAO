@@ -46,6 +46,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   TAO_OutStream *os; // output stream
   long i;            // loop index
 
+  be_type *bt;
+
+  // set the right type;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
                                                    // not imported
     {
@@ -116,8 +124,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
               if (inherited->is_nested ())
                 {
                   // inherited node is used in the scope of "node" node
-                  scope = be_scope::narrow_from_scope (node->defined_in ())
-                    ->decl ();
+                  scope = 
+                    be_scope::narrow_from_scope (node->defined_in ())->decl ();
                 }
 
               *os << "public virtual ";
@@ -177,7 +185,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // g++ problems
       *os << "static " << node->local_name () << "_ptr _nil (void)"
           << be_idt_nl << "{" << be_idt_nl
-          << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
+          << "return (" << bt->nested_type_name (this->ctx_->scope ())
+          << "_ptr)0;" << be_uidt_nl
           << "}" << be_uidt << "\n\n";
 
 

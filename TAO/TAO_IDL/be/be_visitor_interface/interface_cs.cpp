@@ -48,6 +48,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->cli_stub_gen () || node->imported ())
     return 0;
 
+  be_type *bt;
+
+  // set the right type;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os = this->ctx_->stream ();
 
   os->indent (); // start with whatever indentation level we are at
@@ -62,14 +70,17 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
+      << "return " << bt->nested_type_name (this->ctx_->scope ()) 
+      << "::_nil ();" << be_uidt_nl
       << "CORBA::Boolean is_a = obj->_is_a (\""
       << node->repoID () << "\", ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (" << node->full_name () << "::_nil ());" << be_nl
+      << "ACE_CHECK_RETURN (" << bt->nested_type_name (this->ctx_->scope ()) 
+      << "::_nil ());" << be_nl
       << "if (is_a == 0)" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
+      << "return " << bt->nested_type_name (this->ctx_->scope ()) 
+      << "::_nil ();" << be_uidt_nl;
 
-  *os << "return " << node->full_name ()
+  *os << "return " << bt->nested_type_name (this->ctx_->scope ())
       << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -88,13 +99,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (!idl_global->gen_locality_constraint ())
     {
       *os << "if (CORBA::is_nil (obj))" << be_idt_nl
-          << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
+          << "return " << bt->nested_type_name (this->ctx_->scope ()) 
+          << "::_nil ();" << be_uidt_nl;
 
       *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
           << "stub->_incr_refcnt ();" << be_nl
-        // Declare the default proxy.
-          <<node->full_name () << "_ptr default_proxy = " 
-          << node->full_name () <<"::_nil ();" << be_nl;
+          // Declare the default proxy.
+          << bt->nested_type_name (this->ctx_->scope ()) 
+          << "_ptr default_proxy = " 
+          << bt->nested_type_name (this->ctx_->scope ()) 
+          <<"::_nil ();" << be_nl;
 
       // If the policy didtates that the proxy be collocated, use the
       // function to create one.
@@ -109,8 +123,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       // The default proxy will either be returned else be transformed to 
       // a smart one!
       *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
-          << "ACE_NEW_RETURN (default_proxy, "<< node->full_name () 
-          << " (stub), " << node->full_name () << "::_nil ());"<< be_uidt_nl
+          << "ACE_NEW_RETURN (default_proxy, " 
+          << bt->nested_type_name (this->ctx_->scope ()) 
+          << " (stub), " << bt->nested_type_name (this->ctx_->scope ()) 
+          << "::_nil ());"<< be_uidt_nl
           << "return TAO_" << node->flat_name () 
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
           << be_uidt_nl;
@@ -125,7 +141,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->repoID () << "\")) == 0" << be_uidt_nl
           << ")" << be_uidt_nl
           << "ACE_THROW_RETURN (CORBA::MARSHAL (), "
-          << node->full_name () << "::_nil ());" << be_uidt_nl;
+          << bt->nested_type_name (this->ctx_->scope ()) 
+          << "::_nil ());" << be_uidt_nl;
 
       // Locality constraint objects alway use "direct" collocated
       // implementation.
@@ -133,7 +150,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "retval," << be_nl
           << node->full_coll_name (be_interface::DIRECT) << " ("
-          << "ACE_reinterpret_cast (POA_" << node->full_name ()
+          << "ACE_reinterpret_cast (POA_" 
+          << bt->nested_type_name (this->ctx_->scope ())
           << "_ptr, servant), 0)," << be_nl
           << "0" << be_uidt_nl << ");" << be_uidt_nl
           << "return retval;" << be_uidt_nl;
@@ -144,7 +162,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // The _duplicate method
   *os << node->full_name () << "_ptr " << be_nl
       << node->full_name () << "::_duplicate ("
-      << node->full_name () << "_ptr obj)" << be_nl
+      << bt->nested_type_name (this->ctx_->scope ()) 
+      << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (obj))" << be_idt_nl
       << "obj->_incr_refcnt ();" << be_uidt_nl
