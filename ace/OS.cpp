@@ -50,6 +50,9 @@ public:
   int release (void);
   // Explicitly release the lock.
 
+  int locked (void);
+  // Returns 1 if locked, 0 if not.
+
 protected:
   ACE_thread_mutex_t &lock_;
   // Reference to the mutex.
@@ -89,74 +92,15 @@ ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
   acquire ();
 }
 
+ACE_INLINE int
+ACE_OS_Thread_Mutex_Guard::locked (void)
+{
+  return owner_ != -1;
+}
+
 ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 {
   release ();
-}
-
-class ACE_OS_Recursive_Thread_Mutex_Guard
-{
-  // = TITLE
-  //     This data structure is meant to be used within an ACE_OS
-  //     function.  It performs automatic aquisition and release of
-  //     an ACE_recursive_thread_mutex_t.
-  //
-  // = DESCRIPTION
-  //     For internal use only by ACE_OS.
-public:
-  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
-  // Implicitly and automatically acquire the lock.
-
-  ~ACE_OS_Recursive_Thread_Mutex_Guard (void);
-  // Implicitly release the lock.
-
-  int acquire (void);
-  // Explicitly acquire the lock.
-
-  int release (void);
-  // Explicitly release the lock.
-
-protected:
-  ACE_recursive_thread_mutex_t &lock_;
-  // Reference to the mutex.
-
-  int owner_;
-  // Keeps track of whether we acquired the lock or failed.
-
-  // = Prevent assignment and initialization.
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
-};
-
-inline
-int
-ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
-{
-  return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
-}
-
-inline
-int
-ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
-{
-  if (owner_ == -1)
-    return 0;
-  else
-    {
-      owner_ = -1;
-      return ACE_OS::recursive_mutex_unlock (&lock_);
-    }
-}
-
-inline
-ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
-  ACE_recursive_thread_mutex_t &m)
-   : lock_ (m),
-     owner_ (-1)
-{
-  acquire ();
 }
 
 ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
@@ -164,20 +108,32 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
   release ();
 }
 
-#define ACE_OS_GUARD \
-  ACE_OS_Thread_Mutex_Guard (*(ACE_thread_mutex_t *) \
+#define ACE_OS_GUARD_RETURN(RETURN) \
+  ACE_OS_Thread_Mutex_Guard ace_mon (*(ACE_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
-      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
+      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]); \
+  if (! ace_mon.locked ()) return RETURN;
 
 #define ACE_TSS_CLEANUP_GUARD \
-  ACE_OS_Recursive_Thread_Mutex_Guard (*(ACE_recursive_thread_mutex_t *) \
+  ACE_OS_Recursive_Thread_Mutex_Guard ace_mon (\
+    *(ACE_recursive_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
-      ACE_OS_Object_Manager::ACE_TSS_CLEANUP_LOCK]);
+      ACE_OS_Object_Manager::ACE_TSS_CLEANUP_LOCK]); \
+  if (! ace_mon.locked ()) return;
 
-#define ACE_TSS_BASE_GUARD \
-  ACE_OS_Recursive_Thread_Mutex_Guard (*(ACE_recursive_thread_mutex_t *) \
+#define ACE_TSS_CLEANUP_GUARD_RETURN(RETURN) \
+  ACE_OS_Recursive_Thread_Mutex_Guard ace_mon ( \
+    *(ACE_recursive_thread_mutex_t *) \
     ACE_OS_Object_Manager::preallocated_object[ \
-      ACE_OS_Object_Manager::ACE_TSS_BASE_LOCK]);
+      ACE_OS_Object_Manager::ACE_TSS_CLEANUP_LOCK]); \
+  if (! ace_mon.locked ()) return RETURN;
+
+#define ACE_TSS_BASE_GUARD_RETURN(RETURN) \
+  ACE_OS_Recursive_Thread_Mutex_Guard ace_mon ( \
+    *(ACE_recursive_thread_mutex_t *) \
+    ACE_OS_Object_Manager::preallocated_object[ \
+      ACE_OS_Object_Manager::ACE_TSS_BASE_LOCK]); \
+  if (! ace_mon.locked ()) return RETURN;
 
 
 # if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -198,9 +154,10 @@ ACE_OS::netdb_release (void)
 }
 # endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 #else  /* ! ACE_MT_SAFE */
-# define ACE_OS_GUARD
+# define ACE_OS_GUARD_RETURN(RETURN)
 # define ACE_TSS_CLEANUP_GUARD
-# define ACE_TSS_BASE_GUARD
+# define ACE_TSS_CLEANUP_GUARD_RETURN(RETURN)
+# define ACE_TSS_BASE_GUARD_RETURN(RETURN)
 #endif /* ! ACE_MT_SAFE */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
@@ -1926,7 +1883,7 @@ ACE_TSS_Cleanup::instance (void)
   if (ACE_TSS_Cleanup::instance_ == 0)
     {
       // Insure that we are serialized!
-      ACE_TSS_CLEANUP_GUARD
+      ACE_TSS_CLEANUP_GUARD_RETURN (0)
 
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
@@ -1945,7 +1902,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
                          void *inst)
 {
 ACE_TRACE ("ACE_TSS_Cleanup::insert");
-  ACE_TSS_CLEANUP_GUARD
+  ACE_TSS_CLEANUP_GUARD_RETURN (-1)
 
   ACE_KEY_INDEX (key_index, key);
   if (key_index < ACE_DEFAULT_THREAD_KEYS)
@@ -1963,7 +1920,7 @@ int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
   ACE_TRACE ("ACE_TSS_Cleanup::remove");
-  ACE_TSS_CLEANUP_GUARD
+  ACE_TSS_CLEANUP_GUARD_RETURN (-1)
 
   ACE_KEY_INDEX (key_index, key);
   if (key_index < ACE_DEFAULT_THREAD_KEYS)
@@ -1991,7 +1948,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 int
 ACE_TSS_Cleanup::detach (void *inst)
 {
-  ACE_TSS_CLEANUP_GUARD
+  ACE_TSS_CLEANUP_GUARD_RETURN (-1)
 
   ACE_TSS_TABLE_ITERATOR key_info = table_;
   int success = 0;
@@ -2069,7 +2026,7 @@ ACE_TSS_Cleanup::tss_keys ()
 {
   if (in_use_ == ACE_OS::NULL_key)
     {
-      ACE_TSS_CLEANUP_GUARD
+      ACE_TSS_CLEANUP_GUARD_RETURN (0)
       // Double-check;
       if (in_use_ == ACE_OS::NULL_key)
         {
@@ -2138,7 +2095,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
   if (key_created_ == 0)
     {
       // Double-checked lock . . .
-      ACE_TSS_BASE_GUARD
+      ACE_TSS_BASE_GUARD_RETURN (0)
 
       if (key_created_ == 0)
         {
@@ -4737,7 +4694,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
 
-  ACE_OS_GUARD
+  ACE_OS_GUARD_RETURN (-1)
 
   // Remember the original file pointer position
   DWORD original_position = ::SetFilePointer (handle,
@@ -4818,7 +4775,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
 # else /* ACE_HAS_P_READ_WRITE */
 
-  ACE_OS_GUARD
+  ACE_OS_GUARD_RETURN (-1)
 
   // Remember the original file pointer position
   off_t original_position = ACE_OS::lseek (handle,
@@ -4862,7 +4819,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
 
-  ACE_OS_GUARD
+  ACE_OS_GUARD_RETURN (-1)
 
   // Remember the original file pointer position
   DWORD original_position = ::SetFilePointer (handle,
@@ -4941,7 +4898,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #   endif /* ACE_WIN32 */
 # else /* ACE_HAS_P_READ_WRITE */
 
-  ACE_OS_GUARD
+  ACE_OS_GUARD_RETURN (-1)
 
   // Remember the original file pointer position
   off_t original_position = ACE_OS::lseek (handle,
@@ -5383,7 +5340,7 @@ ACE_OS::mktime (struct tm *t)
   ACE_NOTSUP_RETURN (-1);
 #   else
 #     if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
-  ACE_OS_GUARD
+  ACE_OS_GUARD_RETURN (-1)
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
