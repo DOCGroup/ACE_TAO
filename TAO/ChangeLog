@@ -1,3 +1,8 @@
+Wed Feb 18 18:08:34 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Latency/Collocation/Client_Task.cpp:
+	  Fixed redefinition of i in msvc6 builds.
+
 Wed Feb 18 10:51:03 MST 2004  Scott Harris  <harris_s@ociweb.com>
 
         * utils/wxNamingViewer/README:
