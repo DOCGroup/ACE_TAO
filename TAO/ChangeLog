@@ -1,3 +1,13 @@
+Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        
+          Added specialization of TAO::Any_Impl_T<>::to_object for
+          CORBA::Object. Otherwise the default template implementation
+          is used, which always returns (boolean) 0 and does nothing.
+          Thanks to Irfan Pyarali <irfan@oomworks.com> for reporting
+          the problem.
+
 Mon Mar  1 16:52:15 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h: 
