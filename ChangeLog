@@ -1,3 +1,8 @@
+Thu May 27 19:02:18 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Hash_T.cpp (schedule_i): For Win64, reinterpret_cast from
+	  ptrdiff_t to long is incorrect; static_cast is more appropriate.
+
 Thu May 27 20:00:29 2004  Olli Savia  <ops@iki.fi>
 
         * ace/README:

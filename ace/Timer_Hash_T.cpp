@@ -459,7 +459,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
   ptrdiff_t hi = ACE_reinterpret_cast (ptrdiff_t, h);
   if (this->pointer_base_ == 0)
     this->pointer_base_ = hi & 0xffffffff00000000;
-  return ACE_reinterpret_cast (long, hi & 0xffffffff);
+  return ACE_static_cast (long, hi & 0xffffffff);
 #else
   return ACE_reinterpret_cast (long, h);
 #endif
