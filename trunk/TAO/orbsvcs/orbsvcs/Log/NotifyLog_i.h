@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Implementation of the DsNotifyLogAdmin::NotifyLog interface.
- *  
+ *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -43,18 +43,18 @@ class NotifyLogFactory_i;
 using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
-class LogConsumer : public virtual POA_CosNotifyComm::StructuredPushConsumer, 
+class TAO_Notify_LogConsumer : public virtual POA_CosNotifyComm::StructuredPushConsumer,
                     public PortableServer::RefCountServantBase
 {
 public:
-  LogConsumer (NotifyLog_i *log);
+  TAO_Notify_LogConsumer (NotifyLog_i *log);
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
 
   virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
-  virtual ~LogConsumer (void);
+  virtual ~TAO_Notify_LogConsumer (void);
 
   // = NotifyPublish method
   virtual void offer_change (
@@ -187,14 +187,14 @@ public:
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
   get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminNotFound, 
+      CosNotifyChannelAdmin::AdminNotFound,
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
   get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminNotFound, 
+      CosNotifyChannelAdmin::AdminNotFound,
       CORBA::SystemException
     ));
 
@@ -218,7 +218,7 @@ public:
 
   void set_admin (const CosNotification::AdminProperties& admin ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotification::UnsupportedAdmin, 
+      CosNotification::UnsupportedAdmin,
       CORBA::SystemException
     ));
 
@@ -230,24 +230,24 @@ public:
 
   void set_qos (const CosNotification::QoSProperties& ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS, 
+      CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ));
 
   void validate_qos (const CosNotification::QoSProperties&,
     CosNotification::NamedPropertyRangeSeq_out ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS, 
+      CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ));
 
-  CosEventChannelAdmin::ConsumerAdmin_ptr 
+  CosEventChannelAdmin::ConsumerAdmin_ptr
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  CosEventChannelAdmin::SupplierAdmin_ptr 
+  CosEventChannelAdmin::SupplierAdmin_ptr
   for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -266,7 +266,7 @@ protected:
   // Used to access the hash map that holds all the Logs created.
 
 private:
-  LogConsumer *my_log_consumer_;
+  TAO_Notify_LogConsumer *my_log_consumer_;
 
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
 

@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Implementation of the RTEventLogAdmin::NotifyLog interface.
- *  
+ *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -45,14 +45,13 @@ class RTEventLogFactory_i;
 using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
-class LogConsumer : public virtual POA_RtecEventComm::PushConsumer
+class TAO_RTEventLog_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  LogConsumer (RTEventLog_i *log);
-  ~LogConsumer (void);
+  TAO_Rtec_LogConsumer (RTEventLog_i *log);
+  ~TAO_Rtec_LogConsumer (void);
 
-  void
-  connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
+  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
   void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
@@ -103,11 +102,11 @@ public:
   void
   activate (ACE_ENV_SINGLE_ARG_DECL);
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr 
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr 
+  RtecEventChannelAdmin::SupplierAdmin_ptr
   for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -141,7 +140,7 @@ public:
  private:
   TAO_EC_Event_Channel *event_channel_;
 
-  LogConsumer *my_log_consumer_;
+  TAO_Rtec_LogConsumer *my_log_consumer_;
 
   /// The observer strategy
   TAO_EC_ObserverStrategy *observer_strategy_;
