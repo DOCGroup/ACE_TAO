@@ -154,7 +154,7 @@ main (int argc, char *argv[])
       // then result in a CORBA::NO_PERMISSION exception.
       //
       // The server is not shutdown by this test.
-      insecure_invocation_test (orb, object.in (), ACE_TRY_ENV);
+      insecure_invocation_test (orb.in (), object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // This test uses the default secure SSLIOP settings to securely
