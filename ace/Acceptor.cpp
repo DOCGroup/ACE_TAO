@@ -551,6 +551,15 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   if (this->accept_strategy_->open (local_addr, 1) == -1)
     return -1;
 
+  // Set the peer acceptor's handle into non-blocking mode.  This is a
+  // safe-guard against the race condition that can otherwise occur
+  // between the time when <select> indicates that a passive-mode
+  // socket handle is "ready" and when we call <accept>.  During this
+  // interval, the client can shutdown the connection, in which case,
+  // the <accept> call can hang!
+  if (this->accept_strategy_->acceptor ().enable (ACE_NONBLOCK) != 0)
+    return -1;
+
   // Initialize the concurrency strategy.
 
   if (con_s == 0)
@@ -574,15 +583,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   this->scheduling_strategy_ = sch_s;
 
   this->use_select_ = use_select;
-
-  // Set the peer acceptor's handle into non-blocking mode.  This is a
-  // safe-guard against the race condition that can otherwise occur
-  // between the time when <select> indicates that a passive-mode
-  // socket handle is "ready" and when we call <accept>.  During this
-  // interval, the client can shutdown the connection, in which case,
-  // the <accept> call can hang!
-  if (this->accept_strategy_->acceptor ().enable (ACE_NONBLOCK) != 0)
-    return -1;
 
   return this->reactor ()->register_handler
     (this,
