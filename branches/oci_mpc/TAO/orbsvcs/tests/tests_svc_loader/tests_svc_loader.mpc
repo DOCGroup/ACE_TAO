@@ -1,0 +1,3 @@
+project(tests svc loader): taoexe {
+  exename = tests_svc_loader
+}

@@ -1,7 +1,7 @@
 project(IFRService) : orbsvcslib {
   depends   += TypeCodeFactory Svc_Utils IFR_Client IORTable PortableServer
   sharedname = TAO_IFRService
-  libs       = TAO_TypeCodeFactory TAO_Svc_Utils TAO_IFR_Client TAO_IORTable TAO_PortableServer TAO
+  libs      += TAO_TypeCodeFactory TAO_Svc_Utils TAO_IFR_Client TAO_IORTable TAO_PortableServer TAO
   dllflags   = TAO_IFRSERVICE_BUILD_DLL
 
   IDL_Files {

@@ -1,7 +1,7 @@
 project(RTOLDEvent) : orbsvcslib {
   depends   += RTEvent RTSched CosNaming Svc_Utils PortableServer
   sharedname = TAO_RTOLDEvent
-  libs       = TAO_RTEvent TAO_RTSched TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
+  libs      += TAO_RTEvent TAO_RTSched TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
   dllflags   = TAO_RTOLDEVENT_BUILD_DLL
 
   IDL_Files {

@@ -1,7 +1,7 @@
 project : taolib {
   depends   += PortableServer
   sharedname = TAO_Messaging
-  libs       = TAO_PortableServer TAO
+  libs      += TAO_PortableServer TAO
   dllflags   = TAO_MESSAGING_BUILD_DLL
   libout     = ..
 }
