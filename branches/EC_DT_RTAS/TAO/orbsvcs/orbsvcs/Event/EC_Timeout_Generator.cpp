@@ -8,6 +8,13 @@
 #include "EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#include "ec_dsui_config.h"
+#include "ec_dsui_families.h"
+#include "EC_Event_Counter.h"
+#include <dsui.h>
+#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+
 ACE_RCSID(Event, EC_Timeout_Generator, "$Id$")
 
 TAO_EC_Timeout_Generator::~TAO_EC_Timeout_Generator (void)
@@ -33,11 +40,16 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
 
   ACE_TRY_NEW_ENV
     {
-      RtecEventComm::Event e;
-      e.header.type = filter->type ();
-      e.header.source = 0;
+      RtecEventComm::Event evnt;
+      evnt.header.type = filter->type ();
+      evnt.header.source = 0;
 
-      RtecEventComm::EventSet single_event (1, 1, &e, 0);
+      EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
+      evnt.header.eid.id = eid.id;
+      evnt.header.eid.tid = eid.tid;
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
+      RtecEventComm::EventSet single_event (1, 1, &evnt, 0);
 
       TAO_EC_QOS_Info qos_info = filter->qos_info ();
       filter->push_to_proxy (single_event,

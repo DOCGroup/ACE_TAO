@@ -42,6 +42,19 @@ module RtecEventComm
   typedef long _EventType;
 
   /**
+   * @struct EventID
+   *
+   * @brief Define the ID structure of an event header
+   *
+   *
+   */
+  struct EventID
+  {
+    long id;
+    long tid;
+  };
+
+  /**
    * @struct EventHeader
    *
    * @brief Define the structure of an event header
@@ -70,6 +83,7 @@ module RtecEventComm
 
     /// Some way to identify the supplier.
     EventSourceID source;
+    EventID eid;
 
     /// The "Time To Live" counter.
     /**

@@ -1,7 +1,8 @@
 #################################################
 #       EC Namespace Specification File        #
 #################################################
-
+DSTRM_FAMILY    EC2_GROUP       1       "EC DSUI group"
+DSTRM_FAMILY    TIMEOUT         2       "Timeout handler group"
 
 # Entity type   Family Name     Fam ID  Entity Name     				Ety ID Description  			function 1      function2
 DSTRM_EVENT     EC2_GROUP    	1      ENTER_PROXY_PUSH_CONSUMER  		0      	"ENTER_PROXY_PUSH_CONSUMER" 	print_string
