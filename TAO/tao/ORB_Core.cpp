@@ -1600,11 +1600,12 @@ TAO_ORB_Core::leader_follower (void)
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int break_on_timeouts,
+                   int perform_work,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t) - start of run\n")));
+                ASYS_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
   {
@@ -1666,6 +1667,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
         }
       if (result == 0 || result == -1)
         break;
+
+      // In perform_work, we only run the loop once.
+      if (perform_work)
+        break;
     }
 
   {
@@ -1682,7 +1687,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   }
 
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run %d\n"), result));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));
 
   return result;
 }
