@@ -320,7 +320,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
 {
   CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
-                     + CDR::MAX_ALIGNMENT];
+                     + ACE_CDR::MAX_ALIGNMENT];
   char* buf = ACE_reinterpret_cast(char*,header);
   TAO_OutputCDR cdr (buf, sizeof(header));
   cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -508,7 +508,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
      request_size_ (request_size),
      fragment_count_ (fragment_count)
 {
-  CDR::grow (&this->payload_, this->request_size_);
+  ACE_CDR::grow (&this->payload_, this->request_size_);
   this->payload_.wr_ptr (request_size_);
 
   this->received_fragments_ = this->default_received_fragments_;
@@ -730,7 +730,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   // Use ULong so the alignment is right.
   CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
-                     + CDR::MAX_ALIGNMENT];
+                     + ACE_CDR::MAX_ALIGNMENT];
   ACE_INET_Addr from;
   ssize_t n = dgram.recv (header, sizeof(header), from, MSG_PEEK);
   if (n == -1)

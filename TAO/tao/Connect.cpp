@@ -316,7 +316,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
   TAO_POA *the_poa = this->orb_core_->root_poa ();
 
-  char repbuf[CDR::DEFAULT_BUFSIZE];
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
   TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
   // This output CDR is not used!
 
@@ -545,10 +545,10 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
-  TAO_InputCDR input (this->orb_core_->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE),
+  TAO_InputCDR input (this->orb_core_->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
                       TAO_ENCAP_BYTE_ORDER);
 
-  char repbuf[CDR::DEFAULT_BUFSIZE];
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
   (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
 #endif /* ACE_HAS_PURIFY */

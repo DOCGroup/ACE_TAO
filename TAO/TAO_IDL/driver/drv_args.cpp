@@ -264,13 +264,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->client_stub_ending (av[i+1]);
                   i++;
                 }
-              
+
               else if (av[i][2] == 'i')
                 {
                   idl_global->client_inline_ending (av[i+1]);
                   i++;
                 }
-              
+
               else
                 {
                   // I expect 's' or 'i' after 'c'.
@@ -313,13 +313,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->server_template_inline_ending (av[i+1]);
                   i++;
                 }
-              
+
               else if (av[i][2] == 'I')
                 {
                   idl_global->implementation_skel_ending (av[i+1]);
                   i++;
                 }
-              
+
               else
                 {
                   // I expect 's' or 'T' or 'i' or 't' after 's'.
@@ -341,6 +341,10 @@ DRV_parse_args (long ac, char **av)
                 cg->lookup_strategy (TAO_CodeGen::TAO_BINARY_SEARCH);
               else if (ACE_OS::strcmp (av[i+1], "linear_search") == 0)
                 cg->lookup_strategy (TAO_CodeGen::TAO_LINEAR_SEARCH);
+              else
+                ACE_ERROR ((LM_ERROR,
+                            "%s: unknown operation lookup <%s>\n",
+                            av[0], av[i+1]));
               i++;
               break;
 
@@ -349,8 +353,14 @@ DRV_parse_args (long ac, char **av)
             case 'i':
               if (av[i][2] == 'c')
                 idl_global->changing_standard_include_files (1);
+              else if (av[i][2] == 'n')
+                idl_global->changing_standard_include_files (0);
+              else
+                ACE_ERROR ((LM_ERROR,
+                            "%s: unknown -i modifier <%c>\n",
+                            av[0], av[i][2]));
               break;
-                
+
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
@@ -389,14 +399,17 @@ DRV_parse_args (long ac, char **av)
               else
                 DRV_cpp_putarg (av[i]);
               break;
+
             case 'E':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_ONLY_PREPROC);
               break;
+
             case 'V':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_VERSION);
               break;
+
             case 'W':
               if (av[i][2] == '\0')
                 {
@@ -430,6 +443,7 @@ DRV_parse_args (long ac, char **av)
                   break;
                 }
               break;
+
             case 'Y':
               if (av[i][2] == '\0')
                 {
@@ -461,6 +475,7 @@ DRV_parse_args (long ac, char **av)
                   break;
                 }
               break;
+
             case 'b':
               if (av[i][2] == '\0')
                 {
@@ -481,6 +496,7 @@ DRV_parse_args (long ac, char **av)
                 s = av[i] + 2;
               idl_global->set_be (s);
               break;
+
             case 'd':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_DUMP_AST);
@@ -517,6 +533,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
+
             case 'G':
               // enable generation of ...
               if (av[i][2] == 'c')
@@ -549,10 +566,10 @@ DRV_parse_args (long ac, char **av)
                   idl_global->gen_impl_files (1);
                   for (j=0;j<options;j++)
                     {
-                     
+
                       if (av[k][j+3] == 's')
                         {
-                          
+
                           idl_global->implementation_skel_ending (av[i+1]);
                           i++;
                         }
@@ -596,7 +613,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
-              
+
             default:
               cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
               idl_global->set_compile_flags (idl_global->compile_flags () |

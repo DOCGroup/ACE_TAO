@@ -252,9 +252,9 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
     *ACE_reinterpret_cast (CORBA::ULong *,
                            buf + offset) = bodylen;
   else
-    CDR::swap_4 (ACE_reinterpret_cast (char *,
-                                       &bodylen),
-                 buf + offset);
+    ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
+                                           &bodylen),
+                     buf + offset);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
   // Strictly speaking, should not need to loop here because the
@@ -454,15 +454,15 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
   // as the "duty factor" goes down because of either long calls or
   // bursty contention during numerous short calls to the same server.
 
-  CDR::mb_align (&msg.start_);
+  ACE_CDR::mb_align (&msg.start_);
 
   ssize_t header_len = TAO_GIOP_HEADER_LEN;
 
   if (orb_core->orb_params ()->use_lite_protocol ())
     header_len = TAO_GIOP_LITE_HEADER_LEN;
 
-  if (CDR::grow (&msg.start_,
-                 header_len) == -1)
+  if (ACE_CDR::grow (&msg.start_,
+                     header_len) == -1)
     // This should probably be an exception.
     return TAO_GIOP::CommunicationError;
 
@@ -513,10 +513,10 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
   // First make sure it's a GIOP message of any version.
 
   if (TAO_GIOP::parse_header (msg,
-			      msg.do_byte_swap_,
-			      retval,
-			      message_size,
-			      orb_core) == -1)
+                              msg.do_byte_swap_,
+                              retval,
+                              message_size,
+                              orb_core) == -1)
     {
       TAO_GIOP::send_error (transport);
       return TAO_GIOP::EndOfFile; // We didn't really receive
@@ -531,13 +531,13 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
 
   assert (message_size <= UINT_MAX);
 
-  if (CDR::grow (&msg.start_,
-                 header_len + message_size) == -1)
+  if (ACE_CDR::grow (&msg.start_,
+                     header_len + message_size) == -1)
     return TAO_GIOP::CommunicationError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
   // leave it just after the GIOP header (that was parsed already);
-  CDR::mb_align (&msg.start_);
+  ACE_CDR::mb_align (&msg.start_);
   msg.start_.wr_ptr (header_len);
   msg.start_.wr_ptr (message_size);
   msg.start_.rd_ptr (header_len);
@@ -593,9 +593,9 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
 
 int
 TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
-			    int &do_byte_swap,
-			    TAO_GIOP::Message_Type &message_type,
-			    CORBA::ULong &message_size)
+                            int &do_byte_swap,
+                            TAO_GIOP::Message_Type &message_type,
+                            CORBA::ULong &message_size)
 {
   char *header = cdr.start_.rd_ptr ();
 
@@ -638,9 +638,9 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
 
 int
 TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
-			     int &do_byte_swap,
-			     TAO_GIOP::Message_Type &message_type,
-			     CORBA::ULong &message_size)
+                             int &do_byte_swap,
+                             TAO_GIOP::Message_Type &message_type,
+                             CORBA::ULong &message_size)
 {
   do_byte_swap = 0;
 
@@ -659,21 +659,21 @@ TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
 
 int
 TAO_GIOP::parse_header (TAO_InputCDR &cdr,
-			int &do_byte_swap,
-			TAO_GIOP::Message_Type &message_type,
-			CORBA::ULong &message_size,
-			TAO_ORB_Core *orb_core)
+                        int &do_byte_swap,
+                        TAO_GIOP::Message_Type &message_type,
+                        CORBA::ULong &message_size,
+                        TAO_ORB_Core *orb_core)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
     return TAO_GIOP::parse_header_lite (cdr,
-					do_byte_swap,
-					message_type,
-					message_size);
+                                        do_byte_swap,
+                                        message_type,
+                                        message_size);
   else
     return TAO_GIOP::parse_header_std (cdr,
-				       do_byte_swap,
-				       message_type,
-				       message_size);
+                                       do_byte_swap,
+                                       message_type,
+                                       message_size);
 }
 
 CORBA::Boolean
@@ -688,7 +688,7 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
 
 CORBA::Boolean
 TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
-			     TAO_OutputCDR &msg)
+                             TAO_OutputCDR &msg)
 {
   msg.reset ();
 
@@ -719,7 +719,7 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
 
 CORBA::Boolean
 TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
-			      TAO_OutputCDR &msg)
+                              TAO_OutputCDR &msg)
 {
   msg.reset ();
 
@@ -735,8 +735,8 @@ TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
 
 CORBA::Boolean
 TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
-			 TAO_OutputCDR &msg,
-			 TAO_ORB_Core* orb_core)
+                         TAO_OutputCDR &msg,
+                         TAO_ORB_Core* orb_core)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
     return TAO_GIOP::start_message_lite (type, msg);

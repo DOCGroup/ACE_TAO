@@ -219,10 +219,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       this->byte_order_ = *ptr;
 
       ACE_NEW (this->non_aligned_buffer_,
-               char [this->length_ + CDR::MAX_ALIGNMENT]);
+               char [this->length_ + ACE_CDR::MAX_ALIGNMENT]);
 
       char* start = ptr_align_binary (this->non_aligned_buffer_,
-                                      CDR::MAX_ALIGNMENT);
+                                      ACE_CDR::MAX_ALIGNMENT);
 
       (void) ACE_OS::memcpy (start, buffer, this->length_);
       this->buffer_ = start;

@@ -122,8 +122,8 @@ catior (CORBA::String str,
   // resulting data.
 
   ACE_Message_Block mb (ACE_OS::strlen ((char *) str)  / 2 + 1
-                        + CDR::MAX_ALIGNMENT);
-  CDR::mb_align (&mb);
+                        + ACE_CDR::MAX_ALIGNMENT);
+  ACE_CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
   char *tmp = (char *) str;
