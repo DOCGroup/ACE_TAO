@@ -1,3 +1,9 @@
+Sun Oct 19 21:15:10 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* examples/Timer_Queue: Added a new testing framework for
+	  various types of ACE_Time_Queue usecases, e.g., threaded,
+	  reactive, and asynchronous.  
+
 Sun Oct 19 18:07:31 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace: Added new config files for SCO OpenServer with a new initial scheme
