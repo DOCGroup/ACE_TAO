@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,12 +12,13 @@
 //
 // = DESCRIPTION
 //    This program tests an implementation of a logger service.  It uses the
-//    Logger_Factory server to create a number of logger objects.  It then
-//    uses their object references to test functions supported by the
-//    logger server. 
+//    <Logger_Factory> server to create a number of logger objects.
+//    It then uses their object references to test functions supported
+//    by the logger server.
 //
 // = AUTHORS
-//      Sergio Flores-Gaitan
+//      Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//      Matt Braun <mjb2@cec.wustl.edu>
 //
 // ============================================================================
 
@@ -35,7 +37,7 @@ class Logger_Client
   // = DESCRIPTION
   //    This class declares an interface to run the example client for
   //    Logger CORBA server.  All the complexity for initializing the
-  //    server is hidden in the class.  Just the run() interface is
+  //    server is hidden in the class.  Just the <run> interface is
   //    needed.
 public:
   // = Constructor and destructor.
@@ -53,24 +55,45 @@ private:
   // Parses the arguments passed on the command line.
 
   void setup_record (Logger::Log_Record &newrec,
-		     Logger::Log_Priority lp, const char* msg);
-  // Prepares the logger recors for logging
+		     Logger::Log_Priority lp,
+		     Logger::Log_Verbosity lv, 
+		     const char *msg);
+  // Prepares the <Log_Record> for logging.
+
+   void show_record (Logger::Log_Record &newrec);
+  // Shows contents of the record (for debugging purposes)
   
+  CORBA::Object_var
+  resolve_name (CosNaming::Name &name, char* namestring,
+		CosNaming::NamingContext_var context,
+		CORBA::Environment &env); 
+  // Take the Name, give it the proper string name, and
+  // resolve it  
+  int
+  nesting_test (CosNaming::Name &name, char* namestring,
+		CosNaming::NamingContext_var context,
+		CORBA::Environment &env);
+  // Test the nesting context
+    
   int argc_;
   // # of arguments on the command line.
-
+  
   char **argv_;
   // arguments from command line.
-
+  
   int test_nesting_;
   // Test nested naming context or not.
+  
+  int verb_level_;
+  // The verbosity level of the log message
 
   CORBA::ORB_var orb_;
   // Keep a pointer to the orb, to avoid accidental deletes.
 
   Logger_var logger_1_;
-  // Logger obj ref
+  // Logger obj ref.
 
   Logger_var logger_2_;
-  // Logger obj ref
+  // Logger obj ref.
 };
+

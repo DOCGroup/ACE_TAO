@@ -9,14 +9,18 @@ Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
 {
-  Logger_i *l = new Logger_i (name);
+  Logger_i *l;
+
+  ACE_NEW_RETURN (l,
+		  Logger_i (name),
+		  0);
 
   return l->_this (_env);
 }
 
 Logger_Factory_i::Logger_Factory_i (void)
 {
-  // Do nothing
+  // Do nothing.
 }
 
 Logger_i::Logger_i (const char *name)
@@ -30,8 +34,6 @@ Logger_i::~Logger_i (void)
   ACE_OS::free (this->name_);
 }
 
-// This converts from the IDL defined Log_Priority enumerated type to
-// the ACE_Log_Priority enumerated type
 
 ACE_Log_Priority
 Logger_i::priority_conversion (Logger::Log_Priority priority)
@@ -43,34 +45,48 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
       int pval = ACE_static_cast (int, priority);
 
       return ACE_static_cast (ACE_Log_Priority,
-                              ACE_POW (pval));
+                              (1 << pval));
+      // (1 << pval) == 2^pval. <ACE_Log_Priority> are powers of 2.
     }
+}
+
+
+u_long
+Logger_i::verbosity_conversion (Logger::Log_Verbosity verbosity)
+{
+  u_long pval = ACE_static_cast (int, verbosity);
+  return (1 << pval);
 }
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
 	       CORBA::Environment &_env)
 {
+  ACE_Time_Value temp (log_rec.time);
+
+  // Create an <ACE_Log_Record> to leverage existing logging
+  // code. Since Logger::Log_Priority enum tags don't cleanly map to
+  // ACE_Log_Priority tags, <priority_conversion> is used to coerce
+  // the mapping.
   ACE_Log_Record rec (this->priority_conversion (log_rec.type),
-		      log_rec.time,
+		      ACE_Time_Value (log_rec.time),
                       log_rec.app_id);
   
-  // Create an <ACE_Log_Record> to leverage existing logging code. The
-  // <ACE::log2> method is used because we can't specify values for
-  // enum tags in IDL, but <ACE_Log_Priority> values are powers of 2.
-  // Thus, <priority_conversion> is used to transform to an enum type.
-  
-  ASYS_TCHAR msgbuf[ACE_MAXLOGMSGLEN + 1];
-  ACE_OS::strncpy (msgbuf, 
-                   log_rec.msg_data,
+  // Create a temporary buffer for manipulating the logging message, adding
+  // additional space for formatting characters..
+  ASYS_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
+
+  // Format the message for proper display.
+  ACE_OS::strcpy (msgbuf, "\n::");
+
+  // Copy the message data into the temporary buffer  
+  ACE_OS::strncat (msgbuf, 
+		   log_rec.msg_data,
                    ACE_MAXLOGMSGLEN);
-  // I don't think this is a good way to do this. Suggestions?  @@
-  // Matt, please make sure that the size of the array <msg_data> is
-  // no larger than ACE_MAXLOGMSGLEN...
 
   // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
   rec.msg_data (msgbuf);
-  
+
   CORBA::Long addr = log_rec.host_addr;
 
   // The constructor for <ACE_INET_Addr> requires a port number, which
@@ -78,13 +94,15 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   ACE_INET_Addr addy (ACE_static_cast (u_short, 0),
                       ACE_static_cast (ACE_UINT32,
                                        addr));
-  
+
+  // Create a buffer and fill it with the host name of the logger
   ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
   addy.get_host_name (namebuf,
                       MAXHOSTNAMELEN);
   
   rec.print (namebuf,
-             ACE_Log_Msg::VERBOSE,
-             stderr);
-  // Print out the logging message to stderr.
+	     this->verbosity_conversion (log_rec.verbosity),
+	     stderr);
+  // Print out the logging message to stderr with the given level of
+  // verbosity
 }

@@ -21,6 +21,12 @@
 
 #include "orbsvcs/LoggerS.h"
 
+// @@ I couldn't do this because TAO_MAXLOGMSGLEN isn't exported
+// from the Logger.idl file.
+//#if TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN
+//#error Inconsistent lengths, TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN
+//#endif /* TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN */
+
 class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
 {
   // = TITLE
@@ -31,7 +37,8 @@ public:
 
   virtual Logger_ptr make_logger (const char *name,
                                   CORBA::Environment &_env);
-  // This function creates and returns a logger with the given name.
+  // This function creates and returns a logger with the given <name>.
+  // Currently, <name> is unused.
 };
 
 class Logger_i : public virtual POA_Logger
@@ -47,12 +54,18 @@ public:
 
   virtual void log (const Logger::Log_Record &log_rec,
 		    CORBA::Environment &_env);
+  // Writes the <log_rec> to the standard output.
 
 private:
   ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);
-  // This converts from the IDL defined <Log_Priority> enumerated type
-  // to the <ACE_Log_Priority> enumerated type.
-
+  // Converts the IDL defined <Log_Priority> enum type to the
+  // <ACE_Log_Priority> enum type.
+  
+  u_long verbosity_conversion (Logger::Log_Verbosity verbosity);
+  // Converts the IDL defined <Log_Verbosity> enum type to a u_long
+  // which is used by the <ACE_Log_Record> to distinguish the
+  // verbosity level 
+  
   char *name_;
   // Logger identification.
 };
