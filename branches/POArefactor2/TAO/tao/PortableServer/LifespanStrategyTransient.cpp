@@ -97,7 +97,7 @@ namespace TAO
     void
     LifespanStrategyTransient::check_state (ACE_ENV_SINGLE_ARG_DECL)
     {
-      if (this->poa_->tao_poa_manager().get_state () ==
+      if (this->poa_->tao_poa_manager().get_state_i () ==
             PortableServer::POAManager::INACTIVE)
       {
         ACE_THROW (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 4,

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;
@@ -30,11 +31,6 @@ class TAO_CEC_ProxyPullSupplier;
 namespace CORBA
 {
   class SystemException;
-}
-
-namespace PortableServer
-{
-  class ServantBase;
 }
 
 /**

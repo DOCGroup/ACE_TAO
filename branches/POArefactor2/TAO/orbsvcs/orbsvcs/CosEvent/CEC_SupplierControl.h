@@ -29,6 +29,7 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
@@ -41,11 +42,6 @@ class TAO_CEC_TypedProxyPushConsumer;
 namespace CORBA
 {
   class SystemException;
-}
-
-namespace PortableServer
-{
-  class ServantBase;
 }
 
 /**

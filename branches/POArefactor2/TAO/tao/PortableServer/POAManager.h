@@ -85,6 +85,9 @@ public:
   /// Check the state of this POA manager
   void check_state (ACE_ENV_SINGLE_ARG_DECL);
 
+  PortableServer::POAManager::State get_state_i ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
 
   void activate_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -116,9 +119,6 @@ protected:
                      PortableServer::POAManager::AdapterInactive));
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  PortableServer::POAManager::State get_state_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_Lock &lock (void);
 
