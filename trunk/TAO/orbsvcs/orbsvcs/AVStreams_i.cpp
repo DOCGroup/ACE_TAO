@@ -21,13 +21,13 @@ TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (const char *obj_name)
 {
 }
 
-TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl ()
+TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl (void)
 {
 }
 
 void 
 TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,  
-      CORBA::Environment &env)
+                            CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (the_spec);
   ACE_UNUSED_ARG (env);
@@ -58,14 +58,14 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
   ACE_UNUSED_ARG (new_qos);
   ACE_UNUSED_ARG (the_spec);
   ACE_UNUSED_ARG (env);
+  return 0;
 }
 
 void
-TAO_Basic_StreamCtrl::push_event (const AVStreams::streamEvent &the_event,  
+TAO_Basic_StreamCtrl::push_event (const char *the_event,  
                                   CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (the_event);
-  ACE_UNUSED_ARG (the_spec);
   ACE_UNUSED_ARG (env);
 }
 
@@ -87,6 +87,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
 {
   ACE_UNUSED_ARG (flow_name);
   ACE_UNUSED_ARG (env);
+  return 0;
 }
 
 void
@@ -99,3 +100,37 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   ACE_UNUSED_ARG (env);
 }
 
+TAO_StreamCtrl::TAO_StreamCtrl (const char *obj_name = 0)
+  : POA_AVStreams::StreamCtrl (obj_name)
+{
+
+}
+
+TAO_StreamCtrl::~TAO_StreamCtrl (void)
+{
+}
+
+CORBA::Boolean 
+TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party, 
+                           AVStreams::MMDevice_ptr b_party, 
+                           AVStreams::streamQoS &the_qos, 
+                           const AVStreams::flowSpec &the_flows,  
+                           CORBA::Environment &env)
+{
+}
+  
+CORBA::Boolean 
+TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party, 
+                      AVStreams::StreamEndPoint_B_ptr b_party, 
+                      AVStreams::streamQoS &the_qos, 
+                      const AVStreams::flowSpec &the_flows,  
+                      CORBA::Environment &env)
+{
+}
+
+void 
+TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep, 
+                              const AVStreams::flowSpec &the_spec,  
+                              CORBA::Environment &env)
+{
+}
