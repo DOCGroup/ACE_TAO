@@ -1,3 +1,10 @@
+Wed Jun 21 03:02:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.i (set_errno_to_last_error):
+        * ace/OS.i (set_errno_to_wsa_last_error): The RTL for IBM
+          VisualAge C++/NT has the same problem as Borland 4.  Thanks to
+          Boris Kaminer <kaminer.boris@cherus.msk.ru> for reporting this.
+
 Wed Jun 21 01:12:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp: Changed all the timed versions of the "_n_i()"
