@@ -78,13 +78,12 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 }
 
 TAO_Default_Reactor::TAO_Default_Reactor (void)
-  : ACE_Reactor (reactor_impl_ = new ACE_Select_Reactor ())
+  : ACE_Reactor (new TAO_REACTOR, 1)
 {
 }
 
 TAO_Default_Reactor::~TAO_Default_Reactor (void)
 {
-  delete reactor_impl_;
 }
 
 #define quote(x) #x
