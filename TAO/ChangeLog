@@ -1,3 +1,18 @@
+Wed Feb  4 04 23:54:55 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+          Fixed include path for FtRtecEventCommS.h.
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h:
+          orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl:
+          orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.cpp:
+          orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+          orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+          orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+          orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+          Fixed alignment problems when using TAO_InputCDR.
+
+
 Thu Feb  5 05:35:35 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * rules.tao.GNU:
@@ -877,7 +892,7 @@ Wed Feb  4 11:08:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:
         * tao/PortableServer/ImR_LocatorC.cpp:
-        
+
           Added some missing explicit template instantiations. Thanks
           to Olli Savia <ops@iki.fi> for reporting them.
 
