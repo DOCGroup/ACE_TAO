@@ -1,3 +1,9 @@
+Wed Sep  4 17:50:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.pl: Change run time limit from 300 to 400 seconds.
+          Some tests are timing out, and when run by hand, they run just over
+          5 minutes, so give them a little more time.
+
 Wed Sep  4 17:31:24 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Cached_Conn_Test.cpp: ACE_DEBUG %@ for pointers, not %d.
