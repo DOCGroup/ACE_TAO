@@ -266,10 +266,12 @@ private:
   //    TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
   // Ensure that the interface type derives from its superclasses'.
   
-  void update_type_map (const char* name,
-			CosTradingRepos::ServiceTypeRepository::TypeStruct& type,
-			PROP_MAP& prop_map,
-			SUPER_TYPE_MAP& super_map);
+  void  update_type_map (const char* name,
+			 const char * if_name, 
+			 const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
+			 const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
+			 PROP_MAP& prop_map,
+			 SUPER_TYPE_MAP& super_map);
   // Update the type map with the information contained in the
   // TypeStruct, prop_map, and super_map.
 

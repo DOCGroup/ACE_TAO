@@ -57,10 +57,10 @@ public:
   virtual CORBA::ULong max_left (CORBA::Environment &env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::UnknownMaxLeft));
-  // Determine how many offers are left in the collection
+  // Determine how many offers are left in the collection.
  
   void add_offer_iterator (CosTrading::OfferIterator* offer_iter);
-  // Add an iterator to the collection.  
+  // Add an iterator to the collection.
 
 private:
 
@@ -73,7 +73,7 @@ private:
     // Cached value of the number of elements left in this iterator. 
   };
   
-  typedef list<Iter_Info> OFFER_ITERS;
+  typedef deque<Iter_Info> OFFER_ITERS;
 
   OFFER_ITERS iters_;
   // The iterator collection.
