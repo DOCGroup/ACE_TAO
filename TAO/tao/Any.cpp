@@ -211,15 +211,14 @@ CORBA_Any::operator= (const CORBA_Any &src)
       this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
       // Simply duplicate the cdr string here.  We can save the decode
       // operation if there's no need to extract the object.
-
-      return *this;
     }
   ACE_CATCHANY
     {
       return *this;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return *this;)
+
+  return *this;
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
@@ -581,10 +580,11 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -619,10 +619,11 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -657,10 +658,11 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -695,10 +697,11 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -733,10 +736,11 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -771,10 +775,11 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -809,10 +814,11 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -847,10 +853,11 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -891,10 +898,11 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -947,10 +955,11 @@ CORBA_Any::operator>>= (char *&s) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -991,10 +1000,11 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 // = extraction into the special types
@@ -1031,10 +1041,11 @@ CORBA_Any::operator>>= (to_boolean b) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -1069,10 +1080,11 @@ CORBA_Any::operator>>= (to_octet o) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -1107,10 +1119,11 @@ CORBA_Any::operator>>= (to_char c) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -1145,10 +1158,11 @@ CORBA_Any::operator>>= (to_wchar wc) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -1201,10 +1215,11 @@ CORBA_Any::operator>>= (to_string s) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 CORBA::Boolean
@@ -1258,10 +1273,11 @@ CORBA_Any::operator>>= (to_object obj) const
     }
   ACE_CATCHANY
     {
-      return 0;
+      // do nothing
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 
 // this is a copying version for unbounded strings Not inline, to
