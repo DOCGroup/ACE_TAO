@@ -1,3 +1,11 @@
+Mon Dec 13 01:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/ace_xt.mpb (Module):
+	* bin/MakeProjectCreator/config/ace_gl.mpb (Module):
+	* bin/MakeProjectCreator/config/ace_fl.mpb (Module):
+	Removed nice feature inheritance and reentered a workaround related with
+	"verbatim" section bug in MPC.
+
 Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* bin/MakeProjectCreator/config/strategies.mpb (Module):
