@@ -1,3 +1,52 @@
+Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * examples/Registry/Registry.mpc
+        * tests/RMCast/acetest.mpb
+        * tests/SSL/acetest.mpb
+        * bin/create_ace_build.pl
+        * bin/MakeProjectCreator/config/rtnotify.mpb
+        * bin/MakeProjectCreator/config/valuetype.mpb
+        * examples/IPC_SAP/SOCK_SAP/sock_sap.mpc
+        * examples/IPC_SAP/SSL_SAP/SSL_SAP.mpc
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc
+        * examples/Mem_Map/IO-tests/IO_Test.cpp
+        * examples/Mem_Map/IO-tests/test_io.cpp
+        * examples/OS/Process/OS_Process.mpc
+        * examples/QOS/Change_Receiver_FlowSpec/QOS_Change_Receiver_FlowSpec.mpc
+        * examples/QOS/Change_Sender_TSpec/QOS_Change_Sender_FlowSpec.mpc
+        * examples/QOS/Diffserv/QOS_Diffserv.mpc
+        * examples/QOS/Simple/QOS_Simple.mpc
+        * examples/RMCast/Send_File/RMCast_Send_File.mpc
+        * examples/Reactor/Misc/Reactor_Misc.mpc
+        * examples/Reactor/Multicast/Reactor_Multicast.mpc
+        * examples/Service_Configurator/IPC-tests/client/Service_Configurator_IPC_Client.mpc
+        * examples/Service_Configurator/IPC-tests/server/Service_Configurator_IPC_Server.mpc
+        * examples/Service_Configurator/Misc/Service_Configurator_Misc.mpc
+        * examples/Shared_Malloc/Shared_Malloc.mpc
+        * examples/Shared_Memory/Shared_Memory.mpc
+        * examples/Smart_Pointers/Smart_Pointers.mpc
+        * examples/System_V_IPC/SV_Message_Queues/SV_Message_Queues.mpc
+        * examples/System_V_IPC/SV_Semaphores/SV_Semaphores.mpc
+        * examples/Threads/Threads.mpc
+        * examples/Timer_Queue/Timer_Queue.mpc
+        * tests/acetest.mpb
+        * tests/tests.mpc
+        * tests/RMCast/RMCast_Fragment_Test.cpp
+        * tests/RMCast/RMCast_Membership_Test.cpp
+        * tests/RMCast/RMCast_Reassembly_Test.cpp
+        * tests/RMCast/RMCast_Reordering_Test.cpp
+        * tests/RMCast/RMCast_Retransmission_Test.cpp
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp
+        * tests/RMCast/tests.mpc
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp
+        * tests/SSL/tests.mpc
+
+          Added some missing project files. 
+          Updated all ACE tests to use the common test library. 
+          Updated ACE test mpc files to use a common base project. 
+          Fixed mpc files for broken examples. 
+          Added base projects rtnotify and valuetype.
+
 Wed Jul  2 13:16:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-doxygen.h:

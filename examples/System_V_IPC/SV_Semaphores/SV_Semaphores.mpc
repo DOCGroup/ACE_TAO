@@ -1,2 +1,12 @@
-project : aceexe {
+project(*1) : aceexe {
+  exename = sem1
+  Source_Files {
+    Semaphores_1.cpp
+  }
+}
+project(*2) : aceexe {
+  exename = sem2
+  Source_Files {
+    Semaphores_2.cpp
+  }
 }

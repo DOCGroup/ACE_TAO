@@ -1,4 +1,4 @@
-project(* sequence server) : server, strategies {
+project(*sequence server) : server, strategies {
   avoids += minimum_corba
 
   Source_Files {
@@ -7,12 +7,14 @@ project(* sequence server) : server, strategies {
   }
 }
 
-project(* sequence client): client, strategies {
+project(*sequence client): client, strategies {
   avoids += minimum_corba
-
+  after  += Single_Threaded_Sequence_Server
   Source_Files {
     TestC.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }
 

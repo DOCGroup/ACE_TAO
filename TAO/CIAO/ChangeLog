@@ -1,3 +1,18 @@
+Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * CIAO.mwc
+        * CIDLC/cidlc.mpc
+        * CIDLC/parser_examples/examples.mwc
+        * examples/OEP/examples.mwc
+        * examples/handcrafted/examples.mwc
+        * examples/handcrafted/BasicSP/EC/EC.mpc
+        * examples/handcrafted/Hello/hello.mpc
+        * tests/tests.mwc
+        * tools/tools.mwc
+
+          Added workspaces and updated projects files to use
+      the latest MPC features.
+
 Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
     * ciao/CCM_Core.mpc:

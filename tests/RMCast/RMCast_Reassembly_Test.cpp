@@ -51,7 +51,7 @@ private:
 };
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("RMCast_Reassembly_Test"));
 

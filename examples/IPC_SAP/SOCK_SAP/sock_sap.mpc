@@ -1,7 +1,7 @@
 project(*C_inclient) : aceexe {
   exename = C-inclient
   Source_Files {
-    C_inclient.cpp
+    C-inclient.cpp
   }
 }
 
