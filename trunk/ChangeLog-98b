@@ -1,3 +1,16 @@
+Sun Oct 18 17:22:00 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/014/combine.shar:
+	* docs/tutorials/015/combine.shar:
+	The additional input files to the combine script.  A shell archive
+	seems to be the most economical way to keep their history.
+	Individual files just create clutter and a tar.gz wouldn't be
+	diff-able in the repository.
+	
+	* docs/tutorials/014/Makefile:
+	* docs/tutorials/015/Makefile:
+	Adjusted to create the HTML and combine.shar files.
+	
 Sun Oct 18 16:51:43 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/combine: A perl script for combining several

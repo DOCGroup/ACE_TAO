@@ -32,9 +32,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
-HTML : #
-	perl ../combine *.html
-
 rename : #
 	for i in *.cxx ; do	\
 		n=`expr "$$i" : "\(.*\).cxx"`	;\
@@ -61,6 +58,19 @@ Depend : depend
 
 .depend : #
 	touch .depend
+
+HTML : #
+	[ -f hdr ] || $(MAKE) UNSHAR
+	perl ../combine *.pre
+	rm -f *.bdy
+
+SHAR : #
+	[ ! -f combine.shar ] || exit 1
+	shar -T hdr links *.pre > combine.shar
+	rm -f hdr links *.pre
+
+UNSHAR : #
+	sh combine.shar
 
 #----------------------------------------------------------------------------
 #	Dependencies
