@@ -1,3 +1,24 @@
+Wed Jun 05 09:25:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.idl:
+
+	  Remove "local" keyword from interfaces that are not supposed to
+	  be locality constrained.
+
+	  Include "CosNaming.idl" to pull in CosNaming::Name typedef.
+
+	  Updated to conform to PortableGroup IDL defined in the Load
+	  Balancing joint submission.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+	  (populate_object_group):
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (populate_object_group):
+
+	  Changed signature of this method so that it accepts the factory
+	  creation ID for the object group being populated.  Fixes a
+	  syntax error.
+	
 Tue Jun 04 21:10:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp

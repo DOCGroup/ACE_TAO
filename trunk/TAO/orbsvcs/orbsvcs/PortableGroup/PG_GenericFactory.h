@@ -117,6 +117,7 @@ private:
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
   void populate_object_group (
+         CORBA::ULong fcid,
          PortableGroup::ObjectGroup_ptr object_group,
          const PortableServer::ObjectId & oid,
          const char * type_id,
