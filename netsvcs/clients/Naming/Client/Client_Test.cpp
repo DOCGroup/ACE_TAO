@@ -7,7 +7,11 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
 #include "Client_Test.h"
+#include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_assert.h"
 
 ACE_RCSID(Client, Client_Test, "$Id$")
