@@ -29,7 +29,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 
 #include "CEC_Defaults.h"
-#include "event_export.h"
+#include "event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
 
 /**
@@ -48,7 +48,7 @@
  * an easy mechanism to extend the attributes without requiring
  * changes in the EC constructor.
  */
-class TAO_Event_Export TAO_CEC_EventChannel_Attributes
+class TAO_Event_Serv_Export TAO_CEC_EventChannel_Attributes
 {
 public:
   /**
@@ -98,7 +98,7 @@ private:
  * ConsumerAdmin and Dispatching) and to provide a simpler
  * interface to the CEC_Factory.
  */
-class TAO_Event_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
+class TAO_Event_Serv_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
 {
 public:
   class ServantBaseHash

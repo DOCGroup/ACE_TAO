@@ -13,7 +13,7 @@
 #define TAO_Notify_DISPATCH_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
                                          , const TAO_Notify_Event_var&
                                          , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_Base;
 
-class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch : public TAO_Notify_Method_Request_Dispatch_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch : public TAO_Notify_Method_Request_Dispatch_Base
                                                        , public TAO_Notify_Method_Request
 {
 public:
@@ -64,7 +64,7 @@ typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
                                          , const TAO_Notify_Event*
                                          , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Base;
 
-class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_No_Copy : public TAO_Notify_Method_Request_Dispatch_No_Copy_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy : public TAO_Notify_Method_Request_Dispatch_No_Copy_Base
                                                                  , public TAO_Notify_Method_Request_No_Copy
 {
 public:
@@ -95,7 +95,7 @@ typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
                                          , const TAO_Notify_Event_var&
                                          , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base;
 
-class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex : public TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex : public TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base
                                                                  , public TAO_Notify_Method_Request_No_Copy
 {
 public:

@@ -47,7 +47,7 @@ class TAO_CEC_TypedEventChannel;
  * periodically wakeup and verify the state of the suppliers
  * registered with the Event Channel.
  */
-class TAO_Event_Export TAO_CEC_SupplierControl_Adapter 
+class TAO_Event_Serv_Export TAO_CEC_SupplierControl_Adapter 
   : public ACE_Event_Handler
 {
 public:
@@ -74,7 +74,7 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_Reactive_SupplierControl 
+class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl 
   : public TAO_CEC_SupplierControl
 {
 public:

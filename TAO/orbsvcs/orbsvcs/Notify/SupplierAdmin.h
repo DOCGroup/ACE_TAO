@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Export TAO_Notify_SupplierAdmin 
+class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin 
   : public virtual POA_NotifyExt::SupplierAdmin, 
     public virtual TAO_Notify_Admin
 {

@@ -459,7 +459,7 @@ TAO_CEC_Event_Loader::fini (void)
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_Event, TAO_CEC_Event_Loader)
+ACE_FACTORY_DEFINE (TAO_Event_Serv, TAO_CEC_Event_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_CEC_Event_Loader>;

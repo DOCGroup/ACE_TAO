@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,7 +47,7 @@ typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer,
  * @brief A class that manages the Consumer and Supplier maps.
  *
  */
-class TAO_Notify_Export TAO_Notify_Event_Manager
+class TAO_Notify_Serv_Export TAO_Notify_Event_Manager
 {
 public:
   /// Constuctor
@@ -118,7 +118,7 @@ protected:
  * @brief Inform ProxyConsumer of updates.
  *
  */
-class TAO_Notify_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
+class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
 {
 public:
   TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
@@ -139,7 +139,7 @@ protected:
  * @brief Inform ProxySupplier of updates.
  *
  */
-class TAO_Notify_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
+class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
 {
 public:
   TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +35,7 @@ class TAO_Notify_Builder;
  * @brief Global properties that strategize Notify's run-time behaviour.
  *
  */
-class TAO_Notify_Export TAO_Notify_Properties
+class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
   friend class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
 

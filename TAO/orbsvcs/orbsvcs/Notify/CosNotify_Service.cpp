@@ -260,7 +260,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        0)
 
 
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_CosNotify_Service)
+ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/
 

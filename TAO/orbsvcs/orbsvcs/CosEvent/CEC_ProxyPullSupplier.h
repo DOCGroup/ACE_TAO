@@ -26,7 +26,7 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Unbounded_Queue.h"
 
-#include "event_export.h"
+#include "event_serv_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPullConsumer;
@@ -48,7 +48,7 @@ class TAO_CEC_ProxyPullConsumer;
  * Locking is strategized, the event channel acts as a factory for
  * the locking strategies.
  */
-class TAO_Event_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
+class TAO_Event_Serv_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
 {
 public:
   typedef CosEventChannelAdmin::ProxyPullSupplier_ptr _ptr_type;

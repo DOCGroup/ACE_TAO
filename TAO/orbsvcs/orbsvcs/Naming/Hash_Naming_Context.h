@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Naming_Context_Interface.h"
-#include "naming_export.h"
+#include "naming_serv_export.h"
 
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/SString.h"
@@ -46,7 +46,7 @@
  * that we can write some code that would work with any of them,
  * i.e., TAO_Hash_Naming_Context.
  */
-class TAO_Naming_Export TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
 
 public:
@@ -111,7 +111,7 @@ public:
  * class TAO_Bindings_Map, which provides a common interface to the data structures
  * used in TAO_Persistent_Namng_Context and TAO_Transient_Naming_Context.
  */
-class TAO_Naming_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
+class TAO_Naming_Serv_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
 {
 public:
   // = Initialization and termination methods.

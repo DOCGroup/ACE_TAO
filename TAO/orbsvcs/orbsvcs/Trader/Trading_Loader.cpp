@@ -486,7 +486,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_Trading, TAO_Trading_Loader)
+ACE_FACTORY_DEFINE (TAO_Trading_Serv, TAO_Trading_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

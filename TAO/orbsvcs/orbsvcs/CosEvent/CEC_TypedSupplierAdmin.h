@@ -32,7 +32,7 @@
 class TAO_CEC_TypedEventChannel;
 
 //Class TAO_CEC_TypedSupplierAdmin
-class  TAO_Event_Export TAO_CEC_TypedSupplierAdmin
+class  TAO_Event_Serv_Export TAO_CEC_TypedSupplierAdmin
   : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:

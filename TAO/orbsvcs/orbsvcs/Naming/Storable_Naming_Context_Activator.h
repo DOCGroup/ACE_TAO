@@ -22,7 +22,7 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-#include "naming_export.h"
+#include "naming_serv_export.h"
 
 class TAO_Naming_Service_Persistence_Factory;
 
@@ -32,7 +32,7 @@ class TAO_Naming_Service_Persistence_Factory;
  * "lazily" created on demand in other processes by reading the
  * context file off disk only when a request to the context is made.
  */
-class TAO_Naming_Export TAO_Storable_Naming_Context_Activator :
+class TAO_Naming_Serv_Export TAO_Storable_Naming_Context_Activator :
   public virtual PortableServer::ServantActivator
 {
 public:

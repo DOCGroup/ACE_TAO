@@ -13,7 +13,7 @@
 #define TAO_Notify_METHOD_REQUEST_UPDATES_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
  * @brief Command Object to send updates to proxys.
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_Updates : public TAO_Notify_Method_Request_Updates_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates : public TAO_Notify_Method_Request_Updates_Base
                                                         ,public TAO_Notify_Method_Request
 {
 public:
@@ -64,7 +64,7 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
  * @brief Command Object to send updates to proxys.
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_Updates_No_Copy : public TAO_Notify_Method_Request_Updates_No_Copy_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy : public TAO_Notify_Method_Request_Updates_No_Copy_Base
                                                                 ,public TAO_Notify_Method_Request_No_Copy
 {
 public:

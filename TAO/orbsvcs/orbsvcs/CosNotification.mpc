@@ -89,7 +89,7 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, portableserver {
 
 project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany, etcl {
   sharedname   = TAO_CosNotification_Serv
-  dynamicflags = TAO_NOTIFY_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
 
   IDL_Files {

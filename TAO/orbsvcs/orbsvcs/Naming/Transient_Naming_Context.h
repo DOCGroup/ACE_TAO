@@ -31,7 +31,7 @@
  * A thin wrapper on top of ACE_Hash_Map_Manager.  Supports
  * TAO_Bindings_Map interface.  Used by TAO_Transient_Naming_Context.
  */
-class TAO_Naming_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
 {
 public:
 
@@ -126,7 +126,7 @@ private:
  * TAO_Hash_Naming_Context and uses TAO_Transient_Bindings_Map to
  * store name to object bindings.
  */
-class TAO_Naming_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
+class TAO_Naming_Serv_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
 {
 
 public:

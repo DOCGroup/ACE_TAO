@@ -67,7 +67,7 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
 
 project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils {
   sharedname   = TAO_CosTrading_Serv
-  dynamicflags = TAO_TRADING_BUILD_DLL
+  dynamicflags = TAO_TRADING_SERV_BUILD_DLL
   tagchecks   += Trader
   pch_header   =
   pch_source   =

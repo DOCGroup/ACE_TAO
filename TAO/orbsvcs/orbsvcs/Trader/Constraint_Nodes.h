@@ -19,7 +19,7 @@
 
 #include "tao/Basic_Types.h"
 
-#include "orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/trading_serv_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -54,7 +54,7 @@ namespace CORBA
  * subclass dispatches the method on an TAO_Constraint_Visitor
  * correlating to its type.
  */
-class TAO_Trading_Export TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Constraint
 {
 public:
 
@@ -76,7 +76,7 @@ public:
  *
  * @brief A node that represents an operation with no operands.
  */
-class TAO_Trading_Export TAO_Noop_Constraint : public TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Noop_Constraint : public TAO_Constraint
 {
 public:
 
@@ -99,7 +99,7 @@ private:
  * @brief TAO_Binary_Constraint represents an operation with left
  * and right operands.
  */
-class TAO_Trading_Export TAO_Binary_Constraint : public TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Binary_Constraint : public TAO_Constraint
 {
 public:
 
@@ -158,7 +158,7 @@ private:
  * @brief TAO_Unary_Constraint represents an operation with only
  * one operand.
  */
-class TAO_Trading_Export TAO_Unary_Constraint : public TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Unary_Constraint : public TAO_Constraint
 {
 public:
 
@@ -192,7 +192,7 @@ private:
  * @brief TAO_Property_Constraint represents a property whose
  * value is determined by the offer being evaluated.
  */
-class TAO_Trading_Export TAO_Property_Constraint : public TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 {
 public:
 
@@ -223,7 +223,7 @@ private:
  * @brief TAO_Literal_Constraint represents a literal occuring in
  * the constraint expression tree.
  */
-class TAO_Trading_Export TAO_Literal_Constraint : public TAO_Constraint
+class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 {
  public:
 

@@ -33,7 +33,7 @@
 #endif /* _MSC_VER */
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Notify_Export
+template class TAO_Notify_Serv_Export
 TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
@@ -44,7 +44,7 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
  *
  *
  */
-class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier
+class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
 {
   friend class TAO_Notify_Builder;

@@ -55,7 +55,7 @@ project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
 
 project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, iortable {
   sharedname   = TAO_CosNaming_Serv
-  dynamicflags = TAO_NAMING_BUILD_DLL
+  dynamicflags = TAO_NAMING_SERV_BUILD_DLL
   tagchecks   += Naming
 
   IDL_Files {

@@ -13,7 +13,7 @@
 #define TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event_var
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_Lookup : public TAO_Notify_Method_Request_Lookup_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup : public TAO_Notify_Method_Request_Lookup_Base
                                                        , public TAO_Notify_Method_Request
 {
 public:
@@ -65,7 +65,7 @@ typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event*
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_Lookup_No_Copy : public TAO_Notify_Method_Request_Lookup_No_Copy_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy : public TAO_Notify_Method_Request_Lookup_No_Copy_Base
                                                                , public TAO_Notify_Method_Request_No_Copy
 {
 public:

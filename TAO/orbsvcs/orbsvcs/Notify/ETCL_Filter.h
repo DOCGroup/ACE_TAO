@@ -13,7 +13,7 @@
 #define TAO_Notify_ETCL_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +39,7 @@
  * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class TAO_Notify_Export TAO_Notify_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor

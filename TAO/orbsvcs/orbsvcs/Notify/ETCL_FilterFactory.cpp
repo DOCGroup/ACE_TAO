@@ -78,4 +78,4 @@ TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_Notify_ETCL_FilterFactory)
+ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

@@ -28,7 +28,7 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 #include "orbsvcs/CosTradingDynamicS.h"
-#include "orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/trading_serv_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -50,7 +50,7 @@ class TAO_Trader_Base;
  * @brief Uses command line arguments to construct a trader instance with
  * the correct interface support, locking, and policy settings.
  */
-class TAO_Trading_Export TAO_Trader_Factory
+class TAO_Trading_Serv_Export TAO_Trader_Factory
 {
 public:
 
@@ -141,7 +141,7 @@ public:
  * Contains a reference to the trader from which it is
  * used so it can use trader's lock.
  */
-class TAO_Trading_Export TAO_Support_Attributes_i
+class TAO_Trading_Serv_Export TAO_Support_Attributes_i
 {
 public:
   // = Initialization and termination methods.
@@ -193,7 +193,7 @@ private:
  * Contains a reference to the trader from which it is
  * used so it can use trader's lock.
  */
-class TAO_Trading_Export TAO_Link_Attributes_i
+class TAO_Trading_Serv_Export TAO_Link_Attributes_i
 {
 public:
   // = Initialization and termination methods.
@@ -224,7 +224,7 @@ private:
  * Contains a reference to the trader from which it is
  * used so it can use trader's lock.
  */
-class TAO_Trading_Export TAO_Import_Attributes_i
+class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
   // = Initialization and termination methods.
@@ -322,7 +322,7 @@ private:
  * IDL methods in CosTrading::Trader_Components would need
  * add a _duplicate call for each get method).
  */
-class TAO_Trading_Export TAO_Trading_Components_i
+class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
 
@@ -396,7 +396,7 @@ private:
  * want all these classes to be templatized.  TAO_Trader_Base class solves
  * this problem.
  */
-class TAO_Trading_Export TAO_Trader_Base : public TAO_Lockable
+class TAO_Trading_Serv_Export TAO_Trader_Base : public TAO_Lockable
 {
 public:
 

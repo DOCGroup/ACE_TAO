@@ -14,7 +14,7 @@
 #define TAO_NOTIFY_DEFAULT_POA_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +25,7 @@
  *
  * @brief Maintained for backward compatibility.
  */
-class TAO_Notify_Export TAO_Notify_Default_POA_Factory
+class TAO_Notify_Serv_Export TAO_Notify_Default_POA_Factory
 {
 public:
   /// Helper function to register the default factory into the service

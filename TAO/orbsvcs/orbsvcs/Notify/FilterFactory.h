@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
  * @brief Service Object to obtain a CosNotifyFilter::FilterFactory reference.
  *
  */
-class /*TAO_Notify_Export*/ TAO_Notify_FilterFactory : public ACE_Service_Object
+class /*TAO_Notify_Serv_Export*/ TAO_Notify_FilterFactory : public ACE_Service_Object
 {
 public:
   /// Factory method to create a FilterFactory reference

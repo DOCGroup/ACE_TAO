@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +39,7 @@ class TAO_Notify_EventType;
  * @brief Base class abstraction for Events flowing through the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_Notify_Event : private ACE_Copy_Disabled
+class TAO_Notify_Serv_Export TAO_Notify_Event : private ACE_Copy_Disabled
 {
 public:
   /// Constuctor

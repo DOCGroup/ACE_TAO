@@ -18,7 +18,7 @@
 
 #include "orbsvcs/CosEventCommC.h"
 
-#include "event_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ class TAO_CEC_TypedEvent;
  * for each queue or can simply push the event to the consumer in
  * FIFO order.
  */
-class TAO_Event_Export TAO_CEC_Dispatching
+class TAO_Event_Serv_Export TAO_CEC_Dispatching
 {
 public:
   /// destructor...
@@ -84,7 +84,7 @@ public:
  * The events are dispatched in FIFO ordering, using the invoking
  * thread to push the event to the consumer.
  */
-class TAO_Event_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispatching
+class TAO_Event_Serv_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispatching
 {
 public:
   /// The scheduler is used to find the range of priorities and similar

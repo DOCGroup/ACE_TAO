@@ -13,7 +13,7 @@
 #define TAO_Notify_METHOD_REQUEST_SHUTDOWN_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@ class TAO_Notify_ThreadPool_Task;
  * @brief Shutdown message for the ThreadPool_Task
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor

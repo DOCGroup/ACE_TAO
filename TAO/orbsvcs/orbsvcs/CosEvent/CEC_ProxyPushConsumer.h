@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
-#include "event_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ class TAO_CEC_ProxyPushSupplier;
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
-class TAO_Event_Export TAO_CEC_ProxyPushConsumer 
+class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer 
   : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
 public:
@@ -151,7 +151,7 @@ private:
  * the reference count on the proxy, eliminating the need to hold
  * mutexes during long operations.
  */
-class TAO_Event_Export TAO_CEC_ProxyPushConsumer_Guard
+class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer_Guard
 {
 public:
   /// Constructor

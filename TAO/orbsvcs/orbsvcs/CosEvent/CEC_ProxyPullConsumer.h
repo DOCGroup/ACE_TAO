@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "event_export.h"
+#include "event_serv_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
@@ -41,7 +41,7 @@ class TAO_CEC_ProxyPullSupplier;
  * The object commits suicide when disconnect_pull_consumer() is
  * called.
  */
-class TAO_Event_Export TAO_CEC_ProxyPullConsumer : public POA_CosEventChannelAdmin::ProxyPullConsumer
+class TAO_Event_Serv_Export TAO_CEC_ProxyPullConsumer : public POA_CosEventChannelAdmin::ProxyPullConsumer
 {
 public:
   typedef CosEventChannelAdmin::ProxyPullConsumer_ptr _ptr_type;

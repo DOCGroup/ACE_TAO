@@ -22,7 +22,7 @@
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "event_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -52,7 +52,7 @@ class TAO_CEC_TypedEventChannel;
  * Locking is strategized, the event channel acts as a factory for
  * the locking strategies.
  */
-class TAO_Event_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
+class TAO_Event_Serv_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
 public:
   typedef CosEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;

@@ -21,7 +21,7 @@
 
 #include "ID_Factory.h"
 #include "Event.h"
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 /**
  * @class TAO_Notify_FilterAdmin
@@ -29,7 +29,7 @@
  * @brief FilterAdmin interface methods implementation.
  *
  */
-class TAO_Notify_Export TAO_Notify_FilterAdmin
+class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 {
 
  public:
