@@ -62,7 +62,17 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   //this->message_state_.reset (0);
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  (void) this->reply_cdr_.clone_from (params.input_cdr_);
+  ACE_Data_Block *db =
+    this->reply_cdr_.clone_from (params.input_cdr_);
+
+  // See whether we need to delete the data block by checking the
+  // flags. We cannot be happy that we initally allocated the
+  // datablocks of the stack. If this method is called twice, as is in
+  // some cases where the same invocation object is used to make two
+  // invocations like forwarding, the release becomes essential.
+  if (ACE_BIT_DISABLED (db->flags (),
+                        ACE_Message_Block::DONT_DELETE))
+    db->release ();
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
