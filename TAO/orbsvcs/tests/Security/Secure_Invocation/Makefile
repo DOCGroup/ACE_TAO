@@ -71,6 +71,8 @@ SRVR_LIBS += \
 
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
+$(CLIENT_OBJS) $(SERVER_OBJS): $(IDL_SRC)
+
 realclean: clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
