@@ -1,6 +1,6 @@
 ##  Process this file with automake to create Makefile.in
 
-includedir = @includedir@/orbsvcs
+includedir=@includedir@/orbsvcs
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -20,21 +20,17 @@ BUILT_SOURCES =
 BUILT_SOURCES += \
   CosNamingS_T.cpp \
   CosNamingC.inl \
-  CosNamingS_T.inl \
   CosNamingC.cpp \
-  CosNamingC.h \
-  CosNamingS_T.h
+  CosNamingC.h
 
 CLEANFILES += \
   CosNamingS_T.cpp \
   CosNamingC.inl \
-  CosNamingS_T.inl \
   CosNamingC.cpp \
   CosNamingC.h \
-  CosNamingS_T.h \
   CosNaming-stamp
 
-CosNamingS_T.cpp CosNamingC.inl CosNamingS_T.inl CosNamingC.cpp CosNamingC.h CosNamingS_T.h: CosNaming-stamp
+CosNamingS_T.cpp CosNamingC.inl CosNamingC.cpp CosNamingC.h: CosNaming-stamp
 
 CosNaming-stamp: $(srcdir)/CosNaming.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
@@ -64,12 +60,9 @@ libTAO_CosNaming_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosNamingC.h \
-  CosNamingS_T.h \
   Naming/Naming_Client.h \
   Naming/naming_export.h \
   CosNamingC.inl \
-  CosNamingS_T.inl \
-  CosNamingS_T.cpp \
   CosNaming.idl
 
 EXTRA_DIST = \
@@ -444,21 +437,17 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   CosEventChannelAdminS_T.cpp \
   CosEventChannelAdminC.inl \
-  CosEventChannelAdminS_T.inl \
   CosEventChannelAdminC.cpp \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminS_T.h
+  CosEventChannelAdminC.h
 
 CLEANFILES += \
   CosEventChannelAdminS_T.cpp \
   CosEventChannelAdminC.inl \
-  CosEventChannelAdminS_T.inl \
   CosEventChannelAdminC.cpp \
   CosEventChannelAdminC.h \
-  CosEventChannelAdminS_T.h \
   CosEventChannelAdmin-stamp
 
-CosEventChannelAdminS_T.cpp CosEventChannelAdminC.inl CosEventChannelAdminS_T.inl CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminS_T.h: CosEventChannelAdmin-stamp
+CosEventChannelAdminS_T.cpp CosEventChannelAdminC.inl CosEventChannelAdminC.cpp CosEventChannelAdminC.h: CosEventChannelAdmin-stamp
 
 CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
@@ -467,21 +456,17 @@ CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl
 BUILT_SOURCES += \
   CosEventCommS_T.cpp \
   CosEventCommC.inl \
-  CosEventCommS_T.inl \
   CosEventCommC.cpp \
-  CosEventCommC.h \
-  CosEventCommS_T.h
+  CosEventCommC.h
 
 CLEANFILES += \
   CosEventCommS_T.cpp \
   CosEventCommC.inl \
-  CosEventCommS_T.inl \
   CosEventCommC.cpp \
   CosEventCommC.h \
-  CosEventCommS_T.h \
   CosEventComm-stamp
 
-CosEventCommS_T.cpp CosEventCommC.inl CosEventCommS_T.inl CosEventCommC.cpp CosEventCommC.h CosEventCommS_T.h: CosEventComm-stamp
+CosEventCommS_T.cpp CosEventCommC.inl CosEventCommC.cpp CosEventCommC.h: CosEventComm-stamp
 
 CosEventComm-stamp: $(srcdir)/CosEventComm.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
@@ -490,21 +475,17 @@ CosEventComm-stamp: $(srcdir)/CosEventComm.idl
 BUILT_SOURCES += \
   CosTypedEventChannelAdminS_T.cpp \
   CosTypedEventChannelAdminC.inl \
-  CosTypedEventChannelAdminS_T.inl \
   CosTypedEventChannelAdminC.cpp \
-  CosTypedEventChannelAdminC.h \
-  CosTypedEventChannelAdminS_T.h
+  CosTypedEventChannelAdminC.h
 
 CLEANFILES += \
   CosTypedEventChannelAdminS_T.cpp \
   CosTypedEventChannelAdminC.inl \
-  CosTypedEventChannelAdminS_T.inl \
   CosTypedEventChannelAdminC.cpp \
   CosTypedEventChannelAdminC.h \
-  CosTypedEventChannelAdminS_T.h \
   CosTypedEventChannelAdmin-stamp
 
-CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS_T.inl CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminS_T.h: CosTypedEventChannelAdmin-stamp
+CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h: CosTypedEventChannelAdmin-stamp
 
 CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
@@ -513,21 +494,17 @@ CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl
 BUILT_SOURCES += \
   CosTypedEventCommS_T.cpp \
   CosTypedEventCommC.inl \
-  CosTypedEventCommS_T.inl \
   CosTypedEventCommC.cpp \
-  CosTypedEventCommC.h \
-  CosTypedEventCommS_T.h
+  CosTypedEventCommC.h
 
 CLEANFILES += \
   CosTypedEventCommS_T.cpp \
   CosTypedEventCommC.inl \
-  CosTypedEventCommS_T.inl \
   CosTypedEventCommC.cpp \
   CosTypedEventCommC.h \
-  CosTypedEventCommS_T.h \
   CosTypedEventComm-stamp
 
-CosTypedEventCommS_T.cpp CosTypedEventCommC.inl CosTypedEventCommS_T.inl CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommS_T.h: CosTypedEventComm-stamp
+CosTypedEventCommS_T.cpp CosTypedEventCommC.inl CosTypedEventCommC.cpp CosTypedEventCommC.h: CosTypedEventComm-stamp
 
 CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
@@ -561,25 +538,13 @@ libTAO_CosEvent_la_LIBADD = \
 nobase_include_HEADERS += \
   CosEvent/event_export.h \
   CosEventChannelAdminC.h \
-  CosEventChannelAdminS_T.h \
   CosEventCommC.h \
-  CosEventCommS_T.h \
   CosTypedEventChannelAdminC.h \
-  CosTypedEventChannelAdminS_T.h \
   CosTypedEventCommC.h \
-  CosTypedEventCommS_T.h \
   CosEventChannelAdminC.inl \
-  CosEventChannelAdminS_T.inl \
   CosEventCommC.inl \
-  CosEventCommS_T.inl \
   CosTypedEventChannelAdminC.inl \
-  CosTypedEventChannelAdminS_T.inl \
   CosTypedEventCommC.inl \
-  CosTypedEventCommS_T.inl \
-  CosEventChannelAdminS_T.cpp \
-  CosEventCommS_T.cpp \
-  CosTypedEventChannelAdminS_T.cpp \
-  CosTypedEventCommS_T.cpp \
   CosEventChannelAdmin.idl \
   CosEventComm.idl \
   CosTypedEventChannelAdmin.idl \
@@ -1028,27 +993,21 @@ FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  PortableGroup_Simple_DSS_T.cpp \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
-  PortableGroup_Simple_DSS_T.inl \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
-  PortableGroup_Simple_DSS.h \
-  PortableGroup_Simple_DSS_T.h
+  PortableGroup_Simple_DSS.h
 
 CLEANFILES += \
-  PortableGroup_Simple_DSS_T.cpp \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
-  PortableGroup_Simple_DSS_T.inl \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSS.h \
-  PortableGroup_Simple_DSS_T.h \
   PortableGroup_Simple_DS-stamp
 
-PortableGroup_Simple_DSS_T.cpp PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSS_T.inl PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSS.h PortableGroup_Simple_DSS_T.h: PortableGroup_Simple_DS-stamp
+PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSS.h: PortableGroup_Simple_DS-stamp
 
 PortableGroup_Simple_DS-stamp: $(srcdir)/PortableGroup_Simple_DS.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/PortableGroup_Simple_DS.idl
@@ -1088,16 +1047,16 @@ nobase_include_HEADERS += \
   FT_CORBA_ORBS.h \
   FT_CORBA_ORBS_T.h \
   FaultTolerance/FT_IOGR_Property.h \
+  FaultTolerance/FT_ORB_Utils_export.h \
   PortableGroup_Simple_DSC.h \
-  PortableGroup_Simple_DSS_T.h \
+  PortableGroup_Simple_DSS.h \
   FT_CORBA_ORBC.inl \
   FT_CORBA_ORBS.inl \
   FT_CORBA_ORBS_T.inl \
   FaultTolerance/FT_IOGR_Property.i \
   PortableGroup_Simple_DSC.inl \
-  PortableGroup_Simple_DSS_T.inl \
+  PortableGroup_Simple_DSS.inl \
   FT_CORBA_ORBS_T.cpp \
-  PortableGroup_Simple_DSS_T.cpp \
   FT_CORBA_ORB.idl \
   PortableGroup_Simple_DS.idl
 
@@ -1278,6 +1237,7 @@ nobase_include_HEADERS += \
   PortableGroup/UIPMC_Profile.h \
   PortableGroup/UIPMC_Transport.h \
   PortableGroup/UIPMC_Wait_Never.h \
+  PortableGroup/portablegroup_export.h \
   PortableGroupC.h \
   PortableGroupS.h \
   PortableGroupS_T.h \
@@ -1345,7 +1305,6 @@ CosLoadBalancing-stamp: $(srcdir)/CosLoadBalancing.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  LB_ORTS_T.cpp \
   LB_ORTC.inl \
   LB_ORTS.inl \
   LB_ORTS_T.inl \
@@ -1355,7 +1314,6 @@ BUILT_SOURCES += \
   LB_ORTS_T.h
 
 CLEANFILES += \
-  LB_ORTS_T.cpp \
   LB_ORTC.inl \
   LB_ORTS.inl \
   LB_ORTS_T.inl \
@@ -1365,7 +1323,7 @@ CLEANFILES += \
   LB_ORTS_T.h \
   LB_ORT-stamp
 
-LB_ORTS_T.cpp LB_ORTC.inl LB_ORTS.inl LB_ORTS_T.inl LB_ORTC.cpp LB_ORTC.h LB_ORTS.h LB_ORTS_T.h: LB_ORT-stamp
+LB_ORTC.inl LB_ORTS.inl LB_ORTS_T.inl LB_ORTC.cpp LB_ORTC.h LB_ORTS.h LB_ORTS_T.h: LB_ORT-stamp
 
 LB_ORT-stamp: $(srcdir)/LB_ORT.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
@@ -1436,6 +1394,7 @@ nobase_include_HEADERS += \
   CosLoadBalancingS.h \
   CosLoadBalancingS_T.h \
   LB_ORTC.h \
+  LB_ORTS.h \
   LB_ORTS_T.h \
   LoadBalancing/LB_CPU_Load_Average_Monitor.h \
   LoadBalancing/LB_CPU_Utilization_Monitor.h \
@@ -1467,13 +1426,13 @@ nobase_include_HEADERS += \
   CosLoadBalancingS.inl \
   CosLoadBalancingS_T.inl \
   LB_ORTC.inl \
+  LB_ORTS.inl \
   LB_ORTS_T.inl \
   LoadBalancing/LB_LeastLoaded.inl \
   LoadBalancing/LB_LoadAlert.inl \
   LoadBalancing/LB_LoadAverage.inl \
   LoadBalancing/LB_LoadMinimum.inl \
   CosLoadBalancingS_T.cpp \
-  LB_ORTS_T.cpp \
   CosLoadBalancing.idl \
   LB_ORT.idl
 
@@ -1595,21 +1554,17 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   CosNotificationS_T.cpp \
   CosNotificationC.inl \
-  CosNotificationS_T.inl \
   CosNotificationC.cpp \
-  CosNotificationC.h \
-  CosNotificationS_T.h
+  CosNotificationC.h
 
 CLEANFILES += \
   CosNotificationS_T.cpp \
   CosNotificationC.inl \
-  CosNotificationS_T.inl \
   CosNotificationC.cpp \
   CosNotificationC.h \
-  CosNotificationS_T.h \
   CosNotification-stamp
 
-CosNotificationS_T.cpp CosNotificationC.inl CosNotificationS_T.inl CosNotificationC.cpp CosNotificationC.h CosNotificationS_T.h: CosNotification-stamp
+CosNotificationS_T.cpp CosNotificationC.inl CosNotificationC.cpp CosNotificationC.h: CosNotification-stamp
 
 CosNotification-stamp: $(srcdir)/CosNotification.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotification.idl
@@ -1618,21 +1573,17 @@ CosNotification-stamp: $(srcdir)/CosNotification.idl
 BUILT_SOURCES += \
   CosNotifyChannelAdminS_T.cpp \
   CosNotifyChannelAdminC.inl \
-  CosNotifyChannelAdminS_T.inl \
   CosNotifyChannelAdminC.cpp \
-  CosNotifyChannelAdminC.h \
-  CosNotifyChannelAdminS_T.h
+  CosNotifyChannelAdminC.h
 
 CLEANFILES += \
   CosNotifyChannelAdminS_T.cpp \
   CosNotifyChannelAdminC.inl \
-  CosNotifyChannelAdminS_T.inl \
   CosNotifyChannelAdminC.cpp \
   CosNotifyChannelAdminC.h \
-  CosNotifyChannelAdminS_T.h \
   CosNotifyChannelAdmin-stamp
 
-CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminC.inl CosNotifyChannelAdminS_T.inl CosNotifyChannelAdminC.cpp CosNotifyChannelAdminC.h CosNotifyChannelAdminS_T.h: CosNotifyChannelAdmin-stamp
+CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminC.inl CosNotifyChannelAdminC.cpp CosNotifyChannelAdminC.h: CosNotifyChannelAdmin-stamp
 
 CosNotifyChannelAdmin-stamp: $(srcdir)/CosNotifyChannelAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyChannelAdmin.idl
@@ -1641,21 +1592,17 @@ CosNotifyChannelAdmin-stamp: $(srcdir)/CosNotifyChannelAdmin.idl
 BUILT_SOURCES += \
   CosNotifyCommS_T.cpp \
   CosNotifyCommC.inl \
-  CosNotifyCommS_T.inl \
   CosNotifyCommC.cpp \
-  CosNotifyCommC.h \
-  CosNotifyCommS_T.h
+  CosNotifyCommC.h
 
 CLEANFILES += \
   CosNotifyCommS_T.cpp \
   CosNotifyCommC.inl \
-  CosNotifyCommS_T.inl \
   CosNotifyCommC.cpp \
   CosNotifyCommC.h \
-  CosNotifyCommS_T.h \
   CosNotifyComm-stamp
 
-CosNotifyCommS_T.cpp CosNotifyCommC.inl CosNotifyCommS_T.inl CosNotifyCommC.cpp CosNotifyCommC.h CosNotifyCommS_T.h: CosNotifyComm-stamp
+CosNotifyCommS_T.cpp CosNotifyCommC.inl CosNotifyCommC.cpp CosNotifyCommC.h: CosNotifyComm-stamp
 
 CosNotifyComm-stamp: $(srcdir)/CosNotifyComm.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyComm.idl
@@ -1664,21 +1611,17 @@ CosNotifyComm-stamp: $(srcdir)/CosNotifyComm.idl
 BUILT_SOURCES += \
   CosNotifyFilterS_T.cpp \
   CosNotifyFilterC.inl \
-  CosNotifyFilterS_T.inl \
   CosNotifyFilterC.cpp \
-  CosNotifyFilterC.h \
-  CosNotifyFilterS_T.h
+  CosNotifyFilterC.h
 
 CLEANFILES += \
   CosNotifyFilterS_T.cpp \
   CosNotifyFilterC.inl \
-  CosNotifyFilterS_T.inl \
   CosNotifyFilterC.cpp \
   CosNotifyFilterC.h \
-  CosNotifyFilterS_T.h \
   CosNotifyFilter-stamp
 
-CosNotifyFilterS_T.cpp CosNotifyFilterC.inl CosNotifyFilterS_T.inl CosNotifyFilterC.cpp CosNotifyFilterC.h CosNotifyFilterS_T.h: CosNotifyFilter-stamp
+CosNotifyFilterS_T.cpp CosNotifyFilterC.inl CosNotifyFilterC.cpp CosNotifyFilterC.h: CosNotifyFilter-stamp
 
 CosNotifyFilter-stamp: $(srcdir)/CosNotifyFilter.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyFilter.idl
@@ -1687,21 +1630,17 @@ CosNotifyFilter-stamp: $(srcdir)/CosNotifyFilter.idl
 BUILT_SOURCES += \
   Event_ForwarderS_T.cpp \
   Event_ForwarderC.inl \
-  Event_ForwarderS_T.inl \
   Event_ForwarderC.cpp \
-  Event_ForwarderC.h \
-  Event_ForwarderS_T.h
+  Event_ForwarderC.h
 
 CLEANFILES += \
   Event_ForwarderS_T.cpp \
   Event_ForwarderC.inl \
-  Event_ForwarderS_T.inl \
   Event_ForwarderC.cpp \
   Event_ForwarderC.h \
-  Event_ForwarderS_T.h \
   Event_Forwarder-stamp
 
-Event_ForwarderS_T.cpp Event_ForwarderC.inl Event_ForwarderS_T.inl Event_ForwarderC.cpp Event_ForwarderC.h Event_ForwarderS_T.h: Event_Forwarder-stamp
+Event_ForwarderS_T.cpp Event_ForwarderC.inl Event_ForwarderC.cpp Event_ForwarderC.h: Event_Forwarder-stamp
 
 Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/Event_Forwarder.idl
@@ -1710,21 +1649,17 @@ Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl
 BUILT_SOURCES += \
   NotifyExtS_T.cpp \
   NotifyExtC.inl \
-  NotifyExtS_T.inl \
   NotifyExtC.cpp \
-  NotifyExtC.h \
-  NotifyExtS_T.h
+  NotifyExtC.h
 
 CLEANFILES += \
   NotifyExtS_T.cpp \
   NotifyExtC.inl \
-  NotifyExtS_T.inl \
   NotifyExtC.cpp \
   NotifyExtC.h \
-  NotifyExtS_T.h \
   NotifyExt-stamp
 
-NotifyExtS_T.cpp NotifyExtC.inl NotifyExtS_T.inl NotifyExtC.cpp NotifyExtC.h NotifyExtS_T.h: NotifyExt-stamp
+NotifyExtS_T.cpp NotifyExtC.inl NotifyExtC.cpp NotifyExtC.h: NotifyExt-stamp
 
 NotifyExt-stamp: $(srcdir)/NotifyExt.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/NotifyExt.idl
@@ -1761,37 +1696,19 @@ libTAO_CosNotification_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosNotificationC.h \
-  CosNotificationS_T.h \
   CosNotifyChannelAdminC.h \
-  CosNotifyChannelAdminS_T.h \
   CosNotifyCommC.h \
-  CosNotifyCommS_T.h \
   CosNotifyFilterC.h \
-  CosNotifyFilterS_T.h \
   Event_ForwarderC.h \
-  Event_ForwarderS_T.h \
   Notify/Notify_Extensions.h \
   Notify/notify_export.h \
   NotifyExtC.h \
-  NotifyExtS_T.h \
   CosNotificationC.inl \
-  CosNotificationS_T.inl \
   CosNotifyChannelAdminC.inl \
-  CosNotifyChannelAdminS_T.inl \
   CosNotifyCommC.inl \
-  CosNotifyCommS_T.inl \
   CosNotifyFilterC.inl \
-  CosNotifyFilterS_T.inl \
   Event_ForwarderC.inl \
-  Event_ForwarderS_T.inl \
   NotifyExtC.inl \
-  NotifyExtS_T.inl \
-  CosNotificationS_T.cpp \
-  CosNotifyChannelAdminS_T.cpp \
-  CosNotifyCommS_T.cpp \
-  CosNotifyFilterS_T.cpp \
-  Event_ForwarderS_T.cpp \
-  NotifyExtS_T.cpp \
   CosNotification.idl \
   CosNotifyChannelAdmin.idl \
   CosNotifyComm.idl \
@@ -2044,10 +1961,13 @@ nobase_include_HEADERS += \
   Notify/ID_Factory.h \
   Notify/Method_Request.h \
   Notify/Method_Request_Dispatch.h \
+  Notify/Method_Request_Dispatch_T.h \
   Notify/Method_Request_Event.h \
   Notify/Method_Request_Lookup.h \
+  Notify/Method_Request_Lookup_T.h \
   Notify/Method_Request_Shutdown.h \
   Notify/Method_Request_Updates.h \
+  Notify/Method_Request_Updates_T.h \
   Notify/Notify_Constraint_Interpreter.h \
   Notify/Notify_Constraint_Visitors.h \
   Notify/Notify_Default_CO_Factory.h \
@@ -2063,7 +1983,10 @@ nobase_include_HEADERS += \
   Notify/Property_Boolean.h \
   Notify/Proxy.h \
   Notify/ProxyConsumer.h \
+  Notify/ProxyConsumer_T.h \
   Notify/ProxySupplier.h \
+  Notify/ProxySupplier_T.h \
+  Notify/Proxy_T.h \
   Notify/QoSProperties.h \
   Notify/Reactive_Task.h \
   Notify/Refcountable.h \
@@ -2111,10 +2034,13 @@ nobase_include_HEADERS += \
   Notify/ID_Factory.inl \
   Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch.inl \
+  Notify/Method_Request_Dispatch_T.inl \
   Notify/Method_Request_Event.inl \
   Notify/Method_Request_Lookup.inl \
+  Notify/Method_Request_Lookup_T.inl \
   Notify/Method_Request_Shutdown.inl \
   Notify/Method_Request_Updates.inl \
+  Notify/Method_Request_Updates_T.inl \
   Notify/Object.inl \
   Notify/POA_Helper.inl \
   Notify/Peer.inl \
@@ -2123,7 +2049,10 @@ nobase_include_HEADERS += \
   Notify/Property_Boolean.inl \
   Notify/Proxy.inl \
   Notify/ProxyConsumer.inl \
+  Notify/ProxyConsumer_T.inl \
   Notify/ProxySupplier.inl \
+  Notify/ProxySupplier_T.inl \
+  Notify/Proxy_T.inl \
   Notify/QoSProperties.inl \
   Notify/Reactive_Task.inl \
   Notify/Refcountable.inl \
@@ -2143,7 +2072,13 @@ nobase_include_HEADERS += \
   Notify/ThreadPool_Task.inl \
   Notify/Timer_Queue.inl \
   Notify/Timer_Reactor.inl \
-  Notify/Worker_Task.inl
+  Notify/Worker_Task.inl \
+  Notify/Method_Request_Dispatch_T.cpp \
+  Notify/Method_Request_Lookup_T.cpp \
+  Notify/Method_Request_Updates_T.cpp \
+  Notify/ProxyConsumer_T.cpp \
+  Notify/ProxySupplier_T.cpp \
+  Notify/Proxy_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2235,21 +2170,17 @@ EXTRA_DIST += \
 BUILT_SOURCES += \
   CosTradingS_T.cpp \
   CosTradingC.inl \
-  CosTradingS_T.inl \
   CosTradingC.cpp \
-  CosTradingC.h \
-  CosTradingS_T.h
+  CosTradingC.h
 
 CLEANFILES += \
   CosTradingS_T.cpp \
   CosTradingC.inl \
-  CosTradingS_T.inl \
   CosTradingC.cpp \
   CosTradingC.h \
-  CosTradingS_T.h \
   CosTrading-stamp
 
-CosTradingS_T.cpp CosTradingC.inl CosTradingS_T.inl CosTradingC.cpp CosTradingC.h CosTradingS_T.h: CosTrading-stamp
+CosTradingS_T.cpp CosTradingC.inl CosTradingC.cpp CosTradingC.h: CosTrading-stamp
 
 CosTrading-stamp: $(srcdir)/CosTrading.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTrading.idl
@@ -2258,21 +2189,17 @@ CosTrading-stamp: $(srcdir)/CosTrading.idl
 BUILT_SOURCES += \
   CosTradingDynamicS_T.cpp \
   CosTradingDynamicC.inl \
-  CosTradingDynamicS_T.inl \
   CosTradingDynamicC.cpp \
-  CosTradingDynamicC.h \
-  CosTradingDynamicS_T.h
+  CosTradingDynamicC.h
 
 CLEANFILES += \
   CosTradingDynamicS_T.cpp \
   CosTradingDynamicC.inl \
-  CosTradingDynamicS_T.inl \
   CosTradingDynamicC.cpp \
   CosTradingDynamicC.h \
-  CosTradingDynamicS_T.h \
   CosTradingDynamic-stamp
 
-CosTradingDynamicS_T.cpp CosTradingDynamicC.inl CosTradingDynamicS_T.inl CosTradingDynamicC.cpp CosTradingDynamicC.h CosTradingDynamicS_T.h: CosTradingDynamic-stamp
+CosTradingDynamicS_T.cpp CosTradingDynamicC.inl CosTradingDynamicC.cpp CosTradingDynamicC.h: CosTradingDynamic-stamp
 
 CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingDynamic.idl
@@ -2281,21 +2208,17 @@ CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl
 BUILT_SOURCES += \
   CosTradingReposS_T.cpp \
   CosTradingReposC.inl \
-  CosTradingReposS_T.inl \
   CosTradingReposC.cpp \
-  CosTradingReposC.h \
-  CosTradingReposS_T.h
+  CosTradingReposC.h
 
 CLEANFILES += \
   CosTradingReposS_T.cpp \
   CosTradingReposC.inl \
-  CosTradingReposS_T.inl \
   CosTradingReposC.cpp \
   CosTradingReposC.h \
-  CosTradingReposS_T.h \
   CosTradingRepos-stamp
 
-CosTradingReposS_T.cpp CosTradingReposC.inl CosTradingReposS_T.inl CosTradingReposC.cpp CosTradingReposC.h CosTradingReposS_T.h: CosTradingRepos-stamp
+CosTradingReposS_T.cpp CosTradingReposC.inl CosTradingReposC.cpp CosTradingReposC.h: CosTradingRepos-stamp
 
 CosTradingRepos-stamp: $(srcdir)/CosTradingRepos.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingRepos.idl
@@ -2327,20 +2250,11 @@ libTAO_CosTrading_la_LIBADD = \
 nobase_include_HEADERS += \
   CosTradingC.h \
   CosTradingDynamicC.h \
-  CosTradingDynamicS_T.h \
   CosTradingReposC.h \
-  CosTradingReposS_T.h \
-  CosTradingS_T.h \
   Trader/trading_export.h \
   CosTradingC.inl \
   CosTradingDynamicC.inl \
-  CosTradingDynamicS_T.inl \
   CosTradingReposC.inl \
-  CosTradingReposS_T.inl \
-  CosTradingS_T.inl \
-  CosTradingDynamicS_T.cpp \
-  CosTradingReposS_T.cpp \
-  CosTradingS_T.cpp \
   CosTrading.idl \
   CosTradingDynamic.idl \
   CosTradingRepos.idl
@@ -2447,14 +2361,20 @@ nobase_include_HEADERS += \
   Trader/Constraint_Visitors.h \
   Trader/Interpreter.h \
   Trader/Interpreter_Utils.h \
+  Trader/Interpreter_Utils_T.h \
   Trader/Offer_Database.h \
   Trader/Offer_Iterators.h \
+  Trader/Offer_Iterators_T.h \
   Trader/Service_Type_Repository.h \
   Trader/Trader.h \
   Trader/Trader_Constraint_Visitors.h \
   Trader/Trader_Interfaces.h \
+  Trader/Trader_T.h \
   Trader/Trader_Utils.h \
-  Trader/Trading_Loader.h
+  Trader/Trading_Loader.h \
+  Trader/Interpreter_Utils_T.cpp \
+  Trader/Offer_Iterators_T.cpp \
+  Trader/Trader_T.cpp
 
 EXTRA_DIST += \
   CosTrading_Serv.rc
@@ -2464,21 +2384,17 @@ EXTRA_DIST += \
 BUILT_SOURCES += \
   DsLogAdminS_T.cpp \
   DsLogAdminC.inl \
-  DsLogAdminS_T.inl \
   DsLogAdminC.cpp \
-  DsLogAdminC.h \
-  DsLogAdminS_T.h
+  DsLogAdminC.h
 
 CLEANFILES += \
   DsLogAdminS_T.cpp \
   DsLogAdminC.inl \
-  DsLogAdminS_T.inl \
   DsLogAdminC.cpp \
   DsLogAdminC.h \
-  DsLogAdminS_T.h \
   DsLogAdmin-stamp
 
-DsLogAdminS_T.cpp DsLogAdminC.inl DsLogAdminS_T.inl DsLogAdminC.cpp DsLogAdminC.h DsLogAdminS_T.h: DsLogAdmin-stamp
+DsLogAdminS_T.cpp DsLogAdminC.inl DsLogAdminC.cpp DsLogAdminC.h: DsLogAdmin-stamp
 
 DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
@@ -2487,21 +2403,17 @@ DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
 BUILT_SOURCES += \
   DsLogNotificationS_T.cpp \
   DsLogNotificationC.inl \
-  DsLogNotificationS_T.inl \
   DsLogNotificationC.cpp \
-  DsLogNotificationC.h \
-  DsLogNotificationS_T.h
+  DsLogNotificationC.h
 
 CLEANFILES += \
   DsLogNotificationS_T.cpp \
   DsLogNotificationC.inl \
-  DsLogNotificationS_T.inl \
   DsLogNotificationC.cpp \
   DsLogNotificationC.h \
-  DsLogNotificationS_T.h \
   DsLogNotification-stamp
 
-DsLogNotificationS_T.cpp DsLogNotificationC.inl DsLogNotificationS_T.inl DsLogNotificationC.cpp DsLogNotificationC.h DsLogNotificationS_T.h: DsLogNotification-stamp
+DsLogNotificationS_T.cpp DsLogNotificationC.inl DsLogNotificationC.cpp DsLogNotificationC.h: DsLogNotification-stamp
 
 DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
@@ -2531,16 +2443,10 @@ libTAO_DsLogAdmin_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsLogAdminC.h \
-  DsLogAdminS_T.h \
   DsLogNotificationC.h \
-  DsLogNotificationS_T.h \
   Log/log_export.h \
   DsLogAdminC.inl \
-  DsLogAdminS_T.inl \
   DsLogNotificationC.inl \
-  DsLogNotificationS_T.inl \
-  DsLogAdminS_T.cpp \
-  DsLogNotificationS_T.cpp \
   DsLogAdmin.idl \
   DsLogNotification.idl
 
@@ -2554,21 +2460,17 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   DsEventLogAdminS_T.cpp \
   DsEventLogAdminC.inl \
-  DsEventLogAdminS_T.inl \
   DsEventLogAdminC.cpp \
-  DsEventLogAdminC.h \
-  DsEventLogAdminS_T.h
+  DsEventLogAdminC.h
 
 CLEANFILES += \
   DsEventLogAdminS_T.cpp \
   DsEventLogAdminC.inl \
-  DsEventLogAdminS_T.inl \
   DsEventLogAdminC.cpp \
   DsEventLogAdminC.h \
-  DsEventLogAdminS_T.h \
   DsEventLogAdmin-stamp
 
-DsEventLogAdminS_T.cpp DsEventLogAdminC.inl DsEventLogAdminS_T.inl DsEventLogAdminC.cpp DsEventLogAdminC.h DsEventLogAdminS_T.h: DsEventLogAdmin-stamp
+DsEventLogAdminS_T.cpp DsEventLogAdminC.inl DsEventLogAdminC.cpp DsEventLogAdminC.h: DsEventLogAdmin-stamp
 
 DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
@@ -2600,11 +2502,8 @@ libTAO_DsEventLogAdmin_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsEventLogAdminC.h \
-  DsEventLogAdminS_T.h \
   Log/eventlog_export.h \
   DsEventLogAdminC.inl \
-  DsEventLogAdminS_T.inl \
-  DsEventLogAdminS_T.cpp \
   DsEventLogAdmin.idl
 
 endif !BUILD_MINIMUM_CORBA
@@ -2700,8 +2599,7 @@ nobase_include_HEADERS += \
   Log/LogRecordStore.h \
   Log/Log_Constraint_Interpreter.h \
   Log/Log_Constraint_Visitors.h \
-  Log/Log_i.h \
-  Log/PersistStore.h
+  Log/Log_i.h
 
 ## Makefile.DsEventLogAdmin_Skel.am 
 
@@ -2810,21 +2708,17 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminC.cpp \
-  DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS_T.h
+  DsNotifyLogAdminC.h
 
 CLEANFILES += \
   DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminC.cpp \
   DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS_T.h \
   DsNotifyLogAdmin-stamp
 
-DsNotifyLogAdminS_T.cpp DsNotifyLogAdminC.inl DsNotifyLogAdminS_T.inl DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h DsNotifyLogAdminS_T.h: DsNotifyLogAdmin-stamp
+DsNotifyLogAdminS_T.cpp DsNotifyLogAdminC.inl DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h: DsNotifyLogAdmin-stamp
 
 DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h $(srcdir)/DsNotifyLogAdmin.idl
@@ -2858,11 +2752,8 @@ libTAO_DsNotifyLogAdmin_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS_T.h \
   Log/notifylog_export.h \
   DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS_T.inl \
-  DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdmin.idl
 
 endif !BUILD_MINIMUM_CORBA
@@ -3392,6 +3283,7 @@ nobase_include_HEADERS += \
   RtecUDPAdminC.inl \
   RtecUDPAdminS.inl \
   RtecUDPAdminS_T.inl \
+  Event/EC_Lifetime_Utils_T.cpp \
   RtecDefaultEventDataS_T.cpp \
   RtecEventChannelAdminS_T.cpp \
   RtecEventCommS_T.cpp \
@@ -3618,7 +3510,6 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.FTRT_EventChannel.am 
 
 if BUILD_CORBA_MESSAGING
-if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 FTRT_EventChannel = \
@@ -3734,7 +3625,6 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
-endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FT_ClientORB.am 
 
@@ -3750,8 +3640,7 @@ FT_ClientORB = \
   FaultTolerance/FT_ClientService_Activate.cpp \
   FaultTolerance/FT_Endpoint_Selector_Factory.cpp \
   FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp \
-  FaultTolerance/FT_Service_Callbacks.cpp \
-  PortableGroup_Simple_DSC.cpp
+  FaultTolerance/FT_Service_Callbacks.cpp
 
 lib_LTLIBRARIES += libTAO_FT_ClientORB.la
 
@@ -3808,8 +3697,7 @@ FT_ServerORB = \
   FaultTolerance/FT_ServerPolicyFactory.cpp \
   FaultTolerance/FT_ServerPolicy_i.cpp \
   FaultTolerance/FT_ServerRequest_Interceptor.cpp \
-  FaultTolerance/FT_ServerService_Activate.cpp \
-  PortableGroup_Simple_DSC.cpp
+  FaultTolerance/FT_ServerService_Activate.cpp
 
 lib_LTLIBRARIES += libTAO_FT_ServerORB.la
 
@@ -4032,11 +3920,11 @@ libTAO_FaultTolerance_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FaultTolerance_la_LIBADD = \
+  libTAO_FT_ServerORB.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
-  libTAO_FT_ServerORB.la \
   libTAO_FT_ClientORB.la \
   libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -4062,6 +3950,7 @@ nobase_include_HEADERS += \
   FT_ReplicationManagerC.h \
   FT_ReplicationManagerS.h \
   FT_ReplicationManagerS_T.h \
+  FaultTolerance/fault_tol_export.h \
   FT_CORBAC.inl \
   FT_CORBAS.inl \
   FT_CORBAS_T.inl \
@@ -4094,6 +3983,101 @@ endif BUILD_ACE_UUID
 
 EXTRA_DIST += \
   FaultTolerance.rc
+
+## Makefile.HTIOP.am 
+
+BUILT_SOURCES += \
+  HTIOPS_T.cpp \
+  HTIOPC.inl \
+  HTIOPS.inl \
+  HTIOPS_T.inl \
+  HTIOPC.cpp \
+  HTIOPC.h \
+  HTIOPS.h \
+  HTIOPS_T.h
+
+CLEANFILES += \
+  HTIOPS_T.cpp \
+  HTIOPC.inl \
+  HTIOPS.inl \
+  HTIOPS_T.inl \
+  HTIOPC.cpp \
+  HTIOPC.h \
+  HTIOPS.h \
+  HTIOPS_T.h \
+  HTIOP-stamp
+
+HTIOPS_T.cpp HTIOPC.inl HTIOPS.inl HTIOPS_T.inl HTIOPC.cpp HTIOPC.h HTIOPS.h HTIOPS_T.h: HTIOP-stamp
+
+HTIOP-stamp: $(srcdir)/HTIOP.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h $(srcdir)/HTIOP.idl
+	@touch $@
+
+HTIOP = \
+  HTIOP/HTIOP_Acceptor.cpp \
+  HTIOP/HTIOP_Acceptor_Impl.cpp \
+  HTIOP/HTIOP_Completion_Handler.cpp \
+  HTIOP/HTIOP_Connection_Handler.cpp \
+  HTIOP/HTIOP_Connector.cpp \
+  HTIOP/HTIOP_Connector_Impl.cpp \
+  HTIOP/HTIOP_Endpoint.cpp \
+  HTIOP/HTIOP_Factory.cpp \
+  HTIOP/HTIOP_Profile.cpp \
+  HTIOP/HTIOP_Transport.cpp \
+  HTIOP/htiop_endpointsC.cpp \
+  HTIOPC.cpp
+
+lib_LTLIBRARIES += libTAO_HTIOP.la
+
+libTAO_HTIOP_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DHTIOP_BUILD_DLL
+
+libTAO_HTIOP_la_SOURCES = \
+  $(HTIOP)
+
+libTAO_HTIOP_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_HTIOP_la_LIBADD = \
+  -lACE_HTBP \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  HTIOP/HTIOP_Acceptor.h \
+  HTIOP/HTIOP_Acceptor_Impl.h \
+  HTIOP/HTIOP_Completion_Handler.h \
+  HTIOP/HTIOP_Connection_Handler.h \
+  HTIOP/HTIOP_Connector.h \
+  HTIOP/HTIOP_Connector_Impl.h \
+  HTIOP/HTIOP_Endpoint.h \
+  HTIOP/HTIOP_Factory.h \
+  HTIOP/HTIOP_Profile.h \
+  HTIOP/HTIOP_Transport.h \
+  HTIOP/htiop_endpointsC.h \
+  HTIOPC.h \
+  HTIOPS.h \
+  HTIOPS_T.h \
+  HTIOP/HTIOP_Acceptor.i \
+  HTIOP/HTIOP_Acceptor_Impl.i \
+  HTIOP/HTIOP_Completion_Handler.i \
+  HTIOP/HTIOP_Connection_Handler.i \
+  HTIOP/HTIOP_Connector_Impl.i \
+  HTIOP/HTIOP_Endpoint.i \
+  HTIOP/HTIOP_Profile.i \
+  HTIOP/HTIOP_Transport.i \
+  HTIOP/htiop_endpointsC.inl \
+  HTIOPC.inl \
+  HTIOPS.inl \
+  HTIOPS_T.inl \
+  HTIOPS_T.cpp \
+  HTIOP.idl
 
 ## Makefile.IFRService.am 
 
@@ -4212,11 +4196,16 @@ nobase_include_HEADERS += \
   IFRService/HomeDef_i.h \
   IFRService/IDLType_i.h \
   IFRService/IFR_BaseS.h \
+  IFRService/IFR_BaseS_T.h \
   IFRService/IFR_BasicS.h \
+  IFRService/IFR_BasicS_T.h \
   IFRService/IFR_ComponentsS.h \
+  IFRService/IFR_ComponentsS_T.h \
   IFRService/IFR_ExtendedS.h \
+  IFRService/IFR_ExtendedS_T.h \
   IFRService/IFR_Service_Loader.h \
   IFRService/IFR_Service_Utils.h \
+  IFRService/IFR_Service_Utils_T.h \
   IFRService/IRObject_i.h \
   IFRService/InterfaceAttrExtension_i.h \
   IFRService/InterfaceDef_i.h \
@@ -4240,9 +4229,18 @@ nobase_include_HEADERS += \
   IFRService/ValueMemberDef_i.h \
   IFRService/WstringDef_i.h \
   IFRService/IFR_BaseS.i \
+  IFRService/IFR_BaseS_T.i \
   IFRService/IFR_BasicS.i \
+  IFRService/IFR_BasicS_T.i \
   IFRService/IFR_ComponentsS.i \
-  IFRService/IFR_ExtendedS.i
+  IFRService/IFR_ComponentsS_T.i \
+  IFRService/IFR_ExtendedS.i \
+  IFRService/IFR_ExtendedS_T.i \
+  IFRService/IFR_BaseS_T.cpp \
+  IFRService/IFR_BasicS_T.cpp \
+  IFRService/IFR_ComponentsS_T.cpp \
+  IFRService/IFR_ExtendedS_T.cpp \
+  IFRService/IFR_Service_Utils_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -4458,7 +4456,9 @@ nobase_include_HEADERS += \
   Sched/Config_Scheduler.h \
   Sched/DynSched.h \
   Sched/Reconfig_Sched_Utils.h \
+  Sched/Reconfig_Sched_Utils_T.h \
   Sched/Reconfig_Scheduler.h \
+  Sched/Reconfig_Scheduler_T.h \
   Sched/SchedEntry.h \
   Sched/Scheduler.h \
   Sched/Scheduler_Generic.h \
@@ -4472,7 +4472,9 @@ nobase_include_HEADERS += \
   Sched/Config_Scheduler.i \
   Sched/DynSched.i \
   Sched/Reconfig_Sched_Utils.i \
+  Sched/Reconfig_Sched_Utils_T.i \
   Sched/Reconfig_Scheduler.i \
+  Sched/Reconfig_Scheduler_T.i \
   Sched/SchedEntry.i \
   Sched/Scheduler.i \
   Sched/Scheduler_Generic.i \
@@ -4480,6 +4482,8 @@ nobase_include_HEADERS += \
   Scheduler_Factory.i \
   Scheduler_Utilities.i \
   RtecSchedulerS_T.cpp \
+  Sched/Reconfig_Sched_Utils_T.cpp \
+  Sched/Reconfig_Scheduler_T.cpp \
   RtecScheduler.idl
 
 EXTRA_DIST += \
@@ -4677,7 +4681,7 @@ libTAO_RTKokyuEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTKokyuEvent_la_LIBADD = \
-  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
+  -lKokyu \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
   libTAO_RTEvent.la \
@@ -4830,7 +4834,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 
 BUILT_SOURCES += \
-  CSIS_T.cpp \
   CSIC.inl \
   CSIS.inl \
   CSIS_T.inl \
@@ -4840,7 +4843,6 @@ BUILT_SOURCES += \
   CSIS_T.h
 
 CLEANFILES += \
-  CSIS_T.cpp \
   CSIC.inl \
   CSIS.inl \
   CSIS_T.inl \
@@ -4850,14 +4852,13 @@ CLEANFILES += \
   CSIS_T.h \
   CSI-stamp
 
-CSIS_T.cpp CSIC.inl CSIS.inl CSIS_T.inl CSIC.cpp CSIC.h CSIS.h CSIS_T.h: CSI-stamp
+CSIC.inl CSIS.inl CSIS_T.inl CSIC.cpp CSIC.h CSIS.h CSIS_T.h: CSI-stamp
 
 CSI-stamp: $(srcdir)/CSI.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSI.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  CSIIOPS_T.cpp \
   CSIIOPC.inl \
   CSIIOPS.inl \
   CSIIOPS_T.inl \
@@ -4867,7 +4868,6 @@ BUILT_SOURCES += \
   CSIIOPS_T.h
 
 CLEANFILES += \
-  CSIIOPS_T.cpp \
   CSIIOPC.inl \
   CSIIOPS.inl \
   CSIIOPS_T.inl \
@@ -4877,14 +4877,13 @@ CLEANFILES += \
   CSIIOPS_T.h \
   CSIIOP-stamp
 
-CSIIOPS_T.cpp CSIIOPC.inl CSIIOPS.inl CSIIOPS_T.inl CSIIOPC.cpp CSIIOPC.h CSIIOPS.h CSIIOPS_T.h: CSIIOP-stamp
+CSIIOPC.inl CSIIOPS.inl CSIIOPS_T.inl CSIIOPC.cpp CSIIOPC.h CSIIOPS.h CSIIOPS_T.h: CSIIOP-stamp
 
 CSIIOP-stamp: $(srcdir)/CSIIOP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSIIOP.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  GSSUPS_T.cpp \
   GSSUPC.inl \
   GSSUPS.inl \
   GSSUPS_T.inl \
@@ -4894,7 +4893,6 @@ BUILT_SOURCES += \
   GSSUPS_T.h
 
 CLEANFILES += \
-  GSSUPS_T.cpp \
   GSSUPC.inl \
   GSSUPS.inl \
   GSSUPS_T.inl \
@@ -4904,7 +4902,7 @@ CLEANFILES += \
   GSSUPS_T.h \
   GSSUP-stamp
 
-GSSUPS_T.cpp GSSUPC.inl GSSUPS.inl GSSUPS_T.inl GSSUPC.cpp GSSUPC.h GSSUPS.h GSSUPS_T.h: GSSUP-stamp
+GSSUPC.inl GSSUPS.inl GSSUPS_T.inl GSSUPC.cpp GSSUPC.h GSSUPS.h GSSUPS_T.h: GSSUP-stamp
 
 GSSUP-stamp: $(srcdir)/GSSUP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/GSSUP.idl
@@ -4998,7 +4996,6 @@ SecurityLevel2-stamp: $(srcdir)/SecurityLevel2.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  SecurityLevel3S_T.cpp \
   SecurityLevel3C.inl \
   SecurityLevel3S.inl \
   SecurityLevel3S_T.inl \
@@ -5008,7 +5005,6 @@ BUILT_SOURCES += \
   SecurityLevel3S_T.h
 
 CLEANFILES += \
-  SecurityLevel3S_T.cpp \
   SecurityLevel3C.inl \
   SecurityLevel3S.inl \
   SecurityLevel3S_T.inl \
@@ -5018,7 +5014,7 @@ CLEANFILES += \
   SecurityLevel3S_T.h \
   SecurityLevel3-stamp
 
-SecurityLevel3S_T.cpp SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3S_T.inl SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3S.h SecurityLevel3S_T.h: SecurityLevel3-stamp
+SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3S_T.inl SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3S.h SecurityLevel3S_T.h: SecurityLevel3-stamp
 
 SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
@@ -5077,9 +5073,12 @@ libTAO_Security_la_LIBADD = \
 nobase_include_HEADERS += \
   CSIC.h \
   CSIIOPC.h \
+  CSIIOPS.h \
   CSIIOPS_T.h \
+  CSIS.h \
   CSIS_T.h \
   GSSUPC.h \
+  GSSUPS.h \
   GSSUPS_T.h \
   Security/CSI_Utils.h \
   Security/SL2_EstablishTrustPolicy.h \
@@ -5104,14 +5103,18 @@ nobase_include_HEADERS += \
   SecurityLevel2S.h \
   SecurityLevel2S_T.h \
   SecurityLevel3C.h \
+  SecurityLevel3S.h \
   SecurityLevel3S_T.h \
   SecurityS.h \
   SecurityS_T.h \
   CSIC.inl \
   CSIIOPC.inl \
+  CSIIOPS.inl \
   CSIIOPS_T.inl \
+  CSIS.inl \
   CSIS_T.inl \
   GSSUPC.inl \
+  GSSUPS.inl \
   GSSUPS_T.inl \
   Security/SL3_SecurityCurrent.inl \
   Security/Security_Current.inl \
@@ -5123,15 +5126,12 @@ nobase_include_HEADERS += \
   SecurityLevel2S.inl \
   SecurityLevel2S_T.inl \
   SecurityLevel3C.inl \
+  SecurityLevel3S.inl \
   SecurityLevel3S_T.inl \
   SecurityS.inl \
   SecurityS_T.inl \
-  CSIIOPS_T.cpp \
-  CSIS_T.cpp \
-  GSSUPS_T.cpp \
   SecurityLevel1S_T.cpp \
   SecurityLevel2S_T.cpp \
-  SecurityLevel3S_T.cpp \
   SecurityS_T.cpp \
   CSI.idl \
   CSIIOP.idl \
@@ -5219,6 +5219,8 @@ libTAO_SSLIOP_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(SSL_ROOT)/include \
+  -I/usr/kerberos/include \
   -DACE_HAS_SSL=1 \
   -DTAO_SSLIOP_BUILD_DLL
 
@@ -5234,7 +5236,9 @@ libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lssl \
+  -lcrypto
 
 nobase_include_HEADERS += \
   SSLIOP/IIOP_SSL_Acceptor.h \
@@ -5265,6 +5269,7 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_X509.h \
   SSLIOP/ssl_endpoints.h \
   SSLIOPC.h \
+  SSLIOPS.h \
   SSLIOPS_T.h \
   SSLIOP/IIOP_SSL_Connection_Handler.inl \
   SSLIOP/SSLIOP_Acceptor.i \
@@ -5276,8 +5281,8 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Profile.i \
   SSLIOP/ssl_endpoints.i \
   SSLIOPC.inl \
+  SSLIOPS.inl \
   SSLIOPS_T.inl \
-  SSLIOPS_T.cpp \
   SSLIOP.idl
 
 endif BUILD_SSL
