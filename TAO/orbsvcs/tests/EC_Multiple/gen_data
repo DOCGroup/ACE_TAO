@@ -10,19 +10,24 @@ tail +3 remote.log | sort -n > remote.data
 
 gnuplot <<_EOF_
 set grid xtics ytics
-set terminal pbm color
-set output "local.pbm"
-plot 'local.data' w i
-set terminal x11
-plot 'local.data' w i
-pause 5
+set xlabel "Time (usecs)"
+set ylabel "Relative frequency"
 
-set terminal pbm color
-set output "remote.pbm"
+set terminal postscript eps color
+set output "local.eps"
+plot 'local.data' w i
+set terminal x11
+plot 'local.data' w i
+pause 2
+
+set terminal postscript eps
+set output "remote.eps"
 plot 'remote.data' w i
 set terminal x11
 plot 'remote.data' w i
-pause 5
+pause 2
 
 _EOF_
 
+gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE -sOutputFile="local.jpg" local.eps quit.ps
+gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE -sOutputFile="remote.jpg" remote.eps quit.ps

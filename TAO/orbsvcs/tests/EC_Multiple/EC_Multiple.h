@@ -16,81 +16,13 @@
 #define EC_MULTIPLE_H
 
 #include "ace/SString.h"
+#include "ace/Task.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/Event/EC_Gateway.h"
 
-
-class EC_Proxy
-// = TITLE
-//   Event Channel Proxy.
-//
-// = DESCRIPTION
-//   This class mediates among two event channels, it connects as a
-//   consumer of events with a remote event channel, and as a supplier
-//   of events with the local EC.
-//   As a consumer it gives a QoS designed to only accept the events
-//   in which *local* consumers are interested.
-//   Eventually the local EC should create this object and compute its
-//   QoS in an automated manner; but this requires some way to filter
-//   out the peers registered as consumers, otherwise we will get
-//   loops in the QoS graph.
-//   It uses exactly the same set of events in the publications list
-//   when connected as a supplier.
-//
-// = NOTES
-//   An alternative implementation would be to register with the
-//   remote EC as a supplier, and then filter on the remote EC, but
-//   one of the objectives is to minimize network traffic.
-//   On the other hand the events will be pushed to remote consumers,
-//   event though they will be dropped upon receipt (due to the TTL
-//   field); IMHO this is another suggestion that the EC needs to know
-//   (somehow) which consumers are truly its peers in disguise.
-//
-// = ALTERNATIVES
-//   Check http://www.cs.wustl.edu/~coryan/Multiple_EC.html for a
-//   discussion on that topic.
-//
-{
-public:
-  EC_Proxy (void);
-  ~EC_Proxy (void);
-
-  int open (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
-	    RtecEventChannelAdmin::EventChannel_ptr local_ec,
-	    const RtecEventChannelAdmin::ConsumerQOS& subscriptions,
-	    const RtecEventChannelAdmin::SupplierQOS& publications,
-	    CORBA::Environment &_env);
-  // Establish the connections.
-  
-  void disconnect_push_supplier (CORBA::Environment &);
-  // The channel is disconnecting.
-
-  void disconnect_push_consumer (CORBA::Environment &);
-  // The channel is disconnecting.
-
-  void push (const RtecEventComm::EventSet &events,
-	     CORBA::Environment &);
-  // This is the Consumer side behavior, it pushes the events to the
-  // local event channel.
-
-  int shutdown (CORBA::Environment&);
-
-private:
-  ACE_PushConsumer_Adapter<EC_Proxy> consumer_;
-  // Our consumer personality....
-
-  ACE_PushSupplier_Adapter<EC_Proxy> supplier_;
-  // Our supplier personality....
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
-
-  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // We talk to the EC (as a consumer) using this proxy.
-};
-
-class Test_ECP
+class Test_ECG : public ACE_Task_Base
 //
 // = TITLE
 //   A simple test for the EC_Proxy class.
@@ -106,12 +38,21 @@ class Test_ECP
 //    wants one of the local events, and this event is generated less
 //    frequently.
 //
-//   This class creates the local ECP a consumer and a supplier, it
-//   uses the command line to figure the 
+//   This class creates the local EC_Gateway a consumer and a
+//   supplier, it uses the command line to figure the subscriptions
+//   and publications list.
 //
 {
 public:
-  Test_ECP (void);
+  Test_ECG (void);
+
+  enum {
+    DEFAULT_EVENT_COUNT = 128,
+    // The default event count.
+
+    MAX_EVENTS = 256000
+    // Maximum number of events to send...
+  };
 
   int run (int argc, char* argv[]);
   // Execute the test.
@@ -122,33 +63,71 @@ public:
 	     CORBA::Environment &);
   // Implement the consumer and supplier upcalls.
 
+  virtual int svc (void);
+  // Run the scavenger thread for the utilization test.
+
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+			      const void *arg = 0);
+  // Used when short circuiting the EC, this is the Event_Handler
+  // callback.
 
 private:
   int parse_args (int argc, char* argv[]);
+  // parse the command line args
+
+  int run_short_circuit (CORBA::ORB_ptr orb,
+			 PortableServer::POA_ptr root_poa,
+			 PortableServer::POAManager_ptr poa_manager,
+			 CORBA::Environment& _env);
+  // Run the short-circuit version of the test, i.e. we don't use the
+  // EC to pass the events.
+  // To simulate the periodic nature of the EC event generation we run
+  // the ORB and connect to its Reactor for the timeouts.
+
+  int run_ec (CORBA::ORB_ptr orb,
+	      PortableServer::POA_ptr root_poa,
+	      PortableServer::POAManager_ptr poa_manager,
+	      CORBA::Environment& _env);
+  // Run the test using the EC.
+
+  void dump_results (void);
+  // Dumpt the results to the standard output.
 
   RtecEventChannelAdmin::EventChannel_ptr
     get_ec (CosNaming::NamingContext_ptr naming_context,
 	    const char* ec_name,
 	    CORBA::Environment &_env);
+  // Helper routine to obtain an EC given its name.
 
   int connect_supplier (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 			CORBA::Environment &_env);
+  // Connect the supplier, it builds the proper Publication list based
+  // on the command line args.
+
   int connect_consumer (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 			CORBA::Environment &_env);
-  int connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
+  // Connect the consumer, it builds the proper Subscription list
+  // based on the command line args.
+
+  int connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 		   RtecEventChannelAdmin::EventChannel_ptr remote_ec,
+		   RtecScheduler::Scheduler_ptr remote_sch,
 		   CORBA::Environment &_env);
+  // Connect the EC gateway, it builds the Subscriptions and the
+  // Publications list.
 
   int shutdown (CORBA::Environment&);
+  // Called when the main thread (i.e. not the scavenger thread) is
+  // shutting down.
 
 private:
-  ACE_PushConsumer_Adapter<Test_ECP> consumer_; 
+  ACE_PushConsumer_Adapter<Test_ECG> consumer_; 
   // Our consumer personality....
 
-  ACE_PushSupplier_Adapter<Test_ECP> supplier_;
+  ACE_PushSupplier_Adapter<Test_ECG> supplier_;
   // Our supplier personality....
 
-  EC_Proxy ecp_;
+  TAO_EC_Gateway ecg_;
   // The proxy used to connect both event channels.
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
@@ -160,17 +139,30 @@ private:
   RtecEventComm::EventSourceID supplier_id_;
   // Our ID as a supplier.
 
-  char* rmt_ec_name_;
-  // The name of the "remote" EC.
-
   char* lcl_ec_name_;
   // The name of the "local" EC.
 
-  char* sched_name_;
-  // The name of the scheduling service.
+  char* rmt_ec_name_;
+  // The name of the "remote" EC.
 
-  int dyn_sched_;
-  // Use a collocated dynamic scheduler.
+  char* lcl_sch_name_;
+  // The name of the local scheduling service.
+
+  char* rmt_sch_name_;
+  // The name of the remote scheduling service.
+
+  int global_scheduler_;
+  // Don't create a local scheduler.
+
+  int short_circuit_;
+  // Don't send the messages through the EC. This is needed to measure
+  // the overhead introduced by the EC.
+
+  int interval_;
+  // The interval between the messages.
+
+  int message_count_;
+  // How many messages we will send
 
   int event_a_;
   int event_b_;
@@ -179,12 +171,28 @@ private:
   // this allows for a lot of configurations (making a == c or
   // different, etc.)
 
-  int interval_;
-  // The interval between the messages.
+  ACE_hrtime_t lcl_time_[Test_ECG::MAX_EVENTS];
+  int lcl_cnt_;
+  ACE_hrtime_t rmt_time_[Test_ECG::MAX_EVENTS];
+  int rmt_cnt_;
+  // Store the measurements for local and remote events..
 
-  int message_count_;
-  // How many messages will we send...
+  ACE_hrtime_t scavenger_start_;
+  ACE_hrtime_t scavenger_end_;
+  // Measure the time it takes to run the scavenger thread.
+
+  ACE_Barrier scavenger_barrier_;
+  // The scavenger thread should not start until the EC is running.
+
+  int scavenger_cnt_;
+  // The number of iterations to run in the scavenger thread, if 0
+  // then there utilization thread is not started (this is good to
+  // measure just latency).
+
+  int scavenger_priority_;
+  // The priority at which the scavenger thread runs, must be lower
+  // that all the other threads.
+
 };
-
 
 #endif /* EC_MULTIPLE_H */
