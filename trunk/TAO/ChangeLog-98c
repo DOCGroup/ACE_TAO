@@ -3,6 +3,9 @@ Mon Apr 27 16:46:42 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/*.cpp: put in RT class if running
           as root, and set LWP priorities.
 
+        * tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test: added this shell
+          script, which spawns the server and client (locally).
+
 Sun Apr 26 10:19:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
