@@ -11,7 +11,13 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
-#define CHORUS 3.1b
+// Define CHORUS to the correct version number
+#ifdef CHORUS_4
+# define CHORUS 4.0
+#else
+# define CHORUS 3.1b
+#endif
+
 #if defined (linux)
   // This shouldn't be necessary.
 # undef linux
@@ -120,11 +126,15 @@
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_PTHREAD_PROCESS_ENUM
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_PTHREAD_CLEANUP
 #define ACE_LACKS_PTHREAD_SIGMASK
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+// Chorus 4.0 supports POSIX Threads 1003.1b/1003.1c
+#if !defined(CHORUS_4)
+# define ACE_HAS_PTHREAD_PROCESS_ENUM
+#endif
+
 
 #if !defined (__ACE_INLINE__)
 # define __ACE_INLINE__

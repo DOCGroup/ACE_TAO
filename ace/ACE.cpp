@@ -3884,7 +3884,15 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq);
        n > 0;
+#if !defined(CHORUS_4)
        n--, ifr++)
+#else
+       n--,
+           ((ifr->ifr_addr.sa_len <= sizeof (struct sockaddr)) ?
+             ifr++ :
+             ifr = (struct ifreq *) 
+             (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
+#endif /* CHORUS_4 */
     {
       struct sockaddr_in if_addr;
 
@@ -4054,7 +4062,19 @@ ACE::count_interfaces (ACE_HANDLE handle,
         break;
 
       if_count++;
+#if !defined(CHORUS_4)
       p_ifs++;
+#else
+     if (p_ifs->ifr_addr.sa_len <= sizeof (struct sockaddr))
+       {
+          p_ifs++;
+       }
+       else
+       {   
+          p_ifs = (struct ifreq *)
+              (p_ifs->ifr_addr.sa_len + (caddr_t) &p_ifs->ifr_addr);
+       }      
+#endif /* CHORUS_4 */
     }
 
   ACE_OS::free (ifcfg.ifc_req);
@@ -4481,7 +4501,19 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ! _UNICOS */
         }
 
+#if !defined(CHORUS_4)
       pcur++;
+#else
+      if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
+        {
+           pcur++;
+        }
+      else
+        {   
+           pcur = (struct ifreq *) 
+               (pcur->ifr_addr.sa_len + (caddr_t) &pcur->ifr_addr);
+        }
+#endif
     }
   return 0;
 #else
