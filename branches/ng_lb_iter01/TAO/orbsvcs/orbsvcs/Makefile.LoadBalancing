@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:LoadBalancing
 
-ACE_SHLIBS = -lTAO -lTAO_CosNaming -lTAO_PortableServer -lACE
+ACE_SHLIBS = -lTAO -lTAO_PortableGroup -lTAO_PortableServer -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
