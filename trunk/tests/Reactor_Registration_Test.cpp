@@ -27,7 +27,7 @@
 ACE_RCSID(tests, Reactor_Registration_Test, "$Id$")
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
-static const int message_size = 26;
+static const size_t message_size = 26;
 static int iteration = 1;
 
 class Event_Handler : public ACE_Event_Handler
@@ -54,12 +54,11 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
   : ACE_Event_Handler (&reactor),
     pipe_ (read, write)
 {
-  int result = 0;
+  ssize_t result = 0;
 
   if (read == ACE_INVALID_HANDLE)
     {
-      result =
-                        this->pipe_.open ();
+      result = this->pipe_.open ();
       ACE_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
     }
@@ -79,14 +78,14 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
   ACE_UNUSED_ARG (result);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Event_Handler::Event_Handler for %x\n",
+              ACE_TEXT ("Event_Handler::Event_Handler for %@\n"),
               this));
 }
 
 Event_Handler::~Event_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Event_Handler::~Event_Handler for %x\n",
+              ACE_TEXT ("Event_Handler::~Event_Handler for %@\n"),
               this));
 }
 
@@ -95,7 +94,7 @@ Event_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[message_size + 1];
 
-  int result =
+  ssize_t result =
     ACE::recv_n (handle,
                  buf,
                  sizeof buf - 1);
@@ -105,7 +104,7 @@ Event_Handler::handle_input (ACE_HANDLE handle)
   buf[message_size] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "Message %s received for %x\n",
+              ACE_TEXT ("Message %C received for %@\n"),
               buf,
               this));
 
@@ -144,7 +143,7 @@ test (ACE_Reactor_Impl &reactor_impl,
       const char *reactor_type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nTesting with %s\n\n",
+              ACE_TEXT ("\nTesting with %C\n\n"),
               reactor_type));
 
   ACE_Reactor reactor (&reactor_impl,
