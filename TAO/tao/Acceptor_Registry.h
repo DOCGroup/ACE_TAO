@@ -27,10 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
-#include "tao/Typecode.h"
 #include "tao/Resource_Factory.h"
-
-#include "ace/Containers_T.h"
 
 // Forward declarations.
 class ACE_Addr;
