@@ -1,5 +1,7 @@
 Tue Nov 18 14:27:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/cdr.cpp (CDR): Changed TAO_PURIFY to ACE_PURIFY.
+
 	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp: Added code to put use a
  	kinder, gentler high priority value on VxWorks.  This makes it
  	easier for the machine to remain running. :-\
