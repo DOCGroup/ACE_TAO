@@ -206,8 +206,7 @@ ACE_Pagefile_Memory_Pool::round_to_chunk_size (size_t nbytes)
 ACE_INLINE size_t 
 ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
 {
-  return (nbytes + ACE_DEFAULT_SEGMENT_SIZE - 1) 
-          & (~(ACE_DEFAULT_SEGMENT_SIZE - 1));
+  return ACE::round_to_pagesize (nbytes);
 }
 
 #endif /* ACE_WIN32 */
