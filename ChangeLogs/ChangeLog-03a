@@ -11,6 +11,9 @@ Wed Apr 10 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           Added missing includes of Log_Msg.h. These where caused by the
           compilation speedup of Don Hinton on April 5th.
 
+        * ace/Name_Request_Reply.h:
+          Doxygen-ized some of the comments
+
 Tue Apr  9 22:59:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h:
