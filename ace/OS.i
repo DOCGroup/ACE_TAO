@@ -2032,8 +2032,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   //    functionality.
 
   ACE_UNUSED_ARG (timeout);
-  return ACE_OS::mutex_trylock (m);  // The best that we can do is
-                                       // try to grab the lock.
+  return ACE_OS::mutex_trylock (m);  // The best that we can do is try
+                                     // to grab the lock.
 
 #   endif  /* ACE_HAS_PTHREADS */
 
