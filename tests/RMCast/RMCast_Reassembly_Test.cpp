@@ -23,7 +23,7 @@ class ACE_RMCast_Reassembly_Tester
 public:
   ACE_RMCast_Reassembly_Tester (void);
 
-  virtual int put_data (ACE_RMCast::Data &data);
+  virtual int data (ACE_RMCast::Data &data);
   virtual int svc (void);
 
 private:
@@ -250,7 +250,7 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
 }
 
 int
-ACE_RMCast_Reassembly_Tester::put_data (ACE_RMCast::Data &data)
+ACE_RMCast_Reassembly_Tester::data (ACE_RMCast::Data &data)
 {
   ACE_Message_Block *mb = data.payload;
 
@@ -286,7 +286,7 @@ ACE_RMCast_Reassembly_Tester::put_fragment (ACE_UINT32 sequence_number,
   data.total_size = total_length;
   data.fragment_offset = offset;
   data.payload = &p;
-  return this->reassembly_.put_data (data);
+  return this->reassembly_.data (data);
 }
 
 ACE_UINT32

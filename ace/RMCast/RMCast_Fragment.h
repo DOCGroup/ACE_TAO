@@ -40,7 +40,7 @@ public:
   // feedback from the lower layer (transport?)
 
   // = The ACE_RMCast_Module methods
-  virtual int put_data (ACE_RMCast::Data &data);
+  virtual int data (ACE_RMCast::Data &data);
 
 private:
   size_t max_fragment_size_;

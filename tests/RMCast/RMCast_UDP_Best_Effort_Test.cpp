@@ -11,12 +11,11 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/RMCast/RMCast_UDP_Sender.h"
+#include "ace/RMCast/RMCast_IO_UDP.h"
 #include "ace/RMCast/RMCast_Fragment.h"
 
-#include "ace/RMCast/RMCast_UDP_Receiver.h"
-#include "ace/RMCast/RMCast_Sender_Proxy_Best_Effort.h"
-#include "ace/RMCast/RMCast_Sender_Proxy_Factory.h"
+#include "ace/RMCast/RMCast_Module_Factory.h"
+#include "ace/RMCast/RMCast_Fragment.h"
 #include "ace/RMCast/RMCast_Reassembly.h"
 
 #include "ace/Task.h"
@@ -24,6 +23,53 @@
 ACE_RCSID(tests, RMCast_UDP_Best_Effort_Test, "$Id$")
 
 const size_t message_size = 8 * 1024;
+const int total_message_count = 40;
+
+// ****************************************************************
+
+class Sender_Factory : public ACE_RMCast_Module_Factory
+{
+public:
+  Sender_Factory (void)
+  {
+  }
+
+  virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *)
+  {
+    return new ACE_RMCast_Reassembly;
+  }
+
+  virtual void destroy (ACE_RMCast_Module *module)
+  {
+    delete module;
+  }
+};
+
+// ****************************************************************
+
+class Receiver_Factory : public ACE_RMCast_Module_Factory
+{
+public:
+  Receiver_Factory (ACE_RMCast_Module *module)
+    : module_ (module)
+  {
+  }
+
+  virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *)
+  {
+    ACE_RMCast_Module *x = new ACE_RMCast_Reassembly;
+    x->next (this->module_);
+    return x;
+  }
+
+  virtual void destroy (ACE_RMCast_Module *module)
+  {
+    delete module;
+  }
+
+private:
+  ACE_RMCast_Module *module_;
+};
 
 // ****************************************************************
 
@@ -35,22 +81,11 @@ public:
   virtual int svc (void);
 
 private:
-  ACE_RMCast_UDP_Sender sender_;
+  Sender_Factory factory_;
+  ACE_RMCast_IO_UDP io_udp_;
   ACE_RMCast_Fragment fragment_;
-};
 
-// ****************************************************************
-
-class Sender_Proxy_Factory : public ACE_RMCast_Sender_Proxy_Factory
-{
-public:
-  Sender_Proxy_Factory (ACE_RMCast_Module *user_module);
-
-  virtual ACE_RMCast_Sender_Proxy *create (void);
-  virtual void destroy (ACE_RMCast_Sender_Proxy *);
-  
-private:
-  ACE_RMCast_Module *user_module_;
+  ACE_INET_Addr mcast_group_;
 };
 
 // ****************************************************************
@@ -60,16 +95,22 @@ class Receiver : public ACE_RMCast_Module
 public:
   Receiver (const ACE_INET_Addr &mcast_group);
 
+  void dump (void);
+  // Print the results of the test
+
   int handle_events (ACE_Time_Value *tv);
   // Invoke the UDP Receiver handle_events function
 
   virtual int open (void);
-  virtual int put_data (ACE_RMCast::Data &data);
+  virtual int data (ACE_RMCast::Data &data);
 
 private:
-  Sender_Proxy_Factory factory_;
-  ACE_RMCast_UDP_Receiver udp_receiver_;
+  Receiver_Factory factory_;
+  ACE_RMCast_IO_UDP io_udp_;
+
   ACE_INET_Addr mcast_group_;
+
+  int message_count_;
 };
 
 // ****************************************************************
@@ -114,65 +155,38 @@ main (int, ACE_TCHAR *[])
   if (ACE_Thread_Manager::instance ()->wait () != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Error in Thread_Manager::wait\n"), 1);
 
+  receiver.dump ();
+
   ACE_END_TEST;
   return 0;
 }
 
 // ****************************************************************
 
-Sender_Proxy_Factory::Sender_Proxy_Factory (ACE_RMCast_Module *m)
-  :  user_module_ (m)
-{
-}
-
-ACE_RMCast_Sender_Proxy *
-Sender_Proxy_Factory::create (void)
-{
-  ACE_RMCast_Module *top =
-    new ACE_RMCast_Reassembly;
-  top->next (this->user_module_);
-
-  ACE_RMCast_Sender_Proxy *proxy =
-    new ACE_RMCast_Sender_Proxy_Best_Effort (top);
-
-  ACE_DEBUG ((LM_DEBUG, "Created proxy = %x\n", long(proxy)));
-  return proxy;
-}
-
-void
-Sender_Proxy_Factory::destroy (ACE_RMCast_Sender_Proxy *proxy)
-{
-  ACE_RMCast_Module *module = proxy->module ();
-  delete module;
-  delete proxy;
-  ACE_DEBUG ((LM_DEBUG, "Destroyed proxy = %x\n", long(proxy)));
-}
-
-// ****************************************************************
-
 Receiver::Receiver (const ACE_INET_Addr &mcast_group)
   :  factory_ (this)
-  ,  udp_receiver_ (&factory_)
+  ,  io_udp_ (&factory_)
   ,  mcast_group_ (mcast_group)
+  ,  message_count_ (0)
 {
 }
 
 int
 Receiver::handle_events (ACE_Time_Value *tv)
 {
-  return this->udp_receiver_.handle_events (tv);
+  return this->io_udp_.handle_events (tv);
 }
 
 int
 Receiver::open (void)
 {
-  if (this->udp_receiver_.subscribe (this->mcast_group_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error subscribing routine\n"), -1);
+  if (this->io_udp_.subscribe (this->mcast_group_) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Error in IO_UDP::subscribe\n"), -1);
   return 0;
 }
 
 int
-Receiver::put_data (ACE_RMCast::Data &data)
+Receiver::data (ACE_RMCast::Data &data)
 {
   if (data.total_size != message_size)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -198,24 +212,36 @@ Receiver::put_data (ACE_RMCast::Data &data)
                            long(j - data.payload->rd_ptr ())), -1);
     }
 
+  this->message_count_++;
+
   return 0;
+}
+
+void
+Receiver::dump (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Message count = %d/%d",
+              this->message_count_,
+              total_message_count));
 }
 
 // ****************************************************************
 
 Sender::Sender (const ACE_INET_Addr &mcast_group)
-  :  sender_ (mcast_group)
+  :  io_udp_ (&factory_)
+  ,  mcast_group_ (mcast_group)
 {
 }
 
 int
 Sender::svc ()
 {
-  if (this->sender_.open () != 0)
-    ACE_ERROR ((LM_ERROR, "Error in Sender::open()\n"));
-
-  if (this->fragment_.next (&this->sender_) != 0)
+  if (this->fragment_.next (&this->io_udp_) != 0)
     ACE_ERROR ((LM_ERROR, "Error in Fragment::next()\n"));
+
+  if (this->io_udp_.subscribe (this->mcast_group_) != 0)
+    ACE_ERROR ((LM_ERROR, "Error in IO_UDP::subscribe()\n"));
 
   ACE_Message_Block big_blob (message_size);
   big_blob.wr_ptr (message_size);
@@ -226,12 +252,12 @@ Sender::svc ()
       *j = filler++;
     }
 
-  for (int i = 0; i != 20; ++i)
+  for (int i = 0; i != total_message_count; ++i)
     {
       ACE_RMCast::Data data;
       data.sequence_number = i;
       data.payload = &big_blob;
-      this->fragment_.put_data (data);
+      this->fragment_.data (data);
     }
   return 0;
 }

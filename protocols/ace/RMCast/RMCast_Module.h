@@ -59,7 +59,13 @@ public:
   virtual int close (void);
   // Close the module.
 
-  virtual int put_data (ACE_RMCast::Data &data) = 0;
+  virtual int data (ACE_RMCast::Data &);
+  virtual int poll (ACE_RMCast::Poll &);
+  virtual int ack_join (ACE_RMCast::Ack_Join &);
+  virtual int ack_leave (ACE_RMCast::Ack_Leave &);
+  virtual int ack (ACE_RMCast::Ack &);
+  virtual int join (ACE_RMCast::Join &);
+  virtual int leave (ACE_RMCast::Leave &);
   // Push data down the stack
 
 private:
