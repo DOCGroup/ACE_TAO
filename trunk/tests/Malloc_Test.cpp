@@ -261,10 +261,12 @@ main (int argc, ASYS_TCHAR *[])
 
       init_test (PARENT_BASE_ADDR);
 
+#if !defined (ACE_NDEBUG)
       ACE_Control_Block::print_alignment_info ();
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+# if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
       ACE_PI_Control_Block::print_alignment_info ();
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+# endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_NDEBUG */
 
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
