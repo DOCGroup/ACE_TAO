@@ -1,3 +1,11 @@
+Sun Aug 24 15:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynArray_i.cpp:
+          In processing each array element, added a check for a null
+          ACE_Message_Block in the Any_Impl class, along with the
+          appropriate action if this is the case. This fixes the DynArray
+          part of the DynAny test.
+
 Sun Aug 24 13:53:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/*.cpp:
