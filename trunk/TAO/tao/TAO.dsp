@@ -3366,6 +3366,10 @@ SOURCE=.\TAOS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
