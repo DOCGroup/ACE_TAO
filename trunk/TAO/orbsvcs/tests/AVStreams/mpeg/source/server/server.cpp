@@ -589,7 +589,7 @@ AV_Server::run (CORBA::Environment& env)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) acceptor_handler == %d\n",
               this->acceptor_.get_handle ()));
-  
+
     //  ACE_Reactor::instance ()->run_event_loop (); 
 
   // Run the ORB event loop
