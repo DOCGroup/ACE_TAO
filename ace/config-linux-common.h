@@ -50,11 +50,10 @@
   // its timeout argument, use ::poll () instead.
 # define ACE_HAS_POLL
 
-# if !defined (_XOPEN_SOURCE_EXTENDED)
-#   include <unistd.h>
-    // unistd.h only declares getpgid () ifdef __USE_XOPEN_EXTENDED.
-extern "C" __pid_t getpgid __P ((__pid_t __pid));
-# endif /* ! _XOPEN_SOURCE_EXTENDED */
+// Don't define _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED in ACE to make
+// getpgid() prototype visible.  ACE shouldn't depend on feature test
+// macros to make prototypes visible.
+# define ACE_LACKS_GETPGID_PROTOTYPE
 
 // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
 //        on Alpha.  I assume that they're necessary on Intel as well,
@@ -62,9 +61,11 @@ extern "C" __pid_t getpgid __P ((__pid_t __pid));
 //# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_SYSTIME_H
-// The strtok_r declaration is protected in string.h.
-extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
-                                char **__save_ptr));
+
+// Don't define _POSIX_SOURCE in ACE to make strtok() prototype
+// visible.  ACE shouldn't depend on feature test macros to make
+// prototypes visible.
+# define ACE_LACKS_STRTOK_R_PROTOTYPE
 // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
@@ -171,14 +172,10 @@ extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
 #define ACE_HAS_STRERROR
 
 #define ACE_HAS_STRPTIME
-#if !defined (_XOPEN_SOURCE)
-# include <time.h>
-// strptime() is an XPG function.  It is only enabled if _XOPEN_SOURCE
-// or _GNU_SOURCE is defined.  (_GNU_SOURCE causes _XOPEN_SOURCE to be
-// defined on Linux/glibc systems)
-extern "C" char *strptime __P ((__const char *__s, __const char *__fmt,
-                                struct tm *__tp));
-#endif  /* !_XOPEN_SOURCE */
+// Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
+// visible.  ACE shouldn't depend on feature test macros to make
+// prototypes visible.
+#define ACE_LACKS_STRPTIME_PROTOTYPE
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -197,10 +194,18 @@ extern "C" char *strptime __P ((__const char *__s, __const char *__fmt,
 
 // Linux has lseek64()
 #define ACE_HAS_LLSEEK
-#if !defined (_LARGEFILE64_SOURCE) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
-extern "C"
-__off64_t lseek64 __P ((int __fd, __off64_t __offset, int __whence));
-#endif /* !_LARGEFILE64_SOURCE && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+// Don't define _LARGEFILE64_SOURCE in ACE to make lseek64() prototype
+// visible.  ACE shouldn't depend on feature test macros to make
+// prototypes visible.
+#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+# define ACE_LACKS_LSEEK64_PROTOTYPE
+#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+
+#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
+# define ACE_HAS_P_READ_WRITE
+# define ACE_LACKS_PREAD_PROTOTYPE
+#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+
 
 
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
