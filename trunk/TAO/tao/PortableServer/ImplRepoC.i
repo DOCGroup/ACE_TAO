@@ -44,6 +44,17 @@ ImplementationRepository::ServerObject::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::ServerObject>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -1619,6 +1630,17 @@ ImplementationRepository::Administration::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::Administration>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -1643,6 +1665,17 @@ CORBA::Boolean
 ImplementationRepository::ServerInformationIterator::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #endif /* end #if !defined */
