@@ -1,3 +1,13 @@
+Sun May 18 05:42:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Sequence.i: TAO_Unbounded_Array_Sequence and
+	  TAO_Bounded_Array_Sequence  were parametrized by T and
+	  T_var. But the template parameters in the .i file read T
+	  and T_life. Borland 6 compile doesnt seem to like this throwing
+	  up a bunch of link errors. 
+
+	  Thanks to Johnny Willemsen for providing this patch.
+
 Sat May 17 09:44:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/Options.html: Revamped the original documentation to be
