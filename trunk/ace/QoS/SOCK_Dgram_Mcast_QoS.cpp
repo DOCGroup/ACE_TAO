@@ -1,5 +1,4 @@
-//$Id$
-// SOCK_Dgram_Mcast_QoS.cpp,v 1.5 2002/05/02 12:36:22 elliott_c Exp
+// $Id$
 
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Msg.h"
@@ -54,7 +53,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &addr,
   if (this->get_handle () == ACE_INVALID_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "Get Handle Returns Invalid Handle\n"));
+		  "Get Handle Returns Invalid Handle\n"));
 
       if (ACE_SOCK::open (SOCK_DGRAM,
                           protocol_family,
@@ -288,58 +287,5 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
 }
 
 
-int
-ACE_SOCK_Dgram_Mcast_QoS::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
-                                                    ip_mreq &multicast_address ,
-                                                    const ACE_TCHAR *net_if)
-{
-  if (net_if != 0)
-    {
-#if defined (ACE_WIN32)
-      // This port number is not necessary, just convenient
-      ACE_INET_Addr interface_addr;
-      if (interface_addr.set (mcast_addr.get_port_number (),
-                              net_if) == -1)
-        return -1;
-      multicast_address.imr_interface.s_addr =
-        htonl (interface_addr.get_ip_address ());
-#else
-      ifreq if_address;
-
-#if defined (ACE_PSOS)
-      // Look up the interface by number, not name.
-      if_address.ifr_ifno = ACE_OS::atoi (net_if);
-#else
-      ACE_OS::strcpy (if_address.ifr_name, net_if);
-#endif /* defined (ACE_PSOS) */
-
-      if (ACE_OS::ioctl (this->get_handle (),
-                         SIOCGIFADDR,
-                         &if_address) == -1)
-        return -1;
-
-      sockaddr_in *socket_address;
-      socket_address = ACE_reinterpret_cast(sockaddr_in *,
-                                            &if_address.ifr_addr);
-      multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
-#endif /* ACE_WIN32 */
-    }
-  else
-    multicast_address.imr_interface.s_addr = INADDR_ANY;
-
-  multicast_address.IMR_MULTIADDR.s_addr = htonl (mcast_addr.get_ip_address ());
-  return 0;
-}
-
-int
-ACE_SOCK_Dgram_Mcast_QoS::make_multicast_address (const ACE_INET_Addr &mcast_addr,
-                                                  const ACE_TCHAR *net_if)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::make_multicast_address");
-
-  return this->make_multicast_address_i (mcast_addr,
-                                         this->mcast_request_if_,
-                                         net_if );
-}
 
 
