@@ -30,6 +30,46 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CORBA_WrongTransaction[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  39,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5772),
+  ACE_NTOHL (0x6f6e6754),
+  ACE_NTOHL (0x72616e73),
+  ACE_NTOHL (0x61637469),
+  ACE_NTOHL (0x6f6e3a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WrongTransaction:1.0
+    17,
+  ACE_NTOHL (0x57726f6e),
+  ACE_NTOHL (0x67547261),
+  ACE_NTOHL (0x6e736163),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x0),  // name = WrongTransaction
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_WrongTransaction (
+    CORBA::tk_except,
+    sizeof (_oc_CORBA_WrongTransaction),
+    (char *) &_oc_CORBA_WrongTransaction,
+    0,
+    sizeof (CORBA::WrongTransaction)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_WrongTransaction =
+    &_tc_TAO_tc_CORBA_WrongTransaction;
+}
+
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION

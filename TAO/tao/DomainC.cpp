@@ -40,7 +40,6 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "ORB_Core.h"
-#include "Typecode.h"
 #include "ParameterMode.h"
 #include "DynamicC.h"
 #include "ace/Dynamic_Service.h"
@@ -332,43 +331,6 @@ CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_DomainManager[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f446f), 
-  ACE_NTOHL (0x6d61696e), 
-  ACE_NTOHL (0x4d616e61), 
-  ACE_NTOHL (0x6765723a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
-    14,
-  ACE_NTOHL (0x446f6d61), 
-  ACE_NTOHL (0x696e4d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x72000000),  // name = DomainManager
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManager (
-    CORBA::tk_objref,
-    sizeof (_oc_CORBA_DomainManager),
-    (char *) &_oc_CORBA_DomainManager,
-    0,
-    sizeof (CORBA::DomainManager)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_DomainManager =
-    &_tc_TAO_tc_CORBA_DomainManager;
-}
-
-// TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::ConstructionPolicy.
@@ -575,46 +537,6 @@ CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_ConstructionPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f436f), 
-  ACE_NTOHL (0x6e737472), 
-  ACE_NTOHL (0x75637469), 
-  ACE_NTOHL (0x6f6e506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/ConstructionPolicy:1.0
-    19,
-  ACE_NTOHL (0x436f6e73), 
-  ACE_NTOHL (0x74727563), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63790000),  // name = ConstructionPolicy
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstructionPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_CORBA_ConstructionPolicy),
-    (char *) &_oc_CORBA_ConstructionPolicy,
-    0,
-    sizeof (CORBA::ConstructionPolicy)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ConstructionPolicy =
-    &_tc_TAO_tc_CORBA_ConstructionPolicy;
-}
-
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
@@ -670,69 +592,6 @@ void CORBA::DomainManagerList::_tao_any_destructor (
 }
 
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_DomainManagerList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f446f), 
-  ACE_NTOHL (0x6d61696e), 
-  ACE_NTOHL (0x4d616e61), 
-  ACE_NTOHL (0x6765724c), 
-  ACE_NTOHL (0x6973743a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManagerList:1.0
-    18,
-  ACE_NTOHL (0x446f6d61), 
-  ACE_NTOHL (0x696e4d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x724c6973), 
-  ACE_NTOHL (0x74000000),  // name = DomainManagerList
-    CORBA::tk_sequence, // typecode kind
-  80, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref, // typecode kind
-    64, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      36,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f446f), 
-      ACE_NTOHL (0x6d61696e), 
-      ACE_NTOHL (0x4d616e61), 
-      ACE_NTOHL (0x6765723a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
-            14,
-      ACE_NTOHL (0x446f6d61), 
-      ACE_NTOHL (0x696e4d61), 
-      ACE_NTOHL (0x6e616765), 
-      ACE_NTOHL (0x72000000),  // name = DomainManager
-      
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_DomainManagerList),
-    (char *) &_oc_CORBA_DomainManagerList,
-    0,
-    sizeof (CORBA::DomainManagerList)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_DomainManagerList =
-    &_tc_TAO_tc_CORBA_DomainManagerList;
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/cdr_op_cs.cpp:63
@@ -880,7 +739,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

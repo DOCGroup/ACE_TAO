@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Pluggable_Messaging_Utils.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /// Forward declarations
-class ACE_Data_Block;
 class ACE_Allocator;
 class TAO_ORB_Core;
 class TAO_Queued_Data;

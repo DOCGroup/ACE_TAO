@@ -1,19 +1,20 @@
 // $Id$
 
-#include "Tagged_Profile.h"
-#include "ORB_Core.h"
-#include "Acceptor_Registry.h"
-#include "Transport_Acceptor.h"
-#include "Thread_Lane_Resources.h"
-#include "debug.h"
-#include "target_specification.h"
+#include "tao/Tagged_Profile.h"
+#include "tao/ORB_Core.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Transport_Acceptor.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/debug.h"
+#include "tao/target_specification.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Profile.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Tagged_Profile, 
+ACE_RCSID (tao,
+           Tagged_Profile,
            "$Id$")
 
 CORBA::Boolean
@@ -179,7 +180,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
     }
 
   // Unmarshall the sequnce of TaggedProfiles
-  IOP::IOR::_profiles_seq ior_profiles;
+  IOP::TaggedProfileSeq ior_profiles;
 
   hdr_status &= input >> ior_profiles;
 

@@ -26,32 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:70
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const TAO::BufferingConstraint &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.mode) &&
-    (strm << _tao_aggregate.timeout) &&
-    (strm << _tao_aggregate.message_count) &&
-    (strm << _tao_aggregate.message_bytes);
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    TAO::BufferingConstraint &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.mode) &&
-    (strm >> _tao_aggregate.timeout) &&
-    (strm >> _tao_aggregate.message_count) &&
-    (strm >> _tao_aggregate.message_bytes);
-}
-

@@ -26,15 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "CONV_FRAMEC.h"
-#include "CONV_FRAMEA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Typecode.h"
-
-// ==== Handcrafted
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetId[] =
 {
@@ -73,7 +69,71 @@ namespace CONV_FRAME
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CONV_FRAME_CodeSetIdSeq[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  40,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f4e56),
+  ACE_NTOHL (0x5f465241),
+  ACE_NTOHL (0x4d452f43),
+  ACE_NTOHL (0x6f646553),
+  ACE_NTOHL (0x65744964),
+  ACE_NTOHL (0x5365713a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0
+    13,
+  ACE_NTOHL (0x436f6465),
+  ACE_NTOHL (0x53657449),
+  ACE_NTOHL (0x64536571),
+  ACE_NTOHL (0x0),  // name = CodeSetIdSeq
+    CORBA::tk_sequence, // typecode kind
+  84, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_alias, // typecode kind for typedefs
+    68, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      37,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f4e56),
+      ACE_NTOHL (0x5f465241),
+      ACE_NTOHL (0x4d452f43),
+      ACE_NTOHL (0x6f646553),
+      ACE_NTOHL (0x65744964),
+      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
+            10,
+      ACE_NTOHL (0x436f6465),
+      ACE_NTOHL (0x53657449),
+      ACE_NTOHL (0x64000000),  // name = CodeSetId
+            CORBA::tk_ulong,
+
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetIdSeq (
+    CORBA::tk_alias,
+    sizeof (_oc_CONV_FRAME_CodeSetIdSeq),
+    (char *) &_oc_CONV_FRAME_CodeSetIdSeq,
+    0,
+    sizeof (CONV_FRAME::CodeSetIdSeq)
+  );
+
+namespace CONV_FRAME
+{
+  ::CORBA::TypeCode_ptr _tc_CodeSetIdSeq =
+    &_tc_TAO_tc_CONV_FRAME_CodeSetIdSeq;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetComponent[] =
 {
@@ -130,31 +190,51 @@ static const CORBA::Long _oc_CONV_FRAME_CodeSetComponent[] =
   ACE_NTOHL (0x6f64655f),
   ACE_NTOHL (0x73657473),
   ACE_NTOHL (0x0),  // name = conversion_code_sets
-    CORBA::tk_sequence, // typecode kind
-  84, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_alias, // typecode kind for typedefs
-    68, // encapsulation length
+  160, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    40,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f4e56),
+    ACE_NTOHL (0x5f465241),
+    ACE_NTOHL (0x4d452f43),
+    ACE_NTOHL (0x6f646553),
+    ACE_NTOHL (0x65744964),
+    ACE_NTOHL (0x5365713a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0
+        13,
+    ACE_NTOHL (0x436f6465),
+    ACE_NTOHL (0x53657449),
+    ACE_NTOHL (0x64536571),
+    ACE_NTOHL (0x0),  // name = CodeSetIdSeq
+        CORBA::tk_sequence, // typecode kind
+    84, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      37,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x434f4e56),
-      ACE_NTOHL (0x5f465241),
-      ACE_NTOHL (0x4d452f43),
-      ACE_NTOHL (0x6f646553),
-      ACE_NTOHL (0x65744964),
-      ACE_NTOHL (0x3a312e30),
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
-            10,
-      ACE_NTOHL (0x436f6465),
-      ACE_NTOHL (0x53657449),
-      ACE_NTOHL (0x64000000),  // name = CodeSetId
-            CORBA::tk_ulong,
+      CORBA::tk_alias, // typecode kind for typedefs
+      68, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        37,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f4e56),
+        ACE_NTOHL (0x5f465241),
+        ACE_NTOHL (0x4d452f43),
+        ACE_NTOHL (0x6f646553),
+        ACE_NTOHL (0x65744964),
+        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
+                10,
+        ACE_NTOHL (0x436f6465),
+        ACE_NTOHL (0x53657449),
+        ACE_NTOHL (0x64000000),  // name = CodeSetId
+                CORBA::tk_ulong,
 
 
-    0U,
+      0U,
+
 
 };
 
@@ -173,7 +253,7 @@ namespace CONV_FRAME
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetComponentInfo[] =
 {
@@ -204,7 +284,7 @@ static const CORBA::Long _oc_CONV_FRAME_CodeSetComponentInfo[] =
   ACE_NTOHL (0x68617244),
   ACE_NTOHL (0x61746100),  // name = ForCharData
     CORBA::tk_struct, // typecode kind
-  296, // encapsulation length
+  372, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     44,
     ACE_NTOHL (0x49444c3a),
@@ -258,31 +338,51 @@ static const CORBA::Long _oc_CONV_FRAME_CodeSetComponentInfo[] =
     ACE_NTOHL (0x6f64655f),
     ACE_NTOHL (0x73657473),
     ACE_NTOHL (0x0),  // name = conversion_code_sets
-        CORBA::tk_sequence, // typecode kind
-    84, // encapsulation length
+        CORBA::tk_alias, // typecode kind for typedefs
+    160, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_alias, // typecode kind for typedefs
-      68, // encapsulation length
+      40,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f4e56),
+      ACE_NTOHL (0x5f465241),
+      ACE_NTOHL (0x4d452f43),
+      ACE_NTOHL (0x6f646553),
+      ACE_NTOHL (0x65744964),
+      ACE_NTOHL (0x5365713a),
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0
+            13,
+      ACE_NTOHL (0x436f6465),
+      ACE_NTOHL (0x53657449),
+      ACE_NTOHL (0x64536571),
+      ACE_NTOHL (0x0),  // name = CodeSetIdSeq
+            CORBA::tk_sequence, // typecode kind
+      84, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        37,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x434f4e56),
-        ACE_NTOHL (0x5f465241),
-        ACE_NTOHL (0x4d452f43),
-        ACE_NTOHL (0x6f646553),
-        ACE_NTOHL (0x65744964),
-        ACE_NTOHL (0x3a312e30),
-        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
-                10,
-        ACE_NTOHL (0x436f6465),
-        ACE_NTOHL (0x53657449),
-        ACE_NTOHL (0x64000000),  // name = CodeSetId
-                CORBA::tk_ulong,
+        CORBA::tk_alias, // typecode kind for typedefs
+        68, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          37,
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f4e56),
+          ACE_NTOHL (0x5f465241),
+          ACE_NTOHL (0x4d452f43),
+          ACE_NTOHL (0x6f646553),
+          ACE_NTOHL (0x65744964),
+          ACE_NTOHL (0x3a312e30),
+          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
+                    10,
+          ACE_NTOHL (0x436f6465),
+          ACE_NTOHL (0x53657449),
+          ACE_NTOHL (0x64000000),  // name = CodeSetId
+                    CORBA::tk_ulong,
 
 
-      0U,
+        0U,
+
 
 
   13,
@@ -291,7 +391,7 @@ static const CORBA::Long _oc_CONV_FRAME_CodeSetComponentInfo[] =
   ACE_NTOHL (0x44617461),
   ACE_NTOHL (0x0),  // name = ForWcharData
     CORBA::tk_struct, // typecode kind
-  296, // encapsulation length
+  372, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     44,
     ACE_NTOHL (0x49444c3a),
@@ -345,31 +445,51 @@ static const CORBA::Long _oc_CONV_FRAME_CodeSetComponentInfo[] =
     ACE_NTOHL (0x6f64655f),
     ACE_NTOHL (0x73657473),
     ACE_NTOHL (0x0),  // name = conversion_code_sets
-        CORBA::tk_sequence, // typecode kind
-    84, // encapsulation length
+        CORBA::tk_alias, // typecode kind for typedefs
+    160, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_alias, // typecode kind for typedefs
-      68, // encapsulation length
+      40,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f4e56),
+      ACE_NTOHL (0x5f465241),
+      ACE_NTOHL (0x4d452f43),
+      ACE_NTOHL (0x6f646553),
+      ACE_NTOHL (0x65744964),
+      ACE_NTOHL (0x5365713a),
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0
+            13,
+      ACE_NTOHL (0x436f6465),
+      ACE_NTOHL (0x53657449),
+      ACE_NTOHL (0x64536571),
+      ACE_NTOHL (0x0),  // name = CodeSetIdSeq
+            CORBA::tk_sequence, // typecode kind
+      84, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        37,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x434f4e56),
-        ACE_NTOHL (0x5f465241),
-        ACE_NTOHL (0x4d452f43),
-        ACE_NTOHL (0x6f646553),
-        ACE_NTOHL (0x65744964),
-        ACE_NTOHL (0x3a312e30),
-        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
-                10,
-        ACE_NTOHL (0x436f6465),
-        ACE_NTOHL (0x53657449),
-        ACE_NTOHL (0x64000000),  // name = CodeSetId
-                CORBA::tk_ulong,
+        CORBA::tk_alias, // typecode kind for typedefs
+        68, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          37,
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f4e56),
+          ACE_NTOHL (0x5f465241),
+          ACE_NTOHL (0x4d452f43),
+          ACE_NTOHL (0x6f646553),
+          ACE_NTOHL (0x65744964),
+          ACE_NTOHL (0x3a312e30),
+          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CONV_FRAME/CodeSetId:1.0
+                    10,
+          ACE_NTOHL (0x436f6465),
+          ACE_NTOHL (0x53657449),
+          ACE_NTOHL (0x64000000),  // name = CodeSetId
+                    CORBA::tk_ulong,
 
 
-      0U,
+        0U,
+
 
 
 };
@@ -389,7 +509,7 @@ namespace CONV_FRAME
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetContext[] =
 {
@@ -479,7 +599,65 @@ namespace CONV_FRAME
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CONV_FRAME::CodeSetIdSeq &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::insert_copy (
+      _tao_any,
+      CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
+      CONV_FRAME::_tc_CodeSetIdSeq,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CONV_FRAME::CodeSetIdSeq *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::insert (
+      _tao_any,
+      CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
+      CONV_FRAME::_tc_CodeSetIdSeq,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CONV_FRAME::CodeSetIdSeq *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const CONV_FRAME::CodeSetIdSeq *&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CONV_FRAME::CodeSetIdSeq *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CONV_FRAME::CodeSetIdSeq>::extract (
+        _tao_any,
+        CONV_FRAME::CodeSetIdSeq::_tao_any_destructor,
+        CONV_FRAME::_tc_CodeSetIdSeq,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -537,7 +715,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -595,7 +773,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -658,6 +836,11 @@ CORBA::Boolean operator>>= (
 
   template class
     TAO::Any_Dual_Impl_T<
+        CONV_FRAME::CodeSetIdSeq
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
         CONV_FRAME::CodeSetComponent
       >;
 
@@ -675,6 +858,11 @@ CORBA::Boolean operator>>= (
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
+        CONV_FRAME::CodeSetIdSeq \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
         CONV_FRAME::CodeSetComponent \
       >
 
@@ -689,3 +877,4 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

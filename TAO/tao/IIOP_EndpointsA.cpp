@@ -26,13 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IIOP_EndpointsC.h"
-#include "IIOP_EndpointsA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
 {
@@ -86,7 +84,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
 {
@@ -166,7 +164,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -224,7 +222,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -308,3 +306,4 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -26,13 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IIOPC.h"
-#include "IIOPA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_IIOP_ListenPoint[] =
 {
@@ -79,7 +77,7 @@ namespace IIOP
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_IIOP_ListenPointList[] =
 {
@@ -151,7 +149,7 @@ namespace IIOP
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
 {
@@ -252,9 +250,8 @@ namespace IIOP
     &_tc_TAO_tc_IIOP_BiDirIIOPServiceContext;
 }
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -312,7 +309,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -370,7 +367,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -464,3 +461,4 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

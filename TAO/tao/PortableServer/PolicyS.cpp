@@ -45,6 +45,7 @@
 #include "tao/Typecode.h"
 #include "tao/DynamicC.h"
 #include "tao/Basic_Arguments.h"
+#include "tao/CDR.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1

@@ -26,10 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "IIOPC.h"
+#include "tao/CDR.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -40,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -48,9 +50,8 @@ namespace TAO
 }
 
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void
 IIOP::ListenPoint::_tao_any_destructor (
@@ -63,7 +64,7 @@ IIOP::ListenPoint::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IIOP_LISTENPOINTLIST_CS_)
 #define _IIOP_LISTENPOINTLIST_CS_
@@ -116,7 +117,7 @@ void IIOP::ListenPointList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void
 IIOP::BiDirIIOPServiceContext::_tao_any_destructor (
@@ -129,7 +130,30 @@ IIOP::BiDirIIOPServiceContext::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IIOP::ListenPoint &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.host.in ()) &&
+    (strm << _tao_aggregate.port);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IIOP::ListenPoint &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.host.out ()) &&
+    (strm >> _tao_aggregate.port);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_IIOP_ListenPointList_CPP_
 #define _TAO_CDR_OP_IIOP_ListenPointList_CPP_
@@ -201,7 +225,28 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IIOP::BiDirIIOPServiceContext &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.listen_points);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IIOP::BiDirIIOPServiceContext &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.listen_points);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -330,3 +375,4 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

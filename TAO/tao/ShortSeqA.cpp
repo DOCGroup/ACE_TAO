@@ -30,6 +30,48 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CORBA_ShortSeq[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  31,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5368),
+  ACE_NTOHL (0x6f727453),
+  ACE_NTOHL (0x65713a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ShortSeq:1.0
+    9,
+  ACE_NTOHL (0x53686f72),
+  ACE_NTOHL (0x74536571),
+  ACE_NTOHL (0x0),  // name = ShortSeq
+    CORBA::tk_sequence, // typecode kind
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_short,
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ShortSeq (
+    CORBA::tk_alias,
+    sizeof (_oc_CORBA_ShortSeq),
+    (char *) &_oc_CORBA_ShortSeq,
+    0,
+    sizeof (CORBA::ShortSeq)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_ShortSeq =
+    &_tc_TAO_tc_CORBA_ShortSeq;
+}
+
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
