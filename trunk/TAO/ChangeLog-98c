@@ -1,3 +1,24 @@
+Wed Feb 25 22:53:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/NestedUpcall/client.cpp (main): Added a cast so that Sun
+ 	  CC compiler doesn't complain about passing consts as non-const
+ 	  arguments!
+
+	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
+ 	  to ACE_SYNCH so that we can at least build the Event Channel on
+ 	  a single-threaded platform.
+
+	* orbsvcs/orbsvcs/Event_Service_Constants.h: Changed the use of
+ 	  ACE_Thread_Mutex and ACE_RT_Thread_Mutex to ACE_THREAD_MUTEX and
+ 	  ACE_RW_THREAD_MUTEX, respectively, so that TAO will build on
+ 	  non-threaded platforms.
+
+	* tao/poa.cpp,
+          tao/default_server.cpp: Fixed TAO by conditionally
+	  compiling the code that relies on the recursive mutexes
+	  and mutexes.  Thanks to Jim Penny <jpenny@universal-fasteners.com>
+	  for reporting this.
+
 Wed Feb 25 22:47:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/README::
@@ -20,22 +41,11 @@ Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 	meaning of the -s option to "don't use the naming service" and made
 	using the naming service the default.
 
-Wed Feb 25 21:41:50 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
- 	  to ACE_SYNCH so that we can at least build the Event Channel on
- 	  a single-threaded platform.
-
-	* orbsvcs/orbsvcs/Event_Service_Constants.h: Changed the use of
- 	  ACE_Thread_Mutex and ACE_RT_Thread_Mutex to ACE_THREAD_MUTEX and
- 	  ACE_RW_THREAD_MUTEX, respectively, so that TAO will build on
- 	  non-threaded platforms.
-
-	* tao/poa.cpp,
-          tao/default_server.cpp: Fixed TAO by conditionally
-	  compiling the code that relies on the recursive mutexes
-	  and mutexes.  Thanks to Jim Penny <jpenny@universal-fasteners.com>
-	  for reporting this.
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
+	meaning of the -s flag to "don't use the naming service" and made
+	using the naming service the default.
 
 Wed Feb 25 18:03:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

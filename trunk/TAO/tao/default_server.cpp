@@ -46,10 +46,8 @@ TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                       0);
-#else
-      ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_THREADS */
       break;
+#endif /* ACE_HAS_THREADS */
     case TAO_NULL_LOCK:
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Null_Mutex> (),
@@ -73,8 +71,6 @@ TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
                       ACE_Lock_Adapter<ACE_Thread_Mutex> (),
                       0);
       break;
-#else
-      ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_THREADS */
     case TAO_NULL_LOCK:
       ACE_NEW_RETURN (the_lock,

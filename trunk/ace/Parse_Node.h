@@ -115,6 +115,7 @@ public:
 
 private:
   char *parameters_;
+  // "Command-line" parameters.
 };
 
 class ACE_Export ACE_Dynamic_Node : public ACE_Static_Node
@@ -136,6 +137,7 @@ public:
 
 private:
   const ACE_Service_Type *record_;
+  // Pointer to a descriptor that describes this node.
 };
 
 class ACE_Export ACE_Stream_Node : public ACE_Parse_Node
@@ -156,7 +158,8 @@ public:
 
 private:
   const ACE_Static_Node *node_;
-  const ACE_Parse_Node  *mods_;
+  const ACE_Parse_Node *mods_;
+  // Linked list of modules that are part of the stream.
 };
 
 class ACE_Export ACE_Location_Node
@@ -165,8 +168,8 @@ class ACE_Export ACE_Location_Node
   //     Keep track of where a shared library is located.
 public:
   ACE_Location_Node (void);
-  virtual const void *symbol (void) = 0;
-  virtual void set_symbol (const void *h);
+  virtual void *symbol (void) = 0;
+  virtual void set_symbol (void *h);
   ACE_SHLIB_HANDLE handle (void) const;
   void handle (const ACE_SHLIB_HANDLE h);
   const char *pathname (void) const;
@@ -184,10 +187,17 @@ public:
 protected:
   ACE_SHLIB_HANDLE open_handle (void);
 
-  ACE_SHLIB_HANDLE handle_;
-  const void *symbol_;
   const char *pathname_;
-  int	must_delete_;
+  // Pathname to the shared library we are working on.
+
+  int must_delete_;
+  // Flag indicating whether we need to delete the <pathname_>.
+
+  ACE_SHLIB_HANDLE handle_;
+  // Handle to the open shared library.
+
+  void *symbol_;
+  // Symbol that we've obtained from the shared library.
 };
 
 class ACE_Export ACE_Object_Node : public ACE_Location_Node
@@ -196,7 +206,7 @@ class ACE_Export ACE_Object_Node : public ACE_Location_Node
   //   Keeps track of the symbol name for a shared object.
 public:
   ACE_Object_Node (const char *pathname, const char *obj_name);
-  virtual const void *symbol (void);
+  virtual void *symbol (void);
   virtual ~ACE_Object_Node (void);
 
   void dump (void) const;
@@ -207,6 +217,7 @@ public:
 
 private:
   const char *object_name_;
+  // Name of the object that we're parsing.
 };
 
 class ACE_Export ACE_Function_Node : public ACE_Location_Node
@@ -215,7 +226,7 @@ class ACE_Export ACE_Function_Node : public ACE_Location_Node
   //     Keeps track of the symbol name of for a shared function.
 public:
   ACE_Function_Node (const char *pathname, const char *func_name);
-  virtual const void *symbol (void);
+  virtual void *symbol (void);
   virtual ~ACE_Function_Node (void);
 
   void dump (void) const;
@@ -226,6 +237,7 @@ public:
 
 private:
   const char *function_name_;
+  // Name of the function that we're parsing.
 };
 
 class ACE_Export ACE_Dummy_Node : public ACE_Parse_Node
@@ -246,6 +258,7 @@ public:
 private:
   const ACE_Static_Node *node_;
   const ACE_Parse_Node *mods_;
+  // Linked list of modules that we're dealing with.
 };
 
 class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
@@ -256,7 +269,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   //     application. 
 public:
   ACE_Static_Function_Node (const char *func_name);
-  virtual const void *symbol (void);
+  virtual void *symbol (void);
   virtual ~ACE_Static_Function_Node (void);
 
   void dump (void) const;
@@ -267,6 +280,7 @@ public:
 
 private:
   const char *function_name_;
+  // Name of the function that we're parsing.
 };
 
 #if defined (__ACE_INLINE__)

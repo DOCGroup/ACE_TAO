@@ -196,7 +196,7 @@ svc_location
       u_int flags 
 	= ACE_Service_Type::DELETE_THIS 
 	| ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      const void *sym = $3->symbol ();
+      void *sym = $3->symbol ();
 
       if (sym != 0)
 	{
@@ -335,7 +335,7 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
 ACE_Service_Type_Impl *
 ace_create_service_type (const char *name, 
 			 int type, 
-			 const void *symbol, 
+			 void *symbol, 
 			 u_int flags)
 {
   ACE_Service_Type_Impl *stp = 0;

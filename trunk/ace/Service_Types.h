@@ -35,7 +35,7 @@ class ACE_Export ACE_Service_Type_Impl
   //     <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 public:
   // = Initialization and termination methods.
-  ACE_Service_Type_Impl (const void *object, 
+  ACE_Service_Type_Impl (void *object, 
 			 const char *s_name, 
 			 u_int flags = 0);
   virtual ~ACE_Service_Type_Impl (void);
@@ -47,7 +47,7 @@ public:
   virtual int fini (void) const;
   virtual int info (char **str, size_t len) const = 0;
 
-  const void *object (void) const;
+  void *object (void) const;
   // The pointer to the service.
 
   const char *name (void) const;
@@ -66,7 +66,7 @@ protected:
   const char *name_;
   // Name of the service.
 
-  const void *obj_;
+  void *obj_;
   // Pointer to object that implements the service.  This actually
   // points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 
@@ -81,7 +81,7 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
   //     <ACE_Service_Objects>. 
 public:
   // = Initialization method.
-  ACE_Service_Object_Type (const void *so,
+  ACE_Service_Object_Type (void *so,
 			   const char *name, 
 			   u_int flags = 0);
 
@@ -100,7 +100,7 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
   //     <ACE_Modules>. 
 public:
   // = Initialization method.
-  ACE_Module_Type (const void *m, // Really an <ACE_Module> *.
+  ACE_Module_Type (void *m, // Really an <ACE_Module> *.
 		   const char *identifier, 
 		   u_int flags = 0);
 
@@ -133,7 +133,7 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
   //     <ACE_Streams>. 
 public:
   // = Initialization method.
-  ACE_Stream_Type (const void *s, // Really an <ACE_Stream> *.
+  ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
 		   const char *identifier, 
 		   u_int flags = 0);
 

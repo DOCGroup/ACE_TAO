@@ -3,7 +3,7 @@
 
 // Service_Record.i
 
-ACE_INLINE const void *
+ACE_INLINE void *
 ACE_Service_Type_Impl::object (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::object");

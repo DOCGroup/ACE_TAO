@@ -313,7 +313,7 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
 ACE_Service_Type_Impl *
 ace_create_service_type (const char *name, 
 			 int type, 
-			 const void *symbol, 
+			 void *symbol, 
 			 u_int flags)
 {
   ACE_Service_Type_Impl *stp = 0;
@@ -843,7 +843,7 @@ case 30:
       u_int flags 
 	= ACE_Service_Type::DELETE_THIS 
 	| (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      const void *sym = ace_yyvsp[-1].location_node_->symbol ();
+      void *sym = ace_yyvsp[-1].location_node_->symbol ();
 
       if (sym != 0)
 	{

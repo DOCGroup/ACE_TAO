@@ -1,5 +1,13 @@
 Wed Feb 25 21:41:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Parse_Node: Eliminated more uses of "const void *" and
+ 	  changed them to plain ol' "void *".
+
+	* ace/Service_Types.cpp (fini): Changed the "const void *" to be
+ 	  simply "void *" since it didn't seem to make any sense they way
+ 	  it was!  Thanks to Stephen Coy <stevec@magna.com.au> for
+ 	  insisting on this...
+
 	* ace/config-sunos5.*.h: Moved the ACE_HAS_REENTRANT_FUNCTIONS
  	  into the section of #defines that should be commented out if
  	  we're not building a multi-threaded library.
