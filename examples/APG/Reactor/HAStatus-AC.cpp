@@ -65,8 +65,8 @@ ClientService::handle_input (ACE_HANDLE)
   ACE_Message_Block *mb;
   size_t remaining =
     ACE_static_cast (size_t, (recv_cnt - send_cnt));
-  ACE_NEW_RETURN
-    (mb, ACE_Message_Block (&buffer[send_cnt], remaining), -1);
+  ACE_NEW_RETURN (mb, ACE_Message_Block (remaining), -1);
+  mb->copy (&buffer[send_cnt], remaining);
   int output_off = this->msg_queue ()->is_empty ();
   ACE_Time_Value nowait (ACE_OS::gettimeofday ());
   if (this->putq (mb, &nowait) == -1)
