@@ -1,3 +1,9 @@
+Thu May 15 08:54:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Makefile: '(release, cleanrelease): use -prune option to "find"
+	  instead of filtering its output.  Thanks to Chris Cleeland for
+	  suggesting this.
+
 Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/thread_specific.cpp (worker): Changes
