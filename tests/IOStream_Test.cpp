@@ -288,7 +288,7 @@ server (void *arg = 0)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
 
   while (client_handler &&
-         (buf.length() == 0 || buf[buf.length() - 1] != '\n'))
+         (buf.length() == 0 || buf[buf.length() - 1] != '"'))
     {
       client_handler >> buf;
 	  if (buf.length() > 0)
