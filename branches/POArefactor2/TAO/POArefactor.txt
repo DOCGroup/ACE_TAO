@@ -1,3 +1,17 @@
+Tue Oct 12 12:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+          Added include of POA_Current_Impl.h and used the correct namespace
+
+        * tao/IFR_Client/*:
+        * orbsvcs/orbsvcs/IFR_Service/*S.{h,cpp,i,inl}:
+          Regenerated all the files, also all .i files are replaced with
+          the new .inl files
+
+        * orbsvcs/IFR_Server/diffs/*.diff:
+          Removed all these files, they are outdated, on the wrong place and
+          most of them are zero bytes.
+
 Tue Oct 12 11:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h:
