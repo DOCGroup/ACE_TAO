@@ -579,11 +579,11 @@ const char *OctetStr::to_string_hex()
 
 // TODO: verify ACE_OS:: on NT works like this or not
 #if defined(__unix)
-    char *fmt = "   %s\n";
+    const char *fmt = "   %s\n";
 #endif // __unix
 
 #if defined(_WIN32)
-    char *fmt = "   %s\r\n";
+    const char *fmt = "   %s\r\n";
 #endif // _WIN32
 
     ACE_OS::sprintf(line_ptr, fmt, char_buf);
