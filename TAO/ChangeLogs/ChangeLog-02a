@@ -1,3 +1,46 @@
+Thu Mar 29 08:41:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/README:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Oneways/Session_Control.cpp:
+        * tests/Big_Oneways/Session_Task.h:
+        * tests/Big_Oneways/Session_Task.cpp:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/server.cpp:
+        * tests/Big_Oneways/server.dsp:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Sender_Task.cpp:
+        * tests/Queued_Message_Test/Makefile:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+        * tests/Queued_Message_Test/Queued_Message_Test.dsw:
+          All these files were supposed to be part of the 132 branch, but
+          they got accidentally added to the main trunk.  Removed until
+          their time comes.
+
 Thu Mar 29 08:39:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
