@@ -6,8 +6,9 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
+ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
@@ -17,9 +18,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_Fragment_Test
 
 RMCast_Fragment_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_Fragment_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -36,9 +36,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_Membership_Test
 
 RMCast_Membership_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_Membership_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -55,9 +54,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_Reassembly_Test
 
 RMCast_Reassembly_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_Reassembly_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -74,9 +72,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_Reordering_Test
 
 RMCast_Reordering_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_Reordering_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -93,9 +90,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_Retransmission_Test
 
 RMCast_Retransmission_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_Retransmission_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -112,9 +108,8 @@ if BUILD_RMCAST
 noinst_PROGRAMS += RMCast_UDP_Best_Effort_Test
 
 RMCast_UDP_Best_Effort_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RMCast_UDP_Best_Effort_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -127,6 +122,8 @@ endif BUILD_RMCAST
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

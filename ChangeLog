@@ -1,8 +1,200 @@
+Fri Nov 12 17:23:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* bin/bin.mpc:
+	* bin/PerlACE/perlace.mpc: These are meant to propagate the
+	  testing scripts over to the build area for automake builds.
+
+	* bin/auto_run_tests.pl: When no test-set options are supplied, add
+	  in the TAO test lists only if there is an $ACE_ROOT/TAO directory.
+	  Facilitates being able to use this script without options from
+	  the automake-generated "make check" command.
+
+	* configure.ac: Updated with the list of Makefiles below.
+
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/apps/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/examples/SAXPrint/Makefile.am:
+        * ACEXML/examples/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ACEXML/parser/Makefile.am:
+        * ACEXML/tests/Makefile.am:
+        * ACEXML/Makefile.am:
+        * ASNMP/agent/Makefile.am:
+        * ASNMP/asnmp/Makefile.am:
+        * ASNMP/examples/get/Makefile.am:
+        * ASNMP/examples/next/Makefile.am:
+        * ASNMP/examples/set/Makefile.am:
+        * ASNMP/examples/trap/Makefile.am:
+        * ASNMP/examples/walk/Makefile.am:
+        * ASNMP/examples/Makefile.am:
+        * ASNMP/tests/Makefile.am:
+        * ASNMP/Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
+        * apps/JAWS/Makefile.am:
+        * apps/JAWS/clients/Blobby/Makefile.am:
+        * apps/JAWS/clients/Makefile.am:
+        * apps/JAWS/clients/Caching/Makefile.am:
+        * apps/JAWS/server/Makefile.am:
+        * apps/Makefile.am:
+        * apps/Gateway/Gateway/Makefile.am:
+        * apps/Gateway/Makefile.am:
+        * apps/Gateway/Peer/Makefile.am:
+        * apps/JAWS3/jaws3/Makefile.am:
+        * apps/JAWS3/Makefile.am:
+        * apps/drwho/Makefile.am:
+        * apps/gperf/src/Makefile.am:
+        * apps/gperf/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
+        * apps/mkcsregdb/Makefile.am:
+        * apps/soreduce/Makefile.am:
+        * bin/Makefile.am:
+        * bin/PerlACE/Makefile.am:
+        * examples/APG/Active_Objects/Makefile.am:
+        * examples/APG/Config/Makefile.am:
+        * examples/APG/Containers/Makefile.am:
+        * examples/APG/Logging/Makefile.am:
+        * examples/APG/Misc_IPC/Makefile.am:
+        * examples/APG/Naming/Makefile.am:
+        * examples/APG/Proactor/Makefile.am:
+        * examples/APG/Processes/Makefile.am:
+        * examples/APG/Reactor/Makefile.am:
+        * examples/APG/Shared_Memory/Makefile.am:
+        * examples/APG/Signals/Makefile.am:
+        * examples/APG/Sockets/Makefile.am:
+        * examples/APG/Streams/Makefile.am:
+        * examples/APG/Svc_Config/Makefile.am:
+        * examples/APG/ThreadManagement/Makefile.am:
+        * examples/APG/ThreadPools/Makefile.am:
+        * examples/APG/ThreadSafety/Makefile.am:
+        * examples/APG/Threads/Makefile.am:
+        * examples/APG/Timers/Makefile.am:
+        * examples/APG/Makefile.am:
+        * examples/ASX/CCM_App/Makefile.am:
+        * examples/ASX/Makefile.am:
+        * examples/ASX/Message_Queue/Makefile.am:
+        * examples/Bounded_Packet_Relay/Makefile.am:
+        * examples/C++NPv1/Makefile.am:
+        * examples/C++NPv2/Makefile.am:
+        * examples/Makefile.am:
+        * examples/Connection/blocking/Makefile.am:
+        * examples/Connection/Makefile.am:
+        * examples/Connection/misc/Makefile.am:
+        * examples/Connection/non_blocking/Makefile.am:
+        * examples/DLL/Makefile.am:
+        * examples/Export/Makefile.am:
+        * examples/IOStream/client/Makefile.am:
+        * examples/IOStream/Makefile.am:
+        * examples/IOStream/server/Makefile.am:
+        * examples/IPC_SAP/ATM_SAP/Makefile.am:
+        * examples/IPC_SAP/Makefile.am:
+        * examples/IPC_SAP/DEV_SAP/reader/Makefile.am:
+        * examples/IPC_SAP/DEV_SAP/Makefile.am:
+        * examples/IPC_SAP/DEV_SAP/writer/Makefile.am:
+        * examples/IPC_SAP/FIFO_SAP/Makefile.am:
+        * examples/IPC_SAP/FILE_SAP/Makefile.am:
+        * examples/IPC_SAP/SOCK_SAP/Makefile.am:
+        * examples/IPC_SAP/SPIPE_SAP/Makefile.am:
+        * examples/IPC_SAP/SSL_SAP/Makefile.am:
+        * examples/IPC_SAP/TLI_SAP/Makefile.am:
+        * examples/IPC_SAP/UPIPE_SAP/Makefile.am:
+        * examples/Log_Msg/Makefile.am:
+        * examples/Logger/Acceptor-server/Makefile.am:
+        * examples/Logger/client/Makefile.am:
+        * examples/Logger/simple-server/Makefile.am:
+        * examples/Logger/Makefile.am:
+        * examples/Mem_Map/IO-tests/Makefile.am:
+        * examples/Mem_Map/Makefile.am:
+        * examples/Mem_Map/file-reverse/Makefile.am:
+        * examples/Misc/Makefile.am:
+        * examples/NT_Service/Makefile.am:
+        * examples/Naming/Makefile.am:
+        * examples/OS/Process/Makefile.am:
+        * examples/OS/Makefile.am:
+        * examples/QOS/Diffserv/Makefile.am:
+        * examples/QOS/Makefile.am:
+        * examples/QOS/Change_Receiver_FlowSpec/Makefile.am:
+        * examples/QOS/Change_Sender_TSpec/Makefile.am:
+        * examples/QOS/Simple/Makefile.am:
+        * examples/RMCast/Send_File/Makefile.am:
+        * examples/RMCast/Makefile.am:
+        * examples/Reactor/Dgram/Makefile.am:
+        * examples/Reactor/Makefile.am:
+        * examples/Reactor/FIFO/Makefile.am:
+        * examples/Reactor/Misc/Makefile.am:
+        * examples/Reactor/Multicast/Makefile.am:
+        * examples/Reactor/Ntalker/Makefile.am:
+        * examples/Reactor/Proactor/Makefile.am:
+        * examples/Reactor/WFMO_Reactor/Makefile.am:
+        * examples/Registry/Makefile.am:
+        * examples/Service_Configurator/IPC-tests/client/Makefile.am:
+        * examples/Service_Configurator/IPC-tests/Makefile.am:
+        * examples/Service_Configurator/IPC-tests/server/Makefile.am:
+        * examples/Service_Configurator/Makefile.am:
+        * examples/Service_Configurator/Misc/Makefile.am:
+        * examples/Shared_Malloc/Makefile.am:
+        * examples/Shared_Memory/Makefile.am:
+        * examples/Smart_Pointers/Makefile.am:
+        * examples/Synch/Makefile.am:
+        * examples/System_V_IPC/SV_Semaphores/Makefile.am:
+        * examples/System_V_IPC/SV_Message_Queues/Makefile.am:
+        * examples/System_V_IPC/Makefile.am:
+        * examples/TMCast/Member/Makefile.am:
+        * examples/TMCast/Makefile.am:
+        * examples/Threads/Makefile.am:
+        * examples/Timer_Queue/Makefile.am:
+        * examples/Web_Crawler/Makefile.am:
+        * netsvcs/clients/Logger/Makefile.am:
+        * netsvcs/clients/Makefile.am:
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+        * netsvcs/Makefile.am:
+        * netsvcs/lib/Makefile.am:
+        * netsvcs/servers/Makefile.am:
+        * performance-tests/Misc/Makefile.am:
+        * performance-tests/SCTP/Makefile.am:
+        * performance-tests/Server_Concurrency/Leader_Follower/Makefile.am:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile.am:
+        * performance-tests/Server_Concurrency/Makefile.am:
+        * performance-tests/Synch-Benchmarks/Base_Test/Makefile.am:
+        * performance-tests/Synch-Benchmarks/Makefile.am:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Makefile.am:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Makefile.am:
+        * performance-tests/TCP/Makefile.am:
+        * performance-tests/UDP/Makefile.am:
+        * performance-tests/Makefile.am:
+        * tests/Makefile.am:
+        * tests/SSL/Makefile.am:
+        * tests/RMCast/Makefile.am:
+        * tests/HTBP/Reactor_Tests/Makefile.am:
+        * tests/HTBP/Send_Large_Msg/Makefile.am:
+        * tests/HTBP/Send_Recv_Tests/Makefile.am:
+        * tests/HTBP/ping/Makefile.am:
+        * tests/HTBP/Makefile.am:
+        * websvcs/lib/Makefile.am:
+        * websvcs/Makefile.am:
+        * websvcs/tests/Makefile.am:
+        * Makefile.am:
+        * protocols/ace/HTBP/Makefile.am:
+        * protocols/ace/Makefile.am:
+        * protocols/Makefile.am:
+	  Either updated or new automake files. These were all generated with
+	  MPC and checked in. A number will require further tweaks to be
+	  useable for installing an autoconfigure'd ACE. At some point, we
+	  may work on the MPC extensions needed to completely automate the
+	  Makefile.am file generation, but at this point, those changes are
+	  only useful for automake build targets.
+
 Sat Nov 13 23:49:57 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
 	* tests/Test_Output.cpp (ACE_Test_Output::close): 
-	Added delete of the stream and setting msg_ostream to 0. That way when
-	re-initing the stream, it will be recreated. 
+	  Added delete of the stream and setting msg_ostream to 0. That way
+	  when re-initing the stream, it will be recreated. 
 
 Fri Nov 12 09:10:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -6,15 +6,17 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+
+ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 ## Makefile.netsvcs.am 
-lib_LTLIBRARIES = libnetsvcs.la
+noinst_LTLIBRARIES = libnetsvcs.la
 
 libnetsvcs_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_NETSVCS_BUILD_DLL
 
 libnetsvcs_la_SOURCES = \
@@ -23,12 +25,10 @@ libnetsvcs_la_SOURCES = \
   Log_Message_Receiver.cpp \
   Name_Handler.cpp \
   Server_Logging_Handler.cpp \
+  Server_Logging_Handler_T.cpp \
   TS_Clerk_Handler.cpp \
   TS_Server_Handler.cpp \
   Token_Handler.cpp
-
-libnetsvcs_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libnetsvcs_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
@@ -47,6 +47,8 @@ noinst_HEADERS = \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

@@ -1,28 +1,38 @@
 // $Id$
 
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(bin, envinfo, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  cerr << "ACE: "
-       << ACE::major_version() << "."
-       << ACE::minor_version() << "."
-       << ACE::beta_version() << "\n";
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("ACE: %u.%u.%u\n"),
+              ACE::major_version(),
+              ACE::minor_version(),
+              ACE::beta_version()));
 
   ACE_utsname uname;
   ACE_OS::uname(&uname);
-  cerr << "OS: "
-       << uname.sysname << " "
-       << uname.release << "\n";
+#if defined (ACE_LACKS_UTSNAME_T)
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("OS: %s %s\n"),
+              uname.sysname,
+              uname.release));
+#else
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("OS: %C %C\n"),
+              uname.sysname,
+              uname.release));
+#endif
 
-  cerr << "Compiler: "
-       << ACE::compiler_name() << " "
-       << ACE::compiler_major_version() << "."
-       << ACE::compiler_minor_version() << "."
-       << ACE::compiler_beta_version() << "\n";
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Compiler: %s %u.%u\n"),
+              ACE::compiler_name(),
+              ACE::compiler_major_version(),
+              ACE::compiler_minor_version(),
+              ACE::compiler_beta_version()));
 
   return 0;
 }
