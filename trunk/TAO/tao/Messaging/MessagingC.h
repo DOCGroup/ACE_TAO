@@ -2250,6 +2250,11 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder* _retn (void);
     ExceptionHolder* ptr (void) const;
 
+    // Hooks used by template sequence and valuetype manager classes
+    // for non-defined forward declared valuetypes.
+    static void tao_add_ref (ExceptionHolder *);
+    static void tao_remove_ref (ExceptionHolder *);
+
   private:
     ExceptionHolder* ptr_;
   };
@@ -2900,16 +2905,12 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Routi
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Messaging::ExceptionHolder *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Messaging::ExceptionHolder *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
-//
-//
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);

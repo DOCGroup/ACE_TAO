@@ -275,6 +275,22 @@ TAO_NAMESPACE_BEGIN (PortableInterceptor)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectReferenceFactory, &_tc_TAO_tc_PortableInterceptor_ObjectReferenceFactory)
 TAO_NAMESPACE_END
 
+void
+tao_PortableInterceptor_ObjectReferenceFactory_add_ref (
+    PortableInterceptor::ObjectReferenceFactory *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_PortableInterceptor_ObjectReferenceFactory_remove_ref (
+    PortableInterceptor::ObjectReferenceFactory *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class PortableInterceptor::ObjectReferenceFactory_var
 // *************************************************************
@@ -561,6 +577,22 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectReferenceTemplate, &_tc_TAO_tc_PortableInterceptor_ObjectReferenceTemplate)
 TAO_NAMESPACE_END
+
+void
+tao_PortableInterceptor_ObjectReferenceTemplate_add_ref (
+    PortableInterceptor::ObjectReferenceTemplate *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_PortableInterceptor_ObjectReferenceTemplate_remove_ref (
+    PortableInterceptor::ObjectReferenceTemplate *p
+  )
+{
+  CORBA::remove_ref (p);
+}
 
 // *************************************************************
 // Operations for class PortableInterceptor::ObjectReferenceTemplate_var
