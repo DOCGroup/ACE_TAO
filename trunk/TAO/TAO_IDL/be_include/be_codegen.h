@@ -181,6 +181,7 @@ public:
     TAO_ARGUMENT_SI,
     TAO_ARGUMENT_SS,
     TAO_ARGUMENT_VARDECL_SS,
+    TAO_ARGUMENT_UPCALL_SS,
 
     // emitting code for attributes
     TAO_ATTRIBUTE_CH,
