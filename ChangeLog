@@ -1,3 +1,17 @@
+Fri May 30 01:43:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added ifdef's to allow users to pass versioned_so=0 to
+          make in order to turn off library versioning.  This is
+          useful for those who use our makefiles to build their
+          own projects, but don't want to version their libraries
+          with the ACE version number.  Thanks to Jeff Kelley
+          <jeffkelley@micron.com> for reporting the problem and
+          helping to nail down the fix.
+
+        * THANKS:
+          Added Jeff Kelley to the hall of fame.
+
 Fri May 30 00:24:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Makefile.am:
