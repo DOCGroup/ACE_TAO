@@ -62,3 +62,8 @@ client: Creates one Quoter through using the Quoter_Factory_Finder. After that
               ->Quoter_Generic_Factory->Quoter_Factory
 
 
+
+!!!!Note: 
+To make use of the move operation you need to use the -sm switch on 
+the perl script. This activates in the server multiple objects, which is needed for
+moving.
