@@ -416,6 +416,7 @@ TAO_Notify_EventChannel_i::for_suppliers (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::Object_var obj =
     this->get_supplieradmin (this->default_id_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::SupplierAdmin::_nil ());
 
   return CosEventChannelAdmin::SupplierAdmin::_narrow (obj.in (),
                                                        ACE_TRY_ENV);

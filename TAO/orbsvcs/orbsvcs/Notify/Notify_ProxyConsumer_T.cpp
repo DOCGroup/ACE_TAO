@@ -86,7 +86,9 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
 
   CORBA::Boolean ret_val;
 
-  if (supplier_admin_->MyOperator (ACE_TRY_ENV) == CosNotifyChannelAdmin::AND_OP)
+  ret_val = supplier_admin_->MyOperator (ACE_TRY_ENV);
+
+  if (ret_val == CosNotifyChannelAdmin::AND_OP)
     {
       ret_val = bval && this->filter_admin_.match (event, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);

@@ -102,6 +102,7 @@ TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_list
           // create the list.
           TAO_Notify_EventListener_List* new_list =
             this->collection_factory_->create_event_listener_list (ACE_TRY_ENV);
+          ACE_CHECK;
 
           // add the list to the recipient map.
           this->event_recipient_map_.bind (event_type, new_list);

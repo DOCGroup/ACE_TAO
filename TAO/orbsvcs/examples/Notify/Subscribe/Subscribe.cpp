@@ -287,8 +287,11 @@ Subscribe::send_events (CORBA::Environment &ACE_TRY_ENV)
   for (int i = 0; i < 1; ++i)
     {
       supplier_1_->send_event (event1, ACE_TRY_ENV);
+      ACE_CHECK;
       supplier_1_->send_event (event2, ACE_TRY_ENV);
+      ACE_CHECK;
       supplier_1_->send_event (event3, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
