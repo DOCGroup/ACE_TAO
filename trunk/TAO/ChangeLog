@@ -1,3 +1,8 @@
+Thu Apr 15 12:06:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.{h,cpp}:
+          Fixed include paths
+
 Thu Apr 15 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/diffs/Bounds.diff:
