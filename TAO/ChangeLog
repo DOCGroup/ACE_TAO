@@ -1,3 +1,13 @@
+Tue Jul 27 06:11:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.h:
+        * orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.h:
+        * orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.h:
+        * orbsvcs/orbsvcs/Security/CSI_Utils.h:
+          Fixed fuzz errors about missing /**/ and incorrect doxygen file
+          tags
+
 Mon Jul 26 12:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/sfp.idl:
