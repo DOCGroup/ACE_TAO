@@ -1,3 +1,11 @@
+Fri Jul  9 15:54:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/{IIOP,UIOP}_Transport.cpp (start_request):
+
+	  Removed send_request() time probe and added one to
+	  start_request() since the time spent in start_request() is more
+	  important for benchmarking.
+
 Fri Jul  9 15:22:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp:
