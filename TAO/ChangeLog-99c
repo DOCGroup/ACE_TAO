@@ -1,13 +1,13 @@
 Wed Jul 28 14:23:29 1999  Fred Kuhns <fredk@cs.wustl.edu>
 
         * tao/IORManipulation
-          Fixed a problem with how TAO_Stub creator was called.
-          was TAO_Stub ((Stream_var)type_id, ...)
-          But this resulted in both the stub object and the type_id obj 
-          owning the same string.  The change is to first perform a
-          string_dup () then give the string to the stub object.
-          Thanks to Aniruddha Gokhale gokhale@research.bell-labs.com
-          for id'ing the bug and providing a fix.
+          Fixed a problem with how TAO_Stub creator was called.  was
+ 	  TAO_Stub ((Stream_var)type_id, ...)  But this resulted in both
+ 	  the stub object and the type_id obj owning the same string.  The
+ 	  change is to first perform a string_dup () then give the string
+ 	  to the stub object.  Thanks to Aniruddha Gokhale
+ 	  <gokhale@research.bell-labs.com> for id'ing the bug and
+ 	  providing a fix.
 
 Wed Jul 28 13:53:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
