@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_STAT_H
-#define PACE_SYS_STAT_H
+#ifndef PACE_SYS_STAT_H_INDIRECT
+#define PACE_SYS_STAT_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/stat.h"
+# include "pace/posix/stat.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/stat.h"
+# include "pace/vxworks/stat.h"
 #elif defined (PACE_WIN32)
-# include "win32/stat.h"
+# include "pace/win32/stat.h"
 #endif
 
-#endif /* PACE_SYS_STAT_H */
+#endif /* PACE_SYS_STAT_H_INDIRECT */

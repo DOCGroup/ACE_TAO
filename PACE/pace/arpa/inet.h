@@ -13,16 +13,16 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_ARPA_INET_H
-#define PACE_ARPA_INET_H
+#ifndef PACE_ARPA_INET_H_INDIRECT
+#define PACE_ARPA_INET_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/inet.h"
+# include "pace/posix/inet.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/inet.h"
+# include "pace/vxworks/inet.h"
 #elif defined (PACE_WIN32)
-# include "win32/inet.h"
+# include "pace/win32/inet.h"
 #endif
 
 
-#endif /* PACE_ARPA_INET_H */
+#endif /* PACE_ARPA_INET_H_INDIRECT */

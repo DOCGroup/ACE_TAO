@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SCHED_H
-#define PACE_SCHED_H
+#ifndef PACE_SCHED_H_INDIRECT
+#define PACE_SCHED_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/sched.h"
+# include "pace/posix/sched.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/sched.h"
+# include "pace/vxworks/sched.h"
 #elif defined (PACE_WIN32)
-# include "win32/sched.h"
+# include "pace/win32/sched.h"
 #endif
 
-#endif /* PACE_SCHED_H */
+#endif /* PACE_SCHED_H_INDIRECT */

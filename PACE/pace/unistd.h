@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_UNISTD_H
-#define PACE_UNISTD_H
+#ifndef PACE_UNISTD_H_INDIRECT
+#define PACE_UNISTD_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/unistd.h"
+# include "pace/posix/unistd.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/unistd.h"
+# include "pace/vxworks/unistd.h"
 #elif defined (PACE_WIN32)
-# include "win32/unistd.h"
+# include "pace/win32/unistd.h"
 #endif
 
-#endif /* PACE_UNISTD_H */
+#endif /* PACE_UNISTD_H_INDIRECT */

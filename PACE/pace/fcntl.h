@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_FCNTL_H
-#define PACE_FCNTL_H
+#ifndef PACE_FCNTL_H_INDIRECT
+#define PACE_FCNTL_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/fcntl.h"
+# include "pace/posix/fcntl.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/fcntl.h"
+# include "pace/vxworks/fcntl.h"
 #elif defined (PACE_WIN32)
-# include "win32/fcntl.h"
+# include "pace/win32/fcntl.h"
 #endif
 
-#endif /* PACE_FCNTL_H */
+#endif /* PACE_FCNTL_H_INDIRECT */

@@ -1,3 +1,47 @@
+Mon Jun 19 04:34:34 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/sys/mman.h:
+	* pace/sys/socket.h:	
+	* pace/sys/stat.h:
+	* pace/sys/termios.h:
+	* pace/sys/times.h:
+	* pace/sys/types.h:
+	* pace/sys/utsname.h:	
+	* pace/netinet/in.h:
+	* pace/arpa/inet.h:
+	* pace/aio.h:
+	* pace/assert.h:
+	* pace/defines.h:
+	* pace/dirent.h:
+	* pace/fnctl.h:
+	* pace/grp.h:
+	* pace/limits.h:
+	* pace/locale.h:
+	* pace/mqueue.h:
+	* pace/netdb.h:
+	* pace/pthread.h:
+	* pace/pwd.h:
+	* pace/sched.h:
+	* pace/semaphore.h:
+	* pace/setjmp.h:
+	* pace/signal.h:
+	* pace/stdio.h:
+	* pace/stdlib.h:
+	* pace/string.h:
+	* pace/strings.h:
+	* pace/thread.h:
+	* pace/time.h:
+	* pace/unistd.h:
+	* pace/utime.h:
+	* pace/wait.h:	
+
+	  Altered these files #ifdef macro to PACE_FILE_H_INDIRECT so that the
+	  implementation pace/posix/*.h files didn't conflict with the preprocessor
+	  name space.
+
+	  Fully qualified all the includes in these files from #include "posix/file.h"
+	  to #include "pace/posix/file.h"
+
 Mon Jun 19 03:57:37 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/ctype.h:

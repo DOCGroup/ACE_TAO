@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_TERMIOS_H
-#define PACE_SYS_TERMIOS_H
+#ifndef PACE_SYS_TERMIOS_H_INDIRECT
+#define PACE_SYS_TERMIOS_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/termios.h"
+# include "pace/posix/termios.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/termios.h"
+# include "pace/vxworks/termios.h"
 #elif defined (PACE_WIN32)
-# include "win32/termios.h"
+# include "pace/win32/termios.h"
 #endif
 
-#endif /* PACE_SYS_TERMIOS_H */
+#endif /* PACE_SYS_TERMIOS_H_INDIRECT */

@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_GRP_H
-#define PACE_GRP_H
+#ifndef PACE_GRP_H_INDIRECT
+#define PACE_GRP_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/grp.h"
+# include "pace/posix/grp.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/grp.h"
+# include "pace/vxworks/grp.h"
 #elif defined (PACE_WIN32)
-# include "win32/grp.h"
+# include "pace/win32/grp.h"
 #endif
 
-#endif /* PACE_GRP_H */
+#endif /* PACE_GRP_H_INDIRECT */
