@@ -1,3 +1,11 @@
+Sat Apr 29 14:51:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  For the generated GIOP request header response flag
+	  value for twoway requests, changed the hard-coded
+	  '131' value to the constant TAO_TWOWAY_RESPONSE_FLAG
+	  defined in corbafwd.h by Bala.
+
 Sat Apr 29 14:16:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Accept_State.cpp:
