@@ -81,8 +81,6 @@ private:
   JAWS_IO_SOCK_Acceptor acceptor_;
 };
 
-        JAWS_Asynch_Acceptor_Base;
-
 class JAWS_Export JAWS_Asynch_Acceptor
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms
@@ -90,17 +88,6 @@ class JAWS_Export JAWS_Asynch_Acceptor
 #endif /* defined (ACE_WIN32) */
 {
 public:
-  virtual int open (const ACE_INET_Addr &address,
-                    size_t bytes_to_read = 0,
-                    int pass_addresses = 0,
-                    int backlog = 5,
-                    int reuse_addr = 1,
-                    ACE_Proactor *proactor = 0,
-                    int validate_new_connection = 0,
-                    int reissue_accept = 1);
-
-  virtual ACE_HANDLE get_handle (void);
-  // get the ACE_HANDLE, so I can close it!
 };
 
 

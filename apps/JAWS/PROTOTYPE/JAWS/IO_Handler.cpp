@@ -9,7 +9,6 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
-#include "JAWS/Waiter.h"
 
 JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
 {
@@ -24,7 +23,6 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
     mb_ (0),
     handle_ (ACE_INVALID_HANDLE),
     task_ (0),
-    waiter_index_ (-1),
     factory_ (factory)
 {
   // this->io_->handler (this);
@@ -148,18 +146,6 @@ JAWS_Pipeline_Handler *
 JAWS_IO_Handler::task (void)
 {
   return this->task_;
-}
-
-void
-JAWS_IO_Handler::waiter_index (int index)
-{
-  this->waiter_index_ = index;
-}
-
-int
-JAWS_IO_Handler::waiter_index (void)
-{
-  return this->waiter_index_;
 }
 
 void
@@ -337,6 +323,16 @@ JAWS_Asynch_Handler::handle_transmit_file (const
 void
 JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
+  this->dispatch_handler ();
+
+  // Get the data from the message block of the acceptor, copy it
+  // into our Data Block and then return.
+
+  JAWS_Data_Block *db = this->handler ()->message_block ();
+
+  db->
+
+
 }
 
 void
