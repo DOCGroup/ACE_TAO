@@ -1,3 +1,10 @@
+Wed Apr 09 16:46:16 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i}: fixed readPPCTimeBase declaration and return
+	  value (for now: it really needs to return a 64 bit quantity).
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
+	  reporting these.
+
 Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Changed the signature of all the make_svc_handler() methods
@@ -578,7 +585,7 @@ Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.h: protected definition of struct flock on VxWorks,
 	  because it defines that type in sys/fcntlcom.h.  (It doesn't
 	  appear to support flock (), though.)  Thanks to Dave
-	  Mayerhoefer <m210229@svappl36.mdc.com> for reporting this.
+	  Mayerhoefer <mayerhoefer@svappl36.mdc.com> for reporting this.
 
 	* ace/OS.h: define ACE_hrtime_t as u_longlong_t gcc, because
 	  its long long types are only 4 bytes long.  Its longlong_t
@@ -587,7 +594,7 @@ Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.* (gethrtime), config-vxworks-ghs-1.8.h: added support
 	  for PowerPC with Green Hills compiler.  Thanks to Dave
-	  Mayerhoefer <m210229@svappl36.mdc.com> for providing the
+	  Mayerhoefer <mayerhoefer@svappl36.mdc.com> for providing the
 	  readPPCTimeBase assembler routine.
 
 	* ace/config-vxworks*.h: removed #include of vxWorks.h because
@@ -948,7 +955,7 @@ Tue Mar 25 21:26:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
 	  ::taskSpawn () so that VxWorks will generate the task ID.
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com>
 	  for providing this fix, without which random task names would
 	  be assigned.
 
@@ -1148,8 +1155,9 @@ Mon Mar 24 14:22:17 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.cpp (thr_create): For VxWorks, fixed call to ::taskSpawn ().
 	  ACE's arguments are in an array, not individual arguments.
 	  Also, set flags to VX_FP_TASK if it's 0, to match behavior
-	  of ::sp ().  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
-	  for reporting these and providing the fix.
+	  of ::sp ().  Thanks to Dave Mayerhoefer
+	  <mayerhoefer@svappl36.mdc.com> for reporting these and providing
+	  the fix.
 
 	* ace/High_Res_Timer.cpp (elapsed_time (struct timespec &):
 	  fixed, using same approach as in elapsed_time
@@ -1735,11 +1743,11 @@ Tue Mar 11 21:38:42 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SYS_NERR.
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
 	  reporting this.
 
 	* ace/OS.{i,cpp} (uname, hostname): added VxWorks support.
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
 	  providing this.  (Also, uninlined ACE_OS::uname on WIN32
 	  and VxWorks because it contains string literals.)
 
@@ -1861,7 +1869,7 @@ Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	  that it's not declared on VxWorks, where it's not needed;
 	  (stat): added cast of file arg to char * for VxWorks;
 	  (thr_getprio): added missing "#else" before ACE_NOTSUP_RETURN (-1).
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
 	  reporting these.
 
 	* ace/OS.cpp (sched_param): with STHREADS, map ACE_SCOPE_THREAD
@@ -1869,7 +1877,7 @@ Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp: commented out YY_BREAK after ace_yyterminate ()
 	  to avoid GHS compiler warning about unreachable statement.
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
 	  reporting this.
 
 	* ace/ace.mak: removed Thread_Priority and renamed Scheduling_Params
@@ -2609,7 +2617,7 @@ Sat Feb 15 11:46:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/ACE.cpp: It appears that VxWorks doesn't support fcntl().
   	  However, it does seem to support ioctl().  Therefore, that's how
  	  we'll set the descriptors into non-blocking mode.  Thanks to
- 	  Dave Mayerhoefer <m210229@svappl36.mdc.com> for reporting this.
+ 	  Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for reporting this.
 
 	* ace/SOCK_Stream.h: Corrected the documentation for
  	  ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags, const
