@@ -1,3 +1,8 @@
+Sat Jul 20 09:08:17 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp: Fixed a
+	  unused variable warning.
+
 Fri Jul 19 23:44:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/common_args.cpp: 
