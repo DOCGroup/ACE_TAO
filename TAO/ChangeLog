@@ -1,3 +1,12 @@
+Fri Aug 16 10:31:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.bor (CFLAGS, LIBFILES):
+	* orbsvcs/LoadBalancer/LoadMonitor.bor (CFLAGS, LIBFILES):
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor (CFLAGS):
+
+	  Corrected CosLoadBalancing library related variables.  They
+	  were still setup for use with the old load balancer prototype.
+
 Fri Aug 16 09:43:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
