@@ -1,10 +1,24 @@
+Mon Jul  6 04:45:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.h (TAO_Client_Connect_Handler): Added a new data
+	  member <reactive_> to trace whether this client connection is
+	  running reactively or in a separate thread (other than the main
+	  thread.)
+
+	* tao/Connect.cpp (open,close,send_request): Check to see if the
+	  client is going to run in a separate thread (by comparing its
+	  thread id with that of reactor's.)  If so, the handler won't try
+	  to register itself with the reactor and simply block on the
+	  socket IO calls.  This change enables the NestedUpcall/Reactor
+	  example to use the thread-per-connection strategy.
+
 Sun Jul  5 21:22:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/orbconf.h: Undid the change I made on July 3.  Although it
-	  fixed the one problem I was looking at, it broke everything 
+	  fixed the one problem I was looking at, it broke everything
 	  else.  Oops.
 
-	* TAO_IDL/be/be_codegen.cpp: Changed the TAO_EXPORT_MACRO 
+	* TAO_IDL/be/be_codegen.cpp: Changed the TAO_EXPORT_MACRO
 	  definition to override any that came before.  Without this the
 	  ordering of includes (putting corba.h before an orbsvc, such as
 	  CosNamingC.h) would break in certain configurations.  Also moved
@@ -14,11 +28,11 @@ Sat Jul  4 01:18:21 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:	
-	* orbsvcs/orbsvcs/Trader/Offer_Interpreters.cpp:		
+	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Interpreters.cpp:
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
 	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:	
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
 	  Addressed warnings/errors on IRIX.
 
 Fri Jul 03 21:51:44 1998  David L. Levine  <levine@cs.wustl.edu>
