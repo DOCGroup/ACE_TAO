@@ -61,6 +61,10 @@
 # include /**/ <float.h>    // Floating point limits
 # include /**/ <stdlib.h>   // Other types
 
+# if defined(ACE_LACKS_LONGLONG_T)
+#   include /**/ <stdio.h>  // For long long emulation
+# endif  /* ACE_LACKS_LONGLONG_T */
+
 # if !defined (ACE_LACKS_SYS_TYPES_H)
 #   include /**/ <sys/types.h>
 # endif  /* ACE_LACKS_SYS_TYPES_H */
