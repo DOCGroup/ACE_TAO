@@ -18,7 +18,7 @@ TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl (void)
 {
 }
 
-void 
+void
 TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::Object_ptr obj,
     CORBA::ORB_ptr orb,
@@ -49,7 +49,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
                       ));
 }
 
-CORBA::Request_ptr 
+CORBA::Request_ptr
 TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
                                    const char *operation,
@@ -118,13 +118,13 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
     }
 }
 
-void 
+void
 TAO_Dynamic_Adapter_Impl::create_exception_list (
     CORBA::ExceptionList_ptr &list,
     CORBA_Environment &ACE_TRY_ENV
   )
 {
-  ACE_NEW_THROW_EX (list, 
+  ACE_NEW_THROW_EX (list,
                     CORBA::ExceptionList,
                     CORBA::NO_MEMORY (
                         CORBA_SystemException::_tao_minor_code (
@@ -139,11 +139,7 @@ int
 TAO_Dynamic_Adapter_Impl::Initializer (void)
 {
   TAO_ORB_Core::dynamic_adapter_name ("Concrete_Dynamic_Adapter");
-  ACE_Service_Config::static_svcs ()->insert (
-      &ace_svc_desc_TAO_Dynamic_Adapter_Impl
-    );
-  
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_Adapter_Impl);
 }
 
 ACE_STATIC_SVC_DEFINE (
@@ -156,4 +152,3 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
-

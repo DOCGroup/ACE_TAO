@@ -19,8 +19,5 @@ ACE_RCSID (IORTable, IORTable, "$Id$")
 int
 TAO_IORTable_Initializer::init (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_Table_Adapter_Factory);
-
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Table_Adapter_Factory);
 }

@@ -31,16 +31,34 @@ ACE_RCSID (tao,
            TAO_Internal,
            "$Id$")
 
-int TAO_Internal::service_open_count_ = 0;
-#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
-const char *TAO_Internal::resource_factory_args_ = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
-const char *TAO_Internal::server_strategy_args_ = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
-const char *TAO_Internal::client_strategy_args_ = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP) && \
+    defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
+const char *TAO_Internal::resource_factory_args_ =
+            TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
 #else
 const char *TAO_Internal::resource_factory_args_ = 0;
-const char *TAO_Internal::server_strategy_args_ = 0;
-const char *TAO_Internal::client_strategy_args_ = 0;
-#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP &&
+          TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
+
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP) && \
+    defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
+const char *TAO_Internal::server_strategy_factory_args_ =
+            TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
+#else
+const char *TAO_Internal::server_strategy_factory_args_ = 0;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP &&
+          TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
+
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP) && \
+    defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
+const char *TAO_Internal::client_strategy_factory_args_ =
+            TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+#else
+const char *TAO_Internal::client_strategy_factory_args_ = 0;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP &&
+          TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
+
+int TAO_Internal::service_open_count_ = 0;
 
 int
 TAO_Internal::open_services (int &argc, char **argv)
@@ -163,13 +181,12 @@ TAO_Internal::open_services (int &argc, char **argv)
 
 void
 TAO_Internal::default_svc_conf_entries (const char *resource_factory_args,
-                                        const char *server_strategy_args,
-                                        const char
-                                        *client_strategy_args)
+                                        const char *server_strategy_factory_args,
+                                        const char *client_strategy_factory_args)
 {
   TAO_Internal::resource_factory_args_ = resource_factory_args;
-  TAO_Internal::server_strategy_args_ = server_strategy_args;
-  TAO_Internal::client_strategy_args_ = client_strategy_args;
+  TAO_Internal::server_strategy_factory_args_ = server_strategy_factory_args;
+  TAO_Internal::client_strategy_factory_args_ = client_strategy_factory_args;
 }
 
 int
@@ -188,18 +205,9 @@ TAO_Internal::open_services_i (int &argc,
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
-      // The ORB requires that a resource factory exist in order to
-      // reclaim the reactor during finalization.  The default
-      // resource factory must be inserted into the Service Repository
-      // so that Service Configurator directives such as 'static
-      // Resource_Factory "-ORBResources global"' actually work
-      // properly.
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Resource_Factory);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Resource_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Client_Strategy_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Server_Strategy_Factory);
 
       // Configure the IIOP factory. You do *NOT*
       // need modify this code to add your own protocol, instead
@@ -210,29 +218,19 @@ TAO_Internal::open_services_i (int &argc,
       //
       // where PN is the name of your protocol and LIB is the base
       // name of the shared library that implements the protocol.
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_IIOP_Protocol_Factory);
+
       // add descriptor to list of static objects.
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_MCAST_Parser);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_CORBANAME_Parser);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_CORBALOC_Parser);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_FILE_Parser);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_DLL_Parser);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Stub_Factory);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Protocols_Hooks);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Collocation_Resolver);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_MCAST_Parser);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_FILE_Parser);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_DLL_Parser);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
 
       int result = 0;
 
@@ -256,10 +254,10 @@ TAO_Internal::open_services_i (int &argc,
       // calling them if we're not invoking the svc.conf file?
       if (TAO_Internal::resource_factory_args_ != 0)
         ACE_Service_Config::process_directive (TAO_Internal::resource_factory_args_);
-      if (TAO_Internal::client_strategy_args_ != 0)
-        ACE_Service_Config::process_directive (TAO_Internal::client_strategy_args_);
-      if (TAO_Internal::server_strategy_args_ != 0)
-        ACE_Service_Config::process_directive (TAO_Internal::server_strategy_args_);
+      if (TAO_Internal::client_strategy_factory_args_ != 0)
+        ACE_Service_Config::process_directive (TAO_Internal::client_strategy_factory_args_);
+      if (TAO_Internal::server_strategy_factory_args_ != 0)
+        ACE_Service_Config::process_directive (TAO_Internal::server_strategy_factory_args_);
       return result;
     }
   else
