@@ -23,6 +23,9 @@ Thu Aug 13 13:34:52 1998  David L. Levine  <levine@cs.wustl.edu>
           confused ("Internal compiler error") without it, apparently
           when generating it implicitly.
 
+        * tests/ MsgQueue_Notifications_Test.cpp (producer): removed
+          unused local "result".
+
 Wed Aug 12 22:45:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/MsgQueue_Notifications_Test.cpp: Added an explicit
