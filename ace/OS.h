@@ -214,6 +214,18 @@
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
+#if !defined (ACE_DEFAULT_LOGGER_KEY)
+#if defined (ACE_WIN32)
+#define ACE_DEFAULT_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
+#else
+#if defined (ACE_HAS_STREAM_PIPES)
+#define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
+#else
+#define ACE_DEFAULT_LOGGER_KEY "localhost:10013"
+#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_WIN32 */
+#endif /* ACE_DEFAULT_LOGGER_KEY */
+
 #if !defined (ACE_DEFAULT_SERVER_HOST)
 #define ACE_DEFAULT_SERVER_HOST "localhost"
 #endif /* ACE_DEFAULT_SERVER_HOST */
@@ -1924,7 +1936,6 @@ struct utsname
 #define ACE_DIRECTORY_SEPARATOR_CHAR_W L'\\'
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
-#define ACE_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
 #define ACE_DLL_SUFFIX ".dll"
 #define ACE_DLL_PREFIX ""
 
@@ -2160,7 +2171,7 @@ typedef char TCHAR;
 
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#define ACE_LOGGER_KEY "/tmp/server_daemon"
+
 #if defined (__hpux)
 #define ACE_DLL_SUFFIX ".sl"
 #else

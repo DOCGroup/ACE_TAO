@@ -109,12 +109,13 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       return 0;
     }
 #else
-  long length;
+  ACE_INT32 length;
 
   // We need to use the ol' two-read trick here since TCP sockets
   // don't support framing natively.  Note that the first call is just
   // a "peek" -- we don't actually remove the data until the second
-  // call.
+  // call.  Note that this code is portable as long as ACE_UNIT32 is
+  // always 32 bits on both the sender and receiver side.
 
   switch (ACE_OS::recv (handle,
 			(char *) &length,
@@ -194,14 +195,9 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   else
     {
       long len = log_record.length ();
-      ACE_INT32 encoded_len = htonl (len);
-
       log_record.encode ();
 
       if (ACE::send (this->logging_output_,
-		     4,
-		     &encoded_len,
-		     sizeof encoded_len,
 		     (char *) &log_record,
 		     len) == -1)
 	// Switch over to logging to stdout for now.  Eventually,
@@ -260,7 +256,7 @@ private:
   ACE_INET_Addr server_addr_;
   // Address of the logging server.
 
-  const char *rendezvous_key_;
+  const char *logger_key_;
   // Communication endpoint where the client logging daemon will
   // listen for connections from clients.
 
@@ -305,7 +301,7 @@ ACE_Client_Logging_Acceptor::info (char **strp, size_t length) const
 ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
   : server_host_ (ACE_DEFAULT_SERVER_HOST),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
-    rendezvous_key_ (DEFAULT_RENDEZVOUS),
+    logger_key_ (DEFAULT_LOGGER_KEY),
     handler_ (0)
 {
 }
@@ -321,8 +317,8 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
   this->parse_args (argc, argv);
 
   // Initialize the acceptor endpoint.
-  if (this->open (LOGGING_ADDR (this->rendezvous_key_)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", this->rendezvous_key_), -1);
+  if (this->open (LOGGING_ADDR (this->logger_key_)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", this->logger_key_), -1);
 
   // Establish connection with the server.
   ACE_SOCK_Connector con;
@@ -371,7 +367,7 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
 	  this->server_host_ = get_opt.optarg;
 	  break;
 	case 'k':
-	  this->rendezvous_key_ = get_opt.optarg;
+	  this->logger_key_ = get_opt.optarg;
 	  break;
 	case 'p':
 	  this->server_port_ = ACE_OS::atoi (get_opt.optarg);

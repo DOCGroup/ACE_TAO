@@ -30,7 +30,7 @@ class ACE_Thread_Manager;
 
 extern "C"
 {
-typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR)(void);
+  typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (void);
 }
 
 struct ACE_Static_Svc_Descriptor
@@ -63,14 +63,16 @@ public:
 
 // = Maintain a set of the statically linked service descriptor.
 
-typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *> ACE_STATIC_SVCS;
-typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *> ACE_STATIC_SVCS_ITERATOR;
+typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *> 
+        ACE_STATIC_SVCS;
+typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *> 
+        ACE_STATIC_SVCS_ITERATOR;
 
 class ACE_Export ACE_Service_Config
   // = TITLE
   //     Supplies common server operations for dynamic and static
   //     configuration of services.
-
+  //
   // = DESCRIPTION
   //     NOTE: the signal_handler_ static member is allocated by the
   //     ACE_Object_Manager.  The ACE_Service_Config constructor uses
@@ -89,18 +91,22 @@ public:
                       int signum = SIGHUP);
   // Initialize the Service Repository.
 
-  ACE_Service_Config (const char program_name[]);
+  ACE_Service_Config (const char program_name[], 
+                      LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.
 
-  static int open (const char program_name[]);
-  // Performs an open without parsing command-line arguments.
-  // @@ What is its return value?
+  static int open (const char program_name[],
+                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
+  // Performs an open without parsing command-line arguments.  Returns
+  // -1 on failure and 0 otherwise.
 
-  static int open (int argc, char *argv[]);
+  static int open (int argc,
+                   char *argv[],
+                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
-  // arguments passed in from the command-line.
-  // @@ What is its return value?
+  // arguments passed in from the command-line.  Returns -1 on failure
+  // and 0 otherwise.
 
   virtual ~ACE_Service_Config (void);
   // Perform user-specified close activities and remove dynamic
@@ -109,18 +115,17 @@ public:
   static int close (void);
   // Tidy up and perform last rites when ACE_Service_Config is shut
   // down.  This method calls <close_svcs> and <close_singletons>.
-  // @@ What is its return value?
+  // Returns 0.
 
   static int close_svcs (void);
   // Perform user-specified close hooks on all of the configured
   // services in the <Service_Repository>, then delete the
-  // <Service_Repository> itself.
-  // @@ What is its return value?
+  // <Service_Repository> itself.  Returns 0.
 
   static int close_singletons (void);
   // Delete the dynamically allocated Singletons (i.e., the <Reactor>,
   // <Proactor>, <ReactorEx>, <Thread_Manager>, and <Allocator>).
-  // @@ What is its return value?
+  // Returns 0.
 
   // = Reactor event loop management methods.
   static int run_reactor_event_loop (void);

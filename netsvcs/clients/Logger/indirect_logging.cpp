@@ -11,8 +11,8 @@ int
 main (int argc, char *argv[])
 {
   const char *prog_name  = argv[0];
-  int  iterations  = argc < 2 ? 10 : ACE_OS::atoi (argv[1]);
-  const char *logger_key = argc < 3 ? ACE_DEFAULT_RENDEZVOUS : argv[2];
+  int iterations  = argc < 2 ? 10 : ACE_OS::atoi (argv[1]);
+  const char *logger_key = argc < 3 ? ACE_DEFAULT_LOGGING_KEY : argv[2];
 
   ACE_OS::srand ((u_int) ACE_OS::time (0));
 
