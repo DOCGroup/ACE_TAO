@@ -1,7 +1,17 @@
 # $Id$
 
-# AIX 4.x using the C Set++ compiler.
+# AIX 4.x using the IBM C Set++ compiler.
 # *not* using Orbix
+#
+# NOTE! IBM is no longer supporting AIX at any version earlier than 4.3,
+# and Riverace is not testing or supporting ACE on them either. No steps
+# have been taken to intentionally disable anything, but it is not being
+# tested either.
+#
+# NOTE 2! This file is only for use with the older CSet++ compiler, which
+# IBM doesn't sell or support any longer. Riverace doesn't support ACE
+# with it either. This file is still here in case there is some site
+# still using the old compiler, but it is completely unsupported.
 #
 # On 4.1, this file assumes that the user has installed the AIX patch
 # containing the dl*() APIs.  To use these APIs, IBM has created a
@@ -42,6 +52,12 @@ endif
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
 
+# aix_build turns on the funky shared library building code.
+aix_build = 1
+# ibmcxx_build turns on the extra step for instantiating and compiling
+# template instances.
+ibmcxx_build = 1
+
 ifeq ($(threads),1)
 CC	    = xlc_r
 CXX	    = xlC_r
@@ -77,12 +93,8 @@ CPPFLAGS    += -qlanglvl=ansi -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_M
 # Process_Strategy_Test went CPU bound in ostream, so I removed it (S. Huston)
 DCFLAGS     += -g -qcheck=nobounds:div:null
 
+ACELIB      = -lACE
 LD          = $(CXX)
-
-ifeq ($(shared_libs),1)
-ACELIB      = -lACEshr
-SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
-endif
 
 ifeq ($(AIX_MINOR_VERS),1)
 LLIBS	    = -lsvld -ltli_r $(ACELIB)
@@ -104,4 +116,3 @@ OCCFLAGS    += -O2 -qarch=com
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
 TEMPINCDIR  = tempinc
-SOBUILD = 
