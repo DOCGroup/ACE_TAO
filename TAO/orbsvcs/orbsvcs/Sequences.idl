@@ -1,4 +1,4 @@
-// ============================================================================
+// ========================================================================
 // $Id$
 // 
 // = LIBRARY
@@ -9,15 +9,18 @@
 //
 // = AUTHOR
 //    Seth Widoff <sbw1@cs.wustl.edu>
-// ============================================================================
+// ========================================================================
 
 // Used for extracting simple sequences from anys.
 
-typedef sequence<short> ShortSeq;
-typedef sequence<unsigned short> UShortSeq;
-typedef sequence<long> LongSeq;
-typedef sequence<unsigned long> ULongSeq;
-typedef sequence<boolean> BooleanSeq;
-typedef sequence<float> FloatSeq;
-typedef sequence<double> DoubleSeq;
-typedef sequence<string> StringSeq;
+module TAO_Sequences
+{
+  typedef sequence<short> ShortSeq;
+  typedef sequence<unsigned short> UShortSeq;
+  typedef sequence<long> LongSeq;
+  typedef sequence<unsigned long> ULongSeq;
+  typedef sequence<boolean> BooleanSeq;
+  typedef sequence<float> FloatSeq;
+  typedef sequence<double> DoubleSeq;
+  typedef sequence<string> StringSeq;
+};
