@@ -1,3 +1,16 @@
+Fri Oct 20 12:01:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Exception.cpp: 
+	  Changed the return value of
+ 	  tao_insert_in_extractor_system_exception from
+	  CORBA::SystemException * to CORBA::Boolean.
+
+Fri Oct 20 12:01:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Makefile.am : 
+	* tao/Makefile.bor: 
+          Updated to add the new files.
+	
 Fri Oct 20 10:49:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Exception.cpp:

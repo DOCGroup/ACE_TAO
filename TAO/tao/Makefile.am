@@ -120,6 +120,14 @@ ORB_CORE_FILES = \
   InterceptorC.cpp \
   Asynch_Invocation.cpp \
   DII_Invocation.cpp \
+  operation_details.cpp \
+  PortableInterceptor.cpp \
+  Request_Info.cpp \
+  PortableInterceptorC.cpp \
+  DynamicC.cpp \
+  OctetSeqC.cpp \
+  StringSeq.cpp \
+  Smart_Proxies.cpp \
   ORB_Core.cpp \
   ORB_Table.cpp \
   Leader_Follower.cpp \
@@ -172,7 +180,7 @@ ORB_CORE_FILES = \
   Pool_Per_Endpoint.cpp \
   GIOPC.cpp \
   TAO_Singleton_Manager.cpp \
-  DLL_ORB.cpp
+  DLL_ORB.cpp \
 
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la
@@ -315,6 +323,14 @@ HEADER_FILES = \
   Messaging_Policy_i.h \
   NVList.h \
   ORB.h \
+  operation_details.h \
+  PortableInterceptor.h \
+  Request_Info.h \
+  PortableInterceptorC.h \
+  DynamicC.h \
+  OctetSeqC.h \
+  StringSeq.h \
+  Smart_Proxies.h \
   ORB_Core.h \
   ORB_Table.h \
   Object.h \
@@ -452,6 +468,13 @@ INLINE_FILES = \
   Messaging_Policy_i.i \
   NVList.i \
   ORB.i \
+  operation_details.i \
+  PortableInterceptor.i \
+  PortableInterceptorC.i \
+  DynamicC.i \
+  OctetSeqC.inl \
+  StringSeq.inl \
+  Smart_Proxies.i \
   ORB_Core.i \
   ORB_Table.inl \
   Object.i \
