@@ -204,7 +204,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       {
         memabort ();
       }
-    zero(srcbuf, stotal);
+    zero(dstbuf, stotal);
   }
 
   if (use_array)
