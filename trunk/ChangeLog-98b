@@ -1,3 +1,9 @@
+Fri Aug 28 09:45:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch: Fixed the constructor of ACE_Null_Condition so that
+ 	  it's consistent with ACE_Condition_Thread_Mutex.  Thanks to
+	  Mats Nilsson <mats.nilsson@xware.se> for reporting this.
+
 Fri Aug 28 08:33:20 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/OS.h (FILE_FLAG_SEQUENTIAL_SCAN):  Given null definitions for

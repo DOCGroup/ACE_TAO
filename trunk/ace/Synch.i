@@ -818,9 +818,10 @@ ACE_Noop_Token::dump (void) const
 
 
 ACE_INLINE
-ACE_Null_Condition::ACE_Null_Condition (ACE_Null_Mutex &m, int,
-                                        LPCTSTR, void*)
-  : mutex_ (m)
+ACE_Null_Condition::ACE_Null_Condition (const ACE_Null_Mutex &m, 
+                                        LPCTSTR,
+                                        void*)
+  : mutex_ ((ACE_Null_Mutex &) m)
 {
 }
 
