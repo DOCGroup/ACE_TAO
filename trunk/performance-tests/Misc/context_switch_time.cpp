@@ -112,7 +112,8 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, LOW_PRIORITY);
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
@@ -195,7 +196,8 @@ Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY);
 }
 
 Suspend_Resume_Test::~Suspend_Resume_Test()
@@ -303,7 +305,8 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY);
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
@@ -406,7 +409,8 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, LOW_PRIORITY);
 }
 
 Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
@@ -532,7 +536,8 @@ Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
 
   timer_.start ();
 
-  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 2, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  2, 0, LOW_PRIORITY);
 
   timer_barrier_.wait ();
 
