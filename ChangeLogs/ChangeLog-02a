@@ -1,3 +1,38 @@
+Thu Sep 21 14:40:07 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Connector.h:
+	* ace/SSL/SSL_SOCK_Connector.i:
+	* ace/SSL/SSL_SOCK_Connector.cpp:
+
+	  Removed all uses "non_ssl_connect_done_" attribute.  It made the
+	  SSL_SOCK_Connector class non-reentrant, and prevented the
+	  SSL_SOCK_Connector from being used to create additional
+	  connections.  [Bug 660]
+
+	  (connect, complete):
+
+	  Do not attempt to set the handle in SSL_SOCK_Stream if it is
+	  already set.  Doing so would cause OpenSSL to create another
+	  socket in addition to other internal OpenSSL buffers, which
+	  isn't necessary when reconnecting to the same endpoint.
+
+	  (ssl_connect):
+
+	  Do not set the SSL connect state if an SSL connection is already
+	  pending.
+
+	* ace/SSL/ACE_SSL.dsp:
+
+	  Changed output library location to be `../../bin' (equivalent to
+	  $ACE_ROOT/bin).  This change makes this project file consistent
+	  with all other ACE/TAO projects.
+
+	* examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
+
+	  Updated library path to correspond to the location of the
+	  ACE_SSL library.  It was still set to the old location.
+
 Thu Sep 21 11:54:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Service_Config.h : 
@@ -8,9 +43,9 @@ Thu Sep 21 11:54:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  
 	  Removed dependency of Service_Config on Proactor by registering
 	  the Proactor singleton with the Object_Manager when it is
-	  instantiated. This way we neednot call
+	  instantiated. This way we need not call
 	  ACE_Proactor::close_singleton () in Service_Config implementation.
-	
+
 Wed Sep 20 17:25:37 2000  Steve Huston  <shuston@riverace.com>
 
         * performance-tests/UDP/udp_test.cpp: Use ACE_High_Res_Timer instead

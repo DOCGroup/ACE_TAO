@@ -7,7 +7,6 @@
 
 ASYS_INLINE
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
-  : non_ssl_connect_done_ (0)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 }

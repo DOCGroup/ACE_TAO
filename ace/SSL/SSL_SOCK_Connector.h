@@ -125,7 +125,7 @@ public:
 
   int connect (ACE_SSL_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
-	       ACE_QoS_Params qos_params,
+               ACE_QoS_Params qos_params,
 	       ACE_Time_Value *timeout = 0,
 	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                ACE_Protocol_Info *protocolinfo = 0,
@@ -191,10 +191,6 @@ private:
   ACE_SOCK_Connector connector_;
   // The class that does all of the non-secure socket connection.
   // It is default contructed, and subsequently used by connect().
-
-  int non_ssl_connect_done_;
-  // Set to 1 once basic connection (i.e. prior to SSL handshake) is
-  // done.  This is used primarily during non-blocking connects.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
