@@ -38,7 +38,8 @@ public:
   // = Initialization and termination methods.
 
   ACE_DLL (int close_on_destruction = 0);
-  // Default constructor.
+  // Default constructor. Also, by default the close operation
+  // on the object will be done before it is destroyed.
 
   ACE_DLL (ACE_DL_TYPE dll_name = 0,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
