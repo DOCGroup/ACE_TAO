@@ -82,10 +82,9 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Objref_Struct::init_parameters\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 int
@@ -118,10 +117,9 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Objref_Struct::run_sii_test\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 int
@@ -180,10 +178,9 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Objref_Struct::add_args\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 
@@ -233,10 +230,9 @@ Test_Objref_Struct::check_validity (void)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Objref_Struct::check_validity\n");
 
-      return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 CORBA::Boolean

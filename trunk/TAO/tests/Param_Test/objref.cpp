@@ -112,10 +112,9 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, msg_str);
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 int
@@ -140,10 +139,9 @@ Test_ObjRef::reset_parameters (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "set coffee attribute");
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -179,10 +177,9 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ObjRef::run_sii_test\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  return -1;
 }
 
 int
@@ -241,10 +238,9 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ObjRef::add_args\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 CORBA::Boolean
@@ -330,10 +326,9 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "_narrow from DII result");
-      return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 void
