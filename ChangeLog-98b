@@ -1,13 +1,17 @@
+Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/IO_SAP.cpp (enable): removed unreachable break statement.
+
 Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (ACE_OS::sema_wait(ACE_sema_t*, ACE_Time_Value&)):
-	  Changed WinCE version to use time as absolute and update it if
-	  the semaphore is acquired.  Changed Win32 version to update the
-	  time if semaphore is acquired.
+        * ace/OS.i (ACE_OS::sema_wait(ACE_sema_t*, ACE_Time_Value&)):
+          Changed WinCE version to use time as absolute and update it if
+          the semaphore is acquired.  Changed Win32 version to update the
+          time if semaphore is acquired.
 
-	* tests/Semaphore_Test.cpp: Added sanity checks for time that the
-	  semaphore waits take and for the updated time values on acquiring
-	  a semaphore.
+        * tests/Semaphore_Test.cpp: Added sanity checks for time that the
+          semaphore waits take and for the updated time values on acquiring
+          a semaphore.
 
 Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -20,6 +24,7 @@ Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
           examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
           Changed all uses of SIGIO to ACE_SIGIO.
+
 
         * ace/IPC_SAP: Cleaned up the enable() and disable() methods and
           documentation so they correctly use the new ACE_* macros
