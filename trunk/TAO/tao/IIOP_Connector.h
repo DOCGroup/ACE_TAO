@@ -10,6 +10,7 @@
  *
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -68,16 +69,13 @@ public:
 
 protected:
 
-  /// = More TAO_Connector methods, please check the documentation on
-  ///   Pluggable.h
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  /// More TAO_Connector methods, please check the documentation on
+  /// Pluggable.h
+  virtual TAO_Profile *make_profile (CORBA::Environment &ACE_TRY_ENV);
 
   /// Obtain tcp properties that must be used by this connector, i.e.,
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
-
 
 public:
 

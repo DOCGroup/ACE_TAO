@@ -14,7 +14,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
 
-ACE_RCSID(tao, IIOP_Connector, "$Id$")
+ACE_RCSID (TAO,
+           IIOP_Connector,
+           "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -420,23 +422,25 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
-TAO_IIOP_Connector::make_profile (const char *endpoint,
-                                  TAO_Profile *&profile,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile *
+TAO_IIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
   // or:
   //    host:port/object_key
 
+  TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
-                    TAO_IIOP_Profile (endpoint,
-                                      this->orb_core (),
-                                      ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    TAO_IIOP_Profile (this->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
-  ACE_CHECK;
+  return profile;
 }
 
 int

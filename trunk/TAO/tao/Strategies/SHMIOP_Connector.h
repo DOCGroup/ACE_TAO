@@ -1,21 +1,18 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    SHMIOP_Connector.h
-//
-// = DESCRIPTION
-//    IIOP specific connector processing
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SHMIOP_Connector.h
+ *
+ *  $Id$
+ *
+ *  SHMIOP specific connector processing
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SHMIOP_CONNECTOR_H
 #define TAO_SHMIOP_CONNECTOR_H
@@ -38,23 +35,24 @@
 
 // ****************************************************************
 
+/**
+ * @class TAO_SHMIOP_Connector
+ *
+ * @brief SHMIOP-specific Connector bridge for pluggable protocols.
+ *
+ * Concrete instance of the TAO_Connector class.  Responsible
+ * for establishing a connection with a server and is called from the
+ * Connector_Registory.
+ */
 class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
-  // = TITLE
-  //   SHMIOP-specific Connector bridge for pluggable protocols.
-  //
-  // = DESCRIPTION
-  //   Concrete instance of the TAO_Connector class.  Responsible
-  //   for establishing a connection with a server and is called from the
-  //   Connector_Registory.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
-  // Constructor.
 
+  /// Default destructor
   ~TAO_SHMIOP_Connector (void);
-  // Default destructor
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
@@ -72,11 +70,10 @@ public:
   virtual char object_key_delimiter (void) const;
 
 protected:
+
   // = More TAO_Connector methods, please check the documentation on
   //   Pluggable.h
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual TAO_Profile *make_profile (CORBA::Environment &ACE_TRY_ENV);
 
 public:
 
@@ -95,17 +92,17 @@ public:
           TAO_SHMIOP_BASE_CONNECTOR;
 private:
 
+  /// local address
   ACE_MEM_Addr address_;
-  // local address
 
+  /// Our connect strategy
   TAO_SHMIOP_CONNECT_STRATEGY connect_strategy_;
-  // Our connect strategy
 
+  /// The connector initiating connection requests for SHMIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for SHMIOP.
 
+  /// Are we using GIOP lite??
   CORBA::Boolean lite_flag_;
-  // Are we using GIOP lite??
 };
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

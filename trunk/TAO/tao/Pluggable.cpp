@@ -167,16 +167,15 @@ TAO_Connector::make_mprofile (const char *string,
           // or
           //    `endpoint/object_key'
 
-          TAO_Profile *profile = 0;
-          // Must initialize since pointer is passed as a reference!
-
-          this->make_profile (endpoint.c_str (),
-                              profile,
-                              ACE_TRY_ENV);
+          TAO_Profile *profile = this->make_profile (ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
           // Failure:  Problem during profile creation
 
-          // Create a Profile using the individual endpoint string
+          // Initialize a Profile using the individual endpoint
+          // string.
+          // @@ Not exception safe!  We need a TAO_Profile_var!
+          profile->parse_string (endpoint.c_str (), ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)

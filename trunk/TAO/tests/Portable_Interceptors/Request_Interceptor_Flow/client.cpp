@@ -45,7 +45,7 @@ client_test (Test_ptr server, CORBA::Environment &ACE_TRY_ENV)
 {
   // Currently, there are only four scenarios for the client side
   // tests.
-  const MAX_CLIENT_SCENARIO = 4;
+  const Test::TestScenario MAX_CLIENT_SCENARIO = 4;
 
   for (Test::TestScenario i = 1; i <= MAX_CLIENT_SCENARIO; ++i)
     {
@@ -85,7 +85,7 @@ client_test (Test_ptr server, CORBA::Environment &ACE_TRY_ENV)
         }
       ACE_ENDTRY;
       ACE_CHECK;
-    } 
+    }
 }
 
 void
@@ -93,7 +93,7 @@ server_test (Test_ptr server, CORBA::Environment &ACE_TRY_ENV)
 {
   // Currently, there are only four scenarios for the server side
   // tests.
-  const MAX_SERVER_SCENARIO = 4;
+  const Test::TestScenario MAX_SERVER_SCENARIO = 4;
 
   for (Test::TestScenario i = 1; i <= MAX_SERVER_SCENARIO; ++i)
     {
@@ -133,7 +133,7 @@ server_test (Test_ptr server, CORBA::Environment &ACE_TRY_ENV)
         }
       ACE_ENDTRY;
       ACE_CHECK;
-    } 
+    }
 }
 
 int

@@ -1,23 +1,19 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
+//=============================================================================
+/**
+ *  @file    UIOP_Connector.h
+ *
+ *  $Id$
+ *
+ *  UIOP specific connector processing
+ *
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    UIOP_Connector.h
-//
-// = DESCRIPTION
-//    UIOP specific connector processing
-//
-// = AUTHOR
-//    Fred Kuhns <fredk@cs.wustl.edu>
-//    Ossama Othman <othman@cs.wustl.edu>
-//
-// ============================================================================
 
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
@@ -38,23 +34,25 @@
 #include "tao/Connector_Impl.h"
 
 
-
+/**
+ * @class TAO_UIOP_Connector
+ *
+ * @brief UIOP-specific Connector bridge for pluggable protocols.
+ *
+ */
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {
-  // = TITLE
-  //   UIOP-specific Connector bridge for pluggable protocols.
-  //
-  // = DESCRIPTION
-  //
 public:
   // = Initialization and termination methods.
+  /**
+   * Constructor.
+   * @@ Do we want to pass in the tag here or should it be statically
+   * defined?
+   */
   TAO_UIOP_Connector (CORBA::Boolean flag = 0);
-  // Constructor.
-  // @@ Do we want to pass in the tag here or should it be statically
-  // defined?
 
+  /// Destructor
   ~TAO_UIOP_Connector (void);
-  // Destructor
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
@@ -72,15 +70,14 @@ public:
   virtual char object_key_delimiter (void) const;
 
 protected:
+
   // = More TAO_Connector methods, please check the documentation on
   //   Pluggable.h
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual TAO_Profile *make_profile (CORBA::Environment &ACE_TRY_ENV);
 
+  /// Obtains uiop properties that must be used by this connector, i.e.,
+  /// initializes <uiop_properties_>.
   int init_uiop_properties (void);
-  // Obtains uiop properties that must be used by this connector, i.e.,
-  // initializes <uiop_properties_>.
 
 public:
 
@@ -100,18 +97,18 @@ public:
 
 private:
 
+  /// Our connect strategy
   TAO_UIOP_CONNECT_STRATEGY connect_strategy_;
-  // Our connect strategy
 
+  /// The connector initiating connection requests for UIOP.
   TAO_UIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for UIOP.
 
+  /// Do we need to use a GIOP_Lite for sending messages?
   CORBA::Boolean lite_flag_;
-  // Do we need to use a GIOP_Lite for sending messages?
 
+  /// UIOP configuration properties for all connections established by
+  /// this connector.
   TAO_UIOP_Properties uiop_properties_;
-  // UIOP configuration properties for all connections established by
-  // this connector.
 };
 
 # endif  /* TAO_HAS_UIOP == 1 */

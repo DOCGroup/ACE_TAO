@@ -13,7 +13,9 @@
 #include "tao/debug.h"
 #include "uiop_endpoints.h"
 
-ACE_RCSID(Strategies, UIOP_Profile, "$Id$")
+ACE_RCSID (Strategies,
+           UIOP_Profile,
+           "$Id$")
 
 
 #if !defined (__ACE_INLINE__)
@@ -55,22 +57,6 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
 {
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
-                                    TAO_ORB_Core *orb_core,
-                                    CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE,
-                 orb_core,
-                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR,
-                                   TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1),
-    object_key_ (),
-    tagged_profile_ ()
-{
-  parse_string (string, ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
@@ -110,18 +96,17 @@ TAO_UIOP_Profile::endpoint_count (void)
   return this->count_;
 }
 
-int
+void
 TAO_UIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -144,12 +129,11 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 
   // Pull off the "rendezvous point" part of the objref
@@ -161,12 +145,11 @@ TAO_UIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
       // No rendezvous point specified
     }
 
@@ -179,19 +162,16 @@ TAO_UIOP_Profile::parse_string (const char *string,
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_DEFAULT_MINOR_CODE,
-          EINVAL),
-        CORBA::COMPLETED_NO),
-        -1);
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 
   start = ++cp;  // increment past the object key separator
 
   TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
-
-  return 1;
 }
 
 CORBA::Boolean
@@ -283,7 +263,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%sloc://%c.%c@%s%c%s",
+                   "corbaloc:%s://%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],

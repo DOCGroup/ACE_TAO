@@ -43,7 +43,7 @@ Client_ORBInitializer::post_init (
   PortableInterceptor::ClientRequestInterceptor_var ci_interceptor =
     ci;
 
-  info->add_client_request_interceptor (ci_interceptor,
+  info->add_client_request_interceptor (ci_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -58,7 +58,7 @@ Client_ORBInitializer::post_init (
 
   ci_interceptor = ci;
 
-  info->add_client_request_interceptor (ci_interceptor,
+  info->add_client_request_interceptor (ci_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -73,7 +73,7 @@ Client_ORBInitializer::post_init (
 
   ci_interceptor = ci;
 
-  info->add_client_request_interceptor (ci_interceptor,
+  info->add_client_request_interceptor (ci_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 }

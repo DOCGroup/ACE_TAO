@@ -1,3 +1,65 @@
+Mon Apr  9 18:17:14 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.h (parse_string):
+	* tao/Pluggable.h (make_profile):
+	* tao/Pluggable.cpp (make_mprofile):
+	* tao/IIOP_Connector.h (make_profile):
+	* tao/IIOP_Connector.cpp (make_profile):
+	* tao/IIOP_Profile.h (TAO_IIOP_Profile):
+	* tao/IIOP_Profile.cpp (TAO_IIOP_Profile):
+	* tao/Strategies/SHMIOP_Connector.cpp (make_profile):
+	* tao/Strategies/SHMIOP_Connector.h (make_profile):
+	* tao/Strategies/SHMIOP_Profile.cpp (TAO_SHMIOP_Profile):
+	* tao/Strategies/SHMIOP_Profile.h (TAO_SHMIOP_Profile):
+	* tao/Strategies/UIOP_Connector.cpp (make_profile):
+	* tao/Strategies/UIOP_Connector.h (make_profile):
+	* tao/Strategies/UIOP_Profile.cpp (TAO_UIOP_Profile):
+	* tao/Strategies/UIOP_Profile.h (TAO_UIOP_Profile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (make_profile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (make_profile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Connector.h (make_profile):
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp (make_profile):
+	* tao/Strategies/UIOP_Profile.cpp (TAO_DIOP_Profile):
+	* tao/Strategies/UIOP_Profile.h (TAO_DIOP_Profile):
+	
+	  The endpoint string is no longer passed to Profile
+	  constructors.  Previously, this string was passed to the
+	  Profile's constructor at which point TAO_Profile::parse_string()
+	  was called from within that constructor.  However,
+	  parse_string() can throw an exception.  Since emulated
+	  exceptions cannot reproduce the semantics of throwing an
+	  exception within a constructor, it is a very bad idea to invoke
+	  such a method within a constructor.  TAO's pluggable protocol
+	  framework now invokes the parse_string() method directly.  This
+	  change has the added benefit of allowing the removal of one
+	  constructor.  There are way too many to begin with.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
+
+	  Fixed "better conversion" warnings.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+
+	  Added missing type in constant declaration.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+
+	  Added missing template instantiations.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
+
+	  Added missing Request_Interceptor.* source file to the list of
+	  files to compile and link into the binaries.
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
+
+	  Corrected comment.
+
 Mon Apr  9 16:40:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.h:
