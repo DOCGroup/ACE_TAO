@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    cubit_i.cpp
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
 #include "tao/corba.h"
@@ -53,20 +53,21 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 Cubit_ptr
 Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 {
-  Cubit_ptr cubit;
+  Cubit_ptr cubit = Cubit::_nil ();
+  char *obj_str;
 
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      char *obj_str;
-
       obj_str = this->my_cubit_[i]->_get_name (env);
+      ACE_DEBUG ((LM_DEBUG, "obj_str = %s\n", obj_str));
 
       // Keys matched.
-      if (!ACE_OS::strcmp (obj_str, key)) 
-        return Cubit::_duplicate (this->my_cubit_ [i]);
+      if (!ACE_OS::strcmp (obj_str, key))
+        {
+          cubit = Cubit::_duplicate (this->my_cubit_ [i]);
+        }
     }
-
-  return Cubit::_nil ();
+  return cubit;
 }
 
 // Constructor
