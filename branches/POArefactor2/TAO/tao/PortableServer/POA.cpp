@@ -473,7 +473,7 @@ TAO_POA::new_POA (const String &name,
                   TAO_Object_Adapter *object_adapter
                   ACE_ENV_ARG_DECL)
 {
-  TAO_POA *poa;
+  TAO_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_POA (name,
@@ -1021,7 +1021,8 @@ TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  this->active_policy_strategies_.request_processing_strategy()->set_servant_manager (imgr ACE_ENV_ARG_PARAMETER);
+  this->active_policy_strategies_.request_processing_strategy()->
+    set_servant_manager (imgr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -1032,7 +1033,7 @@ TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
                    PortableServer::POA::WrongPolicy))
 {
   return this->active_policy_strategies_.request_processing_strategy()->
-          get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+    get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -1053,7 +1054,7 @@ TAO_POA::is_servant_in_map (PortableServer::Servant servant,
                             int &wait_occurred_restart_call)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-          is_servant_in_map (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+    is_servant_in_map (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -1063,7 +1064,7 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id,
                             int &wait_occurred_restart_call)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-          is_user_id_in_map (id, priority, priorities_match, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+    is_user_id_in_map (id, priority, priorities_match, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -1317,7 +1318,8 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  this->active_policy_strategies_.servant_retention_strategy()->deactivate_all_objects (etherealize_objects ACE_ENV_ARG_PARAMETER);
+  this->active_policy_strategies_.servant_retention_strategy()->
+    deactivate_all_objects (etherealize_objects ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -2749,7 +2751,8 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            PortableServer::Servant &servant
                            ACE_ENV_ARG_DECL)
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
 
 TAO::ORT_Adapter_Factory *

@@ -594,11 +594,13 @@ namespace TAO
       // are no errors or if a restart is not required.
       if (!error && !wait_occurred_restart_call)
         {
+          TAO_Active_Object_Map::Map_Entry *entry = 0;
           int result = this->poa_->active_object_map ().
             rebind_using_user_id_and_system_id (servant,
                                                 poa_current_impl.object_id (),
                                                 system_id,
-                                                servant_upcall.active_object_map_entry());
+                                                entry);
+          servant_upcall.active_object_map_entry(entry);
           if (result != 0)
             error = 1;
         }
