@@ -474,11 +474,13 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   // Check if we need to store it at all or whether we've seen it already
   if (seen)
     {
-      if (seen != this->last_seen_index_)
+      if (seen != this->last_seen_index_
+          && idl_global->pragma_prefixes ().size () > 1)
         {
-          // If it's not the same as the current filename, then we have
-          // just finished with some other included file, and its
-          // (possible empty) prefix must be popped.
+          // If it's not the same as the current filename, and there is more
+          // than one prefix in the stack, then we have
+          // just finished with an included IDL file, and its
+          // (possibly empty) prefix must be popped.
           char *trash = 0;
           idl_global->pragma_prefixes ().pop (trash);
           delete [] trash;
@@ -498,16 +500,22 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
         }
       else
         {
           o_include_file_names = this->pd_include_file_names;
           o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
-          for (i = 0; i < o_n_alloced_file_names; i++)
-            this->pd_include_file_names[i] = o_include_file_names[i];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
+
+          for (i = 0; i < o_n_alloced_file_names; ++i)
+            {
+              this->pd_include_file_names[i] = o_include_file_names[i];
+            }
+
           delete [] o_include_file_names;
         }
     }

@@ -2608,11 +2608,18 @@ idl_store_pragma (char *buf)
       if (new_prefix != 0)
         {
           unsigned long depth = idl_global->scopes ()->depth ();
+          size_t size = idl_global->pragma_prefixes ().size ();
 
-          // At global scope, we always replace the prefix. For all
-          // other scopes, we replace only if there is a prefix already
-          // associated with that scope, otherwise we add the prefix.
-          if (depth == 1 || idl_global->scopes ()->top ()->has_prefix ())
+          // At global scope, we start with a default prefix of "". If this
+          // is all there is in the prefix stack, we replace, because a
+          // prefix has been found in the main file. If a prefix is added
+          // at global scope but in an included IDL file, we add, so we can
+          // recover the original prefix when we exit from the included file.
+          // Finally, if we are not at global scope, we add a new prefix if
+          // the current scope does not already have one, otherwise, we
+          // replace.
+          if ((size == 1 && depth == 1)
+              || (depth > 1 && idl_global->scopes ()->top ()->has_prefix ()))
             {
               char *trash = 0;
               idl_global->pragma_prefixes ().pop (trash);
