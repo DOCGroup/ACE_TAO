@@ -52,7 +52,7 @@ cat << _EOF_ >> $TMP
 
 _EOF_
 
-gcc -MM $* | /bin/sed -e "s; \./; ;g" $SED $REL | \
+gcc -MM $* | sed -e "s; \./; ;g" $SED $REL | \
 	awk ' { \
 		if ($1 != prev) { \
 			if (rec != "") \
