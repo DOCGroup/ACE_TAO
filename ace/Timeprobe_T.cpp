@@ -102,9 +102,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 
   this->timeprobes_[this->current_size_].event_.event_number_ = event;
   this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::NUMBER;
-  ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
-  ACE_High_Res_Timer::hrtime_to_tv (this->timeprobes_[this->current_size_].time_,
-                                    hrtime_now);
+  this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   this->current_size_++;
@@ -120,9 +118,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
 
   this->timeprobes_[this->current_size_].event_.event_description_ = event;
   this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::STRING;
-  ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
-  ACE_High_Res_Timer::hrtime_to_tv (this->timeprobes_[this->current_size_].time_,
-                                    hrtime_now);
+  this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   this->current_size_++;
@@ -261,6 +257,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
               this->timeprobes_[0].thread_,
               "START"));
 
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   u_long i, j;
 
   if (report_buffer_full_ == 0) {
@@ -279,14 +276,23 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
         j = i - 1;
       }
 
-      ACE_Time_Value time_difference (this->timeprobes_[i].time_);
-      time_difference -= this->timeprobes_[j].time_;
+      ACE_hrtime_t time_difference =
+        this->timeprobes_[i].time_ - this->timeprobes_[j].time_;
+
+      ACE_UINT32 elapsed_time_in_micro_seconds =
+        (ACE_UINT32) (time_difference / gsf);
+      ACE_UINT32 remainder =
+        (ACE_UINT32) (time_difference % gsf);
+      // Convert to the fractional part in microseconds, with 3 digits
+      // of precision (hence the 1000).
+      ACE_UINT32 fractional = remainder * 1000 / gsf;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %12.12u\n",
+                  "%-50.50s %8.8x %10u.%03.3u\n",
                   this->find_description_i (i),
                   this->timeprobes_[i].thread_,
-                  time_difference.sec () * 1000000 + time_difference.usec ()));
+                  (unsigned int) elapsed_time_in_micro_seconds,
+                  (unsigned int) fractional));
 
       i = (i + 1) % this ->max_size_; // Modulus increment: loops around at the end.
 
