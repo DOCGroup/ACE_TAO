@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    TypeCode_Case_Base.h
+ *  @file    TypeCode_Case.h
  *
  *  $Id$
  *
- *  Header file for @c TAO::TypeCode::Case_Base type.
+ *  Header file for @c TAO::TypeCode::Case type.
  *
  *  @author Ossama Othman
  */
 //=============================================================================
 
-#ifndef TAO_TYPECODE_CASE_BASE_H
-#define TAO_TYPECODE_CASE_BASE_H
+#ifndef TAO_TYPECODE_CASE_H
+#define TAO_TYPECODE_CASE_H
 
 #include /**/ "ace/pre.h"
 
@@ -143,17 +143,17 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/TypeCode_Case_Base.inl"
+# include "tao/TypeCode_Case.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/TypeCode_Case_Base.cpp"
+# include "tao/TypeCode_Case.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_Base.cpp")
+# pragma implementation ("TypeCode_Case.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_TYPECODE_CASE_BASE_H */
+#endif /* TAO_TYPECODE_CASE_H */

@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TypeCode_Case_Base.h"
+#include "tao/TypeCode_Case.h"
 
 
 namespace TAO
@@ -39,7 +39,7 @@ namespace TAO
      *
      */
     template <typename STRING_TYPE>
-    class Default_Case : public Case_Base<STRING_TYPE>
+    class Default_Case : public Case<STRING_TYPE>
     {
     public:
 

@@ -59,9 +59,9 @@ namespace TAO
                                                  char const *> Foo_Case;
      *   Foo_Case _tao_cases_Foo[] =
      *     {
-     *       { Foo_Case (0, "a", &CORBA::_tc_short),
-     *       { Foo_Case (1, "b", &CORBA::_tc_short),
-     *       { Foo_Case (2, "c", &CORBA::_tc_long)
+     *       Foo_Case (0, "a", &CORBA::_tc_short),
+     *       Foo_Case (1, "b", &CORBA::_tc_short),
+     *       Foo_Case (2, "c", &CORBA::_tc_long)
      *     };
      * \endcode
      *

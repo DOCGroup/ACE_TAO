@@ -3,10 +3,10 @@
 #ifndef TAO_TYPECODE_CASE_CPP
 #define TAO_TYPECODE_CASE_CPP
 
-#include "TypeCode_Case_Base.h"
+#include "TypeCode_Case.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/TypeCode_Case_Base.inl"
+# include "tao/TypeCode_Case.inl"
 #endif /* __ACE_INLINE__ */
 
 

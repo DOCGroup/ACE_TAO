@@ -229,27 +229,23 @@ TAO::TypeCode::Union<StringType,
 {
   case_type * tc_cases = 0;
 
-  ACE_Auto_Array_Ptr<Case> safe_cases;
+  ACE_Auto_Array_Ptr<Case<CORBA::String_var> > safe_cases;
 
-  CORBA::ULong const len = this->case_count ();
-
-............. BUSTED ... NO DEFAULT CASE HANDLING ... SORT OF ...
-
-  if (len > 0)
+  if (this->ncases_ > 0)
     {
       // Dynamically construct a new array of cases stripped of
       // member names.
 
       ACE_NEW_THROW_EX (tc_cases,
-                        case_type[len],
+                        case_type[this->ncases_],
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-      safe_cases.reset (cases);
+      safe_cases.reset (tc_cases);
 
       static char const * empty_name = "";
 
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i = 0; i < this->ncases_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
@@ -261,6 +257,7 @@ TAO::TypeCode::Union<StringType,
         }
     }
 
+  // Create the compact union TypeCode.
   TAO_TypeCodeFactory_Adapter * adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
@@ -275,7 +272,14 @@ TAO::TypeCode::Union<StringType,
     this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  tc = adapter->_tao_create_union_tc (........ FIX ME ....
+  tc = adapter->_tao_create_union_tc (this->base_attributes_.id (),
+                                      "",  /* empty name */
+                                      this->discriminant_type_,
+                                      tc_cases,
+                                      this->ncases_,
+                                      this->default_index_,
+                                      "",
+                                      CORBA::TypeCode_ptr * default_member_type
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
