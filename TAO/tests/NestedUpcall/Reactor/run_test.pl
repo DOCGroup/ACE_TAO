@@ -25,7 +25,7 @@ if (ACE::waitforfile_timed ($file, 3) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-		       "-q -x -k file://$file");
+                       "-q -x -k file://$file");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -59,8 +59,8 @@ if (ACE::waitforfile_timed ($mtfile, 3) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."mt_client".$EXE_EXT,
-		       "-ORBsvcconf svc.mt.conf"
-		       ." -q -x -k file://$mtfile -n 100 ");
+                       "-ORBsvcconf svc.mt.conf"
+                       ." -q -x -k file://$mtfile -n 20 ");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
