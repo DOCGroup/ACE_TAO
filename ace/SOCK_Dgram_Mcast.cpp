@@ -168,18 +168,14 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
+  ACE_UNUSED_ARG (net_if);
   ACE_UNUSED_ARG (protocol_family);
   ACE_UNUSED_ARG (protocol);
   ACE_UNUSED_ARG (reuse_addr);
 #endif /* ACE_WIN32 */
   // Otherwise, do it like everyone else...
 
-  // Create multicast request.
-  if (this->make_multicast_address (this->mcast_addr_,
-                                    net_if) == -1)
-    return -1;
-  else
-    return 0;
+  return 0;
 }
 
 int
@@ -208,20 +204,33 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   if (result != 0)
     return result;
 
+  ip_mreq multicast_address;
+
   // Create multicast request.
-  else if (this->make_multicast_address (this->mcast_addr_,
-                                         net_if) == -1)
-    return -1;
+  result = this->make_multicast_address_i (mcast_addr,
+                                           multicast_address,
+                                           net_if);
+  if (result != 0)
+    return result;
 
   // Tell network device driver to read datagrams with a
   // multicast_address IP interface.
-  else if (this->ACE_SOCK::set_option (IPPROTO_IP,
+  result = this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_ADD_MEMBERSHIP,
-                                       &this->mcast_request_if_,
-                                       sizeof this->mcast_request_if_) == -1)
-    return -1;
-  else
-    return 0;
+                                       &multicast_address,
+                                       sizeof multicast_address);
+  if (result != 0)
+    return result;
+
+  // Set the <mcast_request_if_> field.  This is mostly a convenience
+  // for applications that subscribe to a single multicast group,
+  // using the internal field allows them to simply call the
+  // unsubscribe() operation.
+  // Notice that such applications are using a non-reentrant interface
+  // of the class, and thus should use proper synchronization for it.
+  this->mcast_request_if_ = multicast_address;
+
+  return 0;
 }
 
 int
@@ -296,20 +305,13 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       return 1;
     }
 #else
+  ACE_UNUSED_ARG (mcast_addr);
+  ACE_UNUSED_ARG (net_if);
   ACE_UNUSED_ARG (protocol_family);
   ACE_UNUSED_ARG (protocol);
 #endif /* ACE_WIN32 */
-  // Otherwise, do it like everyone else.
 
-  ip_mreq multicast_address;
-
-  // Create multicast request.
-  if (this->make_multicast_address_i (mcast_addr,
-                                      multicast_address,
-                                      net_if) == -1)
-    return -1;
-  else
-    return 0;
+  return 0;
 }
 
 int
@@ -328,15 +330,23 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
   if (result != 0)
     return result;
 
+  // Otherwise, do it like everyone else.
+
+  ip_mreq multicast_address;
+
+  // Create multicast request.
+  result = this->make_multicast_address_i (mcast_addr,
+                                           multicast_address,
+                                           net_if);
+  if (result != 0)
+    return result;
+
   // Tell network device driver to stop reading datagrams with the
   // <mcast_addr>.
-  else if (ACE_SOCK::set_option (IPPROTO_IP,
-                                 IP_DROP_MEMBERSHIP,
-                                 &this->mcast_request_if_,
-                                 sizeof this->mcast_request_if_) == -1)
-    return -1;
-  else
-    return 0;
+  return ACE_SOCK::set_option (IPPROTO_IP,
+                               IP_DROP_MEMBERSHIP,
+                               &multicast_address,
+                               sizeof multicast_address);
 }
 
 int
