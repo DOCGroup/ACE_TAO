@@ -130,6 +130,12 @@ ACE_Log_Msg_Manager::get_lock (void)
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_,
                         ACE_Recursive_Thread_Mutex,
                         0);
+    }
+
+
+  if (ACE_Log_Msg_Manager::message_queue_ == 0)
+    {
+      ACE_NO_HEAP_CHECK;
 
       // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
@@ -278,7 +284,7 @@ ACE_Log_Msg::instance (void)
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else  /* ! ACE_MT_SAFE */
   // We don't have threads, we cannot call
-  // ACE_Log_Msg_Manager::get_lock() to initialize the message queue,
+  // ACE_Log_Msg_Manager::get_lock () to initialize the message queue,
   // so instead we do it here.
   if (ACE_Log_Msg_Manager::message_queue_ == 0)
     ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
@@ -589,6 +595,9 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
     }
 
   int status = 0;
+
+  // Be sure that there is a message_queue_, with multiple threads.
+  ACE_MT (ACE_Log_Msg_Manager::get_lock ());
 
   // Always close the current handle before doing anything else.
   if (ACE_Log_Msg_Manager::message_queue_->get_handle () != ACE_INVALID_HANDLE)
@@ -1305,6 +1314,9 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::LOGGER))
         {
+          // Be sure that there is a message_queue_, with multiple threads.
+          ACE_MT (ACE_Log_Msg_Manager::get_lock ());
+
 #if defined (ACE_HAS_STREAM_PIPES)
           ACE_Str_Buf log_msg (ACE_static_cast (void *,
                                                 &log_record),
@@ -1465,6 +1477,10 @@ ACE_Log_Msg::dump (void) const
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\thr_state_ = %d\n"),
                 this->thr_desc_->state ()));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
+
+  // Be sure that there is a message_queue_, with multiple threads.
+  ACE_MT (ACE_Log_Msg_Manager::get_lock ());
+
   ACE_Log_Msg_Manager::message_queue_->dump ();
 
   ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
