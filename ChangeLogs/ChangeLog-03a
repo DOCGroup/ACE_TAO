@@ -1,3 +1,10 @@
+Sun May 12 11:12:00 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile: Moved ACEXML directory up so it would be compile right
+	  after ACE.  We will need them when XML-based Service
+	  Configurator becomes the default.  Thank to Kitty for pointing
+	  this out.
+
 Sat May 11 13:04:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.h: Updated the documentation explaining
@@ -7,7 +14,7 @@ Sat May 11 13:04:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Sun May 12 09:45:37 2002   Edan Ayal <edanayal@yahoo.com>
 
 	* ace/WIN32_Asynch_IO.cpp: Fixed check for ACE_IOV_MAX
-	  limitation in the following methods:  
+	  limitation in the following methods:
 	  - ACE_WIN32_Asynch_Read_Dgram::recv
 	  - ACE_WIN32_Asynch_Write_Dgram::send
 	  - ACE_WIN32_Asynch_Read_Stream::readv
