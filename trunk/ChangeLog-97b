@@ -15,6 +15,10 @@ Wed Sep 24 09:36:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_Managed_Object instead, and have it implicitly register
 	  with the ACE_Object_Manager.
 
+	* ace/Timer_List_T.cpp (ACE_Timer_List_Iterator_T):
+	  changed name of "list" argument ot "listParam" to resolve name
+ 	  conflict with STL.  Thanks to Brian Mendel for reporting this.
+
 Tue Sep 23 17:11:44 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/config-hpux-10.x-g++.h: 
