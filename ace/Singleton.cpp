@@ -11,6 +11,7 @@
 
 #include "ace/Synch_T.h"
 #include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Singleton.i"
