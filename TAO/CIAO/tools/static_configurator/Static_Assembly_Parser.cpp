@@ -17,7 +17,7 @@ CIAO::Static_Config::Static_Config_Info static_config_info;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:c:");
+  ACE_Get_Opt get_opts (argc, argv, "a:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,16 +27,11 @@ parse_args (int argc, char *argv[])
         cad_filename = get_opts.opt_arg ();
         break;
 
-      case 'c': // Get the configuration file for deployment configuration info.
-        config_filename = get_opts.opt_arg ();
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "-a <file containing assembly descriptor (.cad) file names>\n"
-                           "-c <deployment configuration file>\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -46,14 +41,6 @@ parse_args (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Must specify an assembly descriptor using -a flag.\n"),
                       -1);
-
-  if (config_filename == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Require a deployment configuration flag.  Use -c to set it \n"
-                         ),
-                        -1);
-    }
 
   // Indicates sucessful parsing of the command line
   return 0;
