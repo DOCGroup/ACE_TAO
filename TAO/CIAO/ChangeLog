@@ -1,3 +1,12 @@
+Thu Jun 10 17:46:10 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Utils.cpp:
+        * DnC/Config_Handlers/TPD_Handler.cpp:
+
+          Fixe memory leaks pertaining to ACE_TString making copies of
+          dynamically allocated memory. The memory supplied to ACE_TString
+          has to be deleted! Fixed memory for these.
+
 Thu Jun 10 17:44:57 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Process_Element.cpp:
