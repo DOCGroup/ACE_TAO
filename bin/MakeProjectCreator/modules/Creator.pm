@@ -277,6 +277,66 @@ sub parse_known {
 }
 
 
+sub parse_scope {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($name)        = shift;
+  my($type)        = shift;
+  my($validNames)  = shift;
+  my($flags)       = shift;
+  my($status)      = 0;
+  my($errorString) = "ERROR: Unable to process $name";
+
+  if (!defined $flags) {
+    $flags = {};
+  }
+
+  while(<$fh>) {
+    my($line) = $self->strip_line($_);
+
+    if ($line eq '') {
+    }
+    elsif ($line =~ /^}/) {
+      $status = 1;
+      $errorString = '';
+      $self->handle_scoped_end($type, $flags);
+      last;
+    }
+    else {
+      my(@values) = ();
+      if ($self->parse_assignment($line, \@values)) {
+        if (defined $$validNames{$values[1]}) {
+          if ($values[0] eq 'assignment') {
+            $self->process_assignment($values[1], $values[2], $flags);
+          }
+          elsif ($values[0] eq 'assign_add') {
+            $self->process_assignment_add($values[1], $values[2], $flags);
+          }
+          elsif ($values[0] eq 'assign_sub') {
+            $self->process_assignment_sub($values[1], $values[2], $flags);
+          }
+        }
+        else {
+          $status = 0;
+          $errorString = "ERROR: Invalid assignment name: $values[1]";
+          last;
+        }
+      }
+      else {
+        ($status, $errorString) = $self->handle_scoped_unknown($fh,
+                                                               $type,
+                                                               $flags,
+                                                               $line);
+        if (!$status) {
+          last;
+        }
+      }
+    }
+  }
+  return $status, $errorString;
+}
+
+
 sub base_directory {
   my($self) = shift;
   return basename($self->getcwd());
@@ -419,6 +479,7 @@ sub process_assignment_add {
   my($value)  = shift;
   my($assign) = shift;
   my($nval)   = $self->get_assignment($name, $assign);
+
   if (defined $nval) {
     $nval = "$value $nval";
   }
@@ -550,10 +611,17 @@ sub get_files_written {
 
 
 sub get_assignment {
-  my($self) = shift;
-  my($name) = shift;
-  my($tag)  = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-  return $self->{$tag}->{$name};
+  my($self)   = shift;
+  my($name)   = shift;
+  my($assign) = shift;
+
+  ## If no hash table was passed in
+  if (!defined $assign) {
+    my($tag) = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+    $assign = $self->{$tag};
+  }
+
+  return $$assign{$name};
 }
 
 
@@ -577,6 +645,23 @@ sub get_static {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub handle_scoped_end {
+  #my($self)  = shift;
+  #my($type)  = shift;
+  #my($flags) = shift;
+}
+
+
+sub handle_scoped_unknown {
+  my($self)  = shift;
+  my($fh)    = shift;
+  my($type)  = shift;
+  my($flags) = shift;
+  my($line)  = shift;
+  return 0, "ERROR: Unrecognized line: $line";
+}
+
 
 sub process_duplicate_modification {
   #my($self)   = shift;

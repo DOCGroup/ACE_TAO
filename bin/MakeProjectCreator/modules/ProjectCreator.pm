@@ -128,6 +128,8 @@ sub new {
   $self->{'valid_components'}     = \%vc;
   $self->{'exclude_components'}   = \%ec;
   $self->{'skeleton_endings'}     = [ 'C', 'S' ];
+  $self->{'type_specific_assign'} = {};
+  $self->{'pctype'}               = $self->extractType("$self");
 
   ## Allow subclasses to override the default extensions
   $self->set_component_extensions();
@@ -177,6 +179,14 @@ sub parse_line {
           ## Fill in all the default values
           $self->generate_defaults();
 
+          ## Fill in type specific assignments
+          my($tsa) = $self->{'type_specific_assign'}->{$self->{'pctype'}};
+          if (defined $tsa) {
+            foreach my $key (keys %$tsa) {
+              $self->process_assignment_add($key, $$tsa{$key});
+            }
+          }
+
           ## Perform any additions, subtractions
           ## or overrides for the project values.
           my($addproj) = $self->get_addproj();
@@ -209,6 +219,7 @@ sub parse_line {
             }
             $self->{'assign'}   = {};
             $self->{'verbatim'} = {};
+            $self->{'type_specific_assign'} = {};
           }
         }
         $self->{$typecheck}         = 0;
@@ -348,6 +359,11 @@ sub parse_line {
             $errorString = "ERROR: Unable to process $comp";
             $status = 0;
           }
+        }
+        elsif ($comp eq 'specific') {
+          ($status, $errorString) = $self->parse_scope(
+                       $ih, $values[1], $values[2], \%validNames,
+                       $self->{'type_specific_assign'}->{$self->{'pctype'}});
         }
         else {
           $errorString = "ERROR: Invalid component name: $comp";
@@ -514,6 +530,22 @@ sub parse_verbatim {
   }
 
   return 1;
+}
+
+
+sub handle_scoped_end {
+  my($self)  = shift;
+  my($type)  = shift;
+  my($flags) = shift;
+
+  if (defined $self->{'type_specific_assign'}->{$type}) {
+    foreach my $key (keys %$flags) {
+      $self->{'type_specific_assign'}->{$type}->{$key} = $$flags{$key};
+    }
+  }
+  else {
+    $self->{'type_specific_assign'}->{$type} = $flags;
+  }
 }
 
 
@@ -1284,7 +1316,7 @@ sub need_to_write_project {
       }
     }
   }
-  
+
   return 0;
 }
 
@@ -1490,9 +1522,8 @@ sub update_project_info {
 sub get_verbatim {
   my($self)   = shift;
   my($marker) = shift;
-  my($type)   = $self->extractType("$self");
   my($str)    = undef;
-  my($thash)  = $self->{'verbatim'}->{$type};
+  my($thash)  = $self->{'verbatim'}->{$self->{'pctype'}};
 
   if (defined $thash) {
     if (defined $thash->{$marker}) {
