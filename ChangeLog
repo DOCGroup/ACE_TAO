@@ -1,6 +1,7 @@
 Fri Sep 12 10:56:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/DLL_Test_Impl.dsp:
+        * tests/DLL_Test.dsp:
 
           Turned on RTTI for all configurations.
 
