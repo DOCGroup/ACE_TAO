@@ -72,6 +72,7 @@ my(%customDefined) = ('automatic'               => 1,
                       'commandflags'            => 1,
                       'inputext'                => 1,
                       'output_option'           => 1,
+                      'pch_option'              => 1,
                       'pre_extension'           => 1,
                       'pre_filename'            => 1,
                       'source_outputext'        => 1,
@@ -727,8 +728,9 @@ sub parse_define_custom {
               if (!defined $self->{'generated_exts'}->{$tag}) {
                 $self->{'generated_exts'}->{$tag} = {};
               }
-              if ($name eq 'command'      || $name eq 'automatic' ||
-                  $name eq 'commandflags' || $name eq 'output_option') {
+              if ($name eq 'command'      || $name eq 'automatic'     ||
+                  $name eq 'commandflags' || $name eq 'output_option' ||
+                  $name eq 'pch_option') {
                 if ($type eq 'assignment') {
                   $self->process_assignment(
                                      $name, $value,
@@ -1722,7 +1724,7 @@ sub get_custom_value {
     }
     $value = \@array;
   }
-  elsif ($cmd eq 'command'       ||
+  elsif ($cmd eq 'command'       || $cmd eq 'pch_option' ||
          $cmd eq 'output_option' || defined $custom{$cmd}) {
     $value = $self->get_assignment($cmd,
                                    $self->{'generated_exts'}->{$based});
