@@ -1,3 +1,9 @@
+Mon Jan 20 18:36:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Querue_T.h (ACE_Message_Queue_Ex): Use _USE
+          rather than _DECL to define the ACE_Message_Queue - fixes
+          compile error.
+
 Mon Jan 29 17:29:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.{h i cpp}: Corrected a bunch of references

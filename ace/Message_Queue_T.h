@@ -1031,7 +1031,7 @@ public:
 
 private:
   /// Implement this via an <ACE_Message_Queue>.
-  ACE_Message_Queue<ACE_SYNCH_DECL> queue_;
+  ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
 
 #if defined (__ACE_INLINE__)
