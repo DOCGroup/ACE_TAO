@@ -1,3 +1,9 @@
+Fri May  1 09:55:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/POAS.cpp: In the initialization section of constructors for
+	some of the collocated classes, we had forgotten to use the
+	ACE_NESTED_CLASS macro. This is now fixed.
+
 Fri May  1 06:19:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface.cpp: Modified the generated code

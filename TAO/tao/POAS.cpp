@@ -2090,7 +2090,7 @@ POA_PortableServer::_tao_collocated_ServantActivator::_tao_collocated_ServantAct
     STUB_Object *stub
   )
   : ACE_NESTED_CLASS (PortableServer, ServantActivator) (stub, servant, CORBA::B_TRUE),
-    _tao_collocated_ServantManager (servant, stub),
+    ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {
@@ -2254,7 +2254,7 @@ POA_PortableServer::_tao_collocated_ServantLocator::_tao_collocated_ServantLocat
     STUB_Object *stub
   )
   : ACE_NESTED_CLASS (PortableServer, ServantLocator) (stub, servant, CORBA::B_TRUE),
-    _tao_collocated_ServantManager (servant, stub),
+    ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {
@@ -2941,7 +2941,7 @@ POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
     STUB_Object *stub
   )
   : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, CORBA::B_TRUE),
-    _tao_collocated_CurrentBase (servant, stub),
+    ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_CurrentBase) (servant, stub),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {
