@@ -5,7 +5,9 @@
 
 ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1) \
+     || (TAO_HAS_AMI_POLLER == 1) \
+     || (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Timeprobe.h"
 #include "tao/Stub.h"
@@ -49,22 +51,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Asynch_Invocation_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-void
-TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->target_spec_.target_specifier (this->profile_->object_key ());
-  this->transport_->start_request (this->orb_core_,
-                                   this->target_spec_,
-                                   this->out_stream_,
-                                   ACE_TRY_ENV);
-}
-
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
@@ -72,6 +60,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   return this->invoke_i (ACE_TRY_ENV);
 }
 
+// **************************************************************************
 
 int
 TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
@@ -107,4 +96,6 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 
+          || TAO_HAS_AMI_POLLER == 1 
+          || TAO_HAS_MINIMUM_CORBA == 0 */

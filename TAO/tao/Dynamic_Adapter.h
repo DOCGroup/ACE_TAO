@@ -81,17 +81,6 @@ public:
 
   virtual void create_exception_list (CORBA::ExceptionList_ptr &,
                                       CORBA_Environment &);
-
-  // Decoding the user exception in the DII version of 
-  // TAO_GIOP_Twoway_Invocation::invoke().
-
-  virtual CORBA::Exception *decode_user_exception (
-      CORBA::ExceptionList_ptr exceptions,
-      TAO_GIOP_Twoway_Invocation *invocation,
-      const char *buf,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

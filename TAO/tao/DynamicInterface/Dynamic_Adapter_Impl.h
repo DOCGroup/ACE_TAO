@@ -87,17 +87,6 @@ public:
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
 
-  // Decoding the user exception in the DII version of 
-  // TAO_GIOP_Twoway_Invocation::invoke().
-
-  virtual CORBA::Exception *decode_user_exception (
-      CORBA::ExceptionList_ptr exceptions,
-      TAO_GIOP_Twoway_Invocation *invocation,
-      const char *buf,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
 };

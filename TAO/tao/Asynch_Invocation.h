@@ -10,8 +10,9 @@
 //    Encapsulate the logic for remote Asynchronous Invocations.
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
-//   <alex@cs.wustl.edu>
+//   Carlos O'Ryan <coryan@cs.wustl.edu>,
+//   Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//   Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,65 +26,81 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1) \
+     || (TAO_HAS_AMI_POLLER == 1) \
+     || (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/MessagingC.h"
 #include "tao/Asynch_Reply_Dispatcher.h"
 
-class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Invocation
+class TAO_Export TAO_GIOP_Asynch_Invocation 
+  : public TAO_GIOP_Invocation
 {
   // = TITLE
-  //   Sends a two-way request does not expect the reply.
+  //    TAO_Asynch_Invocation.
   //
   // = DESCRIPTION
-  //   This class connects (or lookups a connection from the cache) to
-  //   the remote server, builds the CDR stream for the Request, send
-  //   the CDR stream and returns.
+  //    Base class for TAO_GIOP_Twoway_Asynch_Invocation and
+  //    TAO_GIOP_DII_Deferred_Invocation.
   //
 public:
-  TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *data,
-                                     const char *operation,
-                                     CORBA::ULong opname_len_,
-                                     TAO_ORB_Core* orb_core,
-                                     const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                                     Messaging::ReplyHandler_ptr reply_handler_ptr);
+  TAO_GIOP_Asynch_Invocation (TAO_Stub *stub,
+                              const char *operation,
+                              CORBA::ULong opname_len,
+                              TAO_ORB_Core *orb_core);
   // Constructor.
 
-  void start (CORBA_Environment &TAO_IN_ENV =
-              TAO_default_environment ())
+  virtual int invoke (CORBA_Environment &TAO_IN_ENV =
+                      TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Calls TAO_GIOP_Asynch_Invocation::start.
+  // Send request, without blocking until any reply comes back.
 
-  int invoke (CORBA_Environment &TAO_IN_ENV =
-                    TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Send request, block until any reply comes back, and unmarshal
-  // reply parameters as appropriate.
+protected:
+  virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Must be overridden.
 
+  TAO_Asynch_Reply_Dispatcher_Base *rd_;
+  // Reply dispatcher for the current asynchronous invocation.
+};
 
-  //   TAO_InputCDR &inp_stream (void);
-  //   // Return the underlying input stream.
+class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation 
+  : public TAO_GIOP_Asynch_Invocation
+{
+  // = TITLE
+  //    TAO_GIOP_Twoway_Asynch_Invocation.
   //
+  // = DESCRIPTION
+  //    Sends a two-way request does not expect the reply.
+  //    This class connects (or lookups a connection from the cache) to
+  //    the remote server, builds the CDR stream for the Request, send
+  //    the CDR stream and returns.
+  //
+public:
+  TAO_GIOP_Twoway_Asynch_Invocation (
+      TAO_Stub *stub,
+      const char *operation,
+      CORBA::ULong opname_len_,
+      TAO_ORB_Core* orb_core,
+      const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+      Messaging::ReplyHandler_ptr reply_handler_ptr
+    );
+  // Constructor.
 
-  const IOP::ServiceContextList& reply_service_info (void) const;
-  // Accessor to the reply ServiceContextList.
-
-private:
-  int invoke_i (CORBA::Environment &ACE_TRY_ENV)
+protected:
+  virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Implementation of the invoke() methods, handles the basic
   // send/reply code and the system exceptions.
-
-private:
-  TAO_Asynch_Reply_Dispatcher *rd_;
-  // Reply dispatcher for the current synchronous Asynch_Invocation.
 };
 
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 
+          || TAO_HAS_AMI_POLLER == 1 
+          || TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

@@ -13,24 +13,15 @@ ACE_RCSID(DynamicInterface, DII_Reply_Dispatcher, "$Id$")
 #include "tao/GIOP_Message_State.h"
 #include "tao/debug.h"
 
-#if !defined (__ACE_INLINE__)
-#include "DII_Reply_Dispatcher.inl"
-#endif /* __ACE_INLINE__ */
-
 // Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req)
-  : req_ (req),
-    transport_ (0)
+  : req_ (req)
 {
 }
 
 // Destructor.
 TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 {
-  if (this->transport_ != 0)
-    {
-      this->transport_->idle_after_reply ();
-    }
 }
 
 // Dispatch the reply.
@@ -81,17 +72,6 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   delete this;
 
   return 1;
-}
-
-TAO_GIOP_Message_State *
-TAO_DII_Deferred_Reply_Dispatcher::message_state (void)
-{
-  return this->message_state_;
-}
-
-void
-TAO_DII_Deferred_Reply_Dispatcher::dispatcher_bound (TAO_Transport*)
-{
 }
 
 void

@@ -79,10 +79,12 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
                                           CORBA::ULong opname_len,
-                                          TAO_ORB_Core* orb_core)
+                                          TAO_ORB_Core *orb_core)
   : stub_ (stub),
-    op_details_ (operation, opname_len),
-    out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
+    op_details_ (operation, 
+                 opname_len),
+    out_stream_ (buffer, 
+                 sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator (),
@@ -139,11 +141,13 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // assert (this->stub_ != 0);
 
   if (this->stub_ == 0)
-    ACE_THROW (CORBA::INTERNAL (
-                 CORBA_SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
-                   EINVAL),
-              CORBA::COMPLETED_NO));
+    {
+      ACE_THROW (CORBA::INTERNAL (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                CORBA::COMPLETED_NO));
+    }
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
@@ -151,11 +155,13 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     this->orb_core_->connector_registry ();
 
   if (conn_reg == 0)
-    ACE_THROW (CORBA::INTERNAL (
-                 CORBA_SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    {
+      ACE_THROW (CORBA::INTERNAL (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
 
   // Initialize endpoint selection strategy.
   if (!this->is_selector_initialized_)
@@ -173,7 +179,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                           has_timeout,
                                           this->max_wait_time_value_);
       if (has_timeout)
-        this->max_wait_time_ = &this->max_wait_time_value_;
+        {
+          this->max_wait_time_ = &this->max_wait_time_value_;
+        }
     }
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
@@ -192,13 +200,16 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
         {
           // If loaded services have nothing to say on
           // profile/endpoint selection, let the strategy do the work.
-          this->endpoint_selector_->select_endpoint (this, ACE_TRY_ENV);
+          this->endpoint_selector_->select_endpoint (this, 
+                                                     ACE_TRY_ENV);
           ACE_CHECK;
         }
 
       // Get the transport object.
       if (this->transport_ != 0)
-        this->transport_->idle ();
+        {
+          this->transport_->idle ();
+        }
 
       // Obtain a connection.
       int result = conn_reg->connect (this->endpoint_,
@@ -246,6 +257,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // Obtain unique request id from the RMS.
   this->op_details_.request_id (
         this->transport_->tms ()->request_id ());
+
+  // Make sure that you have the right object key
+  this->target_spec_.target_specifier (this->profile_->object_key ());
 }
 
 void
@@ -274,14 +288,15 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       this->target_spec_.target_specifier (
             this->profile_->object_key ());
     }
-  else if (this->stub_->addressing_mode () ==
-           TAO_Target_Specification::Profile_Addr)
+  else if (this->stub_->addressing_mode () 
+             == TAO_Target_Specification::Profile_Addr)
     {
       this->target_spec_.target_specifier (
-            this->profile_->create_tagged_profile ());
+                this->profile_->create_tagged_profile ()
+              );
     }
-  else if (this->stub_->addressing_mode () ==
-           TAO_Target_Specification::Reference_Addr)
+  else if (this->stub_->addressing_mode ()
+             == TAO_Target_Specification::Reference_Addr)
     {
       // We need to call the method seperately. If there is no
       // IOP::IOR info, the call would create the info and return the
@@ -299,8 +314,11 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // Send the request for the header
   if (this->transport_->send_request_header (this->op_details_,
                                              this->target_spec_,
-                                             this->out_stream_) == 0)
-    ACE_THROW (CORBA::MARSHAL ());
+                                             this->out_stream_) 
+        == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
 }
 
 
@@ -313,8 +331,10 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   ACE_Countdown_Time countdown (this->max_wait_time_);
 
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      TAO_INVOKE_EXCEPTION);
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
   // @@ Alex: the <is_roundtrip> flag will be tricky when we move to
   //    AMI: now it is used both to indicate the the CORBA request in
@@ -417,16 +437,20 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   CORBA::Object_var object = 0;
 
   if ( (inp_stream >> object.inout ()) == 0)
+    {
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         TAO_INVOKE_EXCEPTION);
+    }
 
   // The object pointer has to be changed to a TAO_Stub pointer
   // in order to obtain the profiles.
   TAO_Stub *stubobj = object->_stubobj ();
 
   if (stubobj == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      TAO_INVOKE_EXCEPTION);
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
   // Modify the state as appropriate to include new forwarding profiles.
   this->endpoint_selector_->forward (this,
@@ -442,8 +466,7 @@ CORBA::ULong
 TAO_GIOP_Invocation::create_ior_info (void)
 {
   // Get the list of profiles
-  const TAO_MProfile &mprofile =
-    this->stub_->base_profiles ();
+  const TAO_MProfile &mprofile = this->stub_->base_profiles ();
 
   if (this->ior_info_.profiles.length () == 0)
     {
@@ -465,15 +488,11 @@ TAO_GIOP_Invocation::create_ior_info (void)
 
       // Call the create_tagged_profile one every member of the
       // profile and make the sequence
-      for (CORBA::ULong index = 0;
-           index < count;
-           ++index)
+      for (CORBA::ULong index = 0; index < count; ++index)
         {
-          TAO_Profile *prof =
-            multi_prof->get_profile (index);
+          TAO_Profile *prof = multi_prof->get_profile (index);
 
-          this->ior_info_.profiles[index] =
-            prof->create_tagged_profile ();
+          this->ior_info_.profiles[index] = prof->create_tagged_profile ();
         }
 
       delete multi_prof;
@@ -483,8 +502,7 @@ TAO_GIOP_Invocation::create_ior_info (void)
 }
 
 void
-TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
-                                             &ACE_TRY_ENV)
+TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
 {
   // RTCORBA-specific processing.
   // If invocation target supports RTCORBA::CLIENT_PROPAGATED priority
@@ -496,7 +514,9 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
   // This function may get called multiple times, but we only need to
   // perform the processing once.
   if (this->rt_context_initialized_)
-    return;
+    {
+      return;
+    }
 
   if (this->endpoint_selection_state_.priority_model_policy_)
     {
@@ -512,8 +532,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
               == 0)
             ACE_THROW (CORBA::MARSHAL ());
 
-          IOP::ServiceContextList &context_list =
-            this->service_info ();
+          IOP::ServiceContextList &context_list = this->service_info ();
 
           CORBA::ULong l = context_list.length ();
           context_list.length (l + 1);
@@ -528,7 +547,9 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
                i != 0;
                i = i->cont ())
             {
-              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              ACE_OS::memcpy (buf, 
+                              i->rd_ptr (), 
+                              i->length ());
               buf += i->length ();
             }
         }
@@ -549,187 +570,17 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
 
 // ****************************************************************
 
-TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
+TAO_GIOP_Synch_Invocation::~TAO_GIOP_Synch_Invocation (void)
 {
   if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
-}
-
-void
-TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->target_spec_.target_specifier (this->profile_->object_key ());
-  this->transport_->start_request (this->orb_core_,
-                                   this->target_spec_,
-                                   this->out_stream_,
-                                   ACE_TRY_ENV);
-  ACE_CHECK;
-  this->rd_.reply_received () = 0;
-}
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-int
-TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
-                                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UnknownUserException))
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
-
-  int retval = this->invoke_i (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
-  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
-  // we have a user exception.
-  // @@ This is a bit brittle, think about a better implementation.
-  if (retval == TAO_INVOKE_EXCEPTION)
     {
-      // Match the exception interface repository id with the
-      // exception in the exception list.
-      // This is important to decode the exception.
-
-      CORBA::String_var buf;
-
-      TAO_InputCDR tmp_stream (this->inp_stream (),
-                               this->inp_stream ().start ()->length (),
-                               0);
-
-      // Pull the exception ID out of the marshaling buffer.
-      if (tmp_stream.read_string (buf.inout ()) == 0)
-        {
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            TAO_INVOKE_EXCEPTION);
-        }
-
-      TAO_Dynamic_Adapter *dynamic_adapter =
-        ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
-
-      CORBA_Exception *decoded_exception =
-        dynamic_adapter->decode_user_exception (exceptions,
-                                                this,
-                                                buf.in (),
-                                                ACE_TRY_ENV);
-      ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-      if (decoded_exception != 0)
-        {
-          // @@ Think about a better way to raise the exception here,
-          //    maybe we need some more macros?
-
-          // We can not use ACE_THROW here.
-          ACE_TRY_ENV.exception (decoded_exception);
-          return TAO_INVOKE_EXCEPTION;
-        }
-      else
-        {
-          // If we couldn't find the right exception, report it as
-          // CORBA::UNKNOWN.
-
-          // @@ It would seem like if the remote exception is a
-          //    UserException we can assume that the request was
-          //    completed.
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            TAO_INVOKE_EXCEPTION);
-        }
+      this->transport_->idle_after_reply ();
     }
-
-  return retval;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
-// Send request, block until any reply comes back, and unmarshal reply
-// parameters as appropriate.
-//
-// This is used by the generated stubs.
-
-int
-TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
-                                    CORBA::ULong except_count,
-                                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::Exception))
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
-
-  int retval = this->invoke_i (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
-  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
-  // we have a user exception.
-  // @@ This is a bit brittle, think about a better implementation.
-  if (retval == TAO_INVOKE_EXCEPTION)
-    {
-      // Match the exception interface repository id with the
-      // exception in the exception list.
-      // This is important to decode the exception.
-
-      CORBA::String_var buf;
-
-      // Pull the exception ID out of the marshaling buffer.
-      if (this->inp_stream ().read_string (buf.inout ()) == 0)
-        {
-          // @@ Why do we close the connection. Only the request
-          //    failed, but the connection seems to be still
-          //    valid!
-          // this->transport_->close_connection ();
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            TAO_INVOKE_EXCEPTION);
-        }
-
-      for (CORBA::ULong i = 0;
-           i < except_count;
-           i++)
-        {
-          CORBA::TypeCode_ptr tcp = excepts[i].tc;
-          const char *xid = tcp->id (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
-            continue;
-
-          // match
-          CORBA::Exception *exception = excepts[i].alloc ();
-
-          if (exception == 0)
-            ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                                CORBA::COMPLETED_YES),
-                              TAO_INVOKE_EXCEPTION);
-
-          exception->_tao_decode (this->inp_stream (),
-                                  ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO: (%P|%t) Raising exception %s\n"),
-                        buf.in ()));
-
-          // @@ Think about a better way to raise the exception here,
-          //    maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception); // We can not use ACE_THROW here.
-          return TAO_INVOKE_EXCEPTION;
-        }
-
-      // If we couldn't find the right exception, report it as
-      // CORBA::UNKNOWN.
-
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_YES),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  return retval;
 }
 
 int
-TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
+                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register a reply dispatcher for this invocation. Use the
@@ -739,10 +590,10 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
-                                           &this->rd_,
-                                           tms);
-  int retval = dispatch_guard.status();
+  TAO_Bind_Dispatcher_Guard dispatch_guard (this->op_details_.request_id(),
+                                            &this->rd_,
+                                            tms);
+  int retval = dispatch_guard.status ();
 
   if (retval == -1)
     {
@@ -755,11 +606,14 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  retval = TAO_GIOP_Invocation::invoke (1, 
+                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)
-    return retval;
+    {
+      return retval;
+    }
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -788,8 +642,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
     {
-      CORBA::ULong msecs =
-        this->max_wait_time_->msec ();
+      CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
@@ -803,19 +656,19 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
     {
-      CORBA::ULong msecs =
-        this->max_wait_time_->msec ();
+      CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
-                  msecs, reply_error));
+                  msecs, 
+                  reply_error));
     }
 
   // Check the reply error.
 
   if (reply_error == -1)
     {
-      // The guard automatically unbinds the dispatcher
+      // The guard automatically unbinds the dispatcher.
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
@@ -847,6 +700,14 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::ULong reply_status = this->rd_.reply_status ();
 
+  if (is_locate_request)
+    {
+      // A locate request checks a different set of enum return values,
+      // so we return to the TAO_GIOP_Locate_Request_Invocation caller 
+      // to do that.
+      return reply_status;
+    }
+
   switch (reply_status)
     {
     case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
@@ -854,8 +715,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       return TAO_INVOKE_OK;
 
     case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
-      // Return so the exception can be handled.
-      return TAO_INVOKE_EXCEPTION;
+        // Return so the exception can be handled.
+        return TAO_INVOKE_EXCEPTION;
 
     case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       {
@@ -877,9 +738,11 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
         if ((this->inp_stream () >> minor) == 0
             || (this->inp_stream () >> completion) == 0)
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_MAYBE),
-                            TAO_INVOKE_OK);
+          {
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_OK);
+          }
 
         CORBA::SystemException* ex =
           TAO_Exceptions::create_system_exception (type_id.in (),
@@ -911,7 +774,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
-      return this->location_forward (this->inp_stream (), ACE_TRY_ENV);
+      return this->location_forward (this->inp_stream (), 
+                                     ACE_TRY_ENV);
     case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
       {
         // We have received an exception with a request to change the
@@ -942,12 +806,116 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-TAO_GIOP_Oneway_Invocation::
-TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
-                            const char *operation,
-                            CORBA::ULong opname_len,
-                            TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
+void
+TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->transport_->start_request (this->orb_core_,
+                                   this->target_spec_,
+                                   this->out_stream_,
+                                   ACE_TRY_ENV);
+}
+
+// Send request, block until any reply comes back, and unmarshal reply
+// parameters as appropriate.
+
+int
+TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
+                                    CORBA::ULong except_count,
+                                    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::Exception))
+{
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+
+  int retval = this->invoke_i (0,
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
+  // we have a user exception.
+  // @@ This is a bit brittle, think about a better implementation.
+  if (retval == TAO_INVOKE_EXCEPTION)
+    {
+      // Pull the exception from the stream.
+      CORBA::String_var buf;
+
+      if ((this->inp_stream () >> buf.inout ()) == 0)
+        {
+          // Could not demarshal the exception id, raise an local
+          // CORBA::MARSHAL
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                            CORBA::COMPLETED_MAYBE),
+                            TAO_INVOKE_EXCEPTION);
+        }
+
+      // Match the exception interface repository id with the
+      // exception in the exception list.
+      // This is important to decode the exception.
+
+      for (CORBA::ULong i = 0; i < except_count; ++i)
+        {
+          CORBA::TypeCode_ptr tcp = excepts[i].tc;
+          const char *xid = tcp->id (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+            {
+              continue;
+            }
+
+          // match
+          CORBA::Exception *exception = excepts[i].alloc ();
+
+          if (exception == 0)
+            {
+              ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                                  CORBA::COMPLETED_YES),
+                                TAO_INVOKE_EXCEPTION);
+            }
+
+          exception->_tao_decode (this->inp_stream (),
+                                  ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          if (TAO_debug_level > 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO: (%P|%t) Raising exception %s\n"),
+                          buf.in ()));
+            }
+
+          // @@ Think about a better way to raise the exception here,
+          //    maybe we need some more macros?
+          ACE_TRY_ENV.exception (exception); // We can not use ACE_THROW here.
+          return TAO_INVOKE_EXCEPTION;
+        }
+
+      // If we couldn't find the right exception, report it as
+      // CORBA::UNKNOWN.
+
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                        CORBA::COMPLETED_YES),
+                        TAO_INVOKE_EXCEPTION);
+    }
+
+  return retval;
+}
+
+// ****************************************************************
+
+TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
+    TAO_Stub *stub,
+    const char *operation,
+    CORBA::ULong opname_len,
+    TAO_ORB_Core *orb_core
+  )
+  : TAO_GIOP_Synch_Invocation (stub, 
+                               operation, 
+                               opname_len, 
+                               orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
   int has_synchronization = 0;
@@ -959,21 +927,12 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
   this->sync_scope_ = scope;
 }
 
-TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
-{
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
-}
-
 void
-TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Oneway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Make sure that you have the right object key
-  this->target_spec_.target_specifier (this->profile_->object_key ());
 
   this->transport_->start_request (this->orb_core_,
                                    this->target_spec_,
@@ -985,349 +944,98 @@ int
 TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT ||
-      this->sync_scope_ == TAO::SYNC_NONE ||
-      this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING ||
-      this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
+  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
+      || this->sync_scope_ == TAO::SYNC_NONE
+      || this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING
+      || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);
     }
 
-  // Create this only if a reply is required.
-  TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
-                                 this->op_details_.service_info ());
+  int retval = this->invoke_i (0,
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
 
-  // The rest of this function is very similar to
-  // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
-  // wait for a reply. See comments in that code.
-  // @@ Jeff: is it possible to factor out this code into a common
-  // case class or something?  In fact, what is the difference between
-  // the two classes now?
-  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
-
-  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
-                                           &rd,
-                                           tms);
-  int retval = dispatch_guard.status();
-
-  if (retval == -1)
+  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
+  // we have a user exception.
+  // @@ This is a bit brittle, think about a better implementation.
+  if (retval == TAO_INVOKE_EXCEPTION)
     {
-      // @@ What is the right way to handle this error?
-      this->close_connection ();
+      // Pull the exception from the stream.
+      CORBA::String_var buf;
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
+      if ((this->inp_stream () >> buf.inout ()) == 0)
+        {
+          // Could not demarshal the exception id, raise an local
+          // CORBA::MARSHAL
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                            CORBA::COMPLETED_MAYBE),
+                            TAO_INVOKE_EXCEPTION);
+        }
+
+      // This kind of exception shouldn't happen with oneways,
+      // but if it does, we turn it into a CORBA::UNKNOWN exception.
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                        CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // Send the request.
-  retval = TAO_GIOP_Invocation::invoke (1,
-                                        ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
-  if (retval != TAO_INVOKE_OK)
-    return retval;
-
-  // Wait for the reply.
-  if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
-    {
-      CORBA::ULong msecs =
-        this->max_wait_time_->msec ();
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
-                  msecs));
-    }
-
-  int reply_error =
-    this->transport_->wait_strategy ()->wait (this->max_wait_time_,
-                                              rd.reply_received ());
-
-
-  if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
-    {
-      CORBA::ULong msecs =
-        this->max_wait_time_->msec ();
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
-                  msecs, reply_error));
-    }
-
-  // Check the reply error.
-  if (reply_error == -1)
-    {
-      // The guard automatically unbinds the dispatcher
-      if (errno == ETIME)
-        {
-          // Just a timeout, don't close the connection or
-          // anything...
-          ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
-                  TAO_TIMEOUT_SEND_MINOR_CODE,
-                  errno),
-              CORBA::COMPLETED_NO),
-            TAO_INVOKE_EXCEPTION);
-        }
-
-      return this->orb_core_->service_raise_comm_failure (this,
-                                                          this->profile_,
-                                                          ACE_TRY_ENV);
-    }
-
-  CORBA::ULong reply_status = rd.reply_status ();
-
-  switch (reply_status)
-    {
-    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
-      // Return so that the STUB can demarshal the reply.
-      return TAO_INVOKE_OK;
-
-    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
-      {
-        // Pull the exception from the stream.
-        CORBA::String_var buf;
-
-        if ((rd.reply_cdr () >> buf.inout ()) == 0)
-          {
-            // Could not demarshal the exception id, raise an local
-            // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_EXCEPTION);
-          }
-
-        // This kind of exception shouldn't happen with oneways,
-        // but if it does, we turn it into a CORBA::UNKNOWN exception.
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                          CORBA::COMPLETED_YES),
-                          TAO_INVOKE_EXCEPTION);
-      }
-
-    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
-      {
-        // @@ Add the location macros for these exceptions...
-
-        CORBA::String_var type_id;
-
-        if ((rd.reply_cdr () >> type_id.inout ()) == 0)
-          {
-            // Could not demarshal the exception id, raise a local
-            // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_OK);
-          }
-
-        CORBA::ULong minor = 0;
-        CORBA::ULong completion = 0;
-
-        if ((rd.reply_cdr () >> minor) == 0
-            || (rd.reply_cdr () >> completion) == 0)
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_MAYBE),
-                            TAO_INVOKE_OK);
-
-        CORBA::SystemException* ex =
-          TAO_Exceptions::create_system_exception (type_id.in (),
-                                                   ACE_TRY_ENV);
-        ACE_CHECK_RETURN (TAO_INVOKE_OK);
-
-        if (ex == 0)
-          {
-            // @@ We should raise a CORBA::NO_MEMORY, but we ran out
-            //    of memory already. We need a pre-allocated, TSS,
-            //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex,
-                            CORBA::UNKNOWN,
-                            TAO_INVOKE_EXCEPTION);
-          }
-
-        ex->minor (minor);
-        ex->completed (CORBA::CompletionStatus (completion));
-
-        // @@ There should be a better way to raise this exception!
-        //    This code works for both native and emulated exceptions,
-        //    but it is ugly.
-        ACE_TRY_ENV.exception (ex); // We can not use ACE_THROW here.
-        return TAO_INVOKE_OK;
-      }
-
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-      // Handle the forwarding and return so the stub restarts the
-      // request!
-      return this->location_forward (rd.reply_cdr (),
-                                     ACE_TRY_ENV);
-    case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
-      {
-        // We have received an exception with a request to change the
-        // addressing mode. First let us read the mode that the
-        // server/agent asks for.
-        CORBA::Short addr_mode = 0;
-        if (rd.reply_cdr ().read_short (addr_mode) == 0)
-          {
-            // Could not demarshal the addressing disposition, raise an local
-            // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_OK);
-          }
-
-        // Now set this addressing mode in the stub object, so that
-        // the next invocation need not go through this.
-        this->stub_->addressing_mode (addr_mode);
-
-        // Now restart the invocation
-        return TAO_INVOKE_RESTART;
-      }
-    }
-
-  return TAO_INVOKE_OK;
+  return retval;
 }
 
 // ****************************************************************
 
-TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
-{
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
-}
-
-// Send request, block until any reply comes back.
 void
-TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_Locate_Request_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Just make sure that you pass in the object key
-  this->target_spec_.target_specifier (this->profile_->object_key ());
 
   this->transport_->start_locate (this->orb_core_,
                                   this->target_spec_,
                                   this->op_details_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);
-  this->rd_.reply_received () = 0;
 }
 
+// Send request, block until any reply comes back.
 int
 TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ TODO This method is very similar to invoke_i(), we should try
-  //    to refactor them.
-
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      TAO_INVOKE_EXCEPTION);
-
-  // Register a reply dispatcher for this invocation. Use the
-  // preallocated reply dispatcher.
-
-  // Bind.
-  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
-
-  TAO_Bind_Dispatcher_Guard dispatch_guard (this->op_details_.request_id(),
-                                            &this->rd_,
-                                            tms);
-  int retval = dispatch_guard.status();
-
-  if (retval == -1)
     {
-      // @@ What is the right way to handle this error?
-      this->close_connection ();
-
-      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
                         TAO_INVOKE_EXCEPTION);
     }
 
-  int result =
-    this->transport_->send_request (this->stub_,
-                                    this->orb_core_,
-                                    this->out_stream_,
-                                    1,
-                                    this->max_wait_time_);
-
-
-  if (result == -1)
-    {
-      this->transport_->close_connection ();
-      this->transport_ = 0;
-
-      this->endpoint_->reset_hint ();
-
-      // @@ This code abort if the connection for the currenct profile
-      //    fails.  Should we transparently try new profiles until one
-      //    works? Or is that something that a higher level component
-      //    should decide?  Remember that LocateRequests are part of
-      //    the strategy to establish a connection.
-
-      return this->orb_core_->service_raise_transient_failure (this,
-                                                               this->profile_,
-                                                               ACE_TRY_ENV);
-
-    }
-
-  // @@ Maybe the right place to do this is once the reply is
-  //    received? But what about oneways?
-  this->endpoint_selector_->success (this);
-
-  // Wait for the reply.
-  int reply_error =
-    this->transport_->wait_strategy ()->wait (this->max_wait_time_,
-                                              this->rd_.reply_received ());
-
-  // Check the reply error.
-  if (reply_error == -1)
-    {
-      // The guard automatically unbinds the dispatcher
-      if (errno == ETIME)
-        {
-          // Just a timeout, don't close the connection or
-          // anything...
-          ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
-                  TAO_TIMEOUT_SEND_MINOR_CODE,
-                  errno),
-              CORBA::COMPLETED_NO),
-            TAO_INVOKE_EXCEPTION);
-        }
-
-      return this->orb_core_->service_raise_comm_failure (this,
-                                                          this->profile_,
-                                                          ACE_TRY_ENV);
-    }
-
-  CORBA::ULong locate_status = this->rd_.reply_status ();
+  CORBA::ULong locate_status = this->invoke_i (1,
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   switch (locate_status)
     {
     case TAO_GIOP_OBJECT_HERE:
       break;
-
     case TAO_GIOP_UNKNOWN_OBJECT:
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
                                                  CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
-      // NOTREACHED
-
+      // NOTREACHED.
     case TAO_GIOP_OBJECT_FORWARD:
       return this->location_forward (this->inp_stream (),
                                      ACE_TRY_ENV);
     case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
       {
-        // What else do we do??
         // Pull the exception from the stream.
         CORBA::String_var buf;
 
-        if ((this->rd_.reply_cdr () >> buf.inout ()) == 0)
+        if ((this->inp_stream () >> buf.inout ()) == 0)
           {
-            // Could not demarshal the exception id, raise an local
-            // CORBA::MARSHAL
+            // Could not demarshal the exception id, raise a local
+            // CORBA::MARSHAL exception.
             ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_EXCEPTION);
@@ -1345,10 +1053,11 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         // addressing mode. First let us read the mode that the
         // server/agent asks for.
         CORBA::Short addr_mode = 0;
-        if (this->rd_.reply_cdr ().read_short (addr_mode) == 0)
+
+        if (this->inp_stream ().read_short (addr_mode) == 0)
           {
-            // Could not demarshal the addressing disposition, raise an local
-            // CORBA::MARSHAL
+            // Could not demarshal the addressing disposition, raise a local
+            // CORBA::MARSHAL exception.
             ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_OK);
@@ -1358,7 +1067,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         // the next invocation need not go through this.
         this->stub_->addressing_mode (addr_mode);
 
-        // Now restart the invocation
+        // Restart the invocation.
         return TAO_INVOKE_RESTART;
       }
     }
@@ -1366,8 +1075,3 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

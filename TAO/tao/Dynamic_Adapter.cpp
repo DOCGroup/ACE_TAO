@@ -77,17 +77,6 @@ TAO_Dynamic_Adapter::create_exception_list (CORBA::ExceptionList_ptr &,
 {
 }
 
-CORBA::Exception * 
-TAO_Dynamic_Adapter::decode_user_exception (
-    CORBA::ExceptionList_ptr,
-    TAO_GIOP_Twoway_Invocation *,
-    const char *,
-    CORBA::Environment &
-  )
-{
-  return 0;
-}
-
 // ***********************************************************************
 
 // Implementation of the CORBA::is_nil and CORBA::release methods for

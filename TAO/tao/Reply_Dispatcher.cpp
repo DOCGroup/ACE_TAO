@@ -10,6 +10,7 @@ ACE_RCSID(tao, Reply_Dispatcher, "$Id$")
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
+  : reply_status_ (100) // Just an invalid reply status.
 {
 }
 
@@ -18,8 +19,3 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 {
 }
 
-TAO_GIOP_Message_State *
-TAO_Reply_Dispatcher::message_state (void)
-{
-  return 0;
-}
