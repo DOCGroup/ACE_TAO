@@ -1,3 +1,19 @@
+Fri Jan 19 15:39:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.cpp:
+	  QNX/RTP has the same problem that LynxOS has, after fork() is
+	  invoked trying to destroy the preallocated objects in
+	  ACE_OS_Object_Manager fails.
+	  Factor out this variation in a new macro:
+	  ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
+	  
+        * ace/config-lynxos.h:
+        * ace/config-qnx-rtp.h:
+	  Define the new macro for the two relevant platforms.
+
+        * ace/README:
+	  Document the macro.
+
 Fri Jan 19 15:08:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.cpp:
