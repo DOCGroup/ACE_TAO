@@ -1,3 +1,9 @@
+Tue Sep 12 10:53:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
+	* orbsvcs/orbsvcs/Makefile.CosNaming:
+	* orbsvcs/orbsvcs/Makefile.CosNotification: Updated dependencies.
+
 Tue Sep 12 01:58:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/mfc/client.cpp: Included "tao/PortableServer/POA.h".
