@@ -1,3 +1,19 @@
+Mon Jul 08 14:25:44 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp (get_selector): 
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (endpoint_from_profile): 
+	* tests/RTCORBA/Linear_Priority/Makefile:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
+
+	  Minor fixes.
+
+Mon Jul 08 12:51:34 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Persistent_ID/Makefile: This test works with minimum
+	  CORBA.  Therefore, removed the unnecessary minimum_corba check
+	  from the Makefile.  Thanks to Jaiganesh Balasubramanian
+	  <jai@doc.ece.uci.edu> for pointing this out.
+
 Mon Jul  8 14:38:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation/cpp:

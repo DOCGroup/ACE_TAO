@@ -51,7 +51,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invoc
         tao_client_protocol_policy->protocols_rep ();
 
       this->select_endpoint_based_on_client_protocol_policy (invocation,
-                                                             client_protocol_policy,
+                                                             client_protocol_policy.in (),
                                                              client_protocols
                                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -229,17 +229,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
           // There are bands.
           else
             {
-              // Get the bands.
-              RTCORBA::PriorityBandedConnectionPolicy_var bands_policy_ptr =
-                RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands_policy);
-
-              TAO_PriorityBandedConnectionPolicy *priority_bands_policy =
-                ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                                 bands_policy_ptr.in ());
-
-              RTCORBA::PriorityBands &bands =
-                priority_bands_policy->priority_bands_rep ();
-
               // Check which band range we fall in.
               int in_range = 0;
               protocol_hooks->get_selector_bands_policy_hook (bands_policy.in (),
