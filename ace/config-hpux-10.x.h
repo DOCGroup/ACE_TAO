@@ -50,6 +50,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // threads-related information.  If _ACE_HPUX_USE_DCETHREADS is defined,
 // the DCE threading definitions will be set up for the build.  If it
 // is not defined, ACE will be built without thread support.
+// Of course, you must have DCE threads installed if you want to use
+// this.
 #define _ACE_HPUX_USE_DCETHREADS
 
 

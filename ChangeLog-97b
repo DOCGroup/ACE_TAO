@@ -1,3 +1,19 @@
+Tue Sep 23 17:11:44 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-g++.h: 
+	  Added A ACE_LACKS_TIMESPEC_T, thanks to Warren Thompson
+	  (wthompson@altaira.com) for this one.
+
+	* include/makeinclude/platform_hpux_gcc.GNU: 
+	  Added a -D_REENTRANT define, to enable reentrant methods, thanks
+	  to Warren Thompson (wthompson@altaira.com) and Steve Huston
+	  (shuston@riverace.com) for pointing out this.
+
+	* ace/config-hpux-10.x.h: 
+	  Added an small comment to clarify that DCE/threads must be
+	  installed if threading is wanted, they are an optional product
+	  for HP-UX.
+
 Tue Sep 23 10:13:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp: added #include of ace/Thread.h.
