@@ -241,17 +241,6 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "#define TAO_EXPORT_MACRO "
                         << be_global->stub_export_macro ();
 
-  // Generate export macro for nested classes.
-  *this->client_header_ << "\n\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-                        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-                        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-                        << "#  endif /* defined "
-                        << "(TAO_EXPORT_NESTED_MACRO) */\n"
-                        << "#  define TAO_EXPORT_NESTED_MACRO "
-                        << be_global->stub_export_macro ()
-                        << be_nl
-                        << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
-
   *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(push)\n"
                         << "#pragma warning(disable:4250)";
