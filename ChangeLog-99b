@@ -1,3 +1,19 @@
+Sat May 29 14:14:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Vector.{h,i,cpp}:
+
+	  Added STL Vector-style insert() and erase() methods.  Also added
+	  a new constructor that creates an ACE_Vector from a specified
+	  range of iterators.
+
+	  ACE_Vector class is now Purify clean (i.e. fixed any and all
+	  memory leaks).
+
+	* tests/Vector_Test.cpp:
+
+	  Added tests for the newly added ACE_Vector<T>::insert() and
+	  ACE_Vector<T>::erase() methods.
+
 Fri May 28 20:19:50 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Vector.{h,i,cpp}:
