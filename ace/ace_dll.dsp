@@ -317,28 +317,28 @@ LINK32=link.exe
 # PROP Intermediate_Dir "EmuCE"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
+EMPFILE=empfile.exe
+# ADD BASE EMPFILE -COPY
+# ADD EMPFILE -COPY
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /pdb:none /incremental:no
 # ADD LINK32 commctrl.lib coredll.lib advapi32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none /incremental:no
-EMPFILE=empfile.exe
-# ADD BASE EMPFILE -COPY
-# ADD EMPFILE -COPY
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\ /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\ /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
@@ -354,28 +354,28 @@ EMPFILE=empfile.exe
 # PROP Intermediate_Dir "SHCE"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=shcl.exe
-# ADD BASE CPP /nologo /MLd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /MTd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
-# ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
+PFILE=pfile.exe
+# ADD BASE PFILE COPY
+# ADD PFILE COPY
 LINK32=link.exe
 # ADD BASE LINK32 advapi32.lib commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /pdb:".\ace.pdb" /debug /machine:SH3 /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
 # ADD LINK32 advapi32.lib commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /pdb:".\ace.pdb" /debug /machine:SH3 /out:".\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /fixed:no /pdb:none /nodefaultlib
-PFILE=pfile.exe
-# ADD BASE PFILE COPY
-# ADD PFILE COPY
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
+# ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
+CPP=shcl.exe
+# ADD BASE CPP /nologo /MLd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\ /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /MTd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\ /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 
 !ENDIF 
 
@@ -4542,6 +4542,33 @@ NODEP_CPP_METHO=\
 	".\config.h"\
 	".\stdcpp.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Msg_WFMO_Reactor.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -13278,6 +13305,10 @@ SOURCE=.\Module.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Msg_WFMO_Reactor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Multiplexor.h
 # End Source File
 # Begin Source File
@@ -13898,6 +13929,10 @@ SOURCE=.\Module.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Msg_WFMO_Reactor.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Multiplexor.i
 # End Source File
 # Begin Source File
@@ -14232,1256 +14267,134 @@ SOURCE=.\Acceptor.cpp
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Containers.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Free_List.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Module.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Singleton.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream_Modules.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Documentation"
