@@ -1,3 +1,11 @@
+Fri Nov 29 11:42:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Cache and idle the
+	  transport in add_transport_to_cache () instead of just caching
+	  and leaving the transport in busy state.
+
 Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	This set of fixes are for fixing BUG 1247. Please see 
