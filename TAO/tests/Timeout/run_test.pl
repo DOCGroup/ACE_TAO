@@ -29,7 +29,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBDebugLevel 0"
                        ." -k file://$iorfile "
-                       . " -l 6 -h 14");
+                       . " -l 2 -h 28");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
