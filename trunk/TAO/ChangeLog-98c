@@ -1,3 +1,8 @@
+Wed Oct  7 22:27:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	(delete_property): Fixed the double deletion case.
+
 Wed Oct  7 21:44:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/try_macros.h: 
