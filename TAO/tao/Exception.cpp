@@ -271,8 +271,10 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_ENOENT_MINOR_CODE;
     case EBADF:
       return TAO_EBADF_MINOR_CODE;
+#if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
+#endif /* ENOSYS != EFAULT */
     case EPERM:
       return TAO_EPERM_MINOR_CODE;
     case EAFNOSUPPORT:
