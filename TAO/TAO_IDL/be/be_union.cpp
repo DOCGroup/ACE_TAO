@@ -1010,7 +1010,8 @@ be_union::compute_default_value (void)
       this->default_value_.u.ushort_val = 0;
       break;
     case AST_Expression::EV_long:
-      this->default_value_.u.long_val = ACE_INT32_MIN;
+      // The +1 is to avert an MSVC warning
+      this->default_value_.u.long_val = ACE_INT32_MIN + 1;
       break;
     case AST_Expression::EV_ulong:
       this->default_value_.u.ulong_val = 0;
