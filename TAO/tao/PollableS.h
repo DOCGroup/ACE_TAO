@@ -222,11 +222,11 @@ private:
 }
 TAO_NAMESPACE_CLOSE
 
-#include "PollableS_T.h"
+#include "tao/PollableS_T.h"
 #endif /* 0 */
 
 #if defined (__ACE_INLINE__)
-#include "PollableS.i"
+#include "tao/PollableS.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

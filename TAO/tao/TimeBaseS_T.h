@@ -24,12 +24,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "TimeBaseS_T.i"
+#include "tao/TimeBaseS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "TimeBaseS_T.cpp"
+#include "tao/TimeBaseS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

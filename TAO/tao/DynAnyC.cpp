@@ -32,7 +32,7 @@
 #include "tao/POA_CORBA.h"
 
 #if !defined (__ACE_INLINE__)
-#include "DynAnyC.i"
+#include "tao/DynAnyC.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, DynAnyC, "$Id$")

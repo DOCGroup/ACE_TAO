@@ -10,7 +10,7 @@
 #include "tao/BoundsC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "BoundsC.i"
+#include "tao/BoundsC.i"
 #endif /* !defined INLINE */
 
 // default constructor
@@ -40,7 +40,7 @@ CORBA_Bounds::operator= (const CORBA_Bounds &_tao_excp)
 }
 
 // narrow
-CORBA_Bounds_ptr 
+CORBA_Bounds_ptr
 CORBA_Bounds::_narrow (CORBA_Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/Bounds:1.0", exc->_id ())) // same type
@@ -80,7 +80,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem) // copyi
     _tao_any.replace (CORBA::_tc_Bounds, _tao_any_val, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY 
+  ACE_CATCHANY
   {
     delete _tao_any_val;
   }
@@ -135,4 +135,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
   ACE_ENDTRY;
   return 0;
 }
-

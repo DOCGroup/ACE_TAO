@@ -1541,7 +1541,7 @@ private:
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynArray;
 
 #if defined (__ACE_INLINE__)
-#include "DynAnyC.i"
+#include "tao/DynAnyC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

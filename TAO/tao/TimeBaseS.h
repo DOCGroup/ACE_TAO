@@ -20,16 +20,16 @@
 #ifndef TAO_IDL_TIMEBASES_H
 #define TAO_IDL_TIMEBASES_H
 
-#include "TimeBaseC.h"
+#include "tao/TimeBaseC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TimeBaseS_T.h"
+#include "tao/TimeBaseS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "TimeBaseS.i"
+#include "tao/TimeBaseS.i"
 #endif /* defined INLINE */
 
 #endif /* TAO_IDL_TIMEBASES_H */

@@ -1672,7 +1672,7 @@ TAO_NAMESPACE  Messaging
     // *************************************************************
     class _tao_seq_Octet;
     class _tao_seq_Octet_var;
-    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;    
+    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -2156,7 +2156,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::Poller_ptr &);
 
 
 #if defined (__ACE_INLINE__)
-#include "MessagingC.i"
+#include "tao/MessagingC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

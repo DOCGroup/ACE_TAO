@@ -26,12 +26,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "IOPS_T.i"
+#include "tao/IOPS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "IOPS_T.cpp"
+#include "tao/IOPS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

@@ -24,10 +24,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "IOPS_T.h"
+#include "tao/IOPS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "IOPS_T.i"
+#include "tao/IOPS_T.i"
 #endif /* !defined INLINE */
 
 

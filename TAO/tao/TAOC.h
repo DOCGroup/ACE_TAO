@@ -434,7 +434,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TAO::BufferingConstraint &
 
 
 #if defined (__ACE_INLINE__)
-#include "TAOC.i"
+#include "tao/TAOC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

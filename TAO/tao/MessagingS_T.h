@@ -17,12 +17,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "MessagingS_T.i"
+#include "tao/MessagingS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "MessagingS_T.cpp"
+#include "tao/MessagingS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 
