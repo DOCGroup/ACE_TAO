@@ -74,7 +74,8 @@ ACE_RCSID(ast, ast_type, "$Id$")
 
 // Constructor(s) and destructor.
 AST_Type::AST_Type (void)
-  : ifr_added_ (0)
+  : ifr_added_ (0),
+    ifr_fwd_added_ (0)
 {
 }
 
@@ -84,7 +85,8 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
   : AST_Decl (nt, 
               n, 
               p),
-    ifr_added_ (0)
+    ifr_added_ (0),
+    ifr_fwd_added_ (0)
 {
 }
 
