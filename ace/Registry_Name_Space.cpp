@@ -62,10 +62,10 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
                                const char *type)
 {
   // Pointer to data
-  const ACE_USHORT16 *data = value.fast_rep ();
+  const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
   // Size
-  u_long size = value.length () * sizeof (ACE_USHORT16);
+  u_long size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
@@ -88,10 +88,10 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
                                  const char *type)
 {
   // Pointer to data
-  const ACE_USHORT16 *data = value.fast_rep ();
+  const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
   // Size
-  u_long size = value.length () * sizeof (ACE_USHORT16);
+  u_long size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
@@ -138,7 +138,7 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
 
   // Resize the value passed by the user
   // Note: -1 is used because the size includes the null terminator
-  value.resize ((query_object.size () - 1) / sizeof (ACE_USHORT16));
+  value.resize ((query_object.size () - 1) / sizeof (ACE_WSTRING_TYPE));
 
   // Represent new space as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) value.fast_rep (),
