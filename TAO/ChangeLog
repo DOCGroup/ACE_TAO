@@ -1,3 +1,14 @@
+Mon Jul 14 11:12:25 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp:
+	* tests\RTCORBA\Priority_Inversion_With_Bands\test_i.cpp:
+
+	  Fixed incorrect ACE_TRY usage.
+	
+	* tests\RTCORBA\Priority_Inversion_With_Bands\README:
+
+          Fixed minor typo in README and in ChangeLog dated Sat Jul 12 14:01:47 2003  
+	
 Sat Jul 12 18:43:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp (svc): 
@@ -119,7 +130,7 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 	  configurations are tested:
 
 	  (a) Thread lanes without bands
-	  (b) Thread lanes without bands
+	  (b) Thread lanes with bands
 	  (c) Thread pool without bands
   	  (d) Thread pool with bands
 
