@@ -49,6 +49,7 @@ public:
   // Get the generation number.
   
   int operator== (const ACE_Active_Map_Manager_Key &rhs) const;
+  int operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
   // Compare keys.
 
   // = These really should be protected but because of template
