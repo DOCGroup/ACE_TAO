@@ -475,6 +475,9 @@ public:
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
 
 
+  /// Return the locking strategy used for the data blocks.
+  ACE_Lock *locking_strategy (void);
+
   /// The data blocks returned have memeory from the global pool. Will
   /// not get anything from the TSS even if it is available.
   ACE_Data_Block *data_block_for_message_block (size_t size);
