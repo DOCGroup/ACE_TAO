@@ -94,29 +94,30 @@ Client_i::cube_long (int i)
   // Cube a long.
   CORBA::Long ret_long;
   ACE_OS::sleep (2);
-  ret_long = this->server_->simple_method (i, this->env_);
-  //this->server_->shutdown (this->env_);
-  //ACE_OS::sleep (2);
 
-//  ACE_DEBUG ((LM_DEBUG, "FOO!!! %d\n", i));
-  ACE_DEBUG ((LM_DEBUG, "The cube of %d is %d\n", i, ret_long));
+  TAO_TRY 
+  {
+    ret_long = this->server_->simple_method (i, TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("from cube_long");
-    }
-  else
-    {
-      CORBA::Long arg_long = i * i * i;
+    ACE_DEBUG ((LM_DEBUG, "The cube of %d is %d\n", i, ret_long));
+  }
+  TAO_CATCHANY
+  {
+      TAO_TRY_ENV.print_exception ("from cube_long");
+      return;
+  }
+  TAO_ENDTRY;
 
-      if (arg_long != ret_long)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "** cube_long (%ld) ERROR (--> %ld)\n",
-                      ret_long,
-                      arg_long));
-        }
-    }
+  CORBA::Long arg_long = i * i * i;
+
+  if (arg_long != ret_long)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "** cube_long (%ld) ERROR (--> %ld)\n",
+                ret_long,
+                arg_long));
+  }
 }
 
 

@@ -42,3 +42,10 @@ void Simple_i::shutdown (CORBA::Environment &env)
  //   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
+void Ping_i::ping (CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, "Pinged!\n"));
+
+  ACE_UNUSED_ARG (env);
+  // Does nothing, just returns.
+}

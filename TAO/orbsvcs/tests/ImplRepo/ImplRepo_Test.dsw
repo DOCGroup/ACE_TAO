@@ -15,18 +15,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ImplRepoTest ImplRepo"=.\implrepo.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "ImplRepoTest Server"=.\server.dsp - Package Owner=<4>
 
 Package=<5>

@@ -89,14 +89,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\Impl_RepoC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Impl_RepoS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
@@ -106,6 +98,26 @@ SOURCE=.\server_impl.cpp
 # Begin Source File
 
 SOURCE=.\simple_object_impl.cpp
+# End Source File
+# End Group
+# Begin Group "Generated Source Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\ImplRepo_Service\ImplRepoC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ImplRepo_Service\ImplRepoS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ImplRepo_Service\PingC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ImplRepo_Service\PingS.cpp
 # End Source File
 # Begin Source File
 
