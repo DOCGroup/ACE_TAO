@@ -31,8 +31,11 @@ ACE_INET_Addr::dump (void) const
   ACE_TRACE ("ACE_INET_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  char s[MAXNAMELEN];
-  ACE_OS::sprintf (s, "%s:%d", this->get_host_addr (), this->get_port_number ()); 
+
+  char s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
+  ACE_OS::sprintf (s, "%s:%d",
+		   this->get_host_addr (),
+		   this->get_port_number ()); 
   ACE_DEBUG ((LM_DEBUG, "%s", s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

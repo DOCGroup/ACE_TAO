@@ -258,9 +258,9 @@ ACE::ldfind (const char filename[],
 {
   ACE_TRACE ("ACE::ldfind");
 
-  char tempcopy[MAXPATHLEN];
-  char searchpathname[MAXPATHLEN];
-  char searchfilename[MAXPATHLEN];
+  char tempcopy[MAXPATHLEN + 1];
+  char searchpathname[MAXPATHLEN + 1];
+  char searchfilename[MAXPATHLEN + 1];
 
   // Create a copy of filename to work with.
   if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof (char)))
@@ -440,7 +440,7 @@ FILE *
 ACE::ldopen (const char *filename, const char *type)
 {
   ACE_TRACE ("ACE::ldopen");
-  char buf[MAXPATHLEN];
+  char buf[MAXPATHLEN + 1];
 
   if (ACE::ldfind (filename, buf, sizeof buf) == -1)
     return 0;
@@ -2010,10 +2010,10 @@ ACE::get_ip_interfaces (size_t &count,
   const TCHAR *INVALID_TCPIP_DEVICE_ADDR = __TEXT ("0.0.0.0");
   const int MAX_STRING_SZ = 4096;
 
-  TCHAR raw_buffer[MAXPATHLEN];
-  DWORD raw_buflen = MAXPATHLEN;
-  TCHAR buffer[MAXPATHLEN];
-  DWORD buf_len = MAXPATHLEN;
+  TCHAR raw_buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+  DWORD raw_buflen = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
+  TCHAR buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+  DWORD buf_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
 
   if (::get_reg_value (LINKAGE_KEY1,
 		       BIND_NAME_ID,

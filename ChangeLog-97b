@@ -1,3 +1,27 @@
+Thu Sep 11 10:37:00 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
+
+	* ace/ACE.cpp: 
+	* ace/INET_Addr.cpp: 
+	* ace/Log_Msg.h: 
+	* ace/Memory_Pool.h: 
+	* ace/OS.h: 
+	* ace/OS.i: 
+	* ace/Parse_Node.cpp: 
+	* ace/Strategies_T.h: 
+	* bin/clone.cpp: 
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h: 
+	  I checked the use of MAXNAMELEN vs. MAXPATHLEN; all buffers
+	  intended to keep full filenames should have at least
+	  MAXPATHLEN+1 chars.
+	  Only buffers that will keep basenames (without any directories)
+	  should have MAXNAMELEN+1 bytes.
+	  I also added a new macro ACE_MAX_FULLY_QUALIFIED_NAME_LEN which
+	  is the maximum number of characters for a fully qualified
+	  internet hostname.
+	  There remain one obscure usage of these macros in ace/Malloc.h
+	  and Local_Naming_Space_T.{h,cpp}, but a quick fix broke
+	  something, I will try again soon.
+
 Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (~ACE_Log_Msg): release guard before calling
