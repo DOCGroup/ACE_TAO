@@ -43,7 +43,8 @@ DIRS  = CDR \
 	DynAny_Test \
 	Policies \
 	LongUpcalls \
-	RTCORBA
+	RTCORBA \
+	Forwarding
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
