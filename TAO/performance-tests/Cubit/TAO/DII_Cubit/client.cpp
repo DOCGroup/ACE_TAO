@@ -48,11 +48,11 @@ if (this->env_.exception () != 0) \
  return; \
 }
 
-#define REQUEST_CHECK_ENV_RETURN_VOID(REQ, PRINT_STRING) \
-if (REQ->env ()->exception () != 0) \
+#define REQUEST_CHECK_ENV_RETURN_VOID(EXCEPTION, PRINT_STRING) \
+if (EXCEPTION.exception () != 0) \
 { \
     this->error_count_++; \
- REQ->env ()->print_exception (PRINT_STRING); \
+ EXCEPTION.print_exception (PRINT_STRING); \
  return; \
 }
 
@@ -257,7 +257,8 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // Invoke the <make_cubit> operation to ask the Cubit factory
       // for a Cubit object.
-      mc_req->invoke ();
+      mc_req->invoke (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->obj_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -417,9 +418,10 @@ DII_Cubit_Client::cube_short_dii (void)
 
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV, 
                                  "cube_short_dii invoke");
 
   req->return_value () >>= ret_short;
@@ -452,9 +454,10 @@ DII_Cubit_Client::cube_long_dii (void)
 
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV, 
                                  "cube_long_dii invoke");
 
   req->return_value () >>= ret_long;
@@ -489,9 +492,10 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Invoke, check for an exception and verify the result.
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV, 
                                  "cube_octet_dii invoke");
 
   CORBA::Any::to_octet to_ret_octet (ret_octet);
@@ -578,9 +582,10 @@ DII_Cubit_Client::cube_struct_dii (void)
 
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_struct_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV, "cube_struct_dii invoke");
 
   req->return_value () >>= ret_struct_ptr;
 
@@ -620,9 +625,10 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV, 
                                  "cube_octet_seq_dii invoke");
 
   req->return_value () >>= ret_octet_seq_ptr;
@@ -672,9 +678,10 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
   this->call_count_++;
 
-  req->invoke ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  req->invoke (ACE_TRY_ENV);
 
-  REQUEST_CHECK_ENV_RETURN_VOID (req,
+  REQUEST_CHECK_ENV_RETURN_VOID (ACE_TRY_ENV,
                                  "cube_long_seq_dii invoke");
 
   req->return_value () >>= ret_long_seq_ptr;
@@ -772,7 +779,8 @@ DII_Cubit_Client::run (void)
           TAO_CHECK_ENV;
 
           // Cubit::shutdown () is a oneway operation.
-          req->send_oneway ();
+          req->send_oneway (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           ACE_DEBUG ((LM_DEBUG,
                       "\n\t Shutting down IDL_Cubit server \n\n"));
