@@ -74,7 +74,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /out:"Server.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ENDIF 
 
@@ -99,6 +99,10 @@ SOURCE=.\CounterS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Properties.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # End Group
@@ -111,7 +115,15 @@ SOURCE=.\Counter_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CounterC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CounterS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Properties.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

@@ -1,5 +1,6 @@
 //$Id$
-//
+
+////////////////////////////////////////////////////////////////////////
 // This files tests the Client exposed policies:
 //     - PriorityModelPolicy
 //     - PriorityBandedConnectionPolicy
@@ -9,16 +10,12 @@
 // them into the IOR. 
 //
 //
-// TODO: Create another object reference and override its POA's policies
-//       using the CORBA::Object::_set_policy_ovverides method.
-//      
-//
 #include "Counter_i.h"
 #include <tao/RT_ORB.h>
 #include <tao/RT_Policy_i.h>
 #include <ace/Arg_Shifter.h>
 
-const char *ior_output_file = "s.ior";
+#include "RT_Properties.h"
 
 ACE_RCSID(tao, server, "$Id$");
 
@@ -39,6 +36,7 @@ CORBA::Boolean check_reference (CORBA::Object_ptr object,
   return 1;
 }
 
+
 int
 main (int argc, char *argv[])
 {
@@ -52,14 +50,31 @@ main (int argc, char *argv[])
 
       // Here we parse the command line paramether passed
       // to the application.
-      /*
+           
       ACE_Arg_Shifter arg_shifter (argc, argv);
       
-      char *arg;
+      RT_Properties *rt_object_properties = 0;
+      RT_Properties *rt_poa_properties = 0;
+
       while (arg_shifter.is_anything_left ())
         {
+          char *arg;
+          // IOR File Name Option.
+          if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
+            {
+              rt_poa_properties = RT_Properties::read_from (arg, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
+            {
+              rt_object_properties = RT_Properties::read_from (arg, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          else 
+            arg_shifter.consume_arg ();
+          
         }  
-      */
+      
       CORBA::Object_var object;
       
       // Get a reference to the RT-ORB.
@@ -70,37 +85,23 @@ main (int argc, char *argv[])
                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      CORBA::PolicyList policy_list;
-      policy_list.length (3);
+      CORBA::PolicyList poa_policy_list;
+      poa_policy_list.length (3);
+      
       
       // Create the priority policy using the RT-ORB.
-      RTCORBA::Priority priority = 10;
-      policy_list[0] =
+      RTCORBA::Priority priority = rt_poa_properties->priority ();
+      poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                               priority,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       // Create priority Banded Connection Policy.
-      // In order to do this we have to create a sequence
-      // of priority bands.
-
-      RTCORBA::PriorityBands priority_bands;
-      priority_bands.length (2);
+      RTCORBA::PriorityBands poa_priority_bands = rt_poa_properties->priority_bands ();
       
-      RTCORBA::PriorityBand p_band1, p_band2;
-      
-      p_band1.low = 10;
-      p_band1.high = 30;
-      
-      p_band2.low = 7;
-      p_band2.high = 21;
-      
-      priority_bands[0] = p_band1;
-      priority_bands[1] = p_band2;
-      
-      policy_list[1] = 
-        rt_orb->create_priority_banded_connection_policy (priority_bands, 
+      poa_policy_list[1] = 
+        rt_orb->create_priority_banded_connection_policy (poa_priority_bands, 
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
@@ -115,7 +116,7 @@ main (int argc, char *argv[])
       protocol_list[0].transport_protocol_properties =
         TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP);
 
-      policy_list[2] =
+      poa_policy_list[2] =
         rt_orb->create_client_protocol_policy (protocol_list);
 
       object = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
@@ -131,7 +132,7 @@ main (int argc, char *argv[])
       PortableServer::POA_var child_poa =
         poa->create_POA ("Child_POA",
                          poa_mgr ,
-                         policy_list);
+                         poa_policy_list);
       
       // Create a Corba Object reference, using the policies
       // set at the POA level.
@@ -165,14 +166,63 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file = ACE_OS::fopen (rt_poa_properties->ior_source (), "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           ior_output_file),
+                           rt_poa_properties->ior_source ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
+   
+      // Now we create an object that overrides some of the policies
+      // set at the POA level.
+
+
+      // Create a Corba Object reference, using the policies
+      // set at the POA level.
+      
+      // @@ Shortcut - The following code is not definitive, and 
+      //               the cast is only used to access a RTPortableServer::POA
+      //               method that isn't currently accessible otherwise.
+      
+      object =
+        ((TAO_POA*)child_poa.ptr ())->create_reference_with_priority ("IDL:Counter:1.0",
+                                                                      rt_object_properties->priority (),
+                                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("Reference Created!\n")));
+
+      if (!check_reference (object, 
+                            "Unable to create a Counter Object!\n"))
+        return 1;
+
+      Counter_var counter_over = Counter::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      if (!check_reference (counter_over.in(), 
+                            "Unable to create a Counter Object!\n"))
+        return 1;
+
+      
+      CORBA::String_var o_ior = orb->object_to_string (counter_over.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("Activated as <%s>\n"), o_ior.in ()));
+      
+      output_file = ACE_OS::fopen (rt_object_properties->ior_source (), "w");
+
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                           rt_object_properties->ior_source ()),
+                          1);
+      ACE_OS::fprintf (output_file, "%s", o_ior.in ());
+      ACE_OS::fclose (output_file);
+
 
       PortableServer::POAManager_var poa_manager =
         child_poa->the_POAManager (ACE_TRY_ENV);
