@@ -217,7 +217,7 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/DynamicC.cpp:
 
 	  Include `StrinqSeqC.h' instead of `StringSeq.h', in accordance
-	  with the filename newly regenerated StringSeq stubs.
+	  with the filenames newly of the regenerated StringSeq stubs.
 
 	* tao/diffs/Dynamic.diff:
 
@@ -229,7 +229,7 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/diffs/InterceptorC.cpp.diff:
 
 	  Removed these diffs.  The files they were meant to patch are no
-	  longer part of TAO.
+	  longer exist in TAO.
 
 	* tao/Makefile:
 	* tao/Makefile.am:
