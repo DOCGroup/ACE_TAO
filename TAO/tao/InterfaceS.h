@@ -8,9 +8,9 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_INTERFACES_H_
+#ifndef TAO_IDL_INTERFACES_H
 #include "ace/pre.h"
-#define _TAO_IDL_INTERFACES_H_
+#define TAO_IDL_INTERFACES_H
 
 #include "tao/POA_CORBA.h"
 #include "tao/Operation_Table.h"
@@ -44,4 +44,4 @@
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 #include "ace/post.h"
-#endif /* _TAO_IDL_INTERFACES_H_ */
+#endif /* TAO_IDL_INTERFACES_H */
