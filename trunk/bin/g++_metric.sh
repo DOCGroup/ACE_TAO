@@ -21,27 +21,10 @@ do
   shift
 done
 
-#unfortunately, time only goes down to seconds, so do it by hand...
-start=`date +%s%N`
-g++ $commandline
+// we echo out "(%x)", the return value from g++, so the script processes the output
+// will only use times for successful compilations, i.e., "(0)". 
+/usr/bin/time -f "//compile time(%x): ${PWD#$ACE_ROOT/}/${target} %U %S" g++ $commandline
 
 retval=$?
-
-# only echo the compile time if the call was successful
-if [ $retval -eq 0 ]; then
-  stop=`date +%s%N`
-
-  let "total = (${stop}-${start})"
-
-  # convert to microseconds even though we will only use milliseconds in the 
-  # graphs
-  let "total = ($total)/1000"
-
-  # add the path, relative to $ACE_ROOT, to the beginning of the object name
-  # so that it can be used to name the object when it's processed.  
-  # Note that this line is commented so the output won't interfere with the
-  # preprocessor output, i.e., when used by the tao_idl compiler.
-  echo "//compile time: ${PWD#$ACE_ROOT/}/${target} $total"
-fi
 
 exit $retval
