@@ -3,7 +3,7 @@
 # Makefile for building the Bank example
 #
 
-NAME = Bank_Client
+NAME = client
 
 OBJFILES = \
 	$(OBJDIR)\BankC.obj \
