@@ -705,7 +705,7 @@ AST_Generator::create_expr (long v,
 }
 
 AST_Expression *
-AST_Generator::create_expr (ACE_UINT64 v,
+AST_Generator::create_expr (idl_uns_long v,
                             AST_Expression::ExprType t)
 {
   AST_Expression *retval = 0;

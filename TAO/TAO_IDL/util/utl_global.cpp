@@ -1477,7 +1477,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
 
   (void) c->fe_add_structure (connection);
 
-  ACE_UINT64 bound = 0;
+  idl_uns_long bound = 0;
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
                                      AST_Expression::EV_ulong);

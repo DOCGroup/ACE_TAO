@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
 #include "ace/CDR_Stream.h"
+#include "idl_uns_long.h"
 #include "utl_scoped_name.h"
 
 class UTL_String;
@@ -205,7 +206,7 @@ public:
 
   AST_Expression (unsigned long ul);
 
-  AST_Expression (ACE_UINT64 ull,
+  AST_Expression (idl_uns_long,
                   ExprType t);
 
   AST_Expression (float f);

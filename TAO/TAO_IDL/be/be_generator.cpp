@@ -704,7 +704,7 @@ be_generator::create_expr (long l,
 }
 
 AST_Expression *
-be_generator::create_expr (ACE_UINT64 l,
+be_generator::create_expr (idl_uns_long l,
                            AST_Expression::ExprType t)
 {
   be_expression *retval = 0;
