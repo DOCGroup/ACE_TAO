@@ -1,3 +1,13 @@
+Wed Mar 29 00:01:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): 
+	  ACE_OS::closesocket() was being used to do some very "low-level"
+ 	  closing of handles without assigning a handle to
+ 	  ACE_INVALID_HANDLE.  This was causing problems.  Therefore, we
+ 	  now try to use this->peer ().close () if it's different from
+ 	  handle.  Thanks to Alexander Dergatch <dergy@websci.ru> for
+ 	  reporting this.  This fixes [BUGID 520].
+
 Tue Mar 28 12:13:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Containers_T.h: Fixed the mismatching filename in preamble.
