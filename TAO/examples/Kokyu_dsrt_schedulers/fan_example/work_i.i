@@ -1,7 +1,7 @@
 //$Id$
 
 ACE_INLINE
-Complex_Server_i::Complex_Server_i (CORBA::ORB_ptr orb, 
+Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, 
         RTScheduling::Current_ptr current,
         Task_Stats& task_stats,
         int enable_yield)

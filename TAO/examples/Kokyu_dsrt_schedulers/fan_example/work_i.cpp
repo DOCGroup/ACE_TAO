@@ -23,7 +23,7 @@
 ACE_RCSID(MT_Server, work_i, "work_i.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
 void
-Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
+Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Policy_ptr sched_policy =
@@ -76,22 +76,6 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
-  int wflags = O_RDWR;
-  int wfd;
-  unsigned char *ptr;
-  const char *wshfile = "shfile.txt";
-
-  wfd = shm_open(wshfile, wflags, S_IRWXU);
-  ptr = (unsigned char *)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, wfd, 0);
-  close(wfd);
-
-  *ptr = *ptr - 1;
-
-  ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
-
-  if((*ptr)!=0) return;
-
-  else *ptr = 2;
   static CORBA::ULong prime_number = 9619899;
 
   ACE_Time_Value compute_count_down_time (exec_duration, 0);
@@ -163,25 +147,9 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 }
 
 void
-Complex_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
-  int wflags = O_RDWR;
-  int wfd;
-  unsigned char *ptr;
-  const char *wshfile = "shfile.txt";
-
-  wfd = shm_open(wshfile, wflags, S_IRWXU);
-  ptr = (unsigned char *)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, wfd, 0);
-  close(wfd);
-
-  *ptr = *ptr - 1;
-
-  ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
-
-  if((*ptr)!=0) return;
-
-  else
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

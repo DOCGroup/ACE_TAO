@@ -20,23 +20,23 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "Task_Stats.h"
 
-class Complex_Server_i : public POA_Complex_Server
+class Simple_Server_i : public POA_Simple_Server
 {
   // = TITLE
   //   Simpler Server implementation
   //
   // = DESCRIPTION
-  //   Implements the Complex_Server interface in work.idl
+  //   Implements the Simple_Server interface in work.idl
   //
 public:
-  Complex_Server_i (CORBA::ORB_ptr orb, 
+  Simple_Server_i (CORBA::ORB_ptr orb, 
                    RTScheduling::Current_ptr current,
                    Task_Stats&,
                    int);
   // ctor
 
-  // = The Complex_Server methods.
-  void test_method2 (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+  // = The Simple_Server methods.
+  void test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

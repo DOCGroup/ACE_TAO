@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #
-# @file Makefile.threeway_client_and_server
+# @file Makefile.threeway_server
 #
 # gnu.mpd,v 1.56 2003/10/16 14:03:48 elliott_c Exp
 #
@@ -9,9 +9,9 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.threeway_client_and_server
-DEPENDENCY_FILE = .depend.Makefile.threeway_client_and_server
-BIN_UNCHECKED   = threeway_client_and_server
+MAKEFILE        = Makefile.threeway_server2
+DEPENDENCY_FILE = .depend.Makefile.threeway_server2
+BIN_UNCHECKED   = threeway_server2
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -21,21 +21,19 @@ ifndef CIAO_ROOT
 endif
 
 TAO_IDL = ../../../../bin/tao_idl
-IDL_FILES = test \
-	    work
+IDL_FILES = work 
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
 FILES = \
-  testC \
-  testS \
   workC \
-  test_i \
-  threeway_client_and_server
+  workS \
+  work_i \
+  threeway_server2
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lTAO_Svc_Utils -lKokyu_DSRT_Schedulers -lTAO_RTScheduler -lwrappers -lKokyu -ldsui -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
+LDLIBS = -lKokyu_DSRT_Schedulers -lTAO_RTScheduler -lwrappers -lKokyu -ldsui -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -45,12 +43,12 @@ include $(TAO_ROOT)/rules.tao.GNU
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
-TEMPINCDIR := $(TEMPINCDIR)/threeway_client_and_server
+TEMPINCDIR := $(TEMPINCDIR)/threeway_server2
 
 all: $(TEMPINCDIR)
 
 $(TEMPINCDIR):
-	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
+	@-work -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
 
@@ -68,7 +66,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-testC.cpp testS.cpp test_i.cpp threeway_client_and_server.cpp: idl_stubs
+workC.cpp workS.cpp work_i.cpp threeway_server2.cpp: idl_stubs
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU

@@ -1,22 +1,22 @@
-//$Id$ 
+// $Id$
 
-#include "test_i.h"
-#include "workC.h"
+#include "work_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "EDF_Scheduler.h"
 #include "Task_Stats.h"
+#include <sys/types.h>
+#include <sys/mman.h>
 
 #include <dsui.h>
 
-ACE_RCSID(MT_Server, server, "server.cpp,v 1.3 2003/10/14 05:57:01 jwillemsen Exp")
+ACE_RCSID(MT_Server, server, "$Id$")
 
-const char *ior_input_file = "file://test2.ior";
-const char *ior_output_file = "test.ior";
+const char *ior_output_file = "test2.ior";
 
-int nthreads = 1;
+int nthreads = 2;
 int enable_dynamic_scheduling = 1;
 const CORBA::Short max_importance = 100;
 int enable_yield = 1;
@@ -24,7 +24,7 @@ int enable_yield = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:s");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:ds");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -38,6 +38,10 @@ parse_args (int argc, char *argv[])
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 'd':
+        enable_dynamic_scheduling = 0;
+        break;
+
       case 's':
         enable_yield = 0;
         break;
@@ -47,7 +51,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
-			   "-n (thread num)"
+                           "-d (enable dynamic scheduling)"
                            "-s (disable yield)"
                            "\n",
                            argv [0]),
@@ -84,6 +88,7 @@ main (int argc, char *argv[])
 {
   ds_control ds_cntrl ("DT_Oneway", "../edf_example/dt_enable.dsui");
 
+  ACE_DEBUG((LM_DEBUG,"I AM BEGINNING\n"));
   EDF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;
   long flags;
@@ -97,8 +102,8 @@ main (int argc, char *argv[])
 
   task_stats.init (100000);
 
-//  TAO_debug_level =1;
-
+//  TAO_debug_level = 1;
+  
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -125,24 +130,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ACE_DEBUG((LM_DEBUG,"Before complex server\n"));
-      CORBA::Object_var object =
-        orb->string_to_object (ior_input_file ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      Complex_Server_var server2 =
-        Complex_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG((LM_DEBUG,"After complex server\n"));
-      if (CORBA::is_nil (server2.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior_input_file),
-                            1);
-        }
-
+      ACE_DEBUG((LM_DEBUG,"BEFORE begin enable dynamic scheduling\n"));
       if (enable_dynamic_scheduling)
         {
           CORBA::Object_ptr manager_obj =
@@ -177,7 +165,6 @@ main (int argc, char *argv[])
             orb->resolve_initial_references ("RTScheduler_Current"
                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
           current  =
             RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -186,7 +173,6 @@ main (int argc, char *argv[])
       ACE_DEBUG((LM_DEBUG,"before activate server\n"));
       Simple_Server_i server_impl (orb.in (),
                                    current.in (),
-				   server2.in (),
                                    task_stats,
                                    enable_yield);
 
@@ -216,6 +202,7 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG((LM_DEBUG,"before activate thread\n"));
       Worker worker (orb.in ());
       if (worker.activate (flags,
                            nthreads,
@@ -252,9 +239,9 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
-  task_stats.dump_samples ("timeline.txt",
-                            "Time\t\tGUID",
-                            ACE_High_Res_Timer::global_scale_factor ());
+//  task_stats.dump_samples ("timeline.txt",
+//                            "Time\t\tGUID",
+//                            ACE_High_Res_Timer::global_scale_factor ());
   return 0;
 }
 

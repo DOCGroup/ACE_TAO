@@ -1,8 +1,8 @@
 //$Id$
 
-interface Complex_Server
+interface Simple_Server
 {
-  oneway void test_method2 (in long x);
+  oneway void test_method (in long x);
 
   void shutdown ();
 };

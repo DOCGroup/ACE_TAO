@@ -21,18 +21,16 @@ endif
 %.tgt0:
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.threeway_client -C . $(*);
-        -@$(MAKE) -f Makefile.threeway_client_and_server -C . $(*);
-	-@$(MAKE) -f Makefile.threeway_client_and_server2 -C . $(*);
 else
 	@$(MAKE) -f Makefile.threeway_client -C . $(*);
-	@$(MAKE) -f Makefile.threeway_client_and_server -C . $(*);
-	@$(MAKE) -f Makefile.threeway_client_and_server2 -C . $(*);
 endif
 %.tgt1: %.tgt0
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.threeway_server -C . $(*);
+	-@$(MAKE) -f Makefile.threeway_server2 -C . $(*);
 else
 	@$(MAKE) -f Makefile.threeway_server -C . $(*);
+	@$(MAKE) -f Makefile.threeway_server2 -C . $(*);
 endif
 
 
