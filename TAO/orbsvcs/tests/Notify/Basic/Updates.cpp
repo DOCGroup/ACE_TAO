@@ -118,7 +118,8 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
 
   char update_test_buf[BUFSIZ];
 
-  for (int i = 0; i < update_count; ++i)
+  int i = 0;
+  for (; i < update_count; ++i)
     {
       ACE_OS::sprintf (update_test_buf, "%s_%d", DOMAIN, i);
       added[i].domain_name =  CORBA::string_dup (update_test_buf);
