@@ -42,12 +42,13 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& _env)
 	}
       TAO_CATCH (CosTrading::UnknownServiceType, excp)
 	{
-          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::remove_all_types");
+          if (this->verbose_)
+            {
+              if (excp.type.in () != 0)	
+                ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %s\n", excp.type.in ()));
+            }
 
-	  if (excp.type.in () != 0)	
-	    ACE_DEBUG ((LM_DEBUG, "Unknown name: %s\n", excp.type.in ()));
-          
-          goto remove_type_label;
+          TAO_TRY_ENV.clear ();
 	}
       TAO_CATCHANY
 	{
@@ -180,7 +181,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 	  if (ste.name.in () != 0)	
 	    ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", ste.name.in ()));
 
-	  goto add_type_label;
+          TAO_TRY_ENV.clear ();
 	}
       TAO_CATCH (CosTrading::IllegalPropertyName, excp)
 	{
@@ -188,6 +189,8 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 	  
 	  if (excp.name.in () != 0)	
 	    ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", excp.name.in ()));
+
+          TAO_TRY_ENV.clear ();
 	}
       TAO_CATCH (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, vtr)
 	{
@@ -197,6 +200,8 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 	    ACE_DEBUG ((LM_DEBUG, "Type One: %s\n", vtr.type_2.in ()));
 	  if (vtr.type_2.in () != 0)	
 	    ACE_DEBUG ((LM_DEBUG, "Type Two: %s\n", vtr.type_2.in ()));
+
+          TAO_TRY_ENV.clear ();
 	}
       TAO_CATCHANY
 	{
@@ -204,8 +209,6 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 	  TAO_RETHROW;
 	}
       TAO_ENDTRY;
-
-    add_type_label: ;
     }
 }
 
