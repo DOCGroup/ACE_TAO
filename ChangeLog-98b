@@ -3,7 +3,13 @@ Thu Sep 24 09:17:32 1998  Steve Huston  <shuston@riverace.com>
 	* ace/Containers_T.h: Added #include "ace/Containers.h" - AIX xlC
 	  needs this when instantiating templates.
 
-	* ace/OS.i: Fixed comments that referenced ACE_HAS_DCE[_DRAFT4]_THREADS
+	* ace/Dirent.cpp: Do the HP check using only compiler-defined
+	  preprocessor macros since config.h isn't included.
+
+	* ace/OS.i: Fixed comments that referenced DCE threads.
+	  Changed readdir_r #ifdefs to handle pthreads drafts 4 and 6
+	  the same, and split HP-UX 10.x off as a non-conformant player.
+	  Thanks to David Levine for sorting this out with LynxOS.
 
 	* ace/Thread_Manager.cpp: Changed occurrences of
 	  ACE_HAS_DCE_DRAFT4_THREADS to ACE_HAS_PTHREADS_DRAFT4.  Corrected
