@@ -2083,7 +2083,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantLocator::_is_a (
 PortableServer::Servant POA_PortableServer::_tao_collocated_ServantLocator::preinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr  adapter,
-    const PortableServer::Identifier operation,
+    const char * operation,
     PortableServer::ServantLocator::Cookie & the_cookie,
     CORBA::Environment &_tao_environment
   )
@@ -2100,7 +2100,7 @@ PortableServer::Servant POA_PortableServer::_tao_collocated_ServantLocator::prei
 void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr  adapter,
-    const PortableServer::Identifier operation,
+    const char * operation,
     PortableServer::ServantLocator::Cookie the_cookie,
     PortableServer::Servant the_servant,
     CORBA::Environment &_tao_environment

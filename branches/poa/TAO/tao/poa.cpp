@@ -1916,13 +1916,9 @@ TAO_POA::locate_servant_i (const TAO::ObjectKey &key,
   // return 0.
   if (poa->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      PortableServer::Servant servant = poa->id_to_servant_i (id.in (), env);
-
-      if (env.exception () != 0)
-        return -1;
-
-      // Success
-      if (servant != 0)
+      PortableServer::Servant servant = 0;
+      if (poa->active_object_map ().find (id.in (), servant) != -1)
+        // Success
         return 0;
     }
 
@@ -1977,23 +1973,15 @@ TAO_POA::locate_poa_and_servant_i (const TAO::ObjectKey &key,
   if (env.exception () != 0)
     return 0;
 
-  PortableServer::POA_var poa = poa_impl->_this (env);
-  if (env.exception () != 0)
-    return 0;
-
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists, the
   // POA invokes the appropriate method on the servant.
   if (poa_impl->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      PortableServer::Servant servant = poa_impl->id_to_servant_i (*id.ptr (), env);
-
-      if (env.exception () != 0)
-        return 0;
-
-      // Success
-      if (servant != 0)
+      PortableServer::Servant servant = 0;
+      if (poa_impl->active_object_map ().find (*id.ptr (), servant) != -1)
+        // Success
         return servant;
     }
 
@@ -2057,6 +2045,10 @@ TAO_POA::locate_poa_and_servant_i (const TAO::ObjectKey &key,
           env.exception (exception);
           return 0;
         }
+
+      PortableServer::POA_var poa = poa_impl->_this (env);
+      if (env.exception () != 0)
+        return 0;
 
       if (poa_impl->policies ().servant_retention () == PortableServer::RETAIN)
         {
