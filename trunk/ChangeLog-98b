@@ -1,18 +1,23 @@
+Wed Sep 09 16:29:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * BUG-REPORT-FORM,Makefile: added BUG-REPORT-FORM.  Thanks
+          to Susan Liebeskind <shl@cc.gatech.edu> for the form.
+
 Wed Sep  9 13:22:11 1998  James Hu  <jxh@entera.com>
 
-	* ace/Containers.h:
-	* ace/Containers.cpp: Added a new container class ACE_DLList.
+        * ace/Containers.h:
+        * ace/Containers.cpp: Added a new container class ACE_DLList.
 
 Tue Sep  8 23:17:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Mutex_Test.cpp (test): 
-	* tests/Priority_Buffer_Test.cpp (consumer): Changed the
-	  do-nothing if statements to ACE_UNUSED_ARG because NT doesn't
-	  like that.  Thanks to David for clarifying this.
+        * tests/Thread_Mutex_Test.cpp (test):
+        * tests/Priority_Buffer_Test.cpp (consumer): Changed the
+          do-nothing if statements to ACE_UNUSED_ARG because NT doesn't
+          like that.  Thanks to David for clarifying this.
 
 Tue Sep  8 21:45:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* *.{dsp,dsw}: Updated for VC 6.
+        * *.{dsp,dsw}: Updated for VC 6.
 
 Tue Sep  8 21:31:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

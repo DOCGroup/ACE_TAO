@@ -45,6 +45,9 @@ Wed Sep 09 07:01:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/be/be_interface.cpp (cleanup_gperf_temp_file): added
           comment on why we don't delete ss on Linux.
 
+        * BUG-REPORT-FORM,Makefile: added BUG-REPORT-FORM.  Thanks
+          to Susan Liebeskind <shl@cc.gatech.edu> for the form.
+
 Tue Sep  8 21:47:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Simple/grid/Grid_i.cpp: Changed some RANGE_ERRORs
