@@ -112,6 +112,14 @@ private:
 
 typedef ACE_Singleton <JAWS_VFS, ACE_Thread_Mutex> VFS;
 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "JAWS/server/VFS.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("VFS.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #endif /* VFS_H */
 
 /// Local Variables:

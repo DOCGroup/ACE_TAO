@@ -7,6 +7,9 @@
 #include "JAWS/server/IO.h"
 #include "JAWS/server/HTTP_Server.h"
 
+#if !defined (HTTP_SERVER_C)
+#define HTTP_SERVER_C
+
 template <class LOCK> int
 LOCK_SOCK_Acceptor<LOCK>::accept (ACE_SOCK_Stream &ns,
                                   ACE_Addr *ra,
@@ -59,6 +62,10 @@ HTTP_Server::parse_args (int argc, char *argv[])
 int
 HTTP_Server::init (int argc, char *argv[])
 {
+#if !defined (ACE_WIN32)
+  sigignore (SIGPIPE);
+#endif
+
   this->parse_args (argc, argv);
 
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
@@ -257,3 +264,5 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
 template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
 template class ACE_Oneshot_Acceptor<HTTP_Handler, ONESHOT_SOCK_ACCEPTOR>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* HTTP_SERVER_C */
