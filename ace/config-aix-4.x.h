@@ -169,6 +169,13 @@
 #  define ACE_HAS_SIGINFO_T
 #  define ACE_LACKS_SIGINFO_H
 #endif /* ACE_AIX_MINOR_VERS >=2 */
+#if (ACE_AIX_MINOR_VERS >= 3)
+#  define ACE_HAS_SIGTIMEDWAIT
+// it may exist in earlier revs, but I'm not sure and I don't have a
+// system to validate
+#  define ACE_HAS_P_READ_WRITE
+#endif /* ACE_AIX_MINOR_VERS >= 3 */
+
 #define ACE_HAS_SIGWAIT
 #if (ACE_AIX_MINOR_VERS >= 3)
 #  define ACE_HAS_SIGTIMEDWAIT
