@@ -144,3 +144,10 @@ Unbounded_Set_Test_Ex
 Upgradable_RW_Test: !chorus
 Vector_Test
 WFMO_Reactor_Test
+INET_Addr_Test_IPV6
+Max_Default_Port_Test_IPV6
+Multicast_Test_IPV6
+Multihomed_INET_Addr_Test_IPV6
+Proactor_Test_IPV6
+SOCK_Send_Recv_Test_IPV6
+SOCK_Dgram_Test
