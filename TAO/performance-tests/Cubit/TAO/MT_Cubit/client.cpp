@@ -61,23 +61,37 @@ do_priority_inversion_test (Task_State &ts)
 
   Util_Thread util_thread (&ts, &thr_mgr);
 
+  //
+  // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
+  //
+#if defined (CHORUS)
+  int pstartTime = 0;
+  int pstopTime = 0;
+  // Elapsed time will be in microseconds.
+  pstartTime = pccTime1Get();
+  // execute one computation.
+  util_thread.computation ();
+  pstopTime = pccTime1Get();
+  // Store the time in micro-seconds.
+  util_task_duration = pstopTime - pstartTime;
+#else /* CHORUS */
   ACE_High_Res_Timer timer_;
   // Elapsed time will be in microseconds.
   ACE_Time_Value delta_t;
-  // Store the time in secs.
   timer_.start ();
-
-  ACE::is_prime (CUBIT_ARBIT_NUMBER,
-		 2,
-		 CUBIT_ARBIT_NUMBER / 2);
-
+  // execute one computation.
+  util_thread.computation ();
   timer_.stop (); 
   timer_.elapsed_time (delta_t);
-  
-  util_task_duration = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
-  
-  printf ("Utilization Computation time is %f secs\n", util_task_duration);
+  // Store the time in milli-seconds.
+  util_task_duration = delta_t.sec () * ACE_ONE_SECOND_IN_MSECS + (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS;
+#endif /* !CHORUS */
 
+#if (ACE_LACKS_FLOATING_POINT)
+  printf ("Utilization Computation time is %u usecs\n", util_task_duration);
+#else /* ACE_LACKS_FLOATING_POINT */  
+  printf ("Utilization Computation time is %f msecs\n", util_task_duration);
+#endif /* !ACE_LACKS_FLOATING_POINT */
 
   // The minimum priority thread is the utilization thread.
   ACE_Sched_Priority priority =
@@ -148,20 +162,35 @@ do_priority_inversion_test (Task_State &ts)
   ACE_Profile_Timer::Rusage usage;
   timer_for_context_switch.start ();
   timer_for_context_switch.get_rusage (usage);
+#if defined (ACE_HAS_PRUSAGE_T)
   context_switch = usage.pr_vctx + usage.pr_ictx;
+#else  /* ACE_HAS_PRUSAGE_T */
+  context_switch = usage.ru_nvcsw + usage.ru_nivcsw;
+#endif /* ACE_HAS_GETRUSAGE */
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
   // Wait for all the threads to exit (except the utilization thread).
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_OS::printf("-------------------------- Stats -------------------------------\n");
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+#if defined (ACE_HAS_PRUSAGE_T)
   timer_for_context_switch.stop ();
   timer_for_context_switch.get_rusage (usage);
   // Add up the voluntary context switches & involuntary context switches
   context_switch = usage.pr_vctx + usage.pr_ictx - context_switch;
-  ACE_OS::printf("Voluntary context switches=%d, Involuntary context switches=%d\n",usage.pr_vctx , usage.pr_ictx);
-#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
+  ACE_OS::printf("Voluntary context switches=%d, Involuntary context switches=%d\n",
+		 usage.pr_vctx, 
+		 usage.pr_ictx);
+#elif defined (ACE_HAS_GETRUSAGE) 
+  timer_for_context_switch.stop ();
+  timer_for_context_switch.get_rusage (usage);
+  // Add up the voluntary context switches & involuntary context switches
+  context_switch = usage.ru_nvcsw + usage.ru_nivcsw - context_switch;
+  ACE_OS::printf("Voluntary context switches=%d, Involuntary context switches=%d\n",
+		 usage.ru_nvcsw, 
+		 usage.ru_nivcsw);
+#endif /* ACE_HAS_GETRUSAGE */
+
 
   csw = context_switch_time ();
 
@@ -225,8 +254,8 @@ do_priority_inversion_test (Task_State &ts)
               low_priority_client.get_low_priority_latency (),
               low_priority_client.get_low_priority_jitter (),
 	      context_switch,
-	      csw,
-	      csw * context_switch ));
+	      csw/1000,
+	      csw * context_switch/1000 ));
 #endif /* !VXWORKS && !CHORUS */
 
   // signal the utilization thread to finish with its work..
@@ -237,24 +266,26 @@ do_priority_inversion_test (Task_State &ts)
 
   // This loop visits each client.  start_count_ is the number of clients.
   for (j = 1; j < ts.start_count_; j ++)
-      for (i = 0; i < ts.loop_count_; i ++)
+      for (i = 0; i < ts.loop_count_/ts.grain_; i ++)
 	  total_latency_low += ts.global_jitter_array_[j][i];
 
-  for (i = 0; i < ts.loop_count_; i ++)
+  for (i = 0; i < ts.loop_count_/ts.grain_; i ++)
     total_latency_high += ts.global_jitter_array_[0][i];
+
+  total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
 
   total_latency = total_latency_low + 
     total_latency_high + 
     total_util_task_duration;
 
-  total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
-
-  printf ("\t%% Low Priority CPU utilization: %f %%\n"
-	  "\t%% High Priority CPU utilization: %f %%\n"
-	  "\t%% IDLE time: %f %%\n",
-	  (total_latency_low/total_latency)*100,
-	  (total_latency_high/total_latency)*100,
-	  (total_util_task_duration/total_latency)*100 );
+  // Calc and print the CPU percentage. I add 0.5 to round to the
+  // nearest integer before casting it to int.
+  printf ("\t%% Low Priority CPU utilization: %d %%\n"
+	  "\t%% High Priority CPU utilization: %d %%\n"
+	  "\t%% IDLE time: %d %%\n",
+	  (int) (total_latency_low * 100 / total_latency + 0.5),
+	  (int) (total_latency_high * 100 / total_latency + 0.5),
+	  (int) (total_util_task_duration * 100 / total_latency + 0.5) );
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,

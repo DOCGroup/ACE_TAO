@@ -39,20 +39,28 @@ Util_Thread::get_number_of_computations (void)
   return this->number_of_computations_;
 }
 
+// computation performed by the Utilization thread.  We need this in a
+// separate function to get it's execution time.
+//inline
+void
+Util_Thread::computation (void)
+{
+  // See if this number is prime. 2 and CUBIT_ARBIT_NUMBER / 2 are
+  // the recommended values for min_factor and max_factor, as
+  // explained in ACE.h (is_prime).
+  ACE::is_prime (CUBIT_ARBIT_NUMBER,
+		 2,
+		 CUBIT_ARBIT_NUMBER / 2);
+}
+
 // Perform repeated prime factor computations on an arbitrary number.
 // And you thought your life was boring... :-)
-
 int
 Util_Thread::run_computations (void)
 {
   while (this->done_ == 0)
     {
-      // See if this number is prime. 2 and CUBIT_ARBIT_NUMBER / 2 are
-      // the recommended values for min_factor and max_factor, as
-      // explained in ACE.h (is_prime).
-      ACE::is_prime (CUBIT_ARBIT_NUMBER,
-                     2,
-                     CUBIT_ARBIT_NUMBER / 2);
+      this->computation ();
       this->number_of_computations_ ++;
     }
 
