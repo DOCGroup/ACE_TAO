@@ -1,69 +1,76 @@
+Mon Aug 13 12:05:17 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+
+          Explicitly reference the event_manager_ with this-> to avoid a
+          warning on HP-UX with aCC.
+
 Sun Aug 12 17:55:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CodecFactory.h (TAO_CodecFactory):
-	* tao/Messaging_PolicyFactory.h (TAO_Messaging_PolicyFactory):
+        * tao/CodecFactory.h (TAO_CodecFactory):
+        * tao/Messaging_PolicyFactory.h (TAO_Messaging_PolicyFactory):
 
-	  Instances of these objects are now reference counted to make
-	  sure they exist long enough for the ORB to release them.  This
-	  fixes some dynamic unloading problems.
-	
-	* tao/CodecFactory_ORBInitializer.h:
-	* tao/Messaging_ORBInitializer.h:
+          Instances of these objects are now reference counted to make
+          sure they exist long enough for the ORB to release them.  This
+          fixes some dynamic unloading problems.
 
-	  Maintain a reference (i.e., a "_var") to the CodecFactory and
-	  Messaging_PolicyFactory, respectively.  They will be destroyed
-	  when all outstanding references are released.
+        * tao/CodecFactory_ORBInitializer.h:
+        * tao/Messaging_ORBInitializer.h:
 
-	* tao/CodecFactory_ORBInitializer.cpp (pre_init):
-	* tao/Messaging_ORBInitializer.cpp (register_policy_factories):
+          Maintain a reference (i.e., a "_var") to the CodecFactory and
+          Messaging_PolicyFactory, respectively.  They will be destroyed
+          when all outstanding references are released.
 
-	  Initialize a CodecFactory and Messaging_PolicyFactory,
-	  respectively, on the heap.  These instances are now reference
-	  counted.
+        * tao/CodecFactory_ORBInitializer.cpp (pre_init):
+        * tao/Messaging_ORBInitializer.cpp (register_policy_factories):
 
-	* tao/default_resource.h (TAO_Default_Resource_Factory):
+          Initialize a CodecFactory and Messaging_PolicyFactory,
+          respectively, on the heap.  These instances are now reference
+          counted.
 
-	  No longer any need to inherit from ACE_Cleanup.  The Service
-	  Configurator will once again manage the default resource
-	  factory's memory.
+        * tao/default_resource.h (TAO_Default_Resource_Factory):
 
-	* tao/default_resource.cpp:
+          No longer any need to inherit from ACE_Cleanup.  The Service
+          Configurator will once again manage the default resource
+          factory's memory.
 
-	  Removed code that was commented out during the previous changes
-	  to this file.  That code will not be used.
+        * tao/default_resource.cpp:
 
-	* tests/DLL_ORB/Test_Client_Module.cpp:
+          Removed code that was commented out during the previous changes
+          to this file.  That code will not be used.
 
-	  Removed "tabs" from this source file.
+        * tests/DLL_ORB/Test_Client_Module.cpp:
 
-	* tests/DLL_ORB/Test_Server_Module.cpp (init):
+          Removed "tabs" from this source file.
 
-	  No longer any need to use the "-ORBSkipServiceConfigOpen" option
-	  (at least for this single-threaded test).
+        * tests/DLL_ORB/Test_Server_Module.cpp (init):
 
-	* tests/DLL_ORB/client.cpp (main):
+          No longer any need to use the "-ORBSkipServiceConfigOpen" option
+          (at least for this single-threaded test).
 
-	  Removed debugging ORB debugging options.  They shouldn't be in
-	  "released" version of this test.
+        * tests/DLL_ORB/client.cpp (main):
+
+          Removed debugging ORB debugging options.  They shouldn't be in
+          "released" version of this test.
 
 Sun Aug 12 08:46:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Native_Exceptions/test_i.cpp: Fixed warning with g++. 
+        * tests/Native_Exceptions/test_i.cpp: Fixed warning with g++.
 
 Sun Aug 12 00:29:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Native_Exceptions/test_i.cpp: Fixed warning with g++.
+        * tests/Native_Exceptions/test_i.cpp: Fixed warning with g++.
 
 Sat Aug 11 17:02:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_State.inl:
-	* tao/Incoming_Message_Queue.inl:
-	* tao/Transport.cpp:  A chance for us to test the fragmentation
-	  support on the server side. Fixed quite a few bugs with our
-	  fragmentation support. The tests were conducted against ORBIX
-	  2K. The bugs fixed were mostly the way we handle the fragments. 
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.inl:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Transport.cpp:  A chance for us to test the fragmentation
+          support on the server side. Fixed quite a few bugs with our
+          fragmentation support. The tests were conducted against ORBIX
+          2K. The bugs fixed were mostly the way we handle the fragments.
 
 Sat Aug 11 11:34:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
