@@ -1,3 +1,10 @@
+Mon Dec 31 07:55:09 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp: 
+	  orbsvcs/Notify_Service/Notify_Service.h:
+	  orbsvcs/Notify_Service/Notify_Server.cpp:
+	  Fixed compile error in static build.
+
 Mon Dec 31 14:49:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Server.cpp:
