@@ -149,9 +149,11 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/Default_Protocols_Hooks.h:
 	* tao/Default_Protocols_Hooks.cpp:
 
-	   update_client_protocol_properties - to update the client tcp protocol properties
-	   update_server_protocol_properties - to update the server tcp protocol properties
-	   get_dscp_codepoint - to calculate and return the dscp corresponding corresponding to the mapping used.
+          update_client_protocol_properties - to update the client tcp
+	  protocol properties  update_server_protocol_properties - to
+	  update the server tcp protocol properties get_dscp_codepoint -
+	  to calculate and return the dscp corresponding corresponding to
+	  the mapping used. 
 
 	* tao/IIOP_Acceptor.cpp:
 	* tao/IIOP_Connector.cpp:
@@ -162,7 +164,8 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/IIOP_Transport.cpp:
 
 	  Added:
-	  connection_handler - accessor method for the underlying connection handler.
+	  connection_handler - accessor method for the underlying
+	  connection handler. 
 
 Tue Aug  6 22:42:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
