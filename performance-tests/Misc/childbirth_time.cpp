@@ -15,7 +15,7 @@
 //   are possible as described below.   James Hu provides the idea to
 //   batch measuring threads creation.
 //
-//   Usage: childbirth_time [-n ###] [-p|-f|-t|-a] [-h] [-e]
+//   Usage: childbirth_time [-n ###] [-p|-f|-t|-a|-m] [-h] [-e]
 //
 //          -n ###: Specify number of iteration in tens.  If this
 //                  option is not specified, the default is 10 (100
@@ -34,6 +34,9 @@
 //                  mechanisms.  On Solaris, this is thr_create ().
 //                  On NT, this is CreateThread ().  Currently, only
 //                  these two platforms are implemented.
+//
+//              -m: Measure the performance of Thread_Manager::spawn_n
+//                  method.
 //
 //              -a: Measure the performance of thread creation using
 //                  ACE_OS::thr_create ().
@@ -57,6 +60,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Process.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Thread_Manager.h"
 
 #define MAX_NO_ITERATION  10000
 #if defined (ACE_WIN32)
@@ -201,7 +205,7 @@ prof_native_thread (size_t iteration)
     return -1.0;
 #else
   ACE_UNUSED_ARG (iteration);
-  ACE_ERROR_RETURN ((LM_ERROR, "Testing of native threads is not supported on this platform."), -1);
+  ACE_ERROR_RETURN ((LM_ERROR, "Testing of native threads is not supported on this platform.\n"), -1);
 #endif
 }
 
@@ -237,6 +241,41 @@ prof_ace_os_thread (size_t iteration)
     return -1.0;
 #else
   ACE_UNUSED_ARG (iteration);
+  ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform.\n"), -1);
+#endif
+}
+
+static double
+prof_tm_thread (size_t iteration)
+{
+#if defined (ACE_HAS_THREADS)
+  if (iteration != 0)
+    {
+      ACE_Profile_Timer ptimer;
+      ACE_Profile_Timer::ACE_Elapsed_Time et;
+      double time = 0;
+
+      for (size_t i = 0; i < iteration; i++)
+        {
+          ptimer.start ();
+
+          if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
+                                                        (ACE_THR_FUNC) empty,
+                                                        0,
+                                                        THR_SUSPENDED) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+
+          ptimer.stop ();
+          ptimer.elapsed_time (et);
+          time += et.real_time;
+        }
+      iteration *= MULTIPLY_FACTOR;
+      return time / iteration;
+    }
+  else
+    return -1.0;
+#else
+  ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform."), -1);
 #endif
 }
@@ -244,7 +283,7 @@ prof_ace_os_thread (size_t iteration)
 int
 main (int argc, char* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:pftahe");
+  ACE_Get_Opt get_opt (argc, argv, "n:pftahme");
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;
@@ -272,6 +311,10 @@ main (int argc, char* argv[])
         case 'a':                       // test ACE_OS::thr_create
           profiler = prof_ace_os_thread;
           profile_name = "ACE_OS::thr_create ()";
+          break;
+        case 'm':
+          profiler = prof_tm_thread;
+          profile_name = "ACE_Thread_Manager::spawn_n ()";
           break;
         case 'h':                       // use high resolution timer
           ACE_High_Res_Timer::get_env_global_scale_factor ();
