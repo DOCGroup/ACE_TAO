@@ -135,41 +135,34 @@ public:
       ACE_CHECK;
     };
 
-  void get_yadda (CORBA::Long result,
-                  CORBA::Environment &ACE_TRY_ENV)
+  void get_yadda (CORBA::Long,
+                  CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_UNUSED_ARG (result);
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
-                  CORBA::Environment &ACE_TRY_ENV)
+  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder *,
+                        CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_UNUSED_ARG (excep_holder);
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
-  void set_yadda (CORBA::Environment &ACE_TRY_ENV)
+  void set_yadda (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
-                        CORBA::Environment &ACE_TRY_ENV)
+  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder *,
+                        CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_UNUSED_ARG (excep_holder);
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called: \n"));
     };

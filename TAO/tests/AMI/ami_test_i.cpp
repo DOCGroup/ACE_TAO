@@ -58,20 +58,17 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
 
 void
-AMI_Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+AMI_Test_i::shutdown (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->orb_->shutdown (0);
 }
 
 
 CORBA::Long
-AMI_Test_i::yadda (CORBA::Environment &ACE_TRY_ENV)
+AMI_Test_i::yadda (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  //  if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
   return yadda_;
@@ -80,11 +77,9 @@ AMI_Test_i::yadda (CORBA::Environment &ACE_TRY_ENV)
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  //  if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));
   yadda_ = yadda;
