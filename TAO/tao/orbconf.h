@@ -109,7 +109,7 @@
 // The default timeout receiving the location request to the TAO
 // Naming Service and Trading Service.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 3
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 1
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.

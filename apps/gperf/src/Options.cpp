@@ -270,7 +270,8 @@ Options::operator() (int argc, char *argv[])
         case 'f':               
           {
             ACE_SET_BITS (option_word, FAST);
-            if ((iterations = atoi (getopt.optarg)) < 0)
+            iterations = atoi (getopt.optarg);
+            if (iterations < 0)
               {
                 ACE_ERROR ((LM_ERROR, "iterations value must not be negative, assuming 0\n"));
                 iterations = 0;
@@ -298,7 +299,7 @@ Options::operator() (int argc, char *argv[])
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
                              "-d\tEnables the debugging option (produces verbose output to the standard error).\n"
                              "-D\tHandle keywords that hash to duplicate values.  This is useful\n"
-                             "\tfor certain highly redundant keyword sets.  It enables the -S option.\n"
+                             "\tfor certain highly redundant keyword sets.\n"
                              "-e\tAllow user to provide a string containing delimiters used to separate\n"
                              "\tkeywords from their attributes.  Default is \",\\n\"\n"
                              "-E\tDefine constant values using an enum local to the lookup function\n"
@@ -333,8 +334,8 @@ Options::operator() (int argc, char *argv[])
                              "-L\tGenerates code in the language specified by the option's argument.  Languages\n"
                              "\thandled are currently C++ and C.  The default is C.\n"
                              "-m\tAvoids the warning about identical hash values. This is valid\n"
-                             "\tonlyif the -D option is enabled.\n"
-                             "-MSkips class definition in the output. This is valid only in C++ mode.\n"
+                             "\tonly if the -D option is enabled.\n"
+                             "-M\tSkips class definition in the output. This is valid only in C++ mode.\n"
                              "-n\tDo not include the length of the keyword when computing the hash function\n"
                              "-N\tAllow user to specify name of generated lookup function.  Default\n"
                              "\tname is `in_word_set.'\n"
