@@ -1,3 +1,18 @@
+Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Removed suppression of Future Error 129.
+          Removed the use of CFLAGS.
+
+        * ace/OS.h:
+        * ace/config-hpux-11.00.h:
+
+          Modification to remove system header macro definition conflicts.
+          This change does not suppress the conflicts, but does an undef
+          of the two conflicting macros before includeing tcp.h.
+          Thanks to Sam Chong for reporting this problem.
+
 Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Logging_Strategy.{h,cpp}: Added a new -k option to 
