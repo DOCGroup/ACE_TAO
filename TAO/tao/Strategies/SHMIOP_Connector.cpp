@@ -11,7 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -34,7 +33,6 @@ template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_SHMIOP_Connec
 template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>;
 template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -50,7 +48,6 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>;
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
