@@ -3,7 +3,7 @@ Fri Jun 26 02:18:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* performance-tests/Synch-Benchmarks/Benchmark[_Base].{h,cpp}:
 	* performance-tests/Synch_Benchmarks/Makefile: Added a new class
 	  Benchmark_Base so we can not only load the test items
-	  but also the test method dynamically.
+	  but also the test methods dynamically.
 
 Wed Jun 24 21:37:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
