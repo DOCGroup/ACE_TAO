@@ -26,6 +26,10 @@ Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux.common.h: set an ACE_DEFAULT_BASE_ADDR, on Alpha
           for now.  This might be necessary on Intel as well.
 
+        * ace/OS.{h,i}, config-osf1-4.0.h: fixed use of ::sigwait with
+          DIGITAL_UNIX's cxx 6.0, which now uses ACE_HAS_ONEARG_SIGWAIT.
+          Also, added an ACE_DEFAULT_BASE_ADDR to the config file.
+
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
 	* tests/test_config.h: Removed code for
