@@ -18,8 +18,10 @@
 
 
 #ifndef TIMER_HELPER_H
-#include "ace/pre.h"
 #define	TIMER_HELPER_H
+
+#include "ace/pre.h"
+
 
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
@@ -70,4 +72,5 @@ protected:
 };
 
 #include "ace/post.h"
+
 #endif /* TIMER_HELPER_H */

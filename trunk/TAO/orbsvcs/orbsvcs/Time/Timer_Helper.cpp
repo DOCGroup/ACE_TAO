@@ -1,5 +1,8 @@
 #include "Timer_Helper.h"
 #include "TAO_Time_Service_Clerk.h"
+
+#include "tao/debug.h"
+
 #include "ace/OS.h"
 
 
@@ -8,22 +11,19 @@ ACE_RCSID (Time,
            "$Id$")
 
 
-// Constructor.
 Timer_Helper::Timer_Helper (void)
+  : clerk_ (0)
 {
 }
 
-// Constructor that sets the clerk.
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
   : clerk_ (clerk)
 {
 
 }
 
-// Destructor.
 Timer_Helper::~Timer_Helper (void)
 {
-  delete this;
 }
 
 int
@@ -59,29 +59,31 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
 #if defined (ACE_LACKS_LONGLONG_T)
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
-                      "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                      ACE_U64_TO_U32 (UTO_server->time ()),
-                      ACE_U64_TO_U32 (UTO_server->inaccuracy ()),
-                      UTO_server->tdf (),
-                      ACE_U64_TO_U32 ((UTO_server->utc_time ()).time),
-                      (UTO_server->utc_time ()).inacclo,
-                      (UTO_server->utc_time ()).inacchi,
-                      (UTO_server->utc_time ()).tdf));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
+                        "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
+                        ACE_U64_TO_U32 (UTO_server->time ()),
+                        ACE_U64_TO_U32 (UTO_server->inaccuracy ()),
+                        UTO_server->tdf (),
+                        ACE_U64_TO_U32 ((UTO_server->utc_time ()).time),
+                        (UTO_server->utc_time ()).inacclo,
+                        (UTO_server->utc_time ()).inacchi,
+                        (UTO_server->utc_time ()).tdf));
 
 #else
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
-                      "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                      UTO_server->time (),
-                      UTO_server->inaccuracy (),
-                      UTO_server->tdf (),
-                      (UTO_server->utc_time ()).time,
-                      (UTO_server->utc_time ()).inacclo,
-                      (UTO_server->utc_time ()).inacchi,
-                      (UTO_server->utc_time ()).tdf));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
+                        "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
+                        UTO_server->time (),
+                        UTO_server->inaccuracy (),
+                        UTO_server->tdf (),
+                        (UTO_server->utc_time ()).time,
+                        (UTO_server->utc_time ()).inacclo,
+                        (UTO_server->utc_time ()).inacchi,
+                        (UTO_server->utc_time ()).tdf));
 #endif
 
           CORBA::ULongLong curr_server_time =
@@ -102,9 +104,10 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nUpdated time from %d servers in the network",
-                  no_of_servers));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nUpdated time from %d servers in the network",
+                    no_of_servers));
 
       // Return the average of the times retrieved from the various
       // servers.
@@ -137,8 +140,10 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in the handle_timeout ()\n");
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Exception in handle_timeout()\n");
+
       return -1;
     }
   ACE_ENDTRY;
