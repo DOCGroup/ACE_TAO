@@ -1,3 +1,11 @@
+Sun Jan 24 02:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* websvcs/lib/URL_Addr.cpp: 
+	* websvcs/lib/URL_Addr.h: 
+	* websvcs/lib/URL_Addr.i: 
+	* websvcs/tests/Test_URL_Addr.cpp: 
+	  Added support for mailto: URLs	
+
 Sat Jan 23 23:53:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* websvcs/Makefile: 

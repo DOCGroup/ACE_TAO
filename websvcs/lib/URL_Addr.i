@@ -84,3 +84,22 @@ ACE_FTP_Addr::get_inet_address (void) const
   return ACE_INET_Addr (ASYS_TEXT ("ftp"), this->hostname_);
 }
 
+// ****************************************************************
+
+ACE_INLINE LPCTSTR
+ACE_Mailto_Addr::get_user (void) const
+{
+  return this->user_;
+}
+
+ACE_INLINE LPCTSTR
+ACE_Mailto_Addr::get_hostname (void) const
+{
+  return this->hostname_;
+}
+
+ACE_INLINE LPCTSTR
+ACE_Mailto_Addr::get_headers (void) const
+{
+  return this->headers_;
+}

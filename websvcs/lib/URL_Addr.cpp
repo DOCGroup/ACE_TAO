@@ -50,6 +50,7 @@ ACE_URL_Addr::addr_to_string (LPTSTR s,
   if (size < ACE_OS::strlen (this->url_))
     return -1;
   ACE_OS::strcpy (s, this->url_);
+  return 0;
 }
 
 int
@@ -62,7 +63,6 @@ ACE_URL_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 ACE_URL_Addr*
 ACE_URL_Addr::create_address (LPCTSTR url)
 {
-
   ACE_URL_Addr* addr = 0;
   if (ACE_OS::strncmp (http, url, http_size) == 0)
     ACE_NEW_RETURN (addr, ACE_HTTP_Addr (), 0);
@@ -73,7 +73,7 @@ ACE_URL_Addr::create_address (LPCTSTR url)
   else
     ACE_NEW_RETURN (addr, ACE_URL_Addr (), 0);
 
-  if (addr->string_to_addr (url) == -1)
+  if (addr->string_to_addr (url) != 0)
     {
       delete addr;
       addr = 0;
@@ -203,10 +203,13 @@ ACE_HTTP_Addr::url_size (int flags) const
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
   size_t size = 
-    + (this->path_?ACE_OS::strlen (this->path_):0)
-    + (this->query_?ACE_OS::strlen (this->query_):0)
     + sizeof (ASYS_TEXT ("http://"))
     + sizeof (ASYS_TEXT ("/:?")); // separators
+
+  size_t chars =
+    + (this->path_?ACE_OS::strlen (this->path_):0)
+    + (this->query_?ACE_OS::strlen (this->query_):0);
+
 
   if (flags == 0)
     {
@@ -214,13 +217,15 @@ ACE_HTTP_Addr::url_size (int flags) const
     }
   else
     {
-      size += ACE_OS::strlen (this->hostname_) * sizeof(ASYS_TCHAR);
+      chars += ACE_OS::strlen (this->hostname_);
     }
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
     {
       size += sizeof (ASYS_TEXT(":65335"));
     }
+
+  size += chars * sizeof(ASYS_TCHAR);
 
   return size;
 }
@@ -237,7 +242,8 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
   this->query_ = 0;
 
   // Save the original URL....
-  this->ACE_URL_Addr::string_to_addr (address);
+  if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+    return -1;
 
   LPCTSTR string = address;
   string += http_size;
@@ -419,11 +425,13 @@ ACE_FTP_Addr::url_size (int flags) const
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
   size_t size = 
-    + (this->user_?ACE_OS::strlen (this->path_):0)
-    + (this->passwd_?ACE_OS::strlen (this->passwd_):0)
-    + (this->path_?ACE_OS::strlen (this->path_):0)
     + sizeof (ASYS_TEXT ("ftp://"))
     + sizeof (ASYS_TEXT ("@:/")); // separators
+
+  size_t chars =
+    + (this->user_?ACE_OS::strlen (this->path_):0)
+    + (this->passwd_?ACE_OS::strlen (this->passwd_):0)
+    + (this->path_?ACE_OS::strlen (this->path_):0);
 
   if (flags == 0)
     {
@@ -431,9 +439,10 @@ ACE_FTP_Addr::url_size (int flags) const
     }
   else
     {
-      size += ACE_OS::strlen (this->hostname_) * sizeof(ASYS_TCHAR);
+      chars += ACE_OS::strlen (this->hostname_);
     }
 
+  size += chars * sizeof(ASYS_TCHAR);
   return size;
 }
 
@@ -547,7 +556,29 @@ ACE_FTP_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 // ****************************************************************
 
 ACE_Mailto_Addr::ACE_Mailto_Addr (void)
+  :  user_ (0),
+     hostname_ (0),
+     headers_ (0)
 {
+}
+
+ACE_Mailto_Addr::ACE_Mailto_Addr (LPCTSTR user,
+                                  LPCTSTR hostname,
+                                  LPCTSTR headers)
+  :  user_ (0),
+     hostname_ (0),
+     headers_ (0)
+{
+  this->set (user, hostname, headers);
+}
+
+ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_Mailto_Addr &addr)
+  :  ACE_URL_Addr (addr),
+     user_ (0),
+     hostname_ (0),
+     headers_ (0)
+{
+  this->set (addr);
 }
 
 ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
@@ -555,17 +586,132 @@ ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
 }
 
 int
+ACE_Mailto_Addr::set (LPCTSTR user,
+                      LPCTSTR hostname,
+                      LPCTSTR headers)
+{
+  this->clear ();
+  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
+  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (hostname), -1);
+  ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (headers), -1);
+  size_t size = this->url_size (1);
+  LPTSTR buffer;
+  ACE_ALLOCATOR_RETURN (buffer,
+                        ACE_reinterpret_cast(LPTSTR,
+                                             ACE_OS::malloc (size)),
+                        -1);
+  if (this->addr_to_string (buffer, size, 1) == -1)
+    return -1;
+  this->set_url (buffer);
+  return 0;
+}
+
+int
+ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
+{
+  if (this->ACE_URL_Addr::set (addr) != 0)
+    return -1;
+  this->clear ();
+  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
+  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
+  ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (addr.headers_), -1);
+  return 0;
+}
+
+void 
+ACE_Mailto_Addr::clear (void)
+{
+  if (this->user_ != 0)
+    ACE_OS::free (this->user_);
+  if (this->hostname_ != 0)
+    ACE_OS::free (this->hostname_);
+  if (this->headers_ != 0)
+    ACE_OS::free (this->headers_);
+}
+
+size_t
+ACE_Mailto_Addr::url_size (int flags) const
+{
+  // Notice that we cannot hard-code the value because the size in
+  // wchar's may be different.
+  size_t size = sizeof (ASYS_TEXT ("mailto:"))
+    + sizeof (ASYS_TEXT ("@?")); // separators
+
+  size_t chars =
+    + (this->user_?ACE_OS::strlen (this->user_):0)
+    + (this->hostname_?ACE_OS::strlen (this->hostname_):0)
+    + (this->headers_?ACE_OS::strlen (this->headers_):0);
+  size += chars * sizeof (ASYS_TCHAR);
+
+  return size;
+}
+
+int
 ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
                                  size_t size,
                                  int flags) const
 {
+  if (size < this->url_size (flags))
+    return -1;
+  if (this->user_ == 0 || this->hostname_ == 0)
+    return -1;
+
+  size_t n = ACE_OS::sprintf (buffer, ASYS_TEXT ("mailto:%s@%s"),
+                              this->user_, this->hostname_);
+  if (this->headers_ != 0)
+    {
+      n += ACE_OS::sprintf (buffer + n, ASYS_TEXT ("?%s"),
+                            this->headers_);
+    }
+  
   return 0;
 }
 
 int
 ACE_Mailto_Addr::string_to_addr (LPCTSTR address)
 {
-  // @@
+  if (ACE_OS::strncmp (mailto, address, mailto_size) != 0)
+    return -1;
+
+  this->clear ();
+  this->user_ = 0;
+  this->hostname_ = 0;
+  this->headers_ = 0;
+
+  // Save the original URL....
+  if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+    return -1;
+
+  LPCTSTR string = address;
+  string += mailto_size;
+
+  // Make a copy of the string to manipulate it.
+  ASYS_TCHAR *t;
+  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
+
+  ASYS_TCHAR *host_start = ACE_OS::strchr (t, '@');
+  if (host_start != 0)
+    {
+      // terminate the host:port substring
+      host_start[0] = '\0';
+      host_start++;
+      ASYS_TCHAR *headers_start = ACE_OS::strchr (host_start, '?');
+      if (headers_start != 0)
+        {
+          headers_start[0] = '\0';
+          headers_start++;
+          ACE_ALLOCATOR_RETURN (this->headers_,
+                                ACE_OS::strdup (headers_start),
+                                -1);
+        }
+      ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_start), -1);
+    }
+  else
+    {
+      return -1;
+    }
+  this->user_ = t;
+
   return 0;
 }
 
