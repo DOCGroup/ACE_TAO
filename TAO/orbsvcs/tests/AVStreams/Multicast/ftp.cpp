@@ -33,7 +33,7 @@ int
 FTP_Client_Callback::handle_timeout (void *)
 {
   ACE_Message_Block mb (BUFSIZ);
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame\n"));
   char *buf = mb.rd_ptr ();
   //cerr << "message block size" << mb.size () << endl;
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
@@ -116,7 +116,7 @@ Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb,
 int
 Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&endpoint)
 {
-  ACE_DEBUG ((LM_DEBUG,"Endpoint_Reactive_Strategy::make_stream_endpoint"));
+  ACE_DEBUG ((LM_DEBUG,"Endpoint_Reactive_Strategy::make_stream_endpoint\n"));
   ACE_NEW_RETURN (endpoint,
                   FTP_Client_StreamEndPoint,
                   -1);
@@ -211,7 +211,7 @@ Client::bind_to_server (const char *name)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Clinet::bind_to_server\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::bind_to_server\n");
       return -1;
     }
   ACE_ENDTRY;

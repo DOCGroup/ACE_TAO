@@ -4,7 +4,7 @@
 
 FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint\n"));
 }
 
 int
@@ -21,7 +21,7 @@ FTP_Server_StreamEndPoint::get_callback (const char *,
 int
 FTP_Server_Callback::handle_stop (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;

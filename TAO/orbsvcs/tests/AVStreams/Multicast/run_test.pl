@@ -23,7 +23,7 @@ unlink $nsior, $test1, $test2;
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
 $SV2 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test2");
-$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
+$CL  = new PerlACE::Process ("ftp", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -f $makefile");
 
 print STDERR "Starting Naming Service\n";
 
