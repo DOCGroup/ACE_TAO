@@ -672,8 +672,9 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
 
   int ti_fd = ACE_OS::mkstemp (tmp_ifile);
+  int tf_fd = ACE_OS::mkstemp (tmp_ifile);
 
-  if (ti_fd == -1)
+  if (ti_fd == -1 || tf_fd == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: Unable to create temporary file: %m\n",
