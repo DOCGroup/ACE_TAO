@@ -1,3 +1,10 @@
+Tue Aug  3 23:43:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* netsvcs/clients/Naming/Client/Makefile:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile:
+	  Fixed dependencies so parallel compilations (using the -j
+	  option) will work correctly.
+
 Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.{h,cpp} (cleanup):
