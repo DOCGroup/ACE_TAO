@@ -82,7 +82,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
       if (j%1000 == 0)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday ();
-          task_stats_.sample (ACE_UINT64 (run_time.msec ()), guid);
+          task_stats_.sample (run_time.msec (), guid);
         }
       
       compute_count_down.update ();
