@@ -49,17 +49,8 @@ public:
   // Run the orb 
 
 private:
-  Airplane_i server_impl;
-  // The Paper Airplane Server Implementation.  
-  
   int parse_args (void);
   // Parses the commandline arguments.
-
-  TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
-
-  FILE *ior_output_file_;
-  // File where the IOR of the server object is stored.
 
   int argc_;
   // Number of command line arguments.
@@ -67,11 +58,23 @@ private:
   char **argv_;
   // The command line arguments.
 
+  TAO_ORB_Manager orb_manager_;
+  // The ORB manager.
+
+  Airplane_i *server_impl_;
+  // The Paper Airplane Server Implementation.  
+
+  FILE *ior_output_file_;
+  // File where the IOR of the server object is stored.
+
   IR_Helper *ir_helper_;
   // Helper class for using the IR.
 
   int register_with_ir_;
   // Flag for whether or not to register startup with the IR.
+
+  int use_ir_;
+  // Flag for whether or not to use the IR.
 };
 
 #endif /* AIRPLANE_SERVER_I_H */
