@@ -1,3 +1,15 @@
+Fri Jan 16 23:57:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/INET_Addr_Test_IPV6.cpp:
+	* tests/Max_Default_Port_Test_IPV6.cpp:
+	* tests/Multicast_Test_IPV6.cpp:
+	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+	* tests/Proactor_Test_IPV6.cpp:
+	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+
+	  Fixed a typo in the name of the files that are printed out for
+	  logging and error checking.
+
 Fri Jan 16 23:25:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Tests.bor:
