@@ -1,3 +1,23 @@
+Fri Oct 29 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Made the ServantRetentionStrategy loadable by service configurator
+
+        * tao/PortableServer/StrategyFactory.{h,cpp}:
+          Base for all factories creating strategies
+
+        * tao/PortableServer/ServantRetentionStrategyFactory.h:
+          Abstract factory
+
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.h:
+          Concrete factory for servant retention strategies
+
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Use servant retention strategy strategy
+
+        * tao/PortableServer/ServantRetentionStrategy.{h,cpp}:
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Moved base class to a new file and use that base in all places
+
 Fri Oct 29 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{cpp,i}:
