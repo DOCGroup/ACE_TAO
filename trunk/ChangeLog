@@ -1,3 +1,10 @@
+Sun Apr 15 17:13:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Disabled TAO/tests/Client_Leaks on all configurations, it is
+          failing systematically because it cannot create processes fast
+          enough.
+
 Sat Apr 14 18:08:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Configuration_Import_Export.h:
