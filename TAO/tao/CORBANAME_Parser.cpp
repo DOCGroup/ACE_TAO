@@ -13,6 +13,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
 

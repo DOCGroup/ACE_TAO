@@ -28,6 +28,8 @@ class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 
+class ACE_Reactor_Impl;
+
 /**
  * @class TAO_Default_Resource_Factory
  *
