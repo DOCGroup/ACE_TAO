@@ -12,7 +12,7 @@
 package tests.Reactor;
 
 import ACE.OS.*;
-import ACE.Reactor.*;
+import ACE.ASX.*;
 
 public class TimeValueTest
 {
