@@ -588,7 +588,7 @@ sub check_for_bad_ace_trace()
                     $class = $1;
                     $function = $2;
                 }
-                elsif (m/^(ACE_[^\s]*) \(/i) {
+                elsif (m/^([^\s^\(]*) \(/i) {
                     $class = "";
                     $function = $1;
                 }
@@ -598,7 +598,12 @@ sub check_for_bad_ace_trace()
                     || m/ACE_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
                     
-                    if ($class =~ m/(^[^\s][^\<^\s]*)\s*\</) {
+                    # reduce the classname 
+                    if ($class =~ m/([^\s][^\<^\s]*)\s*\</) {
+                        $class = $1;
+                    }
+                    
+                    if ($class =~ m/([^\s^\&^\*]*)\s*$/) {
                         $class = $1;
                     }
                     
