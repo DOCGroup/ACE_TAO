@@ -247,8 +247,8 @@ public:
    * Note that the optional <reuse_addr> parameter does not apply to
    * subscriptions; it is only used if <open> is implicitly invoked (see above).
    *
-   * NOTICE - This method has been deprecated, please use join() instead.  In
-   * addition, the following paramters have also been deprecated:
+   * @deprecated This method has been deprecated, please use join() instead.
+   * In addition, the following parameters have also been deprecated:
    * <protocol_family> and <protocol> have no effect.
    */
   int subscribe (const ACE_INET_Addr &mcast_addr,
@@ -278,7 +278,7 @@ public:
    * implemented in this environment (_even if_ the <subscribe> specifies a
    * non- NULL <net_if>).
    *
-   * NOTICE - This method has been deprecated.  Please use leave() instead.
+   * @deprecated This method has been deprecated.  Please use leave() instead.
    * In addition, <protocol_family> and <protocol> have no effect.
    */
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
@@ -298,8 +298,8 @@ public:
    * Returns -1 if any unsubscribe failed, 0 if there are no errors or no
    * current subscriptions.
    *
-   * This method has been deprecated.  Since a list of groups is not
-   * maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined),
+   * @deprecated This method has been deprecated.  Since a list of groups is
+   * not maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined),
    * it isn't possible to unsubscribe to all the groups without closing
    * the socket.  Therefore, if applications wish to unsubscribe to all
    * groups without closing the socket, they much keep track of the
@@ -330,7 +330,7 @@ public:
    * subset of possible <ACE_SOCK::set_option> calls, but only works for
    * IPPROTO_IP or IPPROTO_IPV6 level options.  Use <ACE_SOCK::set_option>
    * directly to set anything else.
-   * \deprecated { This method has been deprecated since it cannot be used
+   * @deprecated { This method has been deprecated since it cannot be used
    * easily with with IPv6 options.}
    * Returns 0 on success, -1 on failure.
    */
