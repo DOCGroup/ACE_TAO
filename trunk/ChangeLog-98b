@@ -28,6 +28,9 @@ Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
           declare local "t_id" without ACE_NDEBUG, to avoid compile warning
           with debug=0.
 
+        * ace/Timer_Heap_T.cpp (reschedule): only declare local "timerID"
+          without ACE_NDEBUG, to avoid compile warning with debug=0.
+
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added
