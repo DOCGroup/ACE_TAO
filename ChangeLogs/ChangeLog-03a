@@ -1,3 +1,24 @@
+Fri Jan  7 16:05:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Only define ACE_HAS_XT if both the Xt headers and libraries are
+	  available.  Previously, the existence of the Xt libraries was
+	  not part of the XtReactor enable criterion.
+
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+	  Added C++ preprocessor flag documentation and trivial support.
+
+	  Many AIX related compiler flag updates.
+
+	* m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
+
+	  Moved/consolidated platform-specific settings from configure.in
+	  to here.
+
+	  Improved AIX support (updates, fixes, etc).
+
 Fri Jan  7 10:48:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/run_all_list.pm: Added missing commas.
