@@ -1,3 +1,10 @@
+Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux.GNU,ace/Makefile,
+          netsvcs/lib/Makefile: suppress -g when compiling ace/Timer_Hash.cpp
+          and netsvcs/lib/Server_Logging_Handler.cpp on Linux only.
+          (It really only needs to be suppressed on Linux/Alpha.)
+
 Mon Nov  3 01:30:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/UNIX_Addr.i (operator ==):
