@@ -147,7 +147,6 @@ CONTROLLED_FILES = \
         aceConf.sh.in \
         apps \
         bin \
-        configure.in \
         docs \
         etc \
         examples \
