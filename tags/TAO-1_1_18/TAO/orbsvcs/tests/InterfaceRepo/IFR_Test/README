@@ -1,0 +1,117 @@
+$Id$
+
+Admin_Client is a class containing several functions which test
+the methods in various IFR object classes. Since automatic
+administration of the TAO Interface Repository has not yet been
+implemented, each of these functions creates, queries, modifies,
+moves, and finally destroys several IFR objects, none of which
+are related to anything found in an actual IDL file.
+
+Not every type of IFR object is represented by an Admin_Client
+function (the name of which gives a hint about what type of
+IFR object it tests). There are two reasons for this - the
+first being that there will almost certainly be more tests
+added later, and the second being that many of the functions
+test more than one IFR object type. For example, interface_test()
+tests not only the functionality of InterfaceDef, but also that
+of AttributeDef and OperationDef, since these IFR objects are
+created only by an InterfaceDef. In a similar way, alias_test()
+tests WstringDef and SequenceDef in addition to AliasDef, and
+StringDef and PrimitiveDef members are created and tested in
+struct_test(), union_test() and exception_test().
+
+To build this test, the TAO library, the TypeCodeFactory
+library, the Interface Repository (the last two found in
+TAO/orbsvcs/IFR_Service), and these test files must all be built. 
+In addition, the Interface Repository requires the TAO_Svc_Utils 
+library in TAO/orbsvcs/orbsvcs.
+
+To run this test, either use the Perl script run_test.pl, or
+
+
+
+(Windows)
+start the Interface Repository by typing 
+
+ ..\..\..\IFR_Service\IFR_Service
+
+in one window, then (in another window)
+
+ IFR_Test
+
+(Unix)
+in this directory, type 
+
+ ../../../IFR_Service/IFR_Service &
+
+then
+
+ ./IFR_Test
+
+
+
+If for some reason IP multicast is not available or enabled on your platform, 
+then add
+
+ -ORBInitRef InterfaceRepository=file://if_repo.ior
+
+to the client's command line. If the IFR_Service has been started with the
+command line option -o <filename> (see the README file in the IFR_Service
+directory), then instead add
+
+ -ORBInitRef InterfaceRepository=file://<filename>
+
+to the client's command line.
+
+You may add any of the options below to the IFR_Test command line. Both the
+Perl script and the test executable have the same command line options. 
+They are:
+
+	-d	Outputs the results of queries along with a string
+		explaining the sequence of calls and/or accesses
+		leading to each result. There is also informative
+		output when an IFR object is modified or moved.
+		Default output is the test name only.
+
+	-t	(followed by test name - see below). This will
+		execute only the selected test. Default is to
+		execute all test functions.
+		Test names:
+			array
+			enum
+			alias
+			native
+			struct
+			union
+			exception
+			constant
+			interface
+			move
+			module
+
+
+	-i	(followed by number of iterations). This will
+		cause each test function (or the selected one)
+		to be executed <n> times. A useful selection
+		here is -i 2. At the end of each test function,
+		all IFR objects created in that function are
+		destroyed. If the destroy() function does not
+		work properly, then the second execution will
+		raise a BAD_PARAM exception when the test
+		attempts to create the undestroyed object.
+
+ACE_ASSERT is used to check each result, so an incorrect result
+will cause test execution to halt immediately. If a test function
+is halted for this or any other reason, it is likely that the
+destroy() call(s) at the end of the function were not exectuted.
+Before running the test again, the Interface Repository process
+should be stopped and restarted to avoid a BAD_PARAM exception.
+
+The IFR server is started in this test with locking enabled. Even
+though the test itself is single-threaded, using this option will
+ensure that future modifications to IFR code don't cause deadlocks.
+
+More information about the Interface Repository can be found in 
+TAO/docs/releasenotes.index.html.
+
+-Jeff Parsons <parsons@cs.wustl.edu>

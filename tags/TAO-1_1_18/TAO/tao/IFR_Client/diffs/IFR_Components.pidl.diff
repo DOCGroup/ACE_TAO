@@ -1,0 +1,264 @@
+--- IFR_Components.pidl.old	Fri Jun  1 23:05:46 2001
++++ IFR_Components.pidl	Fri Jun  1 23:03:13 2001
+@@ -71,44 +71,6 @@
+ 
+ module IR
+ {
+-  enum DefinitionKind 
+-  {
+-    dk_none, 
+-    dk_all,
+-    dk_Attribute, 
+-    dk_Constant, 
+-    dk_Exception, 
+-    dk_Interface,
+-    dk_Module, 
+-    dk_Operation, 
+-    dk_Typedef,
+-    dk_Alias, 
+-    dk_Struct, 
+-    dk_Union, 
+-    dk_Enum,
+-    dk_Primitive, 
+-    dk_String, 
+-    dk_Sequence, 
+-    dk_Array,
+-    dk_Repository,
+-    dk_Wstring, 
+-    dk_Fixed,
+-    dk_Value, 
+-    dk_ValueBox, 
+-    dk_ValueMember,
+-    dk_Native,
+-    dk_Component,
+-    dk_Home,
+-    dk_Factory,
+-    dk_Finder,
+-    dk_PrimaryKey,
+-    dk_Emits,
+-    dk_Publishes,
+-    dk_Consumes,
+-    dk_Provides,
+-    dk_Uses
+-  };
+-
+   typedef string Identifier;
+   typedef string ScopedName;
+   typedef string RepositoryId;
+@@ -136,14 +98,14 @@
+   typedef sequence <FinderDef> FinderDefSeq;
+   interface PrimaryKeyDef;
+ 
+-  interface ComponentRepository : CORBA::Repository
++  interface ComponentRepository : CORBA_Repository
+   {
+     ComponentDef create_component (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+         in ComponentDef base_component,
+-        in CORBA::InterfaceDefSeq supports_interfaces
++        in CORBA_InterfaceDefSeq supports_interfaces
+       );
+     HomeDef create_home (
+         in RepositoryId id,
+@@ -151,14 +113,14 @@
+         in VersionSpec version,
+         in HomeDef base_home,
+         in ComponentDef managed_component,
+-        in CORBA::ValueDef primary_key
++        in CORBA_ValueDef primary_key
+       );
+   };
+ 
+-  interface ProvidesDef : CORBA::Contained 
++  interface ProvidesDef : CORBA_Contained 
+   {
+     // read interface
+-    readonly attribute CORBA::InterfaceDef interface_type;
++    readonly attribute CORBA_InterfaceDef interface_type;
+   };
+ 
+   struct ProvidesDescription 
+@@ -167,13 +129,13 @@
+     RepositoryId id;
+     RepositoryId defined_in;
+     VersionSpec version;
+-    CORBA::InterfaceDef interface_type;
++    CORBA_InterfaceDef interface_type;
+   };
+ 
+-  interface UsesDef : CORBA::Contained 
++  interface UsesDef : CORBA_Contained 
+   {
+     // read interface
+-    readonly attribute CORBA::InterfaceDef interface_type;
++    readonly attribute CORBA_InterfaceDef interface_type;
+     readonly attribute boolean is_multiple;
+   };
+ 
+@@ -183,18 +145,18 @@
+     RepositoryId id;
+     RepositoryId defined_in;
+     VersionSpec version;
+-    CORBA::InterfaceDef interface_type;
++    CORBA_InterfaceDef interface_type;
+     boolean is_multiple;
+   };
+ 
+   typedef sequence <ProvidesDescription> ProvidesDescSeq;
+   typedef sequence <UsesDescription> UsesDescSeq;
+ 
+-  interface EventDef : CORBA::Contained 
++  interface EventDef : CORBA_Contained 
+   { // abstract - never instantiated
+     // read interface
+     boolean is_a (in RepositoryId event_id);
+-    readonly attribute CORBA::ValueDef event;
++    readonly attribute CORBA_ValueDef event;
+   };
+ 
+   struct EventDescription 
+@@ -203,7 +165,7 @@
+     RepositoryId id;
+     RepositoryId defined_in;
+     VersionSpec version;
+-    CORBA::ValueDef value;
++    CORBA_ValueDef value;
+   };
+ 
+   interface EmitsDef : EventDef 
+@@ -218,10 +180,10 @@
+   {
+   };
+ 
+-  interface ComponentDef : CORBA::InterfaceDef 
++  interface ComponentDef : CORBA_InterfaceDef 
+   {
+     // read/write interface
+-    attribute CORBA::InterfaceDefSeq supported_interfaces;
++    attribute CORBA_InterfaceDefSeq supported_interfaces;
+     // read interface
+     readonly attribute ComponentDef base_component;
+     readonly attribute ProvidesDefSeq provides_interfaces;
+@@ -235,32 +197,32 @@
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::InterfaceDef interface_type
++        in CORBA_InterfaceDef interface_type
+       );
+     UsesDef create_uses (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::InterfaceDef interface_type,
++        in CORBA_InterfaceDef interface_type,
+         in boolean is_multiple
+       );
+     EmitsDef create_emits (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ValueDef value
++        in CORBA_ValueDef value
+       );
+     PublishesDef create_publishes (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ValueDef value
++        in CORBA_ValueDef value
+       );
+     ConsumesDef create_consumes (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ValueDef value
++        in CORBA_ValueDef value
+       );
+   };
+ 
+@@ -274,18 +236,18 @@
+     RepositoryIdSeq supports_interfaces;
+     ProvidesDefSeq provides_interfaces;
+     UsesDefSeq uses_interfaces;
+-    CORBA::AttrDescriptionSeq attributes;
++    CORBA_AttrDescriptionSeq attributes;
+     EmitsDefSeq emits_events;
+     PublishesDefSeq publishes_events;
+     ConsumesDefSeq consumes_events;
+     boolean is_basic;
+   };
+ 
+-  interface PrimaryKeyDef : CORBA::Contained 
++  interface PrimaryKeyDef : CORBA_Contained 
+   {
+     // read interface
+     boolean is_a (in RepositoryId primary_key_id);
+-    readonly attribute CORBA::ValueDef primary_key;
++    readonly attribute CORBA_ValueDef primary_key;
+   };
+ 
+   struct PrimaryKeyDescription 
+@@ -294,18 +256,18 @@
+     RepositoryId id;
+     RepositoryId defined_in;
+     VersionSpec version;
+-    CORBA::ValueDef primary_key;
++    CORBA_ValueDef primary_key;
+   };
+ 
+-  interface FactoryDef : CORBA::OperationDef 
++  interface FactoryDef : CORBA_OperationDef 
+   { // only PARAM_IN parameters
+   };
+ 
+-  interface FinderDef : CORBA::OperationDef 
++  interface FinderDef : CORBA_OperationDef 
+   { // only PARAM_IN parameters
+   };
+ 
+-  interface HomeDef : CORBA::InterfaceDef 
++  interface HomeDef : CORBA_InterfaceDef 
+   {
+     // read operations
+     readonly attribute HomeDef base_home;
+@@ -319,21 +281,21 @@
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ValueDef primary_key
++        in CORBA_ValueDef primary_key
+       );
+     FactoryDef create_factory (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ParDescriptionSeq params, // only PARAM_INs
+-        in CORBA::ExceptionDefSeq exceptions
++        in CORBA_ParDescriptionSeq params, // only PARAM_INs
++        in CORBA_ExceptionDefSeq exceptions
+       );
+     FinderDef create_finder (
+         in RepositoryId id,
+         in Identifier name,
+         in VersionSpec version,
+-        in CORBA::ParDescriptionSeq params, // only PARAM_INs
+-        in CORBA::ExceptionDefSeq exceptions
++        in CORBA_ParDescriptionSeq params, // only PARAM_INs
++        in CORBA_ExceptionDefSeq exceptions
+       );
+   };
+ 
+@@ -348,8 +310,8 @@
+     PrimaryKeyDef primary_key_def;
+     FactoryDefSeq factories;
+     FinderDefSeq finders;
+-    CORBA::OpDescriptionSeq operations;
+-    CORBA::AttrDescriptionSeq attributes;
++    CORBA_OpDescriptionSeq operations;
++    CORBA_AttrDescriptionSeq attributes;
+     boolean is_basic;
+   };
+ };
