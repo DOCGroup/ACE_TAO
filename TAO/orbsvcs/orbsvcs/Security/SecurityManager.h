@@ -125,6 +125,22 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
+  /**
+   * @name TAO-specific Methods
+   *
+   * Methods used internally by TAO's Security Service.
+   */
+  //@{
+  /// Add the given credentials to the SecurityManager's "own
+  /// credentials" list.
+  /**
+   * This method is generally only used by the PrincipalAuthenticator
+   * when credentials are created and authenticated.
+   */
+  void add_own_credentials (SecurityLevel2::Credentials_ptr creds
+                            TAO_ENV_ARG_DECL);
+  //@}
+
 protected:
 
   /// Destructor
@@ -139,6 +155,10 @@ private:
 
   /// Lock used to synchronize access to the SecurityManager's state.
   TAO_SYNCH_MUTEX lock_;
+
+  /// List of SecurityManager's own credentials, i.e. those created by
+  /// its PrincipalAuthenticator.
+  SecurityLevel2::CredentialsList own_credentials_;
 
   /// Reference to the PrinicipalAuthenticator.
   SecurityLevel2::PrincipalAuthenticator_var principal_authenticator_;
