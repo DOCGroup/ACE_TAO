@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::EmptyProfileList::EmptyProfileList (void)
@@ -110,7 +110,7 @@ CORBA::Exception *TAO_IOP::EmptyProfileList::_alloc (void)
 CORBA::Exception *
 TAO_IOP::EmptyProfileList::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::TAO_IOP::EmptyProfileList (*this),
@@ -133,7 +133,7 @@ void TAO_IOP::EmptyProfileList::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -146,7 +146,7 @@ void TAO_IOP::EmptyProfileList::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -163,20 +163,20 @@ static const CORBA::Long _oc_TAO_IOP_EmptyProfileList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x54414f5f),
-  ACE_NTOHL (0x494f502f),
-  ACE_NTOHL (0x456d7074),
-  ACE_NTOHL (0x7950726f),
-  ACE_NTOHL (0x66696c65),
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x54414f5f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x456d7074), 
+  ACE_NTOHL (0x7950726f), 
+  ACE_NTOHL (0x66696c65), 
+  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/EmptyProfileList:1.0
     17,
-  ACE_NTOHL (0x456d7074),
-  ACE_NTOHL (0x7950726f),
-  ACE_NTOHL (0x66696c65),
-  ACE_NTOHL (0x4c697374),
+  ACE_NTOHL (0x456d7074), 
+  ACE_NTOHL (0x7950726f), 
+  ACE_NTOHL (0x66696c65), 
+  ACE_NTOHL (0x4c697374), 
   ACE_NTOHL (0x0),  // name = EmptyProfileList
   0, // member count
   };
@@ -191,11 +191,11 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_EmptyProfileList (
 
 namespace TAO_IOP
 {
-  ::CORBA::TypeCode_ptr _tc_EmptyProfileList =
+  ::CORBA::TypeCode_ptr const _tc_EmptyProfileList =
     &_tc_TAO_tc_TAO_IOP_EmptyProfileList;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::NotFound::NotFound (void)
@@ -254,7 +254,7 @@ CORBA::Exception *TAO_IOP::NotFound::_alloc (void)
 CORBA::Exception *
 TAO_IOP::NotFound::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::TAO_IOP::NotFound (*this),
@@ -331,7 +331,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_NotFound (
 
 namespace TAO_IOP
 {
-  ::CORBA::TypeCode_ptr _tc_NotFound =
+  ::CORBA::TypeCode_ptr const _tc_NotFound =
     &_tc_TAO_tc_TAO_IOP_NotFound;
 }
 
@@ -394,7 +394,7 @@ CORBA::Exception *TAO_IOP::Duplicate::_alloc (void)
 CORBA::Exception *
 TAO_IOP::Duplicate::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::TAO_IOP::Duplicate (*this),
@@ -471,7 +471,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_Duplicate (
 
 namespace TAO_IOP
 {
-  ::CORBA::TypeCode_ptr _tc_Duplicate =
+  ::CORBA::TypeCode_ptr const _tc_Duplicate =
     &_tc_TAO_tc_TAO_IOP_Duplicate;
 }
 
@@ -534,7 +534,7 @@ CORBA::Exception *TAO_IOP::Invalid_IOR::_alloc (void)
 CORBA::Exception *
 TAO_IOP::Invalid_IOR::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::TAO_IOP::Invalid_IOR (*this),
@@ -611,7 +611,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_Invalid_IOR (
 
 namespace TAO_IOP
 {
-  ::CORBA::TypeCode_ptr _tc_Invalid_IOR =
+  ::CORBA::TypeCode_ptr const _tc_Invalid_IOR =
     &_tc_TAO_tc_TAO_IOP_Invalid_IOR;
 }
 
@@ -674,7 +674,7 @@ CORBA::Exception *TAO_IOP::MultiProfileList::_alloc (void)
 CORBA::Exception *
 TAO_IOP::MultiProfileList::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::TAO_IOP::MultiProfileList (*this),
@@ -755,7 +755,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_MultiProfileList (
 
 namespace TAO_IOP
 {
-  ::CORBA::TypeCode_ptr _tc_MultiProfileList =
+  ::CORBA::TypeCode_ptr const _tc_MultiProfileList =
     &_tc_TAO_tc_TAO_IOP_MultiProfileList;
 }
 
@@ -764,7 +764,6 @@ namespace TAO_IOP
 
 // Traits specializations for TAO_IOP::TAO_IOR_Property.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Property_ptr
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::duplicate (
     TAO_IOP::TAO_IOR_Property_ptr p
@@ -773,7 +772,6 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::duplicate (
   return TAO_IOP::TAO_IOR_Property::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
     TAO_IOP::TAO_IOR_Property_ptr p
@@ -782,14 +780,12 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Property_ptr
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::nil (void)
 {
   return TAO_IOP::TAO_IOR_Property::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::marshal (
     TAO_IOP::TAO_IOR_Property_ptr p,
@@ -858,6 +854,12 @@ TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
   return obj;
 }
 
+void
+TAO_IOP::TAO_IOR_Property::_tao_release (TAO_IOR_Property_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 TAO_IOP::TAO_IOR_Property::_is_a (
     const char *value
@@ -879,11 +881,11 @@ TAO_IOP::TAO_IOR_Property::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -895,7 +897,7 @@ const char* TAO_IOP::TAO_IOR_Property::_interface_repository_id (void) const
 CORBA::Boolean
 TAO_IOP::TAO_IOR_Property::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -903,7 +905,6 @@ TAO_IOP::TAO_IOR_Property::marshal (TAO_OutputCDR &)
 
 // Traits specializations for TAO_IOP::TAO_IOR_Manipulation.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::duplicate (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
@@ -912,7 +913,6 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::duplicate (
   return TAO_IOP::TAO_IOR_Manipulation::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
@@ -921,14 +921,12 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::nil (void)
 {
   return TAO_IOP::TAO_IOR_Manipulation::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::marshal (
     TAO_IOP::TAO_IOR_Manipulation_ptr p,
@@ -1050,6 +1048,12 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
   return obj;
 }
 
+void
+TAO_IOP::TAO_IOR_Manipulation::_tao_release (TAO_IOR_Manipulation_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 TAO_IOP::TAO_IOR_Manipulation::_is_a (
     const char *value
@@ -1071,11 +1075,11 @@ TAO_IOP::TAO_IOR_Manipulation::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1087,7 +1091,7 @@ const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 CORBA::Boolean
 TAO_IOP::TAO_IOR_Manipulation::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1191,7 +1195,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

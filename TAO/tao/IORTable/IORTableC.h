@@ -233,6 +233,8 @@ namespace IORTable
     // The static operations.
     static Table_ptr _duplicate (Table_ptr obj);
     
+    static void _tao_release (Table_ptr obj);
+    
     static Table_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -299,7 +301,7 @@ namespace IORTable
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -340,6 +342,8 @@ namespace IORTable
     // The static operations.
     static Locator_ptr _duplicate (Locator_ptr obj);
     
+    static void _tao_release (Locator_ptr obj);
+    
     static Locator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -370,7 +374,7 @@ namespace IORTable
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -410,7 +414,7 @@ namespace TAO
 #if !defined (_IORTABLE_LOCATOR__TRAITS_CH_)
 #define _IORTABLE_LOCATOR__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IORTable_Export Objref_Traits< ::IORTable::Locator>
   {
     static ::IORTable::Locator_ptr duplicate (
@@ -431,7 +435,7 @@ namespace TAO
 #if !defined (_IORTABLE_TABLE__TRAITS_CH_)
 #define _IORTABLE_TABLE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IORTable_Export Objref_Traits< ::IORTable::Table>
   {
     static ::IORTable::Table_ptr duplicate (

@@ -80,7 +80,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_Timeout (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_Timeout =
+  ::CORBA::TypeCode_ptr const _tc_Timeout =
     &_tc_TAO_tc_Messaging_Timeout;
 }
 
@@ -127,7 +127,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RelativeRoundtripTimeoutPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RelativeRoundtripTimeoutPolicy =
     &_tc_TAO_tc_Messaging_RelativeRoundtripTimeoutPolicy;
 }
 

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:302
 
 
 #include "Messaging.h"
@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -53,7 +53,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:66
+// be\be_visitor_valuetype/valuetype_cs.cpp:66
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
@@ -159,7 +159,7 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_init_cs.cpp:85
+// be\be_visitor_valuetype/valuetype_init_cs.cpp:85
 
 Messaging::ExceptionHolder_init::ExceptionHolder_init (void)
 {
@@ -194,7 +194,7 @@ Messaging::ExceptionHolder_init::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::ReplyHandler.
 
@@ -349,7 +349,7 @@ Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_obv_cs.cpp:58
+// be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
 
 OBV_Messaging::ExceptionHolder::ExceptionHolder (void)
 {}
@@ -370,7 +370,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_I
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/field_cs.cpp:580
+// be\be_visitor_valuetype/field_cs.cpp:580
 
 // Accessor to set the member.
 void
@@ -388,7 +388,7 @@ OBV_Messaging::ExceptionHolder::is_system_exception (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/field_cs.cpp:580
+// be\be_visitor_valuetype/field_cs.cpp:580
 
 // Accessor to set the member.
 void
@@ -406,7 +406,7 @@ OBV_Messaging::ExceptionHolder::byte_order (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/field_cs.cpp:755
+// be\be_visitor_valuetype/field_cs.cpp:755
 
 // Accessor to set the member.
 void
@@ -430,7 +430,7 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 }
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:488
+// be\be_valuetype.cpp:488
 
 void
 CORBA::add_ref (Messaging::ExceptionHolder * vt)
@@ -451,7 +451,7 @@ CORBA::remove_ref (Messaging::ExceptionHolder * vt)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_cs.cpp:73
+// be\be_visitor_valuetype/cdr_op_cs.cpp:73
 
 CORBA::Boolean
 operator<< (
@@ -477,7 +477,7 @@ operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/marshal_cs.cpp:44
+// be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm)
@@ -500,7 +500,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_cs.cpp:63
+// be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -536,7 +536,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -66,7 +66,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_SyncScopePolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_SyncScopePolicy =
+  ::CORBA::TypeCode_ptr const _tc_SyncScopePolicy =
     &_tc_TAO_tc_Messaging_SyncScopePolicy;
 }
 

@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -56,7 +56,6 @@ namespace TAO
 
 // Traits specializations for RTPortableServer::POA.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
 TAO::Objref_Traits<RTPortableServer::POA>::duplicate (
     RTPortableServer::POA_ptr p
@@ -65,7 +64,6 @@ TAO::Objref_Traits<RTPortableServer::POA>::duplicate (
   return RTPortableServer::POA::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTPortableServer::POA>::release (
     RTPortableServer::POA_ptr p
@@ -74,14 +72,12 @@ TAO::Objref_Traits<RTPortableServer::POA>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
 TAO::Objref_Traits<RTPortableServer::POA>::nil (void)
 {
   return RTPortableServer::POA::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTPortableServer::POA>::marshal (
     RTPortableServer::POA_ptr p,
@@ -150,6 +146,12 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
   return obj;
 }
 
+void
+RTPortableServer::POA::_tao_release (POA_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 RTPortableServer::POA::_is_a (
     const char *value
@@ -195,7 +197,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for Messaging::RelativeRoundtripTimeoutPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::duplicate (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::duplicate (
   return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::nil (void)
 {
   return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::marshal (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
@@ -149,6 +145,12 @@ Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutP
   return obj;
 }
 
+void
+Messaging::RelativeRoundtripTimeoutPolicy::_tao_release (RelativeRoundtripTimeoutPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RelativeRoundtripTimeoutPolicy::_is_a (
     const char *value
@@ -194,7 +196,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

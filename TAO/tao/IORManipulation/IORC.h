@@ -75,13 +75,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -91,30 +91,30 @@ namespace TAO
 
 namespace TAO_IOP
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_TAO_IOP_EMPTYPROFILELIST_CH_)
 #define _TAO_IOP_EMPTYPROFILELIST_CH_
-
+  
   class TAO_IORManip_Export EmptyProfileList : public CORBA::UserException
   {
   public:
-
+    
     EmptyProfileList (void);
     EmptyProfileList (const EmptyProfileList &);
     ~EmptyProfileList (void);
 
     EmptyProfileList &operator= (const EmptyProfileList &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static EmptyProfileList *_downcast (CORBA::Exception *);
     static const EmptyProfileList *_downcast (CORBA::Exception const *);
-
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -123,48 +123,48 @@ namespace TAO_IOP
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EmptyProfileList;
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EmptyProfileList;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_TAO_IOP_NOTFOUND_CH_)
 #define _TAO_IOP_NOTFOUND_CH_
-
+  
   class TAO_IORManip_Export NotFound : public CORBA::UserException
   {
   public:
-
+    
     NotFound (void);
     NotFound (const NotFound &);
     ~NotFound (void);
 
     NotFound &operator= (const NotFound &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static NotFound *_downcast (CORBA::Exception *);
     static const NotFound *_downcast (CORBA::Exception const *);
-
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -173,35 +173,35 @@ namespace TAO_IOP
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotFound;
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NotFound;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_TAO_IOP_DUPLICATE_CH_)
 #define _TAO_IOP_DUPLICATE_CH_
-
+  
   class TAO_IORManip_Export Duplicate : public CORBA::UserException
   {
   public:
-
+    
     Duplicate (void);
     Duplicate (const Duplicate &);
     ~Duplicate (void);
@@ -238,7 +238,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Duplicate;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Duplicate;
 
 #endif /* end #if !defined */
   
@@ -288,7 +288,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Invalid_IOR;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Invalid_IOR;
 
 #endif /* end #if !defined */
   
@@ -338,7 +338,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MultiProfileList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_MultiProfileList;
 
 #endif /* end #if !defined */
   
@@ -380,6 +380,8 @@ namespace TAO_IOP
     
     // The static operations.
     static TAO_IOR_Property_ptr _duplicate (TAO_IOR_Property_ptr obj);
+    
+    static void _tao_release (TAO_IOR_Property_ptr obj);
     
     static TAO_IOR_Property_ptr _narrow (
         CORBA::Object_ptr obj
@@ -460,7 +462,7 @@ namespace TAO_IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -488,7 +490,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TAO_IOR_Property;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Property;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -528,6 +530,8 @@ namespace TAO_IOP
     
     // The static operations.
     static TAO_IOR_Manipulation_ptr _duplicate (TAO_IOR_Manipulation_ptr obj);
+    
+    static void _tao_release (TAO_IOR_Manipulation_ptr obj);
     
     static TAO_IOR_Manipulation_ptr _narrow (
         CORBA::Object_ptr obj
@@ -601,7 +605,7 @@ namespace TAO_IOP
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_IORList;
+    static ::CORBA::TypeCode_ptr const _tc_IORList;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -741,7 +745,7 @@ namespace TAO_IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -769,7 +773,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TAO_IOR_Manipulation;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Manipulation;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -786,7 +790,7 @@ namespace TAO
 #if !defined (_TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_)
 #define _TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IORManip_Export Objref_Traits< ::TAO_IOP::TAO_IOR_Property>
   {
     static ::TAO_IOP::TAO_IOR_Property_ptr duplicate (
@@ -807,7 +811,7 @@ namespace TAO
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IORManip_Export Objref_Traits< ::TAO_IOP::TAO_IOR_Manipulation>
   {
     static ::TAO_IOP::TAO_IOR_Manipulation_ptr duplicate (
