@@ -80,8 +80,7 @@ ACE_Framework_Repository::close (void)
       this->current_size_ = 0;
     }
 
-  ACE_DLL_Manager::close ();
-
+  ACE_DLL_Manager::close_singleton ();
   return 0;
 }
 
