@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
+#include "ace/Timer_Queue.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
