@@ -749,32 +749,35 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-  // Declare the default proxy.
-  *os << bt->nested_type_name (this->ctx_->scope ())
-      << "_ptr default_proxy = "
-      << bt->nested_type_name (this->ctx_->scope ())
-      <<"::_nil ();" << be_nl << be_nl;
 
 
-  // Code for lzay evaluation..
-  *os << "// Code for lazily evaluated IOR's" << be_nl;
 
-  *os << "if (!obj->is_evaluated ())" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "default_proxy," << be_nl
-      << "::" <<  bt->name ()
-      << " (" << be_idt << be_idt_nl
-      << "obj->steal_ior ()," << be_nl
-      << "obj->orb_core ()" << be_uidt_nl << ")," << be_uidt_nl
-      << bt->nested_type_name (this->ctx_->scope ())
-      << "::_nil ()" << be_uidt_nl << ");"
-      << "return default_proxy;" << be_nl
-      << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
 
   if (! node->is_local ())
     {
+      // Declare the default proxy.
+      *os << bt->nested_type_name (this->ctx_->scope ())
+          << "_ptr default_proxy = "
+          << bt->nested_type_name (this->ctx_->scope ())
+          <<"::_nil ();" << be_nl << be_nl;
+
+      // Code for lzay evaluation..
+      *os << "// Code for lazily evaluated IOR's" << be_nl;
+
+      *os << "if (!obj->is_evaluated ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "default_proxy," << be_nl
+          << "::" <<  bt->name ()
+          << " (" << be_idt << be_idt_nl
+          << "obj->steal_ior ()," << be_nl
+          << "obj->orb_core ()" << be_uidt_nl << ")," << be_uidt_nl
+          << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ()" << be_uidt_nl << ");" << be_nl
+          << "return default_proxy;" << be_nl
+          << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
       // Remote _unchecked_narrow implementation.
       *os << "if (! obj->_is_local ())" << be_idt_nl
           << "{" << be_idt_nl

@@ -347,14 +347,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << node->local_name () << " &);" << be_nl;
     }
 
-  *os << node->local_name ()
-      << " (IOP::IOR *ior," << be_idt_nl
-      << be_idt << "TAO_ORB_Core *orb_core = 0);" << be_uidt_nl
-      << be_uidt_nl;
 
   // Local interfaces don't support stub objects.
   if (! node->is_local ())
     {
+      *os << node->local_name ()
+          << " (IOP::IOR *ior," << be_idt_nl
+          << be_idt << "TAO_ORB_Core *orb_core = 0);" << be_uidt_nl
+          << be_uidt_nl;
+
       *os << node->local_name ()
           << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0," << be_nl
