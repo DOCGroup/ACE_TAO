@@ -314,6 +314,13 @@ be_enum::tc_encap_len (void)
   return this->encap_len_;
 }
 
+int be_enum::write_as_return (TAO_OutStream *stream,
+			      be_type *type)
+{
+  *stream << type->name ();
+  return 0;
+}
+
 // Visiting methods
 int be_enum::accept (be_visitor *visitor)
 {

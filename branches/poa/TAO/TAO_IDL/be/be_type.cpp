@@ -191,6 +191,11 @@ AST_Decl::NodeType be_type::base_node_type (void) const
   return ACE_const_cast(be_type*, this)->node_type ();
 }
 
+int be_type::write_as_return (TAO_OutStream *, be_type *)
+{
+  return -1;
+}
+
 // Visiting methods
 int be_type::accept (be_visitor *visitor)
 {

@@ -311,3 +311,70 @@ CORBA_POA::QueryInterface (REFIID riid,
  (void) AddRef ();
   return TAO_NOERROR;
 }
+
+PortableServer::ServantBase::ServantBase (void)
+{
+}
+
+PortableServer::ServantBase::ServantBase (const ServantBase&)
+{
+}
+
+PortableServer::ServantBase&
+PortableServer::ServantBase::operator= (const ServantBase&)
+{
+  return *this;
+}
+
+PortableServer::ServantBase::~ServantBase (void)
+{
+}
+
+CORBA_POA*
+PortableServer::ServantBase::_default_POA (void)
+{
+  CORBA_Object_ptr root_poa = 
+    TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("RootPOA");
+  return ACE_reinterpret_cast(CORBA_POA*, root_poa);
+}
+
+void
+PortableServer::ServantBase::set_parent (TAO_IUnknown *p)
+{
+  this->parent_ = p;
+  assert (this->parent_ != 0);
+}
+
+int
+PortableServer::ServantBase::find (const CORBA::String& opname,
+				   TAO_Skeleton& skelfunc)
+{
+  return optable_->find (opname, skelfunc);
+}
+
+int
+PortableServer::ServantBase::bind (const CORBA::String& opname,
+				   const TAO_Skeleton skel_ptr)
+{
+  return optable_->bind (opname, skel_ptr);
+}
+
+void
+PortableServer::ServantBase::dispatch (CORBA::ServerRequest &req,
+				       void *context,
+				       CORBA::Environment &env)
+{
+  // XXXASG - we should check here if the call was for _non_existant, else
+  // issue an error. For the time being we issue an error
+  CORBA::String opname = req.op_name ();
+  ACE_UNUSED_ARG (context);
+
+  // Something really bad happened: the operation was not
+  // found in the object, fortunately there is a standard
+  // exception for that purpose.
+  env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+  ACE_ERROR ((LM_ERROR,
+              "Cannot find operation <%s> in object\n",
+              opname));
+}
+

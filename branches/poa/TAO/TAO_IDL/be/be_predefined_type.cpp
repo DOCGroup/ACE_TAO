@@ -432,6 +432,24 @@ be_predefined_type::compute_size_type (void)
   return 0;
 }
 
+int be_predefined_type::write_as_return (TAO_OutStream *stream,
+					 be_type *type)
+{
+  *stream << type->name ();
+  // check if the type is an any
+  if (this->pt () == AST_PredefinedType::PT_any)
+    {
+      // if it is an any, return a pointer to it
+      *stream << " *";
+    }
+  else if (this->pt () == AST_PredefinedType::PT_pseudo)
+    {
+      // pseudo object, return a pointer
+      *stream << "_ptr";
+    }
+  return 0;
+}
+
 // Visiting methods
 int be_predefined_type::accept (be_visitor *visitor)
 {

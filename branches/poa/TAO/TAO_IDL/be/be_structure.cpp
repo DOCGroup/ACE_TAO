@@ -882,6 +882,17 @@ be_structure::compute_size_type (void)
   return 0;
 }
 
+int be_structure::write_as_return (TAO_OutStream *stream,
+				   be_type *type)
+{
+  *stream << type->name ();
+  if (this->size_type () == be_decl::VARIABLE)
+    {
+      *stream << " *";
+    }
+  return 0;
+}
+
 // Visiting methods
 int be_structure::accept (be_visitor *visitor)
 {

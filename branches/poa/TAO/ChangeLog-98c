@@ -1,3 +1,57 @@
+Tue Dec 30 16:38:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* More advances in code generation, it compiles and links now, but
+	  won't run.
+
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface_fwd.cpp: 
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_string.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be_include/be_array.h: 
+	* TAO_IDL/be_include/be_enum.h: 
+	* TAO_IDL/be_include/be_exception.h: 
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be_include/be_interface_fwd.h: 
+	* TAO_IDL/be_include/be_predefined_type.h: 
+	* TAO_IDL/be_include/be_sequence.h: 
+	* TAO_IDL/be_include/be_string.h: 
+	* TAO_IDL/be_include/be_structure.h: 
+	* TAO_IDL/be_include/be_type.h: 
+	* TAO_IDL/be_include/be_typedef.h: 
+	* TAO_IDL/be_include/be_union.h: 
+	  Added methods to be_type to generate the return types; this
+	  time without any switches, just visitors and virtual
+	  dispatching.
+
+	* tao/poa.cpp: 
+	* tao/poa.h: 
+	  Added the methods to lookup operations, this are TAO specific
+	  and should have complaint names, but currently I just kept the
+	  old names to avoid a major breakdown.
+
+	* TAO_IDL/ast/Makefile: 
+	* TAO_IDL/be/Makefile: 
+	* TAO_IDL/driver/Makefile: 
+	* TAO_IDL/fe/Makefile: 
+	* TAO_IDL/narrow/Makefile: 
+	* TAO_IDL/util/Makefile: 
+	  Updated dependencies.
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	  Reverted some changes (code moved from be_interface.cpp into
+	  visitors) to avoid massive conflicts with Andy's changes.
+
 Tue Dec 30 11:07:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orb_core.h (TAO_Resource_Factory): Corrected my "fat-finger"
