@@ -1,3 +1,8 @@
+Thu Aug 20 17:36:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/CosPropertyService/: Removed. For equivalent
+	  code, see orbsvcs/tests/Property
+
 Thu Aug 20 17:21:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Any.{h,i,cpp}:
