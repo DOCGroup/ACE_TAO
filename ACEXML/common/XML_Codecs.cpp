@@ -40,8 +40,8 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
                   ACEXML_Char[encode_len+1],
                   0);
 
-  for (size_t i = 0; i < encode_len; ++i)
-    result[i] = (ACEXML_Char)encodedBuf[i];
+  for (size_t j = 0; j < encode_len; ++j)
+    result[j] = (ACEXML_Char)encodedBuf[j];
 
   result[encode_len] = 0;
 
@@ -87,8 +87,8 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
                   ACEXML_Char[decode_len+1],
                   0);
 
-  for (size_t i = 0; i < decode_len; ++i)
-    result[i] = (ACEXML_Char)decodedBuf[i];
+  for (size_t j = 0; j < decode_len; ++j)
+    result[j] = (ACEXML_Char)decodedBuf[j];
 
   result[decode_len] = 0;
 
