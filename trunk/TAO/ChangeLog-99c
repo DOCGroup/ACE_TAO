@@ -1,3 +1,11 @@
+Wed Feb 17 17:57:01 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * IIOP_ORB.cpp MProfile.cpp MProfile.h ORB.cpp Stub.cpp 
+	  Stub.h Stub.i decode.cpp MProfile.i
+	  Inlined many of the MProfile methods
+	  Also, changed MProfile so it could assume ownership of
+	  a profile, thus saving a lock.
+
 Wed Feb 17 10:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
