@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Service_Config.h"
-#include "JAWS/server/HTTP_Server.h"
+#include "apps/JAWS/server/HTTP_Server.h"
 
 ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 

@@ -3,7 +3,7 @@
 
 #include "ace/OS.h"
 
-#include "JAWS/server/HTTP_Config.h"
+#include "apps/JAWS/server/HTTP_Config.h"
 
 static HTTP_Config_Info config_info;
 HTTP_Config_Info * HTTP_Config::instance_ = 0;
