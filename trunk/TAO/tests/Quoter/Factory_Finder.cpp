@@ -15,7 +15,7 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "FactoryFinder.h"
+#include "Factory_Finder.h"
 
 
 static const char usage [] = 

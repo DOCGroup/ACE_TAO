@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="QuoterFactoryFinder" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Quoter Factory Finder" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=QuoterFactoryFinder - Win32 Debug
+CFG=Quoter Factory Finder - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "FactoryFinder.mak".
+!MESSAGE NMAKE /f "Factory_Finder.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "FactoryFinder.mak" CFG="QuoterFactoryFinder - Win32 Debug"
+!MESSAGE NMAKE /f "Factory_Finder.mak" CFG="Quoter Factory Finder - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "QuoterFactoryFinder - Win32 Release" (based on\
+!MESSAGE "Quoter Factory Finder - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "QuoterFactoryFinder - Win32 Debug" (based on\
+!MESSAGE "Quoter Factory Finder - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +29,7 @@ CFG=QuoterFactoryFinder - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "QuoterFactoryFinder - Win32 Release"
+!IF  "$(CFG)" == "Quoter Factory Finder - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
-!ELSEIF  "$(CFG)" == "QuoterFactoryFinder - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Quoter Factory Finder - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -81,18 +81,18 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "QuoterFactoryFinder - Win32 Release"
-# Name "QuoterFactoryFinder - Win32 Debug"
+# Name "Quoter Factory Finder - Win32 Release"
+# Name "Quoter Factory Finder - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\FactoryFinder.cpp
+SOURCE=.\Factory_Finder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FactoryFinder_Impl.cpp
+SOURCE=.\Factory_Finder_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -108,11 +108,11 @@ SOURCE=.\QuoterS.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\FactoryFinder.h
+SOURCE=.\Factory_Finder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FactoryFinder_Impl.h
+SOURCE=.\Factory_Finder_Impl.h
 # End Source File
 # Begin Source File
 
@@ -142,9 +142,9 @@ SOURCE=.\QuoterS.i
 
 SOURCE=.\Quoter.idl
 
-!IF  "$(CFG)" == "QuoterFactoryFinder - Win32 Release"
+!IF  "$(CFG)" == "Quoter Factory Finder - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "QuoterFactoryFinder - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Quoter Factory Finder - Win32 Debug"
 
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
