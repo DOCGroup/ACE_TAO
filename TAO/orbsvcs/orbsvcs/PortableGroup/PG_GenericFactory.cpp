@@ -314,7 +314,9 @@ TAO_PG_GenericFactory::populate_object_group (
 {
   CORBA::ULong factory_infos_count = factory_infos.length ();
   factory_set.size (factory_infos_count);
-  for (CORBA::ULong j = 0; j < initial_number_members; ++j)
+  for (CORBA::ULong j = 0;
+       j < ACE_static_cast (CORBA::ULong, initial_number_members);
+       ++j)
     {
       const PortableGroup::FactoryInfo &factory_info =
         factory_infos[j];
@@ -551,7 +553,8 @@ TAO_PG_GenericFactory::process_criteria (
   //       changed.
   if (membership_style == PortableGroup::MEMB_INF_CTRL
       && (minimum_number_members < initial_number_members
-          || minimum_number_members > factory_infos_count))
+          || ACE_static_cast (CORBA::ULong,
+                              minimum_number_members) > factory_infos_count))
     {
       unmet_criteria[uc].nam = name;
       unmet_criteria[uc++].val = value;
