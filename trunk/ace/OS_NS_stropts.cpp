@@ -46,7 +46,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 # endif /* ACE_HAS_WINSOCK2 */
 }
 
-
+#if !defined (ACE_HAS_WINCE)
 int
 ACE_OS::ioctl (ACE_HANDLE socket,
                unsigned long io_control_code,
@@ -190,4 +190,4 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_WINSOCK2 */
 }
-
+#endif /* ACE_HAS_WINCE */

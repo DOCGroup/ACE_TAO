@@ -900,8 +900,10 @@ ACE_OS::rename (const char *old_name,
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WINCE)
+  // Win CE is always wide-char.
   ACE_UNUSED_ARG (flags);
-  if (MoveFile (old_name, new_name) != 0)
+  if (0 != MoveFile (ACE_TEXT_CHAR_TO_TCHAR (old_name),
+                     ACE_TEXT_CHAR_TO_TCHAR (new_name)))
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)

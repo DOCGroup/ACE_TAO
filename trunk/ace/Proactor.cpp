@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/config-lite.h"
 #include "ace/Proactor.h"
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
@@ -1190,10 +1191,9 @@ ACE_Proactor::run_event_loop (void)
 }
 
 int
-ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
+ACE_Proactor::run_event_loop (ACE_Time_Value &)
 {
   // not implemented
-  ACE_UNUSED_ARG (tv);
   return -1;
 }
 

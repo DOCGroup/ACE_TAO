@@ -46,6 +46,17 @@
 # endif  /* ACE_LD_DECORATOR_STR */
 #endif  /* _MSC_VER >= 1200 */
 
+// Compiler sets _CPPRTTI if rtti is enabled.
+#if defined (_CPPRTTI)
+#  if defined (ACE_LACKS_RTTI)
+#    undef ACE_LACKS_RTTI
+#  endif
+#else
+#  if !defined (ACE_LACKS_RTTI)
+#    define ACE_LACKS_RTTI
+#  endif
+#endif /* _CPPRTTI */
+
 #if (_MSC_VER >= 1400)
 # include "ace/config-win32-msvc-8.h"
 #elif (_MSC_VER >= 1300)

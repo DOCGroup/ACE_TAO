@@ -108,7 +108,6 @@ namespace ACE_OS {
              int cmd,
              void * = 0);
 
-#if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl>.
   extern ACE_Export 
   int ioctl (ACE_HANDLE socket,
@@ -121,6 +120,7 @@ namespace ACE_OS {
              ACE_OVERLAPPED *overlapped,
              ACE_OVERLAPPED_COMPLETION_FUNC func);
 
+#if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl> when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
   extern ACE_Export 
@@ -132,7 +132,7 @@ namespace ACE_OS {
              unsigned long buffer = 0,
              ACE_OVERLAPPED *overlapped = 0,
              ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
-#endif  // ACE_HAS_WINCE
+#endif  /* ACE_HAS_WINCE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int isastream (ACE_HANDLE handle);

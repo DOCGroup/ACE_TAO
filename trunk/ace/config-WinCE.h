@@ -23,11 +23,14 @@
 # error ACE requires Windows CE 3.0 and later.
 #endif  // UNDER_CE
 
-// CE 3 doesn't have Winsock 2, but CE 4 does.
 #if (UNDER_CE < 400)
+// CE 3 doesn't have Winsock 2, but CE 4 does.
 # if !defined (ACE_HAS_WINSOCK2)
 #  define ACE_HAS_WINSOCK2 0
 # endif
+# define ACE_LACKS_ASSERT_H
+# define ACE_LACKS_SEARCH_H
+# define ACE_LACKS_WCHAR_H
 #endif /* UNDER_CE < 400 */
 
 #if !defined (ACE_HAS_WINCE)
@@ -190,6 +193,8 @@
 #define ACE_LACKS_CHDIR
 #define ACE_LACKS_ENV
 #define ACE_LACKS_HOSTNAME
+#define ACE_LACKS_REALPATH
+#define ACE_LACKS_SWAB
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)

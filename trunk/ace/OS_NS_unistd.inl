@@ -189,7 +189,7 @@ ACE_OS::rmdir (const char *path)
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR (path)),
                                           ace_result_),
                         int, -1);
 #else
@@ -202,7 +202,7 @@ ACE_INLINE int
 ACE_OS::rmdir (const wchar_t *path)
 {
 #if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path),
                                           ace_result_),
                         int, -1);
 #elif defined (ACE_WIN32)
@@ -518,7 +518,11 @@ ACE_OS::getcwd (char *buf, size_t size)
 ACE_INLINE wchar_t *
 ACE_OS::getcwd (wchar_t *buf, size_t size)
 {
-#  if defined (ACE_WIN32)
+#  if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_NOTSUP_RETURN (0);
+#  elif defined (ACE_WIN32)
   return ::_wgetcwd (buf, ACE_static_cast (int, size));
 #  else
   char *narrow_buf = new char[size];
@@ -1285,7 +1289,7 @@ ACE_OS::unlink (const char *path)
                      int, -1);
 # elif defined (ACE_HAS_WINCE)
   // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_CHAR_TO_TCHAR (path)), ace_result_),
                         int, -1);
 # elif defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
