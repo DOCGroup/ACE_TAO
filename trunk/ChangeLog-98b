@@ -1,3 +1,9 @@
+Sun Sep 13 16:29:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h: 
+	  Use the ACE_UNIMPLETED_FUNC to make the code work on older
+	  versions of IRIX
+
 Sat Sep 12 22:39:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.i: There was a bug with strecpy() -- it should return a
