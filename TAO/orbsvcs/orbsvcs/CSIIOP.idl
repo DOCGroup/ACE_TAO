@@ -14,8 +14,8 @@
 #define _CSIIOP_IDL_
 
 //#include <IOP.pidl>
-#include <tao/IOP_IOR.pidl>
-#include <CSI.idl>
+#include "tao/IOP_IOR.pidl"
+#include "CSI.idl"
 //import ::IOP
 //import ::CSI
 

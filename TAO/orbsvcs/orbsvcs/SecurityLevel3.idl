@@ -19,8 +19,8 @@
 #ifndef _SecurityLevel3_
 #define _SecurityLevel3_
 
-#include <tao/Policy.pidl>
-#include <tao/TimeBase.pidl>
+#include "tao/Policy.pidl"
+#include "tao/TimeBase.pidl"
 
 #pragma prefix "adiron.com"
 
