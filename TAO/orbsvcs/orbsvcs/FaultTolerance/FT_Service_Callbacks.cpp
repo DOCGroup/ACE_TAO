@@ -2,6 +2,7 @@
 #include "tao/MProfile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
+#include "FT_Policy_i.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -9,6 +10,10 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FaultTolerance, FT_Service_Callbacks, "$Id$")
+
+TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
+{
+}
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (TAO_MProfile *mpfile,
@@ -111,6 +116,8 @@ TAO_FT_Service_Callbacks::reset_profile_flags (void)
   this->primary_failed_ = 0;
   this->secondary_set_ = 0;
 }
+
+
 CORBA::Boolean
 TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 {
@@ -139,4 +146,226 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
   // If it reaches here then it should be nill
   return 1;
 
+}
+
+
+CORBA::Policy_ptr
+TAO_FT_Service_Callbacks::service_create_policy (
+    CORBA::PolicyType type,
+    CORBA::Any &val,
+    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+
+  if (type == FT::REQUEST_DURATION_POLICY)
+    {
+      policy = TAO_FT_Request_Duration_Policy::create (val,
+                                                       ACE_TRY_ENV);
+    }
+
+  return policy;
+}
+
+void
+TAO_FT_Service_Callbacks::service_context_list (
+    TAO_Stub *&stub,
+    IOP::ServiceContextList &service_list,
+    CORBA::Environment  &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+
+  // Pack the group version service context
+  this->group_version_service_context (stub,
+                                       service_list,
+                                       ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Pack the request service context
+  this->request_service_context (stub,
+                                 service_list,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+
+
+}
+
+void
+TAO_FT_Service_Callbacks::request_service_context (
+    TAO_Stub *&stub,
+    IOP::ServiceContextList &service_list,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_OutputCDR cdr;
+  if (cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+       == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  // Marshall the data in to the CDR streams
+  if (cdr <<
+      stub->orb_core ()->fault_tolerance_service ().client_id ().c_str ()
+      == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  if (cdr <<
+      stub->orb_core ()->fault_tolerance_service ().new_retention_id ()
+      == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+
+  // Check whether the FT::RequestDurationPolicy has been set
+  CORBA::Policy_var policy =
+    stub->get_policy (FT::REQUEST_DURATION_POLICY,
+                      ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // @@ There are two possibilities a) Duration policy has not been
+  // set b)Duration policy has been set. Point 'b' will give no
+  // problems. Some issues kick in for point 'a'. The best is to set a
+  // default value. BUT, what is the "right" value? Need to discuss
+  // this with Andy when I get a chance. For the present let us assume
+  // we have 15 seconds. This is purely an assumption..
+
+  TimeBase::TimeT exp_time = 0;
+
+  // if we have a non-null policy set
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      FT::RequestDurationPolicy_var duration_policy =
+        FT::RequestDurationPolicy::_narrow (policy.in ());
+
+      exp_time =
+        duration_policy->request_duration_value (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  else
+    {
+      // The assumption that we are making
+      exp_time = 15 * 10000000;
+    }
+
+  // Calculaton of the expiration time
+
+  // @@ Note: This is so poorly defined in the spec. All that the
+  // @@ spec says is that add the RequestDurationPolicy value with
+  // @@ the 'local clock value', whatever the local clock
+  // @@ means. IMHO, we need something like UTC value or a more clear
+  // @@ definition to send across the wire.
+
+  // Grab the localtime on the machine where this is running
+  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+
+
+  TimeBase::TimeT sec_part  = time_val.sec () * 10000000;
+  TimeBase::TimeT usec_part = time_val.usec ()* 10;
+
+  // Now we have the total time
+  exp_time += sec_part + usec_part;
+
+
+  // Marshall the TimeBase::TimeT in to the CDR stream
+  if (cdr << exp_time == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  // Add the CDR encapsulation in to the ServiceContextList
+  CORBA::ULong l = service_list.length ();
+  service_list.length (l + 1);
+  service_list[l].context_id = IOP::FT_REQUEST;
+
+  // Make a *copy* of the CDR stream...
+  CORBA::ULong length = cdr.total_length ();
+  service_list[l].context_data.length (length);
+  CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
+
+  for (const ACE_Message_Block *i = cdr.begin ();
+       i != 0;
+       i = i->cont ())
+    {
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      buf += i->length ();
+    }
+
+  return;
+}
+
+
+void
+TAO_FT_Service_Callbacks::group_version_service_context (
+    TAO_Stub *&stub,
+    IOP::ServiceContextList &service_list,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_OutputCDR cdr;
+  if (cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+       == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  if (!this->group_component_flag_)
+    this->get_object_group_version (stub->profile_in_use ());
+
+  // Marshall the data in to the CDR streams
+  // Marshall the TimeBase::TimeT in to the CDR stream
+  if (cdr << this->group_component_ == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  // Add the CDR encapsulation in to the ServiceContextList
+  CORBA::ULong l = service_list.length ();
+  service_list.length (l + 1);
+  service_list[l].context_id = IOP::FT_GROUP_VERSION;
+
+  // Make a *copy* of the CDR stream...
+  CORBA::ULong length = cdr.total_length ();
+  service_list[l].context_data.length (length);
+  CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
+
+  for (const ACE_Message_Block *i = cdr.begin ();
+       i != 0;
+       i = i->cont ())
+    {
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      buf += i->length ();
+    }
+
+  return;
+}
+
+
+void
+TAO_FT_Service_Callbacks::get_object_group_version (TAO_Profile *profile)
+{
+  // For the group version service context, we need to get the
+  // ObjectGroupRefVersion. So we just look at the profile in
+  // use. Look at the TaggedComponents in the profile in use, look for
+  // the TAG_FT_GROUP and get the properties. This is the general idea.
+
+  // Get the TAO_TaggedComponents from the profile
+  const TAO_Tagged_Components &tagged_components =
+    profile->tagged_components ();
+
+  IOP::TaggedComponent tagged;
+  tagged.tag = IOP::TAG_FT_GROUP;
+
+  // Get the TaggedComponent
+  // If it doesn't exist then just return
+  // It just means that the IOR that we got is not from a FT ORB.
+  if (tagged_components.get_component (tagged) != 1)
+    return;
+
+  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+                                          tagged.component_data.get_buffer ()
+                                          ),
+                    tagged.component_data.length ());
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return;
+  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+
+  // Extract the group component
+  cdr >> this->group_component_;
+
+  // Set the flag
+  this->group_component_flag_ = 1;
 }
