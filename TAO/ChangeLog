@@ -1,3 +1,13 @@
+Tue Apr 27 08:59:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+	  (compute_default_label):
+
+	  Do not increment a boolean value.  It doesn't make much sense to
+	  do so.  Logically negate the boolean value instead.  Fixes a
+	  "incrementing a bool value is deprecated" warning exhibited by
+	  MSVC++ 7.1.
+
 Tue Apr 27 13:20:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/run_test.pl:
