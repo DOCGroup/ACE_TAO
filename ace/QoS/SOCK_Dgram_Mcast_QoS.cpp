@@ -8,9 +8,9 @@
 #include "ace/Sock_Connect.h"  // needed for subscribe_ifs()
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "SOCK_Dgram_Mcast_QoS.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure
