@@ -23,16 +23,16 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
   ACE_UNUSED_ARG (ev);
 
   // Refresh position
-  HUDisplay::position_var loc
-    = this->context_->get_connection_GPSLocation (ACE_ENV_ARG_PARAMETER);
+  HUDisplay::position_var loc =
+    this->context_->get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (loc.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-  CORBA::Long x = loc->posx (ACE_ENV_ARG_PARAMETER) % 500;
+  CORBA::Long x = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER) % 500;
   ACE_CHECK;
-  CORBA::Long y = loc->posy (ACE_ENV_ARG_PARAMETER) % 300;
+  CORBA::Long y = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER) % 300;
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: (%d, %d)\n",
@@ -60,7 +60,7 @@ MyImpl::NavDisplay_exec_impl::set_session_context (Components::SessionContext_pt
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -76,7 +76,12 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   char *argv[1] = { "NavDisplay_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv,
+                                        ""
+                                        ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), HUDisplay::tick_init,
                                HUDisplay::tick);
@@ -113,7 +118,7 @@ MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::NavDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::NavDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
