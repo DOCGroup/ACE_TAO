@@ -30,7 +30,8 @@ $dot_path = '/usr/local/bin';
              'tao_esf',
              'tao_rtevent',
              'tao_implrepo',
-             'tao_strategies');
+             'tao_strategies',
+	     'tao_smartproxies');
 
 # Modify defaults using the command line arguments
 &parse_args ();
