@@ -1,3 +1,9 @@
+Tue Jan 18 10:54:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/Options.html:
+	  Documented the -ORBReactorRegistry option in the resource
+	  factory.
+
 Sun Jan 16 15:54:39 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/default_resource.cpp:

@@ -1,5 +1,3 @@
-
-
 <HTML>
 <HEAD>
 <!-- $Id$ -->
@@ -562,6 +560,20 @@ The default is <code>select_mt</code></TD>
       where <B>n</B> is the number of native priorities.
       In all the operating systems where TAO is supported the range of
       CORBA priorities is larger than the native set.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBReactorRegistry</CODE> <EM>registry_type</EM></TD>
+  <TD><a name="-ORBReactorRegistry"></a>
+      Select the type of reactor registry.
+      Currently two implementations are provided:
+      <B>single</B> uses a single reactor per ORB, this is the default
+	    and is sufficient for most applications.
+      Applications with stringent QoS requirements may prefer
+      the <B>per-priority</B> strategy, in this case threads at
+      different CORBA priorities are assigned different
+      reactors.  This last option is usually used in conjunction with
+      the endpoint-per-priority concurrency model.
   </TD>
 </TR>
 </TABLE>
