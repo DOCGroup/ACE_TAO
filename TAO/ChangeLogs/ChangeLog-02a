@@ -1,3 +1,20 @@
+Thu Mar 29 10:15:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/MT_Client/test.idl:
+	* tests/MT_Client/test_i.h:
+	* tests/MT_Client/test_i.cpp:
+	* tests/MT_Client/client.cpp:
+	  Prime the test by making many calls to test_method() that ignore
+	  all exceptions.  Otherwise we get TRANSIENT exceptions due to
+	  bug 189.
+	  Also cleaned up the IDL interface.
+
+	* tests/Client_Leaks/Process_Factory.cpp:
+	  Fixed typo
+
+	* tests/Client_Leaks/Makefile:
+	  Update deps.
+
 Thu Mar 29 10:53:01 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
 	* tao/operation_details.i: Reordered definition of reply_service_info ()

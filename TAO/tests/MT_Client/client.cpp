@@ -64,6 +64,10 @@ public:
   // The thread entry point.
 
 private:
+  void validate_connection (CORBA::Environment &);
+  // Validate the connection
+
+private:
   Simple_Server_var server_;
   // The server.
 
@@ -139,32 +143,39 @@ Client::Client (Simple_Server_ptr server,
 {
 }
 
+void
+Client::validate_connection (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Ping the object 100 times, ignoring all exceptions.
+  // It would be better to use validate_connection() but the test must
+  // run on minimum CORBA builds too!
+  for (int j = 0; j != 100; ++j)
+    {
+      ACE_TRY
+        {
+          this->server_->test_method (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY {} ACE_ENDTRY;
+    }
+}
+
 int
 Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-#if 0
-      // If we are using a global ORB this is a nop, otherwise it
-      // initializes the ORB resources for this thread.
-      int argc = 0;
-      char* argv[] = { "" };
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      this->validate_connection (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-#endif
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          CORBA::Long number =
-            server_->get_number (ACE_TRY_ENV);
+          this->server_->test_method (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_ASSERT (number == 931232);
-
           if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d, %d\n",
-                        i, number));
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n",
+                        i));
         }
     }
   ACE_CATCHANY

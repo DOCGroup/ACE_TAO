@@ -104,7 +104,7 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Process_Factory::shutdown (CORBA::Environment &)
+Process_Factory::noop (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
