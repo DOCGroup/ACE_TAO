@@ -1,17 +1,23 @@
+Sun Jan 11 10:55:04 CST 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from tag main_to_poa_merge_5 and
+	  main_to_poa_merge_6. This late merge is risky, needs complete
+	  validation before public release.
+
 Sat Jan 10 22:11:47 1998    <coryan@MILONGA>
 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Work around bug in MSVC++ 5.0 wrt inheritance from nested
 	  classes and the constructor invocation.
 
 Sat Jan 10 19:21:18 1998    <coryan@MILONGA>
 
-	* TAO_IDL/tao_idl.dsp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* tao/orb_core.cpp: 
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* tao/orb_core.cpp:
 	  Fixed some problems in the latest merges.
 
 Sat Jan 10 18:06:24 1998    <coryan@MILONGA>
@@ -28,51 +34,51 @@ Sat Jan 10 16:57:42 1998    <coryan@MILONGA>
 
 Fri Jan  9 17:58:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_decl.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_enum_val.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_expression.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_module.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_root.cpp: 
-	* TAO_IDL/be/be_scope.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_root.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
 	  Minor cosmetic changes to make the main trunk changes identic to
 	  the ones on this branch.
 
 Thu Jan  8 15:50:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_state_operation.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp:
 	  Added support for native as return type.
 
 Thu Jan  8 13:20:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/ast/Makefile: 
-	* TAO_IDL/be/Makefile: 
+	* TAO_IDL/ast/Makefile:
+	* TAO_IDL/be/Makefile:
 	  Added ast_native and be_native to the list of files.
 
-	* TAO_IDL/be_include/be_native.h: 
-	* TAO_IDL/be/be_native.cpp: 
-	* TAO_IDL/be_include/be_visitor.h: 
-	* TAO_IDL/be/be_visitor.cpp: 
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be/be_native.cpp:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be/be_visitor.cpp:
 	  Added support for visiting be_native.
 
-	* TAO_IDL/be_include/be_visitor_args.h: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be/be_visitor_args.cpp:
 	  Added support for native and improved the implementation.
 
-	* TAO_IDL/fe/y.tab.cpp: 
+	* TAO_IDL/fe/y.tab.cpp:
 	  Removed some includes and pragmas that cause trouble on NT.
 
-	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_type.cpp:
 	  Print an error if the default implementation for write_as_return
 	  is called.
 
@@ -85,7 +91,7 @@ Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Wed Jan  7 15:09:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/y.tab.cpp: 
+	* TAO_IDL/fe/y.tab.cpp:
 	  This is the actual file generated from idl.yy, thanks to the
 	  "clone" scheme for building ACE it was lost in the previous
 	  commits.
@@ -104,69 +110,69 @@ Wed Jan  7 14:08:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Jan  6 17:35:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Added several fixes for mutiple inheritance, but still needs
 	  some work.
 
 Tue Jan  6 15:20:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/object.h: 
-	* tao/object.cpp: 
+	* tao/object.h:
+	* tao/object.cpp:
 	  Removed obsolete methods, they were there to support upcalls on
 	  the server side, but now this is done on
 	  PortableServer::ServantBase.
 
 Tue Jan  6 14:46:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/poa.h: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* tao/poa.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Added a _get_servant () method to the collocated classes, to
 	  obtain access to the underlying skeleton.
 
 Tue Jan  6 13:31:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/objtable.h: 
-	* tao/objtable.cpp: 
+	* tao/objtable.h:
+	* tao/objtable.cpp:
 	  Fixed some problems with the PortableServer::ObjectId and
 	  PortableServer::Servant changes.
 
-	* tao/poa.h: 
-	* TAO_IDL/be/be_interface.cpp: 
+	* tao/poa.h:
+	* TAO_IDL/be/be_interface.cpp:
 	  Added a method to get the interface repository name for a
 	  skeleton.
 
-	* tao/encode.cpp: 
+	* tao/encode.cpp:
 	  Fixed problem on object reference enconding.
 
 Mon Jan 05 23:41:59 1998    <coryan@MILONGA>
 
-	* tao/objkeyC.cpp: 
+	* tao/objkeyC.cpp:
 	  The code for memory reallocation was missing, I added it back.
 
-	* tao/iiopobj.cpp: 
+	* tao/iiopobj.cpp:
 	  Fixed bug in object key generation.
 
-	* tao/poa.cpp: 
+	* tao/poa.cpp:
 	  More debug messages when an object is missing.
 
 Mon Jan 05 17:46:00 1998    <coryan@MILONGA>
 
-	* tao/connect.cpp: 
-	* tao/corba.h: 
-	* tao/corbacom.h: 
-	* tao/default_server.cpp: 
-	* tao/default_server.h: 
-	* tao/iiopobj.cpp: 
-	* tao/iiopobj.i: 
-	* tao/iioporb.cpp: 
-	* tao/orbobj.cpp: 
-	* tao/params.h: 
-	* tao/params.i: 
-	* tao/poa.cpp: 
-	* tao/poa.h: 
-	* tao/server_factory.cpp: 
-	* tao/server_factory.h: 
+	* tao/connect.cpp:
+	* tao/corba.h:
+	* tao/corbacom.h:
+	* tao/default_server.cpp:
+	* tao/default_server.h:
+	* tao/iiopobj.cpp:
+	* tao/iiopobj.i:
+	* tao/iioporb.cpp:
+	* tao/orbobj.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/poa.cpp:
+	* tao/poa.h:
+	* tao/server_factory.cpp:
+	* tao/server_factory.h:
 	  The ObjectId changes were "accepted for revision" by the POA
 	  committe, hence I'll commit them, they check them and then I'll
 	  have to make the changes they require ;-)
@@ -183,22 +189,22 @@ Mon Jan  5 13:06:19 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Mon Jan 05 00:11:45 1998    <coryan@MILONGA>
 
-	* tao/objtable.h: 
-	* tao/objtable.cpp: 
+	* tao/objtable.h:
+	* tao/objtable.cpp:
 	  New Object Table interface, in preparation for the POA needs.
 
 Sat Jan 03 11:37:21 1998    <coryan@MILONGA>
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp:
 	  Typedefs and predefined types where unproperly handled.
 
 Fri Jan  2 14:09:49 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
 	  Sequences work on Solaris, even Purify gives its "Houston it's a
 	  go", so I'm reinstating them.
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
 	  Minor cosmetic changes.
 
 Fri Jan 02 08:31:32 1998    <coryan@MILONGA>
@@ -209,28 +215,28 @@ Fri Jan 02 08:31:32 1998    <coryan@MILONGA>
 
 Thu Jan 01 15:43:43 1998    <coryan@MILONGA>
 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Generated code for collocations setup the "parent_" field
 	  properly.
 
-	* tao/objkeyC.h: 
-	* tao/corbacom.h: 
+	* tao/objkeyC.h:
+	* tao/corbacom.h:
 	  Added export macros.
 
-	* tao/objtable.cpp: 
-	* tao/objtable.h: 
-	* tao/poa.cpp: 
-	* tao/poa.h: 
+	* tao/objtable.cpp:
+	* tao/objtable.h:
+	* tao/poa.cpp:
+	* tao/poa.h:
 	  Object table is based on servants now.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp: 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
 	  Fixed to use the new POA mapping.
-	  
-	* TAO_IDL/tao_idl.dsp: 
-	* tao/TAO.dsp: 
+
+	* TAO_IDL/tao_idl.dsp:
+	* tao/TAO.dsp:
 	  Added the new files to the MSVC++ project.
 
 Tue Dec 30 16:38:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
@@ -238,52 +244,52 @@ Tue Dec 30 16:38:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	* More advances in code generation, it compiles and links now, but
 	  won't run.
 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	* TAO_IDL/be_include/be_array.h: 
-	* TAO_IDL/be_include/be_enum.h: 
-	* TAO_IDL/be_include/be_exception.h: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be_include/be_interface_fwd.h: 
-	* TAO_IDL/be_include/be_predefined_type.h: 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be_include/be_string.h: 
-	* TAO_IDL/be_include/be_structure.h: 
-	* TAO_IDL/be_include/be_type.h: 
-	* TAO_IDL/be_include/be_typedef.h: 
-	* TAO_IDL/be_include/be_union.h: 
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
 	  Added methods to be_type to generate the return types; this
 	  time without any switches, just visitors and virtual
 	  dispatching.
 
-	* tao/poa.cpp: 
-	* tao/poa.h: 
+	* tao/poa.cpp:
+	* tao/poa.h:
 	  Added the methods to lookup operations, this are TAO specific
 	  and should have complaint names, but currently I just kept the
 	  old names to avoid a major breakdown.
 
-	* TAO_IDL/ast/Makefile: 
-	* TAO_IDL/be/Makefile: 
-	* TAO_IDL/driver/Makefile: 
-	* TAO_IDL/fe/Makefile: 
-	* TAO_IDL/narrow/Makefile: 
-	* TAO_IDL/util/Makefile: 
+	* TAO_IDL/ast/Makefile:
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/driver/Makefile:
+	* TAO_IDL/fe/Makefile:
+	* TAO_IDL/narrow/Makefile:
+	* TAO_IDL/util/Makefile:
 	  Updated dependencies.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
 	  Reverted some changes (code moved from be_interface.cpp into
 	  visitors) to avoid massive conflicts with Andy's changes.
 
@@ -299,84 +305,84 @@ Mon Dec 29 16:26:24 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Mon Dec 29 13:18:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/Makefile: 
-	* TAO_IDL/be/be_visitor.cpp: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be_include/be_visitor.h: 
-	* TAO_IDL/be_include/be_visitor_args.h: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/be/be_visitor.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
 	  Started implementation of the collocated class code generation,
 	  using the visitor pattern; hence the new be_visitor class and
 	  some examples of its use.
 
-	* TAO_IDL/be_include/be_type.h: 
-	* TAO_IDL/be_include/be_typedef.h: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
 	  Added method to obtain the node type for the most "unaliased"
 	  type though a typedef chain. This is needed in several points
 	  for code generation.
 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
 	  Implemented the collocated class generation using visitors,
 	  ditto for (part of) the main class.
 
-	* TAO_IDL/util/utl_identifier.cpp: 
+	* TAO_IDL/util/utl_identifier.cpp:
 	  Fixed memory deallocation problem. The string was copied using
 	  ACE_OS::strdup(), but deleted using operator delete[].
 
-	* TAO_IDL/be/be_argument.cpp: 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_attribute.cpp: 
-	* TAO_IDL/be/be_constant.cpp: 
-	* TAO_IDL/be/be_decl.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_enum_val.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_expression.cpp: 
-	* TAO_IDL/be/be_field.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_module.cpp: 
-	* TAO_IDL/be/be_operation.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_root.cpp: 
-	* TAO_IDL/be/be_scope.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_union_branch.cpp: 
-	* TAO_IDL/be/be_union_label.cpp: 
-	* TAO_IDL/be_include/be.h: 
-	* TAO_IDL/be_include/be_argument.h: 
-	* TAO_IDL/be_include/be_array.h: 
-	* TAO_IDL/be_include/be_attribute.h: 
-	* TAO_IDL/be_include/be_constant.h: 
-	* TAO_IDL/be_include/be_decl.h: 
-	* TAO_IDL/be_include/be_enum.h: 
-	* TAO_IDL/be_include/be_enum_val.h: 
-	* TAO_IDL/be_include/be_exception.h: 
-	* TAO_IDL/be_include/be_expression.h: 
-	* TAO_IDL/be_include/be_field.h: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be_include/be_interface_fwd.h: 
-	* TAO_IDL/be_include/be_module.h: 
-	* TAO_IDL/be_include/be_operation.h: 
-	* TAO_IDL/be_include/be_predefined_type.h: 
-	* TAO_IDL/be_include/be_root.h: 
-	* TAO_IDL/be_include/be_scope.h: 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be_include/be_string.h: 
-	* TAO_IDL/be_include/be_structure.h: 
-	* TAO_IDL/be_include/be_type.h: 
-	* TAO_IDL/be_include/be_typedef.h: 
-	* TAO_IDL/be_include/be_union.h: 
-	* TAO_IDL/be_include/be_union_branch.h: 
-	* TAO_IDL/be_include/be_union_label.h: 
+	* TAO_IDL/be/be_argument.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_constant.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_root.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_union_label.cpp:
+	* TAO_IDL/be_include/be.h:
+	* TAO_IDL/be_include/be_argument.h:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/be_include/be_constant.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_enum_val.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_module.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_root.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be_include/be_union_label.h:
 	  Added the accept() method for the vistor pattern
 	  implementation.
 
@@ -428,105 +434,105 @@ Wed Dec 24 15:50:38 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Tue Dec 23 12:00:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO-INSTALL.html: 
-	* VERSION: 
-	* Benchmark/benchmark/Makefile: 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_attribute.cpp: 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be/be_decl.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_operation.cpp: 
-	* TAO_IDL/be/be_scope.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_state.cpp: 
-	* TAO_IDL/be/be_state_argument.cpp: 
-	* TAO_IDL/be/be_state_exception.cpp: 
-	* TAO_IDL/be/be_state_operation.cpp: 
-	* TAO_IDL/be/be_state_sequence.cpp: 
-	* TAO_IDL/be/be_state_structure.cpp: 
-	* TAO_IDL/be/be_state_typedef.cpp: 
-	* TAO_IDL/be/be_state_union.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_union_branch.cpp: 
-	* TAO_IDL/be_include/be_array.h: 
-	* TAO_IDL/be_include/be_codegen.h: 
-	* TAO_IDL/be_include/be_decl.h: 
-	* TAO_IDL/be_include/be_scope.h: 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be_include/be_state.h: 
-	* TAO_IDL/narrow/narrow.cpp: 
-	* docs/Options.html: 
-	* docs/components.html: 
-	* docs/configurations.html: 
-	* docs/index.html: 
-	* docs/orbsvcs.html: 
-	* docs/releasenotes/index.html: 
-	* orbsvcs/README: 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
-	* orbsvcs/Dump_Schedule/Makefile: 
-	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
-	* orbsvcs/Event_Service/Dispatching_Modules.i: 
-	* orbsvcs/Event_Service/Event_Channel.cpp: 
-	* orbsvcs/Event_Service/Event_Channel.i: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	* orbsvcs/Event_Service/Makefile: 
-	* orbsvcs/Event_Service/RT_Task.cpp: 
-	* orbsvcs/Event_Service/ReactorTask.cpp: 
-	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
-	* orbsvcs/Naming_Service/Makefile: 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.h: 
-	* orbsvcs/Scheduling_Service/Makefile: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/tests/Event_Latency/Makefile: 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* tao/Makefile: 
-	* tao/Timeprobe.cpp: 
-	* tao/corba.h: 
-	* tao/corbacom.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/encode.cpp: 
-	* tao/except.cpp: 
-	* tao/except.h: 
-	* tao/giop.cpp: 
-	* tao/invoke.cpp: 
-	* tao/managed_types.cpp: 
-	* tao/managed_types.h: 
-	* tao/managed_types.i: 
-	* tao/object.i: 
-	* tao/orb_core.cpp: 
-	* tao/request.cpp: 
-	* tao/tao_internals.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
-	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.h: 
-	* tests/Cubit/TAO/MT_Cubit/client/client.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/client/cubit.idl: 
-	* tests/Cubit/TAO/MT_Cubit/server/cubit.h: 
-	* tests/Cubit/TAO/MT_Cubit/server/cubit.idl: 
-	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.h: 
-	* tests/Cubit/TAO/MT_Cubit/server/method_db.i: 
-	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp: 
+	* TAO-INSTALL.html:
+	* VERSION:
+	* Benchmark/benchmark/Makefile:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_state.cpp:
+	* TAO_IDL/be/be_state_argument.cpp:
+	* TAO_IDL/be/be_state_exception.cpp:
+	* TAO_IDL/be/be_state_operation.cpp:
+	* TAO_IDL/be/be_state_sequence.cpp:
+	* TAO_IDL/be/be_state_structure.cpp:
+	* TAO_IDL/be/be_state_typedef.cpp:
+	* TAO_IDL/be/be_state_union.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_state.h:
+	* TAO_IDL/narrow/narrow.cpp:
+	* docs/Options.html:
+	* docs/components.html:
+	* docs/configurations.html:
+	* docs/index.html:
+	* docs/orbsvcs.html:
+	* docs/releasenotes/index.html:
+	* orbsvcs/README:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp:
+	* orbsvcs/Event_Service/Dispatching_Modules.i:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
+	* orbsvcs/Event_Service/Event_Channel.i:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/Event_Service/RT_Task.cpp:
+	* orbsvcs/Event_Service/ReactorTask.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.h:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/Event_Latency/Makefile:
+	* orbsvcs/tests/Logger/Makefile:
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* tao/Makefile:
+	* tao/Timeprobe.cpp:
+	* tao/corba.h:
+	* tao/corbacom.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	* tao/except.cpp:
+	* tao/except.h:
+	* tao/giop.cpp:
+	* tao/invoke.cpp:
+	* tao/managed_types.cpp:
+	* tao/managed_types.h:
+	* tao/managed_types.i:
+	* tao/object.i:
+	* tao/orb_core.cpp:
+	* tao/request.cpp:
+	* tao/tao_internals.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h:
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/client/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.h:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.h:
+	* tests/Cubit/TAO/MT_Cubit/server/method_db.i:
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp:
 	  Merged in the changes between revisions main_to_poa_merge_1 and
 	  main_to_poa_merge_2.
 	  The only conflicts were:
-	  + ChangeLog: 
+	  + ChangeLog:
 	  removed all the main truck comments and added the one you are
 	  reading just now.
-	  + tests/Cubit/TAO/MT_Cubit/client/Makefile: 
-	  + tests/Cubit/TAO/MT_Cubit/client/Makefile: 
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile:
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile:
 	  Left the branch revision, it included the dependencies and had
 	  correct syntax.
 	  + tao/poa.cpp:
@@ -535,19 +541,19 @@ Tue Dec 23 12:00:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Wed Dec 17 02:11:11 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* tao/poa.h: 
-	* tao/poa.cpp: 
-	* tao/orbobj.h: 
-	* tao/orbobj.cpp: 
-	* tao/objkeyC.i: 
-	* tao/objkeyC.h: 
-	* tao/object.h: 
-	* tao/iiopobj.h: 
-	* tao/iiopobj.cpp: 
-	* tao/decode.cpp: 
-	* tao/corbacom.h: 
-	* tao/corba.h: 
-	* tao/any.cpp: 
+	* tao/poa.h:
+	* tao/poa.cpp:
+	* tao/orbobj.h:
+	* tao/orbobj.cpp:
+	* tao/objkeyC.i:
+	* tao/objkeyC.h:
+	* tao/object.h:
+	* tao/iiopobj.h:
+	* tao/iiopobj.cpp:
+	* tao/decode.cpp:
+	* tao/corbacom.h:
+	* tao/corba.h:
+	* tao/any.cpp:
 	All affected by changes to support interfaces required by the new
  	POA, specifically CORBA::Object::key() and
  	CORBA::ORB::key_to_object().  It does not compile now, and seems
@@ -555,20 +561,20 @@ Wed Dec 17 02:11:11 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Mon Dec 15 19:39:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* TAO_IDL/be/Makefile: 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_state.cpp: 
-	* TAO_IDL/be/be_state_attribute.cpp: 
-	* TAO_IDL/be/be_state_exception.cpp: 
-	* TAO_IDL/be/be_union_branch.cpp: 
-	* TAO_IDL/be_include/be_state.h: 
-	* docs/releasenotes/orbcore.html: 
-	* docs/releasenotes/index.html: 
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_state.cpp:
+	* TAO_IDL/be/be_state_attribute.cpp:
+	* TAO_IDL/be/be_state_exception.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be_include/be_state.h:
+	* docs/releasenotes/orbcore.html:
+	* docs/releasenotes/index.html:
 	* orbsvcs/Naming_Service.cpp:
-	* tao/iiopobj.h: 
-	* tao/except.h: 
+	* tao/iiopobj.h:
+	* tao/except.h:
 	* tao/except.cpp: Merged in changes from the main trunk.
 
 	* tests/Thruput_test/Makefile: Updated to use taoconfig.mk.

@@ -81,7 +81,7 @@ be_interface::compute_coll_name (void)
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
   int namelen = sizeof (collocated) + sizeof (poa);
-  
+
   UTL_IdListActiveIterator *i;
   ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
   while (!i->is_done ())
@@ -107,7 +107,7 @@ be_interface::compute_coll_name (void)
       // Increase right away, so we can test for the final component
       // in the loop.
       i->next ();
-      
+
       // We add the POA_ preffix only if the first component is not
       // the global scope...
       if (ACE_OS::strcmp (item, "") != 0)
@@ -690,7 +690,10 @@ int be_interface::gen_server_header (void)
         {
           *sh << ", public virtual ";
           intf = be_interface::narrow_from_decl (inherits ()[i]);
-          *sh << intf->full_skel_name ();  // dump the scoped name
+          *sh << intf->relative_skel_name (this->full_skel_name ());  // dump
+                                                                      // the
+                                                                      // scoped
+                                                                      // name
         }  // end of for loop
     }
   else
@@ -949,7 +952,7 @@ be_interface::gen_server_inline (void)
   *si << "{\n";
   *si << "}\n";
 
-  
+
   *si << "ACE_INLINE " << this->name () << "*\n"
       << this->full_skel_name () << "::_this (CORBA_Environment&)\n"
       << "{\n";

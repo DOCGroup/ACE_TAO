@@ -20,15 +20,17 @@
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
+#include "ace/Env_Value_T.h"
 #include "clnt.h"
 
 // Constructor.
+
+#define quote(x) #x
 
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ ("factory"),
     cubit_key_ ("key0"),
     hostname_ (ACE_DEFAULT_SERVER_HOST),
-    portnum_ (TAO_DEFAULT_SERVER_PORT),
     loop_count_ (250),
     exit_later_ (0),
     factory_ (Cubit_Factory::_nil ()),
@@ -38,6 +40,9 @@ Cubit_Client::Cubit_Client (void)
     call_count_ (0),
     error_count_ (0)
 {
+  ACE_Env_Value<unsigned long> defport(quote(TAO_DEFAULT_SERVER_PORT),
+                                       TAO_DEFAULT_SERVER_PORT);
+  portnum_ = defport;
 }
 
 // Simple function that returns the substraction of 117 from the
@@ -763,3 +768,10 @@ main (int argc, char **argv)
   else
     return cubit_client.run ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Env_Value<unsigned long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Env_Value<unsigned long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

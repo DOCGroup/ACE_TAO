@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    poa.h
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_POA_H)
@@ -36,7 +36,7 @@ public:
              CORBA::Environment &env);
   virtual ~CORBA_POA (void);
 
-  static CORBA::POA_ptr init (CORBA::ORB_ptr which_orb, 
+  static CORBA::POA_ptr init (CORBA::ORB_ptr which_orb,
                               ACE_INET_Addr &addr,
                               CORBA::Environment &env);
   // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
@@ -47,7 +47,35 @@ public:
   //
   // @@ Hum, does this still make sense now that it's in POA?
 
-  typedef void (CORBA_POA::*dsi_handler) (PortableServer::ObjectId &id,
+  /* virtual */
+  CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
+                            CORBA::String type_id,
+                            CORBA::Environment& env);
+  // Create a reference to an object, using identifying information
+  // that is fully exposed to applications. (An ORB may use additional
+  // data internally, of course.)
+  //
+  // Object IDs are assigned and used by servers to identify objects.
+  //
+  // Type IDs are repository IDs, assigned as part of OMG-IDL
+  // interface definition to identify specific interfaces and their
+  // relationships to other OMG-IDL interfaces.  It's OK to provide a
+  // null type ID.
+  //
+  // Clients which invoke operations using one of these references
+  // when the server is not active (or after the last reference to the
+  // POA is released) will normally see an OBJECT_NOT_EXIST exception
+  // reported by the ORB.  If the POA is a "Named POA" the client's
+  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
+  // reports that fault.
+  //
+  // NOTE: Since any given POA may have been used in the past, servers
+  // may need to place some data (such as a timestamp) into the object
+  // ID to help distinguish different incarnations of the POA.  "Named
+  // POA" objects won't want those semantics as much as "Anonymous"
+  // ones.
+
+  typedef void (CORBA_POA::*dsi_handler) (CORBA::OctetSeq &obj_id,
 					  CORBA::ServerRequest &request,
 					  void *context,
 					  CORBA::Environment &env);
@@ -79,7 +107,7 @@ public:
   // * "_is_a" is readily handled by skeletons,
   //
   // * "_get_interface" similarly, though with more work to allow the
-  //   IFR data structures to be extracted from skeletons.  
+  //   IFR data structures to be extracted from skeletons.
   //
   // * "_get_implementation" is implementation-specific, a facility
   //   through which administrative and other information may be
@@ -90,7 +118,7 @@ public:
   //   This enables solving many "distributed garbage" problems,
   //   such as maintaining persistent tables keyed by references to
   //   objects that may no longer exist.
-    
+
 #if 0
   // @@ virtual
   void please_shutdown (CORBA::Environment &env);
@@ -105,7 +133,7 @@ public:
   // Run -- call get_request () in a loop until shutdown completes.
   // Uses as much concurrency as is provided in this environment.
   // Initiate shutdown if we've been idle for the specified time.
-  // 
+  //
   // This uses only the public APIs defined above; the function is
   // defined here purely for convenience, to help some applications
   // avoid writing that loop.
@@ -116,7 +144,7 @@ public:
   // Get an "anonymous" POA pseudo-objref ... this is the API that
   // most applications will use.  It returns a POA which is not
   // otherwise in use (though it may have been used in the past).
-  // 
+  //
   // Any given POA (named or otherwise) will create equivalent object
   // references when POA::create () is called with the same object and
   // type IDs.  This is not true for two different POAs.
@@ -125,26 +153,26 @@ public:
 				      CORBA::String name,
 				      CORBA::Environment &env);
   // Get a "named" POA ... most applications don't use/need this API.
-  // 
+  //
   // POA names are for ORB/system bootstrapping purposes, and need not
   // be shared between different systems.  The scope of the name isn't
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
 
-  void dispatch (PortableServer::ObjectId &key, 
-		 CORBA::ServerRequest &req, 
-		 void *context, 
+  void dispatch (PortableServer::ObjectId &key,
+		 CORBA::ServerRequest &req,
+		 void *context,
 		 CORBA::Environment &env);
   // Find the object for the request and pass it up the chain.  Errors
   // are returned in <env>.
 
-  virtual int bind (const PortableServer::ObjectId &key, 
+  virtual int bind (const PortableServer::ObjectId &key,
 		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const PortableServer::ObjectId &key, 
+  virtual int find (const PortableServer::ObjectId &key,
 		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
@@ -161,29 +189,29 @@ private:
   TAO_Object_Table objtable_;
   // Table of objects registered with this Object Adapter.
 
-  CORBA::Boolean do_exit_;	
+  CORBA::Boolean do_exit_;
   // Flag set by <clean_shutdown ()>.
 
-  CORBA::ORB_ptr orb_;		
+  CORBA::ORB_ptr orb_;
   // Pointer to our ORB.
 
-  u_int call_count_;		
+  u_int call_count_;
   // Used by COM stuff
 
-  u_int refcount_;		
+  u_int refcount_;
   // Used by COM stuff
 
-  CORBA::POA::dsi_handler skeleton_;	
+  CORBA::POA::dsi_handler skeleton_;
   // Skeleton function
 
-  void *context_;		
+  void *context_;
   // Who knows!?!
 
-  ACE_SYNCH_MUTEX lock_;	
+  ACE_SYNCH_MUTEX lock_;
   // Locks critical sections within POA code methods (was
   // tcpoa_mutex).
 
-  ACE_SYNCH_MUTEX com_lock_;	
+  ACE_SYNCH_MUTEX com_lock_;
   // Locks critical sections in COM-related code (was tcpoa_lock).
 
   // = Copy and assignment: just say no
@@ -195,7 +223,7 @@ struct TAO_Dispatch_Context
   // = TITLE
   //   Structure holding information necessary for GIOP functionality.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //   Data structure passed as "context" to the GIOP code, which then
   //   calls back one of the two helper routines as part of handling
   //   any particular incoming request.

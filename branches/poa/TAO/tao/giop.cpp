@@ -1098,6 +1098,20 @@ TAO_GIOP::make_error (CDR &msg, ...)
   // things into the <msg> instance.
 }
 
+CORBA::Boolean
+TAO_GIOP_LocateRequestHeader::init (CDR &msg,
+                                    CORBA::Environment &env)
+{
+  CORBA::Boolean hdr_status;
+
+  hdr_status = hdr_status && msg.get_ulong (this->request_id);
+  hdr_status = hdr_status && msg.decode (&TC_opaque,
+                                         &this->object_key,
+                                         0,
+                                         env);
+  return hdr_status;
+}
+
 // Initialize the request header from <msg>, setting <env> for errors.
 
 CORBA::Boolean
