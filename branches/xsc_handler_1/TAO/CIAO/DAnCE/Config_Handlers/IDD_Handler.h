@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,18 +21,15 @@
 namespace Deployment
 {
   struct InstanceDeploymentDescription;
-  struct InstanceResourceDeploymentDescription;
+  struct InstanceDeploymentDescriptions;
 }
 
 namespace CIAO
 {
-
   namespace Config_Handlers
   {
-
-   struct InstanceDeploymentDescription;
-    struct InstanceResourceDeploymentDescription;
-
+    class DeploymentPlan;
+    class InstanceDeploymentDescription;
    /*
     * @class IDD_Handler
     *
@@ -49,12 +46,12 @@ namespace CIAO
     public:
       static bool instance_deployment_descrs (
           const DeploymentPlan &src,
-          Deployment::InstanceDeploymentDescriptions& dest);
+          ::Deployment::InstanceDeploymentDescriptions& dest);
 
     private:
       static bool instance_deployment_descr (
           const InstanceDeploymentDescription &src,
-          Deployment::InstanceDeploymentDescription& dest);
+          ::Deployment::InstanceDeploymentDescription& dest);
     };
   }
 }

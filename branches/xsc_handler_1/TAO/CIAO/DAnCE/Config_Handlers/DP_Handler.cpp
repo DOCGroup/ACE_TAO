@@ -91,7 +91,7 @@ namespace CIAO
       if (!this->retval_)
         return this->retval_;
 
-      return true;
+      return this->retval_;
     }
 
   }
