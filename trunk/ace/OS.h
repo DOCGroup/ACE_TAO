@@ -2006,7 +2006,7 @@ class ACE_sema_t
   // = TITLE 
   // Semaphore simulation for Windows CE.
 public:
-  ACE_mutex_t lock_;
+  ACE_thread_mutex_t lock_;
   // Serializes access to <count_>.
   
   ACE_event_t count_nonzero_;
