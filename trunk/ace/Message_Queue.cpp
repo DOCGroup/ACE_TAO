@@ -467,33 +467,35 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int queue_count;
-  if (this->deactivated_)
-    {
-      errno = ESHUTDOWN;
-      return -1;
-    }
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
 
-  // Wait while the queue is full 
+    // Wait while the queue is full 
 
-  while (this->is_full_i ())
-    {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
-    }
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
 
-  queue_count = this->enqueue_head_i (new_item);
+    queue_count = this->enqueue_head_i (new_item);
+  }
 
   if (queue_count == -1)
     return -1;
@@ -513,34 +515,36 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int queue_count;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
-    {
-      errno = ESHUTDOWN;
-      return -1;
-    }
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
 
-  // Wait while the queue is full 
+    // Wait while the queue is full 
 
-  while (this->is_full_i ())
-    {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
-    }
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
 
-  queue_count = this->enqueue_i (new_item);
+    queue_count = this->enqueue_i (new_item);
+  }
 
   if (queue_count == -1)
     return -1;
@@ -567,33 +571,36 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int queue_count;
 
-  if (this->deactivated_)
-    {
-      errno = ESHUTDOWN;
-      return -1;
-    }
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  // Wait while the queue is full 
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
 
-  while (this->is_full_i ())
-    {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
-    }
-  queue_count = this->enqueue_tail_i (new_item);
+    // Wait while the queue is full 
+
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
+    queue_count = this->enqueue_tail_i (new_item);
+  }
 
   if (queue_count == -1)
     return -1;
