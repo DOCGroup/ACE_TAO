@@ -1,3 +1,16 @@
+Sun Jan  3 18:54:29  1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/On_Demand_Loading.dsw:
+	* examples/POA/On_Demand_Loading/"POA On_Demand_Loading Server.dsp":
+	  Added the NT workspace for the On_Demand_Loading example.
+
+	* examples/POA/Loader/Loader.dsp:
+	* examples/POA/Loader/"POA Loader Server.dsp":
+	  Added the NT workspace for the Loader example.
+
+	* examples/POA/Generic_Servant/Server.dsp:
+	  Changed the settings of the project so that MyFoo.dll is produced as output.
+
 Sun Jan  3 19:27:01 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/Managed_Types.{h,i,cpp}:
