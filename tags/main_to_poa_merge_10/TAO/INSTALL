@@ -1,0 +1,95 @@
+
+     _________________________________________________________________
+                                      
+  Building and Installing TAO
+  
+   TAO has been ported and tested Windows NT, Solaris, VxWorks, and
+   Linux. I expect that major portions of the release will port easily to
+   other platforms that ACE has been ported to. If you can help port TAO
+   to other platforms we'd appreciate it.
+   
+   TAO can be obtained [1]electronically via the WWW and ftp. Besides
+   getting the [2]TAO release you will need [3]ACE. You will likely need
+   the most recent [4]beta version of ACE because TAO tends to track
+   changes to ACE rather closely.
+   
+   A quick build note for users who have used ACE with other ORBs:
+   linking TAO with a version of ACE that must also be linked against
+   another ORB vendor's library, e.g., liborbix.so, will produce
+   undefined and most likely unpredictable and erroneous results.
+   
+     _________________________________________________________________
+                                      
+  On UNIX platforms
+  
+    1. Set ACE_ROOT environment variable as outlined in the [5]ACE
+       installation notes.
+    2. Build and install ACE under $ACE_ROOT.
+          + Change directory to $ACE_ROOT/ace and execute [6]make.
+    3. Set TAO_ROOT environment variable to $ACE_ROOT/TAO.
+    4. Build and install the TAO release under $TAO_ROOT.
+          + Change directory to $TAO_ROOT/tao and execute [7]make.
+    5. Change directory to $TAO_ROOT/tests and execute [8]make.
+    6. Follow instructions on executing the various examples under
+       $TAO_ROOT/tests.
+       
+    _A Note On Make_
+    
+   Since TAO is built atop ACE, TAO re-uses ACE's Makefile structure as
+   well. Thus, just like ACE requires GNU Make, so too does TAO. More
+   exactly, versions of make which are known to _not_ work include those
+   from Solaris 4.x and 5.x, HP-UX, the latest BSD, etc.
+   
+   GNU Make can be obtained from various places in source form.
+     _________________________________________________________________
+                                      
+  On Windows NT
+  
+   Before compiling TAO_IDL on NT, you may need to set the environment
+   variable CPP_PATH to where CL.exe is installed on your machine. By
+   default, we set this variable to to "C:/Program
+   Files/DevStudio/VC/bin". Your location may vary, however. Notice that
+   if you forget to set this variable, you must rebuild TAO_IDL after
+   setting it.
+   
+    Visual C++ 5.0
+    
+   It works best if TAO is placed in ACE_wrappers so TAO ends up in
+   ACE_wrappers\TAO because the Visual C++ 5.0 Project files are set up
+   to work in this configuration. If you move it, then make sure you
+   change the project file to look for the include and library files in
+   the correct place.
+   
+    1. Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or
+       ace-vc50.dsw, whichever is in your copy of ACE).
+       
+    2. Load the workspace tao\TAO.dsw and build the TAO library.
+       
+    3. To build the Cubit test, load the workspace
+       tests\Cubit\TAO\test.dsw and build both client and server.
+       
+    Visual C++ 4.x
+    
+    1. In Tools|Options, go to the Directories page and make sure that
+       include files paths includes ACE_wrappers\ and the root directory
+       of TAO (which can be ACE_wrappers\TAO if installed there). The
+       library files paths should include ACE_wrappers\ace.
+    2. Load the project file tao\TAO.mdp and build the TAO library.
+    3. To build the Cubit test, load the project file
+       tests\Cubit\TAO\test.mdp and build both client and server.
+       
+     _________________________________________________________________
+                                      
+   Back to the [9]TAO home page.
+
+References
+
+   1. file://localhost/.automount/tango/root/export2/project/doc/chris/ACE_wrappers/TAO/TAO-obtain.html
+   2. http://siesta.cs.wustl.edu/~schmidt/TAO-obtain.html
+   3. http://siesta.cs.wustl.edu/~schmidt/ACE-obtain.html
+   4. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz
+   5. file://localhost/.automount/tango/root/export2/project/doc/chris/ACE_wrappers/ACE-INSTALL.html
+   6. file://localhost/.automount/tango/root/export2/project/doc/chris/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   7. file://localhost/.automount/tango/root/export2/project/doc/chris/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   8. file://localhost/.automount/tango/root/export2/project/doc/chris/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   9. http://www.cs.wustl.edu/~schmidt/TAO.html
