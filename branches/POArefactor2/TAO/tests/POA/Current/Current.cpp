@@ -19,6 +19,7 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #include "ace/Log_Msg.h"
 

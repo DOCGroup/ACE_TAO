@@ -19,6 +19,7 @@
 
 #include "testS.h"
 #include "ace/SString.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 class test_i : public POA_test
 {
