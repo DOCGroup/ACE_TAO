@@ -45,14 +45,12 @@ ACE_Task<ACE_SYNCH_USE>::dump (void) const
 
 template<ACE_SYNCH_DECL>
 ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man,
-                                   ACE_Message_Queue<ACE_SYNCH_USE> *mq,
-                                   int wait_for_threads_in_destructor)
+                                   ACE_Message_Queue<ACE_SYNCH_USE> *mq)
   : ACE_Task_Base (thr_man),
     msg_queue_ (0),
     delete_msg_queue_ (0),
     mod_ (0),
-    next_ (0),
-    wait_for_threads_in_destructor_ (wait_for_threads_in_destructor)
+    next_ (0)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::ACE_Task");
 
@@ -70,13 +68,6 @@ template<ACE_SYNCH_DECL>
 ACE_Task<ACE_SYNCH_USE>::~ACE_Task (void)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::~ACE_Task");
-  // Wait for any and all threads in this task to exit.
-  if (this->wait_for_threads_in_destructor_ != 0
-      && this->wait () == -1)
-    ACE_ERROR ((LM_ERROR, 
-                ASYS_TEXT ("(%t) %p\n"),
-                ASYS_TEXT ("wait() failed in ~ACE_Task_Base")));
-
   if (this->delete_msg_queue_)
     delete this->msg_queue_;
 
