@@ -17,8 +17,6 @@
 #if !defined (TASK_CLIENT_H)
 #define TASK_CLIENT_H
 
-#include <math.h>
-
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
@@ -28,6 +26,8 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "cubitC.h"
+
+#include <math.h>
 
 // @@ Should we put this into a more general file, e.g., OS.h?
 //
@@ -53,10 +53,10 @@ public:
 
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
-static inline int 
-func (u_int i) 
-{ 
-  return i - 117; 
+static inline int
+func (u_int i)
+{
+  return i - 117;
 }
 
 enum Cubit_Datatypes
@@ -169,7 +169,7 @@ class Client : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //     The Cubit client.
-  // 
+  //
   // = DESCRIPTION
   //     This class implements the Cubit Client, which is an active object.
   //     `n' threads execute svc, and make 2way CORBA calls on the server
