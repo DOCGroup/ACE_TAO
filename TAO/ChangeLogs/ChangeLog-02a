@@ -1,3 +1,12 @@
+Thu Mar 09 16:22:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Servant_Base.cpp (_create_stub): Awesome detective work by
+	  Paul Calabrese <calabrese_p@ociweb.com> lead to a bug in this
+	  function.  The <servant_orb> was incorrectly assigned to be the
+	  ORB in the POA Current even when the servant in the POA Current
+	  did not match the servant calling this function.  This solves
+	  bug 471.
+
 Thu Mar  9 08:13:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Gateway.cpp:
