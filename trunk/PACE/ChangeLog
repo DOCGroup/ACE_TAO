@@ -1,3 +1,10 @@
+Thu Jun 01 16:50:48 2000    <luther@cs.wustl.edu>
+
+	* ACE_wrappers/pace/pace/pace.dsw
+	* ACE_wrappers/pace/pace/pace_lib.dsp
+	  
+	  Added to the repository.
+
 Tue May 30 16:54:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* THANKS:
