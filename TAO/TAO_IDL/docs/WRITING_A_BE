@@ -46,7 +46,7 @@ used to construct the CFE. The ARM by Stroustrup and Ellis provides a
 thorough explanation of C++.
 
 This document consists of two independent parts. The first part
-describes all CFE supported protocols and the required
+s all CFE supported protocols and the required
 application programmer's interface entry points that a conformant 
 BE must provide. The second part steps through the process of
 constructing a working BE.
