@@ -2232,26 +2232,56 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
         } // end switch direction
       break;
     case AST_Decl::NT_native:
-      {
-        switch (cg->state ())
-          {
-          case TAO_CodeGen::TAO_ARGUMENT_CH:
-            // to keep the MSVC++ compiler happy
-            *os << bt->nested_type_name (bif) << " " << arg->local_name () <<
-              ", ";
-            break;
-          case TAO_CodeGen::TAO_ARGUMENT_CS:
-          case TAO_CodeGen::TAO_ARGUMENT_SH:
-            *os << bt->name () << " " << arg->local_name () << ", ";
-            break;
-          case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
-          case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
-            *os << "env.exception (new CORBA::MARSHAL " <<
-              "(CORBA::COMPLETED_NO));" << nl;
-            break;
-          default:
-            break;
-          }
+      { 
+	switch (arg->direction ())
+	  {
+	  case AST_Argument::dir_IN:
+	    {
+	      switch (cg->state ())
+		{
+		case TAO_CodeGen::TAO_ARGUMENT_CH:
+		  // to keep the MSVC++ compiler happy
+		  *os << bt->nested_type_name (bif) << " "
+		      << arg->local_name () << ", ";
+		  break;
+		case TAO_CodeGen::TAO_ARGUMENT_CS:
+		case TAO_CodeGen::TAO_ARGUMENT_SH:
+		  *os << bt->name () << " " << arg->local_name () << ", ";
+		  break;
+		case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+		case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+		  *os << "env.exception (new CORBA::MARSHAL " <<
+		    "(CORBA::COMPLETED_NO));" << nl;
+		  break;
+		default:
+		  break;
+		}
+	    case AST_Argument::dir_INOUT:
+	    case AST_Argument::dir_OUT:
+	      {
+		switch (cg->state ())
+		  {
+		  case TAO_CodeGen::TAO_ARGUMENT_CH:
+		    // to keep the MSVC++ compiler happy
+		    *os << bt->nested_type_name (bif) << " &"
+			<< arg->local_name () << ", ";
+		    break;
+		  case TAO_CodeGen::TAO_ARGUMENT_CS:
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
+		    *os << bt->name () << " &"
+			<< arg->local_name () << ", ";
+		    break;
+		  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+		  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+		    *os << "env.exception (new CORBA::MARSHAL " <<
+		      "(CORBA::COMPLETED_NO));" << nl;
+		    break;
+		  default:
+		    break;
+		  }
+	      }
+	    }
+	  }
       }
       break;
     case AST_Decl::NT_except: // type is an exception
