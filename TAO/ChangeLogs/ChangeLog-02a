@@ -1,3 +1,11 @@
+Sun Mar 18 02:43:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.dsp:
+	* orbsvcs/orbsvcs/Security.bor:
+
+	  Added new Security Level 1 related files to the source lists in
+	  these files.
+
 Sun Mar 18 01:53:42 2001  Ossama Othman  <ossama@uci.edu>
 
 	* Security/Security_Current.cpp:
