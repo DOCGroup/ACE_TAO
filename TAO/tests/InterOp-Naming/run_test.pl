@@ -32,7 +32,7 @@ if (ACE::waitforfile_timed ($file, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        ."-ORBInitRef random_service="
-                       ."corbaloc:iiop://$TARGETHOSTNAME:$port/object_name");
+                       ."corbaloc:iiop:$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -48,7 +48,7 @@ print STDERR "\n\n==== InvalidName test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " not_a_service "
                        ."-ORBInitRef random_service="
-                       ."corbaloc:iiop://$TARGETHOSTNAME:$port/object_name");
+                       ."corbaloc:iiop:$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -64,7 +64,7 @@ print STDERR "\n\n==== DefaultInitRef test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef"
-                       ." corbaloc:iiop://$TARGETHOSTNAME:$port/");
+                       ." corbaloc:iiop:$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -84,9 +84,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        . "-ORBInitRef random_service="
                        ."corbaloc:"
-                       ."iiop://$TARGETHOSTNAME:$port1,"
-                       ."iiop://$TARGETHOSTNAME:$port2,"
-                       ."iiop://$TARGETHOSTNAME:$port"
+                       ."iiop:$TARGETHOSTNAME:$port1,"
+                       ."iiop:$TARGETHOSTNAME:$port2,"
+                       ."iiop:$TARGETHOSTNAME:$port"
                        ."/object_name");
 
 $client = $CL->TimedWait (60);
@@ -109,9 +109,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        . " -l "
                        . "-ORBInitRef random_service="
                        . "corbaloc:"
-                       . "iiop://$TARGETHOSTNAME:$port1,"
-                       . "iiop://$TARGETHOSTNAME:$port2,"
-                       . "iiop://$TARGETHOSTNAME:$port"
+                       . "iiop:$TARGETHOSTNAME:$port1,"
+                       . "iiop:$TARGETHOSTNAME:$port2,"
+                       . "iiop:$TARGETHOSTNAME:$port"
                        . "/object_name");
 
 $client = $CL->TimedWait (60);
@@ -129,9 +129,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."corbaloc:"
-                       ."iiop://$TARGETHOSTNAME:$port1,"
-                       ."iiop://$TARGETHOSTNAME:$port2,"
-                       ."iiop://$TARGETHOSTNAME:$port/");
+                       ."iiop:$TARGETHOSTNAME:$port1,"
+                       ."iiop:$TARGETHOSTNAME:$port2,"
+                       ."iiop:$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -148,7 +148,7 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."corbaloc:"
-                       ."iiop://$TARGETHOSTNAME:$port/");
+                       ."iiop:$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
