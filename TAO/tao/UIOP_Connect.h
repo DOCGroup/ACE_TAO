@@ -51,9 +51,6 @@ public:
   TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
   virtual TAO_Transport *transport (void) = 0;
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
 };
 
 // ****************************************************************

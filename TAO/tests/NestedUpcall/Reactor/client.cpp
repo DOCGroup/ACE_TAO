@@ -146,6 +146,26 @@ NestedUpCalls_Client::init (int argc, char **argv)
 
 
       ACE_DEBUG ((LM_DEBUG, "Reactor received OK\n"));
+
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
