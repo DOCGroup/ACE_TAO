@@ -22,6 +22,7 @@
 
 #include "tao/TAO.h"
 #include "orbsvcs/AVStreamsC.h"
+#include "AV_export.h"
 
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
@@ -182,6 +183,11 @@ protected:
   TAO_ORB_Manager orb_manager_;
   CORBA::Boolean stop_run_;
 };
+
+#define TAO_AV_CORE_SINGLETON_DEFINE ACE_Singleton <TAO_AV_Core, ACE_Null_Mutex>
+TAO_AV_SINGLETON_DECLARATION (TAO_AV_CORE_SINGLETON_DEFINE);
+
+typedef TAO_AV_CORE_SINGLETON_DEFINE TAO_AV_CORE;
 
 #include "ace/post.h"
 #endif /* TAO_AV_CORE_H */
