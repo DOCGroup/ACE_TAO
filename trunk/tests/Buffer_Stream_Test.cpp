@@ -39,24 +39,25 @@ static ACE_Thread_Manager thread_manager;
 
 class Common_Task : public MT_Task
   // = TITLE
-  //   Methods that are common to the producer and consumer.
+  //   Methods that are common to the Supplier and consumer.
 {
 public:
   Common_Task (void) {}
-  // ACE_Task hooks
+
+  // = ACE_Task hooks.
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
 };
 
-// Define the Producer interface. 
-
-class Producer : public Common_Task
+class Supplier : public Common_Task
+// = TITLE
+// Define the Supplier interface. 
 {
 public:
-  Producer (void) {}
+  Supplier (void) {}
 
-  // Read data from stdin and pass to consumer.
   virtual int svc (void);
+  // Read data from stdin and pass to consumer.
 };
 
 class Consumer : public Common_Task
@@ -66,16 +67,16 @@ class Consumer : public Common_Task
 public:
   Consumer (void) {}
 
+  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
 
-  // Receive message from producer and print to stdout.
   virtual int svc (void);
-
+  // Receive message from Supplier and print to stdout.
 private:
 
   ACE_Time_Value timeout_;
+  // Amount of time to wait for a timeout.
 };
 
 // Spawn off a new thread.
@@ -91,8 +92,10 @@ Common_Task::open (void *)
 int 
 Common_Task::close (u_long exit_status)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) thread is exiting with status %d in module %s\n",
-	     exit_status, this->name ()));
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) thread is exiting with status %d in module %s\n",
+	     exit_status,
+	      this->name ()));
 
   // Can do anything here that is required when a thread exits, e.g.,
   // storing thread-specific information in some other storage
@@ -100,14 +103,14 @@ Common_Task::close (u_long exit_status)
   return 0;
 }
 
-// The Producer reads data from the stdin stream, creates a message,
+// The Supplier reads data from the stdin stream, creates a message,
 // and then queues the message in the message list, where it is
 // removed by the consumer thread.  A 0-sized message is enqueued when
 // there is no more data to read.  The consumer uses this as a flag to
 // know when to exit.
 
 int
-Producer::svc (void)
+Supplier::svc (void)
 {
   ACE_NEW_THREAD;
   ACE_Message_Block *mb;
@@ -137,11 +140,10 @@ Producer::svc (void)
   return 0; 
 }
 
-// Simply enqueue the Message_Block into the end of the queue.
-
 int
 Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 { 
+  // Simply enqueue the Message_Block into the end of the queue.
   return this->putq (mb, tv); 
 }
 
@@ -168,7 +170,9 @@ Consumer::svc (void)
     {
       this->timeout_.sec (ACE_OS::time (0) + 4); // Wait for upto 4 seconds
 
-      if ((result = this->getq (mb, &this->timeout_)) == -1)
+      result = this->getq (mb, &this->timeout_);
+
+      if (result == -1)
 	break;
 
       int length = mb->length ();
@@ -182,9 +186,7 @@ Consumer::svc (void)
       mb->release ();
 
       if (length == 0)
-      {
 	break;
-      }
     }
 
   ACE_ASSERT (result == 0 || errno == EWOULDBLOCK);
@@ -201,20 +203,21 @@ main (int, char *[])
   ACE_START_TEST ("Buffer_Stream_Test");
 
 #if defined (ACE_HAS_THREADS)
-  // Control hierachically-related active objects
+  // Control hierachically-related active objects.
   MT_Stream stream;
   MT_Module *cm;
-  MT_Module *pm; 
+  MT_Module *sm; 
 
+  // Allocate the Consumer and Supplier modules.
   ACE_NEW_RETURN (cm, MT_Module ("Consumer", new Consumer), -1);
-  ACE_NEW_RETURN (pm, MT_Module ("Producer", new Producer), -1);
+  ACE_NEW_RETURN (sm, MT_Module ("Supplier", new Supplier), -1);
 
-  // Create Producer and Consumer Modules and push them onto the
-  // STREAM.  All processing is performed in the STREAM.
+  // Create Supplier and Consumer Modules and push them onto the
+  // Stream.  All processing is performed in the Stream.
 
   if (stream.push (cm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
-  else if (stream.push (pm) == -1)
+  else if (stream.push (sm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
 
   // Barrier synchronization: wait for the threads to exit, then exit

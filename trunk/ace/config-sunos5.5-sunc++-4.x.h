@@ -171,13 +171,12 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-/* Uncomment the following macros (and comment out ACE_HAS_STHREADS)
-   if you want to use only POSIX pthreads on Solaris. */
-// #define ACE_HAS_ONEARG_SIGWAIT
-// #define ACE_HAS_PTHREAD_SIGMASK
-// #define ACE_HAS_THR_YIELD
-// #define ACE_LACKS_PTHREAD_YIELD
 /* End of threading #defines */
+
+#define ACE_HAS_ONEARG_SIGWAIT
+#define ACE_HAS_PTHREAD_SIGMASK
+#define ACE_HAS_THR_YIELD
+#define ACE_LACKS_PTHREAD_YIELD
 
 // Reactor detects deadlock
 // #define ACE_REACTOR_HAS_DEADLOCK_DETECTION
