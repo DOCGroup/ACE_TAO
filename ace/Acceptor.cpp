@@ -581,7 +581,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   // socket handle is "ready" and when we call <accept>.  During this
   // interval, the client can shutdown the connection, in which case,
   // the <accept> call can hang!
-  this->peer_acceptor_.enable (ACE_NONBLOCK);
+  if (this->accept_strategy_->acceptor ().enable (ACE_NONBLOCK) != 0)
+    return -1;
 
   return this->reactor ()->register_handler
     (this,
