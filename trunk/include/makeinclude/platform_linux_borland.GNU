@@ -92,6 +92,8 @@ RANLIB  = @true
 DLD     = $(BCB)/bin/ilink
 LD      = $(BCB)/bin/ilink
 
+TAO_IDL_PREPROCESSOR = bcpp
+
 WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
 
 CFLAGS = $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \

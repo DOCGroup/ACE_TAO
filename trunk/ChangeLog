@@ -1,3 +1,8 @@
+Tue Apr 15 11:24:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Use bcpp as TAO_IDL preprocessor.
+
 Tue Apr 15 08:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-borland-common.h:
