@@ -133,17 +133,20 @@ AST_Structure::~AST_Structure (void)
 
 // Are we or the parameter node involved in any recursion?
 idl_bool
-AST_Structure::in_recursion (AST_Type *node)
+AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (node == 0)
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (this->in_recursion_ != -1)
     {
-      // We are determining the recursive status for ourselves.
-      node = this;
+      return this->in_recursion_;
     }
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
+      list.enqueue_tail (this);
+        
       // Initialize an iterator to iterate over our scope.
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls); 
@@ -175,16 +178,18 @@ AST_Structure::in_recursion (AST_Type *node)
                                  ACE_TEXT ("bad field type\n")),
                                 0);
             }
-
-          if (type->in_recursion (node))
+            
+          if (type->in_recursion (list))
             {
-              return 1;
+              this->in_recursion_ = 1;
+              return this->in_recursion_;
             }
         }
     }
 
   // Not in recursion.
-  return 0;
+  this->in_recursion_ = 0;
+  return this->in_recursion_;
 }
 
 // Return the member count.

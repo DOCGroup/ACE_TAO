@@ -123,7 +123,7 @@ public:
   virtual idl_bool is_local (void);
   // Overwrite the is_local method.
 
-  virtual idl_bool in_recursion (AST_Type *node = 0);
+  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   virtual int contains_wstring (void);

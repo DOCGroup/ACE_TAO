@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 
+#include "ace/Unbounded_Queue.h"
+
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear
@@ -95,7 +97,7 @@ public:
 
   virtual ~AST_Type (void);
 
-  virtual idl_bool in_recursion (AST_Type *node = 0);
+  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
@@ -152,7 +154,10 @@ protected:
                            const char *suffix,
                            const char *prefix);
   // Type name of a node used when generating declarations.
-
+  
+  idl_bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
+  
+protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;
@@ -169,6 +174,9 @@ protected:
 
   char *nested_type_name_;
   // For the corresponding method.
+  
+  long in_recursion_;
+  // Storage once the value has been computed.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

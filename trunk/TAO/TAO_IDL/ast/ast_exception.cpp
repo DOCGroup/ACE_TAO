@@ -119,17 +119,13 @@ AST_Exception::~AST_Exception (void)
 
 // Are we or the parameter node involved in any recursion?
 idl_bool
-AST_Exception::in_recursion (AST_Type *node)
+AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (node == 0)
-    {
-      // We are determining the recursive status for ourselves.
-      node = this;
-    }
-
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
+      list.enqueue_tail (this);
+        
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
@@ -159,15 +155,17 @@ AST_Exception::in_recursion (AST_Type *node)
                                 0);
             }
 
-          if (type->in_recursion (node))
+          if (type->in_recursion (list))
             {
-              return 1;
+              this->in_recursion_ = 1;
+              return this->in_recursion_;
             }
         }
     }
 
   // Not in recursion.
-  return 0;
+  this->in_recursion_ = 0;
+  return this->in_recursion_;
 }
 
 // Private operations.

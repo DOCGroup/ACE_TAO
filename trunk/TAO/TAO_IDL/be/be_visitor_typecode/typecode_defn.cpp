@@ -1688,8 +1688,10 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
   // check if we are repeated
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
+    
+  ACE_Unbounded_Queue<AST_Type *> list;
 
-  if (qnode && (be_global->opt_tc () || node->in_recursion ()))
+  if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
     {
       // we are repeated, so we must generate an indirection here
       *os << "0xffffffff, // indirection" << be_nl;
@@ -1914,7 +1916,9 @@ be_visitor_typecode_defn::gen_typecode (be_union *node)
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  if (qnode && (be_global->opt_tc () || node->in_recursion ()))
+  ACE_Unbounded_Queue<AST_Type *> list;
+
+  if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
     {
       // we are repeated, so we must generate an indirection here
       *os << "0xffffffff, // indirection" << be_nl;
@@ -2243,7 +2247,9 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  if (qnode && (be_global->opt_tc () || node->in_recursion ()))
+  ACE_Unbounded_Queue<AST_Type *> list;
+
+  if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
     {
       // we are repeated, so we must generate an indirection here
       *os << "0xffffffff, // indirection" << be_nl;
@@ -2952,7 +2958,9 @@ be_visitor_typecode_defn::compute_tc_size (be_structure *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if ((be_global->opt_tc () || node->in_recursion ())
+  ACE_Unbounded_Queue<AST_Type *> list;
+
+  if ((be_global->opt_tc () || node->in_recursion (list))
       && (this->queue_lookup (this->tc_queue_, node) 
           || this->queue_lookup (this->compute_queue_, node)))
     {
@@ -3134,7 +3142,9 @@ be_visitor_typecode_defn::compute_tc_size (be_union *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if ((be_global->opt_tc () || node->in_recursion ())
+  ACE_Unbounded_Queue<AST_Type *> list;
+
+  if ((be_global->opt_tc () || node->in_recursion (list))
       && (this->queue_lookup (this->tc_queue_, node) 
           || this->queue_lookup (this->compute_queue_, node)))
     {
@@ -3285,7 +3295,9 @@ be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
   // have already been counted in the current computation or not by checking
   // for our presence in the compute queue. In both cases, we only include the
   // 8 bytes in the computation
-  if ((be_global->opt_tc () || node->in_recursion ())
+  ACE_Unbounded_Queue<AST_Type *> list;
+
+  if ((be_global->opt_tc () || node->in_recursion (list))
       && (this->queue_lookup (this->tc_queue_, node) 
           || this->queue_lookup (this->compute_queue_, node)))
     {

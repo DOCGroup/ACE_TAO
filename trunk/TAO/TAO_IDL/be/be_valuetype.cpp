@@ -627,13 +627,10 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
 }
 
 idl_bool
-be_valuetype::in_recursion (AST_Type *node)
+be_valuetype::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (node == 0)
-    {
-      node = this;
-    }
-
+  list.enqueue_tail (this);
+        
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -665,7 +662,8 @@ be_valuetype::in_recursion (AST_Type *node)
       // The check below will catch that use case.
       if (this == type)
         {
-          return 1;
+          this->in_recursion_ = 1;
+          return this->in_recursion_;
         }
 
       if (!type)
@@ -678,10 +676,10 @@ be_valuetype::in_recursion (AST_Type *node)
 
       // IDL doesn't have such a feature as name reuse so
       // just compare fully qualified names.
-      if (!ACE_OS::strcmp (node->full_name (),
-                           type->full_name ()))
+      if (this->match_names (this, list))
         {
-          return 1;
+          this->in_recursion_ = 1;
+          return this->in_recursion_;
         }
 
       if (type->node_type () == AST_Decl::NT_typedef)
@@ -691,14 +689,16 @@ be_valuetype::in_recursion (AST_Type *node)
         }
 
       // Now hand over to our field type.
-      if (type->in_recursion (node))
+      if (type->in_recursion (list))
         {
-          return 1;
+          this->in_recursion_ = 1;
+          return this->in_recursion_;
         }
 
     } // end of for loop
 
-  return 0;
+  this->in_recursion_ = 0;
+  return this->in_recursion_;
 }
 
 idl_bool

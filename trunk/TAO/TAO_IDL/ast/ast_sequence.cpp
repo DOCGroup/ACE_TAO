@@ -133,16 +133,13 @@ AST_Sequence::~AST_Sequence (void)
 // Public operations.
 
 idl_bool
-AST_Sequence::in_recursion (AST_Type *node)
+AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (node == 0)
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (this->in_recursion_ != -1)
     {
-      // There has to be a parameter.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) AST_Sequence::")
-                         ACE_TEXT ("in_recursion - ")
-                         ACE_TEXT ("bad parameter node\n")),
-                        0);
+      return this->in_recursion_;
     }
 
   AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
@@ -156,16 +153,18 @@ AST_Sequence::in_recursion (AST_Type *node)
                         0);
     }
 
-  if (!ACE_OS::strcmp (node->full_name (),
-                       type->full_name ()))
+  if (this->match_names (this, list))
     {
       // They match.
-      return 1;
+      this->in_recursion_ = 1;
+      return this->in_recursion_;
     }
   else
     {
-      // Not in recursion.
-      return 0;
+      // Check the element type.
+      list.enqueue_tail (this);
+      this->in_recursion_ = type->in_recursion (list);
+      return this->in_recursion_;
     }
 }
 
