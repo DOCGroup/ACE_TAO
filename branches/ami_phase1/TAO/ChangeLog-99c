@@ -1,5 +1,13 @@
 Sat May 29 14:02:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* tao/IIOP_Transport.cpp: 
+	Update TAO_IIOP_Client_Transport::send_request to call the Wait
+	Strategy's send_request instead of calling <GIOP::send_request>.
+	* tao/Wait_Strategy.cpp: 
+	* tao/Wait_Strategy.h: Added <send_request> method.  Useful to set
+	the flags in Leader-Follower send_request. Removed #include
+	"tao/GIOP.h". Added "tao/CDR.h". 
+
 	* tests/MT_Client/MT-client.cpp:  Removed this file.
 	* tests/MT_Client/client.cpp: MT version of simple_client.cpp. Old
 	client.cpp with new method get_number.
