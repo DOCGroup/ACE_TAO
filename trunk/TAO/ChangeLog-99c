@@ -1,3 +1,37 @@
+Tue Apr 27 21:46:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Eliminated priority inversion in the reactive dispatcher, we
+	  release the lock during the upcall to limit the time during
+	  which it is held.
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+	  Use the "reactive_push_to_consumer()" method in the
+	  ProxyPushSupplier to ensure that the lock is released during the 
+	  upcall.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+	  The timeout "filters" need direct access to the
+	  ProxyPushSupplier.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+	  Added a new callback method to the ProxyPushSupplier used by the 
+	  Timeout filters to correctly grab the lock before dispatching
+	  the timeout.
+	  We need to control access to this kind of callback interfaces,
+	  possibly using helper classes with "friend" access.
+
+	* orbsvcs/tests/EC_Throughput/ec.conf: 
+	* orbsvcs/Event_Service/svc.conf:
+	  By default use a regular mutex in the ProxyPushSupplier, it is
+	  more efficient and works correctly.
+
 Tue Apr 27 17:27:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/LSOCK_Acceptor.{h,cpp}:

@@ -32,6 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Filter;
+class TAO_EC_ProxyPushSupplier;
 
 class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
 {
@@ -50,7 +51,8 @@ public:
   // destructor...
 
   virtual TAO_EC_Filter*
-      build (RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
+      build (TAO_EC_ProxyPushSupplier *supplier,
+             RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
   // Create the filter, the caller must assume ownership of the filter
   // returned.
 
@@ -74,7 +76,8 @@ public:
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
-  TAO_EC_Filter* build (RtecEventChannelAdmin::ConsumerQOS& qos) const;
+  TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 };
 
 // ****************************************************************
