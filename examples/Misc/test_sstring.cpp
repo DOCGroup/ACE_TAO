@@ -1,9 +1,9 @@
-#include "ace/SString.h"
 // $Id$
 
+#include "ace/SString.h"
 
 int 
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_CString s1 ("hello");
   ACE_CString s2 ("world");
