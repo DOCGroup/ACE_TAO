@@ -61,7 +61,9 @@ namespace CORBA
 
 ACE_TEMPLATE_SPECIALIZATION
 void
-TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (
+    Dynamic::Parameter & p
+  )
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -74,7 +76,9 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr)
+TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (
+    TAO_OutputCDR & cdr
+  )
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (

@@ -326,9 +326,9 @@ CORBA::ORB::create_exception_list (CORBA::ExceptionList_ptr &list
 }
 
 void
-CORBA::ORB::create_operation_list( CORBA::OperationDef_ptr opDef,
-                                  CORBA::NVList_ptr& result
-                                  ACE_ENV_ARG_DECL )
+CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
+                                   CORBA::NVList_ptr &result
+                                   ACE_ENV_ARG_DECL)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -337,20 +337,19 @@ CORBA::ORB::create_operation_list( CORBA::OperationDef_ptr opDef,
 
   if (adapter == 0)
     {
-       ACE_THROW (CORBA::NO_IMPLEMENT (
-                             CORBA::SystemException::_tao_minor_code (
-                             TAO_DEFAULT_MINOR_CODE,
-                             ENOTSUP),
-                           CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::INTF_REPOS ());
     }
 
-  adapter->create_operation_list(this, opDef, result ACE_ENV_ARG_PARAMETER);
+  adapter->create_operation_list (this, 
+                                  opDef, 
+                                  result 
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 
 void
 CORBA::ORB::create_environment (CORBA::Environment_ptr &environment
-                               ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (environment,
                     CORBA::Environment (),
@@ -1166,16 +1165,15 @@ CORBA::ORB::resolve_initial_references (const char *name,
   // Look for an environment variable called "<name>IOR".
   //
   CORBA::String_var ior_env_var_name =
-       CORBA::string_alloc (ACE_OS::strlen (name) + 3);
+    CORBA::string_alloc (ACE_OS::strlen (name) + 3);
 
-  ACE_OS::strcpy (ior_env_var_name,
+  ACE_OS::strcpy (ior_env_var_name.inout (),
                   name);
 
-  ACE_OS::strcat (ior_env_var_name,
+  ACE_OS::strcat (ior_env_var_name.inout (),
                   "IOR");
 
-  ACE_CString service_ior =
-    ACE_OS::getenv (ior_env_var_name.in ());
+  ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
   if (ACE_OS::strcmp (service_ior.c_str (), "") != 0 )
     {
