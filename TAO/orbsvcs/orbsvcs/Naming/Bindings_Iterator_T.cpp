@@ -10,10 +10,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class ITERATOR, class TABLE_ENTRY>
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (ITERATOR *hash_iter,
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
+                                                                     ITERATOR *hash_iter,
                                                                      PortableServer::POA_ptr poa,
                                                                      ACE_SYNCH_RECURSIVE_MUTEX &lock)
   : destroyed_ (0),
+    context_ (context),
     hash_iter_ (hash_iter),
     lock_ (lock),
     poa_ (PortableServer::POA::_duplicate (poa))
@@ -24,7 +26,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (ITERATOR *h
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   delete hash_iter_;
+  context_->interface ()->_remove_ref (ACE_TRY_ENV);
 }
 
 // Return the Default POA of this Servant
@@ -48,11 +52,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  // Check to make sure this object didn't have <destroy> method
-  // invoked on it.
-  if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
-
   b = binding;
 
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
@@ -60,6 +59,22 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
                       this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
+
+  // Check to make sure this object didn't have <destroy> method
+  // invoked on it.
+  if (this->destroyed_)
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+
+  // If the context we are iterating over has been destroyed,
+  // self-destruct.
+  if (context_->destroyed ())
+    {
+      destroy (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+    }
+
   // If there are no more bindings.
   if (hash_iter_->done ())
     return 0;
@@ -99,6 +114,16 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (CORBA::ULong how_many,
   // invoked on it.
   if (this->destroyed_)
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+
+  // If the context we are iterating over has been destroyed,
+  // self-destruct.
+  if (context_->destroyed ())
+    {
+      destroy (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+    }
 
   // If there are no more bindings...
   if (hash_iter_->done ())
@@ -147,6 +172,8 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (CORBA::Environment &ACE_T
   if (this->destroyed_)
     ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 
+  this->destroyed_ = 1;
+
   PortableServer::POA_var poa =
     this->_default_POA (ACE_TRY_ENV);
   ACE_CHECK;
@@ -187,5 +214,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (TABLE_ENTRY *has
     }
   return 1;
 }
+
 
 #endif /* TAO_BINDINGS_ITERATOR_T_CPP */

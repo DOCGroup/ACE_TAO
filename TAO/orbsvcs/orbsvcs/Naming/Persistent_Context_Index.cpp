@@ -157,6 +157,9 @@ TAO_Persistent_Context_Index::init (void)
                       TAO_Naming_Context (context_impl),
                       -1);
 
+      // Let <implementation> know about it's <interface>.
+      context_impl->interface (context);
+
       // Change what we hold in auto pointer.
       temp.release ();
       ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
@@ -238,6 +241,9 @@ TAO_Persistent_Context_Index::recreate_all (void)
       ACE_NEW_RETURN (context,
                       TAO_Naming_Context (context_impl),
                       -1);
+
+      // Let <implementation> know about it's <interface>.
+      context_impl->interface (context);
 
       // Change what we hold in auto pointer.
       temp.release ();

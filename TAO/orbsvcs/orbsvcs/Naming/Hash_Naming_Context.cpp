@@ -20,10 +20,17 @@ ACE_RCSID(Naming, Hash_Naming_Context, "$Id:")
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)
   : context_ (0),
+    interface_ (0),
     destroyed_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     poa_id_ (poa_id)
 {
+}
+
+void
+TAO_Hash_Naming_Context::interface (TAO_Naming_Context *i)
+{
+  this->interface_ = i;
 }
 
 TAO_Hash_Naming_Context::~TAO_Hash_Naming_Context (void)
@@ -510,6 +517,8 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   else
     {
+      this->destroyed_ = 1;
+
       // Remove self from POA.  Because of reference counting, the POA
       // will automatically delete the servant when all pending requests
       // on this servant are complete.
@@ -533,4 +542,16 @@ TAO_Hash_Naming_Context::root (void)
 {
   return (ACE_OS::strcmp (this->poa_id_.fast_rep (),
                           TAO_ROOT_NAMING_CONTEXT) == 0);
+}
+
+int
+TAO_Hash_Naming_Context::destroyed (void)
+{
+  return this->destroyed_;
+}
+
+TAO_Naming_Context *
+TAO_Hash_Naming_Context::interface (void)
+{
+  return this->interface_;
 }
