@@ -268,15 +268,12 @@ Server_i::init (int argc,
       // Get the orb.
       this->orb_ = this->orb_manager_.orb ();
 
-	  printf("1\n");
       // Register the above implementation with the Naming Service.
       this->init_naming_service (TAO_TRY_ENV);
 
-	  printf("2\n");
       // Create the server object.
       this->create_server ();
 
-	  printf("3\n");
       // Register the server object with the Naming Service.
       this->register_server ();
 
