@@ -1,3 +1,17 @@
+Tue Nov 14 19:45:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added missing header and inline files, and removed files
+	  that no longer exist or have been moved to another 
+	  library.
+
+	* tao/poa_macros.h:
+
+	  Removed this file from the repository, since there is now
+	  a duplicate in tao/PortableServer
+
 Tue Nov 14 19:35:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Cache_Manager.cpp (close_i):
