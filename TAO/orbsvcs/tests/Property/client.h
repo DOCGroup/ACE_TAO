@@ -89,17 +89,8 @@ protected:
   int test_define_property_with_mode (CORBA::Environment &env);
   // Defines properties with various modes.
 
-  int test_delete_all_properties (CORBA::Environment &env);
-  // Deleting all the properties.
-
-  int test_get_property_modes (CORBA::Environment &env);
-  // Getting the modes of some properties.
-
   TAO_ORB_Manager manager_;
   // The ORB manager, handles ORB initialization etc.
-
-  TAO_Naming_Client my_name_client_;
-  // The Name Client, simplifies NameService interaction
 
   CosPropertyService::PropertySetDef_var propsetdef_;
   // To test propertySetDef interface.
