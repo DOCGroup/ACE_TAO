@@ -16,20 +16,32 @@
 //
 // ============================================================================
 
+#define ACE_BUILD_SVC_DLL
+
 #include "test_config.h" /* Include first to enable ACE_ASSERT. */
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 
-# if !defined (ACE_LACKS_PRAGMA_ONCE)
-#   pragma once
-# endif /* ACE_LACKS_PRAGMA_ONCE */
+ACE_RCSID(tests, DLL_Test, "$Id$")
 
-// Considering UNIX OS to be default.
-# if defined (ACE_HAS_WIN32)
-#   define ACE_OBJ_SUFFIX ".obj"
-# else
-#   define ACE_OBJ_SUFFIX ".o"
-#endif
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
+// Considering UNIX OS to be default. On Win32 platforms, the symbols are got form the .exe 
+// as one cant have .exe and .dll for the same .cpp. Also, on Win32 platforms one cant use the
+// .obj to obtain symbols dynamically at runtime.
+
+#if defined (ACE_WIN32)
+#	define ACE_OBJ_SUFFIX ".exe"
+#else
+#	define ACE_OBJ_SUFFIX ".o"
+#endif /*ACE_WIN32*/
 
 class Hello
 {
@@ -63,7 +75,8 @@ public:
 
 // This function returns the Hello object pointer.
 
-extern "C"
+extern "C" ACE_Svc_Export Hello *get_hello (void);
+
 Hello *get_hello (void)
 {
   Hello *hello;
@@ -87,10 +100,6 @@ main (int argc, char *argv[])
 
   ACE_DLL ace_dll_obj;
 
-  // *done*@@ Kirthika, the following code is incorrect since you're
-  // trying to do a strcat() on a string literal...  Make
-  // sure you ALWAYS run Purify on your code to find errors
-  // list this.
   int retval = ace_dll_obj.open ("./DLL_Test"ACE_OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,12 +113,9 @@ main (int argc, char *argv[])
                        ace_dll_obj.error()),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "callling get_hello\n"));
-
   auto_ptr <Hello> my_hello = f ();
 
-  // Make the method calls, now that the object pointer is available.
+  // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
   my_hello->say_next ();
 
