@@ -1,3 +1,12 @@
+Tue Feb 22 19:18:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+	* tests/IDL_Test/main.cpp:
+
+	  Removed non-portable use of ServantBase::_downcast() method.  It
+	  no longer exists in TAO.
+
 Tue Feb 22 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Upcall_Command.h:
