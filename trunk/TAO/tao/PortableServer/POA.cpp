@@ -377,6 +377,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   if (result != 0)
     ACE_THROW (CORBA::OBJ_ADAPTER ());
 
+
   // Forced cleanup.  The new memory management scheme is evil and can
   // lead to reference deadlock, i.e., POA holds object A, but POA
   // cannot die because object A hold POA.
@@ -803,6 +804,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       (non_servant_upcall_in_progress == 0 ||
        &non_servant_upcall_in_progress->poa () != this))
     {
+      // According to the ORT spec, after a POA is destroyed, its state
+      // has to be changed to NON_EXISTENT and all the registered
+      // interceptors are to be informed. Since, the POA is destroyed
+      // and is released in the complete_destruction_i method, we are
+      // trying to keep the poa still around by doing a duplicate of
+      // it. (a hack).
+      PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
+
       this->complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -812,6 +821,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+
+
     }
   else
     {
