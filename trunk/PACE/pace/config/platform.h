@@ -56,11 +56,21 @@
 
 /* These platforms are NOT POSIX compliant. */
 
+/* This is really kludgy but not sure what else to do at this point.
+   It appears that if PACE_HAS_POSIX is not defined (i.e., no #define
+   at all of any kind) and the same goes for PACE_VXWORKS then in
+   pace/config/config.h #if PACE_HAS_POSIX == PACE_LYNXOS will evaluate
+   to true. I am assuming both get default values of 0.
+
+   PACE_WIN32 should be defined as 0 though because pace/config/utility.h
+   checks it.
+   */
+
 #elif defined (PACE_VXWORKS)
 # define PACE_LACKS_POSIX PACE_VXWORKS
-# define PACE_LINUX 0
-# define PACE_LYNXOS 0
-# define PACE_SUNOS 0
+# define PACE_LINUX -1
+# define PACE_LYNXOS -1
+# define PACE_SUNOS -1
 # define PACE_WIN32 0
 /* Doesn't use the makefile! */
 #elif defined (WIN32)
@@ -71,6 +81,7 @@
 # define PACE_LYNXOS 0
 # define PACE_SUNOS 0
 # define PACE_VXWORKS 0
+#error "Here in platform.h for Win32"
 #endif
 
 #endif /* PACE_CONFIG_PLATFORM_H */
