@@ -395,7 +395,7 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
   return 0;
 }
 
-int 
+long
 ACE_Proactor::schedule_timer (ACE_Handler &handler, 
 			      const void *act,
 			      const ACE_Time_Value &time)
@@ -403,7 +403,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   return this->schedule_timer (handler, act, time, ACE_Time_Value::zero);
 }
 
-int 
+long
 ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler, 
 					const void *act,
 					const ACE_Time_Value &interval)
@@ -411,7 +411,7 @@ ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
   return this->schedule_timer (handler, act, interval, interval);
 }
 
-int 
+long
 ACE_Proactor::schedule_timer (ACE_Handler &handler, 
 			      const void *act,
 			      const ACE_Time_Value &time,
@@ -424,10 +424,10 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->mutex (), -1);  
 
   // Schedule the timer
-  int result = this->timer_queue_->schedule (&handler, 
-					     act,
-					     absolute_time,
-					     interval);
+  long result = this->timer_queue_->schedule (&handler, 
+					      act,
+					      absolute_time,
+					      interval);
   if (result != -1)
     {
       // no failures: check to see if we are the earliest time
@@ -444,21 +444,23 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   return result;
 }
 
-int 
-ACE_Proactor::cancel_timer (int timer_id, 
-			    const void **arg)
+int
+ACE_Proactor::cancel_timer (long timer_id, 
+			    const void **arg,
+			    int dont_call_handle_close)
 {
   // No need to singal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (timer_id, arg);
+  return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
 }
 
 int 
-ACE_Proactor::cancel_timer (ACE_Handler &handler)
+ACE_Proactor::cancel_timer (ACE_Handler &handler,
+			    int dont_call_handle_close)
 {
   // No need to singal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (&handler);
+  return this->timer_queue_->cancel (&handler, dont_call_handle_close);
 }
 
 int

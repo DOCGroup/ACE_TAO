@@ -1,3 +1,13 @@
+Tue Sep 09 17:16:21 1997    <irfan@TWOSTEP>
+
+	* ace/Proactor: Updated Proactor to bring it upto date with the
+ 	  recent changes to the Timer_Queue.
+
+	* ace/Handle_Set.i (clr_bit and set_bit): These methods now change
+ 	  the size_ member of the class on Win32.  This is necessary since
+ 	  the ACE_Handle_Set::operator fd_set *() accessor has been
+ 	  optimized for size_ == 0.
+
 Tue Sep 09 09:14:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (cleanup_tss): On WIN32 and with ACE_HAS_TSS_EMULATION,
