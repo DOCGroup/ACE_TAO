@@ -41,6 +41,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_WIN32)
         if (this->persistent_ == 0)
           this->using_registry_ = 1;
+        break;
 #else /* ACE_WIN32 */
         ACE_ERROR_RETURN ((
             LM_ERROR,
@@ -49,7 +50,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           1
         );
 #endif /* ACE_WIN32 */
-        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

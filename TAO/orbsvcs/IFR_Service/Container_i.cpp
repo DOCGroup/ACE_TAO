@@ -2100,6 +2100,7 @@ void
 TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
                               const CORBA::Any &value,
                               CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var tc = value.type ();
 
