@@ -78,6 +78,10 @@ CORBA::ValueBase::ValueBase (void)
 {
 }
 
+CORBA::ValueBase::ValueBase (const ValueBase&)
+{
+}
+
 CORBA::ValueBase::~ValueBase (void)
 {
 }

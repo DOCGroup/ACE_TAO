@@ -1,3 +1,11 @@
+Mon Sep 15 12:06:47 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/Valuetype/ValueBase.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+
+          Added explicit base class initialization in copy constructor
+          for valuetypes that support concrete interfaces.
+
 Mon Sep 15 11:16:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Request_Interceptor.cpp :
