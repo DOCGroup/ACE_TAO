@@ -79,7 +79,7 @@ main (int, char *[])
   Tester_Args args (tester_barrier, n_iterations);
 
 #if defined (VXWORKS)
-  // Assign a thread (VxWorks task) name to test that feature.
+  // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *thread_name;
   ACE_NEW_RETURN (thread_name, ACE_thread_t[n_threads], -1);
 
