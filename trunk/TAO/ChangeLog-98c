@@ -4,6 +4,22 @@
 	  Added multiple possesion semantics. CC_Lock.{h,cpp} is
 	  not used anymore.
 
+Wed Jun 10 14:29:55 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.{h,cpp}:
+
+          Moved included header files from .cpp to .h to
+          fix incomplete types error when compiling files 
+          that include the header file and are using the
+          strategized scheduler implementation
+
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h 
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
+
+          Fixed warning when compiling file that include these
+          header files: set all Info_Type values to 0 (Operation).
+          Values were 0-4, where the enum only goes 0-2
+
 Wed Jun 10 13:03:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Explicit_Activation/server.cpp,
