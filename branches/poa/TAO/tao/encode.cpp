@@ -21,6 +21,14 @@
 
 #include "tao/corba.h"
 
+#if defined(VXWORKS) && defined(ghs)
+extern "C"
+{
+  u_int wslen (const CORBA::WChar *);
+  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
+}
+#endif /* HAVE_WIDEC_H */
+
 extern CORBA::TypeCode TC_opaque;
 
 // Encode instances of arbitrary data types based only on typecode.
@@ -1293,7 +1301,11 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       if (env.exception () == 0)
         {
           // get the actual length of the string
+#if defined(VXWORKS) && defined(ghs)
+     CORBA::ULong len = wslen ((CORBA::WChar *) str);
+#else
 	  CORBA::ULong len = ACE_OS::strlen (str);
+#endif
 
           // if it is an unbounded string or if the length is less than the
           // bounds for an unbounded string

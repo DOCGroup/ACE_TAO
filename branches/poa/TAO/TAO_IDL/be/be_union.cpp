@@ -85,11 +85,11 @@ be_union::compute_default_index (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (!d->imported ())
+            {
               bub = be_union_branch::narrow_from_decl (d);
               if (bub->label ()->label_kind () == AST_UnionLabel::UL_default)
                 this->default_index_ = i; // zero based indexing
@@ -135,7 +135,6 @@ be_union::gen_client_header (void)
   be_type *bt;       // type node
   be_state *s;       // code generation state
 
-
   if (!this->cli_hdr_gen_)
     {
       // retrieve a singleton instance of the code generator
@@ -143,6 +142,8 @@ be_union::gen_client_header (void)
 
       ch = cg->client_header ();
 
+      // generate the ifdefined macro for the array type
+      ch->gen_ifdef_macro (this->flatname ());
       ch->indent (); // start with the current indentation level
       *ch << "class " << local_name () << nl;
       *ch << "{" << nl;
@@ -164,25 +165,43 @@ be_union::gen_client_header (void)
 
       cg->push (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH); // set current code gen state
       bt = be_type::narrow_from_decl (this->disc_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "bad disciminant type\n"), -1);
+        }
 
       s  = cg->make_state (); // get the code gen object for the current state
-      if (!s || !bt || (s->gen_code (bt, this) == -1))
+      if (!s)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
-          ACE_ERROR ((LM_ERROR, "Discriminant type generation failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "bad state\n"), -1);
         }
-      cg->pop ();
+
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "codegen for discriminant failed\n"), -1);
+        }
+      cg->pop (); // revert to previous state
 
       // now generate the public defn for the union branch members
       cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CH); // set current code gen state
-
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
-          ACE_ERROR ((LM_ERROR, "member generation failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "codegen for public defn of union members\n"),
+                            -1);
         }
+
       cg->pop ();
 
       // now generate the private data members of the union
@@ -191,7 +210,7 @@ be_union::gen_client_header (void)
       *ch << "private:\n";
       ch->incr_indent ();
       *ch << bt->nested_type_name (this) << " disc_;" << nl; // emit the
-                                           // ACE_NESTED_CLASS macro
+                                                 // ACE_NESTED_CLASS macro
 
       // the members are inside of a union
       *ch << "union" << nl;
@@ -199,36 +218,19 @@ be_union::gen_client_header (void)
       ch->incr_indent (0);
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
-          ACE_ERROR ((LM_ERROR, "data member generation failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "codegen for private members of union\n"), -1);
         }
+
       ch->decr_indent ();
-      *ch << "}; // end of union\n\n";
+      *ch << "}; // end of union\n";
 
       ch->decr_indent ();
       *ch << "};\n\n";
 
-      // generate var defn
-      this->gen_var_defn ();
-
-      // a class is generated for an out defn only for a variable length struct
-      if (this->size_type () == be_decl::VARIABLE)
-        {
-          this->gen_out_defn ();
-        }
-      else
-        {
-          ch->indent ();
-          *ch << "typedef " << this->local_name () << " &" << this->local_name
-            () << "_out;\n\n";
-        }
-
       // Generate the typecode decl
-      // All names in the root scope have length 2 (for the root and
-      // ourself). The children have length greater than 2. Thus, if our name
-      // length is 2 or less, we are outermost and our typecode decl must be
-      // extern, else we are defined static inside the enclosing scope.
       if (this->is_nested ())
         {
           // we have a scoped name
@@ -243,6 +245,41 @@ be_union::gen_client_header (void)
           *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
             ()->last_component () << ";\n\n";
         }
+      ch->gen_endif ();
+
+      // generate the ifdefined macro for the array type
+      ch->gen_ifdef_macro (this->flatname (), "_var");
+      // generate var defn
+      if (this->gen_var_defn () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_header - "
+                             "codegen for _var\n"), -1);
+        }
+      ch->gen_endif ();
+
+      // generate the ifdefined macro for the array type
+      ch->gen_ifdef_macro (this->flatname (), "_out");
+      // a class is generated for an out defn only for a variable length struct
+      if (this->size_type () == be_decl::VARIABLE)
+        {
+          if (this->gen_out_defn () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_union::"
+                                 "gen_client_header - "
+                                 "codegen for _out\n"), -1);
+            }
+        }
+      else
+        {
+          ch->indent ();
+          *ch << "typedef " << this->local_name () << " &" << this->local_name
+            () << "_out;\n\n";
+        }
+      ch->gen_endif ();
+
       cg->pop ();
       this->cli_hdr_gen_ = I_TRUE;
     }
@@ -259,14 +296,29 @@ be_union::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code gen state
-
       cs = cg->client_stubs ();
+
+      // first generate code for any of the members (if required, e.g.,
+      // anonymous sequences, structs, unions, arrays)
+      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code gen state
+      if (be_scope::gen_client_stubs () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_stubs - "
+                             "codegen for scope failed\n"), -1);
+        }
+      cg->pop ();
+
+      // now generate the operations on the union such as the copy constructor
+      // and the assignment operator
 
       *cs << "// *************************************************************"
           << nl;
       *cs << "// Operations for union " << this->name () << nl;
       *cs << "// *************************************************************\n\n";
+
+      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
       // generate the copy constructor and the assignment operator here
       cs->indent ();
@@ -283,15 +335,18 @@ be_union::gen_client_stubs (void)
       cs->incr_indent (0);
       if (be_scope::gen_client_stubs () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_stubs\n"));
-          ACE_ERROR ((LM_ERROR, "constructor codegen failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_stubs - "
+                             "codegen for scope failed\n"), -1);
         }
+
       cs->decr_indent ();
       *cs << "}\n";
       cs->decr_indent ();
       *cs << "}\n\n";
 
+      // assignment operator
       cs->indent ();
       *cs << "// assignment operator" << nl;
       *cs << this->name () << " &" << nl; // return type
@@ -307,10 +362,12 @@ be_union::gen_client_stubs (void)
       cs->incr_indent (0);
       if (be_scope::gen_client_stubs () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_stubs\n"));
-          ACE_ERROR ((LM_ERROR, "assignment op codegen failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_stubs - "
+                             "codegen for scope failed\n"), -1);
         }
+
       cs->decr_indent ();
       *cs << "}" << nl;
       *cs << "return *this;\n";
@@ -325,9 +382,12 @@ be_union::gen_client_stubs (void)
       cs->incr_indent (0);
       if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union:Error generating encapsulation\n\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_stubs - "
+                             "codegen for encapsulation failed\n"), -1);
         }
+
       cs->decr_indent ();
       *cs << "};" << nl;
 
@@ -340,18 +400,6 @@ be_union::gen_client_stubs (void)
       this->cli_stub_gen_ = I_TRUE;
       cg->pop ();
     }
-  return 0;
-}
-
-int
-be_union::gen_server_header (void)
-{
-  return 0;
-}
-
-int
-be_union::gen_server_skeletons (void)
-{
   return 0;
 }
 
@@ -409,24 +457,50 @@ be_union::gen_client_inline (void)
       cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CI); // set current code gen state
       if (be_scope::gen_client_inline () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_inline\n"));
-          ACE_ERROR ((LM_ERROR, "accessor generation failure\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_inline - "
+                             "codegen for scope failed\n"), -1);
         }
+
       cg->pop ();
 
+      // generate the ifdefined macro for the array type
+      ci->gen_ifdef_macro (this->flatname (), "_var");
       if (this->gen_var_impl () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union: _var impl code gen failed\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_inline - "
+                             "codegen for _var failed\n"), -1);
         }
+      ci->gen_endif ();
+
+      // generate the ifdefined macro for the array type
+      ci->gen_ifdef_macro (this->flatname (), "_out");
       if (this->size_type () == be_decl::VARIABLE && this->gen_out_impl () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union: _out impl code gen failed\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_union::"
+                             "gen_client_inline - "
+                             "codegen for _out failed\n"), -1);
         }
+      ci->gen_endif ();
+
       this->cli_inline_gen_ = I_TRUE;
     }
+  return 0;
+}
+
+int
+be_union::gen_server_header (void)
+{
+  return 0;
+}
+
+int
+be_union::gen_server_skeletons (void)
+{
   return 0;
 }
 

@@ -85,9 +85,19 @@ be_exception::gen_client_header (void)
   if (!this->cli_hdr_gen_) // not already generated
     {
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
       TAO_OutStream *ch = cg->client_header (); // output stream
       TAO_NL  nl;        // end line
+      be_scope *s = be_scope::narrow_from_scope (DeclAsScope (this)); // the
+                                                                      // scope
+                                                                      // defined by us
+
+      if (!s)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_exception::"
+                             "gen_client_header - "
+                             "bad scope\n"), -1);
+        }
 
       cg->push (TAO_CodeGen::TAO_EXCEPTION_CH);
       ch->indent (); // start from whatever indentation level we were at
@@ -113,20 +123,43 @@ be_exception::gen_client_header (void)
       *ch << this->local_name () << " (const " << this->local_name () <<
         " &); // copy ctor" << nl;
       *ch << "~" << this->local_name () << "(void); // dtor" << nl;
+
+      // generate constructor that takes each member as a parameter. We need a
+      // new state. Such a constructor exists if we have members
+      if (this->member_count () > 0)
+        {
+          cg->push (TAO_CodeGen::TAO_EXCEPTION_CTOR_CH);
+          s->comma (1); // tell the scope to generate a comma after every
+                        // member is generated
+          *ch << this->local_name () << "(";
+          if (be_scope::gen_client_header () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_exception::"
+                                 "gen_client_header - "
+                                 "codegen for scope failed\n"), -1);
+            }
+          *ch << ");" << nl;
+          s->comma (0); // revert comma generation state
+          cg->pop (); // revert to previous state
+        }
+
       // assignment operator
       *ch << this->local_name () << " &operator= (const " << this->local_name
         () << " &);" << nl;
       // the static _narrow method
       *ch << "static " << this->local_name () <<
         " *_narrow (CORBA::Exception *);\n";
-      // generate code for members i.e., generate a constructor that takes in
-      // that member as a value as well as generate the member
+
+      // generate the members
       if (be_scope::gen_client_header () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_exception::gen_client_header -"
+                             "(%N:%l) be_exception::"
+                             "gen_client_header - "
                              "codegen for scope failed\n"), -1);
         }
+
       ch->decr_indent ();
       *ch << "};" << nl;
 
@@ -189,7 +222,7 @@ be_exception::gen_client_inline (void)
       *ci << "}\n\n";
 
       cg->push (TAO_CodeGen::TAO_EXCEPTION_CI);
-      // constructors for individual members
+      // generate inline code  required of any anonymous types of members
       if (be_scope::gen_client_inline () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -208,7 +241,17 @@ be_exception::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
+  be_scope *s = be_scope::narrow_from_scope (DeclAsScope (this)); // the scope
+                                                                  // defined by
+                                                                  // us
 
+  if (!s)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_exception::"
+                         "gen_client_stubs - "
+                         "bad scope\n"), -1);
+    }
 
   if (!this->cli_stub_gen_)
     {
@@ -258,6 +301,44 @@ be_exception::gen_client_stubs (void)
       *cs << "return *this;\n";
       cs->decr_indent ();
       *cs << "}\n\n";
+
+      // constructor taking all members. We need a new state here. Also, such a
+      // constructor exists if we have any members
+      if (this->member_count () > 0)
+        {
+          cg->push (TAO_CodeGen::TAO_EXCEPTION_CTOR_CS);
+          s->comma (1); // scope should produce comma after every parameter is
+                        // defined
+          cs->indent ();
+          *cs << "// special constructor" << nl;
+          *cs << this->name () << "::" << this->local_name () << "(";
+          if (be_scope::gen_client_stubs () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_exception::gen_client_stubs -"
+                                 "codegen for scope failed\n"), -1);
+            }
+          s->comma (0);
+          cg->pop ();
+          *cs  << ")" << nl;
+
+          *cs << "\t: CORBA_UserException " <<
+            "(ACE_CORBA_3 (TypeCode, _duplicate) (" << this->tc_name () <<
+            "))" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          // assign each individual member. We need yet another state
+          cg->push (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
+          if (be_scope::gen_client_stubs () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_exception::gen_client_stubs -"
+                                 "codegen for scope failed\n"), -1);
+            }
+          cg->pop (); // revert to previous state
+          cs->decr_indent ();
+          *cs << "}\n\n";
+        }
 
       // narrow method
       cs->indent ();
@@ -310,6 +391,7 @@ be_exception::gen_server_header (void)
 {
   return 0;
 }
+
 
 int
 be_exception::gen_server_inline (void)

@@ -45,6 +45,9 @@ class TAO_Export CORBA_Exception : public TAO_IUnknown
   TAO_CONST CORBA::String id (void) const;
   TAO_CONST CORBA::TypeCode_ptr type (void) const;
 
+  // = To implement the narrow method.
+  virtual int _is_a (const char* repository_id) const;
+
   // = Methods required for COM IUnknown support
 
   ULONG  AddRef (void);
@@ -76,6 +79,9 @@ public:
   CORBA_UserException (CORBA::TypeCode_ptr tc);
   ~CORBA_UserException (void);
 
+  virtual int _is_a (const char* interface_id) const;
+  static CORBA_UserException* _narrow (CORBA_Exception* exception);
+
 protected:
   // Copy and assignment operators.
 };
@@ -103,6 +109,9 @@ public:
   void completion (CORBA::CompletionStatus c)
   { _completed = c; }
 
+  virtual int _is_a (const char* type_id) const;
+  static CORBA_SystemException * _narrow (CORBA_Exception* exception);
+
 private:
   CORBA::ULong _minor;
   CORBA::CompletionStatus _completed;
@@ -120,6 +129,8 @@ public: \
                   CORBA::ULong code = 0xffff0000L) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
+  virtual int _is_a (const char* type_id) const; \
+  static CORBA_##name * _narrow (CORBA_Exception* exception); \
 }
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);

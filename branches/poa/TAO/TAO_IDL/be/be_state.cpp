@@ -34,6 +34,7 @@ template class ACE_Singleton<be_state_union_disctypedefn_ch, ACE_SYNCH_RECURSIVE
 template class ACE_Singleton<be_state_union_disctypedefn_ci, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Singleton<be_state_union_public_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Singleton<be_state_union_public_ci, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_public_cs, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Singleton<be_state_union_private_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Singleton<be_state_operation, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Singleton<be_state_argument, ACE_SYNCH_RECURSIVE_MUTEX>;
@@ -50,6 +51,7 @@ template class ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;
 #pragma instantiate ACE_Singleton<be_state_union_disctypedefn_ci, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Singleton<be_state_union_public_ch, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Singleton<be_state_union_public_ci, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<be_state_union_public_cs, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Singleton<be_state_union_private_ch, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Singleton<be_state_operation, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Singleton<be_state_argument, ACE_SYNCH_RECURSIVE_MUTEX>

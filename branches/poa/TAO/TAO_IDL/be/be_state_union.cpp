@@ -33,7 +33,12 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
 
   bu = be_union::narrow_from_decl (d); // downcast to union type
   if (!bu)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_disctypedefn_ch::"
+                         "gen_code - "
+                         "bad union node\n"), -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -66,7 +71,12 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
         // definition. However, check that we are not inside a recursive call
         if (bt->node_type () == AST_Decl::NT_enum)
           if (bt->gen_client_header () == -1)
-            return -1;
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_disctypedefn_ch::"
+                                 "gen_code - "
+                                 "codegen for discrim failed\n"), -1);
+            }
 
         os->indent ();
         // the set method
@@ -82,11 +92,16 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
         be_type *temp; // most primitive base type
         be_typedef *t = be_typedef::narrow_from_decl (bt);
         if (!t)
-          return -1;
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_state_union_disctypedefn_ch::"
+                               "gen_code - "
+                               "bad typedef node\n"), -1);
+          }
+
         temp = t->primitive_base_type ();
         return this->gen_code (t, d, temp);
       }
-      //break;  unreachable statement!
     } // end of switch
   return 0;
 }
@@ -106,7 +121,12 @@ be_state_union_disctypedefn_ci::gen_code (be_type *bt, be_decl *d, be_type *type
 
   bu = be_union::narrow_from_decl (d); // downcast to union type
   if (!bu)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_disctypedefn_ci::"
+                         "gen_code - "
+                         "bad union node\n"), -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -180,14 +200,21 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
   os = cg->client_header (); // get client header stream
   ub = be_union_branch::narrow_from_decl (d); // downcast to union branch node
   if (!ub)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_ch::"
+                         "gen_code - "
+                         "bad union member\n"), -1);
+    }
 
   bu = be_union::narrow_from_scope (ub->defined_in ());
   if (bu == NULL)
-    return -1;
-
-  // pass the union branch node just incase it is needed
-  cg->node (ub);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_ch::"
+                         "gen_code - "
+                         "bad union node\n"), -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -195,10 +222,7 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
        // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
-  // generate code based on type. For every case, first downcast to the
-  // appropriate type. If the downcast fails, return error, else proceed. In
-  // some cases, the type itself may need code generation, e.g., anonymous
-  // struct types.
+  // codegen based on node type and the state we are in
   switch (type->node_type ())
     {
     case AST_Decl::NT_interface: // type is an obj reference
@@ -211,12 +235,46 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
       }
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
+      {
+        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (type);
+        if (!bpd)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_state_union_public_ch::"
+                               "gen_code - "
+                               "bad predefined type\n"), -1);
+          }
+
+        if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+          {
+            os->indent (); // start from current indentation
+            *os << "void " << ub->local_name () << " (" << bt->nested_type_name
+              (bu) << "_ptr);// set" << nl;
+            *os << bt->nested_type_name (bu) << "_ptr " << ub->local_name () <<
+              " (void) const; // get method\n\n";
+          }
+        else
+          {
+            os->indent (); // start from current indentation
+            *os << "void " << ub->local_name () << " (" << bt->nested_type_name
+              (bu) << ");// set" << nl;
+            *os << bt->nested_type_name (bu) << " " << ub->local_name () <<
+              " (void) const; // get method\n\n";
+          }
+      }
+      break;
     case AST_Decl::NT_enum: // type is an enum
       {
+        // XXXASG - TODO - what if we have a pseudo obj?
         // if the type is an enum, we generate its defn first
         if (bt->node_type () == AST_Decl::NT_enum)
           if (bt->gen_client_header () == -1)
-            return -1;
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ch::"
+                                 "gen_code - "
+                                 "bad union member\n"), -1);
+            }
 
         os->indent (); // start from current indentation
         *os << "void " << ub->local_name () << " (" << bt->nested_type_name (bu)
@@ -261,7 +319,12 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // generation. Check if this is not a recursive call
         if (bt->node_type () != AST_Decl::NT_typedef)
           if (bt->gen_client_header () == -1)
-            return -1;
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ch::"
+                                 "gen_code - "
+                                 "codegen for array failed\n"), -1);
+            }
 
         os->indent ();
         *os << "void " << ub->local_name () << " (" << bt->nested_type_name
@@ -278,7 +341,13 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // generate defn for this aggregate unless we are recursively called
         if (bt->node_type () != AST_Decl::NT_typedef)
           if (bt->gen_client_header () == -1)
-            return -1;
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ch::"
+                                 "gen_code - "
+                                 "codegen for type failed\n"), -1);
+            }
+
         os->indent ();
         *os << "void " << ub->local_name () << " (const " <<
           bt->nested_type_name (bu) << " &);// set" << nl;
@@ -286,7 +355,6 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
           () << " (void) const; // get method (read only)" << nl;
         *os << bt->nested_type_name (bu) << " &" << ub->local_name () <<
           " (void); // get method (read/write only)\n\n";
-
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -306,7 +374,6 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      //break;  unreachable statement!
     } // end of switch
 
   // enclosing union is variable if the member is variable
@@ -333,11 +400,21 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
   os = cg->client_inline (); // get client inline stream
   ub = be_union_branch::narrow_from_decl (d); // downcast to union branch node
   if (!ub)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_ci::"
+                         "gen_code - "
+                         "bad union member\n"), -1);
+    }
 
   bu = be_union::narrow_from_scope (ub->defined_in ());
   if (bu == NULL)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_ci::"
+                         "gen_code - "
+                         "bad union node\n"), -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -352,6 +429,19 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_array: // type is an array
     case AST_Decl::NT_interface: // type is an obj reference
       {
+        // for array, generate inline methods  if any
+        // We first need to generate code for this aggregate type. Check
+        // if we are not called recursively thru a typedef
+        if (bt->node_type () == AST_Decl::NT_array
+            && !bt->imported ())
+          if (bt->gen_client_inline () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ci::"
+                                 "gen_code - "
+                                 "codegen for array failed\n"), -1);
+            }
+
         // set method
         os->indent (); // start from current indentation
         *os << "// accessor to set the member" << nl;
@@ -576,10 +666,9 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         os->decr_indent ();
         *os << "}" << nl;
 
-        // return const char*
         if (bt->node_type () == AST_Decl::NT_typedef)
           {
-            *os << "ACE_INLINE " << bt->name () << nl;
+            *os << "ACE_INLINE const " << bt->name () << nl;
           }
         else
           {
@@ -597,6 +686,18 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_sequence: // type is a sequence
     case AST_Decl::NT_union: // type is a union
       {
+        // We first need to generate code for this aggregate type. Check
+        // if we are not called recursively thru a typedef
+        if (bt->node_type () != AST_Decl::NT_typedef
+            && !bt->imported ())
+          if (bt->gen_client_inline () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ci::"
+                                 "gen_code - "
+                                 "codegen for type failed\n"), -1);
+            }
+
         os->indent ();
         // This case has to be handled differently from structs because the data
         // member is a pointer
@@ -659,6 +760,18 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
       break;
     case AST_Decl::NT_struct: // type is a struct
       {
+        // We first need to generate code for this aggregate type. Check
+        // if we are not called recursively thru a typedef
+        if (bt->node_type () != AST_Decl::NT_typedef
+            && !bt->imported ())
+          if (bt->gen_client_inline () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_union_public_ci::"
+                                 "gen_code - "
+                                 "codegen for struct failed\n"), -1);
+            }
+
         os->indent ();
 
         // (1) set from a const
@@ -734,8 +847,155 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      //break;  unreachable statement!
     } // end of switch
+
+  return 0;
+}
+
+be_state_union_public_cs::be_state_union_public_cs (void)
+{
+}
+
+// generate code for union branch members in client header.  This involves
+// generating the set/get methods corresponding to the members
+int
+be_state_union_public_cs::gen_code (be_type *bt, be_decl *d, be_type *type)
+{
+  TAO_OutStream *os; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  be_union_branch *ub; // union branch member
+  be_union *bu;      // enclosing union
+
+  os = cg->client_stubs (); // get client stubs stream
+  ub = be_union_branch::narrow_from_decl (d); // downcast to union branch node
+  if (!ub)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_cs::"
+                         "gen_code - "
+                         "bad union member\n"), -1);
+    }
+
+  bu = be_union::narrow_from_scope (ub->defined_in ());
+  if (!bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_public_cs::"
+                         "gen_code - "
+                         "bad union member\n"), -1);
+    }
+
+  if (!type) // not a recursive call
+    type = bt;
+  else // recursively called thru a typedef. "type" will have the most primitive
+       // base class of the typedef
+    ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
+
+  switch (cg->state ())
+    {
+    case TAO_CodeGen::TAO_UNION_PUBLIC_CS:
+      {
+        switch (type->node_type ())
+          {
+          case AST_Decl::NT_interface: // type is an obj reference
+          case AST_Decl::NT_pre_defined: // type is predefined type
+          case AST_Decl::NT_string: // type is a string
+            {
+              // nothing
+            }
+            break;
+          case AST_Decl::NT_enum: // type is an enum
+            {
+              if (bt->node_type () == AST_Decl::NT_enum)
+                if (bt->gen_client_stubs () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_union_public_cs::"
+                                       "gen_code - "
+                                       "codegen for type failed\n"), -1);
+                  }
+            }
+            break;
+          case AST_Decl::NT_array: // type is an array
+            {
+              // generate code for the array. So let the array handle code
+              // generation. Check if this is not a recursive call
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                if (bt->gen_client_stubs () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_union_public_cs::"
+                                       "gen_code - "
+                                       "codegen for type failed\n"), -1);
+                  }
+
+            }
+            break;
+          case AST_Decl::NT_sequence: // type is a sequence
+          case AST_Decl::NT_struct: // type is a struct
+          case AST_Decl::NT_union: // type is a union
+            {
+              // generate defn for this aggregate unless we are recursively called
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                if (bt->gen_client_stubs () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_union_public_cs::"
+                                       "gen_code - "
+                                       "codegen for type failed\n"), -1);
+                  }
+            }
+            break;
+          case AST_Decl::NT_except: // type is an exception
+            {
+              // XXXASG: Is this case valid ???
+            }
+            break;
+          case AST_Decl::NT_typedef: // type is a typedef
+            {
+              be_type *temp; // most primitive base type
+              be_typedef *t = be_typedef::narrow_from_decl (bt);
+
+              if (!t)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_state_union_private_cs::"
+                                     "gen_code - "
+                                     "bad typedef\n"), -1);
+                }
+
+              temp = t->primitive_base_type ();
+              // make a recursive call
+              return this->gen_code (t, ub, temp);
+            }
+          } // end of switch node type
+      }
+      break;
+    case TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS:
+      {
+        // This state is used when we are generating the copy ctor and
+        // assignment operator for the union.
+        // Individual assignment of the members takes place inside a case
+        // statement because the type of member assigned is based on the value
+        // of the discriminant
+        os->indent ();
+        if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
+          {
+            *os << "case " << ub->label ()->label_val ()->n ()  << ":\n";
+          }
+        else
+          {
+            *os << "case " << ub->label ()->label_val () << ":\n";
+          }
+        os->incr_indent ();
+        *os << "this->" << ub->local_name () << "_ = u." << ub->local_name ()
+            << "_;" << nl;
+        *os << "break;\n";
+        os->decr_indent (0);
+      }
+      break;
+    }
 
   return 0;
 }
@@ -748,22 +1008,28 @@ int
 be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
   TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_union_branch *ub; // union branch member
   be_union *bu;      // enclosing union
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   os = cg->client_header (); // get client header stream
   ub = be_union_branch::narrow_from_decl (d); // downcast to union branch node
   if (!ub)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_private_ch::"
+                         "gen_code - "
+                         "bad union member\n"), -1);
+    }
 
   bu = be_union::narrow_from_scope (ub->defined_in ());
-  if (bu == NULL)
-    return -1;
+  if (!bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_union_private_ch::"
+                         "gen_code - "
+                         "bad union\n"), -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -787,6 +1053,30 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
       }
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
+      {
+        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (type);
+        if (!bpd)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_state_union_private_ch::"
+                               "gen_code - "
+                               "bad predefined type\n"), -1);
+          }
+
+        if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+          {
+            os->indent (); // start from current indentation
+            *os << bt->nested_type_name (bu) << "_var " << ub->local_name () <<
+              "_;\n";
+          }
+        else
+          {
+            os->indent (); // start from current indentation
+            *os << bt->nested_type_name (bu) << " " << ub->local_name () <<
+              "_;\n";
+          }
+      }
+      break;
     case AST_Decl::NT_enum: // type is an enum
       {
         os->indent (); // start from current indentation
@@ -849,7 +1139,6 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      //break;  unreachable statement!!
     } // end of switch
   return 0;
 }

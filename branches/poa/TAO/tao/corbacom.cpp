@@ -53,6 +53,32 @@ CORBA::String_var::operator= (const CORBA::String_var& r)
   return *this;
 }
 
+#if defined(VXWORKS) && defined(ghs)
+// NOTE: assuming that these don't exist unless they're declared in
+// that header file ...
+
+extern "C" unsigned
+wslen (const CORBA::WChar *str)
+{
+  u_int len = 0;
+
+  while (*str++)
+    len++;
+  return len;
+}
+
+extern "C" CORBA::WChar *
+wscpy (CORBA::WChar *dest,
+       const CORBA::WChar *src)
+{
+  CORBA::WChar	*retval = dest;
+
+  while ((*dest++ = *src++) != 0)
+    continue;
+  return retval;
+}
+#endif	/* VXWORKS &&  ghs */
+
 // Wide Character string utility support; this can need to be
 // integrated with the ORB's own memory allocation subsystem.
 
@@ -68,8 +94,13 @@ CORBA::wstring_copy (const CORBA::WChar *const str)
   if (*str)
     return 0;
 
+#if defined(VXWORKS) && defined(ghs)
+  CORBA::WString	retval = CORBA::wstring_alloc (wslen (str));
+  return wscpy (retval, str);
+#else
   CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
   return ACE_OS::strcpy (retval, str);
+#endif
 }
 
 void

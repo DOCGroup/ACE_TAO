@@ -48,8 +48,18 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-    <P> Current status: (As of Dec 11th, 1997.)
+    <P> Current status: (As of Dec 18th, 1997.)
     <UL>
+      <LI> Very preliminary support for arrays. Not working yet. </LI>
+
+      <LI> Many bugs associated with stub generation fixed. This
+          included support for return values that are variable sized
+          IDL types. Unions improved. </LI>
+
+      <LI> Support for sequences of strings and object references
+          added. However, it is not tested yet so there may be some
+          bugs.  We should have these fixed in a day or so. </LI>
+
       <LI> Support for handling exceptions added. TAO does not use
           direct C++ exceptions. Instead it uses the
           CORBA::Environment based approach. </LI>
@@ -58,6 +68,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           tested in the IDL_Cubit example. A test suite is currently
           being built to test all the parameter passing modes on a
           variety of IDL data types. </LI>
+
+      <LI> Support for attributes completed. Not tested yet. </LI>
 
       <LI> The problem of incorrect code generation for typedefs
           defined in an imported file is resolved.
@@ -69,20 +81,6 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           mechanism. We are currently testing this with the Event
           Channel code. </LI>
 
-      <LI> Generated code closely follows the C++ Mapping specified in
-          the POA Specification (ORBOS/97-05-15). </LI>
-
-      <LI> Many IDL constructs supported including primitive types,
-          typedefs, sequences, structures, and unions. </LI>
-
-      <LI> Generates C++ stubs and skeletons that use TAO's <A
-          HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive IIOP protocol
-          engine</A>.  </LI>
-
-      <LI> Include files are handled properly. So are the definitions
-          used inside the include files that are used in the currently
-          parsed files. </LI>
-
       <LI> The problems arising due to public virtual inheritance when
           casting from an interface class to CORBA::Object_ptr has
           been solved. We do this casting inside the stubs/skeletons
@@ -92,17 +90,28 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           inside the stubs/skeletons work because the compiler has
           knowledge of both types. </LI>
 
-      <LI> IN, INOUT, and OUT object reference parameters are now
-          supported properly. We think the same approach should work
-          for sequences, structs, and unions. </LI>
-
-      <LI> Support for attributes completed and is currently undergoing
-          testing </LI>
-
       <LI> The compiler
           generates correct code for COSS Naming service and it
           runs properly. Correct code also gets generated for the
           Event Channel program </LI>
+
+      <LI> Include files are handled properly. So are the definitions
+          used inside the include files that are used in the currently
+          parsed files. </LI>
+
+      <LI> IN, INOUT, and OUT object reference parameters are now
+          supported properly. We think the same approach should work
+          for sequences, structs, and unions. </LI>
+
+      <LI> Many IDL constructs supported including primitive types,
+          typedefs, sequences, structures, and unions. </LI>
+
+      <LI> Generates C++ stubs and skeletons that use TAO's <A
+          HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive IIOP protocol
+          engine</A>.  </LI>
+
+      <LI> Generated code closely follows the C++ Mapping specified in
+          the POA Specification (ORBOS/97-05-15). </LI>
 
     </UL>
 
@@ -111,9 +120,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 	<LI> Some of the known bugs/incomplete tasks are:
             <UL>
               <LI>
-                  Sequences of strings and object references still
-                  pose problems </LI>
-
+                  We need support for ``TIEs'' (i.e., the object form
+                  of the Adapter pattern). </LI>
               <LI>
                   TypeCode generation for multidimensional arrays and
                   indirected typecodes is still a problem. </LI>
@@ -126,8 +134,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
               <LI> Deal with names in the IDL definition that are C++
                   keywords. </LI>
 
-              <LI> IDL is case insensitive. However, it looks like our
-                  front-end is case sensitive. Thanks to Anil Gopinath
+              <LI> IDL is case-insensitive. However, it looks like our
+                  front-end is case-sensitive. Thanks to Anil Gopinath
                   (anil@ittc.ukans.edu) for pointing this out. </LI>
 
               <LI> tao_idl generates code for a *.idl file only inside
@@ -143,7 +151,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
       Future work:
       <UL>
 
-	<LI>Improve IDL compiler to support complete IDL-to-C++ mapping.</LI>
+	<LI>Improve IDL compiler to generate compiled form of stubs/skeletons.</LI>
 
 	<LI>Fix bugs in the SunSoft IDL front-end we've
             uncovered. These primarily include support for Unions.</LI>
@@ -241,12 +249,7 @@ Service, below are the basic instructions to run it:</P>
 <OL>
 <LI> Compile everything under <CODE>$TAO_ROOT/orbsvcs</CODE>, this
 	needs, obviously, <CODE>$TAO_ROOT/tao</CODE> and
-	the IDL compiler in <CODE>$TAO_ROOT/TAO_IDL</CODE>.
-	You have to add <CODE>config=1</CODE> to your make invocation,
-	this is needed to force the usage of a global scheduling
-	service,
-	currently the collocated, precomputed scheduler cannot be used
-	since the global scheduler cannot be dumped.</LI>
+	the IDL compiler in <CODE>$TAO_ROOT/TAO_IDL</CODE>.</LI>
 
 <LI> Run the naming service, the scheduling service, the event service
 	and the test in
@@ -430,5 +433,6 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
 
 </BODY>
 <hr><P>
+Back to the TAO <A HREF="../index.html">documentation index</A>.
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </HTML>

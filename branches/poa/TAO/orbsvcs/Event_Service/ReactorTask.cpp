@@ -54,20 +54,20 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
     case 0:
       // @@ TODO handle exceptions
       {
-	ACE_TRY
+	TAO_TRY
 	  {
 	    ACE_Scheduler_Factory::server()->set(rt_info_,
 						 0, 0, 0, period,
 						 RtecScheduler::VERY_LOW,
 						 RtecScheduler::NO_QUANTUM,
-						 1, ACE_TRY_ENV);
-	    ACE_CHECK_ENV;
+						 1, TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
 	  }
-	ACE_CATCHANY
+	TAO_CATCHANY
 	  {
 	    ACE_ERROR_RETURN ((LM_ERROR, "set failed\n"), -1);
 	  }
-	ACE_ENDTRY;
+	TAO_ENDTRY;
       }
       break;
 

@@ -22,7 +22,7 @@ ACE_Runtime_Scheduler (int entry_count,
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::create (const char * entry_point,
 			       CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::DUPLICATE_NAME))
 {
   // Just make sure its there and returns its handle (position).
@@ -41,7 +41,7 @@ ACE_Runtime_Scheduler::create (const char * entry_point,
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::lookup (const char * entry_point,
 			       CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return create (entry_point, _env);
 }
@@ -49,12 +49,12 @@ ACE_Runtime_Scheduler::lookup (const char * entry_point,
 RtecScheduler::RT_Info*
 ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
 			    CORBA::Environment &_env)
-     ACE_THROW_SPEC((CORBA::SystemException,
+     TAO_THROW_SPEC((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK))
 {
   if (handle < 0 || handle > entry_count_)
     {
-      ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK(), 0);
+      TAO_THROW_RETURN (RtecScheduler::UNKNOWN_TASK(), 0);
     }
   return rt_info_[handle];
 }
@@ -68,14 +68,14 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
 				 RtecScheduler::Quantum quantum,
 				 CORBA::Long threads,
 				 CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK))
 {
   // We compare the values with the ones stored and print a message on
   // any differences.
   if (handle < 0 || handle > entry_count_)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK);
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK);
       return;
     }
   if (rt_info_[handle]->worst_case_execution_time != time
@@ -98,13 +98,13 @@ void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
 				      RtecScheduler::Sub_Priority& subpriority,
 				      RtecScheduler::Preemption_Priority& p_priority,
 				      CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK,
 		      RtecScheduler::NOT_SCHEDULED))
 {
   if (handle < 0 || handle > entry_count_)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK());
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK());
       return;
     }
   priority = rt_info_[handle]->priority;
@@ -117,7 +117,7 @@ void ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
 						  RtecScheduler::Sub_Priority& subpriority,
 						  RtecScheduler::Preemption_Priority& p_priority,
 						  CORBA::Environment &_env)
-     ACE_THROW_SPEC((CORBA::SystemException,
+     TAO_THROW_SPEC((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK,
 		     RtecScheduler::NOT_SCHEDULED))
 {
@@ -134,12 +134,12 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 					    RtecScheduler::handle_t dependency,
 					    CORBA::Long number_of_calls,
 					    CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle < 0 || handle > entry_count_)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK);
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK);
       return;
     }
   // Just check that the information is consistent.
@@ -160,7 +160,7 @@ void ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 						CORBA::Long maximum_priority,
 						RtecScheduler::RT_Info_Set_out infos,
 						CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
 		      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
 		      RtecScheduler::TASK_COUNT_MISMATCH))

@@ -79,13 +79,14 @@ TAO_Internal::TAO_Internal (void)
 int
 TAO_Internal::close_services (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+			    *ACE_Static_Object_Lock::instance (), -1));
 
   if (service_open_count_ == 0)
     return -1;
 
-  if (--service_open_count_ == 0)
-    return ACE_Service_Config::close ();
+//  if (--service_open_count_ == 0)
+//    return ACE_Service_Config::close ();
 
   return 0;
 }

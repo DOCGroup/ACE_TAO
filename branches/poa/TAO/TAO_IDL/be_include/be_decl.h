@@ -20,6 +20,8 @@
 #if !defined (TAO_BE_DECL_H)
 #define TAO_BE_DECL_H
 
+class be_scope;
+
 /*
  * BE_Decl
  */
@@ -93,6 +95,9 @@ public:
 
   virtual long tc_encap_len (void);
   // return length of encapsulation
+
+  virtual be_scope *scope (void);
+  // return the scope created by this node (if one exists)
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);

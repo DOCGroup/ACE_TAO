@@ -20,6 +20,8 @@
 #if !defined (TAO_BE_SCOPE_H)
 #define TAO_BE_SCOPE_H
 
+class be_decl;
+
 /*
  * BE_Scope
  */
@@ -66,10 +68,19 @@ public:
   virtual long tc_encap_len (void);
   // return length of encapsulation
 
+  virtual void comma (unsigned short set);
+  // set the comma producing state
+
+  virtual be_decl *decl (void);
+  // return the be_decl node corresponding to this scope node
+
   // Narrowing
   DEF_NARROW_METHODS1 (be_scope, UTL_Scope);
   DEF_NARROW_FROM_SCOPE (be_scope);
 
+private:
+  unsigned short comma_;
+  // if set, generate a comma after every element is handled
 };
 
 #endif // if !defined

@@ -20,6 +20,8 @@
 #if !defined (BE_ARRAY_H)
 #define BE_ARRAY_H
 
+class TAO_OutStream;
+
 /*
  * BE_Array
  */
@@ -71,6 +73,10 @@ public:
   virtual int gen_forany_impl (void);
   // the forany impl
 
+  virtual int gen_dimensions (TAO_OutStream *os, unsigned short slice=0);
+  // generate dimensions. If slice == 1, generate dimensions for the slice
+  // definition
+
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -91,6 +97,8 @@ protected:
   virtual int compute_size_type (void);
   // compute the size type if it is unknown
 
+  virtual int create_name (void);
+  // create a name for us
 };
 
 #endif
