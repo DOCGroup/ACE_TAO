@@ -202,10 +202,6 @@ SOURCE=.\small_union.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tmplinst.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\typecode.cpp
 # End Source File
 # Begin Source File

@@ -11,8 +11,7 @@ OBJFILES = \
 	$(OBJDIR)\param_testS.obj \
 	$(OBJDIR)\param_testC.obj \
 	$(OBJDIR)\server.obj \
-	$(OBJDIR)\param_test_i.obj \
-	$(OBJDIR)\tmplinst.obj
+	$(OBJDIR)\param_test_i.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

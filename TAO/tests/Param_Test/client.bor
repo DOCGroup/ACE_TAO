@@ -15,7 +15,6 @@ OBJFILES = \
 	$(OBJDIR)\options.obj \
 	$(OBJDIR)\results.obj \
 	$(OBJDIR)\helper.obj \
-	$(OBJDIR)\tmplinst.obj \
 	$(OBJDIR)\any.obj \
 	$(OBJDIR)\bd_long_seq.obj \
 	$(OBJDIR)\bd_short_seq.obj \

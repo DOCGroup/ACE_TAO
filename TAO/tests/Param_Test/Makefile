@@ -19,8 +19,7 @@ IDL_HDR = param_testC.h param_testS.h
 SVR_FILES =	param_testC	\
 		param_testS	\
 		server		\
-		param_test_i	\
-		tmplinst
+		param_test_i
 
 CLI_FILES =	param_testC	\
 		driver		\
@@ -28,7 +27,6 @@ CLI_FILES =	param_testC	\
 		options		\
 		results		\
 		helper		\
-		tmplinst	\
 		any		\
 		bd_long_seq	\
 		bd_short_seq	\
