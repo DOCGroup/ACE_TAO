@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- IDL -*-
 // $Id$
 
 //File: SecurityLevel2.idl
@@ -13,7 +13,7 @@
 
 module SecurityLevel2 {
 
-# pragma version SecurityLevel2 1.7
+# pragma version SecurityLevel2 1.8
 
     // Forward declaration of interfaces
     local interface PrincipalAuthenticator;
@@ -143,12 +143,14 @@ module SecurityLevel2 {
     // interface audit channel
     local interface AuditChannel {  // Locality Constrained
 
+# pragma version AuditChannel 1.8
+
         void audit_write (
             in   Security::AuditEventType            event_type,
             in   CredentialsList                     creds,
             in   Security::UtcT                      time,
             in   Security::SelectorValueList         descriptors,
-            in   Security::Opaque                    event_specific_data
+            in   any                                 event_specific_data
         );
 
         readonly attribute Security::AuditChannelId audit_channel_id;
