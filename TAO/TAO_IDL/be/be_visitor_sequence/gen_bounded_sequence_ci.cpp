@@ -157,7 +157,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", " << class_name << "::allocbuf(" << node->max_size () << "))" << be_nl
+      << ", 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -222,11 +222,11 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "if (this == &rhs)" << be_idt_nl
       << "return *this;" << be_uidt_nl
       << be_nl
-      << "if (this->release_)" << be_nl
+      << "if (this->release_ && this->buffer_ != 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << class_name << "::allocbuf (rhs.maximum_);" << be_nl
+      << "this->buffer_ = " << class_name << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << be_nl
       <<"TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
@@ -252,7 +252,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
     }
 
   *os << be_nl
-      << "return *this;" << be_uidt_nl << be_uidt_nl
+      << "return *this;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

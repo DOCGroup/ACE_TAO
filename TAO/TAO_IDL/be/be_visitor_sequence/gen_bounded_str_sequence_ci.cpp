@@ -111,7 +111,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
-      << ", " << class_name << "::allocbuf(" << node->max_size () << "))" << be_nl
+      << ", 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -157,7 +157,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "if (this == &rhs)" << be_idt_nl
       << "return *this;" << be_uidt_nl
       << be_nl
-      << "if (this->release_)" << be_nl
+      << "if (this->release_ && this->buffer_ != 0)" << be_nl
       << "{ " << be_idt_nl
       << "char **tmp = ACE_reinterpret_cast (char **, this->buffer_);" << be_nl
       << be_nl
