@@ -1,3 +1,12 @@
+Mon Oct 27 11:11:33 1997  Nanbor Wang  <nw1@CUECA>
+
+	* netsvcs/servers/servers.dsp
+	* netsvcs/lib/netsvcs.dsp:
+	* tests/*.dsp: 
+	* ace/ace_{dll,lib}.dsp: Added project configurations for Alpha
+ 	  machines.  Configurations are named by adding "Alpha" in front
+	  of the original config names, e.g., "Win32 Alpha Unicode Debug.
+
 Mon Oct 27 06:40:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU (show_uninit): Added a
