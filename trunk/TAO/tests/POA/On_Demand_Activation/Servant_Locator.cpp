@@ -43,7 +43,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   if (ACE_OS::strstr (s.in (), "Foo") != 0)
     {
       PortableServer::Servant servant =
-	new MyFooServant (this->orb_.in (), poa, ++this->counter_);
+        new MyFooServant (this->orb_.in (), poa, ++this->counter_);
 
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this MyFooServantLocator.
@@ -54,7 +54,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   else
     {
       CORBA::Exception *exception =
-	new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+        new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
       env.exception (exception);
       return 0;
     }
@@ -73,4 +73,7 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
   ACE_ASSERT (servant == my_servant);
   delete servant;
+
+  // To avoid warning about unused variable with ACE_NDEBUG.
+  ACE_UNUSED_ARG (my_servant);
 }
