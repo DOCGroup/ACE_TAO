@@ -1,6 +1,7 @@
 // $Id$
 
-#include "ace/ACE.h"
+#include "ace/OS.h"
+#include "ace/streams.h"
 
 inline int my_abs (int d) { return d > 0 ? d : -d; }
 
