@@ -52,6 +52,35 @@ TAO_Transport::cache_map_entry (
   this->cache_map_entry_ = entry;
 }
 
+ACE_INLINE unsigned long
+TAO_Transport::purging_order (void) const
+{
+  return this->purging_order_;
+}
+
+ACE_INLINE void
+TAO_Transport::purging_order (unsigned long value)
+{
+  // This should only be called by the Transport Cache Manager when
+  // it is holding it's lock.
+  // The transport should still be here since the cache manager still
+  // has a reference to it.
+  this->purging_order_ = value;
+}
+
+ACE_INLINE int
+TAO_Transport::id (void) const
+{
+  return this->id_;
+}
+
+ACE_INLINE void
+TAO_Transport::id (int id)
+{
+  this->id_ = id;
+}
+
+
 ACE_INLINE int
 TAO_Transport::flush_timer_pending (void) const
 {
@@ -79,18 +108,8 @@ TAO_Transport::check_event_handler_i (const char *caller)
   return 0;
 }
 
-ACE_INLINE unsigned long
-TAO_Transport::purging_order (void) const
+ACE_INLINE TAO_Transport_Cache_Manager &
+TAO_Transport::transport_cache_manager (void)
 {
-  return this->purging_order_;
-}
-
-ACE_INLINE void
-TAO_Transport::purging_order (unsigned long value)
-{
-  // This should only be called by the Transport Cache Manager when
-  // it is holding it's lock.
-  // The transport should still be here since the cache manager still
-  // has a reference to it.
-  this->purging_order_ = value;
+  return this->orb_core_->lane_resources ().transport_cache ();
 }
