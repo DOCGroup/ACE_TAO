@@ -1613,7 +1613,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
     {
       // Get the ith profile
       profile = mp.get_next ();
-      profile->set_policies (policy_list);
+      profile->policies (policy_list);
     }
 
   }
