@@ -19,7 +19,7 @@ ACE_Service_Config::open (int argc,
 // Compare two service descriptors for equality.
 
 ACE_INLINE int
-ACE_Static_Svc_Descriptor::operator== (struct ACE_Static_Svc_Descriptor &d) const
+ACE_Static_Svc_Descriptor::operator== (ACE_Static_Svc_Descriptor &d) const
 {
   return ACE_OS::strcmp (name_, d.name_) == 0;
 }
