@@ -46,7 +46,7 @@ public:
   enum
   {
    /**
-    * @arg REQUIRE_ORDER means that processing stops and @c EOF is
+    * REQUIRE_ORDER means that processing stops and @c EOF is
     * returned as soon as a non-option argument is found. @c opt_ind()
     * will return the index of the next @a argv element so the program
     * can continue processing the rest of the @a argv elements.
@@ -54,7 +54,7 @@ public:
     REQUIRE_ORDER = 1,
 
    /**
-    * @arg PERMUTE_ARGS means the @a argv elements are reordered dynamically
+    * PERMUTE_ARGS means the @a argv elements are reordered dynamically
     * (permuted) so that all options appear first. When the elements are
     * permuted, the order of the options and the following arguments are
     * maintained. When the last option has been processed, @c EOF is
@@ -64,7 +64,7 @@ public:
     PERMUTE_ARGS = 2,
 
    /**
-    * @arg RETURN_IN_ORDER means each @a argv element is processed in the
+    * RETURN_IN_ORDER means each @a argv element is processed in the
     * order is it seen.  If the element is not recognized as an option, '1'
     * is returned and @c opt_arg() refers to the @a argv element found.
     */
