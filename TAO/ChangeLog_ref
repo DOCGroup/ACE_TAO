@@ -1,3 +1,11 @@
+Mon Sep  1 19:13:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDirPolicyC.h: 
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+	* tao/BiDir_GIOP/BiDirPolicyC.i: Regenerated the files. 
+
+	* tao/BiDir_GIOP/BiDirPolicy.pidl: IMproved documentation.
+
 Mon Sep  1 13:51:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BoundsC.h:
