@@ -55,7 +55,7 @@ public:
 
   int open (ACE_DL_TYPE dll_name, 
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
-            int close_on_destruction = 0);
+            int close_on_destruction = 1);
   // This method opens and dynamically links <dll_name>.  The default
   // mode is <RTLD_LAZY>, which loads identifier symbols but not the
   // symbols for functions, which are loaded dynamically on-demand.
