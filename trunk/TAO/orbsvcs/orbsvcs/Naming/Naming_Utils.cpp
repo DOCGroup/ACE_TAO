@@ -25,8 +25,8 @@
 // Default constructor
 
 TAO_Naming_Server::TAO_Naming_Server (void)
-  : ior_multicast_ (0),
-    naming_context_ptr_ (0)
+  naming_context_ptr_ (0),
+  ior_multicast_ (0)
 {
 }
 

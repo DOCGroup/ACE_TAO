@@ -34,6 +34,7 @@ Naming_Service::Naming_Service (int argc,
 
 // Initialize the state of the Naming_Service object
 
+int
 Naming_Service::init (int argc,
 		      char** argv)
 {
