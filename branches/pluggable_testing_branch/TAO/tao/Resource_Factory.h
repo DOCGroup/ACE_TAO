@@ -75,7 +75,7 @@ public:
   // return a reference to the character representation of the protocol
   // factories name.
 
-  const TAO_Protocol_Factory *factory (void);
+  TAO_Protocol_Factory *factory (void);
   // return a pointer to the protocol factory.
 
   void factory (TAO_Protocol_Factory *factory);

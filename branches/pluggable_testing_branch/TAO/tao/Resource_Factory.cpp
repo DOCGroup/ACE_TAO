@@ -17,7 +17,7 @@ TAO_Protocol_Item::protocol_name (void)
   return this->name_;
 }
 
-const TAO_Protocol_Factory *
+TAO_Protocol_Factory *
 TAO_Protocol_Item::factory (void)
 {
   return this->factory_;
