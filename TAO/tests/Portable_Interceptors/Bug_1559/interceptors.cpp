@@ -106,6 +106,11 @@ Echo_Client_Request_Interceptor::send_request (
 
   if (send_request_count == 1)
     {
+      if (exception_count != 1)
+        {
+	  ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected exception_count is <1>\n"));
+        }
       ACE_ASSERT (exception_count == 1);
       // Populate target member of the ClientRequestInfo.
 
@@ -143,6 +148,11 @@ Echo_Client_Request_Interceptor::send_request (
   else if (send_request_count == 2)
     {
       ACE_DEBUG ((LM_DEBUG, "Exception count: %i\n", exception_count));
+      if (exception_count != 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected exception_count is <2>\n"));
+        }
       ACE_ASSERT (exception_count == 2);
       // Populate target member of the ClientRequestInfo.
 
