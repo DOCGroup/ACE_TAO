@@ -1,3 +1,15 @@
+Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Makefile.tests:
+		  Readded Multihomed_INET_Addr_Test that was mistakenly left out
+          when the makefiles were reorganized.
+
+        * tests/Proactor_Timer_Test.dsp:
+        * tests/Service_Config_Tests.dsp:
+        * tests/Test_Output.dsp:
+          Fixed library path problems in Win32 Release builds.  Thanks to
+          Simon McQueen <sm@prismtechnologies.com> for reporting this.
+
 Thu May 22 12:52:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:

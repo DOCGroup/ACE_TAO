@@ -20,7 +20,7 @@ BIN =   ACE_Test \
         Auto_IncDec_Test \
         Barrier_Test \
         Basic_Types_Test \
-	Bound_Ptr_Test \
+        Bound_Ptr_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
         Cached_Accept_Conn_Test \
@@ -30,11 +30,11 @@ BIN =   ACE_Test \
         CDR_File_Test \
         CDR_Test \
         Collection_Test \
-	Config_Test \
+        Config_Test \
         Conn_Test \
         Date_Time_Test \
-	Dev_Poll_Reactor_Test \
-	Dirent_Test \
+        Dev_Poll_Reactor_Test \
+        Dirent_Test \
         DLList_Test \
         DLL_Test\
         Enum_Interfaces_Test \
@@ -42,7 +42,7 @@ BIN =   ACE_Test \
         FIFO_Test \
         Future_Test \
         Future_Set_Test \
-	Get_Opt_Test \
+        Get_Opt_Test \
         Handle_Set_Test \
         High_Res_Timer_Test \
         Hash_Map_Manager_Test \
@@ -51,12 +51,12 @@ BIN =   ACE_Test \
         IOStream_Test \
         Lazy_Map_Manager_Test \
         Log_Msg_Test \
-	Logging_Strategy_Test \
+        Logging_Strategy_Test \
         Malloc_Test \
         Map_Test \
         Map_Manager_Test \
         Max_Default_Port_Test \
-	MEM_Stream_Test \
+        MEM_Stream_Test \
         Mem_Map_Test \
         MM_Shared_Memory_Test \
         MT_Reactor_Timer_Test \
@@ -67,14 +67,15 @@ BIN =   ACE_Test \
         Message_Queue_Test_Ex \
         Message_Queue_Notifications_Test \
         Multicast_Test \
+        Multihomed_INET_Addr_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
         Obstack_Test \
         OrdMultiSet_Test \
         OS_Test \
-	Proactor_Scatter_Gather_Test \
-	Proactor_Test \
-	Proactor_Timer_Test \
+        Proactor_Scatter_Gather_Test \
+        Proactor_Test \
+        Proactor_Timer_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
         Priority_Buffer_Test \
@@ -94,7 +95,7 @@ BIN =   ACE_Test \
         Recursive_Condition_Test \
         Recursive_Condition_Bug_Test \
         Recursive_Mutex_Test \
-	Refcounted_Auto_Ptr_Test \
+        Refcounted_Auto_Ptr_Test \
         Reverse_Lock_Test \
         Semaphore_Test \
         Signal_Test \
@@ -115,10 +116,10 @@ BIN =   ACE_Test \
         Time_Service_Test \
         Time_Value_Test \
         Timer_Queue_Test \
-	Token_Strategy_Test \
+        Token_Strategy_Test \
         TP_Reactor_Test \
         TSS_Test \
-	Vector_Test \
+        Vector_Test \
         UPIPE_SAP_Test \
         Unbounded_Set_Test_Ex \
         Upgradable_RW_Test
