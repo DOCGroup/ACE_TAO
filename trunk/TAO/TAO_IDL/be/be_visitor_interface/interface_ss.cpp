@@ -82,6 +82,32 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_optable;" << be_uidt_nl
       << "}\n\n";
 
+  *os << "// copy ctor" << be_nl;
+  // find if we are at the top scope or inside some module
+  if (!node->is_nested ())
+    {
+      // we are outermost. So the POA_ prefix is prepended to our name
+      *os << node->full_skel_name () << "::POA_"
+	  << node->local_name () << " ("
+	  << "POA_" << node->local_name () << "& rhs)";
+    }
+  else
+    {
+      // the POA_ prefix is prepended to our outermost module name
+      *os << node->full_skel_name () << "::"
+	  << node->local_name () << " ("
+	  << node->local_name () << "& rhs)";
+    }
+  *os << be_idt_nl
+      << ": ";
+  if (node->traverse_inheritance_graph
+      (be_interface::copy_ctor_helper, os) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "be_visitor_interface_ss::visit_interface - "
+		       " copy ctor generation failed\n"), -1);
+  *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
+      << "{}\n";
+
   // destructor
   os->indent ();
   *os << "// skeleton destructor" << be_nl;

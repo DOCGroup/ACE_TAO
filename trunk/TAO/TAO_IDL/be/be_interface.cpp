@@ -1596,6 +1596,31 @@ be_interface::collocated_ctor_helper (be_interface *derived,
   return 0;
 }
 
+int
+be_interface::copy_ctor_helper (be_interface *derived,
+				be_interface *base,
+				TAO_OutStream *os)
+{
+  if (derived == base)
+    // we are the same. Don't do anything, otherwise we will end up calling
+    // ourself
+    return 0;
+
+  if (base->is_nested ())
+    {
+      be_decl *scope;
+      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
+          << base->local_name () << ") (rhs)," << be_nl;
+    }
+  else
+    {
+      *os << "  " << base->full_skel_name () << " (rhs)," << be_nl;
+    }
+
+  return 0;
+}
+
 const char*
 be_interface::relative_coll_name (const char *collname)
 {
