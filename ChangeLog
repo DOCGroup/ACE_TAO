@@ -1,3 +1,9 @@
+Tue Mar  2 12:33:51 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/compiler.m4: Added HPUX_VERS to HP-UX compiler options, and
+	  -D_HPUX_SOURCE to aC++ options. This mirrors what the traditional
+	  platform options do.
+
 Tue Mar  2 11:16:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BMakeWorkspaceCreator.pm:
