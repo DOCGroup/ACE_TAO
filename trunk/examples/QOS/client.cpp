@@ -296,8 +296,9 @@ main (int argc, char * argv[])
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-                     &ace_qos, // ACE_QoS.
-                     &dwBytes) == -1) // bytes returned.
+	                 SIO_SET_QOS,
+                     ace_qos, // ACE_QoS.
+					 &dwBytes) == -1) // bytes returned.
     ACE_ERROR ((LM_ERROR,
                 "Error in Qos set ACE_OS::ioctl() %d\n",
                 dwBytes));					   	
