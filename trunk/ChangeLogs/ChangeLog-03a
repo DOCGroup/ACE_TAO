@@ -1,5 +1,10 @@
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch_T.{h,i}: Added a new ACE_Guard constructor that
+	  allows the caller to select whether the guard owns/acquires the
+ 	  lock or not.  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for
+ 	  contributing this.
+
 	* ace/Synch_T.{h,i}: Added a disown() method that relinquishes
  	  ownership of the lock so that it is not released implicitly in
  	  the destructor.  Thanks to Chris Kohlhoff <chris@kohlhoff.com>
