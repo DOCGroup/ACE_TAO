@@ -7,7 +7,7 @@
 
 PACE_DOC++ = /project/doc/pkg/bin/doc++
 index.html:
-	$(PACE_DOC++) -H -F -B banner ../posix/*.h
+	$(PACE_DOC++) -H -F -B banner ../*.h
 
 clean:
 	$(RM) *.html *.gif *.class *.tex *.db .html
