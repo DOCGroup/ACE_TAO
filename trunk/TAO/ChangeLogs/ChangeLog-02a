@@ -1,3 +1,8 @@
+Fri Jun  8 06:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl: Removed some extraneous
+	  print statements that was causing our builds to grok.
+
 Mon Jun  4 17:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
