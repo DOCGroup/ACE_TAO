@@ -3,7 +3,6 @@
 
 // ===========================================================
 //
-//
 // = LIBRARY
 //    ACE_wrappers/examples/DLL
 //
@@ -38,9 +37,6 @@ class Newsweek : public Magazine
   //   Polymoriphism is exploited and an object pointer
   //   of Magazine is bound to the Newsweek object at runtime.
 public:
-
-  // *done*@@ Kirthika, please put this comment underneath the title()
-  // method.
 
   void title (void);
   // This is the abstract class method which describes the magazine.
