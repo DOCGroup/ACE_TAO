@@ -92,7 +92,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
   else
     {
       for (char c;
-           (c = this->url_.stream ().get_char ()) != EOF;
+           (c = this->url_.stream ().get_char ()) != (char)EOF;
            )
         {
           // Check to see if we're at the end of the header line.
