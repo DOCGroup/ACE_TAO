@@ -54,7 +54,7 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
       result = aiowait (&timeout);
     }
 
-  if ((int) result == -1)
+  if (ACE_reinterpret_cast (long, result) == -1)
     // Check errno  for  EINVAL,EAGAIN,EINTR ??
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t)::%p\n",
@@ -62,7 +62,7 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
                        "aiowait failed"),
                       0);
    
-  if ((int) result ==  0)
+  if (ACE_reinterpret_cast (long, result) == -1)
     return 0; // timeout
 
   int error_status = 0;
