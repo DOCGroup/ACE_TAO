@@ -1,3 +1,12 @@
+Wed Dec 22 11:17:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/show_unused_macros.pl:
+
+          This script will find macros in specified config files that
+          are not referenced in other config files, but are referenced
+          in the rest of the ace source files.  The macros that it shows
+          are candidates for removal from ace.
+
 Wed Dec 22 08:00:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ftclientorb.mpb:
