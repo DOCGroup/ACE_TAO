@@ -1,3 +1,12 @@
+Sat Jun 09 17:03:37 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Acceptor.cpp (open):
+
+	  Fixed problem where the handle of an uninitialized peer acceptor
+	  was set into non-blocking mode, resulting in a failed ioctl()
+	  call.  The acceptor member in the "accept strategy" should be
+	  used instead, since it was the one that was just opened.
+
 Sat Jun 09 10:07:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
