@@ -1,3 +1,12 @@
+Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Request_Interceptor.h:		
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp: 
+	  
+	  Fixed compile errors and warnings in Debian SingleThreaded
+	  build.
+
 Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Distributable_Thread.h:
