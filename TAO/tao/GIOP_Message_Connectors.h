@@ -31,13 +31,6 @@ class TAO_Export TAO_GIOP_Message_Connectors:
   //   common code between different versions of GIOP in a single
   //   class. 
   
-  int process_connector_messages (TAO_Transport *transport,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_InputCDR &input,
-                                  CORBA::Octet message_type);
-  // Processes the messages from the connectors so that they can be
-  // passed on to the appropriate states.
-
 protected:
   virtual CORBA::Boolean 
   write_request_header (const TAO_Operation_Details &opdetails,
@@ -65,6 +58,13 @@ private:
   // Virtual methods that will be implemented by the version specific
   // class. There may be a feeling that this declaration may not be
   // required, but some of the code in the class look for this method
+
+   int process_connector_messages (TAO_Transport *transport,
+                                  TAO_ORB_Core *orb_core,
+                                  TAO_InputCDR &input,
+                                  CORBA::Octet message_type);
+  // Processes the messages from the connectors so that they can be
+  // passed on to the appropriate states.
 };
 
 //////////////////////////////////////////////////
