@@ -1834,56 +1834,62 @@ void
 TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 {
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.basic_arg_seen_,
+      idl_global->basic_arg_seen_,
       "tao/PortableServer/Basic_SArguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.bd_string_arg_seen_,
+      idl_global->bd_string_arg_seen_,
       "tao/PortableServer/BD_String_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.fixed_array_arg_seen_,
+      idl_global->fixed_array_arg_seen_,
       "tao/PortableServer/Fixed_Array_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.fixed_size_arg_seen_,
+      idl_global->fixed_size_arg_seen_,
       "tao/PortableServer/Fixed_Size_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.object_arg_seen_,
+      idl_global->object_arg_seen_,
       "tao/PortableServer/Object_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.special_basic_arg_seen_,
+      idl_global->special_basic_arg_seen_,
       "tao/PortableServer/Special_Basic_SArguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.ub_string_arg_seen_,
+      idl_global->ub_string_arg_seen_,
       "tao/PortableServer/UB_String_SArguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.var_array_arg_seen_,
+      idl_global->var_array_arg_seen_,
       "tao/PortableServer/Var_Array_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.var_size_arg_seen_,
+      idl_global->var_size_arg_seen_,
       "tao/PortableServer/Var_Size_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->any_arg_seen_,
+      "tao/PortableServer/Any_SArg_Traits.h",
       stream
     );
 
