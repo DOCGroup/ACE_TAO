@@ -39,9 +39,9 @@ Tue Mar 17 16:02:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	    wait_for_multiple_events().
 
 	* ace/Msg_WFMO_Reactor: A new Reactor that specializes the
- 	  WFMO_Reactor.  WFMO_Reactor uses MsgWaitForMultipleObjects while
+ 	  WFMO_Reactor.  WFMO_Reactor uses WaitForMultipleObjects while
  	  Msg_WFMO_Reactor uses MsgWaitForMultipleObjects.  This allows
- 	  the Msg_WFMO_Reactor to react on Windows and COM/DCOM messages
+ 	  the Msg_WFMO_Reactor to react to Windows and COM/DCOM messages
  	  in addition to the regular WFMO_Reactor events.
 
 	  Thanks to Beskrovny Evgeny (evgeny_beskrovny@icomverse.com) of
