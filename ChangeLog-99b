@@ -1,3 +1,11 @@
+Wed Oct 27 09:48:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: changed check
+          for whether exceptions are enabled from ifndef exceptions
+          to ifeq ($(exceptions),).  That allows use of
+          exceptions=0.  Thanks to Phil Mesnier <mesnier_p@ociweb.com>
+          for reporting this.
+
 Wed Oct 27 09:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_qnx_neutrino.GNU: removed
