@@ -294,7 +294,7 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-#if defined (ACE_HAS_PENTIUM) && defined (linux)
+#if defined (ACE_HAS_PENTIUM) && defined (__GNUC__)
 ACE_hrtime_t 
 ACE_OS::gethrtime (void)
 {
@@ -312,7 +312,7 @@ ACE_OS::gethrtime (void)
 
   return (unsigned long long) most << 32  |  least;
 }
-#endif /* ACE_HAS_PENTIUM && linux */
+#endif /* ACE_HAS_PENTIUM && __GNUC__ */
 
 #if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 
