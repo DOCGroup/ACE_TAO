@@ -1,3 +1,25 @@
+Thu Apr  8 15:30:55 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* TAO/docs/releasenotes/index.html:
+	updated to reflect the availability of the Persistent Naming Service.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	added a missing coma after macro.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h, cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h, cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}
+	Fixed various compiler warnings/errors, e.g., order of member
+	initialization, explicit template instantiation, qualifying types with
+	class names, etc.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h, cpp}
+	Added the files to separate template code from non-template code
+	in Persistent_Context_Index.{h,cpp}.
+
+	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h, cpp}
+	Changed the name to Shared_Hash_Map_T.{h, cpp}
+
 Thu Apr 08 14:48:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic,
@@ -734,7 +756,7 @@ Thu Apr 01 22:52:00 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Thu Apr  1 21:41:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * $TAO_ROOT/examples/POA/FindPOA/FindPOA.cpp: Made some cosmetic
-	  changes 
+	  changes
 
 Thu Apr  1 13:47:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
@@ -885,7 +907,7 @@ Tue Mar 30 09:51:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * tests/MT_Client/server.conf: Use global resources.
 
         * tests/MT_Client/client.cpp: Use ACE_PRINT_EXCEPTION to print the
-	  exception. 
+	  exception.
 
 Mon Mar 29 22:42:31 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
