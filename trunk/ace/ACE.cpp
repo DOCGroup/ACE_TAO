@@ -1498,7 +1498,7 @@ ACE::daemonize (const char pathname[],
   ACE_UNUSED_ARG (close_all_handles);
 
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_FORK */
 }
 
 int
