@@ -100,10 +100,6 @@ public:
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
 
-  // = Reference counting.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
-
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Environment_ptr _ptr_type;
   typedef CORBA_Environment_var _var_type;
@@ -122,12 +118,6 @@ private:
 
   /// The previous environment on the "default environment stack".
   CORBA_Environment *previous_;
-
-  /// Reference counting.
-  CORBA::ULong refcount_;
-
-  /// Protect the reference count.
-  TAO_SYNCH_MUTEX refcount_lock_;
 };
 
 /**

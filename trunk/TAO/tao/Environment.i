@@ -10,8 +10,9 @@ CORBA::is_nil (CORBA::Environment_ptr env)
 ACE_INLINE void
 CORBA::release (CORBA::Environment_ptr env)
 {
-  if (env)
-    env->_decr_refcnt ();
+  if (env == 0)
+    return;
+  delete env;
 }
 
 ACE_INLINE CORBA_Exception*
@@ -23,9 +24,9 @@ CORBA_Environment::exception (void) const
 ACE_INLINE CORBA_Environment *
 CORBA_Environment::_duplicate (CORBA_Environment *x)
 {
-  if (x != 0)
-    x->_incr_refcnt ();
-  return x;
+  if (x == 0)
+    return 0;
+  return new CORBA_Environment (*x);
 }
 
 ACE_INLINE CORBA_Environment_ptr
