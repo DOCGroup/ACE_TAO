@@ -742,7 +742,7 @@ public:
   ~ACE_Object_Manager_Destroyer (void);
 
 private:
-  ACE_Thread_ID _saved_main_thread_id = ACE_OS::thr_self();
+  ACE_thread_t _saved_main_thread_id;
   // Save the main thread ID, so that destruction can be suppressed.
 };
 
