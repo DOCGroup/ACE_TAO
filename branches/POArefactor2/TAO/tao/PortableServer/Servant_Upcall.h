@@ -15,16 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ServantLocatorC.h"
-
-#include "POA_Current_Impl.h"
-#include "Active_Object_Map.h"
+#include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Active_Object_Map.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

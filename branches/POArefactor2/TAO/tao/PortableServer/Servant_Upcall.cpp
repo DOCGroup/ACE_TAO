@@ -1,22 +1,15 @@
 // $Id$
 
-// -- PortableServer Include --
-#include "Object_Adapter.h"
-#include "Servant_Upcall.h"
-#include "POA.h"
-#include "POA_Guard.h"
-#include "ServerRequestInfo.h"
-#include "Default_Servant_Dispatcher.h"
-#include "ServerInterceptorAdapter.h"
-#include "Collocated_Object_Proxy_Broker.h"
-
-// -- ACE Include --
-#include "ace/Auto_Ptr.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Default_Servant_Dispatcher.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/Thread_Strategy.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -24,8 +17,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
-
-#include "Thread_Strategy.h"
 
 ACE_RCSID (PortableServer,
            Servant_Upcall,
