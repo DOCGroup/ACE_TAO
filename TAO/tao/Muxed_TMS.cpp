@@ -97,6 +97,9 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
 
+  // Does the reply_dispatcher have a timeout?
+  CORBA::Boolean has_timeout = 0;
+
   // Grab the reply dispatcher for this id.
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -123,18 +126,51 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         return 0;
       }
 
-    // Just let the Reply_Dispatcher know that dispatching has
-    // started.
-    (void) rd->start_dispatch ();
+
+    if (TAO_debug_level > 8)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t)- TAO_Muxed_TMS::dispatch_reply, "
+                  "id = %d\n",
+                  params.request_id_));
+
+    if (result != 0)
+      {
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                      ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
+                      result));
+
+        // This return value means that the mux strategy was not able
+        // to find a registered reply handler, either because the reply
+        // was not our reply - just forget about it - or it was ours, but
+        // the reply timed out - just forget about the reply.
+        return 0;
+      }
+
+    has_timeout = rd->has_timeout ();
+
+    if (has_timeout == TAO_Reply_Dispatcher::TIMEOUT)
+      {
+        // Only when the RD has a timeout it makes sense to let other
+        // thread know that we have started dispatching.
+        // Just let the Reply_Dispatcher know that dispatching has
+        // started.
+        (void) rd->start_dispatch ();
+      }
   }
 
   // Dispatch the reply.
   // They return 1 on success, and -1 on failure.
   int retval =  rd->dispatch_reply (params);
 
-  // Just let the Reply_Dispatcher know that dispatching is done.
-  (void) rd->end_dispatch ();
-
+  if (has_timeout == TAO_Reply_Dispatcher::TIMEOUT)
+    {
+      // Only when the RD has a timeout it makes sense to let other
+      // thread know that we have finished dispatching.
+      // Just let the Reply_Dispatcher know that dispatching is done.
+      (void) rd->end_dispatch ();
+    }
   return retval;
 }
 
