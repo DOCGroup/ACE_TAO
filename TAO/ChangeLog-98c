@@ -1,3 +1,8 @@
+Tue Aug 18 15:23:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* tao/Any.cpp: Use operator delete directly, rather than delete, to
+	  free un-typed memory.  Thanks to John Mulhern for this fix.
+
 Tue Aug 18 09:39:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Param_Test/Makefile,driver.cpp,longlong.{h,cpp},
