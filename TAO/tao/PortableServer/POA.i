@@ -394,6 +394,11 @@ TAO_POA::get_manager_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 
+// @@ Priyanka, shouldn't this method return a
+//    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
+//    may be a typedef of the other but they have different
+//    TypeCodes!
+//
 ACE_INLINE CORBA::StringSeq *
 TAO_POA::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -164,23 +164,41 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 void
-TAO_POA::set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory
-                              *current_factory
-                              TAO_ENV_ARG_DECL)
+TAO_POA::set_obj_ref_factory (
+  PortableInterceptor::ObjectReferenceFactory *current_factory
+  TAO_ENV_ARG_DECL)
 {
+  // @@ Priyanka, I have no idea what you're doing here.
+
   TAO_ObjectReferenceFactory *tao_obj_ref_factory;
 
+  // @@ Priyanka, this is a memory leak.  You allocate a new instance
+  //    and then do nothing with it!
   ACE_NEW_THROW_EX (tao_obj_ref_factory,
                     TAO_ObjectReferenceFactory (this),
                     CORBA::NO_MEMORY ());
 
+  // @@ Priyanka, again... why you reinterpret_cast<>ing here?
+  //    You're just assigning a derived class pointer to a base class
+  //    pointer.  Just assign it!  Polymorphism!
   PortableInterceptor::ObjectReferenceFactory *obj_ref_factory =
     ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceFactory *,
                           tao_obj_ref_factory);
 
+  // @@ Priyanka, memory leak!
   obj_ref_factory = current_factory;
 
+  // @@ Priyanka, access violation and a memory leak!  You never
+  //    increased the reference count.  The caller owns the storage!
+  //    If you want to "own" it, then you need to increase the
+  //    reference count!
   this->obj_ref_factory_ = obj_ref_factory;
+
+  // @@ Priyanka, can't you just zap all of the above (broken) code,
+  //    and replace it simply with:
+  //
+  //         CORBA::add_ref (current_factory);
+  //         this->obj_ref_factory_ = current_factory;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
@@ -338,23 +356,42 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    CORBA::String_var server_id = this->orb_core_.server_id();
-    CORBA::String_var orb_id = this->orb_core_.orbid ();
+  // @@ Priyanka, it might be better to move all of this code to the
+  //    new_POA() method since you can potentially throw an exception
+  //    here.  This isn't bad for the native exception case, but it is
+  //    really bad to throw an exception in a constructor in the
+  //    emulated exception case since it is not possible to reproduce
+  //    native exception semantics in such situations.
 
-    /// Create an ObjectReferenceTemplate for this POA.
-    TAO_ObjectReferenceTemplate *ort_template;
+  // @@ Priyanka, why do you need to store these in a
+  //    CORBA::String_var?  Just pass them directly to the constructor
+  //    below since the ORB_Core retains ownership of the returned
+  //    strings.
+  CORBA::String_var server_id = this->orb_core_.server_id();
+  CORBA::String_var orb_id = this->orb_core_.orbid ();
 
-    ACE_NEW_THROW_EX (ort_template,
-                      TAO_ObjectReferenceTemplate (server_id.in (),
-                                                   orb_id.in (),
-                                                   this->adapter_name (TAO_ENV_SINGLE_ARG_PARAMETER),
-                                                   this),
+  // Create an ObjectReferenceTemplate for this POA.
+  TAO_ObjectReferenceTemplate *ort_template;
+
+  // @@ Priyanka, move the this->adapter_name() call on to a separate
+  //    line so that you can do an ACE_CHECK immediately after it.
+  //    Don't forget to store the returned value in a
+  //    PortableInterceptor::AdapterName_var.  This will also fix a
+  //    memory leak you introduced below when an exception occurs.
+  ACE_NEW_THROW_EX (ort_template,
+                    TAO_ObjectReferenceTemplate (
+                      server_id.in (),
+                      orb_id.in (),
+                      this->adapter_name (TAO_ENV_SINGLE_ARG_PARAMETER),
+                      this),
                     CORBA::NO_MEMORY ());
+  // @@ Priyanka, where's the ACE_CHECK?
 
   this->ort_template_ = ort_template;
 
   this->set_obj_ref_factory (this->ort_template_
                              TAO_ENV_ARG_PARAMETER);
+  // @@ Priyanka, where's the ACE_CHECK?
 
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -875,6 +912,11 @@ TAO_POA::the_children_i (TAO_ENV_SINGLE_ARG_DECL)
   return children._retn ();
 }
 
+// @@ Priyanka, shouldn't this method return a
+//    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
+//    may be a typedef of the other but they have different
+//    TypeCodes!
+//
 CORBA::StringSeq *
 TAO_POA::adapter_name_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -3717,6 +3759,19 @@ void
 TAO_POA::save_ior_component (const IOP::TaggedComponent &component
                              TAO_ENV_ARG_DECL_NOT_USED)
 {
+  // @@ Priyanka, let's think about why this is broken.
+  //    - This method gets invoked by IORInfo::add_ior_component().
+  //    - That means that each IORInterceptor can potentially invoke
+  //      this method, and thus cause this state to be changed.
+  //    - That is REALLY busted.  The previously cached tagged
+  //      component will be forgotten, and thus will never be added to
+  //      the IOR's tagged components!!  A profile can have MULTIPLE
+  //      tagged components!
+  //    - BROKEN!
+  //
+  //    Do you really need this method?  What about
+  //    tao_add_ior_component()?
+
   this->tagged_component_ = component;
   this->add_component_support_ = 1;
 }
@@ -3727,6 +3782,23 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
                                    IOP::ProfileId profile_id
                                    TAO_ENV_ARG_DECL_NOT_USED)
 {
+  // @@ Priyanka, let's think about why this is broken.
+  //    - This method gets invoked by IORInfo::add_ior_component().
+  //    - That means that each IORInterceptor can potentially invoke
+  //      this method, and thus cause this state to be changed.
+  //    - That is REALLY busted.  The previously cached tagged
+  //      component will be forgotten, and thus will never be added to
+  //      the IOR's tagged components!!  A profile can have MULTIPLE
+  //      tagged components!
+  //    - BROKEN!
+  //
+  //    The method name is also misleading.  You're really only
+  //    supposed to be using the ProfileId parameter to decide which
+  //    profiles will have a tagged component added.
+  //
+  //    Do you really need this method?  What about
+  //    tao_add_ior_component_to_profile()?
+
   this->tagged_component_ = component;
   this->profile_id_ = profile_id;
   this->add_component_support_ = 1;

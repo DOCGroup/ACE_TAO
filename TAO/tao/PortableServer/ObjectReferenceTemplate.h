@@ -56,11 +56,11 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   /// Constructor
   TAO_ObjectReferenceTemplate (const char *server_id,
                                const char *orb_id,
-                               PortableInterceptor::AdapterName
-                               *adapter_name,
+                               PortableInterceptor::AdapterName *adapter_name,
                                TAO_POA *poa);
 
-  ~TAO_ObjectReferenceTemplate ();
+  /// Destructor
+  ~TAO_ObjectReferenceTemplate (void);
 
   virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -68,20 +68,27 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual PortableInterceptor::AdapterName * adapter_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual PortableInterceptor::AdapterName * adapter_name (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Object_ptr make_object (const char * repository_id,
-                                         const PortableInterceptor::ObjectId & id
-                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Object_ptr make_object (
+      const char * repository_id,
+      const PortableInterceptor::ObjectId & id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
- private:
+private:
 
   const char *server_id_;
   const char *orb_id_;
+
+  // @@ Priyanka, make this a PortableInterceptor::AdapterName_var.
+  //    Otherwise, you'll have a memory leak since you never
+  //    deallocate the instance.
   PortableInterceptor::AdapterName *adapter_name_;
+
   TAO_POA *poa_;
 
 };
