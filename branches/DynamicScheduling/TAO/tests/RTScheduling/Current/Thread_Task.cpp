@@ -89,7 +89,8 @@ Thread_Task::svc (void)
 		  "The Current DT Guid is %d\n",
 		  count));
 
-      RTScheduling::Current::NameList* segment_name_list = this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
+      RTScheduling::Current::NameList* segment_name_list = 
+	this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
       ACE_DEBUG ((LM_DEBUG,
