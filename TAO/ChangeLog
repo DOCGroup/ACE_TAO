@@ -1,3 +1,48 @@
+Sun Aug 24 13:00:31 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynAny_Test/analyzer.cpp:
+        * tests/DynAny_Test/analyzer.h:
+          New file containing DynAnalyzer that analyzes the contents of the
+          DynAny. Used in this test to dump the contents of the DynAny to
+          the output when -d is passed as commandline option.
+
+        * tests/DynAny_Test/basic_test.dsp:
+        * tests/DynAny_Test/DynAny_Test.mpc:
+        * tests/DynAny_Test/Makefile:
+        * tests/DynAny_Test/Makefile.bor:
+          Updated because of new file above.
+
+        * tests/DynAny_Test/da_tests.idl:
+          Added sequence of short.
+
+        * tests/DynAny_Test/README:
+          Document new -d option
+
+        * tests/DynAny_Test/data.cp:
+        * tests/DynAny_Test/data.h:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/DynAny_Test/driver.h:
+        * tests/DynAny_Test/test_dynany.cpp:
+        * tests/DynAny_Test/test_dynany.h:
+        * tests/DynAny_Test/test_dynarray.cpp:
+        * tests/DynAny_Test/test_dynarray.h:
+        * tests/DynAny_Test/test_dynenum.cpp:
+        * tests/DynAny_Test/test_dynenum.h:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/DynAny_Test/test_dynsequence.h:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynstruct.h:
+        * tests/DynAny_Test/test_dynunion.cpp:
+        * tests/DynAny_Test/test_dynunion.h:
+        * tests/DynAny_Test/test_wrapper.cpp:
+        * tests/DynAny_Test/test_wrapper.h:
+          Converted to doxygen. Added argument to constructor to specify
+          whether we want debug or not. Before all to_any() calls the DynAny
+          is analyzed first with the new DynAnyAnalyzer. This revealed
+          the problems Jeff already fixed with his checkin
+          Thu Aug 21 11:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+          The DynArray also reveales now a new problem that must be fixed.
+
 Sun Aug 24 11:41:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynamicAny.cpp:
