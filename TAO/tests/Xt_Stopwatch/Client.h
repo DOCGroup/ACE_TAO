@@ -17,7 +17,7 @@
 #define CLIENT_H
 
 #include "testC.h"
-
+#include "tao/xt_resource.h"
 class Control;
 
 class Client  

@@ -1,3 +1,16 @@
+Thu Oct 21 11:52:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Xt_Stopwatch/timer.h: 
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/Client.h:
+	* tests/Xt_Stopwatch/Control.h:
+	* tests/Xt_Stopwatch/test_i.cpp:
+	* tests/Xt_Stopwatch/test_i.h:
+	* tests/Xt_Stopwatch/Makefile: Fixed a compile error. Thanks to
+	  Thomas Groth <groth.th@stn-atlas.de> for reporting this. I also
+	  updated the Makefile dependencies & removed some warnings on
+	  Sun_Egcs. 
+
 Thu Oct 21 10:54:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object.cpp (_is_a): Moved the local type_id checking up
