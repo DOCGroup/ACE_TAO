@@ -97,7 +97,7 @@
         <li>Nov 22 2002 - Completed the first handcrafted example
             <a href="../examples/handcrafted/Hello/README">HelloWorld</a>
             component implementation.  CIAO now also include a
-            minimally functioning Session container implementation.<p>
+            minimally functioning service container implementation.<p>
       </ul>
 
   <li> <h3>Status of individual modules</h3>
@@ -155,7 +155,7 @@
         import ::some_idl_module;
 
         module component_composite_name {
-          composition session component_home_executor {
+          composition service component_home_executor {
             implements component_home;
             manages component_executor;
           };
