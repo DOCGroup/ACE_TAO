@@ -129,9 +129,9 @@ CORBA_Any::operator<<= (from_wchar wc)
                  1, env);
 }
 
-// ----------------------------------------------------------------------
-// CORBA_Any_var type
-// ----------------------------------------------------------------------
+// *************************************************************
+// Inline operations for class CORBA_Any_var
+// *************************************************************
 
 ACE_INLINE
 CORBA_Any_var::CORBA_Any_var (void)
@@ -203,9 +203,9 @@ CORBA_Any_var::_retn (void)
   return temp;
 }
 
-// ----------------------------------------------------------------------
+// *************************************************************
 // CORBA_Any_var insertion operators
-// ----------------------------------------------------------------------
+// *************************************************************
 
 ACE_INLINE void
 operator <<= (CORBA_Any_var lhs, CORBA::Short rhs)
@@ -309,9 +309,9 @@ operator <<= (CORBA_Any_var lhs, CORBA::Any::from_string rhs)
   lhs.inout () <<= rhs;
 }
 
-// ----------------------------------------------------------------------
+// *************************************************************
 // CORBA_Any_var extraction operators
-// ----------------------------------------------------------------------
+// *************************************************************
 
 ACE_INLINE CORBA::Boolean
 operator >>= (CORBA_Any_var lhs, CORBA::Short &rhs)
@@ -415,9 +415,9 @@ operator >>= (CORBA_Any_var lhs, CORBA::Any::to_object rhs)
   return lhs.inout () >>= rhs;
 }
 
-// ----------------------------------------------------------------------
-// CORBA_Any_out type
-// ----------------------------------------------------------------------
+// *************************************************************
+// Inline operations for class CORBA_Any_out
+// *************************************************************
 
 ACE_INLINE
 CORBA_Any_out::CORBA_Any_out (CORBA_Any *&s)
@@ -471,3 +471,8 @@ CORBA_Any_out::ptr (void)
   return this->ptr_;
 }
 
+ACE_INLINE CORBA_Any *
+CORBA_Any_out::operator-> (void)
+{
+  return this->ptr_;
+}

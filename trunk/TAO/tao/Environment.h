@@ -104,6 +104,7 @@ public:
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Environment_ptr _ptr_type;
+  typedef CORBA_Environment_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
 
@@ -120,6 +121,62 @@ private:
   CORBA_Environment* previous_;
   // The previous environment on the "default environment stack".
 
+};
+
+class TAO_Export CORBA_Environment_var
+{
+  // = TITLE
+  //   CORBA_Environment_var
+  //
+  // = DESCRIPTION
+  //   Provide for automatic storage deallocation on going out of
+  //   scope.
+public:
+  CORBA_Environment_var (void); // default constructor
+  CORBA_Environment_var (CORBA_Environment_ptr);
+  CORBA_Environment_var (const CORBA_Environment_var &); // copy constructor
+  ~CORBA_Environment_var (void); // destructor
+
+  CORBA_Environment_var &operator= (CORBA_Environment_ptr);
+  CORBA_Environment_var &operator= (const CORBA_Environment_var &);
+  CORBA_Environment_ptr operator-> (void) const;
+
+  operator const CORBA_Environment_ptr &() const;
+  operator CORBA_Environment_ptr &();
+  // in, inout, out, _retn
+  CORBA_Environment_ptr in (void) const;
+  CORBA_Environment_ptr &inout (void);
+  CORBA_Environment_ptr &out (void);
+  CORBA_Environment_ptr _retn (void);
+  CORBA_Environment_ptr ptr (void) const;
+
+private:
+  CORBA_Environment_ptr ptr_;
+};
+
+class TAO_Export CORBA_Environment_out
+{
+  // = TITLE
+  //   CORBA_Environment_out
+  //
+  // = DESCRIPTION
+  //   The _out class for CORBA_Environment. This is used to help in
+  //   managing the out parameters.
+public:
+  CORBA_Environment_out (CORBA_Environment_ptr &);
+  CORBA_Environment_out (CORBA_Environment_var &);
+  CORBA_Environment_out (const CORBA_Environment_out &);
+  CORBA_Environment_out &operator= (const CORBA_Environment_out &);
+  CORBA_Environment_out &operator= (CORBA_Environment_ptr);
+  operator CORBA_Environment_ptr &();
+  CORBA_Environment_ptr &ptr (void);
+  CORBA_Environment_ptr operator-> (void);
+
+private:
+  CORBA_Environment_ptr &ptr_;
+
+  CORBA_Environment_out &operator= (const CORBA_Environment_var &);
+  // Assignment from _var not allowed.
 };
 
 #if defined (__ACE_INLINE__)

@@ -429,6 +429,8 @@ public:
   CORBA_Any *& ptr (void);
   // return underlying instance
 
+  CORBA_Any *operator-> (void);
+
 private:
   CORBA_Any *&ptr_;
   // Instance
@@ -441,7 +443,7 @@ private:
 # include "tao/Any.i"
 #else
 
-// Extraction operators and copying versions of insertion 
+// Copying versions of insertion 
 // operators which are defined as members of the Any class
 // must also be defined for Any_var.
 extern TAO_Export void operator<<= (CORBA_Any_var, 
@@ -479,6 +481,8 @@ extern TAO_Export void operator<<= (CORBA_Any_var,
 extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_string);
 
+// These are not required by the spec, but will make users
+// of other ORBs that are used to them more comfortable.
 extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Short&);
 extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 

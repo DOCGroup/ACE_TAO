@@ -196,6 +196,8 @@ class CORBA_ServerRequest;
 typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
 
 class CORBA_Environment;
+class CORBA_Environment_var;
+class CORBA_Environment_out;
 typedef class CORBA_Environment *CORBA_Environment_ptr;
 
 class CORBA_Principal;
@@ -356,6 +358,8 @@ public:
   typedef Any *Any_ptr;
 
   typedef CORBA_Environment Environment;
+  typedef CORBA_Environment_var Environment_var;
+  typedef CORBA_Environment_out Environment_out;
   typedef Environment *Environment_ptr;
 
   typedef CORBA_Exception Exception;

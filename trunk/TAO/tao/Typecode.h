@@ -518,7 +518,6 @@ public:
   CORBA_TypeCode_out (CORBA_TypeCode_var &);
   CORBA_TypeCode_out (const CORBA_TypeCode_out &);
   CORBA_TypeCode_out &operator= (const CORBA_TypeCode_out &);
-  CORBA_TypeCode_out &operator= (const CORBA_TypeCode_var &);
   CORBA_TypeCode_out &operator= (CORBA_TypeCode_ptr);
   operator CORBA_TypeCode_ptr &();
   CORBA_TypeCode_ptr &ptr (void);
@@ -526,6 +525,9 @@ public:
 
 private:
   CORBA_TypeCode_ptr &ptr_;
+
+  CORBA_TypeCode_out &operator= (const CORBA_TypeCode_var &);
+  // Assignment from _var not allowed
 };
 
 class TAO_Export TAO_TypeCodes
