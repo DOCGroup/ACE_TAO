@@ -86,14 +86,6 @@ public:
                   u_long verbose_flag,
                   ACE_TCHAR *verbose_msg);
 
-#if defined (ACE_HAS_WINCE)
-  /// For Windows CE, the default is to log messages to a preset
-  /// window.
-  int print (const ACE_TCHAR host_name[],
-             u_long verbose_flag,
-             ACE_CE_Bridge *log_ = 0);
-#endif /* defined (ACE_HAS_WINCE) */
-
   /**
    * Returns a character array with the string form of the
    * <ACE_Log_Priority> parameter.  This is used for the verbose
