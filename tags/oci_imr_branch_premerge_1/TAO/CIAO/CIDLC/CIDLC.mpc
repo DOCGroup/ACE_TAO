@@ -1,0 +1,11 @@
+//$Id$
+
+project(*CIDLC) {
+
+  exename = cidlc
+  includes += .. ../CCF
+  after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
+  install = ../bin
+  libpaths += ../CCF/CCF/CIDL ../CCF/CCF/IDL3 ../CCF/CCF/IDL2 ../CCF/CCF/CodeGenerationKit ../CCF/CCF/CompilerElements
+  libs += CIDL IDL3 IDL2 CodeGenerationKit CompilerElements boost_regex boost_filesystem
+}

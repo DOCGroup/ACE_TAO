@@ -1,0 +1,17 @@
+//$Id$
+#include "../BasicSP.idl"
+
+module BasicSP
+{
+  component BMClosedED
+    {
+      provides  ReadData dataout;
+      uses      ReadData datain;
+      publishes DataAvailable out_avail;
+      consumes  DataAvailable in_avail;
+    };
+
+  home BMClosedEDHome manages BMClosedED
+    {
+    };
+};

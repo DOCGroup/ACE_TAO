@@ -1,0 +1,550 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/010'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    440 -rw-rw-r-- hdr
+#     49 -rw-rw-r-- bodies
+#   2242 -rw-rw-r-- page01.pre
+#     84 -rw-rw-r-- page02.pre
+#    231 -rw-rw-r-- page03.pre
+#    138 -rw-rw-r-- page04.pre
+#    606 -rw-rw-r-- page05.pre
+#   1493 -rw-rw-r-- page06.pre
+#    444 -rw-rw-r-- page07.pre
+#    689 -rw-rw-r-- page02.pst
+#    236 -rw-rw-r-- page03.pst
+#    387 -rw-rw-r-- page04.pst
+#    647 -rw-rw-r-- page05.pst
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh32552; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<HTML>
+<HEAD>
+X   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+X   <META NAME="Author" CONTENT="James CE Johnson">
+X   <TITLE>ACE Tutorial 010</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+X
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 010</FONT></B></CENTER>
+X
+<CENTER><B><FONT SIZE=+2>Passing chunks of data through an ACE_Message_Queue</FONT></B></CENTER>
+X
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+e3d97df3787127f8678ec95f024c44c6  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 440 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '440,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+message_queue.cpp
+block.h
+task.h
+task.cpp
+SHAR_EOF
+  $shar_touch -am 0124153399 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+888c8b85427980776f703176da1f9ee4  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 49 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '49,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+<P>
+In an earlier tutorial we briefly introduced ACE_Message_Queue.  In this
+tutorial we'll go into a bit more detail.
+<P>
+ACE_Message_Queue is modeled after Unix System V IPC mechanisms.  The basic
+idea is that you put a block of data into one end of the Queue and take it
+out of the other end.  Your basic FIFO in other words.  The SysV mechanism
+works great for passing these blocks of data between processes on the same
+host but it's a bit overkill for moving blocks between threads.  You could
+use a pipe, socket or similar mechanism but that still has more overhead than
+we really want just for moving data between threads.  Process-global memory
+is a good technique but then you need a way to signal the "listening" threads.
+The ACE_Message_Queue is a better approach:  Create blocks of data and enqueue
+them in one thread while another thread (or threads) dequeue and perform work.
+<P>
+Kirthika's Abstract:
+<UL>
+The Message Queue is a FIFO accessible from multiple threads.
+That is, a thread puts the produced blocks of data on the message queue
+to be consumed by some other thread/threads and processed. In this
+tutorial, we see how effectively the Message Queue in a ACE_Task can be
+used to pass data among threads in the thread pool.
+(this is very similar to
+<A HREF="../007/page01.html">Tutorial 7</A>
+X wherein we implemented a
+thread-pool server).Here, actual data is passed between the threads and
+also an ACE_Barrier has been used to provide synchronisation among
+multiple threads.
+<P>
+The Message Queue consists of Message Blocks, each of which has a read
+and write pointer. Using these pointers the message blocks can be
+accessed for reading and writing operations. The ACE_Task::svc() method
+will put the block onto the queue without bothering about the existence
+of a consumer for that block. A thread from the thread pool obtains the
+block from the queue, and checks to see whether the block_type is
+MB_HANGUP. If so, it puts the block back on the queue for its
+peers and exits. Otherwise, it reads the block and processes it before
+releasing it.
+<P>
+This simple tutorial makes us aware of the usage and importance of the
+Message Queue which could be used to our advantage especially for
+multithreaded applications.
+</UL>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+a59ecff5ebb6cd48d96531f70c504ffc  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 2242 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2242,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pre ==============
+if test -f 'page02.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
+X
+We'll look first at <A HREF="message_queue.cpp">main()</A>.
+<P>
+X
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page02.pre' &&
+  chmod 0664 'page02.pre' ||
+  $echo 'restore of' 'page02.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pre:' 'MD5 check failed'
+166bf09c6c4474767e95ef4a7be20a03  page02.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
+    test 84 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '84,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pre ==============
+if test -f 'page03.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
+Our <A HREF="block.h">Block</A> object is a very simple derivative
+of the ACE_Message_Block.  The only reason I created it was to prove
+that the message blocks to, indeed, get freed when we're done with 'em.
+<P>
+X
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page03.pre' &&
+  chmod 0664 'page03.pre' ||
+  $echo 'restore of' 'page03.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pre:' 'MD5 check failed'
+3164732c254de8d97fac8fd52071ae32  page03.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
+    test 231 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '231,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pre ==============
+if test -f 'page04.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
+Our <A HREF="task.h">Task</A> object executes in one or more threads
+and reads from the message queue it contains.
+<P>
+X
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page04.pre' &&
+  chmod 0664 'page04.pre' ||
+  $echo 'restore of' 'page04.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pre:' 'MD5 check failed'
+fec9a7b5b9b2a8f61c0178aaf1b78a91  page04.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
+    test 138 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '138,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pre ==============
+if test -f 'page05.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
+X
+Our <A HREF="task.cpp">Task</A> object definition.
+<P>
+Something to look at here is the ACE_Barrier usage.  In the
+constructor, we tell the barrier how many threads we're using.  Then,
+in the svc() method, we use the barrier's wait() method.  You can
+think of the barrier as a semaphore initialized to the thread count.
+X  Each time wait()
+is invoked, the semaphore is decremented and the thread is blocked.
+X  When the count equals zero, all threads are unblocked and allowed to
+continue.
+<P>
+<font size=-1>Note:  This isn't the way ACE_Barrier really works, it's
+just an analogy</font>
+X
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page05.pre' &&
+  chmod 0664 'page05.pre' ||
+  $echo 'restore of' 'page05.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pre:' 'MD5 check failed'
+ff8fe38f39f3860bcd45aa450cb754da  page05.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
+    test 606 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '606,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page06.pre ==============
+if test -f 'page06.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page06.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page06.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page06.pre' &&
+X
+Since I added Block just to give us output, let's take a look at that output.
+X
+<P>
+<HR WIDTH="100%">
+<PRE>
+[jcej@chiroptera 010]$./message_queue 4 2
+(8910|1024) Task ctor 0xbffff9c4
+(8910|2050) Task 0xbffff9c4 starts in thread 2050
+(8910|1025) Task 0xbffff9c4 starts in thread 1025
+(8910|1024) Block ctor 0x8052398
+(8910|1024) Block ctor 0x8052488
+(8910|1024) Block ctor 0x8052578
+(8910|1024) Block ctor 0x8052668
+(8910|1024) Block ctor 0x8052758
+(8910|1025) Block 0x8052398 contains (This is message 0.)
+(8910|2050) Block 0x8052488 contains (This is message 1.)
+(8910|1025) Block dtor 0x8052398
+(8910|1025) Block 0x8052578 contains (This is message 2.)
+(8910|2050) Block dtor 0x8052488
+(8910|2050) Block 0x8052668 contains (This is message 3.)
+(8910|1025) Block dtor 0x8052578
+(8910|1025) Task close 0xbffff9c4
+(8910|2050) Block dtor 0x8052668
+(8910|2050) Task close 0xbffff9c4
+(8910|1024) Task dtor 0xbffff9c4
+(8910|1024) Block dtor 0x8052758
+(8910|1024) Application exiting
+[jcej@chiroptera 010]$
+</PRE>
+<HR WIDTH="100%">
+<P>
+Notice that each <i>Block ctor</i> has a corresponding <i>Block dtor</i>.
+We've proven the point that all memory gets cleaned up.  We also see that
+both threads get to do some work and that both close as expected.
+<P>
+It's also worth mentioning that it's just an accident that all of the blocks
+are created and enqueued before any are processed.  Run the test on a multi-processor
+or with more iterations and you'll see some get processed before all are created.
+SHAR_EOF
+  $shar_touch -am 03191459100 'page06.pre' &&
+  chmod 0664 'page06.pre' ||
+  $echo 'restore of' 'page06.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page06.pre:' 'MD5 check failed'
+d2a471df09308f89a611a7aa0218737f  page06.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page06.pre'`"
+    test 1493 -eq "$shar_count" ||
+    $echo 'page06.pre:' 'original size' '1493,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page07.pre ==============
+if test -f 'page07.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page07.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page07.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page07.pre' &&
+X
+That's it for Tutorial 10.  There are some esoteric changes between the thread-pool server
+and this application but it's basically the same.  In the next tutorial I'll modify this just
+a bit to move non-trivial data through the queue.
+<P>
+X
+<UL>
+<LI><A HREF="Makefile">Makefile</A>
+<LI><A HREF="block.h">block.h</A>
+<LI><A HREF="message_queue.cpp">message_queue.cpp</A>
+<LI><A HREF="task.cpp">task.cpp</A>
+<LI><A HREF="task.h">task.h</A>
+</UL>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page07.pre' &&
+  chmod 0664 'page07.pre' ||
+  $echo 'restore of' 'page07.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page07.pre:' 'MD5 check failed'
+07ae8f9b2a400e46ab102ab8c40a8b81  page07.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page07.pre'`"
+    test 444 -eq "$shar_count" ||
+    $echo 'page07.pre:' 'original size' '444,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pst ==============
+if test -f 'page02.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pst' &&
+<HR WIDTH="100%">
+<P>
+This looks a lot like our thread-pool server and it even does some things
+better.  In particular, I've scoped the Task object so that it's destructor
+will have a chance to get called before the application exits.
+Notice how we write actual data into the message block though.  In the thread-pool
+server we just provided a pointer.  Writting the data is actually a more correct
+way of doing things since you don't get into strange pointer casting situations.
+What if you want to put complex objects into the message block though?  We'll do
+that in the next tutorial, let's stick with the basics first.
+<P>
+On the next page we'll take a look at our Block object...
+<P>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page02.pst' &&
+  chmod 0664 'page02.pst' ||
+  $echo 'restore of' 'page02.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pst:' 'MD5 check failed'
+10957f28adbff16015bd94bdc01cd779  page02.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pst'`"
+    test 689 -eq "$shar_count" ||
+    $echo 'page02.pst:' 'original size' '689,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pst ==============
+if test -f 'page03.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pst' &&
+<HR WIDTH="100%">
+<P>
+Ok, nothing really magic there.  Some folks just feel a little uncomfortable
+not doing an explicit <i>delete</i> on objects they've <i>new</i>'d so I
+wanted to show you that the memory really does get cleaned up.
+X
+SHAR_EOF
+  $shar_touch -am 03191459100 'page03.pst' &&
+  chmod 0664 'page03.pst' ||
+  $echo 'restore of' 'page03.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pst:' 'MD5 check failed'
+fe792e145798cee96c099bf4026cf8ef  page03.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
+    test 236 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '236,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pst ==============
+if test -f 'page04.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pst' &&
+<HR WIDTH="100%">
+<P>
+The only thing here that we didn't see in the thread-pool server is the
+ACE_Barrier.  The application logic really doesn't need it but it is a
+handy way to synchronize the threads at the beginning of svc().  In testing
+I found that if I didn't sync svc(), the first thread to get activated would
+tend to get all of the messages before the other threads came alive.
+SHAR_EOF
+  $shar_touch -am 03191459100 'page04.pst' &&
+  chmod 0664 'page04.pst' ||
+  $echo 'restore of' 'page04.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pst:' 'MD5 check failed'
+2212efef5c096791808b00a5212c4376  page04.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
+    test 387 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '387,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pst ==============
+if test -f 'page05.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
+<HR WIDTH="100%">
+<P>
+This is all pretty straight-forward too.  One gottcha we avoided was a memory leak
+due to our shutdown message.  Notice that svc() enqueues that block without bothering
+to see if there are any more threads to dequeue it.  Thats why our dtor can call getq()
+without worrying about blocking infinitely:  it knows the message block will be there.
+<P>
+Also notice that we haven't used <i>THR_DETACHED</i> in this
+X      tutorial.  Why?  Because in <i>message_queue.cpp</i> we call
+X      <i>wait()</i> to wait for all of the task's threads to exit.
+X      That prevents the leak that we normally avoid by using <i>THR_DETACHED</i>.
+SHAR_EOF
+  $shar_touch -am 03191459100 'page05.pst' &&
+  chmod 0664 'page05.pst' ||
+  $echo 'restore of' 'page05.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pst:' 'MD5 check failed'
+802d999314ebcf28ebbffe6fb6dedcfa  page05.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
+    test 647 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '647,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh32552
+exit 0

@@ -1,0 +1,27 @@
+// $Id$
+
+include "vacpp_setup.icc"
+
+if $__TOS_AIX__ {
+    TargetType = "shr"
+    TargetName = "shr.o"
+}
+
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(exportAll),
+    link(debug)
+    {
+        target type ( TargetType ) TargetName
+        {
+           source type (cpp) "Service_Config_DLL.cpp"
+           source platformLinkLibs
+        }
+if $__TOS_AIX__ {
+        run after "ar -r -u libService_Config_DLL.a shr.o"
+        run cleanup "rm -rf libService_Config_DLL.a", "rm -rf shr.o"
+}
+
+    }

@@ -1,0 +1,46 @@
+$Id$
+
+This is a unit test for setting DiffServ Codepoint both in the requests sent and the replies received. It also illustrates how a Custom Network Priority Mapping can be plugged in.
+
+Scenario:
+--------
+
+Testing the setting of dscp in the requests sent
+-------------------------------------------------
+
+Server creates a POA and registers a servant with it.  Client obtains
+the object reference. It sets the desired corba and native
+priority. Client then performs several invocations on the object
+during which it sets and unsets diffserv codepoint at the ORB, THREAD
+and OBJECT levels.
+
+Testing the setting of dscp in the replies sent
+-------------------------------------------------
+
+Server creates a POA and enables network priority through the POA
+policy. This ensures that all replies sent from the POA have the dscp
+set. It registers a servant with this POA. Client obtains the object
+reference. Client then performs several invocations on the object.
+
+To run (on Unix): 
+-----------------
+
+$./server 
+$./client
+
+Options:
+--------
+
+server [-k ior_output_file2] [-o ior_output_file2] [-p corba_priority] [-s {test_server} ] [-c {test_client}]
+
+client [-k server_ior] [-n number_of_iterations] [-p corba_priority] [-s {test_server}] [-c {test_client}]
+
+NOTE: The iterations have to be >=6 in order to test set/unset at the ORB, THREAD and OBJECT levels.
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+//$Id$
+
+project(*CodeGenerationKit) {
+  staticname = CodeGenerationKit
+  includes += ../..
+}

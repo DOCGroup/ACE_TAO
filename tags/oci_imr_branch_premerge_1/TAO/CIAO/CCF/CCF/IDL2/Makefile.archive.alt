@@ -1,0 +1,79 @@
+# file      : CCF/IDL2/Makefile.archive
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_BUILD_RULES)/Archive.pre.rules)
+
+
+cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+
+
+translated_units := SemanticGraph/Attribute.o    \
+                    SemanticGraph/Elements.o     \
+                    SemanticGraph/Enum.o         \
+                    SemanticGraph/Exception.o    \
+                    SemanticGraph/Fundamental.o  \
+                    SemanticGraph/Interface.o    \
+                    SemanticGraph/Literals.o     \
+                    SemanticGraph/Member.o       \
+                    SemanticGraph/Module.o       \
+                    SemanticGraph/Name.o         \
+                    SemanticGraph/Native.o       \
+                    SemanticGraph/Operation.o    \
+                    SemanticGraph/Sequence.o     \
+                    SemanticGraph/Struct.o       \
+                    SemanticGraph/Translation.o  \
+                    SemanticGraph/TypeId.o       \
+                    SemanticGraph/Union.o        \
+                    SemanticGraph/ValueType.o
+
+
+translated_units += Traversal/Attribute.o    \
+                    Traversal/Elements.o     \
+                    Traversal/Enum.o         \
+                    Traversal/Exception.o    \
+                    Traversal/Fundamental.o  \
+                    Traversal/Interface.o    \
+                    Traversal/Member.o       \
+                    Traversal/Module.o       \
+                    Traversal/Native.o       \
+                    Traversal/Operation.o    \
+                    Traversal/Sequence.o     \
+                    Traversal/Struct.o       \
+                    Traversal/Translation.o  \
+                    Traversal/TypeId.o       \
+                    Traversal/Union.o        \
+                    Traversal/ValueType.o
+
+translated_units += SemanticAction/Operation.o
+
+translated_units += SemanticAction/Impl/Attribute.o  \
+                    SemanticAction/Impl/Elements.o   \
+                    SemanticAction/Impl/Enum.o       \
+                    SemanticAction/Impl/Exception.o  \
+                    SemanticAction/Impl/Factory.o    \
+                    SemanticAction/Impl/Include.o    \
+                    SemanticAction/Impl/Interface.o  \
+                    SemanticAction/Impl/Member.o     \
+                    SemanticAction/Impl/Module.o     \
+                    SemanticAction/Impl/Native.o     \
+                    SemanticAction/Impl/Operation.o  \
+                    SemanticAction/Impl/Struct.o     \
+                    SemanticAction/Impl/TypeId.o     \
+                    SemanticAction/Impl/Typedef.o    \
+                    SemanticAction/Impl/Union.o      \
+                    SemanticAction/Impl/ValueType.o
+
+module_base           := IDL2
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+
+$(call include, $(UTILITY_BUILD_RULES)/Archive.post.rules)
