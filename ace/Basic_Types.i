@@ -179,7 +179,7 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
 
 #define ACE_HIGHBIT (~(~0UL >> 1))
 
-ACE_UINT32
+ACE_INLINE ACE_UINT32
 ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out)
 {
   const ACE_UINT32 b = (a << 1) | c_in;
@@ -188,7 +188,7 @@ ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out)
   return b;
 }
 
-ACE_U_LongLong
+ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
                            ACE_UINT32 *c_out)
 {
@@ -202,7 +202,7 @@ ACE_U_LongLong::ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
   return b;
 }
 
-ACE_U_LongLong
+ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry)
 {
   ACE_U_LongLong r (0, 0);
@@ -227,7 +227,7 @@ ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry)
   return r;
 }
 
-ACE_U_LongLong
+ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry)
 {
   register ACE_UINT32 mask = ACE_HIGHBIT;
