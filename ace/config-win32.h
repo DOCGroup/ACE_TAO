@@ -45,11 +45,11 @@
 // be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: MFC DLLs must be installed
-//  Additonal notes		: If both ACE_HAS_MFC and ACE_MT_SAFE are
+//  Additonal notes             : If both ACE_HAS_MFC and ACE_MT_SAFE are
 //                        defined, the MFC DLL (not the static lib)
 //                        will be used from ACE.
 #if !defined (ACE_HAS_MFC)
-	#define ACE_HAS_MFC 0
+        #define ACE_HAS_MFC 0
 #endif
 
 // Define this if you're using MSVC 4.2 or above and your application
@@ -57,20 +57,20 @@
 //  Runtime restrictions: You must be using MSVC 4.2 or above and your
 //                        application must link with the standard libraries.
 #if defined (_MSC_VER) && (_MSC_VER >= 1020)
-	#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-		#define ACE_HAS_STANDARD_CPP_LIBRARY	0
-	#endif
+        #if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+                #define ACE_HAS_STANDARD_CPP_LIBRARY    0
+        #endif
 #else
-	#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-		#undef ACE_HAS_STANDARD_CPP_LIBRARY
-	#endif
-	#define ACE_HAS_STANDARD_CPP_LIBRARY 0
+        #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+                #undef ACE_HAS_STANDARD_CPP_LIBRARY
+        #endif
+        #define ACE_HAS_STANDARD_CPP_LIBRARY 0
 #endif
 
 // The STL that comes with ACE uses the std namespace. Note however, it is not
 // part of the standard C++ library
 #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-        #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
+        #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   1
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
 #if !defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
@@ -82,9 +82,9 @@
 // break existing application code.
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: -
-//  Additonal notes		: ACE_HAS_MFC implies ACE_HAS_STRICT
+//  Additonal notes             : ACE_HAS_MFC implies ACE_HAS_STRICT
 #if !defined (ACE_HAS_STRICT)
-	#define ACE_HAS_STRICT 0
+        #define ACE_HAS_STRICT 0
 #endif
 
 // Turn off the following define if you want to disable threading.
@@ -92,7 +92,7 @@
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: multithreaded runtime DLL must be installed
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+        #define ACE_MT_SAFE 1
 #endif
 
 // Build as as a DLL.  Define ACE_HAS_DLL to 0 if you want to build a static
@@ -100,7 +100,7 @@
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: ACE DLL must be installed :-)
 #if !defined (ACE_HAS_DLL)
-	#define ACE_HAS_DLL 1
+        #define ACE_HAS_DLL 1
 #endif
 
 // Build ACE services as DLLs.  If you write a library and want it to
@@ -110,25 +110,25 @@
 // ACE "service" is to leverage the ACE_Svc_Export macros.  It's just
 // as easy to define your own export macros.
 #if !defined (ACE_HAS_SVC_DLL)
-	#define ACE_HAS_SVC_DLL 1
+        #define ACE_HAS_SVC_DLL 1
 #endif
 
 // Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
 // want to compile with WinSock 2.0.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: winsock2 must be installed.
-//	#define ACE_HAS_WINSOCK2 0
+//      #define ACE_HAS_WINSOCK2 0
 
 // Define ACE_HAS_ORBIX to 1 in your config.h file if you want to integrate
 // ACE and Orbix in Win32.
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: system must have Orbix DLLs
 #if !defined (ACE_HAS_ORBIX)
-	#define ACE_HAS_ORBIX 0
+        #define ACE_HAS_ORBIX 0
 #endif
 
 #if !defined (ACE_HAS_MT_ORBIX)
-	#define ACE_HAS_MT_ORBIX 0
+        #define ACE_HAS_MT_ORBIX 0
 #endif
 
 // @@ MSVC doesn't seem to handle namespace correctly.  Don't set it
@@ -159,7 +159,7 @@
 //
 // 1. Using static object manager (as described above.)
 // 2. Instantiate Object Manager in your CApplication derived class
-//    and define ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
+//    and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
 //
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
