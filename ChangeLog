@@ -1,3 +1,8 @@
+Thu Aug 28 06:33:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/tests/Address_Test.cpp:
+          Fixed compile error
+
 Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ACEXML/apps/svcconf/.depend.Makefile.ACEXML_XML_Svc_Conf_Parser:
@@ -16,7 +21,7 @@ Wed Aug 27 20:34:19 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_defs.h: Added export qualification to
 	  Dispatcher_Attributes class to fix link error in
-	  Win2K_VC71_NET_DLL build. 
+	  Win2K_VC71_NET_DLL build.
 
 Wed Aug 27 17:52:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
