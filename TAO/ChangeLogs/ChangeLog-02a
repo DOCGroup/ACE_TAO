@@ -1,3 +1,9 @@
+Sat Feb 24 11:01:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/st_client.conf:
+          The option to disable locks in the connection cache was changed,
+          but this configuration file was still using the old one.
+
 Sat Feb 24 10:16:42 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RTCORBA/Client_Protocol/svc.conf:
