@@ -24,11 +24,6 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_chorus.GNU: added CHORUS = 1,
           for use by individual Makefiles.
 
-        * ace/Future.cpp: removed ACE_Atomic_Op<ACE_Thread_Mutex, int>
-          instantiation, when __ACE_INLINE__ is enabled, because it no
-          longer appears to be necessary, and caused link collisions on
-          g++/VxWorks.
-
         * examples/Shared_Malloc/test_persistence.cpp: removed
           ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
           instantiation because it's in ace/System_Time.cpp.
