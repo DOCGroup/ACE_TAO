@@ -24,6 +24,14 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+/* Required to force correct linkage on signal() */
+#if defined (PACE_HAS_CPLUSPLUS)
+# ifndef PACE_SIG_PF
+# define PACE_SIG_PF
+  typedef void (*pace_sig_pf) (int);
+# endif /* PACE_SIG_PF */
+#endif /* PACE_HAS_CPLUSPLUS */
+
 #ifndef PACE_SIG_ATOMIC_T
 #define PACE_SIG_ATOMIC_T
   typedef sig_atomic_t pace_sig_atomic_t;

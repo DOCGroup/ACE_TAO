@@ -49,6 +49,13 @@ extern "C" {
 #endif /* PACE_WCHAR_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)
+# ifndef PACE_BSEARCH_PF
+# define PACE_BSEARCH_PF
+  typedef int (*pace_bsearch_pf) (const void*, const void*);
+# endif /* PACE_BSEARCH_PF */
+#endif /* PACE_HAS_CPLUSPLUS */
+
+#if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 

@@ -1,3 +1,21 @@
+Fri Jul 14 00:30:38 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ../ace/OS.i
+	  Minor updates. Currently only LynxOS has a dirty build
+	  of libACE, although libACE still can't be linked against
+	  correctly.
+
+	* pace/signal.h
+	* pace/posix/signal.*
+	* pace/stdlib.h
+	* pace/posix/stdlib.*
+	* pace/pthread.h
+	* pace/posix/pthread.*
+
+	  Added typedef of pointers to functions which forced
+	  functions which take pointers to functions to accept
+	  arguments of c++ linkage... I think.
+
 Thu Jul 13 16:37:33 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ../include/makeinclude/wrapper_macros.GNU
