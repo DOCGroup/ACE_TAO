@@ -619,7 +619,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   // platform.
   ASYS_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
 
-  ASYS_TCHAR *dll_suffix =
+  const ASYS_TCHAR *dll_suffix =
 #if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
     ACE_DLL_SUFFIX;
 #else
