@@ -1,3 +1,10 @@
+Sun Apr 11 18:29:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Client):
+ 	  Fixed the use of ACE_Thread_Mutex to ACE_SYNCH_MUTEX to ensure
+ 	  this will run properly on non-threaded platforms.  Thanks to
+ 	  Alex for reporting this.
+
 Sun Apr 11 15:36:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp
