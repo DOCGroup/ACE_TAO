@@ -262,7 +262,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
                 int argc,
                 char **argv,
                 u_int id)
-  : ACE_Task<ACE_MT_SYNCH> (thread_manager),
+  : ACE_Task<ACE_SYNCH> (thread_manager),
     cubit_impl_ (0),
     ts_ (ts),
     num_ (0),

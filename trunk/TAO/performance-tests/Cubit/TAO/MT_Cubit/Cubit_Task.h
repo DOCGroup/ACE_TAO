@@ -28,7 +28,7 @@
 #include "cubit_i.h"
 #include "Globals.h"
 
-class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
+class Cubit_Task : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.

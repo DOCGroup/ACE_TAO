@@ -15,7 +15,7 @@ Cubit_Task::Cubit_Task (const char *args,
                         u_int num_of_objs,
                         ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+  : ACE_Task<ACE_SYNCH> (thr_mgr),
     key_ ("Cubit"),
     orbname_ ((char *) orbname),
     orbargs_ ((char *) args),
