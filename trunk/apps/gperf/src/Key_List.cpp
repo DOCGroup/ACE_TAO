@@ -944,8 +944,6 @@ Key_List::output_lookup_array (void)
       duplicate_entry duplicates[total_duplicates];
       int lookup_array[max_hash_value + 1];
 #else
-      // Note: we don't use new, because that invokes a custom
-      // operator new.
       duplicate_entry *duplicates = (duplicate_entry *)
 	malloc (total_duplicates * sizeof (duplicate_entry));
       int *lookup_array = (int *) malloc (sizeof (int) * (max_hash_value + 1));
@@ -1051,7 +1049,7 @@ Key_List::output_lookup_array (void)
                   }
 
               // We are in *big* trouble if this happens!
-              assert (i != 0);
+              assert (i >= 0);
             }
         }
 

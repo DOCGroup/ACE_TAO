@@ -1,3 +1,13 @@
+Tue Sep 22 02:12:53 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* src/Key_List.cpp (output_lookup_array): Changed the assertion
+ 	  from assert (i != 0) to assert (i >= 0) since I think that's
+ 	  correct... (ah, so THAT's why comments are important thinks the
+ 	  '92 Doug... ;-)).
+
+	* src/Options: Improved the comments for the '-h' option to
+ 	  reflect current reality...
+
 Thu Sep 17 11:42:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp (output_lookup_array): Put 'signed' keyword
