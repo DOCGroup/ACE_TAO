@@ -48,11 +48,8 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ORB_init.o .obj/ORB_init.so .shobj/ORB_init.o .shobj/ORB_init.so: ORB_init.cpp \
- $(TAO_ROOT)/tao/corba.h \
+.obj/ORB_init.o .obj/ORB_init.so .shobj/ORB_init.o .shobj/ORB_init.so: ORB_init.cpp $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
