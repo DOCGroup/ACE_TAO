@@ -1,3 +1,10 @@
+Wed May 16 10:21:26 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/CORBALOC_Parser.cpp:
+	* tao/IORManipulation/IORManipulation.cpp:
+	  Changed TAO_Stub constructors to use the orb core's  stub
+	  factory so that they get the right kind of stub.
+
 Wed May 16 09:16:23 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/RT_Stub_Factory.h:
