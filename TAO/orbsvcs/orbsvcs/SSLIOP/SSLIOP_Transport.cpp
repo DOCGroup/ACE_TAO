@@ -58,6 +58,17 @@ TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Handler_Base *handler,
 
 TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
 {
+  // If the socket has not already been closed.
+  if (this->handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->dequeue_all ();
+    }
 }
 
 TAO_SSLIOP_Handler_Base *&
@@ -69,7 +80,7 @@ TAO_SSLIOP_Transport::handler (void)
 int
 TAO_SSLIOP_Transport::idle (void)
 {
-  return this->handler_->idle();
+  return this->handler_->idle ();
 }
 
 void
@@ -209,8 +220,9 @@ TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) SSLIOP_Transport::handle_client_input -"
-                    " nil message state\n"));
+                    ACE_TEXT ("TAO (%P|%t) ")
+                    ACE_TEXT ("SSLIOP_Transport::handle_client_input -")
+                    ACE_TEXT (" nil message state\n")));
       return -1;
     }
 

@@ -53,6 +53,10 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
 
 TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 {
+  // Make sure we are closed before we start destroying the
+  // strategies.
+  this->close ();
+
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
@@ -134,8 +138,8 @@ int
 TAO_SSLIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
 {
   const TAO_SSLIOP_Profile *profile =
-    ACE_dynamic_cast(const TAO_SSLIOP_Profile *,
-                     pfile);
+    ACE_dynamic_cast (const TAO_SSLIOP_Profile *,
+                      pfile);
 
   // Make sure the dynamically cast pointer is valid.
   if (profile == 0)
@@ -213,6 +217,8 @@ int
 TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                              const ACE_INET_Addr& addr)
 {
+  this->orb_core_ = orb_core;
+
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_SSLIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
@@ -233,8 +239,9 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "\n\nTAO (%P|%t) SSLIOP_Acceptor::open_i - %p\n\n",
-                    "cannot open acceptor"));
+                    ACE_TEXT ("\n\nTAO (%P|%t) ")
+                    ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("cannot open acceptor")));
       return -1;
     }
 
@@ -247,8 +254,9 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "\n\nTAO (%P|%t) SSLIOP_Acceptor::open_i - %p\n\n",
-                    "cannot get local addr"));
+                    ACE_TEXT ("\n\nTAO (%P|%t) ")
+                    ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("cannot get local addr")));
       return -1;
     }
 
@@ -261,8 +269,9 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       for (size_t i = 0; i < this->num_hosts_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) SSLIOP_Acceptor::open_i - "
-                      "listening on: <%s:%u>\n",
+                      ACE_TEXT ("TAO (%P|%t) ")
+                      ACE_TEXT ("SSLIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("listening on: <%s:%u>\n"),
                       this->hosts_[i].c_str (),
                       this->ssl_component_.port));
         }
@@ -326,7 +335,8 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) Zero length IIOP/SSL option.\n"),
+                           ACE_TEXT ("TAO (%P|%t) Zero length")
+                           ACE_TEXT ("IIOP/SSL option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
@@ -337,8 +347,9 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
           if (slot == ACE_static_cast (int, len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) IIOP/SSL option <%s> is "
-                               "missing a value.\n",
+                               ACE_TEXT ("TAO (%P|%t) IIOP/SSL")
+                               ACE_TEXT ("option <%s> is ")
+                               ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
 
@@ -365,8 +376,9 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
                 this->priority_ = corba_priority;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "TAO (%P|%t) Invalid IIOP/SSL endpoint "
-                                   "priority: <%s>\n",
+                                   ACE_TEXT ("TAO (%P|%t) Invalid ")
+                                   ACE_TEXT ("IIOP/SSL endpoint ")
+                                   ACE_TEXT ("priority: <%s>\n"),
                                    value.c_str ()),
                                   -1);
             }
@@ -378,14 +390,17 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
                 this->ssl_component_.port = ssl_port;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "TAO (%P|%t) Invalid IIOP/SSL endpoint "
-                                   "port: <%s>\n",
+                                   ACE_TEXT ("TAO (%P|%t) Invalid ")
+                                   ACE_TEXT ("IIOP/SSL endpoint ")
+                                   ACE_TEXT ("port: <%s>\n"),
                                    value.c_str ()),
                                   -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) Invalid IIOP/SSL option: <%s>\n",
+                               ACE_TEXT ("TAO (%P|%t) Invalid ")
+                               ACE_TEXT ("IIOP/SSL ")
+                               ACE_TEXT ("option: <%s>\n"),
                                name.c_str ()),
                               -1);
         }
