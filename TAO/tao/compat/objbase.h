@@ -61,7 +61,7 @@ typedef const TAO_IID &REFIID;
 //
 DEFINE_GUID (IID_TAO_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
 
-class TAO_IUnknown 
+class TAO_IUnknown
 {
 public:
   virtual TAO_HRESULT  QueryInterface (REFIID riid,
@@ -81,9 +81,9 @@ ResultFromScode(TAO_SCODE scode)
 }
 
 #define TAO_NOERROR         ((TAO_SCODE) 0)
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined(DIGITAL_UNIX)
 #  define NOERROR TAO_NOERROR
-#endif
+#endif /* ! ACE_WIN32 && ! DIGITAL_UNIX */
 #define TAO_E_NOINTERFACE   ((TAO_SCODE) 17)
 
 
@@ -97,7 +97,7 @@ ResultFromScode(TAO_SCODE scode)
 // supported at this writing.
 
 typedef u_short         TAO_VARTYPE;
-enum TAO_VARENUM 
+enum TAO_VARENUM
 {                  // only types suitable for VARIANTs
   VT_EMPTY    = 0,            // nothing
   VT_NULL     = 1,            // SQL style ull (XXX)
@@ -118,9 +118,9 @@ enum TAO_VARENUM
   VT_BYREF    = 0x4000        // pointer to more primitive type
 };
 
-struct TAO_CY 
+struct TAO_CY
   // = TITLE
-  //   Currency is an eight byte fixed point number (could be "long long").  
+  //   Currency is an eight byte fixed point number (could be "long long").
 {
 #if defined (WORDS_BIGENDIAN)
     long Hi;
@@ -136,11 +136,11 @@ struct TAO_CY
 
 typedef double TAO_DATE;
 
-struct TAO_VARIANT 
+struct TAO_VARIANT
 {
   TAO_VARTYPE               vt;             // type ID
   u_short               wReserved1, wReserved2, wReserved3;
-  union 
+  union
   {
     //
     // By-Value fields
