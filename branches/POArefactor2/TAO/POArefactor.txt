@@ -1,3 +1,8 @@
+Mon Jan 24 11:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentPolicyValueSystem.h:
+          Fixed include
+
 Sun Jan 23 01:22:45 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/Adapter_Activator.cpp:
@@ -25,7 +30,7 @@ Sat Jan 22 23:08:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Mostly cosmetic fixes and changes.
 
-	* tao/PortableServer/ThreadPolicy.pidl:	
+	* tao/PortableServer/ThreadPolicy.pidl:
 
 	  Added a enum which is missing from the spec.
 
