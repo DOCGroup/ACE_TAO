@@ -162,15 +162,6 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START);
 
-  /*const TAO_IIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
-
-  // @@ This should be implemented in the transport object, which
-  //    would query the profile to obtain the version...
-  if (TAO_GIOP::start_message (profile->version (),
-                               TAO_GIOP::Request,
-                               output,
-                               orb_core) == 0)*/
   if (this->client_mesg_factory_->write_protocol_header
       (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
