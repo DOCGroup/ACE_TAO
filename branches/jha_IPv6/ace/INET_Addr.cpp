@@ -196,6 +196,7 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
   this->set (sa);
 }
 
+#if defined (ACE_HAS_IPV6)
 int
 ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 ip_addr,
@@ -209,6 +210,7 @@ ACE_INET_Addr::set (u_short port_number,
   printf("Error: set not defined for 32 bit addresses with IPv6 defined\n");
   return -1;
 }
+#endif
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and an Internet
 // address.
@@ -218,10 +220,19 @@ ACE_INET_Addr::set (u_short port_number,
                     ace_in_addr_t inet_address,
                     int encode)
 {
+#if defined (ACE_HAS_IPV6)
   unsigned char &family = this->inet_addr_.sin6_family;
   unsigned char &len = this->inet_addr_.sin6_len;
   unsigned short &port = this->inet_addr_.sin6_port;
   void *addrptr = (void*)&this->inet_addr_.sin6_addr;
+#else
+  unsigned short &family = this->inet_addr_.sin_family;
+#if defined (ACE_HAS_SIN_LEN)
+  unsigned char &len = this->inet_addr_.sin_len;
+#endif
+  unsigned short &port = this->inet_addr_.sin_port;
+  void *addrptr = (void*)&this->inet_addr_.sin_addr;
+#endif
 
   ACE_TRACE ("ACE_INET_Addr::set");
   this->ACE_Addr::base_set (ACE_AF_INET, sizeof this->inet_addr_);
@@ -242,9 +253,16 @@ ACE_INET_Addr::set (u_short port_number,
   else
     port = port_number;
 
+#if defined (ACE_HAS_IPV6)
+// XXX load a size variable up above
   (void) ACE_OS::memcpy ((void *) addrptr,
                          (void *) &inet_address,
                          sizeof this->inet_addr_.sin6_addr);
+#else
+  (void) ACE_OS::memcpy ((void *) addrptr,
+                         (void *) &inet_address,
+                         sizeof this->inet_addr_.sin_addr);
+#endif
   return 0;
 }
 
