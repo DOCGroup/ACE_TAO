@@ -19,10 +19,11 @@
 #ifndef TAO_IIOP_PIDL
 #define TAO_IIOP_PIDL
 
+// This is a OMG specified IDL. When IIOP modules start getting
+// complicated we may want to have them here. 
 #pragma prefix "omg.org"
 
 
-// IDL
 module IIOP
 {
   struct ListenPoint

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IIOPC_H_
-#define _TAO_IDL_IIOPC_H_
+#ifndef TAO_IDL_IIOPC_H
+#define TAO_IDL_IIOPC_H
 
 #include "ace/pre.h"
 
