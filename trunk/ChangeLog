@@ -1,3 +1,8 @@
+Tue Dec  2 12:07:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
+          Removed all std::, this causes problems in our MSVC6 builds
+
 Mon Dec  1 22:04:37 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* tests/Task_Ex_Test.cpp: 
