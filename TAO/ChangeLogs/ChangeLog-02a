@@ -3,7 +3,7 @@ Wed Dec 05 08:03:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* tao/Strategies/DIOP_Profile.cpp:
 
 	  Fixed the usage of corbaloc for DIOP. This change was motivated
-	  by <ckhumboa@gmu.edu>.
+	  by Chatchai Khunboa <ckhumboa@gmu.edu>.
 
 	* tao/Strategies/DIOP_Transport.cpp:
 	  
