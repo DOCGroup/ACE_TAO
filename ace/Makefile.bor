@@ -23,6 +23,7 @@ OBJFILES = \
 	$(OBJDIR)\ATM_QoS.obj \
 	$(OBJDIR)\ATM_Stream.obj \
 	$(OBJDIR)\Based_Pointer_Repository.obj \
+	$(OBJDIR)\Base_Thread_Adapter.obj \
 	$(OBJDIR)\Basic_Types.obj \
 	$(OBJDIR)\Capabilities.obj \
 	$(OBJDIR)\CDR_Stream.obj \
@@ -99,8 +100,11 @@ OBJFILES = \
 	$(OBJDIR)\OS_Memory.obj \
 	$(OBJDIR)\OS_String.obj \
 	$(OBJDIR)\OS_TLI.obj \
+	$(OBJDIR)\OS_Thread_Adapter.obj \
 	$(OBJDIR)\Thread_Hook.obj \
 	$(OBJDIR)\Thread_Adapter.obj \
+	$(OBJDIR)\Base_Thread_Adapter.obj \
+	$(OBJDIR)\OS_Thread_Adapter.obj \
 	$(OBJDIR)\Thread_Exit.obj \
 	$(OBJDIR)\Thread_Control.obj \
 	$(OBJDIR)\Pair.obj \
