@@ -72,19 +72,19 @@ operator << (ostream &os,
 {
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
-     << "Long:              " << t.word4_ << endl
-#if !defined(_MSC_VER)
-     << "ULongLong:          " << t.word8_ << endl
-#else
-     << "ULongLong 1st half: "
-        << hex
-        << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ >> 32))
-        << dec << endl
+     << "Long:              " << t.word4_ << endl;
+
+  ACE_CDR::ULongLong hi = (t.word8_ >> 32);
+  ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
+
+  os << "ULongLong 1st half: "
+     << hex
+     << ACE_U64_TO_U32(hi)
+     << dec << endl
      << "ULongLong 2nd half: "
-        << hex
-        << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ & 0xffffffff))
-        << dec << endl
-#endif
+     << hex
+     << ACE_U64_TO_U32(lo)
+     << dec << endl
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;
   return os;
