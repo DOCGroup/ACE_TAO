@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 IDL_SRC = GridC.cpp GridS.cpp
 

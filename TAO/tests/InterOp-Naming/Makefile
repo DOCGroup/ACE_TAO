@@ -16,7 +16,7 @@ IDL_SRCS = \
 	INSC.cpp \
 	INSS.cpp
 
-LDLIBS = -lTAO -lTAO_CosNaming
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 PROG_SRCS = \
 	INS_test_client.cpp \

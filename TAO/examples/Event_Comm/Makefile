@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 PROG_SRCS = Consumer_Handler.cpp \
             Consumer_Input_Handler.cpp \
             Event_Comm_i.cpp \
