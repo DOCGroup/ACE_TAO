@@ -1,8 +1,11 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
 dnl 
-dnl       ACE M4 include file which contains ACE specific M4 macros
+dnl       ACE M4 include file which contains general M4 macros
 dnl       to be used by the ACE configure script.
+dnl
+dnl       The macros in this file were designed for ACE but should be
+dnl       general enough for general use.
 dnl 
 dnl -------------------------------------------------------------------------
 
@@ -113,7 +116,7 @@ AC_DEFUN(ACE_CACHE_CHECK,
   AC_MSG_CHECKING([$1])
   AC_CACHE_VAL([$2], [$3])
   AC_MSG_RESULT([$]$2)
-  if test "[$]$2" = yes; then
+  if test "[$]$2" != no; then
     ace_just_a_place_holder=fixme
 ifelse([$4], , :, [$4])
   else
@@ -342,3 +345,135 @@ EOF
 dnl   checks for structures
 
 dnl   checks for system services
+
+
+dnl *********************** SPECIAL SECTION *******************************
+dnl
+dnl This section contains my own *re*implementation of the functionality
+dnl provided by some tests/macros found in GNU Autoconf since the ones found
+dnl in Autoconf don't appear to work as expected.
+dnl
+dnl                -Ossama Othman <ossama@debian.org>
+dnl
+dnl The copyright for the following macros is listed below.
+dnl Note that all macros listed prior to this section are copyrighted
+dnl by Ossama Othman, not the Free Software Foundation.  Nevertheless,
+dnl all software found in this file is free software.  Please read the
+dnl distribution terms found at the top of this file and the ones below.
+
+dnl Parameterized macros.
+dnl Requires GNU m4.
+dnl This file is part of Autoconf.
+dnl Copyright (C) 1992, 93, 94, 95, 96, 1998 Free Software Foundation, Inc.
+dnl
+dnl This program is free software; you can redistribute it and/or modify
+dnl it under the terms of the GNU General Public License as published by
+dnl the Free Software Foundation; either version 2, or (at your option)
+dnl any later version.
+dnl
+dnl This program is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl
+dnl You should have received a copy of the GNU General Public License
+dnl along with this program; if not, write to the Free Software
+dnl Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+dnl 02111-1307, USA.
+dnl
+dnl As a special exception, the Free Software Foundation gives unlimited
+dnl permission to copy, distribute and modify the configure scripts that
+dnl are the output of Autoconf.  You need not follow the terms of the GNU
+dnl General Public License when using or distributing such scripts, even
+dnl though portions of the text of Autoconf appear in them.  The GNU
+dnl General Public License (GPL) does govern all other use of the material
+dnl that constitutes the Autoconf program.
+dnl
+dnl Certain portions of the Autoconf source text are designed to be copied
+dnl (in certain cases, depending on the input) into the output of
+dnl Autoconf.  We call these the "data" portions.  The rest of the Autoconf
+dnl source text consists of comments plus executable code that decides which
+dnl of the data portions to output in any given case.  We call these
+dnl comments and executable code the "non-data" portions.  Autoconf never
+dnl copies any of the non-data portions into its output.
+dnl
+dnl This special exception to the GPL applies to versions of Autoconf
+dnl released by the Free Software Foundation.  When you make and
+dnl distribute a modified version of Autoconf, you may extend this special
+dnl exception to the GPL to apply to your modified version as well, *unless*
+dnl your modified version has the potential to copy into its output some
+dnl of the text that was the non-data portion of the version that you started
+dnl with.  (In other words, unless your change moves or copies text from
+dnl the non-data portions to the data portions.)  If your modification has
+dnl such potential, you must delete any notice of this special exception
+dnl to the GPL from your modified version.
+dnl
+dnl Written by David MacKenzie, with help from
+dnl Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
+dnl Roland McGrath, Noah Friedman, david d zuhn, and many others.
+
+
+dnl Usage: ACE_SEARCH_LIBS(FUNCTION, SEARCH-LIBS [, ACTION-IF-FOUND
+dnl                        [, ACTION-IF-NOT-FOUND [, OTHER-LIBRARIES]]])
+dnl Search for a library defining FUNCTION, if it's not already available.
+AC_DEFUN(ACE_SEARCH_LIBS,
+[
+ AC_CACHE_CHECK(for library containing $1, ac_cv_search_$1,
+   [
+    ac_func_search_save_LIBS="$LIBS"
+
+    ac_cv_search_$1="no"
+
+    ACE_TRY_LINK_FUNC([$1], [ac_cv_search_$1="none required"])
+
+    test "$ac_cv_search_$1" = "no" && for i in $2; do
+      LIBS="-l$i $5 $ac_func_search_save_LIBS"
+      ACE_TRY_LINK_FUNC($1,
+        [
+         ac_cv_search_$1="-l$i"
+         break
+        ])
+    done
+
+    LIBS="$ac_func_search_save_LIBS"
+   ])
+
+  if test "$ac_cv_search_$1" != "no"; then
+    test "$ac_cv_search_$1" = "none required" || LIBS="$ac_cv_search_$1 $LIBS"
+    $3
+  else :
+    $4
+  fi
+])
+
+dnl Usage: ACE_TRY_LINK_FUNC(FUNCTION,[, ACTION-IF-FOUND
+dnl                          [, ACTION-IF-NOT-FOUND])
+dnl Search for a library defining FUNCTION, if it's not already available.
+AC_DEFUN(ACE_TRY_LINK_FUNC,
+[
+AC_TRY_LINK(
+dnl Don't include <ctype.h> because on OSF/1 3.0 it includes <sys/types.h>
+dnl which includes <sys/select.h> which contains a prototype for
+dnl select.  Similarly for bzero.
+[/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char $1(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+]ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
+extern "C"
+#endif
+])dnl
+[/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char $1();
+], [
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_$1) || defined (__stub___$1)
+choke me
+#else
+$1();
+#endif
+],[$2],[$3])
+])
