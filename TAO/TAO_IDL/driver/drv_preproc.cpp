@@ -135,9 +135,33 @@ DRV_cpp_init()
   DRV_cpp_putarg ("-I.");
 
   // So we can find the required orb.idl file.
-  DRV_cpp_putarg (ACE_OS::strcat (ACE_OS::strcat ("-I",
-                                                  ACE_OS::getenv ("TAO_ROOT")),
-                                  "/tao"));
+  char* option = new char[BUFSIZ];
+  ACE_OS::strcpy (option, "-I");
+  const char* TAO_ROOT =
+    ACE_OS::getenv ("TAO_ROOT");
+  if (TAO_ROOT != 0)
+    {
+      ACE_OS::strcat (option, TAO_ROOT);
+      ACE_OS::strcat (option, "/tao");
+    }
+  else
+    {
+      const char* ACE_ROOT =
+        ACE_OS::getenv ("ACE_ROOT");
+      if (ACE_ROOT != 0)
+        {
+          ACE_OS::strcat (option, ACE_ROOT);
+          ACE_OS::strcat (option, "TAO/tao");
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO_IDL: neither TAO_ROOT nor ACE_ROOT defined\n"));
+          ACE_OS::strcat (option, ".");
+        }
+    }
+
+  DRV_cpp_putarg (option);
 }
 
 /*
