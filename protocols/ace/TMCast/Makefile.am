@@ -8,8 +8,14 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/ace/TMCast
+
+ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
+
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
+
 ## Makefile.TMCast.am 
 
 if BUILD_EXCEPTIONS
@@ -17,17 +23,19 @@ if BUILD_THREADS
 lib_LTLIBRARIES += libTMCast.la
 
 libTMCast_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DTMCAST_BUILD_DLL
 
 libTMCast_la_SOURCES = \
   Group.cpp \
   Protocol.cpp
 
+libTMCast_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libTMCast_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   Export.hpp \

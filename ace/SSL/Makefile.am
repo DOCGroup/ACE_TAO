@@ -8,6 +8,8 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/ace/SSL
+
 ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
@@ -32,6 +34,9 @@ libACE_SSL_la_SOURCES = \
   SSL_SOCK_Acceptor.cpp \
   SSL_SOCK_Connector.cpp \
   SSL_SOCK_Stream.cpp
+
+libACE_SSL_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_SSL_la_LIBADD = \
  $(ACE_BUILDDIR)/ace/libACE.la
