@@ -1,3 +1,21 @@
+Sat Nov 02 18:10:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	  Inserted missing , in constructor.
+
+	* orbscvs/orbsvcs/Notify/Notify_Service.cpp:
+	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks
+	  to Bala for suggesting a fix.
+
+	* orbscvs/orbsvcs/Notify/Thread_Pool_Task.cpp:
+	  Modified call to <activate> to use ACE_DEFAULT_THREAD_PRIORITY.
+
+	* orbsvcs\Logging_Service\Notify_Logging_Service\Notify_Logging_Service.cpp:
+	  Changed code to obtain the notify service.
+
+	* orbsvcs\Logging_Service\Notify_Logging_Service\svc.conf:	  	
+          Modified the .conf file to use the revised Notify Service directive.
+	  
 Sat Nov  2 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Utils/Servant_Var.h:
@@ -30,9 +48,12 @@ Fri Nov 01 20:09:44 2002  Pradeep Gore  <pradeep@oomworks.com>
           In method <run_test> removed duplicate call to Sequence Consumer.
 
         * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
-
           Changed code to obtain the notify service for colocation.
 
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	  Changed the default values used when the test is run without any
+	  parameters.
+	
         * orbsvcs/tests/Notify/Blocking/notify.conf:
         * orbsvcs/tests/Notify/Discarding/notify.conf:
         * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
