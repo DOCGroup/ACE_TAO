@@ -1,3 +1,7 @@
+Sun Jun 01 20:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: Fixed a typo and added comments. 
+
 Sun Jun  1 19:05:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: The following changes were made to the release
@@ -9,6 +13,8 @@ Sun Jun  1 19:05:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	    write permissions in the output directory
 	  - Removed the option to create releases with no zipped
 	    libraries. 
+	  - Introduced the need for another environment variable MAILID to
+	    provide the mail id of the person cutting the beta. 
 
 Sun Jun 01 18:02:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
