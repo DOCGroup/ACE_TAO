@@ -128,8 +128,22 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
           << "_tao_union_helper (_tao_union_tmp);" << be_uidt_nl
           << "result = strm >> _tao_union_helper;" << be_nl
           << "if (result)" << be_idt_nl
-          << "_tao_union." << f->local_name () << "("
-          << "_tao_union_tmp);" << be_uidt;
+          << "{" << be_idt_nl
+          << "_tao_union." << f->local_name ()
+          << " (_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -215,8 +229,22 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
           << ";" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union." << f->local_name () << " ("
-          << "_tao_union_tmp);" << be_uidt;
+          << "_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -294,8 +322,22 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
       *os << node->name () << "_var _tao_union_tmp;" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp.in ());";
+          
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -344,8 +386,22 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
       *os << node->name () << "_var _tao_union_tmp;" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp.in ());";
+          
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -405,8 +461,9 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
 
           *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
               << "if (result)" << be_idt_nl
-              << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());"
-              << be_uidt;
+              << "{" << be_idt_nl
+              << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
+          
         }
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "CORBA::Char _tao_union_tmp;" << be_nl
@@ -414,38 +471,60 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
             << "(_tao_union_tmp);" << be_nl
             << "result = strm >> _tao_union_helper;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union." << f->local_name ()
-            << "(_tao_union_tmp);" << be_uidt;
+            << " (_tao_union_tmp);";
+
       else if (node->pt () == AST_PredefinedType::PT_wchar)
         *os << "CORBA::WChar _tao_union_tmp;" << be_nl
             << "CORBA::Any::to_wchar _tao_union_helper "
             << "(_tao_union_tmp);" << be_nl
             << "result = strm >> _tao_union_helper;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union." << f->local_name ()
-            << "(_tao_union_tmp);" << be_uidt;
+            << " (_tao_union_tmp);";
+
       else if (node->pt () == AST_PredefinedType::PT_octet)
         *os << "CORBA::Octet _tao_union_tmp;" << be_nl
             << "CORBA::Any::to_octet _tao_union_helper "
             << "(_tao_union_tmp);" << be_nl
             << "result = strm >> _tao_union_helper;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union." << f->local_name ()
-            << "(_tao_union_tmp);" << be_uidt;
+            << " (_tao_union_tmp);";
+
       else if (node->pt () == AST_PredefinedType::PT_boolean)
         *os << "CORBA::Boolean _tao_union_tmp;" << be_nl
             << "CORBA::Any::to_boolean _tao_union_helper "
             << "(_tao_union_tmp);" << be_nl
             << "result = strm >> _tao_union_helper;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union." << f->local_name ()
-            << "(_tao_union_tmp);" << be_uidt;
+            << " (_tao_union_tmp);";
+
       else
         *os << node->name () << " _tao_union_tmp;" << be_nl
             << "result = strm >> _tao_union_tmp;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union." << f->local_name ()
-            << " (_tao_union_tmp);" << be_uidt;
+            << " (_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -524,8 +603,22 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
         *os << " _tao_union_tmp;" << be_nl
             << "result = strm >> _tao_union_tmp;" << be_nl
             << "if (result)" << be_idt_nl
+            << "{" << be_idt_nl
             << "_tao_union."
-            << f->local_name () << " (_tao_union_tmp);" << be_uidt;
+            << f->local_name () << " (_tao_union_tmp);";
+
+        if (this->explicit_default ())
+          {
+            *os << be_nl;
+            *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+          }
+        else
+          {
+            *os << be_uidt_nl;
+          }
+
+        *os << "}" << be_uidt;
+
         return 0;
       }
 
@@ -616,8 +709,22 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
 
       *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp);" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -665,8 +772,22 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
       *os << node->name () << " _tao_union_tmp;" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
-          << " (_tao_union_tmp);" << be_uidt;
+          << " (_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -769,8 +890,22 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
           << ";" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_union." << f->local_name () << " ("
-          << "_tao_union_tmp);" << be_uidt;
+          << "_tao_union_tmp);";
+
+      if (this->explicit_default ())
+        {
+          *os << be_nl;
+          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt;
+
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -821,5 +956,51 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
         }
       delete visitor;
     }
+  return 0;
+}
+
+int 
+be_visitor_union_branch_cdr_op_ci::explicit_default (void)
+{
+  be_union *bu = be_union::narrow_from_decl (this->ctx_->scope ());
+  int def_index = bu->default_index ();
+
+  if (def_index != -1)
+    {
+      be_union_branch *ub = 
+        be_union_branch::narrow_from_decl (this->ctx_->node ());
+
+      // instantiate a scope iterator.
+      UTL_ScopeActiveIterator *si = 
+        new UTL_ScopeActiveIterator (bu, 
+                                     UTL_Scope::IK_decls);
+
+      int i = 0; // counter
+      be_union_branch *bub; // union branch node
+      AST_Decl *d;  // temp node
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+
+          if (!d->imported ())
+            bub = be_union_branch::narrow_from_decl (d);
+
+          if (bub == ub)
+            {
+              delete si;
+              return (i == def_index);
+            }
+          else
+            {
+              i++;
+              si->next ();
+            }
+        }
+
+      delete si;
+    }
+
   return 0;
 }
