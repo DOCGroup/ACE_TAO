@@ -15,12 +15,13 @@ VERSION = BCB.04.04
 # ---------------------------------------------------------------------------
 PROJECT = ChatClient.exe
 OBJFILES = obj\ChatClient.obj obj\ChatClientWnd.obj obj\BroadcasterC.obj \
-  obj\BroadcasterS.obj obj\ReceiverC.obj obj\ReceiverS.obj obj\ReceiverImpl.obj
+  obj\BroadcasterS.obj obj\ReceiverC.obj obj\ReceiverS.obj obj\ReceiverImpl.obj \
+  obj\ORBThread.obj
 RESFILES = ChatClient.res
 RESDEPEN = $(RESFILES) ChatClientWnd.dfm
 LIBFILES =
-LIBRARIES = ace_bp.lib tao_bp.lib orbsvcs_bp.lib
-SPARELIBS = Vcl40.lib orbsvcs_bp.lib tao_bp.lib ace_bp.lib
+LIBRARIES = ACE_bp.lib TAO_bp.lib TAO_PortableServer_bp.lib
+SPARELIBS = Vcl40.lib TAO_PortableServer_bp.lib TAO_bp.lib ACE_bp.lib
 PACKAGES = Vcl40.bpi Vclx40.bpi vcljpg40.bpi bcbsmp40.bpi Qrpt40.bpi Vcldb40.bpi \
   ibsmp40.bpi vcldbx40.bpi TeeUI40.bpi teedb40.bpi tee40.bpi nmfast40.bpi \
   dclocx40.bpi
@@ -32,21 +33,16 @@ PATHASM = .;
 PATHRC = .;
 DEBUGLIBPATH = $(BCB)\lib\debug
 RELEASELIBPATH = $(BCB)\lib\release
-USERDEFINES = WIN32;ACE_HAS_DLL=1;TAO_HAS_DLL=1;TAO_ORBSVCS_HAS_DLL=1;_DLL;ACE_USE_RCSID=0
+USERDEFINES =
 SYSDEFINES = _RTLDLL;NO_STRICT;USEPACKAGES
 # ---------------------------------------------------------------------------
 CFLAG1 = -I$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. -O2 -Hc \
-  -H=obj\ChatClient.csm -Hh=pch.h -w-rvl -w-rch -w-par -w-obs -w-inl -Ve -a8 -k- \
+  -H=obj\ChatClient.csm -Hh=pch.h -w-rvl -w-rch -w-par -w-obs -w-inl -w-aus -Ve -a8 -k- \
   -vi -c -b- -Vx -tW -tWM -D$(SYSDEFINES);$(USERDEFINES)
 PFLAGS = -U$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release\Pascal;$(RELEASELIBPATH) \
-  -I$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. -N2obj -N0obj \
-  -DWIN32;ACE_HAS_DLL=1;TAO_HAS_DLL=1;TAO_ORBSVCS_HAS_DLL=1;_DLL;ACE_USE_RCSID=0 \
-  -$Y- -$L- -$D- -v -JPHNE -M
-RFLAGS = -i$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. \
-  -DWIN32;ACE_HAS_DLL=1;TAO_HAS_DLL=1;TAO_ORBSVCS_HAS_DLL=1;_DLL;ACE_USE_RCSID=0
-AFLAGS = /i$(BCB)\include /i$(BCB)\include\vcl /i..\..\.. /i..\.. /dWIN32 \
-  /dACE_HAS_DLL=1 /dTAO_HAS_DLL=1 /dTAO_ORBSVCS_HAS_DLL=1 /d_DLL /dACE_USE_RCSID=0 \
-  /mx /w2 /zn
+  -I$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. -N2obj -N0obj -$Y- -$L- -$D- -v -JPHNE -M
+RFLAGS = -i$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\..
+AFLAGS = /i$(BCB)\include /i$(BCB)\include\vcl /i..\..\.. /i..\..  /mx /w2 /zn
 LFLAGS = -L$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release\Pascal;$(RELEASELIBPATH) -aa \
   -Tpe -x -Gn
 # ---------------------------------------------------------------------------
@@ -83,36 +79,9 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 
-[HistoryLists\hlIncludePath]
-Count=2
-Item0=$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\..
-Item1=$(BCB)\include;$(BCB)\include\vcl;..\..\..\..;..\..\..
-
-[HistoryLists\hlLibraryPath]
-Count=2
-Item0=$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release
-Item1=$(BCB)\lib\obj;$(BCB)\lib;..\..\..\..\bin
-
-[HistoryLists\hlDebugSourcePath]
-Count=1
-Item0=$(BCB)\source\vcl;..
-
-[HistoryLists\hlConditionals]
-Count=1
-Item0=WIN32;ACE_HAS_DLL=1;TAO_HAS_DLL=1;TAO_ORBSVCS_HAS_DLL=1;_DLL;ACE_USE_RCSID=0
-
 [HistoryLists\hlIntOutputDir]
 Count=1
 Item0=obj
-
-[HistoryLists\hlHostApplication]
-Count=1
-Item0=D:\projects\ACE_wrappers\borland\bin\Naming_Service_bd.exe
-
-[HistoryLists\hlRunParameters]
-Count=2
-Item0=-f..\..\..\bin\chat.ior -nChris
-Item1=-f..\..\..\bin\chat.ior
 
 [HistoryLists\hlFinalOutputDir]
 Count=1

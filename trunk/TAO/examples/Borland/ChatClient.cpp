@@ -12,11 +12,24 @@ USEUNIT("BroadcasterS.cpp");
 USEUNIT("ReceiverC.cpp");
 USEUNIT("ReceiverS.cpp");
 USEUNIT("ReceiverImpl.cpp");
+USEUNIT("ORBThread.cpp");
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+void ace_init(void)
+{
+  ACE::init();
+}
+#pragma startup ace_init
+
+void ace_fini(void)
+{
+  ACE::fini();
+}
+#pragma exit ace_fini
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-  ACE::init ();
-
   try
     {
       Application->Initialize ();
@@ -36,12 +49,6 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
       ShowMessage ("Unknown exception");
     }
-
-  // Must explicitly free the window to ensure the orb is shut down
-  // before ACE::fini is called.
-  delete ChatClientWindow;
-
-  ACE::fini ();
 
   return 0;
 }

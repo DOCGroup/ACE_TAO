@@ -9,22 +9,22 @@
 #include <Forms.hpp>
 #include "ReceiverImpl.h"
 #include "BroadcasterC.h"
+#include "ORBThread.h"
 #include <Dialogs.hpp>
 #include <ExtCtrls.hpp>
+#include <memory>
 //---------------------------------------------------------------------------
 // Message used to notify window of incoming data
 #define WM_MESSAGE_RECEIVED (WM_APP + 0x123)
 //---------------------------------------------------------------------------
 class TChatClientWindow : public TForm
 {
-  __published:	// IDE-managed Components
+__published:	// IDE-managed Components
   TMemo *OutputMemo;
   TMemo *InputMemo;
   TOpenDialog *OpenDialog;
-  TTimer *TimerToEnsureRegularMessages;
   void __fastcall FormClose (TObject *Sender, TCloseAction &Action);
   void __fastcall InputMemoKeyPress (TObject *Sender, char &Key);
-  void __fastcall TimerToEnsureRegularMessagesTimer (TObject *Sender);
    
 private:
   void __fastcall ReadIOR (String filename);
@@ -38,6 +38,9 @@ private:
 
   String nickname_;
   // Nickname of the user chatting.
+
+  std::auto_ptr<TORBThread> orb_thread_;
+  // We run the orb's main loop in a separate thread.
 
   CORBA::ORB_var orb_;
   // Our orb. Order is important! The orb must have a longer lifetime than
@@ -56,14 +59,13 @@ private:
 
 public:		// User declarations
   __fastcall TChatClientWindow (TComponent* Owner);
-  void __fastcall ApplicationMessage (MSG& msg, bool& Handled);
 
 protected: // Message handlers
   void __fastcall WMMessageReceived (TMessage& Message);
   BEGIN_MESSAGE_MAP
   VCL_MESSAGE_HANDLER (WM_MESSAGE_RECEIVED, TMessage, WMMessageReceived)
-    END_MESSAGE_MAP (TForm)
-    };
+  END_MESSAGE_MAP (TForm)
+};
 //---------------------------------------------------------------------------
 extern PACKAGE TChatClientWindow *ChatClientWindow;
 //---------------------------------------------------------------------------
