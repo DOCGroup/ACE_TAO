@@ -1,3 +1,11 @@
+Mon Jan  3 10:56:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/TMCast/Makefile.am:
+	* ace/TMCast/TMCast.mpc:
+	* bin/MakeProjectCreator/config/tmcast.mpb:
+
+	  Add ACE prefix to TMCast library name.
+
 Mon Jan  3 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:

@@ -19,22 +19,22 @@ lib_LTLIBRARIES =
 
 if BUILD_EXCEPTIONS
 if BUILD_THREADS
-lib_LTLIBRARIES += libTMCast.la
+lib_LTLIBRARIES += libACE_TMCast.la
 
-libTMCast_la_CPPFLAGS = \
+libACE_TMCast_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -DTMCAST_BUILD_DLL
 
-libTMCast_la_SOURCES = \
+libACE_TMCast_la_SOURCES = \
   Group.cpp \
   MTQueue.cpp \
   Protocol.cpp
 
-libTMCast_la_LDFLAGS = \
+libACE_TMCast_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
-libTMCast_la_LIBADD = \
+libACE_TMCast_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
 nobase_include_HEADERS += \

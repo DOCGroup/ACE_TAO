@@ -3,6 +3,6 @@
 
 project : acelib, core {
   requires     += exceptions threads
-  sharedname    = TMCast
+  sharedname    = ACE_TMCast
   dynamicflags += TMCAST_BUILD_DLL
 }

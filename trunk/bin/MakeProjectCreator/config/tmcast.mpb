@@ -3,6 +3,6 @@
 
 project: acelib {
   after        += TMCast
-  libs         += TMCast
+  libs         += ACE_TMCast
   requires     += exceptions threads
 }
