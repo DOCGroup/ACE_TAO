@@ -416,6 +416,9 @@ ACE_TS_Clerk_Processor::fini (void)
 
   // Remove the backing store
   this->shmem_->remove ();
+
+  ACE_Connector <ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>::fini ();
+  
   return 0;
 }
 
