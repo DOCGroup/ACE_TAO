@@ -60,14 +60,6 @@ Tue Jan 28 12:42:39 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	* tests/Pipe_Test.cpp (main): Added an iteration count to control
 	  the number of children created by the main process.
 
-	* ace/OS.{h,cpp}:  added ACE_OS::set_sched_params ().  It permits
-	  platform-independent setting of thread priorities and priority
-	  classes.  It is currently supported on Solaris, Win32, and VxWorks.
-
-	* ace/Scheduling_Parameters.{h,i,cpp},
-	  ace/Thread_Priority.{h,i,cpp}, ace/Makefile:
-	  Added these two classes to support ACE_OS::set_sched_params ().
-
 	* ace/Memory_Pool.cpp (init_acquire): cast this->minimum_bytes_ to
 	  size_t to avoid compiler warning if size_t is unsigned.
 
