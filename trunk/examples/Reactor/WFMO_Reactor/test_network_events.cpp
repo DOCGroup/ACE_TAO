@@ -77,23 +77,29 @@ Network_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_input handle = %d\n", handle));
 
-  char message[BUFSIZ];
-  int result = this->stream_.recv (message, sizeof message);
-  if (result > 0)
+  while (1)
     {
-      message[result] = 0;
-      ACE_DEBUG ((LM_DEBUG, "Remote message: %s\n", message));
-      return 0;
-    }
-  else if (result == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Connection closed\n"));
-      return -1;
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "Problems in receiving data, result = %d", result));
-      return -1;
+      char message[BUFSIZ];
+      int result = this->stream_.recv (message, sizeof message);
+      if (result > 0)
+        {
+          message[result] = 0;
+          ACE_DEBUG ((LM_DEBUG, "Remote message: %s\n", message));
+        }
+      else if (result == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Connection closed\n"));
+          return -1;
+        }
+      else if (errno == EWOULDBLOCK)
+        {
+          return 0;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Problems in receiving data, result = %d", result));
+          return -1;
+        }
     }
 }
 
