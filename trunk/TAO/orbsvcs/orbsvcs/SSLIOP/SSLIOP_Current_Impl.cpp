@@ -51,7 +51,6 @@ TAO_SSLIOP_Current_Impl::get_attributes (
   if (this->ssl_ == 0)
     return safe_attribute_list._retn ();
 
-  CORBA::ULong j = 0;
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       const Security::AttributeType &attribute = attributes[i];
@@ -59,9 +58,10 @@ TAO_SSLIOP_Current_Impl::get_attributes (
       // @@ Hacks just to get things going.  Cleanup soon!
       if (attribute.attribute_family.family_definer == 0  // OMG (?)
           && attribute.attribute_family.family == 1  // privileges
-          && attribute.attribute_type == 2)  // AccessId
+          && attribute.attribute_type == Security::AccessId)
         {
-          attribute_list->length (++j);
+          CORBA::ULong j = attribute_list->length ();
+          attribute_list->length (j + 1);
 
           // ----------------------------------------------------
           // Set the attribute_type field.
@@ -94,7 +94,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
               // in the AttributeList.  Drop the length to its
               // previous value.
               // @@ Not exactly exception-safe.  C'est la vie.
-              attribute_list->length (--j);
+              attribute_list->length (j);
               continue;
             }
 
@@ -106,7 +106,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
               // in the AttributeList.  Drop the length to its
               // previous value.
               // @@ Not exactly exception-safe.  C'est la vie.
-              attribute_list->length (--j);
+              attribute_list->length (j);
               continue;
             }
 
