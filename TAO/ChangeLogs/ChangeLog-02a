@@ -7,8 +7,6 @@ Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	  Removed old, meanwhile unrelevant comments from me.
 
-Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
-
 	* tao/Asynch_Reply_Dispatcher.cpp:
 	  
 	  Added a check for a nil reply handler. In the case of a nil reply
