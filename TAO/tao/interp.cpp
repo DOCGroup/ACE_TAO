@@ -245,32 +245,33 @@ static table_element table [CORBA::TC_KIND_COUNT] =
     TC_KIND_COUNT
   };
 
-#if defined (unix) || defined (VXWORKS) || defined (ACE_WIN32)
-#define declare_entry(x,t) \
-        struct align_struct_ ## t { \
-            x one; \
-            char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
-            x two; \
-        }
+#if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
+  // Have a bogus one
+  #define declare_entry(x,t) struct align_struct_ ## t { }
 
-#define setup_entry(x,t) \
+  #define setup_entry(x,t) \
     { \
-        align_struct_ ## t       align; \
-        table [t].size = sizeof (x); \
-        table [t].alignment = \
-                (char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
+      table [t].size = sizeof (x); \
+      table [t].alignment = 1; \
+    }
+#else  /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
+  // unix, ACE_WIN32, VXWORKS, __Lynx__, at least
+  #define declare_entry(x,t) \
+    struct align_struct_ ## t \
+    { \
+      x one; \
+      char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
+      x two; \
     }
 
-#else   // "Fixed" byte alignment
-// Have a bogus one
-#define declare_entry(x,t) struct align_struct_ ## t { }
-#define setup_entry(x,t) \
+  #define setup_entry(x,t) \
     { \
-        table [t].size = sizeof (x); \
-        table [t].alignment = 1; \
+      align_struct_ ## t       align; \
+      table [t].size = sizeof (x); \
+      table [t].alignment = \
+      (char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
     }
-
-#endif /* defined (unix) || defined (VXWORKS) || defined (ACE_WIN32) */
+#endif /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
 
 // Fills in fixed size and alignment values.
 
