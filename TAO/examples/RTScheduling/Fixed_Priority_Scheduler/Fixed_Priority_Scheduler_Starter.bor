@@ -50,9 +50,9 @@ CFLAGS = \
 	$(LIB_FLAGS) \
 	$(DLL_FLAGS)
 
-CPPDIR = .
+CPPDIR = .;..
 
-IDLDIR = .
+IDLDIR = ..
 
 INCLUDES = \
 	..\Starter.h \

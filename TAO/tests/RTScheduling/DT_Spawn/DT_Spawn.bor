@@ -35,7 +35,7 @@ CFLAGS = \
 	$(LIB_FLAGS) \
 	$(DLL_FLAGS)
 
-CPPDIR = .
+CPPDIR = .;..
 
 INCLUDES = \
 	..\Scheduler.h
