@@ -1,6 +1,18 @@
-TUE Feb  2 12:48:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+Tue Feb  2 14:19:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ACE_wrappers/tests/CDR_Test.cpp:
+        * websvcs/websvcs.dsw:
+        * websvcs/lib/websvcs.dsw:
+        * websvcs/lib/websvcs.dsp:
+        * websvcs/tests/tests.dsw:
+        * websvcs/tests/Test_URL_Addr.dsp:
+          Added MSVC project files for the websvcs library.
+
+        * websvcs/lib/URL_addr.cpp:
+          Now correctly exports classes in DLLs.
+
+Tue Feb  2 12:48:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/CDR_Test.cpp:
           Changed the template type of the auto_ptr for char. We were
           getting a Purify FMR message on Unix.
 
