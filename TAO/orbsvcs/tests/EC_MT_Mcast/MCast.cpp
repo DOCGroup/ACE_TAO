@@ -307,8 +307,9 @@ main (int argc, char* argv[])
 
       ACE_OS::sleep (2); // simple solution ensures ready receivers
       terminate_threads = true; // terminate thread pool
-      ACE_OS::sleep (1); // simple solution ensures terminated thread pool
-      the_ace_manager.cancel_grp (thread_pool_id); // cancel any threads still alive
+
+      the_ace_manager.wait(); // wait until all threads in the pool are stopped
+
       the_ace_manager.close ();
 
       // **************** THAT COMPLETES THE EVENT LOOP
@@ -377,7 +378,7 @@ main (int argc, char* argv[])
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MCast example terminated\n"));
+                  "MCast example finished\n"));
     }
   ACE_CATCHANY
     {

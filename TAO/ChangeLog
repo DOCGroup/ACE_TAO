@@ -1,3 +1,11 @@
+Fri Jul  4 10:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+          When the worker threads have to be stopped, don't use a sleep, but
+          do a wait on the thread manager to wait until all threads are
+          stopped. Hopefully this will fix the EC_MT_Cast crashes we sometimes
+          see in the daily builds.
+
 Fri Jul  4 08:07:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Consumer.h:
