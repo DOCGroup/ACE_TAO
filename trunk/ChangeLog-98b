@@ -1,3 +1,8 @@
+Thu Oct 15 20:16:46 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/ACE-FMM.html: Updated with Bob McWhirter's latest changes.
+	Discussion of race conditions when spawning threads from within a constructor.
+
 Thu Oct 15 18:30:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added ACE_HTONS(x) macros to complement ACE_HTONL(x)
