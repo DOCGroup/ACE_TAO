@@ -7041,8 +7041,8 @@ dnl in order for X11 related files to be compiled properly.
 if test "$ace_user_enable_optimize"; then
   dnl We want OCXXFLAGS to be on the end, so we use CXXFLAGS,
   dnl not ACE_CXXFLAGS!
-  CXXFLAGS="$OCXXFLAGS $CXXFLAGS"
-  CFLAGS="$OCFLAGS $CFLAGS"
+  CXXFLAGS="$CXXFLAGS $OCXXFLAGS"
+  CFLAGS="$CFLAGS $OCFLAGS"
 fi
 CXXFLAGS="$ACE_CXXFLAGS $X_CFLAGS $CXXFLAGS"
 CFLAGS="$ACE_CFLAGS $X_CFLAGS $CFLAGS"
