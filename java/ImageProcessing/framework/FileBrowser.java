@@ -2,10 +2,9 @@ package imaging.framework;
 
 import java.awt.*;
 import java.awt.image.*;
-import gjt.Separator;
 import java.net.*;
 import java.applet.*;
-//import gjt.ComponentScroller;
+import gjt.Separator;
 
 class FileNode extends Hierarchy
 {
@@ -98,24 +97,10 @@ class BrowserPanel extends Panel
     if (count > 0)
       this.add ("Center", this.root_);
     return count;
-    //    this.scroller_ = new HierarchyScroller (this.root_);
-    //    this.add ("East", this.scroller_);
-    //    this.scroller_.setComponent (this.root_);
-  }
-
-  public boolean handleEvent (Event evt)
-  {
-    if (evt.target == this.scroller_)
-      {
-	repaint ();
-	return true;
-      }
-    return super.handleEvent (evt);
   }
 
   private FileNode root_ = null;
   private ImageApp parent_;
-  private HierarchyScroller scroller_;
 }
 
 class FileBrowser extends Frame
