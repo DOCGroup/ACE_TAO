@@ -68,23 +68,15 @@
 # define ACE_MT_SAFE 1
 #endif
 
-// Build as as a DLL.  Define ACE_HAS_DLL to 0 if you want to build a static
-// lib.
-//  Setting applies to  : building ACE, linking with ACE
-//  Runtime restrictions: ACE DLL must be installed :-)
-#if !defined (ACE_HAS_DLL)
-# define ACE_HAS_DLL 1
-#endif
-
 // Build ACE services as DLLs.  If you write a library and want it to
 // use ACE_Svc_Export, this will cause those macros to build dlls.  If
 // you want your ACE service to be a static library, comment out this
 // line.  As far as I know, the only reason to have a library be an
 // ACE "service" is to leverage the ACE_Svc_Export macros.  It's just
 // as easy to define your own export macros.
-#if !defined (ACE_HAS_SVC_DLL)
-# define ACE_HAS_SVC_DLL 1
-#endif
+//  #if !defined (ACE_SVC_HAS_DLL)
+//  # define ACE_SVC_HAS_DLL 1
+//  #endif
 
 // Define the special export macros needed to export symbols outside a dll
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -239,7 +231,7 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Win32 has wchar_t support
-#define ACE_HAS_WCHAR 
+#define ACE_HAS_WCHAR
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
@@ -339,8 +331,8 @@ typedef unsigned __int64 ACE_UINT64;
 // must have _MT defined to include multithreading
 // features from win32 headers
 # if !defined(_MT) && !defined (ACE_HAS_WINCE)
-// *** DO NOT *** defeat this error message by defining _MT yourself.  
-// On MSVC, this is changed by selecting the Multithreaded 
+// *** DO NOT *** defeat this error message by defining _MT yourself.
+// On MSVC, this is changed by selecting the Multithreaded
 // DLL or Debug Multithreaded DLL in the Project Settings
 // under C++ Code Generation.
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
