@@ -49,6 +49,12 @@ Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp: use ACE_OS::putenv ().
 
+        * tests/Env_Value_Test.cpp (main): expect 0 on Linux/Alpha,
+          (unsigned long) -10 on everything else for test of
+          TEST_VALUE_NEGATIVE converted to an unsigned long.
+          Thanks to Jack Erickson <JErickson@exchange.ml.com> for
+          verifying that it _should_ return (unsigned long) -10.
+
 Sun Jan 04 17:19:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.15, released Sun Jan 04 17:19:31 1998.
