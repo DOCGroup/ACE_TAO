@@ -12,6 +12,7 @@
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//     Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,12 +26,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 #include "tao/Reply_Dispatcher.h"
-#include "tao/MessagingC.h"
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-#if (TAO_HAS_AMI_CALLBACK == 1) \
-    || (TAO_HAS_AMI_POLLER == 1) \
-    || (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#include "tao/MessagingC.h"
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export TAO_Asynch_Reply_Dispatcher_Base 
   : public TAO_Reply_Dispatcher
@@ -78,9 +82,7 @@ protected:
   // This invocation is using this transport, may change...
 };
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) \
-           || (TAO_HAS_AMI_POLLER == 1) \
-           || (TAO_HAS_MINIMUM_CORBA == 0) */
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // *********************************************************************
 
