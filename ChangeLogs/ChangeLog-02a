@@ -1,3 +1,9 @@
+Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/run_tests.lst: 
+  	* tests/run_test.lst: 
+	* tests: Added support for the new Message_Queue_Test_Ex.cpp file.
+
 Fri Jan 26 09:33:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/auto_run_tests.lst:

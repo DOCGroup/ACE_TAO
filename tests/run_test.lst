@@ -51,6 +51,7 @@ Mem_Map_Test: !chorus !Unicos
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
+Message_Queue_Test_Ex: !chorus
 MM_Shared_Memory_Test: !chorus !Unicos
 MT_Reactor_Timer_Test: ALL MSVC !DISABLED
 MT_SOCK_Test: !chorus
