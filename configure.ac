@@ -7328,8 +7328,6 @@ dnl   netsvcs/servers/Makefile
 dnl   tests/Makefile
 
 AC_CONFIG_FILES([
-  ace-config
-  ace-config.1
   Makefile
   ace/Makefile
   ace/QoS/Makefile

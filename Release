@@ -64,8 +64,6 @@ CONTROLLED_FILES = \
         VERSION \
 	ACEXML \
         ace \
-        ace-config.1.in \
-        ace-config.in \
         apps \
         bin \
 	configure.ac \
