@@ -60,8 +60,16 @@ class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
   //      Provides a Timing Wheel version of Timer Queue
   //
   // = DESCRIPTION
-  //      This implementation uses a table of ordered doubly-linked
-  //      lists of absolute times.
+  //      This implementation uses a hash table of ordered doubly-
+  //      linked lists of absolute times.  The other enhancements 
+  //      to Timer List include using the pointer to the node as the
+  //      timer id (to speed up removing), adding a free list and 
+  //      the ability to preallocate nodes.  Timer Wheel is based on
+  //      the timing wheel implementation used in Adam M. Costello and
+  //      George Varghese's paper "Redesigning the BSD Callout and
+  //      Timer Facilities" 
+  //      (http://dworkin.wustl.edu/~varghese/PAPERS/newbsd.ps.Z)
+  //        
 {
 public: 
   typedef ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> WHEEL_ITERATOR;
@@ -74,8 +82,8 @@ public:
   // Type inherited from.
 
   // = Initialization and termination methods.
-  ACE_Timer_Wheel_T (size_t wheelsize = 1024, 
-                     size_t resolution = 1000, 
+  ACE_Timer_Wheel_T (size_t wheelsize = ACE_DEFAULT_TIMER_WHEEL_SIZE, 
+                     size_t resolution = ACE_DEFAULT_TIMER_WHEEL_RESOLUTION, 
                      size_t prealloc = 0,
                      FUNCTOR *upcall_functor = 0);
   // Constructor that takes in a size for the timing wheel and a
