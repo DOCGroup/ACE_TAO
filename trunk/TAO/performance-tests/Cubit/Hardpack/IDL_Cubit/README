@@ -13,6 +13,8 @@ setenv PATH ${HARDPACK_ROOT}/bin:${HARDPACK_ROOT}/SunOS_5.5.1/bin:${PATH}
 setenv LD_LIBRARY_PATH ${HARDPACK_ROOT}/SunOS_5.5.1/lib:${LD_LIBRARY_PATH}
 
 1. Hardpack provides a build tool to build the Makefile from the Imakefile. 
+You should set the BUILD variable in the Imakefile to the directory of
+your Hardpack for your platform.
 
 2.To build and compile 
 
