@@ -40,6 +40,9 @@ public:
   /// destructor
   virtual ~CORBA_Object (void);
 
+  /// address of this variable used in _unchecked_narrow
+  static int _tao_class_id;
+
   /// increment the ref count
   static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
 

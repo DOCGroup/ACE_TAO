@@ -85,7 +85,7 @@ CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment &)
       ACE_reinterpret_cast (CORBA::Object_ptr,
                             obj->_tao_QueryInterface
                             (ACE_reinterpret_cast (ptr_arith_t,
-                                                   &CORBA::Object::_narrow)));
+                                                   &CORBA::Object::_tao_class_id)));
   else
     return CORBA::Object::_duplicate (obj);
 }

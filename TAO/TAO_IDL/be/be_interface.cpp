@@ -1988,21 +1988,21 @@ be_interface::queryinterface_helper (be_interface *derived,
   // If the ancestor is in the root scope, we can use the local name.
   if (scope->node_type () == AST_Decl::NT_root)
     {
-      *os << "&" << ancestor->local_name () << "::_narrow" << be_uidt
+      *os << "&" << ancestor->local_name () << "::_tao_class_id" << be_uidt
           << "))" << be_nl;
     }
   // Or, if it's defined in a scope different than the child's, the
   // ACE_NESTED_CLASS macro won't work - we use the scoped name.
   else if (scope != derived_scope)
     {
-      *os << "&::" << ancestor->name () << "::_narrow" << be_uidt
+      *os << "&::" << ancestor->name () << "::_tao_class_id" << be_uidt
           << "))" << be_nl;
     }
   // The ACE_NESTED_CLASS macro is necessary in this case.
   else
     {
       *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", "
-          << ancestor->local_name () << ")" << "::_narrow" << be_uidt
+          << ancestor->local_name () << ")" << "::_tao_class_id" << be_uidt
           << "))" << be_nl;
     }
 
