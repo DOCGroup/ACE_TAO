@@ -22,7 +22,7 @@ IDL_FILES = Test
 LIB     = libTest_Client_Module.a
 SHLIB   = libTest_Client_Module.$(SOEXT)
 FILES   = Test_Client_Module
-LSRC    = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
+LSRC    = $(addsuffix .cpp,$(FILES) TestC)
 
 LIBS   += -lTAO $(ACELIB)
 
