@@ -26,8 +26,6 @@
 
 // Forward decls.
 
-class ROA;
-typedef ROA* ROA_ptr;
 class TAO_OA_Connection_Handler;
 
 // This is a quick hack to avoid having to unravel the intracacies of
