@@ -220,6 +220,8 @@ ACE_INET_Addr::set (const char port_name[],
   ACE_TRACE ("ACE_INET_Addr::set");
 
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (port_name);
+  ACE_UNUSED_ARG (host_name);
   ACE_NOTSUP_RETURN (-1);
 #else
   servent sentry;
@@ -244,6 +246,8 @@ ACE_INET_Addr::set (const char port_name[],
   ACE_TRACE ("ACE_INET_Addr::set");
 
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (port_name);
+  ACE_UNUSED_ARG (inet_address);
   ACE_NOTSUP_RETURN (-1);
 #else
   servent sentry;

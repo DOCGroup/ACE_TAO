@@ -1774,6 +1774,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   // The stack arg is ignored:  if there's a need for it, we'd have to
   // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
+  ACE_UNUSED_ARG (stack);
 
   // The hard-coded arguments are what ::sp () would use.  ::taskInit ()
   // is used instead of ::sp () so that we can set the priority, flags,
@@ -1870,6 +1871,8 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   ACE_TSS_Cleanup::instance ()->key_used (key);
   return 0;
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -1885,14 +1888,17 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 // ACE_TRACE ("ACE_OS::thr_keyfree");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_LACKS_KEYDELETE)
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
   return ::pthread_key_delete (key);
 #elif defined (ACE_HAS_DCETHREADS) 
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_THR_KEYDELETE)
   return ::thr_keydelete (key);
 #elif defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   // Extract out the thread-specific table instance and and free up
@@ -1900,6 +1906,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
   ACE_TSS_Cleanup::instance ()->remove (key);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -1948,6 +1955,8 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     /* NOTREACHED */
 
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (dest);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -2256,7 +2265,7 @@ spa (FUNCPTR entry, ...)
   static const unsigned int MAX_ARGS = 10;
   static char *argv[MAX_ARGS];
   va_list pvar;
-  int argc;
+  unsigned int argc;
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
@@ -2289,7 +2298,7 @@ spa (FUNCPTR entry, ...)
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (int i = argc; i <= MAX_ARGS; ++i)
+      for (unsigned int i = argc; i <= MAX_ARGS; ++i)
 	argv[i] = 0;
     }
 
