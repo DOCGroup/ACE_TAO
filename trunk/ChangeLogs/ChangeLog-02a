@@ -1,3 +1,11 @@
+Thu May  2 07:34:59 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+
+          Switch ACE::get_ip_interfaces() to
+          ACE_Sock_Connect::get_ip_interfaces() and include
+          ace/Sock_Connect.h.  This only applies to Win32.
+
 Thu May  2 00:39:32 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Dynamic.i: Uncommented ACE_TRACE calls.
