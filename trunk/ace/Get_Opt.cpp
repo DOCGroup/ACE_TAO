@@ -617,7 +617,7 @@ ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (const ACE_TCHAR *
 
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
 {
-  delete [] this->name_;
+  delete [] ACE_const_cast (ACE_TCHAR*, this->name_);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
