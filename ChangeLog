@@ -1,3 +1,11 @@
+Sat Jul 31 10:22:05 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release:
+
+	  WashU cvs is running a very old version of CVS which doesn't
+	  support many of the old commands that we used to use. Retiring
+	  those commands and set the working ones. 
+	
 Sat Jul 31 07:08:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/make_release:

@@ -375,11 +375,11 @@ sub check_workspace () {
     chdir '..'  ||  die "$0: unable to chdir ..\n";
     $module = 'ACE_wrappers';
   } elsif ($kit =~ /tao/) {
-    chdir '../..'  ||  die "$0: unable to chdir ../..\n";
-    $module = 'ACE_wrappers/TAO';
+    chdir '../'  ||  die "$0: unable to chdir ../..\n";
+    $module = 'TAO';
   } elsif ($kit =~ /ciao/) {
-    chdir '../../..'  ||  die "$0: unable to chdir ../..\n";
-    $module = 'ACE_wrappers/TAO/CIAO';
+    chdir '../'  ||  die "$0: unable to chdir ../..\n";
+    $module = 'CIAO';
   }
 
   my @out_of_date = ();
