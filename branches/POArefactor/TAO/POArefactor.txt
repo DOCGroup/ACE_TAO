@@ -1,3 +1,8 @@
+Wed Sep 15 08:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Fixed this idl file (GOA part)
+
 Wed Sep 15 08:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter.{h,cpp}:
