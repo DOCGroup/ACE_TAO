@@ -170,18 +170,18 @@ int
 ACE_POSIX_Asynch_Operation::cancel (void)
 {
   int result = ::aio_cancel (this->handle_, 0);
-  
+
   if (result == -1)
     return -1;
-  
-  // Check the return value and return 0/1/2 appropriately. 
+
+  // Check the return value and return 0/1/2 appropriately.
   if (result == AIO_CANCELED)
     return 0;
   else if (result == AIO_ALLDONE)
     return 1;
   else if (result == AIO_NOTCANCELED)
     return 2;
-  else 
+  else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P | %t):%p\n"
                        "ACE_POSIX_Asynch_Operation::cancel: "
@@ -321,7 +321,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
 }
 
 // = Base class operations. These operations are here to kill
-//   dominance warnings. These methods call the base class methods. 
+//   dominance warnings. These methods call the base class methods.
 
 u_long
 ACE_POSIX_Asynch_Read_Stream_Result::bytes_transferred (void) const
@@ -529,9 +529,9 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
   // We want queuing of RT signal to notify completion.
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
-  
+
   // Keep ACE_POSIX_Asynch_Result, the base class pointer in the
-  // signal value. 
+  // signal value.
   ACE_POSIX_Asynch_Result *base_result = result;
   result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
                                                                      base_result);
@@ -756,7 +756,7 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream
 {
   // Setup AIOCB.
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
-  
+
   // Issure write. 1 means write.
   if (this->register_aio_with_proactor (result, 1) == -1)
     {
@@ -848,7 +848,7 @@ ACE_POSIX_SIG_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_R
   result->aio_sigevent.sigev_signo = result->signal_number ();
 
   // Keep ACE_POSIX_Asynch_Result, the base class pointer in the
-  // signal value. 
+  // signal value.
   ACE_POSIX_Asynch_Result *base_result = result;
   result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
                                                                      base_result);
@@ -1016,7 +1016,7 @@ ACE_POSIX_Asynch_Read_File_Result::signal_number (void) const
 
 // The following methods belong to
 // ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid
-// dominace warnings. These methods route their call to the 
+// dominace warnings. These methods route their call to the
 // ACE_POSIX_Asynch_Read_Stream_Result base class.
 
 u_long
@@ -1080,7 +1080,7 @@ ACE_POSIX_AIOCB_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
   if (return_val == -1)
     delete result;
-  
+
   return return_val;
 }
 
@@ -1164,10 +1164,10 @@ ACE_POSIX_SIG_Asynch_Read_File::read (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_read (result);
-  
+
   if (return_val == -1)
     delete result;
-  
+
   return return_val;
 }
 
@@ -1332,17 +1332,17 @@ int
 ACE_POSIX_Asynch_Write_File_Result::priority (void) const
 {
   return ACE_POSIX_Asynch_Result::priority ();
-} 
+}
 
 int
 ACE_POSIX_Asynch_Write_File_Result::signal_number (void) const
 {
   return ACE_POSIX_Asynch_Result::signal_number ();
-} 
+}
 
 // The following methods belong to
 // ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
-// dominance warnings. These methods route their call to the 
+// dominance warnings. These methods route their call to the
 // ACE_POSIX_Asynch_Write_Stream_Result base class.
 
 u_long
@@ -1403,10 +1403,10 @@ ACE_POSIX_AIOCB_Asynch_Write_File::write (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_write (result);
-  
+
   if (return_val == -1)
     delete result;
-  
+
   return return_val;
 }
 
@@ -1493,7 +1493,7 @@ ACE_POSIX_SIG_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
   if (return_val == -1)
     delete result;
-  
+
   return return_val;
 }
 
@@ -1706,7 +1706,7 @@ protected:
   // Constructor. Give the reactor so that it can activate/deactivate
   // the handlers. Give also the proactor used here, so that the
   // handler can send the <POSIX_Asynch_Accept> result block through
-  // <post_completion>. 
+  // <post_completion>.
 
   int register_accept_call_i (ACE_POSIX_Asynch_Accept_Result* result);
   // Worker method for registering this <accept> call with the local
@@ -1724,7 +1724,7 @@ protected:
 
   ACE_POSIX_Proactor *posix_proactor_;
   // POSIX_Proactor.
-  
+
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result*> result_queue_;
   // Queue of Result pointers that correspond to all the <accept>'s
   // pending.
@@ -1752,11 +1752,11 @@ public:
   // Constructor. Give the reactor so that it can activate/deactivate
   // the handlers. Give also the proactor used here, so that the
   // handler can send information through the notification pipe
-  // (<post_completion>). 
+  // (<post_completion>).
 
   ~ACE_POSIX_AIOCB_Asynch_Accept_Handler (void);
   // Destructor.
-  
+
   int register_accept_call (ACE_POSIX_Asynch_Accept_Result* result);
   // Register this <accept> call with the local handler.
 
@@ -1825,7 +1825,7 @@ ACE_POSIX_Asynch_Accept_Handler::register_accept_call_i (ACE_POSIX_Asynch_Accept
                            "Reactor::resume_handler failed\n"),
                           -1);
     }
-  
+
   return 0;
 }
 
@@ -1860,7 +1860,7 @@ ACE_POSIX_Asynch_Accept_Handler::deregister_accept_call (void)
                            "%N:%l:(%P | %t):%p\n",
                            "ACE_POSIX_Asynch_Accept_Handler::"
                            "deregister_accept_call:suspend handler failed"),
-                          0);  
+                          0);
     }
 
   // Return the result pointer.
@@ -1930,7 +1930,7 @@ ACE_POSIX_AIOCB_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
                        "ACE_POSIX_AIOCB_Asynch_Accept_Handler::"
                        "handle_input:<post_completion> failed"),
                       -1);
-  
+
   return 0;
 }
 
@@ -1953,11 +1953,11 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Acce
   // and thru the auxillary thread in the deregister fun. So let us
   // mutex it.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-  
+
   // Do the work.
   if (this->register_accept_call_i (result) == -1)
     return -1;
-  
+
   return 0;
 }
 
@@ -1967,7 +1967,7 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
   // An <accept> has been sensed on the <listen_handle>. We should be
   // able to just go ahead and do the <accept> now on this <fd>. This
   // should be the same as the <listen_handle>.
-  
+
   // Deregister this info pertaining to this <accept> call.
   ACE_POSIX_Asynch_Accept_Result* result = this->deregister_accept_call ();
   if (result == 0)
@@ -1976,7 +1976,7 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
                        "ACE_POSIX_SIG_Asynch_Accept_Handler::"
                        "handle_input:deregister_accept_call failed"),
                       -1);
-  
+
   // Issue <accept> now.
   // @@ We shouldnt block here since we have already done poll/select
   // thru reactor. But are we sure?
@@ -1989,7 +1989,7 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
                       -1);
 
   // Accept has completed.
-  
+
   // Store the new handle.
   result->aio_fildes = new_handle;
 
@@ -2000,7 +2000,7 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
                        "ACE_POSIX_SIG_Asynch_Accept_Handler::"
                        "handle_input:<post_completion> failed"),
                       -1);
-  
+
   return 0;
 }
 
@@ -2049,7 +2049,7 @@ ACE_POSIX_AIOCB_Asynch_Accept::accept (ACE_Message_Block &message_block,
   // Register this <accept> call with the local handler.
   if (this->accept_handler_->register_accept_call (result) == -1)
     return -1;
-  
+
   return 0;
 }
 
@@ -2262,11 +2262,11 @@ ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
   // For this reactor, this thread is the owner.
   reactor->owner (ACE_OS::thr_self ());
 
-  // Handle events. Wait for any connection events. 
+  // Handle events. Wait for any connection events.
   int result = 0;
   while (result != -1)
     result = reactor->handle_events ();
-  
+
   return 0;
 }
 
@@ -2693,7 +2693,7 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_W
       // Failure.
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-      
+
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
@@ -2708,7 +2708,7 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_W
           delete this;
         }
     }
-  
+
   // Write stream successful.
 
   // Partial write to socket.
@@ -3209,7 +3209,7 @@ ACE_Proactor *
 ACE_POSIX_AIOCB_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_POSIX_Asynch_Operation::proactor ();
-} 
+}
 
 // *********************************************************************
 
@@ -3322,7 +3322,7 @@ ACE_Proactor *
 ACE_POSIX_SIG_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_POSIX_Asynch_Operation::proactor ();
-} 
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result *>;
