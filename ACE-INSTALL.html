@@ -26,7 +26,7 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 <H4>Document Index</H4>
 
 <UL>
-  <LI><A HREF="#platforms">Supported Platforms and Compilers</A>
+  <LI><A HREF="#platforms">Supported Platforms and C++ Compilers</A>
   <LI><A HREF="#installnotes">Installation Notes for Supported Platforms</A>
   <LI><A HREF="#g++">Compiling ACE with GNU g++</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
@@ -35,17 +35,9 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 </UL>
 
 <P><HR><P>
-<H3><A NAME="platforms">Supported Platforms and Compilers</A></H3>
+<H3><A NAME="platforms">Supported Platforms and C++ Compilers</A></H3>
 
-<p>The ADAPTIVE Communication Environment has been ported and tested
-extensively on a wide range of C++ compilers and uni-processor and
-multi-processor OS platforms including Win32, i.e., WinNT/i386,
-WinNT/Alpha, Win95, and Windows CE; most versions of UNIX, e.g., SunOS
-4.x and 5.x, SGI IRIX, DG/UX, HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x,
-Linux, SCO, UnixWare, <A HREF="http://www.freebsd.org/">FreeBSD</A>,
-<A HREF="http://www.s390.ibm.com/products/oe/index.html">MVS
-OpenEdition</A>, and <A HREF="http://www.lynx.com/">LynxOS</A>; <A
-HREF="http://www.wrs.com">VxWorks</A>; and PSoS.  If you have a
+<!--#include virtual="/~schmidt/ACE-versions-i.html" --> If you have a
 problem compiling the ACE wrappers on the platforms shown below please
 send email to either <A HREF="news:comp.soft-sys.ace">ACE
 Newsgroup</A> or the <A HREF="mailto:ace-users@cs.wustl.edu">ACE
@@ -57,7 +49,7 @@ is known to support well.<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, Windows NT (MSVC++ 4.x and 5.0),
+    <td>Solaris 2.5 and 2.6, Windows NT (MSVC++ 4.x and 5.0),
         DEC Alpha Windows NT (MSVC++ 5.0), Linux/Intel,
         Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0,
         HP/UX, AIX
@@ -65,17 +57,17 @@ is known to support well.<P>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Solaris 2.6, Windows 95, Windows CE, IRIX 6.x, MVS
+   <td>Windows 95, IRIX 6.x, MVS
    </td>
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> PSoS, Tandem, Chorus, SCO, UnixWare, SunOS 4.x, FreeBSD, NetBSD
+    <td> Windows CE, Tandem, Chorus, SCO, UnixWare, SunOS 4.x, FreeBSD, NetBSD
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
     <td><b>Planned support, i.e., pending</b></td>
-    <td> Windows CE </td>
+    <td> pSoS, </td>
   </tr>
 </table>
 
