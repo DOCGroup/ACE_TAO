@@ -65,7 +65,7 @@ protected:
 
 // ----------------------------------------------------------------------
 /**
- * @class TAO_AV_Endpoint_Strategy
+ * @class TAO_AV_Endpoint_Process_Strategy
  * @brief Process-based strategy for creating endpoints.
  *        Abstract base class.
  */
