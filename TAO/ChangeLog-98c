@@ -1,3 +1,18 @@
+Tue Jun 09 17:27:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.{h,cpp} (activate): Added this method to
+	  Default_Server_Connection_Handler so we can prepare information
+ 	  for inheriting some objects/properties from the spawning thread.
+  	  (svc): Inherit and setup some properties/objects from the parent
+	  thread.  Currently, only root poa is inherited in spawned
+	  threads.  I should probably add another method called inherit ()
+	  to handle this.  Anyhow, this solved the thread-per-connection
+	  problem. 
+
+	* tao/ORB_Core.cpp (add_to_collocation_table): Removed the
+	  explicit conversion from ACE_INET_Addr to ACE_Hash_Addr since
+	  Irfan fixed ACE_Hash_Addr::operator==.
+
 Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: removed old release targets.  They're no longer
