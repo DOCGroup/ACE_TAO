@@ -15,6 +15,7 @@ DIRS  = CDR \
         Param_Test \
         NestedUpcall \
         Multiple_Inheritance \
+	MT_Client
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
