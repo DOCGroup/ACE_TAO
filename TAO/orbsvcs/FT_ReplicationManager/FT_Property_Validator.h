@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file FT__Property_Validator.h
+ * @file FT_Property_Validator.h
  *
  * $Id$
  *
@@ -88,6 +88,6 @@ namespace TAO
 
 } // namespace TAO
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* FT_PROPERTY_VALIDATOR_H */

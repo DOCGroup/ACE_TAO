@@ -1,3 +1,5 @@
+// $Id$
+
 project(*Server): taoserver, fault_tolerance, orbsvcsexe{
   exename = ft_replica
   Source_Files {
@@ -27,7 +29,7 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe{
     run_test_fault_consumer.pl  // Is the notification analyzed correctly
     run_test_registry.pl        // does the stand-along factory registry work
     run_test_rmregistry.pl      // does the factory registry in the RM work
-    run_test_replication_mgr.pl // 
+    run_test_replication_mgr.pl //
     run_test_demo.pl            // test it all together
   }
 }
@@ -97,7 +99,7 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   }
 
   Header_Files {
-    
+ 
   }
   // explicitly omit IDL files
   IDL_Files {

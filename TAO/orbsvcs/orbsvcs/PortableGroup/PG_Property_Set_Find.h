@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    PG_Property_Set.h
+ *  @file    PG_Property_Set_Find.h
  *
  *  $Id$
  *
@@ -44,5 +44,7 @@ namespace TAO
   }
 
 } //namespace TAO
+
+#include /**/ "ace/post.h"
 
 #endif // TAO_PG_PROPERTY_SET_FIND_H

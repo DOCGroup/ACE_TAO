@@ -20,6 +20,7 @@
 #define TAO_PG_PROPERTY_SET
 #include "portablegroup_export.h"
 #include <orbsvcs/PortableGroupS.h>
+#include /**/ "ace/pre.h"
 #include <orbsvcs/CosNamingC.h>
 #include <ace/Hash_Map_Manager.h>
 #include <ace/SString.h>
@@ -183,5 +184,7 @@ namespace TAO
 ////////////////////////////////////
 // include templated helper function
 #include "PG_Property_Set_Find.h"
+
+#include /**/ "ace/post.h"
 
 #endif // TAO_PG_PROPERTY_SET
