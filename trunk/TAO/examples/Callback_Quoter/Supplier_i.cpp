@@ -153,3 +153,29 @@ Supplier_i::Consumer_Data::operator== (const Consumer_Data &rhs)
   // object references.
   return this->consumer_->_is_equivalent (rhs.consumer_.in ());
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<Supplier_i::Consumer_Data>;
+template class ACE_Unbounded_Set<Supplier_i::Consumer_Data>;
+template class ACE_Unbounded_Set_Iterator<Supplier_i::Consumer_Data>;
+
+template class ACE_Hash_Map_Entry<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*>;
+template class ACE_Hash_Map_Manager<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<Supplier_i::Consumer_Data>
+#pragma instantiate ACE_Unbounded_Set<Supplier_i::Consumer_Data>
+#pragma instantiate ACE_Unbounded_Set_Iterator<Supplier_i::Consumer_Data>
+
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_Unbounded_Set<Supplier_i::Consumer_Data>*,ACE_Null_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
