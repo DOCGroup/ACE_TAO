@@ -19,7 +19,8 @@ CORBA::LocalObject::_nil (void)
 }
 
 ACE_INLINE CORBA::LocalObject_ptr
-CORBA::LocalObject::_narrow (CORBA::Object_ptr obj, CORBA::Environment& ACE_TRY_ENV)
+CORBA::LocalObject::_narrow (CORBA::Object_ptr obj,
+                             CORBA::Environment&)
 {
   if (obj->_is_local () != 0)
     return
@@ -31,7 +32,8 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj, CORBA::Environment& ACE_TRY_
 }
 
 ACE_INLINE CORBA::LocalObject_ptr
-CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj, CORBA::Environment&)
+CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj,
+                                       CORBA::Environment&)
 {
   if (obj->_is_local () != 0)
     return
