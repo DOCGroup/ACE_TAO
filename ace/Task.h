@@ -94,13 +94,30 @@ public:
 			int grp_id = -1,
 			ACE_Task_Base *task = 0); 
   // Turn the task into an active object, i.e., having <n_threads> of
-  // control, all running at the <priority> level with the same
+  // control, all running at the <priority> level (see below) with the same
   // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
   // occurs, returns 1 if Task is already an active object and
   // <force_active> is false (doesn't *not* create a new thread in
   // this case), and returns 0 if Task was not already an active
   // object and a thread is created successfully or thread is an
   // active object and <force_active> is true.
+  // 
+  // The <{flags}> are a bitwise-OR of the following:
+  // = BEGIN<INDENT>
+  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
+  // THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
+  // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
+  // THR_SCHED_RR, THR_SCHED_DEFAULT
+  // = END<INDENT>
+  // 
+  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // priority value for the given scheduling policy (specified in
+  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
+  // calculated dynamically, and is the median value between the
+  // minimum and maximum priority values for the given policy.  If an
+  // explicit value is given, it is used.  Note that actual priority
+  // values are EXTREMEMLY implementation-dependent, and are probably
+  // best avoided.
 
   // = Suspend/resume a Task
   virtual int suspend (void);

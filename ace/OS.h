@@ -3066,6 +3066,26 @@ public:
                          long priority = -1,
                          void *stack = 0,
                          size_t stacksize = 0);
+  // Creates a new thread having <{flags}> attributes and running <{ACE_THR_FUNC}>
+  // with <{args}>.  <{thr_id}> and <{t_handle}> are set to the thread's ID and handle (?),
+  // respectively.  The thread runs at <{priority}> priority (see below).
+  //
+  // The <{flags}> are a bitwise-OR of the following:
+  // = BEGIN<INDENT>
+  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED, THR_CANCEL_ASYNCHRONOUS,
+  // THR_BOUND, THR_NEW_LWP, THR_DETACHED, THR_SUSPENDED, THR_DAEMON, THR_JOINABLE,
+  // THR_SCHED_FIFO, THR_SCHED_RR, THR_SCHED_DEFAULT
+  // = END<INDENT>
+  // 
+  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // priority value for the given scheduling policy (specified in
+  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
+  // calculated dynamically, and is the median value between the
+  // minimum and maximum priority values for the given policy.  If an
+  // explicit value is given, it is used.  Note that actual priority
+  // values are EXTREMEMLY implementation-dependent, and are probably
+  // best avoided.
+
   static int thr_getprio (ACE_hthread_t thr_id, int &prio);
   static int thr_join (ACE_hthread_t waiter_id, void **status); 
   static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 

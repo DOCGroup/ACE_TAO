@@ -37,7 +37,27 @@ public:
 		    long priority = -1,
 		    void *stack = 0, 
 		    size_t stack_size = 0);
-  // Spawn a new thread, which executes "func" with argument "arg".
+  // Spawn a new thread having <{flags}> attributes and running
+  // <{func}> with arguments <{args}>.  <{thr_id}> and <{t_handle}>
+  // are set to the thread's ID and handle (?), respectively.  The
+  // thread runs at <{priority}> priority (see below).
+  //
+  // The <{flags}> are a bitwise-OR of the following:
+  // = BEGIN<INDENT>
+  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
+  // THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
+  // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
+  // THR_SCHED_RR, THR_SCHED_DEFAULT
+  // = END<INDENT>
+  // 
+  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // priority value for the given scheduling policy (specified in
+  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
+  // calculated dynamically, and is the median value between the
+  // minimum and maximum priority values for the given policy.  If an
+  // explicit value is given, it is used.  Note that actual priority
+  // values are EXTREMEMLY implementation-dependent, and are probably
+  // best avoided.
 
   static int spawn_n (size_t n, 
 		      ACE_THR_FUNC func,
@@ -54,6 +74,8 @@ public:
   // are.  Returns the number of threads actually spawned (if this
   // doesn't equal the number requested then something has gone wrong
   // and <errno> will explain...).
+  //
+  // See also <spawn>.
 
   static int spawn_n (ACE_thread_t thread_ids[], 
 		      size_t n, 
@@ -76,6 +98,8 @@ public:
   // handles being spawned.  Returns the number of threads actually
   // spawned (if this doesn't equal the number requested then
   // something has gone wrong and <errno> will explain...).
+  //
+  // See also <spawn>.
 
   static int join (const ACE_Thread_ID &,
 		   void **status = 0);
