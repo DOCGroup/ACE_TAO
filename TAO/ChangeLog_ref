@@ -1,3 +1,14 @@
+Mon Sep  1 09:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Moved generation of the Object_T.h include to the source
+          file from the header file.
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added _NOT_USED to the environment variable signature of _is_a.
+
 Mon Sep  1 08:44:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

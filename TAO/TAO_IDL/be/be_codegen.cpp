@@ -1338,14 +1338,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.interface_seen_))
-    {
-      // Include the AbstractBase file from the Valuetype library.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Object_T.h");
-    }
-
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.abstract_iface_seen_))
     {
       // Include the AbstractBase file from the Valuetype library.
@@ -1409,6 +1401,14 @@ TAO_CodeGen::gen_stub_src_includes (void)
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/ValueBase.h");
         }
+    }
+
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.interface_seen_))
+    {
+      // Include the AbstractBase file from the Valuetype library.
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Object_T.h");
     }
 
   if (be_global->gen_amh_classes () == I_TRUE)
