@@ -78,8 +78,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-orblite")
     {
-      $clargs .= " -ORBiioplite";
-      $svargs .= " -ORBiioplite";
+      $clargs .= " -ORBgioplite";
+      $svargs .= " -ORBgioplite";
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
