@@ -1079,6 +1079,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           fp = format;
           *fp++ = *format_str++;   // Copy in the %
 
+          // Initialization to satisfy VC6
+          int tmp_indent = 0;
           // Work through the format string to copy in the format
           // from the caller. While it's going across, extract ints
           // for '*' width/precision values from the argument list.
@@ -1331,7 +1333,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                              ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, 
+                            (bp, format,
                              ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                       }
                     else
@@ -1443,7 +1445,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   if (ACE_static_cast (size_t, wp) > bspace)
                     wp = ACE_static_cast (int, bspace);
 
-                  for (int tmp_indent = wp;
+                  for (tmp_indent = wp;
                        tmp_indent;
                        tmp_indent--)
                     *bp++ = ' ';
