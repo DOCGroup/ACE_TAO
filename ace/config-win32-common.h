@@ -1,13 +1,13 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for Windows 95,
-// Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++
-// compilers 2.0, 4.0, 4.1, 4.2, 5.0 and 6.0
-
-#ifndef ACE_WIN32_COMMON_H
-#define ACE_WIN32_COMMON_H
+#ifndef ACE_CONFIG_WIN32_COMMON_H
+#define ACE_CONFIG_WIN32_COMMON_H
 #include "ace/pre.h"
+
+#ifndef ACE_CONFIG_WIN32_H
+#error Use config-win32.h in config.h instead of this header
+#endif /* ACE_CONFIG_WIN32_H */
 
 // Complain if WIN32 is not already defined.
 #if !defined (WIN32) && !defined (ACE_HAS_WINCE)
@@ -20,7 +20,7 @@
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
 #if !defined (ACE_HAS_WINNT4)
-# define ACE_HAS_WINNT4 1      // assuming Win NT 4.0 or greater
+# define ACE_HAS_WINNT4 1      /* assuming Win NT 4.0 or greater */
 #endif
 
 #if (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0)
@@ -226,7 +226,7 @@
 // Green Hills Native x86 does not support __int64 keyword
 #if !defined (ghs)
 typedef unsigned __int64 ACE_UINT64;
-#endif // (ghs)
+#endif /* (ghs) */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -491,4 +491,4 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_HAS_MUTEX_TIMEOUTS
 
 #include "ace/post.h"
-#endif /* ACE_WIN32_COMMON_H */
+#endif /* ACE_CONFIG_WIN32_COMMON_H */

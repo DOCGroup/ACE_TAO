@@ -1,13 +1,24 @@
-/* -*- C++ -*- */
-// $Id$
+//=============================================================================
+/**
+ *  @file   config-win32-visualage.h
+ *
+ *  $Id$
+ *
+ *  @brief  Configuration file for VisualAge compilers
+ *
+ *  @note   Do not include this file directly, include config-win32.h instead.
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
 
-//Created for IBMCPP
-// The following configuration file contains the defines
-// common to all VisualAge compilers.
-
-#ifndef ACE_WIN32_VISUALAGECPP_H
-#define ACE_WIN32_VISUALAGECPP_H
+#ifndef ACE_CONFIG_WIN32_VISUALAGE_H
+#define ACE_CONFIG_WIN32_VISUALAGE_H
 #include "ace/pre.h"
+
+#ifndef ACE_CONFIG_WIN32_H
+#error Use config-win32.h in config.h instead of this header
+#endif /* ACE_CONFIG_WIN32_H */
 
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 
@@ -41,7 +52,6 @@
 #define ACE_HAS_GNU_CSTRING_H 1
 #define ACE_HAS_MUTABLE_KEYWORD 1
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
-#define ACE_HAS_ONE_DEFINITION_RULE 1
 #define ACE_HAS_SIG_ATOMIC_T 1
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_STDCPP_STL_INCLUDES 1
@@ -83,7 +93,9 @@
 #define EPIPE		32
 #define ENAMETOOLONG	38
 
+#define ACE_ENDTHREADEX(STATUS) ::_endthread ()
+
 #endif /* defined(__IBMCPP__) */
 
 #include "ace/post.h"
-#endif /* ACE_WIN32_VISUALAGECPP_H */
+#endif /* ACE_CONFIG_WIN32_VISUALAGE_H */

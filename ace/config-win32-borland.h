@@ -3,11 +3,19 @@
 
 // The following configuration file contains defines for Borland compilers.
 
-#ifndef ACE_WIN32_BORLAND_H
-#define ACE_WIN32_BORLAND_H
+#ifndef ACE_CONFIG_WIN32_BORLAND_H
+#define ACE_CONFIG_WIN32_BORLAND_H
 #include "ace/pre.h"
 
-#if defined (__BORLANDC__)
+#ifndef ACE_CONFIG_WIN32_H
+#error Use config-win32.h in config.h instead of this header
+#endif /* ACE_CONFIG_WIN32_H */
+
+# if defined (ACE_HAS_PACE)
+#  ifndef PACE_HAS_ALL_POSIX_FUNCS
+#   define PACE_HAS_ALL_POSIX_FUNCS 1
+#  endif /* PACE_HAS_ALL_POSIX_FUNCS */
+# endif /* ACE_HAS_PACE */
 
 # if (__BORLANDC__ == 0x540)
 // The linker in C++Builder 4 has trouble with the large number of DLL
@@ -55,7 +63,6 @@
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
 # define ACE_HAS_MUTABLE_KEYWORD 1
 # define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
-# define ACE_HAS_ONE_DEFINITION_RULE 1
 # define ACE_HAS_SIG_ATOMIC_T 1
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # if (__BORLANDC__ <= 0x540)
@@ -88,7 +95,7 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
 
-#endif /* defined(__BORLANDC__) */
+# define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 #include "ace/post.h"
-#endif /* ACE_WIN32_BORLAND_H */
+#endif /* ACE_CONFIG_WIN32_BORLAND_H */
