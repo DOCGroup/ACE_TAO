@@ -1,5 +1,9 @@
 Thu Aug  5 11:46:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* rules.tao.GNU: Moved  the definition of interface_repo from
+	  $ACE_ROOT/include/makeinclude/wrapper_macros.GNU here as per
+	  Dr.Levine's suggestions
+
 	* tao/InterfaceC.h: Added #incude "tao/varout.h" to fix an error
 	  with SunCC4.2. This #include should bring in the definition of
 	  TAO_Object_Field_T <T, T_var>.  
