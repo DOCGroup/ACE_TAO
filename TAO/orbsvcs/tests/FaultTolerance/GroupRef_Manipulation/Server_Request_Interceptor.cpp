@@ -67,7 +67,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
 /*  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) receive_request_service_context called [%d] times \n",
               this->request_count_));
-	      */
+              */
 
   if (this->forward_request_thrown_ == true)
     {
@@ -151,7 +151,7 @@ Server_Request_Interceptor::receive_request (
 
       FT::TagFTGroupTaggedComponent group_component;
 
-	  cdr >> group_component.component_version;
+      cdr >> group_component.component_version;
       cdr >> group_component.group_domain_id.inout ();
       cdr >> group_component.object_group_id;
       cdr >> group_component.object_group_ref_version;
