@@ -121,9 +121,9 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
         *os <<"_set";
     }
 
-  *os<< " (const char *  operation," << be_nl
-      << "IOP::ServiceContextList &service_context_list," << be_nl               
-      << "CORBA::Object * target";
+  *os<< " (const char *_tao_operation," << be_nl
+      << "IOP::ServiceContextList &_tao_service_context_list," << be_nl               
+      << "CORBA::Object *_tao_target";
   
   // generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
@@ -147,7 +147,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   // Generate the member list and set each member but before that, 
   // its necessary to pass on some args to the base class.
   os->indent (); 
-  *os << "  : TAO_ClientRequest_Info (operation, service_context_list, target)";  
+  *os << "  : TAO_ClientRequest_Info (_tao_operation, _tao_service_context_list, _tao_target)";  
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
