@@ -1,10 +1,13 @@
 // $Id$
 
-#include "SOCK_Dgram_Mcast_QoS.h"
-#include "ace/Log_Msg.h"
+#include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SOCK_Dgram_Mcast_QoS.i"
+#include "ace/QoS/SOCK_Dgram_Mcast_QoS.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 // This is a workaround for platforms with non-standard
@@ -46,11 +49,13 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &addr,
 
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
+  //
   if (this->get_handle () == ACE_INVALID_HANDLE)
     {
+#ifdef ACE_SUBSET_0
       ACE_DEBUG ((LM_DEBUG,
 		  "Get Handle Returns Invalid Handle\n"));
-
+#endif
       if (ACE_SOCK::open (SOCK_DGRAM,
                           protocol_family,
                           protocol,
@@ -238,13 +243,18 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       if (mcast_addr == qos_session->dest_addr ())
       	{
 	  // Subscribe to the QoS session.
+#ifdef ACE_SUBSET_0
 	  if (this->qos_manager_.join_qos_session (qos_session) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       ACE_LIB_TEXT ("Unable to join QoS Session\n")),
 			      -1);
+#else
+	  this->qos_manager_.join_qos_session (qos_session);
+#endif
 	}
       else
 	{
+#ifdef ACE_SUBSET_0
 	  if (this->close () != 0)
 	    ACE_ERROR ((LM_ERROR,
 			ACE_LIB_TEXT ("Unable to close socket\n")));
@@ -253,6 +263,8 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                                ACE_LIB_TEXT (" not match the address passed into")
                                ACE_LIB_TEXT (" subscribe\n")),
                               -1);
+#endif
+	  
 	}
 
       sockaddr_in mult_addr;

@@ -17,13 +17,13 @@
 #define ACE_SOCK_DGRAM_MCAST_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Dgram.h"
+#include "ace/Sockets/SOCK_Dgram.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 /**
  * @class ACE_SOCK_Dgram_Mcast
@@ -186,7 +186,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Mcast.i"
+#include "ace/Sockets/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

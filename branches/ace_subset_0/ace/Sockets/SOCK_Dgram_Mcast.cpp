@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/INET_Addr.h"
+#include "ace/Sockets/SOCK_Dgram_Mcast.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Mcast.i"
+#include "ace/Sockets/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 // This is a workaround for platforms with non-standard

@@ -336,7 +336,9 @@ ACE_Unbounded_Set_Iterator<T>::operator* (void)
   T *retv = 0;
 
   int result = this->next (retv);
+#ifdef ACE_SUBSET_0
   ACE_ASSERT (result != 0);
+#endif
   ACE_UNUSED_ARG (result);
 
   return *retv;

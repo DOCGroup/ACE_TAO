@@ -1,13 +1,16 @@
 // QoS_Session_Impl.cpp
 // $Id$
 
-#include "ace/SOCK.h"
-#include "QoS_Manager.h"
-#include "QoS_Session_Impl.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/SOCK.h"
+#include "ace/QoS/QoS_Manager.h"
+#include "ace/QoS/QoS_Session_Impl.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "QoS_Session_Impl.i"
+#include "ace/QoS/QoS_Session_Impl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, QoS_Session_Impl, "$Id$")
@@ -655,11 +658,15 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.
 
+#ifdef ACE_SUBSET_0
   if (qos_manager->qos_session_set ().find (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("This QoS session was not subscribed to")
                        ACE_LIB_TEXT (" by the socket\n")),
                       -1);
+#else
+  qos_manager->qos_session_set ().find (this);
+#endif
 
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
@@ -667,6 +674,8 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   u_long ret_bytes = 0;
 
   ACE_QoS qos = ace_qos;
+
+#ifdef ACE_SUBSET_0
   if (ACE_OS::ioctl (socket->get_handle (),
                      ACE_SIO_SET_QOS,
                      qos,
@@ -678,7 +687,12 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
-
+#else
+  ACE_OS::ioctl (socket->get_handle (),
+                     ACE_SIO_SET_QOS,
+                     qos,
+                     &ret_bytes);
+#endif
   return 0;
 }
 

@@ -1,9 +1,12 @@
 // QoS_Session_Factory.cpp
 // $Id$
 
-#include "QoS_Session_Factory.h"
-#include "QoS_Session_Impl.h"
-#include "ace/Log_Msg.h"
+#include "ace/QoS/QoS_Session_Factory.h"
+#include "ace/QoS/QoS_Session_Impl.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, QoS_Session_Factory, "$Id$")
 
@@ -38,6 +41,7 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
                     ACE_GQoS_Session,
                     0);
 
+#ifdef ACE_SUBSET_0
   if (this->add_session (qos_session) == -1)
     {
       delete qos_session;
@@ -45,7 +49,9 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
                          ACE_LIB_TEXT ("Error in adding session\n")),
                         0);
     }
-
+#else
+  this->add_session (qos_session);
+#endif
   return qos_session;
 }
 
@@ -54,11 +60,16 @@ int
 ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 {
 
+#ifdef ACE_SUBSET_0
   if ((qos_session != 0) && (this->remove_session (qos_session) == -1))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Error in destroying session\n")),
                       -1);
-
+#else
+  if (qos_session != 0) {
+    this->remove_session(qos_session);
+  }
+#endif
   return 0;
 }
 
@@ -67,12 +78,15 @@ ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 int
 ACE_QoS_Session_Factory::add_session (ACE_QoS_Session *qos_session)
 {
+#ifdef ACE_SUBSET_0
   if (this->qos_session_set_.insert (qos_session) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Error in adding a new session")
                        ACE_LIB_TEXT ("to the session set\n")),
                       -1);
-
+#else
+  this->qos_session_set_.insert (qos_session);
+#endif
   return 0;
 }
 
@@ -81,11 +95,14 @@ ACE_QoS_Session_Factory::add_session (ACE_QoS_Session *qos_session)
 int
 ACE_QoS_Session_Factory::remove_session (ACE_QoS_Session *qos_session)
 {
+#ifdef ACE_SUBSET_0
   if (this->qos_session_set_.remove (qos_session) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Error in removing a session")
                        ACE_LIB_TEXT ("from the session set\n")),
                       -1);
-
+#else
+  this->qos_session_set_.remove (qos_session);
+#endif
   return 0;
 }

@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifdef ACE_SUBSET_0
-#include "ace/Log_Msg.h"
+#include "ace/Logging/Log_Msg.h"
 #endif
 
 #if defined (ACE_HAS_MALLOC_STATS)

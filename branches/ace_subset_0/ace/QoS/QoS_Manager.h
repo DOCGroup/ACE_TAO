@@ -15,16 +15,16 @@
 #define ACE_QOS_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/IPC_SAP.h"
-#include "ace/Containers_T.h"
-#include "ACE_QoS_Export.h"
-#include "QoS_Session.h"
+#include "ace/Sockets/IPC_SAP.h"
+#include "ace/Utils/Templates/Containers_T.h"
+#include "ace/QoS/ACE_QoS_Export.h"
+#include "ace/QoS/QoS_Session.h"
 
 /**
  * @class ACE_QoS_Manager

@@ -1,8 +1,11 @@
 // QoS_Manager.cpp
 // $Id$
 
-#include "QoS_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/QoS/QoS_Manager.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, QoS_Manager, "$Id $")
 
@@ -20,11 +23,15 @@ ACE_QoS_Manager::~ACE_QoS_Manager (void)
 int
 ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 {
+#ifdef ACE_SUBSET_0
   if (this->qos_session_set ().insert (qos_session) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Error in adding a new session to the ")
                        ACE_LIB_TEXT ("socket session set\n")),
                       -1);
+#else
+  this->qos_session_set().insert(qos_session);
+#endif
   return 0;
 }
 
