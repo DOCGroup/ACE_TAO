@@ -248,7 +248,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
 
 // generate the _var definition for ourself
 int
-be_type::gen_var_defn (void)
+be_type::gen_var_defn (char *)
 {
   return 0;
 }
@@ -256,25 +256,26 @@ be_type::gen_var_defn (void)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_type::gen_var_impl (void)
+be_type::gen_var_impl (char *, char *)
 {
   return 0;
 }
 
 // generate the _out definition
 int
-be_type::gen_out_defn (void)
+be_type::gen_out_defn (char *)
 {
   return 0;
 }
 
 int
-be_type::gen_out_impl (void)
+be_type::gen_out_impl (char *, char *)
 {
   return 0;
 }
 
-AST_Decl::NodeType be_type::base_node_type (void) const
+AST_Decl::NodeType
+be_type::base_node_type (void) const
 {
   return ACE_const_cast(be_type*, this)->node_type ();
 }
