@@ -50,7 +50,7 @@
 class CORBA_DynAny;
 typedef CORBA_DynAny *CORBA_DynAny_ptr;
 
-class  CORBA_DynAny_var
+class TAO_Export CORBA_DynAny_var
 {
 public:
   CORBA_DynAny_var (void); // default constructor
@@ -76,7 +76,7 @@ private:
   CORBA_DynAny_ptr ptr_;
 };
 
-class  CORBA_DynAny_out
+class TAO_Export CORBA_DynAny_out
 {
 public:
   CORBA_DynAny_out (CORBA_DynAny_ptr &);
@@ -436,7 +436,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynAny;
 class CORBA_DynEnum;
 typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
 
-class  CORBA_DynEnum_var
+class TAO_Export CORBA_DynEnum_var
 {
 public:
   CORBA_DynEnum_var (void); // default constructor
@@ -461,7 +461,7 @@ private:
   CORBA_DynEnum_ptr ptr_;
 };
 
-class  CORBA_DynEnum_out
+class TAO_Export CORBA_DynEnum_out
 {
 public:
   CORBA_DynEnum_out (CORBA_DynEnum_ptr &);
@@ -536,7 +536,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynEnum;
 // Forward declaration.
 struct CORBA_NameValuePair;
 
-class  CORBA_NameValuePair_var
+class TAO_Export CORBA_NameValuePair_var
 {
 public:
   CORBA_NameValuePair_var (void); // default constructor
@@ -563,7 +563,7 @@ private:
   CORBA_NameValuePair *ptr_;
 };
 
-class  CORBA_NameValuePair_out
+class TAO_Export CORBA_NameValuePair_out
 {
 public:
   CORBA_NameValuePair_out (CORBA_NameValuePair *&);
@@ -581,7 +581,7 @@ private:
   void operator= (const CORBA_NameValuePair_var &);
 };
 
-struct  CORBA_NameValuePair
+struct TAO_Export CORBA_NameValuePair
 {
   TAO_String_Manager id;
   CORBA::Any value;
@@ -784,7 +784,7 @@ public:
 // class CORBA::NameValuePairSeq_var
 // *************************************************************
 
-class  CORBA_NameValuePairSeq_var
+class TAO_Export CORBA_NameValuePairSeq_var
 {
 public:
   CORBA_NameValuePairSeq_var (void); // default constructor
@@ -812,7 +812,7 @@ private:
   CORBA_NameValuePairSeq *ptr_;
 };
 
-class  CORBA_NameValuePairSeq_out
+class TAO_Export CORBA_NameValuePairSeq_out
 {
 public:
   CORBA_NameValuePairSeq_out (CORBA_NameValuePairSeq *&);
@@ -866,7 +866,7 @@ public:
 class CORBA_DynStruct;
 typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
 
-class  CORBA_DynStruct_var
+class TAO_Export CORBA_DynStruct_var
 {
 public:
   CORBA_DynStruct_var (void); // default constructor
@@ -891,7 +891,7 @@ private:
   CORBA_DynStruct_ptr ptr_;
 };
 
-class  CORBA_DynStruct_out
+class TAO_Export CORBA_DynStruct_out
 {
 public:
   CORBA_DynStruct_out (CORBA_DynStruct_ptr &);
@@ -965,7 +965,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynStruct;
 class CORBA_DynUnion;
 typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
 
-class  CORBA_DynUnion_var
+class TAO_Export CORBA_DynUnion_var
 {
 public:
   CORBA_DynUnion_var (void); // default constructor
@@ -990,7 +990,7 @@ private:
   CORBA_DynUnion_ptr ptr_;
 };
 
-class  CORBA_DynUnion_out
+class TAO_Export CORBA_DynUnion_out
 {
 public:
   CORBA_DynUnion_out (CORBA_DynUnion_ptr &);
@@ -1268,7 +1268,7 @@ public:
 // class CORBA::AnySeq_var
 // *************************************************************
 
-class  CORBA_AnySeq_var
+class TAO_Export CORBA_AnySeq_var
 {
 public:
   CORBA_AnySeq_var (void); // default constructor
@@ -1296,7 +1296,7 @@ private:
   CORBA_AnySeq *ptr_;
 };
 
-class  CORBA_AnySeq_out
+class TAO_Export CORBA_AnySeq_out
 {
 public:
   CORBA_AnySeq_out (CORBA_AnySeq *&);
@@ -1352,7 +1352,7 @@ extern  CORBA::TypeCode_ptr  _tc_AnySeq;
 class CORBA_DynSequence;
 typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
 
-class  CORBA_DynSequence_var
+class TAO_Export CORBA_DynSequence_var
 {
 public:
   CORBA_DynSequence_var (void); // default constructor
@@ -1377,7 +1377,7 @@ private:
   CORBA_DynSequence_ptr ptr_;
 };
 
-class  CORBA_DynSequence_out
+class TAO_Export CORBA_DynSequence_out
 {
 public:
   CORBA_DynSequence_out (CORBA_DynSequence_ptr &);
@@ -1452,7 +1452,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynSequence;
 class CORBA_DynArray;
 typedef CORBA_DynArray *CORBA_DynArray_ptr;
 
-class  CORBA_DynArray_var
+class TAO_Export CORBA_DynArray_var
 {
 public:
   CORBA_DynArray_var (void); // default constructor
@@ -1477,7 +1477,7 @@ private:
   CORBA_DynArray_ptr ptr_;
 };
 
-class  CORBA_DynArray_out
+class TAO_Export CORBA_DynArray_out
 {
 public:
   CORBA_DynArray_out (CORBA_DynArray_ptr &);
