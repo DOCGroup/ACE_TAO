@@ -1,12 +1,13 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "tao/RTCORBA/RTCORBA.h"
 #include "testC.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pools, client, "$Id$")
+ACE_RCSID(Thread_Pool, client, "$Id$")
 
-const char *ior = "file://ior";
+const char *ior = "file://ior_1";
 int iterations = 6;
 int shutdown_server = 0;
 
@@ -50,6 +51,10 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =

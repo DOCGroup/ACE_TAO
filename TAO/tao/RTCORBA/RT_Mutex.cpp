@@ -57,7 +57,9 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
 
   if (result == 0)
     return 1;
-  else if (result == -1 && errno == ETIME)
+  else if (result == -1 &&
+           (errno == ETIME ||
+            errno == EBUSY))
     return 0;
   else
     // Some really bad error.

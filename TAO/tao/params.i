@@ -165,3 +165,27 @@ TAO_ORB_Parameters::nodelay (int x)
 {
   this->nodelay_ = x;
 }
+
+ACE_INLINE long
+TAO_ORB_Parameters::sched_policy (void) const
+{
+  return this->sched_policy_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::sched_policy (long x)
+{
+  this->sched_policy_ = x;
+}
+
+ACE_INLINE long
+TAO_ORB_Parameters::scope_policy (void) const
+{
+  return this->scope_policy_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::scope_policy (long x)
+{
+  this->scope_policy_ = x;
+}

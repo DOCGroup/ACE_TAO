@@ -2,6 +2,7 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "tao/Strategies/advanced_resource.h"
 
 const char *ior = "server.ior";
 
@@ -15,14 +16,14 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
+                           "-k <ior> "
                            "\n",
                            argv [0]),
                           -1);

@@ -43,7 +43,7 @@ class TAO_RTCORBA_Export TAO_Linear_Priority_Mapping : public TAO_Priority_Mappi
   //   priorities (0...32767)
   //
 public:
-  TAO_Linear_Priority_Mapping (int policy = ACE_SCHED_OTHER);
+  TAO_Linear_Priority_Mapping (long policy);
   // Default constructor
 
   virtual ~TAO_Linear_Priority_Mapping (void);
@@ -57,7 +57,7 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
-  int policy_;
+  long policy_;
   // The scheduling policy
 
   int min_;

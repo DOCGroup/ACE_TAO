@@ -5,7 +5,7 @@
 NAME = Collocation
 
 OBJFILES = \
-	$(OBJDIR)\Coll_Tester.obj \
+	$(OBJDIR)\Collocation_Tester.obj \
 	$(OBJDIR)\Collocation.obj
 
 CFLAGS = \
@@ -21,8 +21,8 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_STRATEGIES_LIB) \
-        $(BINDIR)\Diamond$(LIB_DECORATOR).lib \
-        $(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
+	$(BINDIR)\Diamond$(LIB_DECORATOR).lib \
+	$(BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
 
 CPPDIR = .
 

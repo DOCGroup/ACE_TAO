@@ -133,7 +133,7 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
       {"",0},{"",0},
       {"_non_existent",  &POA_CORBA_DomainManager::_non_existent_skel},
       {"",0},{"",0},{"",0},
-      {"get_domain_policy", 	&POA_CORBA_DomainManager::get_domain_policy_skel},
+      {"get_domain_policy",     &POA_CORBA_DomainManager::get_domain_policy_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -326,7 +326,8 @@ _TAO_DomainManager_Strategized_Proxy_Broker::select_proxy (
   )
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object);
+    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
@@ -785,18 +786,18 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsi
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"copy", 	&POA_CORBA_ConstructionPolicy::copy_skel},
+      {"copy",  &POA_CORBA_ConstructionPolicy::copy_skel},
       {"_is_a",  &POA_CORBA_ConstructionPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_CORBA_ConstructionPolicy::destroy_skel},
+      {"destroy",       &POA_CORBA_ConstructionPolicy::destroy_skel},
       {"",0},{"",0},
       {"_interface",  &POA_CORBA_ConstructionPolicy::_interface_skel},
       {"",0},{"",0},
       {"_non_existent",  &POA_CORBA_ConstructionPolicy::_non_existent_skel},
       {"",0},{"",0},
-      {"_get_policy_type", 	&POA_CORBA_ConstructionPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_CORBA_ConstructionPolicy::_get_policy_type_skel},
       {"",0},{"",0},
-      {"make_domain_manager", 	&POA_CORBA_ConstructionPolicy::make_domain_manager_skel},
+      {"make_domain_manager",   &POA_CORBA_ConstructionPolicy::make_domain_manager_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -984,7 +985,8 @@ _TAO_ConstructionPolicy_Strategized_Proxy_Broker::select_proxy (
   )
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object);
+    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];

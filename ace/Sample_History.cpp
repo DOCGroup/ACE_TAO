@@ -22,6 +22,18 @@ ACE_Sample_History::~ACE_Sample_History (void)
   delete[] this->samples_;
 }
 
+size_t
+ACE_Sample_History::max_samples (void) const
+{
+  return this->max_samples_;
+}
+
+size_t
+ACE_Sample_History::sample_count (void) const
+{
+  return this->sample_count_;
+}
+
 void
 ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
                                   ACE_UINT32 scale_factor) const

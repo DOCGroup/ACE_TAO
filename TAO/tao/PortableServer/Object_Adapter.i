@@ -313,3 +313,9 @@ TAO_POA_Current_Impl::priority (void) const
 {
   return this->priority_;
 }
+
+ACE_INLINE CORBA::Short
+TAO_Object_Adapter::Servant_Upcall::priority (void) const
+{
+  return this->current_context_.priority ();
+}

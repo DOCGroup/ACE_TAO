@@ -32,7 +32,7 @@ class TAO_Bands_Endpoint_Selector;
 class TAO_Protocol_Endpoint_Selector;
 class TAO_Priority_Protocol_Selector;
 class TAO_Bands_Protocol_Selector;
-class TAO_Default_Endpoint_Selector;
+class TAO_RT_Default_Endpoint_Selector;
 
 // ****************************************************************
 /**
@@ -85,7 +85,7 @@ private:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
-  TAO_Default_Endpoint_Selector *default_endpoint_selector_;
+  TAO_RT_Default_Endpoint_Selector *rt_default_endpoint_selector_;
   TAO_Priority_Endpoint_Selector *priority_endpoint_selector_;
   TAO_Bands_Endpoint_Selector *bands_endpoint_selector_;
   TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector_;

@@ -78,7 +78,9 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_idt_nl // idt = 1
       << "int strategy ="
       << be_idt_nl // idt = 2
-      << "TAO_ORB_Core::collocation_strategy (object);"
+      << "TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);"
+      << be_nl
+      << "ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);"
       << be_uidt_nl << be_nl // idt = 1
       << "if (this->proxy_cache_[strategy] != 0)"
       << be_idt_nl // idt = 2

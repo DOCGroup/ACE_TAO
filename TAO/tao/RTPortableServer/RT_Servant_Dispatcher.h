@@ -17,7 +17,10 @@
 
 #include "rtportableserver_export.h"
 #include "tao/PortableServer/Servant_Dispatcher.h"
-#include "tao/RTCORBA/RTCORBA.h"
+
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "tao/RTCORBA/RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -76,7 +79,8 @@ class TAO_RTPortableServer_Export RT_Priority_Model_Processing
 public:
 
   // Constructor.
-  RT_Priority_Model_Processing (TAO_POA &poa);
+  RT_Priority_Model_Processing (TAO_POA &poa,
+                                CORBA::Short servant_priority);
 
   // Resets the priority of the current thread back to its original
   // value if necessary, i.e., if it was changed and the
@@ -119,6 +123,9 @@ private:
 
   // Original CORBA priority of the thread.
   RTCORBA::Priority original_CORBA_priority_;
+
+  // Servant Priority.
+  CORBA::Short servant_priority_;
 };
 
 #include "ace/post.h"

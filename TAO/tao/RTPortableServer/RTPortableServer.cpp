@@ -19,11 +19,7 @@
 
 ACE_RCSID (RTPortableServer, RTPortableServer, "$Id$")
 
-int
-TAO_RT_POA_Initializer::init (void)
+TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_RT_Object_Adapter_Factory);
-
-  return 0;
+  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_RT_Object_Adapter_Factory);
 }
