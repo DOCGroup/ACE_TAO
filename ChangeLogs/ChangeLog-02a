@@ -1,3 +1,9 @@
+Fri Jan 19 16:57:43 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Svc_Handler.h: Updated the comments to explain why 
+	  operator new is overloaded.  Thanks to Kirill Kuolechov
+ 	  <Kirill.Koulechov@gmx.net> for reporting this.
+
 Fri Jan 19 15:39:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.cpp:
@@ -33,10 +39,10 @@ Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * ace/SSL/Makefile:
           Put a check for defining ACE_SHLIBS to get it compiled on HPUX.
-
-        * ace/RMCast/Makefile:
-        * ace/Makefile :
-          Updated dependencies
+  
+	* ace/RMCast/Makefile: 
+	* ace/Makefile : 
+	  Updated dependencies
 
         * ace/config-all.h
           Fix a build problem on HP-UX 11.00 with aCC A.03.25.  The macro
