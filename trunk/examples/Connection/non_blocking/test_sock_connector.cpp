@@ -21,9 +21,16 @@ main (int argc, char *argv[])
   // necessary since <select> on NT does not support waiting on STDIN.
 
 #if defined (ACE_WIN32)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_WFMO_Reactor wfmo_reactor;
   ACE_Reactor reactor (&wfmo_reactor);
   ACE_Reactor::instance (&reactor);
+# else
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Non-NT platform (Win95/98?) without Winsock2 installed.\n"
+                     "This example requires WFMO_Reactor which requires.\n"
+                     "Winsock2 be installed.\n"), -1);
+# endif /*  !ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 #endif /* ACE_WIN32 */
 
   // Perform Service_Config initializations
