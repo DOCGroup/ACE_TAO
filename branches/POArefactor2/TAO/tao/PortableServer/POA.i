@@ -129,20 +129,6 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
     }
 }
 
-ACE_INLINE void
-TAO_POA::deactivate_object (const PortableServer::ObjectId &oid
-                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
-
-  this->deactivate_object_i (oid
-                             ACE_ENV_ARG_PARAMETER);
-}
-
 ACE_INLINE CORBA::Object_ptr
 TAO_POA::create_reference (const char *intf
                            ACE_ENV_ARG_DECL)

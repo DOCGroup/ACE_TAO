@@ -49,6 +49,7 @@ class TAO_PortableServer_Export TAO_POA_Manager :
 
 public:
 
+
   void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
@@ -81,6 +82,9 @@ public:
   ~TAO_POA_Manager (void);
 
   PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Check the state of this POA manager
+  void check_state (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
 

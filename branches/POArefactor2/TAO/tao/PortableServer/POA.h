@@ -477,6 +477,9 @@ public:
 
   CORBA::ULong waiting_servant_deactivation (void) const;
 
+  /// Return the POA Manager related to this POA
+  TAO_POA_Manager &tao_poa_manager ();
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -655,23 +658,11 @@ protected:
   void wait_for_completions (CORBA::Boolean wait_for_completion
                              ACE_ENV_ARG_DECL);
 
-  void check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL);
-
   void deactivate_object_i (const PortableServer::ObjectId &oid
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy));
-
-  void cleanup_servant (
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
-      ACE_ENV_ARG_DECL
-    );
-
-  void deactivate_map_entry (
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
-      ACE_ENV_ARG_DECL
-    );
 
   CORBA::Object_ptr create_reference_i (const char *intf,
                                         CORBA::Short priority
@@ -894,8 +885,6 @@ protected:
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
-  int delete_active_object_map_;
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::AdapterActivator_var adapter_activator_;
@@ -939,8 +928,6 @@ protected:
   TAO_Object_Adapter *object_adapter_;
 
   CORBA::Boolean cleanup_in_progress_;
-
-  CORBA::Boolean etherealize_objects_;
 
   CORBA::ULong outstanding_requests_;
 

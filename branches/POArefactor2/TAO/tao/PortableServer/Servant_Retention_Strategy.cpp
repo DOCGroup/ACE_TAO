@@ -47,7 +47,8 @@ namespace TAO
 
     Retain_Servant_Retention_Strategy::Retain_Servant_Retention_Strategy (void) :
       active_object_map_ (0),
-      waiting_servant_deactivation_ (0)
+      waiting_servant_deactivation_ (0),
+      etherealize_objects_ (1)
     {
     }
 
@@ -149,19 +150,19 @@ namespace TAO
       // implementation calls _remove_ref when all operation invocations
       // have completed. If there is a ServantActivator, the Servant is
       // consumed by the call to ServantActivator::etherealize instead.
-/*
+
       // First check for a non-zero servant.
       if (active_object_map_entry->servant_)
         {
 
     #if (TAO_HAS_MINIMUM_POA == 0)
-
-          if (this->poa_->etherealize_objects_ &&
+/*
+          if (this->etherealize_objects_ &&
               this->poa_->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER &&
               !CORBA::is_nil (this->poa_->servant_activator_.in ()))
             {
               CORBA::Boolean remaining_activations =
-                this->poa_->active_object_map ().
+                this->active_object_map_->
                 remaining_activations (active_object_map_entry->servant_);
 
               // A recursive thread lock without using a recursive thread
@@ -172,7 +173,7 @@ namespace TAO
               // the lock, other threads will not be able to make progress
               // since <Object_Adapter::non_servant_upcall_in_progress_>
               // has been set.
-              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
+              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               // If the cleanup_in_progress parameter is TRUE, the reason
@@ -182,15 +183,15 @@ namespace TAO
               // is FALSE, the etherealize operation is called for other
               // reasons.
               this->servant_activator_->etherealize (active_object_map_entry->user_id_,
-                                                     this,
+                                                     this->poa_,
                                                      active_object_map_entry->servant_,
-                                                     this->cleanup_in_progress_,
+                                                     this->poa_->cleanup_in_progress_,
                                                      remaining_activations
                                                      ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
           else
-
+  */
     #endif
 
             {
@@ -202,14 +203,14 @@ namespace TAO
               // the lock, other threads will not be able to make progress
               // since <Object_Adapter::non_servant_upcall_in_progress_>
               // has been set.
-              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               active_object_map_entry->servant_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
-  */
+
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
@@ -659,6 +660,57 @@ namespace TAO
     {
       return waiting_servant_deactivation_;
     }
+
+    void
+    Retain_Servant_Retention_Strategy::deactivate_all_objects (
+      CORBA::Boolean etherealize_objects
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      this->etherealize_objects_ = etherealize_objects;
+      // If the etherealize_objects parameter is TRUE, the POA has the
+      // RETAIN policy, and a servant manager is registered with the POA,
+      // the etherealize operation on the servant manager will be called
+      // for each active object in the Active Object Map. The apparent
+      // destruction of the POA occurs before any calls to etherealize are
+      // made.  Thus, for example, an etherealize method that attempts to
+      // invoke operations on the POA will receive the OBJECT_NOT_EXIST
+      // exception.
+
+      // We must copy the map entries into a separate place since we
+      // cannot remove entries while iterating through the map.
+      ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *> map_entries
+        (this->active_object_map_->current_size ());
+
+      size_t counter = 0;
+      TAO_Active_Object_Map::user_id_map::iterator end
+        = this->active_object_map_->user_id_map_->end ();
+
+      for (TAO_Active_Object_Map::user_id_map::iterator iter
+             = this->active_object_map_->user_id_map_->begin ();
+           iter != end;
+           ++iter)
+        {
+          TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
+          TAO_Active_Object_Map::Map_Entry *active_object_map_entry = map_pair.second ();
+
+          if (!active_object_map_entry->deactivated_)
+            {
+              map_entries[counter] = active_object_map_entry;
+              ++counter;
+            }
+        }
+
+      for (size_t i = 0;
+           i < counter;
+           ++i)
+        {
+          this->deactivate_map_entry (map_entries[i]
+                                      ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+    }
   }
 }
 
@@ -852,6 +904,24 @@ namespace TAO
     Non_Retain_Servant_Retention_Strategy::waiting_servant_deactivation (void) const
     {
       return 0;
+    }
+
+    void
+    Non_Retain_Servant_Retention_Strategy::deactivate_all_objects (
+      CORBA::Boolean etherealize_objects
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      return;
+    }
+
+    void
+    Non_Retain_Servant_Retention_Strategy::cleanup_servant (
+      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+      ACE_ENV_ARG_DECL)
+    {
+      return;
     }
   }
 }

@@ -6,6 +6,7 @@
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Thread_Strategy.h"
+#include "tao/PortableServer/Servant_Retention_Strategy.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"
@@ -118,7 +119,7 @@ namespace TAO
       ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
       // Check the state of the POA Manager.
-      this->poa_->check_poa_manager_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
       // Setup current for this request.
@@ -405,7 +406,7 @@ namespace TAO
               ACE_DECLARE_NEW_CORBA_ENV;
               ACE_TRY
                 {
-                  this->poa_->cleanup_servant (this->active_object_map_entry_
+                  this->poa_->active_policy_strategies().servant_retention_strategy()->cleanup_servant (this->active_object_map_entry_
                                                ACE_ENV_ARG_PARAMETER);
 
                   ACE_TRY_CHECK;

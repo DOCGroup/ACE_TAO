@@ -1,3 +1,16 @@
+Tue Oct 26 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POAManager.{h,cpp}:
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Moved check_poa_manager_state from the POA to the POAManager, the
+          POAManager should check its state, the POA just calls this method.
+
+       * tao/PortableServer/POA.{h,cpp}:
+       * tao/PortableServer/Sevant_Retention_Strategy.{h,cpp}:
+         Moved several methods for the cleanup to the servant retention
+         strategy. Some work has to be done for the servant locator.
+
 Mon Oct 25 17:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 

@@ -112,6 +112,21 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy)) = 0;
+
+      virtual
+      void
+      deactivate_all_objects (CORBA::Boolean etherealize_objects
+                              ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy)) = 0;
+
+      virtual
+      void
+      cleanup_servant (
+        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        ACE_ENV_ARG_DECL) = 0;
+
+
     protected:
       TAO_POA* poa_;
     };
@@ -187,19 +202,28 @@ namespace TAO
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL);
 
-    protected:
+      virtual
       void
-      deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
-                            ACE_ENV_ARG_DECL);
+      deactivate_all_objects (CORBA::Boolean etherealize_objects
+                              ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy));
 
+      virtual
       void
       cleanup_servant (
         TAO_Active_Object_Map::Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
 
+    protected:
+      void
+      deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+                            ACE_ENV_ARG_DECL);
+
     private:
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
+      CORBA::Boolean etherealize_objects_;
     };
 
     class TAO_PortableServer_Export Non_Retain_Servant_Retention_Strategy :
@@ -268,6 +292,20 @@ namespace TAO
                            TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL);
+
+      virtual
+      void
+      deactivate_all_objects (CORBA::Boolean etherealize_objects
+                              ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy));
+      virtual
+      void
+      cleanup_servant (
+        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        ACE_ENV_ARG_DECL);
+
+
     };
   }
 }
