@@ -199,7 +199,7 @@ single_thread_performance_test (int queue_type = 0)
 
   for (i = 0; i < messages; ++i)
     {
-      // There's got to be a better way to do this.  init () doesn't
+      // There's got to be a better way to do this.  <init> doesn't
       // delete any existing data block, so we do it explicitly.
       delete receive_block[i].data_block ();
       receive_block[i].init (MAX_MESSAGE_SIZE);
