@@ -60,6 +60,32 @@ Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  netsvcs/clients/Tokens/manual/manual.cpp:
 	  added template specializations.
 
+Thu Mar 27 10:05:59 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* netsvcs/lib/TS_Clerk_Handler.cpp: Fixed two things:
+	  1) In TS_Clerk_Processor::parse_args() changed
+	  "%n:\n[-p hostname:port] [-t timeout] [-p poolname]\n%a", 1),
+	  to
+	  "%n:\n[-h hostname:port] [-t timeout] [-p poolname]\n%a", 1),
+
+	  2) In TS_Clerk_Processor::alloc() changed
+	  void *temp = 0;
+          // Only create the state if it doesn't already exist.
+          if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
+          {
+            // Allocate the space out of shared memory for the system time entry
+            temp = this->shmem_->malloc (sizeof (this->system_time_));
+ 
+          to:
+ 
+          // Only create the state if it doesn't already exist.
+          if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR) ==  -1)
+          {
+            // Allocate the space out of shared memory for the system time entry
+            void *temp = this->shmem_->malloc (sizeof (this->system_time_));
+ 
+          Thanks to Sandro Doro (alex@aureus.sublink.org) for suggesting these changes.
+
 Thu Mar 27 01:00:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.2_sgiCC.GNU: Added a new
@@ -976,6 +1002,14 @@ Sun Mar  10 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  lseek to rewind the output file.  With this correction the speed
  	  go up due to IO cache.  Thanks to Sandro Doro
  	  <alex@aureus.sublink.org> for reporting this.
+
+Sun Mar  9 18:24:37 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* java/src/IOCntlMsg.java (IOCntlMsg): Added two new
+	  classes/files, namely IOCntlCmds and IOCntlMsg.
+
+	* java/src/Task.java: Added accessors to get/set the flags of the
+	  Task. 
 
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -2907,6 +2941,11 @@ Sun Jan 19 11:10:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	  performance-tests/TTCP/ORBeline/ttcp_i.cpp,
 	  performance-tests/TTCP/Orbix/ttcp_i.cpp (main):
 	  return 0 instead of 42.
+
+Sat Jan 18 10:54:25 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* java/src/README: Updated the README file to indicate how
+	  documentation for Java ACE cab be automatically generated.
 
 Fri Jan 17 11:47:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
