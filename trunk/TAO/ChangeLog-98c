@@ -1,3 +1,14 @@
+Mon Oct 27 22:07:58 1997  Carlos O'Ryan  <coryan@MILONGA>
+
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_helper.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	  Set this->cli_stub_gen_ to I_TRUE once the code has been
+	  emitted.
+
 Mon Oct 27 19:34:08 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* TAO_IDL/be/be_exception.cpp: 

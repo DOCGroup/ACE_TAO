@@ -312,7 +312,7 @@ be_sequence::gen_client_stubs (void)
         this->flatname () << ";\n\n";
 
       cg->pop ();
-      this->cli_stub_gen_ = 1;
+      this->cli_stub_gen_ = I_TRUE;
 
     }
   return 0;
