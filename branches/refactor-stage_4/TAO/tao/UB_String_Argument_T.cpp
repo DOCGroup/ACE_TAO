@@ -54,7 +54,7 @@ template<typename S>
 CORBA::Boolean
 TAO::Inout_UB_String_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 {
-  CORBA::string_free (this->x_);
+  delete [] this->x_;
   return cdr >> this->x_;
 }
 

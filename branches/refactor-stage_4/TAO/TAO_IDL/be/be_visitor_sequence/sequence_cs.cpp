@@ -813,7 +813,7 @@ be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->instance_name ());
+  os->gen_ifdef_macro (node->flat_name ());
   os->gen_ifdef_AHETI ();
 
   *os << be_nl << be_nl

@@ -1,3 +1,31 @@
+Thu Jul 10 09:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+
+          Added argument traits template class specialization for anys
+          that are used in operations.
+
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Commented out unused variable.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * tao/Array_VarOut_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.cpp:
+
+          Fixed bugs uncovered by compiling Param_Test.
+
 Wed Jul  9 14:46:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Profile_Transport_Resolver.cpp (TAO): Minor fix for the

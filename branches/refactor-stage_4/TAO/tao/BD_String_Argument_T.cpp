@@ -67,6 +67,7 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
   )
 {
+  delete [] this->x_;
   return cdr >> to_S (this->x_, BOUND);
 }
 

@@ -1185,6 +1185,11 @@ template class TAO::Any_Impl_T<char>;
 template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
 
+template class TAO::Arg_Traits<CORBA::Any>;
+template class TAO::Var_Size_Arg_Traits_T<CORBA::Any, 
+                                          CORBA::Any_var, 
+                                          CORBA::Any_out>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO::Any_Special_Basic_Impl_T<
@@ -1240,5 +1245,10 @@ template class TAO::Any_Impl_T<CORBA::Object>;
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
 #pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
 #pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
+
+#pragma instantiate TAO::Arg_Traits<CORBA::Any>
+#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, 
+                                               CORBA::Any_var, 
+                                               CORBA::Any_out>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

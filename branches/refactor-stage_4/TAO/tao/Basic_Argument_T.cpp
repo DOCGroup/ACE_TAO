@@ -33,7 +33,7 @@ template<typename S>
 CORBA::Boolean
 TAO::In_Basic_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= this->x_;
+  return any >>= ACE_const_cast (S &, this->x_);
 }
 
 // ===========================================================

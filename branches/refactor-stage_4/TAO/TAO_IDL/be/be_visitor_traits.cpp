@@ -93,16 +93,6 @@ be_visitor_traits::visit_interface (be_interface *node)
       return 0;
     }
 
-  // We want to generate the second block below only if we have
-  // been seen in an operation and the first block only if we
-  // are forward declared in this file but not defined. If neither
-  // of these conditions hold, just skip this call.
-  if (!node->seen_in_operation ()
-      && (node->imported () || node->is_defined ()))
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -203,16 +193,6 @@ int
 be_visitor_traits::visit_valuetype (be_valuetype *node)
 {
   if (node->cli_traits_gen ())
-    {
-      return 0;
-    }
-
-  // We want to generate the second block below only if we have
-  // been seen in an operation and the first block only if we
-  // are forward declared in this file but not defined. If neither
-  // of these conditions hold, just skip this call.
-  if (!node->seen_in_operation ()
-      && (node->imported () || node->is_defined ()))
     {
       return 0;
     }
@@ -321,6 +301,7 @@ be_visitor_traits::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *alias = this->ctx_->alias ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -330,12 +311,12 @@ be_visitor_traits::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " Arg_Traits<"
-      << node->name () << ">" << be_idt_nl
+      << alias->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Var_Size_Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << node->name () << "_var," << be_nl
-      << node->name () << "_out" << be_uidt_nl
+      << alias->name () << "," << be_nl
+      << alias->name () << "_var," << be_nl
+      << alias->name () << "_out" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -423,10 +404,10 @@ be_visitor_traits::visit_array (be_array *node)
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
   // @@@ (JP) I don't think we have to generate the Array_Traits decl.
-/*
+
   // This is used by the _var and _out classes, so it should always be
   // generated in the main file.
-  if (!node->imported ())
+  if (!node->imported () && !node->anonymous ())
     {
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -448,7 +429,7 @@ be_visitor_traits::visit_array (be_array *node)
           << ");" << be_uidt << be_uidt_nl
           << "};";
     }
-*/
+
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
   if (node->seen_in_operation ())

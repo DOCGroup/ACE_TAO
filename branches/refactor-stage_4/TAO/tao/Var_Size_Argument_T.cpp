@@ -102,7 +102,7 @@ template<typename S, typename S_var>
 CORBA::Boolean
 TAO::Ret_Var_Size_Argument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
 {
-  return cdr >> *this->x_.inout ();
+  return cdr >> this->x_.inout ();
 }
 
 template<typename S, typename S_var>
@@ -116,7 +116,7 @@ template<typename S, typename S_var>
 CORBA::Boolean
 TAO::Ret_Var_Size_Argument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= this->x_.inout ();
+  return any >>= this->x_.out ();
 }
 
 template<typename S, typename S_var>

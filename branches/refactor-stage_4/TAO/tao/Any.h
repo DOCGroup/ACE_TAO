@@ -24,6 +24,7 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
+#include "tao/Var_Size_Argument_T.h"
 
 namespace TAO
 {
@@ -264,6 +265,15 @@ namespace CORBA
 
 namespace TAO
 {
+  /// Used in generated code if CORBA::Any is an argument or return type.
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Any>
+    : public Var_Size_Arg_Traits_T<CORBA::Any, 
+                                   CORBA::Any_var, 
+                                   CORBA::Any_out>
+  {
+  };
+
   /**
    * @class Any_Impl
    *
