@@ -20,8 +20,18 @@
 #define TAO_ATTRIBUTES_H
 
 #include "orbsvcs/CosTradingS.h"
-#include "Monitor.h"
- 
+
+class TAO_Lockable
+// = DESCRIPTION
+//   Class used to remove the circular dependencies between the
+//   Attribute classes with the Trader class.  
+{
+public: 
+
+  virtual ACE_Lock& lock (void) = 0;  
+};
+
+
 class TAO_ORBSVCS_Export TAO_Support_Attributes_Impl
   // = TITLE
   //     This class stores, allows access to and modification of 

@@ -404,12 +404,12 @@ validate_properties (Prop_Map& prop_map,
       if (! TAO_Trader_Base::is_valid_identifier_name (n))
 	TAO_THROW (CosTrading::IllegalPropertyName (n));
       else
-	{
+	{	  
 	  TAO_String_Hash_Key prop_name (n);
-	  const CosTradingRepos::ServiceTypeRepository::PropStruct&
-	    prop_struct = props[i];
+	  CosTradingRepos::ServiceTypeRepository::PropStruct* prop_val =
+	    (CosTradingRepos::ServiceTypeRepository::PropStruct*) &props[i];
 
-	  if (prop_map.bind (prop_name, prop_struct) == 1)
+	  if (prop_map.bind (prop_name, prop_val) == 1)
 	    TAO_THROW (CosTrading::DuplicatePropertyName (n));
 	}
     }
@@ -470,13 +470,13 @@ validate_inheritance (Prop_Map& prop_map,
 	  Prop_Map::ENTRY* existing_prop = 0;
 	  TAO_String_Hash_Key prop_name (super_props[j].name);
 	  
-	  if (prop_map.bind (prop_name, super_props[j], existing_prop) == 1)
+	  if (prop_map.bind (prop_name, &super_props[j], existing_prop) == 1)
 	    {
 	      // if already there, check that it is compatible with
 	      // properties of other types. Value Types have to be the
 	      // same. 
 	      const CosTradingRepos::ServiceTypeRepository::PropStruct&
-		property_in_map = existing_prop->int_id_;
+		property_in_map = *existing_prop->int_id_;
 	      
 	      if (! super_props[j].value_type->equal (property_in_map.value_type, _env))
 		{

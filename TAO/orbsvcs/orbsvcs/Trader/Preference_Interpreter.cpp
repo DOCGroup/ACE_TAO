@@ -80,14 +80,60 @@ order_offer (CosTrading::OfferId offer_id,
 {
   if (this->root_ != 0)
     {
-      TAO_Literal_Constraint return_value;	  
+      Preference_Info pref_info;
       TAO_Expression_Type expr_type = this->root_->expr_type ();
-      if (evaluator.evaluate_preference (this->root_, return_value) == 0)
-	this->offers_.insert (make_pair (return_value, make_pair (offer_id, offer)));
+      
+      pref_info.offer_ = offer;
+      pref_info.offer_id_ = offer_id;
+      pref_info.evaluated_ = CORBA::B_TRUE;
+
+      if (evaluator.evaluate_preference (this->root_, pref_info.value_) == 0)
+	{	  
+	  // If the evaluation succeeds, insert the node into the
+	  // correct place in the queue.
+	  TAO_Expression_Type expr_type = this->root_->expr_type ();
+
+	  if (expr_type == TAO_FIRST)
+	    this->offers_.enqueue_tail (pref_info);
+	  else
+	    this->offers_.enqueue_head (pref_info);
+
+	  if (expr_type == TAO_MIN || expr_type == TAO_MAX)
+	    {	      
+	      Ordered_Offers::ITERATOR offer_iter (this->offers_);
+
+	      // Push the new item down the list until the min/max
+	      // criterion is satisfied. Observe the evaluation
+	      // failed / evaluation suceeded partion in the list.
+	      offer_iter.advance ();
+	      for (int i = 1;
+		   ! offer_iter.done ();
+		   offer_iter.advance (), i++)
+		{
+		  Preference_Info* current_offer;
+		  offer_iter.next (current_offer);
+
+		  // Maintain the sorted order in the first partition.
+		  if (current_offer->evaluated_ == CORBA::B_TRUE &&
+		      ((expr_type == TAO_MIN &&
+		       pref_info.value_ > current_offer->value_) ||
+		      (expr_type == TAO_MAX &&
+		       pref_info.value_ < current_offer->value_)))
+		    {
+		      this->offers_.set (*current_offer, i - 1);
+		      this->offers_.set (pref_info, i);
+		    }
+		  else
+		    break;
+		}
+	    }		
+	}
       else
 	{
-	  TAO_Literal_Constraint end ((CORBA::Double) TRADER_MAX_DOUBLE);
-	  this->offers_.insert (make_pair (end, make_pair (offer_id, offer)));
+	  // If the evaluation fails, just tack the sucker onto the
+	  // end of the queue.
+	  pref_info.evaluated_ = CORBA::B_FALSE;
+	  this->offers_.enqueue_tail (pref_info);
 	}
     }
 }
@@ -97,28 +143,15 @@ TAO_Preference_Interpreter::
 remove_offer (CosTrading::OfferId& offer_id,
 	      CosTrading::Offer*& offer)
 {
-  int return_value = 0;
-  TAO_Expression_Type expr_type = this->root_->expr_type ();
-  ORDERED_OFFERS::iterator offer_beg = this->offers_.begin ();
-  ORDERED_OFFERS::iterator offer_end = this->offers_.end ();
+  int return_value = -1;
+  Preference_Info pref_info;
 
-  if (offer_beg != offer_end)
+  return_value = this->offers_.dequeue_head (pref_info);
+
+  if (return_value == 0)
     {
-      if (expr_type == TAO_WITH || expr_type == TAO_MAX)
-	{
-	  offer_end--;
-	  offer_id = (*offer_end).second.first;
-	  offer = (*offer_end).second.second;
-	  this->offers_.erase (offer_end);
-	}
-      else
-	{
-	  offer_id = (*offer_beg).second.first;
-	  offer = (*offer_beg).second.second;
-	  this->offers_.erase (offer_beg);
-	}
-      
-      return_value = 1;
+      offer = pref_info.offer_;
+      offer_id = pref_info.offer_id_;
     }
   
   return return_value;
