@@ -2516,7 +2516,7 @@ Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           we have pushed it here. We also believe that other protocols may
           need a lock during lookups.
 
-        * tao/IIOP_Enpoint.i: Hold a lock in object_addr (). There was a
+        * tao/IIOP_Endpoint.i: Hold a lock in object_addr (). There was a
           subtle race condition in that method. In object_addr (void) the
           code first checks for object_addr_.get_type() != AF_INET and, if
           so, it calls ACE_INET_Addr::set(). ACE_INET_Addr::set() sets
