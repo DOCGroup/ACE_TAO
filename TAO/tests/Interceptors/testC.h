@@ -11,7 +11,6 @@
 #define _TAO_IDL_TESTC_H_
 
 #include "tao/corba.h"
-#include "Request_Info.h" // Shoudl be in tao
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -68,7 +67,7 @@ TAO_NAMESPACE  Test_Interceptors
       TAO_InputCDR &,
       CORBA::Environment &);
 
-  static Silly *_downcast (CORBA::Exception *);
+  static Silly *_narrow (CORBA::Exception *);
 
 
   // = TAO extension
@@ -243,31 +242,116 @@ private:
   void operator= (const Visual &);
 };
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-// Is this in the right place?
-class ClientRequest_Info_normal : public ClientRequest_Info
+class  TAO_Test_Interceptors_Visual_Default_Proxy_Factory
 {
 public:
-   ClientRequest_Info_normal (char * operation,
-                              IOP::ServiceContextList &service_context_list,               
-                              CORBA::Object * target,
-                              CORBA::Long &arg, // argument to <normal>
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
-
-  virtual Dynamic::ParameterList * arguments (CORBA::Environment &ACE_TRY_ENV =
-                                              TAO_default_environment ());
-
-private:
-  CORBA::Long &arg_; 
-  // An argument which might have to be put into the ParameterList and returned dynamically
   
-  // Theres just the System Exception, do i put that too in the exception list?
-
-  // What about Request Context?
+  TAO_Test_Interceptors_Visual_Default_Proxy_Factory (int register_proxy_factory = 1);
+  
+  virtual ~TAO_Test_Interceptors_Visual_Default_Proxy_Factory (void);
+  
+  virtual Visual_ptr create_proxy (
+      Visual_ptr proxy,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
 };
-#endif /* TAO_HAS_INTERCEPTORS */
+
+class  TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter
+{
+public:
+  
+  friend class ACE_Singleton<TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  
+  int register_proxy_factory (
+      TAO_Test_Interceptors_Visual_Default_Proxy_Factory *df,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  
+  int unregister_proxy_factory (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  
+  Visual_ptr create_proxy (
+      Visual_ptr proxy,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+protected:
+  TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter (void);
+  ~TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter (void);
+  TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter &operator= (
+      const TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter &
+    );
+  TAO_Test_Interceptors_Visual_Default_Proxy_Factory *proxy_factory_;
+  int delete_proxy_factory_;
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  
+};
+
+typedef ACE_Singleton<TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Test_Interceptors_Visual_PROXY_FACTORY_ADAPTER;
+
+class  TAO_Test_Interceptors_Visual_Smart_Proxy_Base
+  : public virtual ACE_NESTED_CLASS (Test_Interceptors, Visual),
+    public virtual TAO_Smart_Proxy_Base
+{
+public:
+  TAO_Test_Interceptors_Visual_Smart_Proxy_Base (void);
+  ~TAO_Test_Interceptors_Visual_Smart_Proxy_Base (void);
+  virtual TAO_Stub *_stubobj (void) const;
+virtual void normal (
+    CORBA::Long arg,
+    CORBA::Environment &ACE_TRY_ENV = 
+      TAO_default_environment ()
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void nothing (
+    CORBA::Environment &ACE_TRY_ENV = 
+      TAO_default_environment ()
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void user (
+    CORBA::Environment &ACE_TRY_ENV = 
+      TAO_default_environment ()
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    Test_Interceptors::Silly
+  ));
+
+virtual void system (
+    CORBA::Environment &ACE_TRY_ENV = 
+      TAO_default_environment ()
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void shutdown (
+    CORBA::Environment &ACE_TRY_ENV = 
+      TAO_default_environment ()
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+protected:
+  ::Test_Interceptors::Visual_ptr get_proxy (void);
+  ::Test_Interceptors::Visual_var proxy_;
+};
+
+
 #endif /* end #if !defined */
+
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Visual;
 
 

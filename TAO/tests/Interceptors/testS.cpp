@@ -20,7 +20,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 12:37:56 */
+/* starting time is 11:05:03 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /project/acetmp/kirthika/BUILD/cc5/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Test_Interceptors_Visual_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -116,7 +116,7 @@ TAO_Test_Interceptors_Visual_Perfect_Hash_OpTable::lookup (const char *str, unsi
     }
   return 0;
 }
-/* ending time is 12:37:56 */
+/* ending time is 11:05:03 */
 static TAO_Test_Interceptors_Visual_Perfect_Hash_OpTable tao_Test_Interceptors_Visual_optable;
 
 Test_Interceptors::Visual_ptr _TAO_collocation_POA_Test_Interceptors_Visual_Stub_Factory (
@@ -194,21 +194,10 @@ void POA_Test_Interceptors::Visual::normal_skel (
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
-  //  PortableInterceptor::Cookies _tao_cookies;
-  // CORBA::NVList_var _tao_interceptor_args;
-
+  PortableInterceptor::Cookies _tao_cookies;
+  CORBA::NVList_var _tao_interceptor_args;
   CORBA::Object_var _tao_objref;
-
-  // Object_id and adapter_id???
-
-  // Hey why not use _tao_server_request.operation () ?
-  CORBA::String_var name ("normal");
-   
-  ServerRequest_Info ri (ACE_const_cast (char *,
-                                         name.in()),
-                                         _tao_server_request.service_info ());
-    
-  /*if (_tao_vfr.valid ())
+  if (_tao_vfr.valid ())
     {
       _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
       ACE_CHECK;
@@ -216,10 +205,10 @@ void POA_Test_Interceptors::Visual::normal_skel (
       _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
       ACE_CHECK;
     }
-  */
+
   ACE_TRY
     {
-      /*  _tao_vfr.preinvoke (
+      _tao_vfr.preinvoke (
           _tao_server_request.request_id (),
           1,
           _tao_objref.in (),
@@ -228,9 +217,7 @@ void POA_Test_Interceptors::Visual::normal_skel (
           _tao_interceptor_args.inout (),
           _tao_cookies,
           ACE_TRY_ENV
-          );*/
-      _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
-
+        );
       TAO_INTERCEPTOR_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -241,13 +228,8 @@ void POA_Test_Interceptors::Visual::normal_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-      ServerRequest_Info ri_next (ACE_const_cast (char *,
-                                                  name.in()),
-                                  _tao_server_request.service_info ());
-      
-  
 #if (TAO_HAS_INTERCEPTORS == 1)
-      /*      _tao_vfr.postinvoke (
+      _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
           _tao_objref.in (),
@@ -256,13 +238,12 @@ void POA_Test_Interceptors::Visual::normal_skel (
           _tao_interceptor_args.inout (),
           _tao_cookies,
           ACE_TRY_ENV
-          );*/
-      _tao_vfr.send_reply (&ri_next, ACE_TRY_ENV);
+        );
       TAO_INTERCEPTOR_CHECK;
     }
   ACE_CATCHANY
     {
-      /*      _tao_vfr.exception_occurred (
+      _tao_vfr.exception_occurred (
           _tao_server_request.request_id (),
           1,
           _tao_objref.in (),
@@ -270,7 +251,7 @@ void POA_Test_Interceptors::Visual::normal_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-        ACE_RETHROW;*/
+      ACE_RETHROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -289,7 +270,7 @@ void POA_Test_Interceptors::Visual::nothing_skel (
 {
   POA_Test_Interceptors::Visual *_tao_impl = (POA_Test_Interceptors::Visual *)_tao_object_reference;
 
-  /*#if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -318,7 +299,7 @@ void POA_Test_Interceptors::Visual::nothing_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS 
+#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_impl->nothing (
         ACE_TRY_ENV
@@ -326,7 +307,7 @@ void POA_Test_Interceptors::Visual::nothing_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -368,7 +349,7 @@ void POA_Test_Interceptors::Visual::user_skel (
 {
   POA_Test_Interceptors::Visual *_tao_impl = (POA_Test_Interceptors::Visual *)_tao_object_reference;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -397,7 +378,7 @@ void POA_Test_Interceptors::Visual::user_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS 
+#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_impl->user (
         ACE_TRY_ENV
@@ -405,7 +386,7 @@ void POA_Test_Interceptors::Visual::user_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -447,7 +428,7 @@ void POA_Test_Interceptors::Visual::system_skel (
 {
   POA_Test_Interceptors::Visual *_tao_impl = (POA_Test_Interceptors::Visual *)_tao_object_reference;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -476,7 +457,7 @@ void POA_Test_Interceptors::Visual::system_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS 
+#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_impl->system (
         ACE_TRY_ENV
@@ -484,7 +465,7 @@ void POA_Test_Interceptors::Visual::system_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -526,7 +507,7 @@ void POA_Test_Interceptors::Visual::shutdown_skel (
 {
   POA_Test_Interceptors::Visual *_tao_impl = (POA_Test_Interceptors::Visual *)_tao_object_reference;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -557,7 +538,7 @@ void POA_Test_Interceptors::Visual::shutdown_skel (
       TAO_INTERCEPTOR_CHECK;
 #else
       ACE_UNUSED_ARG (_tao_server_request);
-#endif /* TAO_HAS_INTERCEPTORS 
+#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_impl->shutdown (
         ACE_TRY_ENV
@@ -565,7 +546,7 @@ void POA_Test_Interceptors::Visual::shutdown_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-/* #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           0,
