@@ -2549,7 +2549,11 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
       }
 # elif defined (ACE_HAS_DCETHREADS)
     ACE_UNUSED_ARG (inst);
-    ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   if defined (ACE_HAS_STDARG_THR_DEST)
+      ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+#   else
+      ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   endif /* ACE_HAS_STDARG_THR_DEST */
 # elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
