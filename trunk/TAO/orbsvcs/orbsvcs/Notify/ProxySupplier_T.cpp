@@ -140,6 +140,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (ACE_ENV_SINGLE_ARG
   }
 
   this->consumer_->suspend (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 template <class SERVANT_TYPE> void

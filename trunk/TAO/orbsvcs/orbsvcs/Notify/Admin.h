@@ -22,7 +22,7 @@
 
 #include "FilterAdmin.h"
 #include "EventTypeSeq.h"
-#include "Object.h"
+#include "Topology_Object.h"
 
 class TAO_Notify_Proxy;
 class TAO_Notify_EventChannel;
@@ -35,7 +35,7 @@ template <class TYPE> class TAO_Notify_Container_T;
  *
  */
 
-class TAO_Notify_Serv_Export TAO_Notify_Admin : public virtual TAO_Notify_Object
+class TAO_Notify_Serv_Export TAO_Notify_Admin : public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
 public:
@@ -43,7 +43,7 @@ public:
   typedef CosNotifyChannelAdmin::AdminIDSeq_var SEQ_VAR;
 
   /// Constuctor
-  TAO_Notify_Admin (void);
+  TAO_Notify_Admin ();
 
   /// Destructor
   ~TAO_Notify_Admin ();
@@ -69,14 +69,28 @@ public:
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
 
   /// Obtain the Admin's subscribed types.
-  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types 
+  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
                          ACE_ENV_ARG_DECL);
 
+  TAO_Notify_EventChannel * event_channel () const;
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+    CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+
+  void set_default (bool is_default);
+  bool is_default () const;
+  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+
 protected:
-  typedef TAO_Notify_Container_T <TAO_Notify_Proxy> 
+  void save_attrs (TAO_Notify::NVPList& attrs);
+  virtual const char * get_admin_type_name (void) const = 0;
+
+protected:
+  typedef TAO_Notify_Container_T <TAO_Notify_Proxy>
     TAO_Notify_Proxy_Container;
 
   /// = Data Members
@@ -95,6 +109,8 @@ protected:
 
   /// Filter operator
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
+
+  bool is_default_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -31,13 +31,6 @@ TAO_Notify_CosEC_ProxyPushConsumer::release (void)
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::push (TAO_Notify_Event_var &/*event*/)
-{
-  // This should never be called.
-  ACE_ASSERT (1);
-}
-
-void
 TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -80,10 +73,17 @@ TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSup
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
 }
 
-void TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+void
+TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+const char *
+TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name (void) const
+{
+  return "ec_proxy_push_consumer";
 }

@@ -19,6 +19,7 @@
 
 #include "UTF16_BOM_Factory.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
 // Instantiate templates that allow discovery of this factory

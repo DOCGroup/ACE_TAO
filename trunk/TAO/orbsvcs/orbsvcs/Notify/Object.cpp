@@ -15,6 +15,8 @@
 
 ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
 
+
+
 TAO_Notify_Object::TAO_Notify_Object (void)
   : event_manager_ (0)
   , admin_properties_ (0)
@@ -66,6 +68,18 @@ TAO_Notify_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
   return this->poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
+/// Activate with existing id
+CORBA::Object_ptr
+TAO_Notify_Object::activate (
+    PortableServer::Servant servant,
+    CORBA::Long id
+    ACE_ENV_ARG_DECL)
+{
+  this->id_ = id;
+  return this->poa_->activate_with_id (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+}
+
+
 void
 TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -77,10 +91,10 @@ TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       if (TAO_debug_level > 2)
-	{
-	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
-	  ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
-	}
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
+    ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
+  }
       // Do not propagate any exceptions
     }
   ACE_ENDTRY;
@@ -133,7 +147,7 @@ TAO_Notify_Object::shutdown_proxy_poa (void)
         {
           this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           delete this->proxy_poa_;
         }
       ACE_CATCHANY
@@ -268,6 +282,15 @@ TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
   return properties._retn ();
 }
 
+bool
+TAO_Notify_Object::find_qos_property_value (
+  const char * name,
+  CosNotification::PropertyValue & value) const
+{
+  return this->qos_properties_.find (name, value);
+}
+
+
 void
 TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
 {
@@ -279,3 +302,60 @@ TAO_Notify_Object::timer (void)
 {
   return this->worker_task_->timer ();
 }
+
+namespace {
+  template<class T>
+    void add_qos_attr(TAO_Notify::NVPList& attrs, const T& prop) {
+      if (prop.is_valid())
+      {
+        attrs.push_back(TAO_Notify::NVP (prop));
+      }
+    }
+// Note : These instantiations have to be here because each namespace {}
+// is unique.
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template void add_qos_attr<TAO_Notify_Property_Boolean>(
+  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&);
+template void add_qos_attr<TAO_Notify_Property_T<int> >(
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&);
+template void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&);
+template void add_qos_attr<TAO_Notify_Property_T<short> >(
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&);
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate void add_qos_attr<TAO_Notify_Property_Boolean>(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&)
+#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<int> >(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&)
+#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&)
+#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<short> >(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&)
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+} // namespace
+
+void
+TAO_Notify_Object::save_attrs (TAO_Notify::NVPList& attrs)
+{
+  add_qos_attr(attrs, this->qos_properties_.event_reliability ());
+  add_qos_attr(attrs, this->qos_properties_.connection_reliability ());
+  add_qos_attr(attrs, this->qos_properties_.priority ());
+  add_qos_attr(attrs, this->qos_properties_.timeout ());
+  add_qos_attr(attrs, this->qos_properties_.stop_time_supported ());
+  add_qos_attr(attrs, this->qos_properties_.maximum_batch_size ());
+  add_qos_attr(attrs, this->qos_properties_.pacing_interval ());
+}
+
+void
+TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
+{
+  attrs.load (this->qos_properties_.event_reliability ());
+  attrs.load (this->qos_properties_.connection_reliability ());
+  attrs.load (this->qos_properties_.priority ());
+  attrs.load (this->qos_properties_.timeout ());
+  attrs.load (this->qos_properties_.stop_time_supported ());
+  attrs.load (this->qos_properties_.maximum_batch_size ());
+  attrs.load (this->qos_properties_.pacing_interval ());
+  this->qos_properties_.init ();
+}
+

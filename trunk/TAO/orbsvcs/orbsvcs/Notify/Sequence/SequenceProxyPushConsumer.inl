@@ -1,3 +1,2 @@
 // $Id$
 
-#include "SequenceProxyPushConsumer.h"

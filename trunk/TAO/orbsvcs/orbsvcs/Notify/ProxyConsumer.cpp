@@ -19,6 +19,12 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 #include "Worker_Task.h"
 #include "Properties.h"
 #include "SupplierAdmin.h"
+#include "EventChannel.h"
+#include "Routing_Slip.h"
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
 TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
   : supplier_admin_ (0)
@@ -40,7 +46,7 @@ TAO_Notify_ProxyConsumer::peer (void)
 void
 TAO_Notify_ProxyConsumer::init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Object::init (supplier_admin);
+  TAO_Notify::Topology_Object::init (supplier_admin);
 
   this->supplier_admin_ = supplier_admin;
 
@@ -70,17 +76,30 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier ACE_ENV_ARG_DEC
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
     ACE_CHECK;
+    TAO_Notify_Supplier* deleted_supplier = 0;
 
     if (this->is_connected ())
       {
-        supplier->release ();
-        ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+        if (TAO_Notify_PROPERTIES::instance()->allow_reconnect())
+          {
+            deleted_supplier = this->supplier_;
+          }
+        else
+          {
+            supplier->release ();
+            ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+          }
       }
 
-    supplier_ = supplier;
+    this->supplier_ = supplier;
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
     ACE_CHECK;
+
+    if (deleted_supplier != 0)
+      {
+        deleted_supplier->_decr_refcnt();
+      }
   }
 
   // Inform QoS values.
@@ -96,6 +115,46 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier ACE_ENV_ARG_DEC
 
   // Increment the global supplier count
   ++supplier_count;
+}
+void
+TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL)
+{
+  if (this->supports_reliable_events ())
+    {
+      TAO_Notify_Event_var pevent;
+      event->queueable_copy (pevent ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      TAO_Notify::Routing_Slip_Ptr routing_slip =
+        TAO_Notify::Routing_Slip::create (pevent ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      if (DEBUG_LEVEL > 0)
+        ACE_DEBUG((LM_DEBUG, ACE_TEXT ("ProxyConsumer routing event.\n")));
+      routing_slip->route (this, true ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      routing_slip->wait_persist ();
+    }
+  else
+    {
+      TAO_Notify_Method_Request_Lookup_No_Copy request (event, this);
+      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+}
+
+bool
+TAO_Notify_ProxyConsumer::supports_reliable_events () const
+{
+  bool reliable = false;
+  CosNotification::PropertyValue value;
+    if (this->find_qos_property_value (CosNotification::EventReliability, value))
+    {
+      CORBA::Long setting;
+      if (value >>= setting)
+      {
+        reliable = (setting == CosNotification::Persistent);
+      }
+    }
+  return reliable;
 }
 
 void

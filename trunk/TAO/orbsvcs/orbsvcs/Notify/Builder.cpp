@@ -5,8 +5,8 @@
 #include "Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           Builder, 
+ACE_RCSID (Notify,
+           Builder,
            "$Id$")
 
 #include "ace/Dynamic_Service.h"
@@ -41,10 +41,10 @@ ACE_RCSID (Notify,
 #include "ETCL_FilterFactory.h"
 #include "Container_T.h"
 
-template <class PROXY_IMPL, 
-          class PROXY, 
-          class PROXY_PTR, 
-          class PROXY_VAR, 
+template <class PROXY_IMPL,
+          class PROXY,
+          class PROXY_PTR,
+          class PROXY_VAR,
           class PARENT>
 class TAO_Notify_Proxy_Builder_T
 {
@@ -83,6 +83,32 @@ public:
 
     return proxy_ret._retn ();
   }
+
+  PROXY_IMPL*
+  build (PARENT *parent, const CosNotifyChannelAdmin::ProxyID proxy_id
+         ACE_ENV_ARG_DECL)
+  {
+    TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
+
+    PROXY_IMPL* proxy = 0;
+    factory->create (proxy ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    PortableServer::ServantBase_var servant (proxy);
+
+    proxy->init (parent ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    proxy->activate (proxy, proxy_id ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    // insert proxy in admin container.
+    parent->insert (proxy ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    return proxy;
+  }
+
 };
 
 // define the ProxyConsumer Builders.
@@ -183,21 +209,22 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa ACE
   factory->create (ecf ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ecf_ret._retn ());
 
-  PortableServer::ServantBase_var servant_var (ecf);
+//  PortableServer::ServantBase_var servant_var (ecf);
 
-  ecf->TAO_Notify_EventChannelFactory::init (poa ACE_ENV_ARG_PARAMETER);
-
-  CORBA::Object_var obj = ecf->activate (ecf ACE_ENV_ARG_PARAMETER);
+  ecf->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ecf_ret._retn ());
-
-  ecf_ret = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+  ecf_ret = ecf->activate_self (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ecf_ret._retn ());
 
   return (ecf_ret._retn ());
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_Builder::build_event_channel (TAO_Notify_EventChannelFactory* ecf, const CosNotification::QoSProperties & initial_qos, const CosNotification::AdminProperties & initial_admin, CosNotifyChannelAdmin::ChannelID_out id ACE_ENV_ARG_DECL)
+TAO_Notify_Builder::build_event_channel (
+  TAO_Notify_EventChannelFactory* ecf,
+  const CosNotification::QoSProperties & initial_qos,
+  const CosNotification::AdminProperties & initial_admin,
+  CosNotifyChannelAdmin::ChannelID_out id ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec_ret;
 
@@ -207,7 +234,7 @@ TAO_Notify_Builder::build_event_channel (TAO_Notify_EventChannelFactory* ecf, co
   factory->create (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
 
-  PortableServer::ServantBase_var servant_var (ec);
+//  PortableServer::ServantBase_var servant_var (ec);
 
   ec->init (ecf, initial_qos, initial_admin ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
@@ -228,8 +255,35 @@ TAO_Notify_Builder::build_event_channel (TAO_Notify_EventChannelFactory* ecf, co
   return ec_ret._retn ();
 }
 
+TAO_Notify_EventChannel *
+TAO_Notify_Builder::build_event_channel (
+  TAO_Notify_EventChannelFactory* ecf,
+  const CosNotifyChannelAdmin::ChannelID id ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
+
+  TAO_Notify_EventChannel* ec = 0;
+  factory->create (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  ec->init (ecf ACE_ENV_ARG_PARAMETER); //, initial_qos, initial_admin
+  ACE_CHECK_RETURN (0);
+
+  // insert ec in ec container.
+  ecf->ec_container_->insert (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  ec->activate (ec, id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return ec;
+}
+
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_Builder::build_consumer_admin (TAO_Notify_EventChannel* ec, CosNotifyChannelAdmin::InterFilterGroupOperator op, CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL)
+TAO_Notify_Builder::build_consumer_admin (
+    TAO_Notify_EventChannel* ec,
+    CosNotifyChannelAdmin::InterFilterGroupOperator op,
+    CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var ca_ret;
 
@@ -239,7 +293,7 @@ TAO_Notify_Builder::build_consumer_admin (TAO_Notify_EventChannel* ec, CosNotify
   factory->create (ca ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ca_ret._retn ());
 
-  PortableServer::ServantBase_var servant_var (ca);
+//  PortableServer::ServantBase_var servant_var (ca);
 
   ca->init (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ca_ret._retn ());
@@ -261,6 +315,31 @@ TAO_Notify_Builder::build_consumer_admin (TAO_Notify_EventChannel* ec, CosNotify
   return ca_ret._retn ();
 }
 
+TAO_Notify_ConsumerAdmin *
+TAO_Notify_Builder::build_consumer_admin (
+  TAO_Notify_EventChannel* ec,
+  const CosNotifyChannelAdmin::ChannelID id
+  ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
+  TAO_Notify_ConsumerAdmin * ca = 0;
+  factory->create (ca ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+//  PortableServer::ServantBase_var servant_var (ca);
+
+  ca->init (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Object_var obj = ca->activate (ca, id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // insert admin in CA container.
+  ec->ca_container_->insert (ca ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  return ca;
+}
+
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec, CosNotifyChannelAdmin::InterFilterGroupOperator op, CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL)
 {
@@ -272,7 +351,7 @@ TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec, CosNotify
   factory->create (sa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (sa_ret._retn ());
 
-  PortableServer::ServantBase_var servant_var (sa);
+//  PortableServer::ServantBase_var servant_var (sa);
 
   sa->init (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (sa_ret._retn ());
@@ -292,6 +371,32 @@ TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec, CosNotify
   ACE_CHECK_RETURN (sa_ret._retn ());
 
   return sa_ret._retn ();
+}
+
+TAO_Notify_SupplierAdmin *
+TAO_Notify_Builder::build_supplier_admin (
+  TAO_Notify_EventChannel* ec,
+  const CosNotifyChannelAdmin::ChannelID id
+  ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
+  TAO_Notify_SupplierAdmin * sa = 0;
+  factory->create (sa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+//  PortableServer::ServantBase_var servant_var (ca);
+
+  sa->init (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Object_var obj = sa->activate (sa, id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // insert admin in CA container.
+  ec->sa_container_->insert (sa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return sa;
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
@@ -363,6 +468,76 @@ TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
     default:
       ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                         CosNotifyChannelAdmin::ProxySupplier::_nil ());
+    }
+}
+
+TAO_Notify_ProxyConsumer *
+TAO_Notify_Builder::build_proxy(TAO_Notify_SupplierAdmin* sa
+                            , CosNotifyChannelAdmin::ClientType ctype
+                            , const CosNotifyChannelAdmin::ProxyID proxy_id
+                            ACE_ENV_ARG_DECL)
+{
+  switch (ctype)
+    {
+    case CosNotifyChannelAdmin::ANY_EVENT:
+      {
+        TAO_Notify_ProxyPushConsumer_Builder pb;
+        return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+      }
+    break;
+
+    case CosNotifyChannelAdmin::STRUCTURED_EVENT:
+      {
+        TAO_Notify_StructuredProxyPushConsumer_Builder pb;
+        return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+      }
+    break;
+
+    case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+     {
+       TAO_Notify_SequenceProxyPushConsumer_Builder pb;
+       return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+     }
+      break;
+
+    default:
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        0);
+                        }
+}
+
+TAO_Notify_ProxySupplier *
+TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
+                            , CosNotifyChannelAdmin::ClientType ctype
+                            , const CosNotifyChannelAdmin::ProxyID proxy_id
+                            ACE_ENV_ARG_DECL)
+{
+  switch (ctype)
+    {
+    case CosNotifyChannelAdmin::ANY_EVENT:
+      {
+        TAO_Notify_ProxyPushSupplier_Builder pb;
+        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+      }
+      break;
+
+    case CosNotifyChannelAdmin::STRUCTURED_EVENT:
+      {
+        TAO_Notify_StructuredProxyPushSupplier_Builder pb;
+        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+      }
+    break;
+
+    case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+      {
+        TAO_Notify_SequenceProxyPushSupplier_Builder pb;
+        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+      }
+      break;
+
+    default:
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        0);
     }
 }
 

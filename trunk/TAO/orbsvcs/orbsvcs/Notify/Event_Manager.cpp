@@ -76,7 +76,7 @@ void
 TAO_Notify_Event_Manager::connect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL)
 {
   this->supplier_map_->connect (proxy_consumer ACE_ENV_ARG_PARAMETER);
-
+  ACE_CHECK;
   // Inform about subscription types.
   TAO_Notify_EventTypeSeq removed;
   proxy_consumer->types_changed (this->subscription_types (), removed ACE_ENV_ARG_PARAMETER);

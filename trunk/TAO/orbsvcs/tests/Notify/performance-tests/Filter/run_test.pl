@@ -36,7 +36,9 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
 $NS->Spawn ();
+print $NS->CommandLine ()."\n";
 $TS->Spawn ();
+print $TS->CommandLine ()."\n";
 
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
@@ -49,6 +51,7 @@ print "********* Running Structured Consumer with two " .
       "consumers and no filter *******\n";
 
 unlink $ior;
+print $STS->CommandLine ()."\n";
 $STS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
@@ -61,7 +64,8 @@ if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
 
 if ($status == 0) {
   $STC->Arguments($client_args);
-  $client = $STC->SpawnWaitKill (60);
+  print $STC->CommandLine ()."\n";
+  $client = $STC->SpawnWaitKill (300);
   print "\n";
 
   $STS->Kill ();

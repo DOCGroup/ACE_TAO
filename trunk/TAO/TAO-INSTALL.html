@@ -60,7 +60,7 @@ TAO.  If you have <A
 HREF="../docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the TAO along with ACE
 wrappers on the platforms shown above please send email to either the
-<A HREF="news:comp.soft-sys.ace">Newsgroup</A> or to the <A 
+<A HREF="news:comp.soft-sys.ace">Newsgroup</A> or to the <A
 HREF="mailto:ace-users@cs.wustl.edu">TAO mailing list</A> and we'll
 try to help you fix the problems.  You can also submit bug reports and
 enhancement requests in our
@@ -74,7 +74,7 @@ with the <A
 HREF="http://www.dre.vanderbilt.edu/ACE"> ACE </A> release.  You'll
 always need the most recent version of ACE because TAO tracks and
 influences changes to ACE.  Always use the ACE+TAO release
-bundle as a single piece instead of trying to mix and match things up.<P> 
+bundle as a single piece instead of trying to mix and match things up.<P>
 
 <HR><P>
 <H3>On UNIX platforms</H3>
@@ -123,7 +123,7 @@ bundle as a single piece instead of trying to mix and match things up.<P>
         <P>If you wish to compile the ORB services distributed with TAO,
           including the <CODE>Naming_Service</CODE> you
           must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
-          above.  Please see the 
+          above.  Please see the
           <A HREF="docs/configurations.html#orbsvcs">TAO configuration documentation</a>
           for a discussion on how to create a subset configuration of specific
           TAO ORB servcies.
@@ -160,7 +160,7 @@ etc.<p>
 
 GNU Make can be obtained from various places in source and binary
 form. Please see <a href="../ACE-INSTALL.html"> ACE-INSTALL.html </a>
-for details from where they can be obtained.<P> 
+for details from where they can be obtained.<P>
 
 
 <HR><P>
@@ -290,7 +290,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
       <a href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>,
       and
       <a href="../ACE-INSTALL.html#VxWorks/NT">Building ACE on
-	Tornado/NT hosts for VxWorks targets</a>
+        Tornado/NT hosts for VxWorks targets</a>
     </P>
 
     <P>Please note that dynamic loading of libraries is not supported
@@ -301,7 +301,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
     <P>If using perfect hashing, TAO_IDL needs gperf to be built on
       the host. That's the default on many platforms.  First, build
       <code>gperf</code> in the
-      <code>ACE_wrappers/apps/gperf/src/</code> directory.  
+      <code>ACE_wrappers/apps/gperf/src/</code> directory.
     </P>
 
     <H4>Which one is right for me?</H4>
@@ -376,15 +376,8 @@ project </a> file.</P>
 files that loads the projects ACE, ACEXML, Kokyu, TAO, TAO_IDL (the
 compiler), gperf, the orb services libraries, and the standalone
 executables (such as Naming Service, etc.).  It can be used to build
-all the files needed to build/run TAO applications.</P>  
+all the files needed to build/run TAO applications.</P>
 
-<<<<<<< TAO-INSTALL.html
-<H4>Visual C++ 7.1</H4> The DOC group doesn't support TAO on VC++ 7.0
-since the libraries that were shipped with VC++ 7.0 did not work
-well. The DOC group supports only VC++ 7.1, which is used by their
-sponsors. The following points are relevant to users who are trying to
-use TAO with VC++ 7.1.
-=======
 <H4>Visual C++ 7.1</H4>
 The DOC group doesn't support TAO on VC++ 7.0 since the libraries that
 were shipped with VC++ 7.0 did not work well. The DOC group supports
@@ -393,7 +386,6 @@ points are also relevant to users who are trying to use TAO with VC++
 7.1. Additionally, all required options are set for the generated .sln
 files. If something is missing then it is probably a bug with
 MPC. Please report such bugs to the tao-users newsgroups.
->>>>>>> 1.86
 
 <H4>Borland C++ Builder</H4> <P>
 
@@ -434,7 +426,7 @@ creating static libraries and linking with them.
 <P>First, follow the build instructions in the
 <A HREF="../ACE-INSTALL.html#mingw">ACE installation notes.</A>
 When building with MinGW and Cygwin you are using the GNU make under Windows.
-When you use make from the commandline, make sure that <code>TAO_ROOT</code> is 
+When you use make from the commandline, make sure that <code>TAO_ROOT</code> is
 set to a full path or to <code>%ACE_ROOT%/TAO</code>, which will also result
 in setting a full path. Setting it with the Unix style to <code>$ACE_ROOT/TAO</code>
 will not work, setting it using the make style to <code>$(ACE_ROOT)/TAO</code> looks
@@ -499,27 +491,27 @@ GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
 using <a href="../MPC/README">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
-quickly. 
+quickly.
 
 <UL>
   <LI> Please see <a href="#MPC"> instructions </a> above to  download
-  MPC from anon cvs repository <p>       
+  MPC from anon cvs repository <p>
   <LI>Please make sure that you have <a href="http://www.perl.org">
-  perl</a> installed, preferably perl 
-  5.8 or higher. Users on Win32 based platforms are recommended to use
+  perl</a> installed, preferably perl
+   5.8 or higher. Users on Win32 based platforms are recommended to use
   <a href="http://www.activestate.com/Products/ActivePerl/"> Active
   State Perl </a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms. <p>
   <LI>If you just want to build TAO and associated tests, examples,
   and associated utility libraries, we recommend the following
-  alternatives: 
+  alternatives:
     <UL>
     <LI> Build ACE and TAO seperately. ACE needs to be built first and
   instructins for building ACE are available at <a
   href="../ACE-INSTALL.html#MPC">ACE-INSTALL</a>. GNUmakefiles and
   project files for TAO can be generated by using the following
-  commands:<p> 
+  commands:<p>
     <CODE> $ACE_ROOT/bin/mwc.pl TAO.mwc </CODE> <p>
    from <CODE> $TAO_ROOT </CODE> to generate GNUmakefiles. Use <CODE>
   -type vc6 </CODE> or <CODE>-type vc71</CODE> to generate VC6 and
@@ -539,9 +531,9 @@ quickly.
   <LI>If you want to build CIAO and its associated libraries
   please see <a href="CIAO/CIAO-INSTALL.html"> CIAO-INSTALL <a> for
   details.
-  
-  </UL>  
-  
+
+  </UL>
+
 
 <HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.

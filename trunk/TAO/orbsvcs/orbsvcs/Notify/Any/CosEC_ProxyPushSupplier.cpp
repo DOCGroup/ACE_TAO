@@ -57,3 +57,9 @@ TAO_Notify_CosEC_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG
 {
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+const char *
+TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name (void) const
+{
+  return "ec_proxy_push_supplier";
+}

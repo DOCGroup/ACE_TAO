@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object.h"
+#include "Topology_Object.h"
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
 #include "Admin.h"
@@ -35,7 +35,8 @@ class TAO_Notify_Peer;
  * @brief Base class proxy for all proxys in NS.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Proxy : public virtual TAO_Notify_Object
+class TAO_Notify_Serv_Export TAO_Notify_Proxy
+  : public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Peer;
 
@@ -50,35 +51,33 @@ public:
   ~TAO_Notify_Proxy ();
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant 
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant
                                       ACE_ENV_ARG_DECL);
+
+  /// Activate with a given ID
+  virtual CORBA::Object_ptr activate (
+      PortableServer::Servant servant,
+      CORBA::Long id
+      ACE_ENV_ARG_DECL);
 
   /// Deactivate
   void deactivate (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtain the Proxy's subscribed types.
-  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types 
+  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
                          ACE_ENV_ARG_DECL);
 
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (
-      const TAO_Notify_Event* event, 
-      TAO_Notify_FilterAdmin& parent_filter_admin, 
-      CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-      ACE_ENV_ARG_DECL
-    );
-
-  /// Check if this event passes the admin and proxy filters.
-  CORBA::Boolean check_filters (
-      const TAO_Notify_Event_var &event, 
-      TAO_Notify_FilterAdmin& parent_filter_admin, 
+      const TAO_Notify_Event* event,
+      TAO_Notify_FilterAdmin& parent_filter_admin,
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
       ACE_ENV_ARG_DECL
     );
 
   /// Inform this proxy that the following types are being advertised.
-  void types_changed (const TAO_Notify_EventTypeSeq& added, 
-                      const TAO_Notify_EventTypeSeq& removed 
+  void types_changed (const TAO_Notify_EventTypeSeq& added,
+                      const TAO_Notify_EventTypeSeq& removed
                       ACE_ENV_ARG_DECL);
 
   /// Have updates been turned off.
@@ -92,8 +91,8 @@ public:
 
   /// Implement the Obtain Types.
   virtual CosNotification::EventTypeSeq* obtain_types (
-      CosNotifyChannelAdmin::ObtainInfoMode mode, 
-      const TAO_Notify_EventTypeSeq& types 
+      CosNotifyChannelAdmin::ObtainInfoMode mode,
+      const TAO_Notify_EventTypeSeq& types
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -106,6 +105,15 @@ public:
 
   /// Override, TAO_Notify_Object::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+
+  // TAO_Notify::Topology_Object
+
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
+  virtual const char * get_proxy_type_name (void) const = 0;
+
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
+    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
 
 protected:
 

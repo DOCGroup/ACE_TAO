@@ -78,7 +78,7 @@ TAO_Notify_Batch_Buffering_Strategy::dequeue_i (int max_deq_count, CosNotificati
 
       --this->global_queue_length_;
 
-      TAO_Notify_Method_Request_Event* mre = ACE_dynamic_cast (TAO_Notify_Method_Request_Event*, mb);
+      TAO_Notify_Method_Request_Event_Queueable* mre = ACE_dynamic_cast (TAO_Notify_Method_Request_Event_Queueable*, mb);
 
       mre->event ()->convert (event_batch[deq_count]);
 

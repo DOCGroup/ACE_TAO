@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,6 +40,7 @@
 class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
+  typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer> SuperClass;
   friend class TAO_Notify_Builder;
 public:
   /// Constuctor
@@ -50,6 +51,10 @@ public:
 
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
+
+  virtual const char * get_proxy_type_name (void) const;
+
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
 protected:
   ///= Data Members

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,7 @@
 #include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Consumer;
-
+class TAO_Notify_AnyEvent;
 /**
  * @class TAO_Notify_AnyEvent
  *
@@ -42,9 +42,6 @@ public:
 
   /// Destructor
   ~TAO_Notify_AnyEvent_No_Copy ();
-
-  /// Copy the event.
-  virtual TAO_Notify_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const;
 
   /// Get the event type.
   virtual const TAO_Notify_EventType& type (void) const;
@@ -69,7 +66,21 @@ public:
   /// Push event to the Event_Forwarder interface
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
 
+  /// marshal this event into a CDR buffer (for persistence)
+  virtual void marshal (TAO_OutputCDR & cdr) const;
+
+  /// unmarshal this event from a CDR buffer (for persistence)
+  /// \param code a code indicating what type of event to create.
+  /// \param cdr a CDR stream containing the marshalled data for the event.
+  /// \return the new event, or NULL if this is the wrong type of event.
+  static TAO_Notify_AnyEvent * unmarshal (TAO_InputCDR & cdr);
+
 protected:
+  /// returns a copy of this event allocated from the heap
+  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const;
+
+protected:
+
   /// Any Event
   const CORBA::Any* event_;
 
@@ -93,6 +104,9 @@ public:
 
   /// Destructor
   ~TAO_Notify_AnyEvent ();
+
+  /// return this
+  virtual const TAO_Notify_Event * queueable_copy (ACE_ENV_SINGLE_ARG_DECL)const;
 
 protected:
   /// Copy of the Event.

@@ -21,33 +21,110 @@
 
 #include "Method_Request.h"
 #include "Refcountable.h"
-#include "Method_Request_Dispatch_T.h"
+#include "Method_Request_Event.h"
 #include "ProxySupplier.h"
+#include "Delivery_Request.h"
+
+class TAO_Notify_EventChannelFactory;
+class TAO_InputCDR;
+class TAO_Notify_Method_Request_Dispatch_Queueable;
 
 /**
  * @class TAO_Notify_Method_Request_Dispatch
+ *
+ * @brief
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
+  : public TAO_Notify_Method_Request_Event
+{
+public:
+  /// an arbitrary code (Octet) to identify this delivery method type in persistent storage
+  enum {persistence_code = 1};
+
+  /// Constuct from event
+  TAO_Notify_Method_Request_Dispatch (
+    const TAO_Notify_Event * event,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
+
+  /// Construct from a delivery rquest
+  TAO_Notify_Method_Request_Dispatch (
+    const TAO_Notify::Delivery_Request_Ptr & delivery,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
+
+  /// Constuct construct from another method request+event
+  /// event is passed separately because we may be using a copy
+  /// of the one in the previous method request
+  TAO_Notify_Method_Request_Dispatch (
+    const TAO_Notify_Method_Request_Event & request,
+    const TAO_Notify_Event * event,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
+
+public:
+  /// Destructor
+  virtual ~TAO_Notify_Method_Request_Dispatch ();
+
+  /// Static method used to reconstruct a Method Request Dispatch
+  static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
+    TAO_Notify::Delivery_Request_Ptr & delivery_request,
+    TAO_Notify_EventChannelFactory &ecf,
+    TAO_InputCDR & cdr
+    ACE_ENV_ARG_DECL);
+
+
+protected:
+  /// Execute the dispatch operation.
+  int execute_i (ACE_ENV_SINGLE_ARG_DECL);
+
+protected:
+  /// The Proxy
+  TAO_Notify_ProxySupplier_Guard proxy_supplier_;
+  //TAO_Notify_ProxySupplier* proxy_supplier_;
+
+  /// Flag is true if we want to do filtering else false.
+  bool filtering_;
+};
+
+/**
+ * @class TAO_Notify_Method_Request_Dispatch_Queueable
  *
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
 
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
-                                         , TAO_Notify_ProxySupplier_Guard
-                                         , const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch : public TAO_Notify_Method_Request_Dispatch_Base
-                                                       , public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_Queueable
+    : public TAO_Notify_Method_Request_Dispatch
+    , public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constuctor
-  TAO_Notify_Method_Request_Dispatch (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+  /// Construct construct from another method request+event
+  /// event is passed separately because we may be using a copy
+  /// of the one in the previous method request
+  TAO_Notify_Method_Request_Dispatch_Queueable (
+    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_Event_var & event,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
+
+  /// Constuct construct from Delivery Request
+  /// should ONLY be used by unmarshall
+  TAO_Notify_Method_Request_Dispatch_Queueable (
+    const TAO_Notify::Delivery_Request_Ptr & request,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Dispatch ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+
+private:
+  const TAO_Notify_Event_var event_var_;
+  TAO_Notify_ProxySupplier_Guard proxy_guard_;
 };
 
 /*******************************************************************************************************/
@@ -58,18 +135,22 @@ public:
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
-
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
-                                         , TAO_Notify_ProxySupplier*
-                                         , const TAO_Notify_Event*
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy : public TAO_Notify_Method_Request_Dispatch_No_Copy_Base
-                                                                 , public TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
+    : public TAO_Notify_Method_Request_Dispatch
+    , public TAO_Notify_Method_Request
 {
 public:
-  /// Constuctor
-  TAO_Notify_Method_Request_Dispatch_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+  /// Constuct from event
+  TAO_Notify_Method_Request_Dispatch_No_Copy (
+    const TAO_Notify_Event * event,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
+
+  /// Constuct construct from another method request
+  TAO_Notify_Method_Request_Dispatch_No_Copy (
+    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_ProxySupplier* proxy_supplier,
+    bool filtering);
 
   /// Destructor
   ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
@@ -77,40 +158,11 @@ public:
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+  /// Create a copy of this method request
+  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 /*******************************************************************************************************/
-
-/**
- * @class TAO_Notify_Method_Request_Dispatch_No_Copy_Ex
- *
- * @brief Dispatchs an event to a proxy supplier.
- *
- */
-
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*
-                                         , const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex : public TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base
-                                                                 , public TAO_Notify_Method_Request_No_Copy
-{
-public:
-  /// Constuctor
-  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
-
-  /// Destructor
-  ~TAO_Notify_Method_Request_Dispatch_No_Copy_Ex ();
-
-  /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
-};
 
 #if defined (__ACE_INLINE__)
 #include "Method_Request_Dispatch.inl"

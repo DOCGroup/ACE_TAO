@@ -10,8 +10,7 @@ ACE_RCSID (Notify, TAO_Notify_ProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "../AdminProperties.h"
-#include "../Method_Request_Lookup.h"
-#include "../Worker_Task.h"
+#include "../Properties.h"
 #include "AnyEvent.h"
 #include "PushSupplier.h"
 
@@ -43,13 +42,6 @@ TAO_Notify_ProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_Notify_ProxyPushConsumer::push (TAO_Notify_Event_var &/*event*/)
-{
-  // This should never be called.
-  ACE_ASSERT (1);
-}
-
-void
 TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -67,10 +59,7 @@ TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
     }
 
   TAO_Notify_AnyEvent_No_Copy event (any);
-
-  TAO_Notify_Method_Request_Lookup_No_Copy request (&event, this);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+  this->push_i (&event ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -90,6 +79,8 @@ TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSuppl
   ACE_CHECK;
 
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
@@ -98,4 +89,43 @@ void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_
                    ))
 {
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+const char *
+TAO_Notify_ProxyPushConsumer::get_proxy_type_name (void) const
+{
+  return "proxy_push_consumer";
+}
+
+void
+TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
+{
+  SuperClass::load_attrs(attrs);
+  ACE_CString ior;
+  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  {
+    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+    {
+      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::PushSupplier_var ps =
+        CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      // minor hack: suppress generating subscription updates during reload.
+      bool save_updates = this->updates_off_;
+      this->updates_off_ = true;
+      this->connect_any_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->updates_off_ = save_updates;
+    }
+    ACE_CATCHANY
+    {
+      ACE_ASSERT(0);
+    }
+    ACE_ENDTRY;
+  }
 }

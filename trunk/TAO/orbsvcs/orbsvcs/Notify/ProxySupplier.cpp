@@ -31,7 +31,7 @@ TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Object::init (consumer_admin);
+  TAO_Notify::Topology_Object::init (consumer_admin);
 
   this->consumer_admin_ = consumer_admin;
 
@@ -68,16 +68,28 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer ACE_ENV_ARG_DEC
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
+    TAO_Notify_Consumer * deleted_consumer = 0;
     if (this->is_connected ())
       {
-        consumer->release ();
-        ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+        if (TAO_Notify_PROPERTIES::instance()->allow_reconnect())
+          {
+            deleted_consumer = this->consumer_;
+          }
+        else
+          {
+            consumer->release ();
+            ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+          }
       }
 
     consumer_ = consumer;
 
     this->consumer_admin_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
     ACE_CHECK;
+    if (deleted_consumer != 0)
+      {
+        deleted_consumer->_decr_refcnt();
+      }
   }
 
   // Inform QoS values.
@@ -139,34 +151,8 @@ TAO_Notify_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_ProxySupplier::push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request & request ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 1);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 1);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 0); // No filtering.
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 0); // No filtering.
-
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 

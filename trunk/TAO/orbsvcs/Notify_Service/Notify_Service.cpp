@@ -10,7 +10,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
-#include "../orbsvcs/Notify/Service.h"
+#include "orbsvcs/orbsvcs/Notify/Service.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
   : notify_service_ (0),
@@ -90,7 +90,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   if (this->notify_service_ == 0)
   {
-          ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+      ACE_DEBUG ((LM_DEBUG, "Service not found! check conf.file\n"));
       return -1;
   }
 
@@ -139,24 +139,6 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
-  // Write IOR to a file, if asked.
-  CORBA::String_var str =
-    this->orb_->object_to_string (this->notify_factory_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (this->ior_output_file_)
-    {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
-      this->ior_output_file_ = 0;
-  }
-  else if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "The Notification Event Channel Factory IOR is <%s>\n",
-                str.in ()));
-
   // Make it bootstrappable, if asked.
   if (this->bootstrap_)
     {
@@ -184,84 +166,103 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
         }
     }
 
+
   // Register with the Name service, if asked
   if (this->use_name_svc_)
-  {
-    // Register the Factory
-    ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
+    {
+      // Register the Factory
+      ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
 
 #if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
-    CosNaming::Name name (1);
-    name.length (1);
-    name[0].id =
-      CORBA::string_dup (this->notify_factory_name_.c_str ());
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id =
+        CORBA::string_dup (this->notify_factory_name_.c_str ());
 #else
-    CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str ()
-                              ACE_ENV_ARG_PARAMETER);
+      CosNaming::Name_var name =
+        this->naming_->to_name (this->notify_factory_name_.c_str ()
+                                ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
 
-    ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (-1);
 
 
 #if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
-    this->naming_->rebind (name,
-                           this->notify_factory_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      this->naming_->rebind (name,
+                            this->notify_factory_.in ()
+                            ACE_ENV_ARG_PARAMETER);
 #else
-    this->naming_->rebind (name.in (),
-                           this->notify_factory_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      this->naming_->rebind (name.in (),
+                            this->notify_factory_.in ()
+                            ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
 
-    ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (-1);
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Registered with the naming service as: %s\n",
-                this->notify_factory_name_.c_str()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Registered with the naming service as: %s\n",
+                  this->notify_factory_name_.c_str()));
 
-    if (this->register_event_channel_ == 1)
-      {
-        // create an event channel
-        CosNotifyChannelAdmin::ChannelID id;
+      if (this->register_event_channel_ == 1)
+        {
+          // create an event channel
+          CosNotifyChannelAdmin::ChannelID id;
 
-        CosNotification::QoSProperties initial_qos;
-        CosNotification::AdminProperties initial_admin;
+          CosNotification::QoSProperties initial_qos;
+          CosNotification::AdminProperties initial_admin;
 
-        CosNotifyChannelAdmin::EventChannel_var ec =
-          this->notify_factory_->create_channel (initial_qos,
-                                                 initial_admin,
-                                                 id
-                                                 ACE_ENV_ARG_PARAMETER);
+          CosNotifyChannelAdmin::EventChannel_var ec =
+            this->notify_factory_->create_channel (initial_qos,
+                                                  initial_admin,
+                                                  id
+                                                  ACE_ENV_ARG_PARAMETER);
 #if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
-        name[0].id =
-          CORBA::string_dup (this->notify_channel_name_.c_str ());
+          name[0].id =
+            CORBA::string_dup (this->notify_channel_name_.c_str ());
 #else
-        name = this->naming_->to_name (
-          this->notify_channel_name_.c_str ()
-          ACE_ENV_ARG_PARAMETER);
+          name = this->naming_->to_name (
+            this->notify_channel_name_.c_str ()
+            ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
-        ACE_CHECK_RETURN (-1);
-
+          ACE_CHECK_RETURN (-1);
 
 #if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
-        this->naming_->rebind (name,
-                               ec.in ()
-                               ACE_ENV_ARG_PARAMETER);
+          this->naming_->rebind (name,
+                                ec.in ()
+                                ACE_ENV_ARG_PARAMETER);
 #else
-        this->naming_->rebind (name.in (),
-                               ec.in ()
-                               ACE_ENV_ARG_PARAMETER);
+          this->naming_->rebind (name.in (),
+                                ec.in ()
+                                ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
-        ACE_CHECK_RETURN (-1);
+          ACE_CHECK_RETURN (-1);
 
-        ACE_DEBUG ((LM_DEBUG,
-                    "Registered an Event Channel with the naming service as: %s\n",
-                    this->notify_channel_name_.c_str()));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Registered an Event Channel with the naming service as: %s\n",
+                      this->notify_channel_name_.c_str()));
 
-      }
+        }
+    }
+
+  // Write IOR to a file, if asked.
+  // Note: do this last to ensure that we're up and running before the file is written
+  CORBA::String_var str =
+    this->orb_->object_to_string (this->notify_factory_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (this->ior_output_file_)
+    {
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
+      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_ = 0;
   }
+  else if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "The Notification Event Channel Factory IOR is <%s>\n",
+                str.in ()));
 
   return 0;
 }

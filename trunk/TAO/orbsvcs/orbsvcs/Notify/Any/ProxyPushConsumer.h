@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
                        POA_CosNotifyChannelAdmin::ProxyPushConsumer
                      >
 {
+ typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer> SuperClass;
  friend class TAO_Notify_Builder;
 public:
   /// Constuctor
@@ -51,6 +52,11 @@ public:
 
   /// Release
   virtual void release (void);
+
+//  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual const char * get_proxy_type_name (void) const;
+
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
@@ -79,7 +85,8 @@ protected:
 
 private:
   // Overloaded TAO_Notify_ProxyConsumer::push to get around Borland compiler warnings.
-  virtual void push (TAO_Notify_Event_var &event);
+  // I don't think this is necessary any more -- Dale.
+//  virtual void push (TAO_Notify_Event_var &event);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

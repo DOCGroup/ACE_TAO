@@ -14,6 +14,7 @@ ACE_RCSID(RT_Notify, TAO_Notify_Proxy, "$Id$")
 #include "Worker_Task.h"
 #include "Properties.h"
 #include "POA_Helper.h"
+#include "Topology_Saver.h"
 
 TAO_Notify_Proxy::TAO_Notify_Proxy (void)
   :updates_off_ (0)
@@ -29,8 +30,17 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   // Set the POA that we use to return our <ref>
   this->poa_ = this->proxy_poa_;
+  return TAO_Notify_Object::activate (servant ACE_ENV_ARG_PARAMETER);
+}
 
-  return this->proxy_poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+CORBA::Object_ptr
+TAO_Notify_Proxy::activate (PortableServer::Servant servant,
+                            const CosNotifyChannelAdmin::ProxyID proxy_id
+                            ACE_ENV_ARG_DECL)
+{
+  // Set the POA that we use to return our <ref>
+  this->poa_ = this->proxy_poa_;
+  return TAO_Notify_Object::activate (servant, proxy_id ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -112,4 +122,75 @@ TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 
   if (peer != 0)
     peer->qos_changed (qos_properties);
+}
+
+void
+TAO_Notify_Proxy::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+{
+  bool changed = this->children_changed_;
+  this->children_changed_ = false;
+  this->self_changed_ = false;
+
+  if (is_persistent ())
+  {
+    TAO_Notify::NVPList attrs;
+    this->save_attrs(attrs);
+
+    const char * type_name = this->get_proxy_type_name ();
+    bool want_all_children = saver.begin_object(this->id(), type_name, attrs, changed ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (want_all_children || this->filter_admin_.is_changed ())
+    {
+      this->filter_admin_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+    if (want_all_children || this->subscribed_types_.is_changed ())
+    {
+      this->subscribed_types_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+    // todo: handle removed children
+
+    saver.end_object(this->id(), type_name ACE_ENV_ARG_PARAMETER);
+  }
+}
+
+void
+TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
+{
+  TAO_Notify_Object::save_attrs(attrs);
+  TAO_Notify_Peer * peer = this->peer();
+  if (peer != 0)
+  {
+    ACE_CString ior;
+    if (peer->get_ior(ior))
+    {
+      attrs.push_back (TAO_Notify::NVP("PeerIOR", ior));
+    }
+  }
+}
+
+TAO_Notify::Topology_Object*
+TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
+{
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (attrs);
+  TAO_Notify::Topology_Object* result = this;
+  if (type == "subscriptions")
+  {
+    // since we initialized our subscribed types to everything
+    // in the constructor. we have to clear it out first.
+    this->subscribed_types_.reset();
+    result = &this->subscribed_types_;
+    ACE_CHECK_RETURN(0);
+  }
+  else if (type == "filter_admin")
+  {
+    result = & this->filter_admin_;
+  }
+  return result;
 }
