@@ -568,10 +568,7 @@ Client::init_orb (void)
   ACE_OS::strcpy (tmp_buf,
                   tmp_args.buf ());
   // Add the argument.
-  // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
-  // to / use a URL style to represent the ior.
   ACE_OS::strcat (tmp_buf,
-                  " -ORBobjrefstyle url "
                   " -ORBrcvsock 32768 "
                   " -ORBsndsock 32768 ");
 
