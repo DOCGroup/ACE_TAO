@@ -77,6 +77,9 @@ public:
     );
 
   /// Throws NO_IMPLEMENT.
+  virtual CORBA::Object_ptr _get_component (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const CORBA::Char *operation,
                                 CORBA::NVList_ptr arg_list,
