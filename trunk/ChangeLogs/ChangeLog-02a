@@ -1,3 +1,10 @@
+Fri May  3 08:00:55 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/tutorials/012/work.h:
+
+          Include ace/Log_Msg.h to get the definition of ACE_DEBUG and
+          related macros.
+
 Fri May  3 07:07:31 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Proactor_Test.cpp:
