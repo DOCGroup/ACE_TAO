@@ -16,11 +16,9 @@ read_file (void *fd)
   int        flags = 0;
   int        n;
 
-#if defined (ACE_HAS_64BIT_LONGS)
-  stream.set_handle (long (fd));
-#else /* ! ACE_HAS_64BIT_LONGS */
-  stream.set_handle (int (fd));
-#endif /* ! ACE_HAS_64BIT_LONGS */
+  // Cast the arg to a long, first, because a pointer is the same
+  // size as a long on all current ACE platforms.
+  stream.set_handle ((int) (long) fd);
 
   ACE_OS::printf ("start  (tid = %d, fd = %d)\n", ACE_OS::thr_self (), stream.get_handle ());
   ACE_OS::fflush (stdout);

@@ -70,11 +70,10 @@ malloc_recurse (int count)
 static void *
 worker (void *arg)
 {
-#if defined (ACE_HAS_64BIT_LONGS)
-  malloc_recurse ((long) arg);
-#else /* ! ACE_HAS_64BIT_LONGS */
-  malloc_recurse ((int) arg);
-#endif /* ! ACE_HAS_64BIT_LONGS */
+  // Cast the arg to a long, first, because a pointer is the same
+  // size as a long on all current ACE platforms.
+  malloc_recurse ((int) (long) arg);
+
   return 0;
 }
 #endif /* ACE_HAS_THREADS */

@@ -75,14 +75,10 @@ Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
   if (this->count++ >= 10)
     return -1; // Automatically cancel periodic timer...
 
-#if defined (ACE_HAS_64BIT_LONGS)
+  // Cast arg to a long, first, because a pointer is the same
+  // size as a long on all current ACE platforms.
   ACE_DEBUG ((LM_INFO,
               "time for this(%u) expired at (%d, %d) with arg = %d\n",
-             this, tv.sec (), tv.usec (), long (arg)));
-#else /* ! ACE_HAS_64BIT_LONGS */
-  ACE_DEBUG ((LM_INFO,
-              "time for this(%u) expired at (%d, %d) with arg = %d\n",
-             this, tv.sec (), tv.usec (), int (arg)));
-#endif /* ! ACE_HAS_64BIT_LONGS */
+             this, tv.sec (), tv.usec (), (int) (long) arg));
   return 0;
 }
