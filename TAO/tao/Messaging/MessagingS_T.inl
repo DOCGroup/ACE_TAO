@@ -29,8 +29,6 @@
 // TAO_IDL - Generated from
 // be\be_visitor_interface/tie_si.cpp:96
 
-#if defined (ACE_HAS_USING_KEYWORD)
-
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
 	: ptr_ (&t),
@@ -120,6 +118,4 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
   
   return this->ReplyHandler::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-#endif /* ACE_HAS_USING_KEYWORD */
 

@@ -1324,14 +1324,19 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Timeout_Handler.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
   Messaging/Messaging.cpp \
+  Messaging/MessagingA.cpp \
   Messaging/MessagingC.cpp \
   Messaging/MessagingS.cpp \
+  Messaging/Messaging_No_ImplA.cpp \
   Messaging/Messaging_No_ImplC.cpp \
   Messaging/Messaging_ORBInitializer.cpp \
   Messaging/Messaging_PolicyFactory.cpp \
   Messaging/Messaging_Policy_i.cpp \
+  Messaging/Messaging_RT_PolicyA.cpp \
   Messaging/Messaging_RT_PolicyC.cpp \
+  Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
+  Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
 
 libTAO_Messaging_la_LDFLAGS = \
@@ -1354,28 +1359,28 @@ nobase_include_HEADERS += \
   Messaging/Messaging.h \
   Messaging/Messaging.pidl \
   Messaging/MessagingC.h \
-  Messaging/MessagingC.i \
+  Messaging/MessagingC.inl \
   Messaging/MessagingS.h \
-  Messaging/MessagingS.i \
+  Messaging/MessagingS.inl \
   Messaging/MessagingS_T.cpp \
   Messaging/MessagingS_T.h \
-  Messaging/MessagingS_T.i \
+  Messaging/MessagingS_T.inl \
   Messaging/Messaging_No_Impl.pidl \
   Messaging/Messaging_No_ImplC.h \
-  Messaging/Messaging_No_ImplC.i \
+  Messaging/Messaging_No_ImplC.inl \
   Messaging/Messaging_ORBInitializer.h \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
   Messaging/Messaging_Policy_i.i \
   Messaging/Messaging_RT_Policy.pidl \
   Messaging/Messaging_RT_PolicyC.h \
-  Messaging/Messaging_RT_PolicyC.i \
+  Messaging/Messaging_RT_PolicyC.inl \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyC.h \
-  Messaging/Messaging_SyncScope_PolicyC.i \
+  Messaging/Messaging_SyncScope_PolicyC.inl \
   Messaging/TAO_Ext.pidl \
   Messaging/TAO_ExtC.h \
-  Messaging/TAO_ExtC.i \
+  Messaging/TAO_ExtC.inl \
   Messaging/messaging_export.h
 
 pkgconfigdata_DATA += TAO_Messaging.pc

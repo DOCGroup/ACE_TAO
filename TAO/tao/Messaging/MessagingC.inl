@@ -78,4 +78,3 @@ Messaging::ReplyHandler::ReplyHandler (
 }
 
 #endif /* end #if !defined */
-

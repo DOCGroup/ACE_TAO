@@ -26,13 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "Messaging_RT_PolicyC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Impl_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -40,70 +38,17 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Messaging_RT_PolicyC.i"
+#include "Messaging_RT_PolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_Messaging_Timeout[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/Timeout:1.0
-    8,
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x6f757400),  // name = Timeout
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_Messaging_Timeout (
-    CORBA::tk_alias,
-    sizeof (_oc_Messaging_Timeout),
-    (char *) &_oc_Messaging_Timeout,
-    0,
-    sizeof (Messaging::Timeout)
-  );
-
-namespace Messaging
-{
-  ::CORBA::TypeCode_ptr _tc_Timeout =
-    &_tc_TAO_tc_Messaging_Timeout;
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
@@ -145,12 +90,6 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*Messaging__TAO_RelativeRoundtripTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 {}
 
@@ -161,7 +100,7 @@ void
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRoundtripTimeoutPolicy *_tao_tmp_pointer =
-    ACE_static_cast (RelativeRoundtripTimeoutPolicy *, _tao_void_pointer);
+    static_cast<RelativeRoundtripTimeoutPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -218,22 +157,22 @@ Messaging::RelativeRoundtripTimeoutPolicy::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Policy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -255,123 +194,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_Messaging_RelativeRoundtripTimeoutPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  57,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x6c617469), 
-  ACE_NTOHL (0x7665526f), 
-  ACE_NTOHL (0x756e6474), 
-  ACE_NTOHL (0x72697054), 
-  ACE_NTOHL (0x696d656f), 
-  ACE_NTOHL (0x7574506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0
-    31,
-  ACE_NTOHL (0x52656c61), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x526f756e), 
-  ACE_NTOHL (0x64747269), 
-  ACE_NTOHL (0x7054696d), 
-  ACE_NTOHL (0x656f7574), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63790000),  // name = RelativeRoundtripTimeoutPolicy
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_Messaging_RelativeRoundtripTimeoutPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_Messaging_RelativeRoundtripTimeoutPolicy),
-    (char *) &_oc_Messaging_RelativeRoundtripTimeoutPolicy,
-    0,
-    sizeof (Messaging::RelativeRoundtripTimeoutPolicy)
-  );
-
-namespace Messaging
-{
-  ::CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy =
-    &_tc_TAO_tc_Messaging_RelativeRoundtripTimeoutPolicy;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_elem
-  )
-{
-  Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_objptr =
-    Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::insert (
-      _tao_any,
-      Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor,
-      Messaging::_tc_RelativeRoundtripTimeoutPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::extract (
-        _tao_any,
-        Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor,
-        Messaging::_tc_RelativeRoundtripTimeoutPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -387,11 +210,6 @@ operator>>= (
   
   template class
     TAO_Objref_Out_T<
-        Messaging::RelativeRoundtripTimeoutPolicy
-      >;
-
-  template class
-    TAO::Any_Impl_T<
         Messaging::RelativeRoundtripTimeoutPolicy
       >;
 
@@ -412,10 +230,4 @@ operator>>= (
         Messaging::RelativeRoundtripTimeoutPolicy
       >
 
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        Messaging::RelativeRoundtripTimeoutPolicy \
-      >
-
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

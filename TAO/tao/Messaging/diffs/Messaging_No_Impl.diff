@@ -1,6 +1,6 @@
---- orig/Messaging_No_ImplC.h	2003-11-03 21:07:08.000000000 -0600
-+++ Messaging_No_ImplC.h	2003-11-03 21:08:32.000000000 -0600
-@@ -50,6 +50,11 @@
+--- orig/Messaging_No_ImplC.h	2005-02-07 11:50:46.665059200 +0100
++++ Messaging_No_ImplC.h	2005-02-07 11:53:22.098561600 +0100
+@@ -52,6 +52,11 @@
  #include "tao/PolicyC.h"
  #include "tao/PollableC.h"
  
