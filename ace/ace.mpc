@@ -296,6 +296,7 @@ project : acelib, core {
       Unbounded_Set.cpp
       Unbounded_Queue.cpp
       Asynch_Acceptor.cpp
+      Asynch_Connector.cpp
       Auto_IncDec_T.cpp
       Auto_Ptr.cpp
       Based_Pointer_T.cpp
@@ -358,12 +359,33 @@ project : acelib, core {
     }
   }
 
+  Inline_Files {
+    ace_wchar.inl
+  }
+
   Header_Files {
+    ACE_Export.h
+    ace_wchar.h
     config-all.h
     config-win32-common.h
     config-win32-msvc.h
     config-win32.h
     config.h
+    Default_Constants.h
+    Global_Macros.h
+    Log_Priority.h
+    Malloc_Base.h
+    Min_Max.h
+    OS_Export.h
+    post.h
+    pre.h
+    Proactor_Impl.h
+    Reactor_Impl.h
+    streams.h
+    Svc_Conf.h
+    Svc_Conf_Tokens.h
+    UPIPE_Addr.h
+    Version.h
   }
 
   Documentation_Files {

@@ -1,79 +1,91 @@
+Mon Mar 17 09:58:48 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Updated the project to include the correct template, inline and
+          header files.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Changed the defaults for precompiled headers.  If multiple pch
+          headers are found, then take the one closest to the project name.
+
 Sun Mar 16 10:12:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.i (recursive_mutex_cond_unlock): Fixed typo
 
 Sat Mar 15 13:50:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mpc: Added Recursive_Condition_Bug_Test.
+        * tests/tests.mpc: Added Recursive_Condition_Bug_Test.
 
 Sat Mar 15 12:20:45 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/Recursive_Condition_Bug_Test.dsp: Added a new project file.
+        * tests/tests.dsw:
+        * tests/Recursive_Condition_Bug_Test.dsp: Added a new project file.
 
 Sat Mar 15 10:55:01 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Makefile:
-	* tests/Makefile.bor:
-	* tests/run_test.lst: Added Recursive_Condition_Bug_Test.cpp to
-	  these files.
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/run_test.lst: Added Recursive_Condition_Bug_Test.cpp to
+          these files.
 
-	* tests: Added a new Recursive_Condition_Bug_Test.cpp to check
-	  that the fix from Leonid Kvetnyi is correct and doesn't cause
-	  other problems.
+        * tests: Added a new Recursive_Condition_Bug_Test.cpp to check
+          that the fix from Leonid Kvetnyi is correct and doesn't cause
+          other problems.
 
-	* tests/Recursive_Condition_Test.cpp (ACE_TMAIN): Minor reformatting.
+        * tests/Recursive_Condition_Test.cpp (ACE_TMAIN): Minor reformatting.
 
-	* ace/OS.i (recursive_mutex_cond_unlock): Added another check for
-	  m->RecursionCount > 1 to fix problems where the test program hangs.
-	  Thanks to Leonid Kvetnyi <leonidk@nice.com> for this fix.
+        * ace/OS.i (recursive_mutex_cond_unlock): Added another check for
+          m->RecursionCount > 1 to fix problems where the test program hangs.
+          Thanks to Leonid Kvetnyi <leonidk@nice.com> for this fix.
 
-	* ace/Event_Handler_T.h: Changed
+        * ace/Event_Handler_T.h: Changed
 
           typedef int (T::*SIG_HANDLER) (ACE_HANDLE, siginfo_t*, ucontext_t*);
 
-	  to this
+          to this
 
-	  typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
+          typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
 
           so that we're consistent across platforms where ACE_HANDLE is a
- 	  HANDLE, not an int!  Thanks to Johnny Willemsen
- 	  <jwillemsen@remedy.nl> for reporting this.
+          HANDLE, not an int!  Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting this.
 
 Fri Mar 14 22:26:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client.mpb:
-	* bin/MakeProjectCreator/config/ciao_component.mpb:
-	* bin/MakeProjectCreator/config/ciao_server.mpb:
-	* bin/MakeProjectCreator/modules/Driver.pm: Merged in CIAO
-	  specific rules and default environment settings.  These changes
-	  help me take advantage of Chad's and other's work without
-	  complicating my workspace.  Most of other CIAO stuff are rather
-	  localized.
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_component.mpb:
+        * bin/MakeProjectCreator/config/ciao_server.mpb:
+        * bin/MakeProjectCreator/modules/Driver.pm: Merged in CIAO
+          specific rules and default environment settings.  These changes
+          help me take advantage of Chad's and other's work without
+          complicating my workspace.  Most of other CIAO stuff are rather
+          localized.
 
-	  These changes have no effect on others whatsoever.
+          These changes have no effect on others whatsoever.
 
 Fri Mar 14 11:49:27 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Cached_Allocator_Test.cpp: Fix access out-of-bounds error.
-	  Thanks to Alexander Libman <alexl@aurema.com> for this fix.
+        * tests/Cached_Allocator_Test.cpp: Fix access out-of-bounds error.
+          Thanks to Alexander Libman <alexl@aurema.com> for this fix.
 
 Thu Mar 13 16:11:48 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Log_Msg.cpp (log_hexdump):
-	* tests/Proactor_Test.cpp:
+        * ace/Log_Msg.cpp (log_hexdump):
+        * tests/Proactor_Test.cpp:
 
-	  Use the ACE_SIZE_T_FORMAT_SPECIFIER macro to specify the correct
-	  size_t format specifier.  Fixes a warning exhibited on 32-bit
-	  and 64-bit g++ builds.
+          Use the ACE_SIZE_T_FORMAT_SPECIFIER macro to specify the correct
+          size_t format specifier.  Fixes a warning exhibited on 32-bit
+          and 64-bit g++ builds.
 
 Thu Mar 13 17:35:48 2003  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv1/Logging_Handler.cpp (recv_log_record):
-	* examples/C++NPv2/Logging_Handler.cpp (recv_log_record): Use
-	  ACE_CDR::grow(), not ACE_Message_Block::size(), to resize the
-	  CDR-receiving block. This maintains alignment across the resize.
-	  Thanks to Don Hinton for this fix.
+        * examples/C++NPv1/Logging_Handler.cpp (recv_log_record):
+        * examples/C++NPv2/Logging_Handler.cpp (recv_log_record): Use
+          ACE_CDR::grow(), not ACE_Message_Block::size(), to resize the
+          CDR-receiving block. This maintains alignment across the resize.
+          Thanks to Don Hinton for this fix.
 
 Thu Mar 13 07:40:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
