@@ -26,6 +26,7 @@
 #include "ace/Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/os_include/sys/os_un.h"
 
 /**
  * @class ACE_UNIX_Addr
