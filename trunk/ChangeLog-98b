@@ -1,3 +1,8 @@
+Thu Aug 13 13:34:52 1998  John Mulhern  <9107@mn3.lawson.lawson.com>
+
+        * tests/Priority_Task_Test.cpp: don't try to run on HPUX 11,
+          if not root.
+
 Thu Aug 13 13:34:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * os-patches/linux-patches.html: the af_inet.c patch is only
