@@ -331,7 +331,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
      || this->select_reactor_.suspend_set_.wr_mask_.is_set (handle)
      || this->select_reactor_.suspend_set_.ex_mask_.is_set (handle));
 
-  if (!has_any_wait_mask && !has_any_suspend_mask)
+  if (!has_any_wait_mask
+      && !has_any_suspend_mask
+      && (this->find (handle, &slot) == eh))
 #if defined (ACE_WIN32)
     {
       ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;

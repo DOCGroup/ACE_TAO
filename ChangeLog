@@ -1,3 +1,22 @@
+Mon Apr  7 16:58:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_Base.cpp (unbind): Fixed a subtle problem
+	  during complete shutdown of the event handler. 
+
+	  Problem: During the unbind () call we call handle_close () after
+	  which we nullify the event handlers without much checks. This
+	  dangerous if the application during the callback,
+	  ie. handle_close () call registers a new handler with the
+	  reactor. It is quite possible that the map is changed during
+	  registration. 
+
+	  Solution: We check whether the event handler's pointer in the
+	  map and the one that was cached before calling handle_close ()
+	  are the same. 
+
+	  Thanks to Kobi Cohen-Arazi" <kobi@mivzak.com> for reporting the
+	  problem. 
+
 Mon Apr  7 17:04:20 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Unbounded_Set_Test_Ex.cpp: Moved the definition of MyNode
