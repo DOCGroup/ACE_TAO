@@ -41,14 +41,14 @@ Legend:
 [0100  ] 	POA/Explicit_Activation runs
 [x101x ] POA/Default_Servant compiles
 [x000x ] 	POA/Default_Servant runs
-
+    
 [1111x ] Param_Test compiles
 [1111x ] 	SII short
 [1111x ] 	SII ubstring
 [1111x ] 	SII fixed_struct
 [10x0x ] 	SII strseq
-[0000x ] 	SII var_struct
-[0000x ] 	SII nested_struct
+[0010x ] 	SII var_struct
+[0010x ] 	SII nested_struct
 [0000x ] 	SII struct_seq
 [0000x ] 	SII objref
 
