@@ -466,7 +466,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
         ACE_CHECK_RETURN (0);
 
-        CORBA::Char * rhs_v;
+        const char* rhs_v;
         rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
                                                bound);
 
