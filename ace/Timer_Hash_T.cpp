@@ -426,6 +426,18 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::remove_first (void)
   return temp;
 }
 
+
+// Dummy version of expire to get rid of warnings in Sun CC 4.2
+
+template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> int
+ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::expire ()
+{
+  return INHERITED::expire();
+}
+
+
+// Specialized expire for Timer Hash
+
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::expire (const ACE_Time_Value &cur_time)
 {
