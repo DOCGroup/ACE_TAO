@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:631
+// be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_CPP_
 #define _TAO_IDL_ORIG_MESSAGINGS_CPP_
@@ -47,26 +47,25 @@
 #include "tao/CDR.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
 #include "tao/PortableServer/PICurrent_Guard.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc_Allocator.h"
-#include "ace/config-all.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "MessagingS.i"
+#include "MessagingS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -75,7 +74,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1534
+// be\be_interface.cpp:1536
 
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -278,7 +277,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
   
   if (status == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      ACE_THROW (CORBA::BAD_OPERATION (TAO::VMCID | 2, CORBA::COMPLETED_NO));
     }
   
   ACE_TRY
@@ -312,7 +311,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:631
+// be\be_visitor_interface/interface_ss.cpp:640
 
 TAO::Collocation_Proxy_Broker *
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -333,8 +332,8 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (size_t)
 static int
 Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (
-      ACE_reinterpret_cast (
-          size_t,
+      reinterpret_cast<
+          size_t> (
           Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer
         )
     );
@@ -400,7 +399,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   
   POA_Messaging::ReplyHandler *_tao_impl =
-    (POA_Messaging::ReplyHandler *) _tao_servant;
+    static_cast<POA_Messaging::ReplyHandler *> (_tao_servant);
   
   CORBA::Boolean _tao_retval = 0;
   CORBA::String_var value;
@@ -430,7 +429,7 @@ void POA_Messaging::ReplyHandler::_non_existent_skel (
   )
 {
   POA_Messaging::ReplyHandler *_tao_impl =
-    (POA_Messaging::ReplyHandler *) _tao_servant;
+    static_cast<POA_Messaging::ReplyHandler *> (_tao_servant);
   
   CORBA::Boolean _tao_retval =
     _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -463,7 +462,7 @@ void POA_Messaging::ReplyHandler::_interface_skel (
     }
   
   POA_Messaging::ReplyHandler *_tao_impl =
-    (POA_Messaging::ReplyHandler *) _tao_servant;
+    static_cast<POA_Messaging::ReplyHandler *> (_tao_servant);
   
   CORBA::InterfaceDef_ptr _tao_retval = 
     _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -494,7 +493,7 @@ void POA_Messaging::ReplyHandler::_component_skel (
   )
 {
   POA_Messaging::ReplyHandler *_tao_impl =
-    (POA_Messaging::ReplyHandler *) _tao_object_reference;
+    static_cast<POA_Messaging::ReplyHandler *> (_tao_object_reference);
   
   CORBA::Object_var _tao_retval =
     _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -514,23 +513,17 @@ CORBA::Boolean POA_Messaging::ReplyHandler::_is_a (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (
+  return
+    (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/Messaging/ReplyHandler:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    );
 }
 
 void* POA_Messaging::ReplyHandler::_downcast (
@@ -540,13 +533,13 @@ void* POA_Messaging::ReplyHandler::_downcast (
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:omg.org/Messaging/ReplyHandler:1.0") == 0)
     {
-      return ACE_static_cast (POA_Messaging::ReplyHandler_ptr, this);
+      return static_cast<POA_Messaging::ReplyHandler_ptr> (this);
     }
   
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
-      return ACE_static_cast (PortableServer::Servant, this);
+      return static_cast<PortableServer::Servant> (this);
     }
   
   return 0;
@@ -558,7 +551,7 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:567
+// be\be_visitor_interface/interface_ss.cpp:576
 
 void POA_Messaging::ReplyHandler::_dispatch (
     TAO_ServerRequest &req,
@@ -573,7 +566,7 @@ void POA_Messaging::ReplyHandler::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:509
+// be\be_visitor_interface/interface_ss.cpp:527
 
 Messaging::ReplyHandler *
 POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -584,22 +577,14 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Stub_Auto_Ptr safe_stub (stub);
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
   
-  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
-    {
-      ACE_NEW_RETURN (
-          tmp,
-          CORBA::Object (stub, 1, this),
-          0
-        );
-    }
-  else
-    {
-      ACE_NEW_RETURN (
-          tmp,
-          CORBA::Object (stub, 0, this),
-          0
-        );
-    }
+  CORBA::Boolean _tao_opt_colloc =
+    stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
+  
+  ACE_NEW_RETURN (
+      tmp,
+      CORBA::Object (stub, _tao_opt_colloc, this),
+      0
+    );
   
   CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
@@ -612,4 +597,14 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
       );
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_root/root.cpp:1683
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+
 #endif /* ifndef */
+

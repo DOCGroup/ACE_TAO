@@ -1,3 +1,33 @@
+Mon Feb  7 13:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Connection_Timeout_Policy_i.h:
+        * tao/Messaging/Messaging_ORBInitializer.h:
+        * tao/Messaging/Messaging_Policy_i.h:
+        * tao/Messaging/Messaging_PolicyFactory.h:
+          Simplified msc_ver checks
+
+        * tao/Messaging/Messaging.pidl:
+        * tao/Messaging/Messaging_No_Impl.pidl:
+        * tao/Messaging/Messaging_RT_Policy.pidl:
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl:
+        * tao/Messaging/TAO_Ext.pidl:
+          Updated regeneration instructions
+
+        * tao/Messaging/diffs/Messaging.diff:
+        * tao/Messaging/diffs/Messaging_No_Impl.diff:
+          Updated
+
+        * tao/Messaging/Messaging_No_Impl{A,C}.{h,cpp,i,inl}:
+        * tao/Messaging/Messaging_RT_Policy{A,C}.{h,cpp,i,inl}:
+        * tao/Messaging/Messaging_SyncScopy_Policy{A,C}.{h,cpp,i,inl}:
+        * tao/Messaging/Messaging{A,C,S,S_T}.{h,cpp,i,inl}:
+        * tao/Messaging/TAO_Ext{A,C}.{h,cpp,i,inl}:
+          Regenerated all these files, added new A.cpp files and replaced .i
+          with .inl files.
+
+        * tao/Makefile.am:
+          Updated for changes above
+
 Mon Feb  7 10:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynamicAnyC.cpp:
