@@ -1,3 +1,10 @@
+Mon Dec 27 16:02:20 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
+
+          Increased the timeout for waiting for the manager (to short for
+          windows machines).
+
 Sat Dec 25 20:53:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* Release:
