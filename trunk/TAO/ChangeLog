@@ -1,3 +1,12 @@
+Fri Jun 11 22:11:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Array_VarOut_T.inl (operator[]):
+	* tao/Fixed_Array_Argument_T.inl:
+
+	  More cases where MSVC++ 6 brain damage requires a
+	  reinterpret_cast<> or C-style "sledgehammer" cast instead of the
+	  proper const_cast<>.
+
 Fri Jun 11 23:46:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
        * utils/IOR-parser/IOR-parser.mpc:
