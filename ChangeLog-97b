@@ -79,6 +79,10 @@ Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Shared_Malloc/test_persistence.cpp: added #include of
 	  iostream.h with ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
 
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: removed
+	  instantiation of ACE_TSS<ACE_Dynamic> because it is in
+	  ace/Thread_Manager.cpp.
+
 Tue Oct 21 02:23:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.23, released Tue Oct 21 02:23:26 1997.
