@@ -416,6 +416,10 @@ SOURCE=.\be\be_visitor_enum.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_exception.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_field.cpp
 # End Source File
 # Begin Source File
