@@ -54,6 +54,7 @@ ACE_HAS_ONEARG_SIGWAIT			sigwait() takes only one argument.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R	Uses ctime_r & asctime_r with only two parameters vs. three.
 ACE_HAS_ORBIX				Platform has Orbix CORBA implementation
 ACE_HAS_OSF_TIMOD_H			Platform supports the OSF TLI timod STREAMS module
+ACE_HAS_PENTIUM				Platform is an Intel Pentium microprocessor.
 ACE_HAS_POLL				Platform contains <poll.h>
 ACE_HAS_POSIX_NONBLOCK			Platform supports POSIX O_NONBLOCK semantics
 ACE_HAS_POSIX_SEM			Platform supports POSIX real-time semaphores (e.g., VxWorks and Solaris)
