@@ -1,3 +1,10 @@
+Fri Sep 10 22:53:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/CCM_Core.mpc:
+	* ciao/CCM_Core.mpc:
+
+	  Linked with TAO_Utils library
+
 Sat Sep 11 03:35:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/Container_Base.cpp:

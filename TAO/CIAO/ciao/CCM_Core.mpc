@@ -60,7 +60,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
   }
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils {
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client CIAO_Container
