@@ -39,7 +39,10 @@ TAO_ORB_Core::orb (void)
 ACE_INLINE TAO_POA *
 TAO_ORB_Core::root_poa (void)
 {
-  return TAO_OC_RETRIEVE (root_poa);
+  if (TAO_OC_RETRIEVE (root_poa) == 0)
+    this->create_and_set_root_poa ();
+
+  return this->root_poa_;
 }
 
 ACE_INLINE TAO_OA_Parameters *
