@@ -1,3 +1,41 @@
+Tue Dec 18 7:58:07 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Proactor.i (get_handle): Changed this to return
+	  ACE_INVALID_HANDLE on non Win32 platforms.  Also changed
+	  shared_event_ from an ACE_Manual_Event to an ACE_Auto_Event.
+	  This allows us to remove the call to reset from handle_signal.
+
+	* examples/Reactor/Proactor/test_timeout.cpp:  Added a new example
+	  application to the Proactor example suite.  Check the README for
+	  more details.
+
+	* examples/Reactor/ReactorEx/test_timeout.cpp:  Added a new example
+	  application to the ReactorEx example suite.  Check the README for
+	  more details.
+
+	* ace/Service_Config.cpp:  Fixed a bug in run_reactorEx_event_loop
+	  (ACE_Time_Value &) so that it doesn't return on timeout.
+
+Tue Dec 18 7:06:32 1996    <harrison@samba.cs.wustl.edu>
+
+	* ace/Proactor.cpp (handle_events): Once again removed the
+	  timer_skew_ code.  Changed the ACE_HANDLE global_handle_ to
+	  ACE_Manual_Event shared_event_.  Added a constructor that takes
+	  an ACE_Timer_Queue *.  Changed the implementation to use an
+	  ACE_OS::sleep if only timers are registered.  We need to figure
+	  out a better approach than the sleep.
+
+	* ace/Service_Config.cpp (run_proactor_event_loop): Changed this
+	  to only return when an error occurs.  If handle_events returns a
+	  0, then a timeout occurred, and we can continue to dispatch
+	  events.  We only return when all of the time has expired.
+
+	* ace/Registry_Name_Space.h (ACE_Registry_Name_Space): Moved the
+	  include statements below the ACE_WIN32 and UNICODE directives.
+
+	* ace/OS.h (siginfo_t): Added siginfo_t (ACE_HANDLE *handle)
+	  constructor prototype.
+
 Wed Dec 18 06:37:22 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (cond_wait): Added the new algorithm for condition
