@@ -226,12 +226,14 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   else
     *os << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
 
-  *os << " ());" << be_uidt_nl
-      << "exception_holder_var->marshaled_exception ().replace" << be_idt_nl 
-      << "(cdr->length (), // max" << be_nl
-      << " cdr->length (), // length" << be_nl
-      << " (unsigned char*) cdr->rd_ptr (),// data" << be_nl
-      << " 0); // release" << be_uidt_nl;
+  *os << " ());" << be_uidt_nl;
+
+  *os << "Messaging::ExceptionHolder::_tao_seq_Octet_var marshaled_exception_var =" << be_idt_nl
+      << "new Messaging::ExceptionHolder::_tao_seq_Octet (cdr->length (), // max" << be_nl
+      << "cdr->length (), // length" << be_nl
+      << "(unsigned char*) cdr->rd_ptr (),// data" << be_nl
+      << "0); // release" << be_uidt_nl
+      << "exception_holder_var->marshaled_exception (marshaled_exception_var.in ());" << be_nl;
 
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
       << " exception_holder_var->is_system_exception (1);" << be_uidt_nl << be_nl
