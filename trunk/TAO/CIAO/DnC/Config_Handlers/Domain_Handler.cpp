@@ -36,16 +36,6 @@ namespace CIAO
         release_ (release)
     {}
 
-    void Domain_Handler::dump (Deployment::Domain& domain)
-    {
-      ACE_DEBUG ((LM_DEBUG, "UUID: %s \n", domain.UUID.in ()));
-      ACE_DEBUG ((LM_DEBUG, "label: %s \n", domain.label.in ()));
-      this->dump_nodes (domain);
-      this->dump_ics (domain);
-      this->dump_bridges (domain);
-      this->dump_srs (domain);
-    }
-
     Domain_Handler::~Domain_Handler()
     {
       if (this->release_)
@@ -130,7 +120,6 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.sharedResource.length ());
           domain.sharedResource.length (i + 1);
@@ -157,7 +146,6 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.node.length ());
           domain.node.length (i + 1);
@@ -185,7 +173,6 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -212,7 +199,6 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -239,7 +225,6 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -305,7 +290,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong resource_length 
                      (domain_node.resource.length ());
@@ -333,7 +317,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   this->process_refs (named_node_map);
                 }
             }
@@ -347,7 +330,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   this->process_refs (named_node_map);
                 }
             }
@@ -390,7 +372,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong sp_length 
                      (domain_resource.property.length ());
@@ -514,7 +495,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
@@ -579,7 +559,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
@@ -666,7 +645,6 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong sp_length 
                      (domain_sr.property.length ());
@@ -827,152 +805,6 @@ namespace CIAO
           (doc->getDocumentElement ()->getNodeName ());
 
       return doc;
-    }
-
-    void Domain_Handler::dump_nodes (Deployment::Domain& domain)
-    {
-      for (CORBA::ULong i = 0; i < domain.node.length (); ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nNode %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
-                      domain.node[i].name.in ()));
-          for (CORBA::ULong j = 0; j < domain.node[i].resource.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.node[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0;
-                   k < domain.node[i].resource[j].resourceType.length (); ++k)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                     domain.node[i].resource[j].resourceType[k].in ()));
-                }
-            }
-
-          for (CORBA::ULong j = 0;
-               j < domain.node[i].connectionRef.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
-              int value = domain.node[i].connectionRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.interconnect[value].name.in ()));
-            }
-
-          for (CORBA::ULong j = 0;
-               j < domain.node[i].sharedResourceRef.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     SharedResource %d: \n", j + 1));
-              int value = domain.node[i].sharedResourceRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.sharedResource[value].name.in ()));
-            }
-
-        }
-    }
-
-    void Domain_Handler::dump_ics (Deployment::Domain& domain)
-    {
-      for (CORBA::ULong i = 0; i < domain.interconnect.length (); ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nInterconnect %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
-                      domain.interconnect[i].name.in ()));
-          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n",
-                      domain.interconnect[i].label.in ()));
-          for (CORBA::ULong j = 0;
-               j < domain.interconnect[i].resource.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.interconnect[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0;
-                k < domain.interconnect[i].resource[j].resourceType.length ();
-                ++k)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                   domain.interconnect[i].resource[j].resourceType[k].in ()));
-                }
-            }
-
-          for (CORBA::ULong j = 0;
-               j < domain.interconnect[i].connectionRef.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
-              int value = domain.interconnect[i].connectionRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.bridge[value].name.in ()));
-            }
-
-          for (CORBA::ULong j = 0;
-               j < domain.interconnect[i].connectRef.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     SharedResource %d: \n", j + 1));
-              int value = domain.interconnect[i].connectRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.node[value].name.in ()));
-            }
-
-        }
-    }
-
-    void Domain_Handler::dump_bridges (Deployment::Domain& domain)
-    {
-      for (CORBA::ULong i = 0; i < domain.bridge.length (); ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nBridge %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
-                      domain.bridge[i].name.in ()));
-          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n",
-                      domain.bridge[i].label.in ()));
-          for (CORBA::ULong j = 0;
-               j < domain.bridge[i].resource.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.bridge[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0;
-                   k < domain.bridge[i].resource[j].resourceType.length ();
-                   ++k)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                    domain.bridge[i].resource[j].resourceType[k].in ()));
-                }
-            }
-
-          for (CORBA::ULong j = 0; j < domain.bridge[i].connectRef.length ();
-               ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
-              int value = domain.bridge[i].connectRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.interconnect[value].name.in ()));
-            }
-        }
-    }
-
-    void Domain_Handler::dump_srs (Deployment::Domain& domain)
-    {
-      for (CORBA::ULong i = 0; i < domain.sharedResource.length (); ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nSharedResource %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
-                      domain.sharedResource[i].name.in ()));
-          for (CORBA::ULong k = 0;
-               k < domain.sharedResource[i].resourceType.length (); ++k)
-            {
-              ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                domain.sharedResource[i].resourceType[k].in ()));
-            }
-
-          for (CORBA::ULong j = 0;
-               j < domain.sharedResource[i].nodeRef.length (); ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
-              int value = domain.sharedResource[i].nodeRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
-                          domain.node[value].name.in ()));
-            }
-        }
     }
 
     void Domain_Handler::process_attributes_for_sr 
