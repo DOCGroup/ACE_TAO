@@ -11,15 +11,24 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
-PUB_HDRS = Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector \
-           IIOP_Acceptor GIOP Invocation IIOP_ORB Connect Params \
-	   Marshal Debug \
-	   Default_Client Default_Server \
-	   Server_Strategy_Factory Client_Strategy_Factory ORB_Core
-
-ifndef minimum_corba
-minimum_corba = 0
-endif # minimum_corba
+PUB_HDRS = \
+  Pluggable \
+  MProfile \
+  IIOP_Profile \
+  IIOP_Transport \
+  IIOP_Connector \
+  IIOP_Acceptor GIOP \
+  Invocation \
+  IIOP_ORB \
+  Connect \
+  Params \
+  Marshal \
+  Debug \
+  Default_Client \
+  Default_Server \
+  Server_Strategy_Factory \
+  Client_Strategy_Factory \
+  ORB_Core
 
 POA_FILES = \
   POA \
@@ -105,8 +114,6 @@ DYNAMIC_ANY_FILES += \
   DynStruct_i \
   DynUnion_i \
   InconsistentTypeCodeC
-
-CPP_FLAGS += -DTAO_HAS_MINIMUM_CORBA
 
 endif # minimum_corba
 

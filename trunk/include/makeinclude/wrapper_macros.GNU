@@ -18,6 +18,7 @@
 #  ----             -----------
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
+#  minimum_corba    Enable minimumCORBA support.
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                     default, others do not.
@@ -263,6 +264,10 @@ else  # ! exceptions
     CCFLAGS += -fno-exceptions
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! exceptions
+
+ifeq ($(minimum_corba),1)
+  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA
+endif # minimum_corba
 
 ifeq ($(profile),0)
   override profile =
