@@ -261,4 +261,8 @@
 #endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 
+#if defined (i386)
+#define ACE_HAS_X86_STAT_MACROS
+#endif /* i386 */
+
 #endif /* ACE_CONFIG_H */
