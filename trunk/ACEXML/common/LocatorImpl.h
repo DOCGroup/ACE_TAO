@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Krishnakumar Balasubramanian <kitty@cs.wustl.edu>
  */
 //=============================================================================
 
