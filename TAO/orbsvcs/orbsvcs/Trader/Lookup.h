@@ -28,10 +28,6 @@
 
 #include "ace/Containers.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 template<class TRADER>
 class TAO_Lookup :
   public TAO_Trader_Components<POA_CosTrading::Lookup>,
@@ -148,9 +144,6 @@ public:
   // concatenated onto the names of limits applied locally and
   // returned.
   // END SPEC
-  
-  static const char* NAME;
-
   
 private:
 
@@ -306,10 +299,6 @@ private:
   Request_Ids request_ids_;
   // A list of recent request_id_stems 
 };
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Lookup.cpp"
