@@ -123,6 +123,25 @@ public:
   ));
 };
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_Event_Forwarder::ProxyPushSupplier>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::ProxyPushConsumer>;
+template class TAO_Notify_Export
+TAO_NS_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 #if defined (__ACE_INLINE__)
 #include "Proxy_T.inl"
 #endif /* __ACE_INLINE__ */
