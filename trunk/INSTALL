@@ -165,7 +165,15 @@ If you use the GNU GCC C++ compiler please note the following:
 
 	  Alternatively, you could apply the Cygnus template
 	  repository patches and use the -repo options.  Please see
-	  the g++ FAQ and gcc manual for more information.
+	  the g++ FAQ and gcc manual for more information.  The g++
+	  FAQ indicates that a new implementation of templates planned
+	  for version 2.8 will eliminate the restriction against
+	  static data members in template classes, which would allow
+	  ready implementation of a correct ACE_Singleton.
+
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+	  for reporting the problem with ACE_Singleton on g++, and
+	  for helping to find and implement these solutions.
 
 --------------------------------------------------
 
