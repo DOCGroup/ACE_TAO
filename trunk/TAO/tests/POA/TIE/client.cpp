@@ -7,7 +7,7 @@
 //     client.cpp
 //
 // = DESCRIPTION
-//     This is a simple foo client implementation.
+//     This is a simple client implementation.
 //
 // = AUTHOR
 //     Irfan Pyarali
@@ -21,7 +21,7 @@
 
 ACE_RCSID(TIE, client, "$Id$")
 
-static char *IOR[7] = { 0, 0, 0, 0, 0, 0, 0 };
+  static char *IOR[7] = { 0, 0, 0, 0, 0, 0, 0 };
 static int iterations = 1;
 
 static int
@@ -104,66 +104,67 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
 
-template <class T, class T_var> class Test
+template <class T, class T_var> 
+class Test
 {
 public:
   static void run (CORBA::ORB_ptr orb, 
 		   char *IOR,
 		   CORBA::Environment &env)
-    {
-      if (IOR != 0)
-	{
-	  // Get an object reference from the argument string.
-	  CORBA::Object_var object = orb->string_to_object (IOR, env);
+  {
+    if (IOR != 0)
+      {
+        // Get an object reference from the argument string.
+        CORBA::Object_var object = orb->string_to_object (IOR, env);
 
-	  if (env.exception () != 0)
-	    {
-	      env.print_exception ("CORBA::ORB::string_to_object");
-	      return;
-	    }
+        if (env.exception () != 0)
+          {
+            env.print_exception ("CORBA::ORB::string_to_object");
+            return;
+          }
 
-	  // Try to narrow the object reference to a Foo reference.
-	  T_var foo = T::_narrow (object.in (), env);
+        // Try to narrow the object reference to a reference.
+        T_var foo = T::_narrow (object.in (), env);
       
-	  if (env.exception () != 0)
-	    {
-	      env.print_exception ("_narrow");
-	      return;
-	    }
+        if (env.exception () != 0)
+          {
+            env.print_exception ("_narrow");
+            return;
+          }
 
-	  ACE_Profile_Timer timer;
-	  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+        ACE_Profile_Timer timer;
+        ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
-	  // We start an ACE_Profile_Timer here...
-	  timer.start ();
+        // We start an ACE_Profile_Timer here...
+        timer.start ();
 
-	  CORBA::Long result = 0;
-	  int i = 0;
-	  for (i = 0; i < iterations; i++ && env.exception () == 0)
-	    {
-	      // Invoke the doit() method of the foo reference.
-	      result = foo->doit (env);
-	    }
+        CORBA::Long result = 0;
+        int i = 0;
+        for (i = 0; i < iterations; i++ && env.exception () == 0)
+          {
+            // Invoke the doit() method on the reference.
+            result = foo->doit (env);
+          }
      
-	  // stop the timer.
-	  timer.stop ();
-	  timer.elapsed_time (elapsed_time);
+        // stop the timer.
+        timer.stop ();
+        timer.elapsed_time (elapsed_time);
 
-	  // compute average time.
-	  print_stats (elapsed_time, i);
+        // compute average time.
+        print_stats (elapsed_time, i);
 
-	  if (env.exception () != 0)
-	    {
-	      env.print_exception ("Foo::doit");
-	      return;
-	    }
+        if (env.exception () != 0)
+          {
+            env.print_exception ("doit");
+            return;
+          }
   
-	  // Print the result of doit () method of the foo reference.
-	  ACE_DEBUG ((LM_DEBUG,
-		      "%d\n",
-		      result)); 
-	}
-    }
+        // Print the result of doit () method on the reference.
+        ACE_DEBUG ((LM_DEBUG,
+                    "%d\n",
+                    result)); 
+      }
+  }
 };
 
 int
@@ -186,43 +187,43 @@ main (int argc, char **argv)
   
   int i = 1;
 
-  Test<Foo,Foo_var>::run (orb.in (), 
-			  IOR[i++], 
-			  env);
+  Test<A, A_var>::run (orb.in (), 
+                       IOR[i++], 
+                       env);
 
-  Test<Outer::Foo,Outer::Foo_var>::run (orb.in (), 
-					IOR[i++], 
-					env);
+  Test<Outer::B, Outer::B_var>::run (orb.in (), 
+                                     IOR[i++], 
+                                     env);
 
-  Test<Outer::Inner::Foo,Outer::Inner::Foo_var>::run (orb.in (), 
-						      IOR[i++], 
-						      env);
+  Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
+                                                   IOR[i++], 
+                                                   env);
 
-  Test<Foo,Foo_var>::run (orb.in (),
-			  IOR[i++], 
-			  env);
+  Test<A, A_var>::run (orb.in (),
+                       IOR[i++], 
+                       env);
 
-  Test<Outer::Foo,Outer::Foo_var>::run (orb.in (), 
-					IOR[i++], 
-					env);
+  Test<Outer::B, Outer::B_var>::run (orb.in (), 
+                                     IOR[i++], 
+                                     env);
 
-  Test<Outer::Inner::Foo,Outer::Inner::Foo_var>::run (orb.in (), 
-						      IOR[i++], 
-						      env);
+  Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
+                                                   IOR[i++], 
+                                                   env);
 
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class Test<Foo,Foo_var>;
-template class Test<Outer::Foo,Outer::Foo_var>;
-template class Test<Outer::Inner::Foo,Outer::Inner::Foo_var>;
+template class Test<A, A_var>;
+template class Test<Outer::B, Outer::B_var>;
+template class Test<Outer::Inner::C, Outer::Inner::C_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate Test<Foo,Foo_var>
-#pragma instantiate Test<Outer::Foo,Outer::Foo_var>
-#pragma instantiate Test<Outer::Inner::Foo,Outer::Inner::Foo_var>
+#pragma instantiate Test<A, A_var>
+#pragma instantiate Test<Outer::B, Outer::B_var>
+#pragma instantiate Test<Outer::Inner::C, Outer::Inner::C_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

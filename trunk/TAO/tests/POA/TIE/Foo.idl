@@ -8,21 +8,21 @@
 
 // IDL
 
-interface Foo
+interface A
 {
   long doit();
 };
 
 module Outer
 {
-  interface Foo
+  interface B
     {
       long doit();
     };
 
   module Inner
     {
-      interface Foo
+      interface C
         {
           long doit();
         };

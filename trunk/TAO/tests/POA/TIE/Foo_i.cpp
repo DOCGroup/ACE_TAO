@@ -18,22 +18,22 @@
 
 ACE_RCSID(TIE, Foo_i, "$Id$")
 
-// Constructor
-Simple_Foo_i::Simple_Foo_i (CORBA::Long value)
-  : value_ (value)
+  // Constructor
+  Tie_i::Tie_i (CORBA::Long value)
+    : value_ (value)
 {
 }
 
 // Return this->value
 CORBA::Long
-Simple_Foo_i::doit (CORBA::Environment &/*env*/)
+Tie_i::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
 
 // Constructor
-Foo_i::Foo_i (CORBA::Long value,
-              PortableServer::POA_ptr poa)
+A_i::A_i (CORBA::Long value,
+          PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
@@ -41,21 +41,21 @@ Foo_i::Foo_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-Foo_i::doit (CORBA::Environment &/*env*/)
+A_i::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-Foo_i::_default_POA (CORBA::Environment &/*env*/)
+A_i::_default_POA (CORBA::Environment &/*env*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 // Constructor
-Outer_i::Foo_i::Foo_i (CORBA::Long value,
-                       PortableServer::POA_ptr poa)
+Outer_i::B_i::B_i (CORBA::Long value,
+                   PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
@@ -63,21 +63,21 @@ Outer_i::Foo_i::Foo_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-Outer_i::Foo_i::doit (CORBA::Environment &/*env*/)
+Outer_i::B_i::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-Outer_i::Foo_i::_default_POA (CORBA::Environment &/*env*/)
+Outer_i::B_i::_default_POA (CORBA::Environment &/*env*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 // Constructor
-Outer_i::Inner_i::Foo_i::Foo_i (CORBA::Long value,
-                                PortableServer::POA_ptr poa)
+Outer_i::Inner_i::C_i::C_i (CORBA::Long value,
+                            PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
@@ -85,14 +85,14 @@ Outer_i::Inner_i::Foo_i::Foo_i (CORBA::Long value,
 
 // Return this->value
 CORBA::Long
-Outer_i::Inner_i::Foo_i::doit (CORBA::Environment &/*env*/)
+Outer_i::Inner_i::C_i::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-Outer_i::Inner_i::Foo_i::_default_POA (CORBA::Environment &/*env*/)
+Outer_i::Inner_i::C_i::_default_POA (CORBA::Environment &/*env*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
