@@ -63,8 +63,7 @@ namespace CIAO
 
       static void instance_resource_depl_descr (
         const InstanceResourceDeploymentDescription &src,
-        Deployment::InstanceResourceDeploymentDescription &dest,
-        CORBA::ULong pos);
+        Deployment::InstanceResourceDeploymentDescription &dest);
     };
   }
 }
