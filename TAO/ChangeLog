@@ -22,7 +22,7 @@ Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
 	  Use the above method in TAO_Stub to access the object_key.  This
-	  shoudlfdix BUG 1483. 
+	  should fix [BUG 1483]. 
 
 Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
 
