@@ -40,6 +40,18 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
+#       Local targets (and local hacks)
+#----------------------------------------------------------------------------
+
+ifeq ($(LYNXTARGET),ppc)
+#### Event_Service.cpp raises internal compiler error with LynxOS 3.0.0 g++,
+#### but only when -O2 optimization is enabled.  Disable it . . .
+.obj/Event_Service.o .obj/Event_Service.so .shobj/Event_Service.o .shobj/Event_Service.so: Event_Service.cpp
+	@echo NOTE: compiling Event_Service.cpp with -O instead of -O2, see Makefile.
+	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
+endif # LYNXTARGET == ppc
+
+#----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
 
