@@ -3730,7 +3730,11 @@ extern "C"
 
 #   if defined (CHORUS)
 #     include /**/ <chorus.h>
-#     include /**/ <cx/select.h>
+#     if !defined(CHORUS_4)
+#       include /**/ <cx/select.h>
+#     else
+#       include /**/ <stdio.h>
+#     endif
 #     include /**/ <sys/uio.h>
 #     include /**/ <time.h>
 #     include /**/ <stdfileio.h>
@@ -3749,11 +3753,13 @@ extern_C int      gethostname     __((char*, size_t));
 // This must come after limits.h is included
 #     define MAXPATHLEN _POSIX_PATH_MAX
 
+#     if  !defined(CHORUS_4)
 typedef cx_fd_mask fd_mask;
+typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+#     endif
 #     ifndef howmany
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* howmany */
-typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #   elif defined (CYGWIN32)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/file.h>
@@ -5448,7 +5454,7 @@ class ACE_Export ACE_OS
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 public:
 
-# if defined (CHORUS)
+# if defined (CHORUS) && !defined (CHORUS_4)
   // We must format this code as follows to avoid confusing OSE.
   enum ACE_HRTimer_Op
     {
