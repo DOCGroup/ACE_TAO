@@ -17,7 +17,7 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
 namespace Kokyu
 {
-  
+
 /*
 //@@VS: This is somehow not being recognized by MSVC, which results
 //in a link error. For now, the definition has been moved to the .h
@@ -44,7 +44,7 @@ operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
 */
 template <class DSRT_Scheduler_Traits>
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>(sched_policy, sched_scope),
    sched_queue_modified_ (0),
@@ -168,7 +168,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
                 }
             }
 
-          if (ACE_OS::thr_setprio (most_eligible_thr_handle, 
+          if (ACE_OS::thr_setprio (most_eligible_thr_handle,
                                    this->active_prio_, this->sched_policy_) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -282,8 +282,8 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
   if (found == 0 && flag == BLOCK)
     {
       thr_handle = dispatch_item->thread_handle ();
-      if (ACE_OS::thr_setprio (thr_handle, 
-                               this->blocked_prio_, 
+      if (ACE_OS::thr_setprio (thr_handle,
+                               this->blocked_prio_,
                                this->sched_policy_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
