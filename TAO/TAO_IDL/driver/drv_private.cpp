@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -66,18 +66,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // drv_global.cc - Global variables for IDL compiler driver program
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
-#include	"drv_private.h"
+#include "drv_private.h"
 
 ACE_RCSID(driver, drv_private, "$Id$")
 
 // Storage for file names
 
-#define		NFILES	1024
+#if !defined (NFILES)
+# define NFILES 1024
+#endif /* ! NFILES */
 
-char		*DRV_files[NFILES];
-long		DRV_nfiles = 0;
-long		DRV_file_index = -1;
+char            *DRV_files[NFILES];
+long            DRV_nfiles = 0;
+long            DRV_file_index = -1;
 IDL_GlobalData *idl_global = NULL;
