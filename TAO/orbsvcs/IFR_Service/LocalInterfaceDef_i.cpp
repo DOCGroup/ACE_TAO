@@ -2,6 +2,7 @@
 // $Id$
 
 #include "LocalInterfaceDef_i.h"
+#include "Repository_i.h"
 
 ACE_RCSID(IFR_Service, LocalInterfaceDef_i, "$Id$")
 
@@ -28,3 +29,27 @@ TAO_LocalInterfaceDef_i::def_kind (CORBA::Environment &)
   return CORBA::dk_LocalInterface;
 }
 
+CORBA::Boolean 
+TAO_LocalInterfaceDef_i::is_a (const char *interface_id,
+                               CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->is_a_i (interface_id,
+                       ACE_TRY_ENV);
+}
+
+CORBA::Boolean 
+TAO_LocalInterfaceDef_i::is_a_i (const char *interface_id,
+                                 CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/LocalBase:1.0") == 0)
+    {
+      return 1;
+    }
+
+  return this->TAO_InterfaceDef_i::is_a_i (interface_id,
+                                           ACE_TRY_ENV);
+}

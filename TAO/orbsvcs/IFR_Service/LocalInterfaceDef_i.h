@@ -55,6 +55,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
+
+  virtual CORBA::Boolean is_a (
+      const char *interface_id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean is_a_i (
+      const char *interface_id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

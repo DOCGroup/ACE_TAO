@@ -250,7 +250,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               ACE_TRY_CHECK
 
               bases[i] = CORBA_InterfaceDef::_narrow (result.in (),
-                                                   ACE_TRY_ENV);
+                                                      ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (bases[i].in ()))
