@@ -3,7 +3,7 @@ Thu Jul  1 21:18:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
 
 	  Corrected typo in documentation.  Thanks to Thomas Lockhart for
-	  supplying patch.
+	  supplying a patch.
 
 Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
