@@ -14,7 +14,7 @@
  */
 //=============================================================================
 
-#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
 #ifndef ACE_OS_MAIN_H
 # define ACE_OS_MAIN_H
@@ -62,7 +62,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 int \
 ace_main_i
 
-#   elif !defined (ACE_WINCE)
+#   elif !defined (ACE_WIN32)
    
 #     define main \
 ace_os_main_i (int, char *[]); \
@@ -74,17 +74,31 @@ ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 int \
 ace_main_i
 
-#     if defined (ACE_WIN32)
+#   elif !defined (ACE_WINCE)
+
+class ACE_Export xxx
+{
+public:
+  xxx (void);
+  ~xxx (void) {}
+  int run (int, ACE_TCHAR *[]);
+  virtual int run_i (int, ACE_TCHAR *[]) = 0;
+};
+
 #       define wmain \
-ace_os_wmain_i (int, ACE_TCHAR *[]); \
+ace_os_wmain_i (xxx&, int, ACE_TCHAR *[]); \
+int xxx::run_i (int argc, ACE_TCHAR *argv[])  \
+{ \
+  return ace_os_wmain_i (argc, argv); \
+} \
 int \
 ACE_WMAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., wmain */ \
 { \
-  return ace_os_wmain_i (argc, argv);   /* what the user calls "main" */ \
+  xxx x; \
+  return ace_os_wmain_i (x, argc, argv);   /* what the user calls "main" */ \
 } \
 int \
 ace_main_i
-#     endif /* ACE_WIN32 */
 
 #   else /* ACE_HAS_WINCE */
 
