@@ -110,8 +110,8 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
             CORBA::String_var str = gen->gen_string ();
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          "setting string = %s\n", str));
-            this->in_[i] <<= str;
+                          "setting string = %s\n", str.in ()));
+            this->in_[i] <<= str.in ();
             this->inout_[i] <<= 0; // different from in_
           }
           break;
@@ -175,8 +175,8 @@ Test_AnySeq::reset_parameters (void)
         case 1:
           {
             CORBA::String_var str = gen->gen_string ();
-            this->in_[i] <<= str;
-            this->inout_[i] <<= str;
+            this->in_[i] <<= str.in ();
+            this->inout_[i] <<= str.in ();
           }
           break;
         case 2:
