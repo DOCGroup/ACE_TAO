@@ -1,6 +1,6 @@
 Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/tests/Simulator/Event_Supplier/Makefile:
+        * orbsvcs/tests/Simulator/{Event_Supplier,DOVEMIB}/Makefile:
           cleaned up to work on both Solaris and VxWorks.
 
 Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
