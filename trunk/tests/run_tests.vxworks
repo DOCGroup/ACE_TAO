@@ -110,10 +110,9 @@ ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
 
-#### ENOTSUP: ACE_OS::cond_timedwait ()
-#### ld < Buffer_Stream_Test
-#### write 2, "Buffer_Stream_Test ", 19
-#### ace_main; unld "Buffer_Stream_Test"
+ld < Buffer_Stream_Test
+write 2, "Buffer_Stream_Test ", 19
+ace_main; unld "Buffer_Stream_Test"
 
 ld < Priority_Buffer_Test
 write 2, "Priority_Buffer_Test ", 21
