@@ -20,7 +20,7 @@
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, TAO_Singleton, "$Id$")
+//ACE_RCSID (tao, TAO_Singleton, "$Id$")
 
 template <class TYPE, class ACE_LOCK> void
 TAO_Singleton<TYPE, ACE_LOCK>::dump (void)

@@ -76,11 +76,18 @@ public:
   const TAO_Connection_Handler *handler (void) const;
   // Return the underlying handler
 
+  void recycle_state (ACE_Recyclable_State new_state);
+
+  ACE_Recyclable_State recycle_state (void);
+  // Get/Set <recycle_state>.
 
 private:
 
   TAO_Connection_Handler *handler_;
   // The connection handler that needs to be cached.
+
+  ACE_Recyclable_State recycle_state_;
+  // The state of the handle
 };
 
 

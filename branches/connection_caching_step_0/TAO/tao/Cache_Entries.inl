@@ -3,7 +3,8 @@
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (void)
-  : handler_ (0)
+  : handler_ (0),
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
@@ -24,6 +25,24 @@ TAO_Cache_IntId::~TAO_Cache_IntId (void)
 {
 }
 
+ACE_INLINE void
+TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
+{
+  this->handler_ = rhs.handler_;
+}
+
+ACE_INLINE int
+TAO_Cache_IntId::operator== (const TAO_Cache_IntId &rhs) const
+{
+  return (this->handler_ == rhs.handler_);
+}
+
+ACE_INLINE int
+TAO_Cache_IntId::operator!= (const TAO_Cache_IntId &rhs) const
+{
+  return (this->handler_ != rhs.handler_);
+}
+
 ACE_INLINE TAO_Connection_Handler *
 TAO_Cache_IntId::handler (void)
 {
@@ -36,10 +55,25 @@ TAO_Cache_IntId::handler (void) const
   return this->handler_;
 }
 
+ACE_INLINE void
+TAO_Cache_IntId::recycle_state (ACE_Recyclable_State st)
+{
+  this->recycle_state_ = st;
+}
+
+ACE_INLINE ACE_Recyclable_State
+TAO_Cache_IntId::recycle_state (void)
+{
+  return this->recycle_state_;
+}
+
+
 /*******************************************************/
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (void)
-  : connection_property_ (0)
+  : connection_property_ (0),
+    is_delete_ (0),
+    index_ (0)
 {
 }
 
@@ -55,13 +89,14 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Base_Connection_Property *prop)
 ACE_INLINE
 TAO_Cache_ExtId::~TAO_Cache_ExtId (void)
 {
-  delete this->connection_property_;
+  if (this->is_delete_)
+    delete this->connection_property_;
 }
 
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
 {
-  *this->connection_property_ = *rhs.connection_property_;
+  this->connection_property_ = rhs.connection_property_;
   this->is_delete_ = rhs.is_delete_;
   this->index_ = rhs.index_;
 }
@@ -69,7 +104,7 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
 ACE_INLINE void
 TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
 {
-  *this->connection_property_ = *rhs.connection_property_;
+  this->connection_property_ = rhs.connection_property_;
   this->is_delete_ = rhs.is_delete_;
   this->index_ = rhs.index_;
 }

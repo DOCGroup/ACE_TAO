@@ -4,22 +4,15 @@
 ACE_INLINE
 TAO_Connection_Handler::TAO_Connection_Handler (void)
   : orb_core_ (0),
-    tss_resources_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    tss_resources_ (0)
 {
 }
 
-ACE_INLINE void
-TAO_Connection_Handler::recycle_state (ACE_Recyclable_State new_state)
+ACE_INLINE
+TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
-  this->recycle_state_ = new_state;
 }
 
-ACE_INLINE ACE_Recyclable_State
-TAO_Connection_Handler::recycle_state (void)
-{
-  return this->recycle_state_;
-}
 
 ACE_INLINE TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Connection_Handler::cache_map_entry (void)

@@ -204,7 +204,6 @@ TAO_SHMIOP_Server_Connection_Handler::svc (void)
   // This method is called when an instance is "activated", i.e.,
   // turned into an active object.  Presumably, activation spawns a
   // thread with this method as the "worker function".
-  int result = 0;
 
   // Call the implementation here
   return this->svc_i ();

@@ -4,8 +4,7 @@
 ACE_INLINE
 TAO_Connection_Handler::TAO_Connection_Handler (void)
   : orb_core_ (0),
-    tss_resources_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    tss_resources_ (0)
 {
 }
 

@@ -84,6 +84,37 @@ TAO_Connection_Cache_Manager::purge (void)
   return 0;
 }
 
+ACE_INLINE int
+TAO_Connection_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_,
+                            -1));
+  return this->make_idle_i (entry);
+}
+
+ACE_INLINE int
+TAO_Connection_Cache_Manager::mark_closed (HASH_MAP_ENTRY *&entry)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_,
+                            -1));
+  return this->mark_closed_i (entry);
+}
+
+ACE_INLINE int
+TAO_Connection_Cache_Manager::close (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_,
+                            -1));
+  return this->close_i ();
+}
+
+
 ACE_INLINE size_t
 TAO_Connection_Cache_Manager::current_size (void) const
 {
@@ -94,14 +125,4 @@ ACE_INLINE size_t
 TAO_Connection_Cache_Manager::total_size (void) const
 {
   return this->cache_map_.total_size ();
-}
-
-ACE_INLINE int
-TAO_Connection_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-  return this->make_idle_i (entry);
 }
