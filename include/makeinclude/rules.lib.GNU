@@ -114,8 +114,8 @@ endif
 ifdef SHLIBBUILD
 	$(SHLIBBUILD)
 else
- 	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS) $(STATLIB)
- 	-chmod a+rx $@
+	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS) $(STATLIB)
+	-chmod a+rx $@
 endif
 
 ifdef SHLIBA

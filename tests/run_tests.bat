@@ -24,6 +24,7 @@ Reader_Writer_Test
 Recursive_Mutex_Test
 Service_Config_Test
 SOCK_Test
+Conn_Test
 SPIPE_Test
 SString_Test
 SV_Shared_Memory_Test
