@@ -212,7 +212,8 @@ Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 <LI>
 The current Event Channel is working on TAO,
 the Scheduling Service still has some problems,
-apparently related to the IDL compiler.</LI>
+apparently related to sequences of variable sized structures as out
+parameters.</LI>
 
 <LI>
 The configuration runs can be done even on the distributed scenario, using
@@ -222,7 +223,8 @@ the Real-time "Scheduling Service", which now has an IDL interface.</LI>
 At run-time (no config runs) there is no need to use the Real-time Scheduling
 Service, a faster, collocated implementation for the service is available.
 Obviously the information is generated on the config runs and linked into
-the program.  Unfortunately the schedule information cannot be
+the program.
+Unfortunately the schedule information cannot be
 downloaded from the service right now.</LI>
 
 <LI>
@@ -259,6 +261,11 @@ speed up the developing cycle,
 but requires a (small) amount of dynamic memory allocation.
 It could be interesting to "save" the schedule computation in some
 persistent form, so startup cost are lower too.</LI>
+
+<LI>
+The user should have complete control of services collocation,
+ACE services for dynamically loaded objects should help in this area,
+but we need to add support for NT DLLs in the IDL compiler.</LI>
 
 </UL>
 <P>For general documentation on the Event Service please read

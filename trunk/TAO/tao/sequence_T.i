@@ -159,7 +159,7 @@ TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
 {
 }
 
-template <class T> ACE_INLINE TAO_Unbounded_Object_Sequence<T>::Manager
+template <class T> ACE_INLINE TAO_Object_Manager<T>
 TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
@@ -189,8 +189,7 @@ TAO_Bounded_Object_Sequence<T,MAX>::TAO_Bounded_Object_Sequence
 {
 }
 
-template <class T, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Object_Sequence<T,MAX>::Manager
+template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
 TAO_Bounded_Object_Sequence<T,MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
