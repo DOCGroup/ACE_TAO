@@ -303,6 +303,8 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out conf
   ACE_THROW_SPEC ((CORBA::SystemException,
                   RtecScheduler::NOT_SCHEDULED))
 {
+  ACE_UNUSED_ARG ((configs));
+
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
     ACE_THROW (RtecScheduler::NOT_SCHEDULED());
