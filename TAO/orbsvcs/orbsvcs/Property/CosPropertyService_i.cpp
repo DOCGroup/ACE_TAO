@@ -995,7 +995,8 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
                TAO_PropertiesIterator (*prop_set));
 
       rest = CosPropertyService::PropertiesIterator::_duplicate (iterator->_this (_env));
-      TAO_CHECK_ENV_RETURN (_env, );
+      TAO_CHECK_ENV_PRINT_RETURN_VOID (_env,
+                                       "CosPropertyService::PropertiesIterator::_duplicate");
 
       ACE_DEBUG ((LM_DEBUG, "DB:TAO_PropSet::get_all_properties-Done\n"));
     }
