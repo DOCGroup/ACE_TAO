@@ -328,7 +328,7 @@ DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
-                  -C $(COMPILE.c) -traditional -- \
+                  -o $(VDIR) -C $(COMPILE.c) -traditional -- \
                   -m munch -n nm$(TOOLENV) ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
