@@ -1,3 +1,8 @@
+Tue Jun 02 20:03:51 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
+	  aC++ on both platforms.
+
 Tue Jun 02 12:19:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (wait_grp,wait_task):  These two were
