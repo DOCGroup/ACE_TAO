@@ -258,7 +258,7 @@ struct Tester
 
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     BOOST_CHECK_MESSAGE(r.expect(32), r);
-    
+
   }
 
   void add_all(test_suite * ts)
@@ -323,8 +323,3 @@ init_unit_test_suite(int, char*[])
   return ts.release();
 }
 
-#if 0
-// This is just to convince MPC that I do not need a main() to have a
-// program.
-int main() {}
-#endif

@@ -198,8 +198,3 @@ init_unit_test_suite(int, char*[])
   return ts.release();
 }
 
-#if 0
-// This is just to convince MPC that I do not need a main() to have a
-// program.
-int main() {}
-#endif
