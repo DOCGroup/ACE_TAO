@@ -73,6 +73,7 @@ pace_dup2 (int fildes, int fildes2)
   return dup2 (fildes, fildes2);
 }
 
+PACE_INLINE
 int
 pace_execl (const char* path, const char* arg, ...)
 {
@@ -80,28 +81,6 @@ pace_execl (const char* path, const char* arg, ...)
   va_list ap;
   va_start (ap, arg);
   result = pace_execv (path, (char*const*)ap);
-  va_end (ap);
-  return result;
-}
-
-int
-pace_execle (const char* path, const char* arg, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execve (path, (char*const*)ap, 0);
-  va_end (ap);
-  return result;
-}
-
-int
-pace_execlp (const char* file, const char* arg,  ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execvp (file, (char*const*)ap);
   va_end (ap);
   return result;
 }
@@ -117,12 +96,14 @@ pace_execv (const char * path,
 
 PACE_INLINE
 int
-pace_execve (const char * path,
-             char * const argv[],
-             char * const envp[])
+pace_execle (const char* path, const char* arg, ...)
 {
-  return execve (path, argv, envp);
-  /* if successful, this operation does NOT return */
+  int result = 0;
+  va_list ap;
+  va_start (ap, arg);
+  result = pace_execve (path, (char*const*)ap, 0);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -131,6 +112,28 @@ pace_execvp (const char * file,
              char * const argv[])
 {
   return execvp (file, argv);
+  /* if successful, this operation does NOT return */
+}
+
+PACE_INLINE
+int
+pace_execlp (const char* file, const char* arg,  ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, arg);
+  result = pace_execvp (file, (char*const*)ap);
+  va_end (ap);
+  return result;
+}
+
+PACE_INLINE
+int
+pace_execve (const char * path,
+             char * const argv[],
+             char * const envp[])
+{
+  return execve (path, argv, envp);
   /* if successful, this operation does NOT return */
 }
 
