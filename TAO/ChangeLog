@@ -1,3 +1,10 @@
+Fri Oct 10 06:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FT_ORB.bor:
+          No .i files are anymore available in the FaultTolerance
+          directory, only .inl files, so updated the INCLUDES part
+          of this makefile.
+
 Thu Oct 09 23:15:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FTORB.mpc
@@ -9,7 +16,6 @@ Thu Oct 09 20:33:24 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/tests/FaultTolerance/IOGR/Makefile
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
           updated dependancies for above Makefiles
-
 
 Thu Oct 09 19:36:08 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -251,7 +257,7 @@ Wed Oct	 8 07:29:12 UTC	2003  Johnny Willemsen	<jwillemsen@remedy.nl>
 
 Tue Oct	 7 18:29:25 2003  Irfan	Pyarali	 <irfan@oomworks.com>
 
-    * Added the	following borland makefiles:
+        * Added the following borland makefiles:
 
 	  - TAO/examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Starter.bor
 	  - TAO/examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Test.bor
@@ -271,7 +277,7 @@ Tue Oct	 7 18:29:25 2003  Irfan	Pyarali	 <irfan@oomworks.com>
 	  - TAO/tests/RTScheduling/VoidData/Makefile.bor
 	  - TAO/tests/RTScheduling/VoidData/VoidData.bor
 
-    * Added the	following mpc files:
+        * Added the following mpc files:
 
 	  - TAO/examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc
 	  - TAO/examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc
@@ -281,7 +287,7 @@ Tue Oct	 7 18:29:25 2003  Irfan	Pyarali	 <irfan@oomworks.com>
 	  - TAO/tests/RTScheduling/Thread_Cancel/Thread_Cancel.mpc
 	  - TAO/tests/RTScheduling/VoidData/VoidData.mpc
 
-    * Added the	following mpc base projects:
+        * Added the following mpc base projects:
 
 	  - bin/MakeProjectCreator/config/rtscheduling.mpb
 	  - bin/MakeProjectCreator/config/rtscheduling_client.mpb
@@ -294,35 +300,35 @@ Fri Oct	03 22:42:24 2003  Chris	Cleeland  <cleeland@ociweb.com>
 Fri Oct	 3 20:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/RTS.dsw:
-    * tests/RTScheduling/RTS.dsw:
+        * tests/RTScheduling/RTS.dsw:
 	  Added	them with new names. Adding with the old names could
-      make cvs barf again.
+          make cvs barf again.
 
 Fri Oct	 3 20:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/rtscheduling.dsw:
-    * tests/RTScheduling/RTScheduling_Tests.dsw: Removed
-      from the repo since it was creating a hassle for the
-      beta.
+        * tests/RTScheduling/RTScheduling_Tests.dsw: Removed
+          from the repo since it was creating a hassle for the
+          beta.
 
 Thu Oct	 2 16:12:45 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-    * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.i:
-      Fixed unused args	warning.
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.i:
+          Fixed unused args warning.
 
 Thu Oct	 2 07:44:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-    * orbsvcs/examples/RtEC/Kokyu/README:
-    * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
-    * orbsvcs/examples/RtEC/Kokyu/Supplier.{cpp,h}:
-      Modified example to use EC timers.
+        * orbsvcs/examples/RtEC/Kokyu/README:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.{cpp,h}:
+          Modified example to use EC timers.
 
-    * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.{cpp,h,i}:
-      Changed memory allocation	to use allocators.
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.{cpp,h,i}:
+          Changed memory allocation to use allocators.
 
-    * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp,h}:
-      Removed Honeywell	proprietary RMS_Dyn_MNO	scheduling strategy
-      since this cannot	be released as per CD Gill.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp,h}:
+          Removed Honeywell proprietary RMS_Dyn_MNO scheduling strategy
+          since this cannot be released as per CD Gill.
 
 Wed Oct	 1 11:02:12 2003  Chad Elliott	<elliott_c@ociweb.com>
 
