@@ -1,7 +1,7 @@
 #include "tao/Connection_Cache_Manager.h"
 #include "tao/Connection_Handler.h"
 #include "tao/debug.h"
-#include "tao/ORB_core.h"
+#include "tao/ORB_Core.h"
 #include "tao/Resource_Factory.h"
 
 #if !defined (__ACE_INLINE__)
