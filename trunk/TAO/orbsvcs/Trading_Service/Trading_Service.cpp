@@ -33,6 +33,7 @@ Trading_Shutdown::handle_signal (int signum, siginfo_t* sinfo, ucontext_t* ucon)
 
 Trading_Service::Trading_Service (void)
   : federate_ (0),
+    ior_output_file_ (0),
     bootstrapper_ (0)
 {
   char* trader_name =
@@ -83,6 +84,13 @@ Trading_Service::init (int argc, char* argv[])
       this->ior_ = orb->object_to_string (lookup, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // Dump the ior to a file.
+      if (this->ior_output_file_ != 0)
+        {
+          ACE_OS::fprintf (this->ior_output_file_, "%s", this->ior_.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
+      
       if (this->federate_)
         {
           // Only become a multicast server if we're the only trader
@@ -339,7 +347,27 @@ Trading_Service::parse_args (int& argc, char *argv[])
         {
           arg_shifter.consume_arg ();
           this->federate_ = 1;
+        }      
+      if (ACE_OS::strcmp (current_arg, "-TSdumpior") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              
+              char* file_name = arg_shifter.get_current ();
+              this->ior_output_file_ = ACE_OS::fopen (file_name, "w");
+
+              if (this->ior_output_file_ == 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to open %s for writing: %p\n",
+                                   file_name), -1);              
+
+              arg_shifter.consume_arg ();
+            }
+          else
+            this->ior_output_file_ = ACE_OS::fdopen (ACE_STDOUT, "w");
         }
+
       else
         arg_shifter.ignore_arg ();
     }
