@@ -1,3 +1,38 @@
+Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+
+          Moved class UnknownUserException and body of method 
+          TAO_Exceptions::make_unknown_user_typecode() to the
+          DynamicInterface library.
+
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
+
+          Added empty virtual method create_unknown_user_typecode().
+
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        
+          Added virtual method create_unknown_user_typecode().
+
+        * tao/DynamicInterface/Unknown_User_Exception.h:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
+
+          New files contained class CORBA::UnknownUserException.
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+
+          Replace #include of tao/Exception.h with the new local
+          header file.
+
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/DynamicInterface/Makefile:
+        * tao/DynamicInterface/Makefile.bor:
+
+          Added the new files.
+
 Mon Dec 18 09:14:25 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
