@@ -144,6 +144,27 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
+Latency_Consumer::close (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) %s closing down.\n",
+              this->entry_point ()));
+
+  this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
 Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -262,21 +283,6 @@ void
 Latency_Consumer::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) %s shutting down.\n", entry_point ()));
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Disconnect from the push supplier.
-      this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_ERROR ((LM_ERROR,
-                 "(%t) %s Latency_Consumer::shutdown: unexpected exception.\n",
-                  entry_point ()));
-    }
-  ACE_ENDTRY;
 }
 
 
@@ -439,6 +445,45 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
   ACE_ENDTRY;
 
   return 0;
+}
+
+void
+Latency_Supplier::close (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) %s closing down.\n",
+              this->entry_point ()));
+
+  this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->consumers_->disconnect_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  {
+    PortableServer::POA_var poa =
+      this->supplier_._default_POA (ACE_TRY_ENV);
+    ACE_CHECK;
+
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+    ACE_CHECK;
+
+    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    ACE_CHECK;
+  }
+
+  {
+    PortableServer::POA_var poa =
+      this->consumer_._default_POA (ACE_TRY_ENV);
+    ACE_CHECK;
+
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->consumer_, ACE_TRY_ENV);
+    ACE_CHECK;
+
+    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    ACE_CHECK;
+  }
 }
 
 void
@@ -653,14 +698,6 @@ Latency_Supplier::shutdown (void)
           consumers_->push (events, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
-      // Disconnect from the channel.
-      consumers_->disconnect_push_consumer (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Disconnect from the push supplier.
-      suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -941,8 +978,25 @@ main (int argc, char *argv [])
         orb->perform_work ();
 
       for (i = 0; i < suppliers; ++i)
+        supplier [i]->print_stats ();
+
+      for (i = 0; i < consumers; ++i)
+        consumer [i]->print_stats ();
+
+      for (i = 0; i < suppliers; ++i)
         {
-          supplier [i]->print_stats ();
+          supplier[i]->close (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      for (i = 0; i < consumers; ++i)
+        {
+          consumer [i]->close (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      for (i = 0; i < suppliers; ++i)
+        {
           delete supplier[i];
           ACE_TRY_CHECK;
         }
@@ -950,7 +1004,6 @@ main (int argc, char *argv [])
 
       for (i = 0; i < consumers; ++i)
         {
-          consumer [i]->print_stats ();
           delete consumer [i];
           ACE_TRY_CHECK;
         }
@@ -960,6 +1013,9 @@ main (int argc, char *argv [])
       ACE_TRY_CHECK;
 
       ACE_TIMEPROBE_PRINT;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
