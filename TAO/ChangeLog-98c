@@ -1,3 +1,8 @@
+Tue Sep 15 13:10:51 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "/"s with
+	"\"s while specifying absolute path for gperf on WIN32.
+
 Tue Sep 15 12:54:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added a new line
