@@ -7,7 +7,7 @@
 //    PrintVisitor.h
 //
 // = AUTHOR
-//    Michael Kircher 
+//    Michael Kircher
 //
 // = DESCRIPTION
 //    This file descibes the PrintVisitor used by the any evaluator.
@@ -27,7 +27,7 @@ class PrintVisitor : public NodeVisitor {
 public:
 
   PrintVisitor (const char *file_name);
-  ~PrintVisitor ();
+  virtual ~PrintVisitor ();
 
   void printTimeStamp (ACE_hrtime_t creation,
                        ACE_hrtime_t ec_recv,
@@ -39,7 +39,7 @@ public:
   void visitStructNode (StructNode *structNode);
   void visitDoubleNode (DoubleNode *doubleNode);
   void visitLongNode (LongNode *longNode);
-  void visitULongNode (ULongNode *uLongNode);  
+  void visitULongNode (ULongNode *uLongNode);
   void visitStringNode (StringNode *stringNode);
 private:
   void printPadding (unsigned int recursion_level);
@@ -47,5 +47,5 @@ private:
 
   FILE *output_;
 };
-   
+
 #endif // PRINT_VISITOR_H
