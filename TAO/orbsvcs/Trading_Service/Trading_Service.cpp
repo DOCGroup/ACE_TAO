@@ -160,7 +160,7 @@ Trading_Service::init_multicast_server (void)
   // First, see if the user has given us a multicast port number for
   // the name service on the command-line;
   u_short port =
-    TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
+    TAO_ORB_Core_instance ()->orb_params ()->service_port (TRADINGSERVICE);
 
   if (port == 0)
     {
