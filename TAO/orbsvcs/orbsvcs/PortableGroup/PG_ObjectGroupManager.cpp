@@ -253,6 +253,30 @@ TAO_PG_ObjectGroupManager::remove_member (
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
+  TAO_PG_ObjectGroup_Array * groups = 0;
+  if (this->location_map_.find (the_location, groups) != 0)
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
+                      PortableGroup::ObjectGroup::_nil ());
+
+  // Multiple members from different object groups may reside at the
+  // same location.  Iterate through the list to attempt to find a
+  // match for the exact object group. 
+  size_t to_be_removed = 0;
+
+  // get the position of the object group in the object_group_array
+  to_be_removed = this->get_object_group_position (*groups, group_entry);
+
+  // remove the element from the array and resize the array.
+  const size_t groups_len = groups->size ();
+  size_t j;
+  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
+    {
+      j = i + 1;
+      (*groups)[i] = (*groups)[j];
+    }
+
+  groups->size (groups_len - 1);
+
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
@@ -735,6 +759,32 @@ TAO_PG_ObjectGroupManager::member_already_present (
           // Member with given type ID exists at the given
           // location.
           return 1;
+        }
+    }
+
+  // No member with given type ID present at the given location.
+  return 0;
+}
+
+size_t
+TAO_PG_ObjectGroupManager::get_object_group_position (
+  const TAO_PG_ObjectGroup_Array &groups,
+  TAO_PG_ObjectGroup_Map_Entry * group_entry)
+{
+  // Multiple members from different object groups may reside at the
+  // same location.  Iterate through the list to attempt to find a
+  // match.
+  size_t len = groups.size ();
+  for (size_t i = 0; i < len; ++i)
+    {
+      // It should be enough just to compare the group_entry pointers,
+      // but that seems brittle.  Better to check a controlled value,
+      // like the ObjectGroupId.
+      if (groups[i]->group_id == group_entry->group_id)
+        {
+          // Member with given type ID exists at the given
+          // location.
+          return i;
         }
     }
 
