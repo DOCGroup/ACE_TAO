@@ -83,7 +83,14 @@ find_another_host (ASYS_TCHAR other_host[])
       ACE_OS::strcpy (other_host, ASYS_WIDE_STRING (h->h_name));
 
       // @@ We really need to add wrappers for these hostent methods.
+
+      // AIX 4.3 has problems with DNS usage when sethostent(1) is called -
+      // further DNS lookups don't work at all.
+#if defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS == 3)
+      sethostent (0);
+#else
       sethostent (1);
+#endif
 
       while ((h = gethostent ()) != NULL)
         {
@@ -128,7 +135,13 @@ fail_no_listener_nonblocking (void)
 
   find_another_host (test_host);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
-  nobody_home.set ((u_short) 42000, test_host);
+  if (nobody_home.set ((u_short) 42000, test_host) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Host lookup for %s %p\n"),
+                  test_host, ASYS_TEXT ("failed")));
+      return -1;
+    }
+
   status = con.connect (sock, nobody_home, &nonblock);
 
   // Need a port that will fail.
@@ -159,7 +172,8 @@ fail_no_listener_nonblocking (void)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Test not executed fully; expected EWOULDBLOCK, %p (%d)\n"),
+                  ASYS_TEXT ("Test not executed fully; "
+                             "expected EWOULDBLOCK, %p (%d)\n"),
                   ASYS_TEXT ("not"), errno));
       status = -1;
     }
@@ -189,7 +203,12 @@ succeed_nonblocking (void)
 
   find_another_host (test_host);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
-  echo_server.set ((u_short) 7, test_host);
+  if (echo_server.set ((u_short) 7, test_host) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Host lookup for %s %p\n"),
+                  test_host, ASYS_TEXT ("failed")));
+      return -1;
+    }
   status = con.connect (sock, echo_server, &nonblock);
 
   // Need to test the call to 'complete' really.
