@@ -3537,6 +3537,21 @@ ACE_PSOS_Time_t::init_simulator_time ()
 
 #endif  /* ACE_PSOS */
 
+#if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
+extern "C" int __d6_sigwait (sigset_t *set);
+
+extern "C" int __d10_sigwait( const sigset_t *set, int *sig )
+{
+sigset_t  unconst_set = *set;
+int       caught_sig;
+
+  if ((caught_sig = __d6_sigwait(&unconst_set)) == -1)
+    return -1;
+  *sig = caught_sig;
+  return 0;
+}
+#endif /* __DGUX && PTHREADS && _POSIX4A_DRAFT10_SOURCE */
+
 #if defined (CHORUS)
 extern "C"
 void
