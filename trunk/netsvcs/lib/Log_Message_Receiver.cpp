@@ -51,7 +51,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_2>::attach (Log_Message_Receiver_Impl<ACE_SY
   // Use the "body"s print lock as copy lock.
   ACE_Guard<ACE_SYNCH_MUTEX> guard (global_copy_lock_);  
   #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-#endif
+#endif /* ACE_HAS_THREADS */
   ++body->count_;
   return body;
 }
@@ -68,7 +68,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_2>::detach(Log_Message_Receiver_Impl<ACE_SYN
   // Use the "body"s print lock as copy lock.
   ACE_Guard<ACE_SYNCH_MUTEX> guard (global_copy_lock_);  
   #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-#endif
+#endif /* ACE_HAS_THREADS */
   if (body->count_-- == 0)
     delete body;
 }

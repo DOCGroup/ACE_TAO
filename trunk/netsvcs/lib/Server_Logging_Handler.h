@@ -13,6 +13,7 @@
 //    Doug Schmidt and Per Andersson
 // 
 // ============================================================================
+
 #if !defined (ACE_SERVER_LOGGING_HANDLER_H)
 #define ACE_SERVER_LOGGING_HANDLER_H
 
@@ -86,4 +87,4 @@ typedef  Synch_Thr_Logging_Handler_Static_Receiver_Acceptor ACE_Thr_Server_Loggi
 ACE_SVC_FACTORY_DECLARE (ACE_Server_Logging_Acceptor)
 ACE_SVC_FACTORY_DECLARE (ACE_Thr_Server_Logging_Acceptor)
 
-#endif
+#endif /* ACE_SERVER_LOGGING_HANDLER_H */
