@@ -8,25 +8,12 @@ Things to do
 
 "Simple" things
 
-- Remove kerberos warnings
+- Clear the semaphores on the client and the server!
 
-+ Need to fix the following warnings:
-    "Video_Server.cpp", line 880: Warning: para hides Video_Server::para.
-    "Video_Server.cpp", line 906: Warning: para hides Video_Server::para.
-
-+ Seg fault while exiting
-  Destructor of reactor crashes the server
-  -- I think I've fixed this! Naga, can you confirm that it doesnt crash
-     anymore ?
-
-+ Parent-Child relationship
-   -- parent goes back and listens for new connections
-   -- child handles this connection
+- ORBport 0
 
 - rttag is enabled with -r
   does it work ?
-
-+ rename Mpeg_Server to AV_Server
 
 - Make #define's into enums in common.h/globals.h
 
