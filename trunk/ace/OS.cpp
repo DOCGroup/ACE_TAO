@@ -1389,6 +1389,14 @@ ACE_Thread_Adapter::inherit_log_msg (void)
       new_log->restart (this->restart_);
       new_log->trace_depth (this->trace_depth_);
     }
+
+  // @@ Now the TSS Log_Meg has been created, cache
+  // my thread descriptor in.
+
+  if (this->thr_desc_ != 0)
+    ACE_LOG_MSG->thr_desc (this->thr_desc_, this->thr_mgr_);
+  // Block the thread from proceeding until
+  // thread manager has thread descriptor ready.
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */  
 }
 
@@ -1523,11 +1531,13 @@ ace_thread_adapter (void *args)
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func, 
                                         void *arg,
                                         ACE_THR_C_FUNC entry_point,
-                                        ACE_Thread_Manager *tm)
+                                        ACE_Thread_Manager *tm,
+					ACE_Thread_Descriptor *td)
   : user_func_ (user_func),
     arg_ (arg),
     entry_point_ (entry_point),
-    thr_mgr_ (tm)
+    thr_mgr_ (tm),
+    thr_desc_ (td)
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ,
     ostream_ (NULL),

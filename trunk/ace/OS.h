@@ -3092,6 +3092,7 @@ extern "C" ACE_Export void *ace_thread_adapter (void *args);
 
 // Forward decl.
 class ACE_Thread_Manager;
+class ACE_Thread_Descriptor;
 
 class ACE_Thread_Adapter
   // = TITLE
@@ -3109,7 +3110,8 @@ public:
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
-                      ACE_Thread_Manager *tmgr = 0);
+                      ACE_Thread_Manager *tmgr = 0,
+		      ACE_Thread_Descriptor *td = 0);
   // Constructor.
 
   void *invoke (void);
@@ -3139,6 +3141,11 @@ private:
 
   ACE_Thread_Manager *thr_mgr_;
   // Optional thread manager.
+
+  ACE_Thread_Descriptor *thr_desc_;
+  // Optional thread descriptor.  Passing this pointer in will force
+  // the spawned thread to cache this location in Log_Msg and wait until
+  // Thread_Manager fills in all information in thread descriptor.
 
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   ostream *ostream_;
