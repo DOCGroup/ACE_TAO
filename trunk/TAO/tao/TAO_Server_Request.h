@@ -101,7 +101,7 @@ public:
                   size_t length,
                   int release);
 
-  /// Return the legnth of the operation.
+  /// Return the length of the operation.
   unsigned int operation_length (void) const;
   //@}
 
