@@ -12,6 +12,10 @@
 #include "Kokyu_EC.h"
 #include "Consumer.h"
 
+#include <dsui.h>
+#include "federated_config.h"
+#include "federated_dsui_families.h"
+
 namespace
 {
   int config_run = 0;
@@ -31,11 +35,12 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
+  ds_control ctrl ("Federated_Test_Consumer","federated_enabled.dsui");
 
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
-  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -154,7 +159,7 @@ main (int argc, char* argv[])
       ACE_OS::thr_setprio (thr_handle, prio);
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // ****************************************************************

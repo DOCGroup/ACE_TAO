@@ -10,10 +10,16 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event/EC_Event_Limit.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
 #include "Supplier.h"
+
+#include <dsui.h>
+#include "federated_config.h"
+#include "federated_dsui_families.h"
+
 
 namespace
 {
@@ -95,8 +101,9 @@ public:
          RtecEventChannelAdmin::Observer::_narrow(gateway_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-       RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
+      RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
          consumer_event_channel->append_observer (obs.in () ACE_ENV_ARG_PARAMETER);
+      ACE_UNUSED_ARG(local_ec_obs_handle);
       ACE_CHECK;
 
       consumer_ec->start(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -221,12 +228,13 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
+  ds_control* ds_cntl = new ds_control ("Federated_Test_Supplier","federated_enabled.dsui");
 
   TAO_EC_Kokyu_Factory::init_svcs ();
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
   //@BT
-  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -288,8 +296,13 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      //DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, m_id, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 1, 0, NULL);
+
+      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+      ACE_Time_Value ticker (20);
+      orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
+      //ACE_Reactor::instance()->run_event_loop();
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -297,17 +310,17 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       //@BT: ORB shutting down; currently, this isn't expected to happen
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
 
       //@BT: Scheduler shuts down with the EC and ORB
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
 
       // We should do a lot of cleanup (disconnect from the EC,
       // deactivate all the objects with the POA, etc.) but this is
       // just a simple demo so we are going to be lazy.
 
       //@BT: Done clean up
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
 
     }
   ACE_CATCHANY
@@ -318,7 +331,7 @@ main (int argc, char* argv[])
   ACE_ENDTRY;
 
   //@BT
-  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 
   return 0;
 }
