@@ -1,3 +1,10 @@
+Fri Aug  6 09:15:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h
+          private -> public ~JAWS_IO_Reactive_Handler (void) due to
+          aCC: HP ANSI C++ B3910B A.03.39 compiler bug not allowing
+          friend derived classes access.
+
 Fri Aug  6 08:34:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
