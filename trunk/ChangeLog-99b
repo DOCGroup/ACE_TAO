@@ -1,3 +1,8 @@
+Sun Oct 31 22:46:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Capabilities_Test.cpp (main): removed declarations
+          of unused argc and argv arguments.
+
 Sun Oct 31 16:39:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Capabilities.cpp:
@@ -8,7 +13,7 @@ Sun Oct 31 16:39:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           Added Capabilities files to MSVC projects.
 
         * tests/Capabilities_Test.cpp:
-          Was loading the wrong file, changed to loading 
+          Was loading the wrong file, changed to loading
           Capabilites_Test.cfg instead of captest.cfg.
 
         * tests/Capabilities_Test.dsp:
@@ -21,121 +26,121 @@ Sun Oct 31 16:39:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Oct 31 15:29:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Capabilities.cpp: Cleaned up some of the explicit template
-	  instantiations so they will work on all platforms.  Thanks to
- 	  Bala for pointing this out.
+        * ace/Capabilities.cpp: Cleaned up some of the explicit template
+          instantiations so they will work on all platforms.  Thanks to
+          Bala for pointing this out.
 
-	* ace/Makefile,
-	* tests/run_tests.lst,
-	  tests/Makefile (BIN): Added an entry for the new ACE_Capabilities
-	  classes.
+        * ace/Makefile,
+        * tests/run_tests.lst,
+          tests/Makefile (BIN): Added an entry for the new ACE_Capabilities
+          classes.
 
 Fri Oct 29 21:09:49 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* man/html/Makefile.am:
+        * man/html/Makefile.am:
 
-	  For some reason Automake couldn't automatically copy the HTML
-	  man pages to the distribution directory when doing a `make dist'
-	  so do it manually.
+          For some reason Automake couldn't automatically copy the HTML
+          man pages to the distribution directory when doing a `make dist'
+          so do it manually.
 
 Fri Oct 29 19:53:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am (EXTRA_DIST):
+        * Makefile.am (EXTRA_DIST):
 
-	  Removed ACE.DSW from the distribution list.
+          Removed ACE.DSW from the distribution list.
 
-	* configure.in:
+        * configure.in:
 
-	  Removed test for necessity of _GNU_SOURCE macro.  All uses and
-	  need of that feature test macro have been removed from ACE.
+          Removed test for necessity of _GNU_SOURCE macro.  All uses and
+          need of that feature test macro have been removed from ACE.
 
-	  If a thread library was detected, define _REENTRANT in the
-	  command line, not the generated config.h header.  The user can
-	  use the ace-config script to determine what other flags are
-	  needed to compile ACE.
+          If a thread library was detected, define _REENTRANT in the
+          command line, not the generated config.h header.  The user can
+          use the ace-config script to determine what other flags are
+          needed to compile ACE.
 
-	  Check for sched_yield in the librt library, if it exists, in
-	  addition to the others listed.  Solaris 7 moves sched_yield from
-	  the libposix4 library to librt.
+          Check for sched_yield in the librt library, if it exists, in
+          addition to the others listed.  Solaris 7 moves sched_yield from
+          the libposix4 library to librt.
 
-	  Added libsocket to list of libraries to search for
-	  getservbyname().
+          Added libsocket to list of libraries to search for
+          getservbyname().
 
-	  If check for socket() results in unresolved symbols, add `-lnsl'
-	  to library search.
+          If check for socket() results in unresolved symbols, add `-lnsl'
+          to library search.
 
-	  Improved ACE_HAS_PTHREAD_PROCESS_ENUM test.
+          Improved ACE_HAS_PTHREAD_PROCESS_ENUM test.
 
-	  Added checks for getpgid, strtok_r, strptime and lseek64
-	  prototypes.  The old getpgid test is superceded by a new one.  A
-	  prototype is declared if the checks determine that certain
-	  feature test macros are needed to enable them.
+          Added checks for getpgid, strtok_r, strptime and lseek64
+          prototypes.  The old getpgid test is superceded by a new one.  A
+          prototype is declared if the checks determine that certain
+          feature test macros are needed to enable them.
 
-	  Added man directory Makefiles to list of files to generate.
+          Added man directory Makefiles to list of files to generate.
 
-	* ace-config.in:
+        * ace-config.in:
 
-	  Minor updates.  Modified so that "ace" is the default library if
-	  one isn't specified.
+          Minor updates.  Modified so that "ace" is the default library if
+          one isn't specified.
 
-	* ace-config.1.in:
+        * ace-config.1.in:
 
-	  Minor updates.
+          Minor updates.
 
-	* ace/config-linux-common.h:
-	* ace/OS.h:
+        * ace/config-linux-common.h:
+        * ace/OS.h:
 
-	  Moved all prototypes to OS.h.  Only macros should be defined
-	  config headers.  Each of the moved prototypes are enabled by
-	  using the following newly added macros:
+          Moved all prototypes to OS.h.  Only macros should be defined
+          config headers.  Each of the moved prototypes are enabled by
+          using the following newly added macros:
 
-		ACE_LACKS_GETPGID_PROTOTYPE
-		ACE_LACKS_STRPTIME_PROTOTYPE
-		ACE_LACKS_STRTOK_R_PROTOTYPE
-		ACE_LACKS_LSEEK64_PROTOTYPE
+                ACE_LACKS_GETPGID_PROTOTYPE
+                ACE_LACKS_STRPTIME_PROTOTYPE
+                ACE_LACKS_STRTOK_R_PROTOTYPE
+                ACE_LACKS_LSEEK64_PROTOTYPE
 
-	  All prototypes in ace/OS.h should come after the inclusion of
-	  ace/Basic_Types.h since the prototypes may need types that are
-	  only available after that inclusion.  Also added a
-	  ACE_LACKS_PREAD_PROTOTYPE that is used to enable make both
-	  pread() and pwrite() protypes.
-	
-	  Recent glibc libraries have pread() and pwrite() but only enable
-	  the prototypes if _XOPEN_SOURCE=500 is defined (Single Unix
-	  specification).  Now define ACE_HAS_P_READ_WRITE and
-	  ACE_LACKS_PREAD_PROTOTYPE on Linux.
+          All prototypes in ace/OS.h should come after the inclusion of
+          ace/Basic_Types.h since the prototypes may need types that are
+          only available after that inclusion.  Also added a
+          ACE_LACKS_PREAD_PROTOTYPE that is used to enable make both
+          pread() and pwrite() protypes.
 
-	* bin/bootstrap:
+          Recent glibc libraries have pread() and pwrite() but only enable
+          the prototypes if _XOPEN_SOURCE=500 is defined (Single Unix
+          specification).  Now define ACE_HAS_P_READ_WRITE and
+          ACE_LACKS_PREAD_PROTOTYPE on Linux.
 
-	  Added ACE man page generation.  Generating the man pages during
-	  the bootstrapping process allows the man page list in
-	  man/man3/Makefile.am to be generated by a shell command instead
-	  of having to explicitly specify each man page in that Makefile.
-	  The man pages will only be generated if the ACE.3 man page
-	  doesn't exist.  That man page should be representative of the
-	  existence of the rest of the man pages.
+        * bin/bootstrap:
 
-	* man/Makefile.am:
-	* man/html/Makefile.am:
-	* man/man3/Makefile.am:
+          Added ACE man page generation.  Generating the man pages during
+          the bootstrapping process allows the man page list in
+          man/man3/Makefile.am to be generated by a shell command instead
+          of having to explicitly specify each man page in that Makefile.
+          The man pages will only be generated if the ACE.3 man page
+          doesn't exist.  That man page should be representative of the
+          existence of the rest of the man pages.
 
-	  Added Automake input files for the ACE man pages.  The man pages
-	  will now be installed during a `make install'.  This is an
-	  ACE Configuration Project specific enhancement.  ACE's current
-	  man page scheme is unchanged, and doesn't support this feature.
+        * man/Makefile.am:
+        * man/html/Makefile.am:
+        * man/man3/Makefile.am:
 
-	* m4/features.m4:
+          Added Automake input files for the ACE man pages.  The man pages
+          will now be installed during a `make install'.  This is an
+          ACE Configuration Project specific enhancement.  ACE's current
+          man page scheme is unchanged, and doesn't support this feature.
 
-	  Delete test_aio.log when the test is done.
+        * m4/features.m4:
+
+          Delete test_aio.log when the test is done.
 
 Fri Oct 29 17:01:58 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/OS.h: Added ACE_DEFAULT_SHLIB_MODE for KCC. Since this mode
- 	  wasnt right the DLL_Test failed when compiled using the KAI
-	  compiler. This change fixes this problem too. Thanks to Nanbor
- 	  <nanbor@cs.wustl.edu> and Michael Kircher
-	  <michael.kircher@mchp.siemens.de> for helping me on this task.
-	
+        * ace/OS.h: Added ACE_DEFAULT_SHLIB_MODE for KCC. Since this mode
+          wasnt right the DLL_Test failed when compiled using the KAI
+          compiler. This change fixes this problem too. Thanks to Nanbor
+          <nanbor@cs.wustl.edu> and Michael Kircher
+          <michael.kircher@mchp.siemens.de> for helping me on this task.
+
 Fri Oct 29 07:08:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU,
