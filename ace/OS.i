@@ -2028,20 +2028,20 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
 #   else  /* ACE_HAS_PTHREADS */
 
-  // @@ Apparently only POSIX threads have the timed lock
-  //    functionality.
+  // @@ Are there any other platforms that support timed lock
+  //    acquisitions.
 
+  ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
-  return ACE_OS::mutex_trylock (m);  // The best that we can do is try
-                                     // to grab the lock.
+  ACE_NOTSUP_RETURN (-1);
 
 #   endif  /* ACE_HAS_PTHREADS */
 
 # else  /* ACE_HAS_MUTEX_TIMEOUTS */
 
+  ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
-  return ACE_OS::mutex_trylock (m);  // The best that we can do is try
-                                     // to grab the lock.
+  ACE_NOTSUP_RETURN (-1);
 
 # endif /* ACE_HAS_MUTEX_TIMEOUTS */
 
