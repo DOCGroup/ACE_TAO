@@ -16,6 +16,7 @@ TAO::TypeCode::Enumerator<STRING_TYPE>::get_name (void) const
 // conversions.
 // -----------------------------------------------------------------
 
+template<>
 ACE_INLINE char const *
 TAO::TypeCode::Enumerator<CORBA::String_var>::get_name (void) const
 {
