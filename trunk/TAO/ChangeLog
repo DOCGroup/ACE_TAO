@@ -1,3 +1,25 @@
+Sun Aug 11 23:17:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ORT.idl:
+
+	  New IDL file that defines a TAO load balancer specific
+	  ObjectReferenceFactory ValueType.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+	  New IORInterceptor that sets the TAO load balancer specific
+	  ObjectReferenceFactory for a given object adapter.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+
+	  TAO load balancer specific ObjectReferenceFactory that creates
+	  an object group for a member of the given repository ID (if
+	  instructed to do so), creates an "unpublished" reference for
+	  that member, and adds it to the object group via the
+	  LoadManager.
+
 Sat Aug 10 17:09:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/PSS/PSS.dsw:
