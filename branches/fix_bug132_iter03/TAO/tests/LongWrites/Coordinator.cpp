@@ -5,8 +5,11 @@
 
 ACE_RCSID(LongWrites, Coordinator, "$Id$")
 
-Coordinator::Coordinator (void)
-  : shutdown_called_ (0)
+Coordinator::Coordinator (CORBA::ULong initial_payload_size,
+                          CORBA::Long test_iterations)
+  : initial_payload_size_ (initial_payload_size)
+  , test_iterations_ (test_iterations)
+  , shutdown_called_ (0)
   , pairs_count_ (0)
   , pairs_length_ (16)
 {
@@ -59,12 +62,13 @@ Coordinator::start (CORBA::Environment &ACE_TRY_ENV)
         }
     }
 
-  CORBA::ULong event_size = 256 * 1024;
+  CORBA::ULong event_size = this->initial_payload_size_;
   ACE_DEBUG ((LM_DEBUG, "Running with payload = %d\n",
               event_size));
   for (size_t j = 0; j != this->pairs_count_; ++j)
     {
-      this->pairs_[j].sender->send_events (100, event_size,
+      this->pairs_[j].sender->send_events (this->test_iterations_,
+                                           event_size,
                                            ACE_TRY_ENV);
       ACE_CHECK;
     }

@@ -19,7 +19,11 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
   : mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    current_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
+    // @@ This doesn't seem to work. The problem comes when we extract
+    // data portion from this buffer in the skeleton. Why?? Needs
+    // investigation.
+    // current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
     supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
     message_state_ (orb_core),
     orb_core_ (orb_core)
@@ -167,7 +171,8 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
+                    ACE_TEXT ("TAO (%P|%t) bad header, "
+                              "magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -218,9 +223,9 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
 
   if ((align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
       {
-        size_t size = ACE_CDR::MAX_ALIGNMENT + 
-	              x + 
-		      TAO_GIOP_MESSAGE_HEADER_LEN;
+        size_t size = ACE_CDR::MAX_ALIGNMENT +
+                      x +
+                      TAO_GIOP_MESSAGE_HEADER_LEN;
 
         // @@ This must come off the allocator. For some reason when I
         // use the allocator things go for a toss. Need to revisit
@@ -504,13 +509,30 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
       return -1;
     }
 
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_Handler::read_messages"
+                  " received %d bytes\n",
+                  n));
+
+      size_t len;
+      for (size_t offset = 0; offset < size_t(n); offset += len)
+        {
+          len = n - offset;
+          if (len > 512)
+            len = 512;
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         this->current_buffer_.wr_ptr () + offset,
+                         len,
+                         "TAO (%P|%t) - read_messages "));
+        }
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
+    }
+
   // Now we have a succesful read. First adjust the write pointer
   this->current_buffer_.wr_ptr (n);
 
-  if (TAO_debug_level > 8)
-    {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
-    }
 
   return 0;
 

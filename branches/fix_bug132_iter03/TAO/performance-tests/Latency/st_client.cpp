@@ -129,11 +129,11 @@ main (int argc, char *argv[])
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-	  if (period != -1)
-	    {
-	      ACE_Time_Value tv (0, period * 1000);
-	      ACE_OS::sleep (tv);
-	    }
+          if (period != -1)
+            {
+              ACE_Time_Value tv (0, period * 1000);
+              ACE_OS::sleep (tv);
+            }
         }
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
@@ -161,6 +161,9 @@ main (int argc, char *argv[])
           server->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

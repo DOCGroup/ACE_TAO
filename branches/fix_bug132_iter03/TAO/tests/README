@@ -13,6 +13,10 @@ how to run the following tests:
           This is a simple test for AMI callback model in combination with
           timeouts (relative roundtrip timeout policy).
 
+	. Big_Oneways
+
+	  Stress test non-blocking I/O features in the ORB.
+
         . Bidirectional
 
           This is a test that exercises the birectional GIOP connection

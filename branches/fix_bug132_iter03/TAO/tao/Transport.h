@@ -9,7 +9,6 @@
  *  Define the interface for the Transport component in TAO's
  *  pluggable protocol framework.
  *
- *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
@@ -23,6 +22,7 @@
 #include "Exception.h"
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
+#include "ace/Strategies.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,10 +35,7 @@ class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 
-#include "ace/Message_Queue.h"
-#include "ace/Strategies.h"
-
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
+class TAO_Queued_Message;
 
 class TAO_Export TAO_Synch_Refcountable : private ACE_Refcountable
 {
@@ -55,7 +52,6 @@ protected:
 
   TAO_SYNCH_MUTEX mutex_;
 };
-
 
 /**
  * @class TAO_Transport
@@ -94,10 +90,10 @@ protected:
  * transport may already be sending another message in a reactive
  * fashion.
  *
- * Consequently, the Transport must also keep a
- * <TT>current_message</TT>, if the current message is not null any
- * new messages must be queued.  Only once the current message is
- * completely sent we can take a message out of the queue.
+ * Consequently, the Transport must also know if the head of the queue
+ * has been partially sent.  In that case new messages can only follow
+ * the head. Only once the head is completely sent we can start
+ * sending new messages.
  *
  * <H4>Waiting threads:</H4> One or more threads can be blocked
  * waiting for the connection to completely send the message.
@@ -145,11 +141,6 @@ protected:
  */
 class TAO_Export TAO_Transport : private TAO_Synch_Refcountable
 {
-
-  friend class TAO_Transport_Sync_Strategy;
-  friend class TAO_Eager_Buffering_Sync_Strategy;
-  friend class TAO_Delayed_Buffering_Sync_Strategy;
-
 public:
   /// default creator, requres the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
@@ -192,6 +183,17 @@ public:
    */
   TAO_Wait_Strategy *wait_strategy (void) const;
 
+  /// Callback method to reactively drain the outgoing data queue
+  int handle_output (void);
+
+  /**
+   * Return the TSS leader follower condition variable used in the
+   * Wait Strategy. Muxed Leader Follower implementation returns a
+   * valid condition variable, others return 0.
+   */
+  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
+
+#if 0
   /// Send a request or queue it for later.
   /**
    * If the right policies are set queue the request for later.
@@ -234,6 +236,10 @@ public:
   /// Send any messages that have been buffered.
   // @@ lockme
   ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
+
+  /// Send any messages that have been buffered.
+  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
+#endif /* 0 */
 
   /**
    * Initialising the messaging object. This would be used by the
@@ -340,9 +346,9 @@ public:
    * down).  In that case, it returns -1 and sets errno to
    * <code>ENOENT</code>.
    */
-  ssize_t send (const ACE_Message_Block *mblk,
-                const ACE_Time_Value *timeout = 0,
-                size_t *bytes_transferred = 0);
+  ssize_t send (iovec *iov, int iovcnt,
+                size_t &bytes_transferred,
+                const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
   /**
@@ -429,9 +435,9 @@ protected:
    * bytes already on the OS I/O subsystem.
    *
    */
-  virtual ssize_t send_i (const ACE_Message_Block *mblk,
-                          const ACE_Time_Value *timeout = 0,
-                          size_t *bytes_transferred = 0) = 0;
+  virtual ssize_t send_i (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *timeout = 0) = 0;
 
   // Read len bytes from into buf.
   /**
@@ -589,8 +595,6 @@ public:
    */
   virtual int reactor_signalling (void);
 
-  //@}
-
   /// Method for the connection handler to signify that it
   /// is being closed and destroyed.
   virtual void connection_handler_closing (void);
@@ -598,14 +602,18 @@ public:
   /// Register the associated connection handler with the reactor
   /// for a timer.
   /**
-   * At this point, only <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code>
-   * uses this, and it's unclear whether it needs to stay around.  But, it's here
-   * because it uses the associated protocol-specific connection handler, and accesses
-   * to that must be serialized on the internal lock.
+   * At this point, only
+   * <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code> 
+   * uses this, and it's unclear whether it needs to stay around.
+   * But, it's here because it uses the associated protocol-specific
+   * connection handler, and accesses to that must be serialized on
+   * the internal lock. 
    *
-   * @param arg argument passed to the handle_timeout() method of the event handler
+   * @param arg argument passed to the handle_timeout() method of the
+   *        event handler 
    * @param delay  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @param interval  time interval after which the timer will be
+   *        automatically rescheduled 
    * @return -1 on failure, a Reactor timer_id value on success
    *
    * @see ACE_Reactor::schedule_timer()
@@ -615,7 +623,6 @@ public:
                                  const ACE_Time_Value &delay,
                                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
-
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
   static void release (TAO_Transport* transport);
@@ -624,14 +631,34 @@ public:
   int recache_transport (TAO_Transport_Descriptor_Interface* desc);
 
   /// Set/Get the Cache Map entry
-  void cache_map_entry (
-    TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+  void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+
+  /// Send a message block chain,
+  int send_message_block_chain (const ACE_Message_Block *message_block,
+                                size_t &bytes_transferred,
+                                ACE_Time_Value *max_wait_time = 0);
+
+  /// Sent the contents of <message_block>, blocking if required by
+  /// the twoway flag or by the current policies in the stub.
+  int send_message_i (TAO_Stub *stub,
+                      int twoway_flag,
+                      const ACE_Message_Block *message_block,
+                      ACE_Time_Value *max_wait_time);
 
   //  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *& cache_map_entry (void);
 
+  /// Cache management
   void mark_invalid (void);
 
+  /// Cache management
   int make_idle (void);
+
+  /// Schedule handle_output() callbacks
+  int schedule_output (void);
+
+  /// Cancel handle_output() callbacks
+  int cancel_output (void);
 
 protected:
   // @@ see if one of these calls send_message()
@@ -654,6 +681,20 @@ protected:
                       int queued_message);
 
 private:
+
+  /// Try to send the current message.
+  /**
+   * As the outgoing data is drained this method is invoked to send as
+   * much of the current message as possible.
+   *
+   * Returns 0 if there is more data to send, -1 if there was an error
+   * and 1 if the message was completely sent.
+   */
+  int send_current_message (void);
+
+  /// Copy the contents of a message block into a Queued_Message
+  TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
@@ -676,6 +717,7 @@ protected:
   /// Strategy for waiting for the reply after sending the request.
   TAO_Wait_Strategy *ws_;
 
+#if 0
   /// Queue for buffering transport messages.
   TAO_Transport_Buffering_Queue *buffering_queue_;
 
@@ -684,6 +726,7 @@ protected:
 
   /// Buffering timeout value.
   ACE_Time_Value buffering_timeout_value_;
+#endif /* 0 */
 
   /// Use to check if bidirectional info has been synchronized with
   /// the peer.
@@ -706,6 +749,13 @@ protected:
    * if the server receives the info.
    */
   int bidirectional_flag_;
+
+  /// Synchronize access to the outgoing data queue
+  TAO_SYNCH_MUTEX queue_mutex_;
+
+  /// Implement the outgoing data queue
+  TAO_Queued_Message *head_;
+  TAO_Queued_Message *tail_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.
