@@ -2800,19 +2800,7 @@ SOURCE=.\Codeset_Translator_Factory_T.cpp
 # Begin Source File
 
 SOURCE=.\Connector_Impl.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

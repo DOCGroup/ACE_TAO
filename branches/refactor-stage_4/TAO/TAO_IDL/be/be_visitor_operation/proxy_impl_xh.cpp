@@ -23,8 +23,23 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "static void" << be_nl
-      << node->local_name () << " (" << be_idt << be_idt_nl
+  *os << "static void" << be_nl;
+
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
+      else
+        {
+          *os << "_get_";
+        }
+    }
+
+  *os << node->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Object_out obj_forward," << be_nl
       << "TAO::Argument ** args," << be_nl

@@ -32,48 +32,34 @@ TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.mode = CORBA::PARAM_IN;
 }
 
-template<typename S, typename S_slice, typename S_forany>
-CORBA::Boolean
-TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_;
-}
-
 // ===========================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::Inout_Var_Array_Argument_T<S,S_forany>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::marshal (
+    TAO_OutputCDR & cdr
+  )
 {
   return cdr << this->x_;
 }
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::Inout_Var_Array_Argument_T<S,S_forany>::demarshal (TAO_InputCDR & cdr)
+TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::demarshal (
+    TAO_InputCDR & cdr
+  )
 {
   return cdr >> this->x_;
 }
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 void
-TAO::Inout_Var_Array_Argument_T<S,S_forany>::interceptor_param (
+TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
     Dynamic::Parameter & p
   )
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_INOUT;
-}
-
-template<typename S, typename S_forany>
-CORBA::Boolean
-TAO::Inout_Var_Array_Argument_T<S,S_forany>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_;
 }
 
 // ==============================================================
@@ -94,6 +80,19 @@ TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::demarshal (
                         0);
   S_forany tmp (this->x_);
   return cdr >> tmp;
+}
+
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_out, 
+         typename S_forany>
+void
+TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::
+interceptor_param (Dynamic::Parameter & p)
+{
+  p.argument <<= this->x_;
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ============================================================
@@ -122,15 +121,6 @@ interceptor_result (CORBA::Any * any)
   (*any) <<= S_forany (this->x_.ptr ());
 }
 
-template<typename S, typename S_slice, typename S_var, typename S_forany>
-CORBA::Boolean
-TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
-interceptor_replace (CORBA::Any & any)
-{
-  S_forany tmp (this->x_.ptr ());
-  return any >>= tmp;
-}
-
 // ============================================================
 
 template<typename S, typename S_forany>
@@ -149,16 +139,6 @@ TAO::In_Var_Array_SArgument_T<S,S_forany>::interceptor_param (
 {
   p.argument <<= S_forany (this->x_);
   p.mode = CORBA::PARAM_IN;
-}
-
-template<typename S, typename S_forany>
-CORBA::Boolean
-TAO::In_Var_Array_SArgument_T<S,S_forany>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  S_forany tmp (this->x_);
-  return any >>= tmp;
 }
 
 // ===========================================================
@@ -188,16 +168,6 @@ TAO::Inout_Var_Array_SArgument_T<S,S_forany>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S, typename S_forany>
-CORBA::Boolean
-TAO::Inout_Var_Array_SArgument_T<S,S_forany>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  S_forany tmp (this->x_);
-  return any >>= tmp;
-}
-
 // ==============================================================
 
 template<typename S_slice, typename S_var, typename S_forany>
@@ -207,6 +177,16 @@ TAO::Out_Var_Array_SArgument_T<S_slice,S_var,S_forany>::marshal (
   )
 {
   return cdr << S_forany (this->x_.ptr ());
+}
+
+template<typename S_slice, typename S_var, typename S_forany>
+void
+TAO::Out_Var_Array_SArgument_T<S_slice,S_var,S_forany>::interceptor_param (
+    Dynamic::Parameter & p
+  )
+{
+  p.argument <<= S_forany (this->x_);
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ============================================================
@@ -227,15 +207,6 @@ TAO::Ret_Var_Array_SArgument_T<S_slice,S_var,S_forany>::interceptor_result (
   )
 {
   (*any) <<= S_forany (this->x_.ptr ());
-}
-
-template<typename S_slice, typename S_var, typename S_forany>
-CORBA::Boolean
-TAO::Ret_Var_Array_SArgument_T<S_slice,S_var,S_forany>::
-interceptor_replace (CORBA::Any & any)
-{
-  S_forany tmp (this->x_.ptr ());
-  return any >>= tmp;
 }
 
 #endif /* TAO_VAR_ARRAY_ARGUMENT_T_C */

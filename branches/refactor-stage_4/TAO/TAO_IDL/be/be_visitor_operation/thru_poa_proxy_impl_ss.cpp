@@ -52,8 +52,23 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << intf->full_thru_poa_proxy_impl_name () << "::"
-      << node->local_name () << " (" << be_idt << be_idt_nl
+      << intf->full_thru_poa_proxy_impl_name () << "::";
+
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
+      else
+        {
+          *os << "_get_";
+        }
+    }
+
+  *os << node->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Object_out forward," << be_nl
       << "TAO::Argument ** args," << be_nl

@@ -52,7 +52,6 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual void interceptor_result (CORBA::Any *);
-    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
   };
 
 }
