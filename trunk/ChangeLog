@@ -1,3 +1,11 @@
+Fri May  2 20:07:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * include/makeinclude/ace_flags.bor:
+
+          Added some flag and lib definitions that will be used by
+          BCB with the new TAO libraries that will appear in a 
+          forthcoming CVS branch merge.
+
 Fri May  2 08:45:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
