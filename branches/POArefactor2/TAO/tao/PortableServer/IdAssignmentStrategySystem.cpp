@@ -23,7 +23,7 @@ namespace TAO
     bool
     System_Id_Assignment_Strategy::has_system_id (void) const
     {
-      return false;
+      return true;
     }
   }
 }
