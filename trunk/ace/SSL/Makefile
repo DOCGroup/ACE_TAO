@@ -860,7 +860,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i
 
 .obj/SSL_Asynch_Stream.o .obj/SSL_Asynch_Stream.so .shobj/SSL_Asynch_Stream.o .shobj/SSL_Asynch_Stream.so: SSL_Asynch_Stream.cpp SSL_Asynch_Stream.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Context.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h SSL_Context.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1028,7 +1028,8 @@ endif
   $(ACE_ROOT)/ace/Message_Block.i \
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp SSL_Asynch_BIO.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  SSL_Asynch_BIO.h \
   $(ACE_ROOT)/ace/POSIX_Proactor.h \
   $(ACE_ROOT)/ace/Proactor_Impl.h \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -1144,8 +1145,9 @@ endif
   $(ACE_ROOT)/ace/pre.h SSL_Export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl SSL_Asynch_Stream.h \
-  SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  SSL_Asynch_Stream.h SSL_Context.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
