@@ -1,112 +1,117 @@
+Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Use Queued_Message_Test/run_test.pl
+
 Tue May  1 21:38:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Carlton Teel to the hall of fame.
+        * THANKS: Added Carlton Teel to the hall of fame.
 
 Tue May  1 11:05:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/MEM_Stream_Test.cpp (handle_input):
+        * tests/MEM_Stream_Test.cpp (handle_input):
 
-	  Fixed syntax error.  "ACE_TCHAR," not "ACE_CHAR."
+          Fixed syntax error.  "ACE_TCHAR," not "ACE_CHAR."
 
 Tue May  1 09:57:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Activation_Queue.cpp (enqueue): Clarified the behavior
-	  of passing sizeof (*mr).  Thanks to Guy Bolton King
- 	  <guy_bolton_king@non.agilent.com>
+        * ace/Activation_Queue.cpp (enqueue): Clarified the behavior
+          of passing sizeof (*mr).  Thanks to Guy Bolton King
+          <guy_bolton_king@non.agilent.com>
 
 Tue May  1 07:13:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst : Sun CC 5.1 cannot work with
-	  Simple_Naming test. Made sure that this test does not run with
-	  Sun CC 5.1.
+        * bin/auto_run_tests.lst : Sun CC 5.1 cannot work with
+          Simple_Naming test. Made sure that this test does not run with
+          Sun CC 5.1.
 
 Tue May  1 06:15:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Manager_Ex): Fixed
-	  an erroneous comment.  Thanks to Mark Drijver
- 	  <mdrijver@remedy.nl> for finding this.
+        * ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Manager_Ex): Fixed
+          an erroneous comment.  Thanks to Mark Drijver
+          <mdrijver@remedy.nl> for finding this.
 
-	* ace/Local_Name_Space_T.cpp (create_manager_i): It's now valid
-	  to use fixed mmap addresses on Win9x.  Thanks to Cristian Ferretti
- 	  <cristian_ferretti@yahoo.com> for these fixes.
+        * ace/Local_Name_Space_T.cpp (create_manager_i): It's now valid
+          to use fixed mmap addresses on Win9x.  Thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com> for these fixes.
 
-	* ace/Mem_Map.{h,i},
-  	* ace/ace_wchar.h,
-	* ace/OS.{h,i}: Added support to the ACE_OS::mmap() function and
-	  ACE_Mem_Map class so they work properly on Win9x.  Thanks to
- 	  Cristian Ferretti <cristian_ferretti@yahoo.com> for these fixes.
+        * ace/Mem_Map.{h,i},
+        * ace/ace_wchar.h,
+        * ace/OS.{h,i}: Added support to the ACE_OS::mmap() function and
+          ACE_Mem_Map class so they work properly on Win9x.  Thanks to
+          Cristian Ferretti <cristian_ferretti@yahoo.com> for these fixes.
 
-	* tests/Malloc_Test.cpp (main): Updated this test so that it
-	  doesn't try to do any remapping or alternative child address
- 	  ranges on Win9x.  Thanks to Cristian Ferretti
- 	  <cristian_ferretti@yahoo.com> for pointing this out.
+        * tests/Malloc_Test.cpp (main): Updated this test so that it
+          doesn't try to do any remapping or alternative child address
+          ranges on Win9x.  Thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com> for pointing this out.
 
-	* tests/MEM_Stream_Test.cpp (handle_input): Make sure to multiple
-	  MAXPATHLEN * sizeof (ACE_CHAR) to handle Unicode properly.
-  	  Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
- 	  pointing this out.
+        * tests/MEM_Stream_Test.cpp (handle_input): Make sure to multiple
+          MAXPATHLEN * sizeof (ACE_CHAR) to handle Unicode properly.
+          Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
+          pointing this out.
 
 Mon Apr 30 12:56:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst : Removed RAPI of the scoreboard.
+        * bin/nightlybuilds/builds.lst : Removed RAPI of the scoreboard.
 
 Sun Apr 29 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added a flag to the Pluggable UDP test, so that it does not
-	  get run in environments using only statically linked libraries.
+          Added a flag to the Pluggable UDP test, so that it does not
+          get run in environments using only statically linked libraries.
 
 Sun Apr 29 11:44:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ace_wchar.h: Reverted the following change 
-  
+        * ace/ace_wchar.h: Reverted the following change
+
           Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
           * ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
             Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
-  
+
           This change is confusing since it's inconsistent with other
-	  platforms that enable ACE_TEXT_WIDE.
+          platforms that enable ACE_TEXT_WIDE.
 
 Thu Apr 26 20:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR): 
-	* ace/CDR_Stream.cpp: Added a new method steal_data () which
-	  replaces data blocks from one InputCDR stream to another. This
-	  is a slightly modified form of steal_from () which basically
-	  creates a new data block for the source stream. Creating a new
-	  data block incurs the unwanted malloc overhead. 
+        * ace/CDR_Stream.h (ACE_InputCDR):
+        * ace/CDR_Stream.cpp: Added a new method steal_data () which
+          replaces data blocks from one InputCDR stream to another. This
+          is a slightly modified form of steal_from () which basically
+          creates a new data block for the source stream. Creating a new
+          data block incurs the unwanted malloc overhead.
 
 Thu Apr 26 12:37:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/README: Updated the list of tests that do not work on
-	  windows 9x/ME for their limited shared memory support.  Thanks
-	  to Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
-	  them out.
+        * tests/README: Updated the list of tests that do not work on
+          windows 9x/ME for their limited shared memory support.  Thanks
+          to Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
+          them out.
 
 Thu Apr 26 12:30:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Containers_T.h Updated documentation for
-	  ACE_DLList_*Iterator's on the use of method
-	  <advance_and_remove>.  Users are responsible for release
-	  (free'ing) the returned element.  Thanks to Rachel G. Smith
-	  <Rachel_G_Smith@raytheon.com> for motivating the change.
+        * ace/Containers_T.h Updated documentation for
+          ACE_DLList_*Iterator's on the use of method
+          <advance_and_remove>.  Users are responsible for release
+          (free'ing) the returned element.  Thanks to Rachel G. Smith
+          <Rachel_G_Smith@raytheon.com> for motivating the change.
 
 Thu Apr 26 07:58:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Prevented the BiDirectional tests from
-	  running in the Minimum nightly builds.
+        * bin/auto_run_tests.lst: Prevented the BiDirectional tests from
+          running in the Minimum nightly builds.
 
 Thu Apr 26 07:48:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/MEM_IO.h (ACE_MEM_IO): Some cosmetic fixes.
+        * ace/MEM_IO.h (ACE_MEM_IO): Some cosmetic fixes.
 
 Thu Apr 26 07:38:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp: Fixed a compile
-	  error. The ACE_MEM_IO::fini () was taking an integer
-	  value. There was no method with a signature fini (int). Removed
-	  the integer argument.
+        * examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp: Fixed a compile
+          error. The ACE_MEM_IO::fini () was taking an integer
+          value. There was no method with a signature fini (int). Removed
+          the integer argument.
 
 Wed Apr 25 23:24:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -117,11 +122,11 @@ Wed Apr 25 23:24:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/MEM_IO.cpp:
         * ace/MEM_IO.h:
         * ace/MEM_IO.i: Do not compile MT signaling code if only SysV
-	  semaphores are available.
+          semaphores are available.
 
         * ace/MEM_Acceptor.cpp:
         * ace/MEM_Connector.cpp: Force the other party to use Reactive
-	  signaling if we don't support MT signaling.
+          signaling if we don't support MT signaling.
 
 Wed Apr 25 19:48:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -167,11 +172,11 @@ Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 Wed Apr 25 03:15:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Malloc.h: Added new variables to reference counting the
-	  Malloc.
+          Malloc.
 
         * ace/PI_Malloc.h: Added new variables to reference counting the
-	  Malloc and removed a ton of duplicated code that had already
-	  been defined in Malloc.h.
+          Malloc and removed a ton of duplicated code that had already
+          been defined in Malloc.h.
 
         * ace/Malloc_T.cpp:
         * ace/Malloc_T.h:
