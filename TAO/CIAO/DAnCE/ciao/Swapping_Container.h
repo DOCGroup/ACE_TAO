@@ -47,6 +47,10 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CORBA::Object_ptr get_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     /// Create POA  for the component.

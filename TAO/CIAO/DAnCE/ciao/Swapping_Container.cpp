@@ -5,7 +5,7 @@
 #include "ace/DLL.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
-#include "Dynamic_Component_Activator.h"
+//#include "Dynamic_Component_Activator.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Swapping_Container.inl"
@@ -18,7 +18,7 @@ namespace CIAO
   Swapping_Container::serial_number_ (0);
 
   Swapping_Container::Swapping_Container (CORBA::ORB_ptr o)
-  : Container (o),
+  : Session_Container (o),
     number_ (0)
   {
   }
@@ -125,5 +125,6 @@ namespace CIAO
         this->dsa_
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+
   }
 }
