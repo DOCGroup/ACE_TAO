@@ -192,22 +192,27 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
       files.<p>
 
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
-      by default, though it is not required.  IP multicasting is enabled
-      by default in the RedHat 5.1 kernel.  In older distributions, you
-      can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
-      enabled.  The ACE config file, <code>ace/config-linux-common.h</code>,
-      expects IP multicast to be enabled; if not, please comment out
-      the <code>#define ACE_HAS_IP_MULTICAST</code> before building ACE.<p>
-
-      At runtime, there must be a network interface that is up and
-      supports multicast in order to use it.  See the description of
-      the <code>multicast</code> option in the Linux <code>ifconfig</code>
-      man page for a bit more information.
-      <a href="http://www.cs.wustl.edu/~nanbor/">Nanbor</a> notes that adding
-      an mcast routing table entry, <em>e.g.</em>, in your
-      <code>rc.local</code> or <code>rc.inet1</code> startup script,
-      allows multicast to work on an Ethernet interface:
-          <code>route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code><p>
+      by default, though it is not required.  IP multicast on Linux
+      requires the following:<p>
+      <ul>
+        <li>Enable IP multicast in the Linux kernel.  It is enabled in
+            the default RedHat 5.1 kernel.  In older distributions, you
+            can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
+            enabled.<p>
+        <li>Enable IP multicast in ACE.  It is enabled by default in
+            <code>ace/config-linux-common.h</code>.  If you don't
+            use IP multicast, please comment out the
+            <code>#define ACE_HAS_IP_MULTICAST</code> before building ACE.<p>
+        <li>There must be a network interface that is up and supports
+            multicast.  If you have linuxconf, it's easiest to use that
+            to add a network route for multicast (224.0.0.0) on one of
+            your network interfaces, such as <code>eth0</code>.  If
+            you don't have or use linuxconf, try adding a multicast
+            routing table entry using something like this:<p>
+            <pre>
+             <code># route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code>
+            </pre><p>
+      </ul>
 
       With RedHat 5.0, you'll need some
       <a href="os-patches/linux-patches.html">updates and possibly some
@@ -221,7 +226,8 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
       and set your PATH and LD_LIBRARY_PATH accordingly.<p>
 
       Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
-      such as RedHat 4.2.<p>
+      such as RedHat 4.2.  The problems are with threads and thread-specific
+      storage.<p>
 
   <LI><B>SCO UNIX</B><P>
 
