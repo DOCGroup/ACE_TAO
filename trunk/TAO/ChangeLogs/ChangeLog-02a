@@ -1,3 +1,17 @@
+Sun Mar 18 08:53:34 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
+
+	  Export the TAO_Security_Current_Impl class on MS Windows
+	  builds.  Fixes a link-time "unresolved symbol" error.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: 
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Don't bother compiling SSLIOPS.cpp.  It is empty since
+	  SSLIOP.idl does not define remote interfaces.
+
 Sat Mar 17 19:36:02 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/{client,server}.cpp: Changed "true" to 1 
