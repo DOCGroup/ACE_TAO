@@ -31,9 +31,13 @@ TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 BE_GlobalData::BE_GlobalData (void)
   : removing_ (I_FALSE),
     holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
+    filename_ (0),
     enable_locking_ (I_FALSE),
     do_included_files_ (I_TRUE)
 {
+  // At this point, the FE has been initialized.  We can
+  // now instruct it that we want to preserve c++ keywords.
+  idl_global->preserve_cpp_keywords (I_TRUE);
 }
 
 BE_GlobalData::~BE_GlobalData (void)

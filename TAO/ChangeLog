@@ -1,3 +1,11 @@
+Fri Dec 17 08:15:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/be_global.cpp:
+
+          During construction of BE_GlobalData, set preserve_cpp_keywords on
+          the idl_global to true.  It is set to false during FE
+          initialization.
+
 Fri Dec 17 06:45:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/drv_args.cpp:
