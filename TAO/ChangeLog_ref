@@ -1,3 +1,19 @@
+Mon Oct 27 19:14:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/Service_Callbacks.cpp:
+	* tao/Service_Callbacks.h: 
+	
+	  Fixed the FT to use the latest and greatest stuff in ORB core. 
+
+
 Mon Oct 27 17:55:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORManipulation/IORC.cpp:

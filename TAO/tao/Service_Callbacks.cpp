@@ -59,9 +59,9 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
   return 0;
 }
 
-int
+TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
-    TAO_GIOP_Invocation * /*invoke*/,
+    IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
     ACE_ENV_ARG_DECL)
 {
@@ -73,9 +73,9 @@ TAO_Service_Callbacks::raise_comm_failure (
       2);
 }
 
-int
+TAO::Invocation_Status
 TAO_Service_Callbacks::raise_transient_failure (
-    TAO_GIOP_Invocation * /*invoke*/,
+    IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
     ACE_ENV_ARG_DECL)
 {
