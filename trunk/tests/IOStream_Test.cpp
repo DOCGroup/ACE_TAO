@@ -313,7 +313,8 @@ server (void *arg = 0)
   while (client_handler &&
          (buf.length() == 0 || buf[buf.length() - 1] != '"'))
     {
-      client_handler >> buf;
+      if (!(client_handler >> buf))
+        break;
 
       if (buf.length() > 0)
         ACE_DEBUG ((LM_DEBUG, "%s ", buf.c_str()));
@@ -329,7 +330,8 @@ server (void *arg = 0)
   while (ACE_OS::strlen (buf) == 0
          || buf[ACE_OS::strlen (buf) - 1] != '"')
     {
-      client_handler >> buf;
+      if (!(client_handler >> buf))
+        break;
       ACE_DEBUG ((LM_DEBUG, "%s ", buf));
     }
 
