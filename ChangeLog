@@ -1,3 +1,115 @@
+Thu Mar 28 23:47:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS.h:
+        * ace/OS.cpp:
+          Fixed WinCE entry point definitions, and factored out Unicode format
+          checking parts as a separate function for both WinCE and Unicode builds.
+
+        * ace/config-WinCE.h:
+          Commented out the part that 'forces' WinCE to use DLL only.  The
+          'commented out' part has been left for possible future reference.
+
+        * tests/test_config.h:
+          Changed path settings for WinCE file system as CE only supports absolute-
+          path and does not have concept of './'.
+
+        * tests/tests_WinCE.vcw:
+        * tests/ARGV_Test_WinCE.vcp:
+        * tests/Atomic_Op_Test_WinCE.vcp:
+        * tests/Auto_IncDec_Test_WinCE.vcp:
+        * tests/Barrier_Test_WinCE.vcp:
+        * tests/Basic_Types_Test_WinCE.vcp:
+        * tests/Bound_Ptr_Test_WinCE.vcp:
+        * tests/Buffer_Stream_Test_WinCE.vcp:
+        * tests/Cached_Accept_Conn_Test_WinCE.vcp:
+        * tests/Cached_Conn_Test_WinCE.vcp:
+        * tests/Cache_Map_Manager_Test_WinCE.vcp:
+        * tests/Capabilities_Test_WinCE.vcp:
+        * tests/CDR_Array_Test_WinCE.vcp:
+        * tests/CDR_File_Test_WinCE.vcp:
+        * tests/CDR_Test_WinCE.vcp:
+        * tests/Collection_Test_WinCE.vcp:
+        * tests/Conn_Test_WinCE.vcp:
+        * tests/DLList_Test_WinCE.vcp:
+        * tests/DLL_Test_DLL_WinCE.vcp:
+        * tests/DLL_Test_WinCE.vcp:
+        * tests/Dynamic_Priority_Test_WinCE.vcp:
+        * tests/Enum_Interfaces_Test_WinCE.vcp:
+        * tests/Future_Set_Test_WinCE.vcp:
+        * tests/Future_Test_WinCE.vcp:
+        * tests/Handle_Set_Test_WinCE.vcp:
+        * tests/Hash_Map_Bucket_Iterator_Test_WinCE.vcp:
+        * tests/Hash_Map_Manager_Test_WinCE.vcp:
+        * tests/High_Res_Timer_Test_WinCE.vcp:
+        * tests/Lazy_Map_Manager_Test_WinCE.vcp:
+        * tests/Logging_Strategy_Test_WinCE.vcp:
+        * tests/Log_Msg_Test_WinCE.vcp:
+        * tests/Malloc_Test_WinCE.vcp:
+        * tests/Map_Manager_Test_WinCE.vcp:
+        * tests/Map_Test_WinCE.vcp:
+        * tests/Max_Default_Port_Test_WinCE.vcp:
+        * tests/Mem_Map_Test_WinCE.vcp:
+        * tests/MEM_Stream_Test_WinCE.vcp:
+        * tests/Message_Block_Test_WinCE.vcp:
+        * tests/Message_Queue_Notifications_Test_WinCE.vcp:
+        * tests/Message_Queue_Test_Ex_WinCE.vcp:
+        * tests/Message_Queue_Test_WinCE.vcp:
+        * tests/MM_Shared_Memory_Test_WinCE.vcp:
+        * tests/MT_Reactor_Timer_Test_WinCE.vcp:
+        * tests/MT_SOCK_Test_WinCE.vcp:
+        * tests/Naming_Test_WinCE.vcp:
+        * tests/New_Fail_Test_WinCE.vcp:
+        * tests/Notify_Performance_Test_WinCE.vcp:
+        * tests/Object_Manager_Test_WinCE.vcp:
+        * tests/OrdMultiSet_Test_WinCE.vcp:
+        * tests/OS_Test_WinCE.vcp:
+        * tests/Priority_Buffer_Test_WinCE.vcp:
+        * tests/Priority_Reactor_Test_WinCE.vcp:
+        * tests/Priority_Task_Test_WinCE.vcp:
+        * tests/Process_Manager_Test_WinCE.vcp:
+        * tests/RB_Tree_Test_WinCE.vcp:
+        * tests/Reactors_Test_WinCE.vcp:
+        * tests/Reactor_Exceptions_Test_WinCE.vcp:
+        * tests/Reactor_Notify_Test_WinCE.vcp:
+        * tests/Reactor_Performance_Test_WinCE.vcp:
+        * tests/Reactor_Timer_Test_WinCE.vcp:
+        * tests/Reader_Writer_Test_WinCE.vcp:
+        * tests/Recursive_Mutex_Test_WinCE.vcp:
+        * tests/Refcounted_Auto_Ptr_Test_WinCE.vcp:
+        * tests/Reverse_Lock_Test_WinCE.vcp:
+        * tests/Semaphore_Test_WinCE.vcp:
+        * tests/Service_Config_DLL_WinCE.vcp:
+        * tests/Service_Config_Test_WinCE.vcp:
+        * tests/Sigset_Ops_Test_WinCE.vcp:
+        * tests/Simple_Message_Block_Test_WinCE.vcp:
+        * tests/SOCK_Connector_Test_WinCE.vcp:
+        * tests/SOCK_Send_Recv_Test_WinCE.vcp:
+        * tests/SOCK_Test_WinCE.vcp:
+        * tests/SPIPE_Test_WinCE.vcp:
+        * tests/SString_Test_WinCE.vcp:
+        * tests/Svc_Handler_Test_WinCE.vcp:
+        * tests/Task_Test_WinCE.vcp:
+        * tests/Thread_Manager_Test_WinCE.vcp:
+        * tests/Thread_Mutex_Test_WinCE.vcp:
+        * tests/Thread_Pool_Reactor_Resume_Test_WinCE.vcp:
+        * tests/Thread_Pool_Reactor_Test_WinCE.vcp:
+        * tests/Thread_Pool_Test_WinCE.vcp:
+        * tests/Timeprobe_Test_WinCE.vcp:
+        * tests/Timer_Queue_Test_WinCE.vcp:
+        * tests/Time_Service_Test_WinCE.vcp:
+        * tests/Time_Value_Test_WinCE.vcp:
+        * tests/Tokens_Test_WinCE.vcp:
+        * tests/TSS_Test_WinCE.vcp:
+        * tests/Upgradable_RW_Test_WinCE.vcp:
+          Project files for WinCE build on eMbedded Visual C++ 3.0.
+          Note that some tests run fine under emulator but not on the real
+          machine, and some tests run okay on WinCE 3.0 but not on Pocket PC 2002.
+          The missing tests are mostly not supported by WinCE 3.0/PPC 2002.
+          For example, WinCE does not have 'fork' or environment variables.
+          Also, WinCE supports memory mapped file; however, the method is so different
+          to other Windows platforms that it is really hard to make it work correctly
+          on current ACE mem-map function structure.
+
 Thu Mar 28 16:15:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/TTY_IO.h: Added the ACE_Export macro to the Serial_Params

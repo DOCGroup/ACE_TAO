@@ -5003,6 +5003,12 @@ public:
 
   static int fsync (ACE_HANDLE handle);
 
+# if defined (ACE_USES_WCHAR)
+  // If fp points to the Unicode format file, the file pointer will be moved right next
+  // to the Unicode header (2 types).  Otherwise, file pointer will be at the beginning.
+  static void checkUnicodeFormat (FILE* fp);
+# endif  // ACE_USES_WCHAR
+
   static FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
   static FILE *freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream);
 # if defined (fdopen)
@@ -7262,10 +7268,14 @@ private:
      */
     int ce_argc_;
 };
+#     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
+#       undef ACE_TMAIN
+#     endif  // ACE_TMAIN
 
-#     define main \
+// Support for ACE_TMAIN, which is a recommended way.
+#     define ACE_TMAIN \
 ace_main_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
-int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
   ACE_CE_ARGV ce_argv(lpCmdLine); \
   ACE::init(); \
@@ -7276,11 +7286,42 @@ int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 } \
 int ace_main_i
 
-#     define main_ce \
-ace_main_ce (int, ACE_TCHAR**); \
+// Support for wchar_t but still can't fit to CE because of the command line parameters.
+#     define wmain \
+ace_main_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+{ \
+  ACE_CE_ARGV ce_argv(lpCmdLine); \
+  ACE::init(); \
+  ACE_MAIN_OBJECT_MANAGER \
+  int i = ace_main_i (ce_argv.argc(), ce_argv.argv()); \
+  ACE::fini(); \
+  return i; \
+} \
+int ace_main_i
+
+// Supporting legacy 'main' is A LOT easier for users than changing existing code on WinCE.
+#     define main \
+ace_main_i (int, char *[]);  /* forward declaration */ \
+#include <ace/Argv_Type_Converter.h> \
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+{ \
+  ACE_CE_ARGV ce_argv(lpCmdLine); \
+  ACE::init(); \
+  ACE_MAIN_OBJECT_MANAGER \
+  ACE_Argv_Type_Converter command_line(ce_argv.argc(), ce_argv.argv()); \
+  int i = ace_main_i (command_line.get_argc(), command_line.get_ASCII_argv()); \
+  ACE::fini(); \
+  return i; \
+} \
+int ace_main_i
+
+// This definition is for the "int FaCE_MAIN(int, wchar_t**)" using FaCE.
+#     define FaCE_MAIN \
+ace_main_i (int, ACE_TCHAR**); \
 extern BOOL InitInstance (HINSTANCE, int); \
 extern void InitSetup(); \
-int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
     MSG msg; \
     HACCEL hAccelTable; \
@@ -7295,7 +7336,7 @@ int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
     } \
     return msg.wParam; \
 } \
-int ace_main_ce
+int ace_main_i
 
 #   else
 #     define main \
