@@ -1,5 +1,8 @@
 Mon Jun 14 16:07:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* tao/default_client.cpp: Creating Exclusive TMS always, since
+	Muxed TMS is not available yet.  
+
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
 	Added ACE_THROW_SPEC to the relevant methods.
