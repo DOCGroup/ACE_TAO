@@ -12,6 +12,9 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+#To use perfect hashing op lookup strategy, use -P.
+TAO_IDLFLAGS += -P
+
 LDLIBS     =  -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
