@@ -16,6 +16,12 @@
 //
 // ============================================================================
 
+#include "ace/inc_user_config.h"
+#if defined (VXWORKS)
+# undef ACE_MAIN
+# define ACE_MAIN server
+#endif /* VXWORKS */
+
 #include "server.h"
 #include "ace/Sched_Params.h"
 
@@ -232,7 +238,7 @@ Server::activate_low_servants (void)
   // choose the remaining endpoints based on the protocol used in
   // the endpoint.
   //
-  // e.g.: orignal endpoint:    iiop://foobar:10001 
+  // e.g.: orignal endpoint:    iiop://foobar:10001
   //       random endpoint      iiop://
 
   const char protocol_delimiter[] = "://";
@@ -355,28 +361,11 @@ Server::start_servants (void)
   return 0;
 }
 
-// The main() function.
-#include "ace/streams.h"
-#if defined (VXWORKS)
-  // Rename main to server to make it easier to run both client and
-  // server on one target.
-extern "C"
-int
-server (int argc, char *argv[])
-{
-  ACE_Object_Manager ace_object_manager;
-#else
+
 int
 main (int argc, char *argv[])
 {
-#endif /* VXWORKS */
   int result;
-  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::OSTREAM);
-  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR);
-  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
-  //  ofstream log ("server.log");
-  //  log.setf (ios::unitbuf);
-  //  ACE_Log_Msg::instance()->msg_ostream (&log);
 
   Server server;
 

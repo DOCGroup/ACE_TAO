@@ -10,6 +10,9 @@ Thu Jul 15 14:32:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
           [Bug 42]
 
+        * performance-tests/Cubit/TAO/MT_Cubit/{client,server}.cpp:
+          on VxWorks, redefine ACE_MAIN to change the entry point name.
+
 Thu Jul 15 14:03:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * tao/params.h:

@@ -1,5 +1,11 @@
 // $Id$
 
+#include "ace/inc_user_config.h"
+#if defined (VXWORKS)
+# undef ACE_MAIN
+# define ACE_MAIN client
+#endif /* VXWORKS */
+
 #include "ace/Sched_Params.h"
 #include "server.h"
 #include "client.h"
@@ -823,17 +829,9 @@ Client_i::do_thread_per_rate_test (void)
 // finish. After they aer done, we compute the latency and jitter
 // metrics and print them.
 
-#if defined (VXWORKS)
-extern "C"
-int
-client (int argc, char *argv[])
-{
-  ACE_Object_Manager ace_object_manager;
-#else
 int
 main (int argc, char *argv[])
 {
-#endif /* VXWORKS */
   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
 
   Client_i client;
