@@ -217,7 +217,7 @@ TAO_HomeDef_i::create_factory (const char *id,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (I:FactoryDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::FactoryDef::_nil ());
 
   return this->create_factory_i (id,
                                  name,

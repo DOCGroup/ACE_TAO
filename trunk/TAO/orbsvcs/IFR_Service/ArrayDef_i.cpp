@@ -192,7 +192,7 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     element_path.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   return CORBA_IDLType::_narrow (obj.in (),
                                  ACE_TRY_ENV);
