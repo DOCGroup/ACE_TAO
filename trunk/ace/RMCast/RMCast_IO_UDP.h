@@ -109,6 +109,10 @@ public:
   virtual int leave (ACE_RMCast::Leave &);
 
 private:
+
+  ACE_RMCast_UDP_Proxy *allocate_and_bind_proxy (ACE_RMCast_Module *module,
+						 const ACE_INET_Addr &);
+
   //! The factory used to create the modules attached to each proxy
   ACE_RMCast_Module_Factory *factory_;
 
