@@ -149,7 +149,13 @@
 
 // keep the compiler from complaining of
 // parameters which are not used.
+#if defined (ghs)
+// GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
+// it doesn't complain about unused args, so don't bother with them.
+#define ACE_UNUSED_ARG(a)
+#else
 #define ACE_UNUSED_ARG(a) (a)
+#endif /* ghs */
 
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
@@ -756,7 +762,7 @@ struct ACE_cond_t
   long waiters_;
   // Number of waiting threads.
 
-  ACE_thread_mutex waiters_lock_;
+  ACE_thread_mutex_t waiters_lock_;
   // Serialize access to the waiters count.
 
   ACE_sema_t sema_;
@@ -2453,11 +2459,6 @@ private:
   // Ensure we can't define an instance of this class.
 };
 
-#include "ace/Trace.h"
-
-// These need to come here to avoid problems with circular dependencies.
-#include "ace/Log_Msg.h"
-
 // A useful abstraction for expressions involving operator new since
 // we can change memory allocation error handling policies (e.g.,
 // depending on whether ANSI/ISO exception handling semantics are
@@ -2515,14 +2516,6 @@ private:
 
 #endif /* UNICODE */
 
-#if defined (UNICODE)
-#include "ace/SString.h"
-#define ACE_WIDE_STRING(ASCII) \
-ACE_WString (ASCII).fast_rep ()
-#else
-#define ACE_WIDE_STRING(ASCII) ASCII
-#endif /* UNICODE */
-
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #if defined (ACE_INLINE)
 #undef ACE_INLINE
@@ -2530,5 +2523,18 @@ ACE_WString (ASCII).fast_rep ()
 #define ACE_INLINE inline
 #include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OSCALLS */
+
+#include "ace/Trace.h"
+
+// These need to come here to avoid problems with circular dependencies.
+#include "ace/Log_Msg.h"
+
+#if defined (UNICODE)
+#include "ace/SString.h"
+#define ACE_WIDE_STRING(ASCII) \
+ACE_WString (ASCII).fast_rep ()
+#else
+#define ACE_WIDE_STRING(ASCII) ASCII
+#endif /* UNICODE */
 
 #endif  /* ACE_OS_H */
