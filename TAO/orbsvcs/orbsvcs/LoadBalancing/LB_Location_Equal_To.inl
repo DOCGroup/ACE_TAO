@@ -5,6 +5,8 @@ TAO_LB_Location_Equal_To::operator () (
   const LoadBalancing::Location &lhs,
   const LoadBalancing::Location &rhs)
 {
+  // @todo Interim implementation until we figure out what to do when a
+  //       location has multiple components.
   CORBA::ULong lhs_len = lhs.length ();
   CORBA::ULong rhs_len = rhs.length ();
 

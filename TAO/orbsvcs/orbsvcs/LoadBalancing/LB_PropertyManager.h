@@ -149,39 +149,47 @@ public:
 
   //@}
 
-//   /// Type-specific property hash map.
-//   typedef ACE_Hash_Map_Manager_Ex<
-//     const char *,
-//     LoadBalancing::Property,
-//     ACE_Hash<const ACE_TCHAR *>,
-//     TAO_LB_Property_Equal_To,
-//     ACE_SYNCH_MUTEX> Type_Prop_Table;
+  /// Type-specific property hash map.
+  typedef ACE_Hash_Map_Manager_Ex<
+    const ACE_TCHAR *,
+    LoadBalancing::Properties,
+    ACE_Hash<const ACE_TCHAR *>,
+    ACE_Equal_To<const ACE_TCHAR *>,
+    TAO_SYNCH_MUTEX> Type_Prop_Table;
 
-//   typedef ACE_Hash_Map_Manager_Ex<
-//     ACE_UINT32,                // Use the FactoryCreationId as the hash.
-//     LoadBalancing::Property,
-//     ACE_Hash<ACE_UINT32>,
-//     TAO_LB_Property_Equal_To,
-//     ACE_SYNCH_MUTEX> Creation_Prop_Table;
+  /// Properties used when a given object group was created.
+  typedef ACE_Hash_Map_Manager_Ex<
+    PortableServer::ObjectId,
+    LoadBalancing::Properties,
+    TAO_ObjectId_Hash,
+    ACE_Equal_To<PortableServer::ObjectId>,
+    TAO_SYNCH_MUTEX> Creation_Prop_Table;
 
-//   typedef Creation_Prop_Table Dynamic_Prop_Table;
+  /// Properties set at run time
+  typedef Creation_Prop_Table Dynamic_Prop_Table;
 
 private:
 
-  /// Table of global default object group properties.
-//   Default_Prop_Table default_properties_;
+  /// Default properties.
+  LoadBalancing::Properties default_properties_;
 
-//   /// Table of type-specific object group properties.
-//   Type_Prop_Table type_properties_;
+  /// Table of type-specific object group properties.
+  Type_Prop_Table type_properties_;
 
-//   /// Table of object group properties used when the object group was
-//   /// created.
-//   Creation_Prop_Table creation_properties_;
+  /// Table of object group properties used when the object group was
+  /// created.
+  Creation_Prop_Table creation_properties_;
 
-//   /// Table of object group properties used at run-time.
-//   Dynamic_Prop_Table dynamic_properties_;
+  /// Table of object group properties used at run-time.
+  Dynamic_Prop_Table dynamic_properties_;
 
 };
+
+
+/// Property sequence equality operator.
+CORBA::Boolean operator== (const LoadBalancing::Properties &lhs,
+                           const LoadBalancing::Properties &rhs);
+
 
 #include "ace/post.h"
 

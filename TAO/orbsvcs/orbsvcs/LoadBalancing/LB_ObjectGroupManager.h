@@ -173,6 +173,8 @@ private:
   /// Pointer to the ObjectGroup map.
   TAO_LB_ObjectGroup_Map &object_group_map_;
 
+  /// Map that contains list of all replicas at a given location.
+  TAO_LB_Location_Map location_map_;
 };
 
 #endif  /* TAO_LB_OBJECT_GROUP_MANAGER_H */
