@@ -13,7 +13,7 @@
 // BARRIER_TYPE is supposed to enable/disable barrier sync on each svc
 // a worker has done.
 
-#include <iostream.h>
+#include "ace/stdcpp.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 

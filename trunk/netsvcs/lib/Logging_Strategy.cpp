@@ -2,7 +2,7 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include <fstream.h>
+#include "ace/stdcpp.h"
 #include "ace/Get_Opt.h"
 #include "Logging_Strategy.h"
 
