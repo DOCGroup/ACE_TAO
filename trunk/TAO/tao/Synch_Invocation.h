@@ -160,9 +160,6 @@ namespace TAO
      * @param resolver The profile and transport holder.
      *
      * @param detail Operation details of the invocation on the target
-     *
-     * @param response_expected Flag to indicate whether the
-     * operation encapsulated by @a op returns a response or not.
      */
     Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
                              Profile_Transport_Resolver &resolver,
