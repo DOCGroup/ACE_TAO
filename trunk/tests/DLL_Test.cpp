@@ -40,8 +40,10 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_WIN32)
 #  define OBJ_SUFFIX ".exe"
+#  define OBJ_PREFIX ""
 #else
 #  define OBJ_SUFFIX ".o"
+#  define OBJ_PREFIX ".obj/"
 #endif /*ACE_WIN32*/
 
 class Hello
@@ -95,7 +97,7 @@ main (int argc, char *argv[])
 
   ACE_DLL dll;
 
-  int retval = dll.open ("DLL_Test" OBJ_SUFFIX);
+  int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        dll.error ()),
