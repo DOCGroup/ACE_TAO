@@ -54,11 +54,13 @@ be_typedef::gen_client_header (void)
 {
   be_type *bt;       // type node
   be_state *s;       // state based code gen object
+  TAO_OutStream *ch; // client header
 
   if (!this->cli_hdr_gen_) // not already generated
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      ch = cg->client_header ();
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CH);
       cg->node (this); // pass ourselves. For typedefs, this is very important,
                        // because other nodes's code generation may depend on
@@ -75,6 +77,22 @@ be_typedef::gen_client_header (void)
           return -1;
         }
 
+      // generate the typecode decl for this typedef node
+      if (this->is_nested ())
+        {
+          // we have a scoped name
+          ch->indent ();
+          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
+      else
+        {
+          // we are in the ROOT scope
+          ch->indent ();
+          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
+
       cg->pop ();
       this->cli_hdr_gen_ = I_TRUE;
     }
@@ -88,9 +106,6 @@ be_typedef::gen_client_stubs (void)
   TAO_NL  nl;        // end line
   be_type *bt;
   be_state *s;       // state based code gen object
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
 
   if (!this->cli_stub_gen_)
     {
@@ -115,31 +130,28 @@ be_typedef::gen_client_stubs (void)
           return -1;
         }
 
-#if 0
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
         nl;
       *cs << "{\n";
       cs->incr_indent (0);
-      // note that we just need the parameters here and hence we generate the
-      // encapsulation for the parameters
-      bt = this->primitive_base_type ();
-      if (bt->gen_encapsulation () == -1)
+      if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating encapsulation\n\n"));
+          ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
           return -1;
         }
       cs->decr_indent ();
       *cs << "};" << nl;
 
       *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
-        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () <<
+        " (CORBA::tk_alias, sizeof (_oc_" <<  this->flatname () <<
         "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
-#endif
+
+
       this->cli_stub_gen_ = I_TRUE;
       cg->pop ();
     }
@@ -200,25 +212,101 @@ be_typedef::gen_server_inline (void)
 int
 be_typedef::gen_typecode (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_alias, // typecode kind for typedefs" << nl;
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  cs->incr_indent (0);
+  if (this->gen_encapsulation () == -1)
+    {
+      return -1;
+    }
   return 0;
 }
 
 long
 be_typedef::tc_size (void)
 {
-  return 0;
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
 }
 
+// generate encapsulation. A typedef is an alias to its base type
 int
 be_typedef::gen_encapsulation  (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  long i, arrlen;
+  long *arr;  // an array holding string names converted to array of longs
+  be_type *bt; // base type
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+  // generate repoID
+  *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+  (void)this->tc_name2long (this->repoID (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("0x%x, ", arr[i]);
+    }
+  *cs << " // repository ID = " << this->repoID () << nl;
+
+  // generate name
+  *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+  (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("0x%x, ", arr[i]);
+    }
+  *cs << " // name = " << this->local_name () << nl;
+
+  // generate typecode for the base type
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt || (bt->gen_typecode () == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+       "be_typedef::gen_encapsulation failed for base type\n"),
+                        -1);
+    }
   return 0;
 }
 
 long
 be_typedef::tc_encap_len (void)
 {
-  return 0;
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      be_type *bt; // base type
+      this->encap_len_ = 4;  // holds the byte order flag
+
+      this->encap_len_ += this->repoID_encap_len (); // repoID
+
+      // do the same thing for the local name
+      this->encap_len_ += this->name_encap_len ();
+
+      // add the encapsulation length of our base type
+      bt = be_type::narrow_from_decl (this->base_type ());
+      if (!bt)
+        {
+          ACE_ERROR ((LM_ERROR,
+              "be_typedef::tc_encap_len - bad base type\n"));
+          return 0;
+        }
+      this->encap_len_ += bt->tc_encap_len ();
+
+    }
+  return this->encap_len_;
 }
 
 // Narrowing
