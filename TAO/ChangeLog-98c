@@ -1,3 +1,14 @@
+Wed Jan  7 18:00:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	* TAO_IDL/tao_idl.cpp: 
+	* TAO_IDL/driver/Makefile: 
+	* TAO_IDL/driver/drv_main.cpp: 
+	  Moved the main() routine to the topmost directory, this is
+	  needed for platforms like SGI that will not link a group of
+	  shared libraries without any object files. It also seems more
+	  reasonable (IMHO).
+
 Wed Jan  7 13:55:26 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the assignment of
