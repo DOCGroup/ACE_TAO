@@ -1,3 +1,10 @@
+Tue May  4 21:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Fixed memory managment problems with the new implicit option
+	  -I$TAO_ROOT/tao, also use $ACE_ROOT/TAO if TAO_ROOT is not
+	  defined and print a warning message if none is defined.
+
 Tue May  4 21:15:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
