@@ -1,8 +1,16 @@
+Thu Jul 15 16:26:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (spa): use ACE_NEEDS_HUGE_THREAD_STACKSIZE
+          instead of hard-coded value.
+
+        * ace/config-vxworks5.x.h: added default
+          ACE_NEEDS_HUGE_THREAD_STACKSIZE of 64000.
+
 Thu Jul 15 16:08:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Moved ACE_HAS_IP_MULTICAST down
-	  *after* ACE_HAS_WINSOCK2 is defined.  Thanks to Marina for
-	  reporting this.
+        * ace/config-win32-common.h: Moved ACE_HAS_IP_MULTICAST down
+          *after* ACE_HAS_WINSOCK2 is defined.  Thanks to Marina for
+          reporting this.
 
 Thu Jul 15 16:11:04 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -4461,7 +4461,7 @@ spa (FUNCPTR entry, ...)
   const int ret = ::taskSpawn (argv[0],    // task name
                                100,        // task priority
                                VX_FP_TASK, // task options
-                               1000000,    // stack size
+                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
                                entry,      // entry point
                                argc,       // first argument to main ()
                                (int) argv, // second argument to main ()
