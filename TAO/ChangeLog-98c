@@ -1,3 +1,10 @@
+Mon Aug  3 09:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
+	  Bounded octet sequences do not have the Message_Block
+	  constructor, but we were generating it. Thanks to John Geiss
+	  <kim_john@sprynet.com> for reporting this problem.
+
 Fri Jul 31 20:34:27 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* tao/Any.cpp: 
