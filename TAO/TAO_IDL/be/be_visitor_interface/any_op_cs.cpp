@@ -95,7 +95,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-      << "if (!type->equal (" << node->tc_name ()
+      << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
