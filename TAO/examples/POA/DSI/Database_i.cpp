@@ -152,12 +152,8 @@ DatabaseImpl::Agent::create_entry (const char *key,
   if (ACE_OS::strcmp (entry_type, "Employee") != 0 ||
       initial_attributes.length () != 2)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Type (entry_type),
-                        Database::Unknown_Type);
-
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
+      ACE_THROW_RETURN (Database::Unknown_Type (), 
+                        Database::Entry::_nil ());
     }
   
   char *name = 0;
@@ -168,11 +164,8 @@ DatabaseImpl::Agent::create_entry (const char *key,
   if (ACE_OS::strcmp (first.name.in (), "name") != 0 ||
       ACE_OS::strcmp (second.name.in (), "id") != 0)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Type (entry_type),
-                        Database::Unknown_Type);
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
+      ACE_THROW_RETURN (Database::Unknown_Type (), 
+                        Database::Entry::_nil ());
     }
       
   first.value >>= name;
@@ -204,13 +197,8 @@ DatabaseImpl::Agent::find_entry (const char *key,
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Type (entry_type),
-                        Database::Unknown_Type);
-      
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
-   
+      ACE_THROW_RETURN (Database::Unknown_Type (), 
+                        Database::Entry::_nil ());
     }
   
   void *temp;
@@ -235,12 +223,8 @@ DatabaseImpl::Agent::find_entry (const char *key,
     }
   else
     {
-      
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Key (key),
-                        Database::Unknown_Key);
-      ACE_CHECK_RETURN (Database::Entry::_nil ());
+      ACE_THROW_RETURN (Database::Unknown_Key (), 
+                        Database::Entry::_nil ());
     }
   return entry._retn ();
 }
@@ -252,11 +236,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Type (entry_type),
-                        Database::Unknown_Type);                        
-      ACE_CHECK;
+      ACE_THROW (Database::Unknown_Type ()); 
     }
   
   void *temp;
@@ -267,11 +247,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
     }
   else
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        Database::Unknown_Key (key),
-                        Database::Unknown_Key);                        
-      ACE_CHECK;
+      ACE_THROW (Database::Unknown_Key ()); 
     }
 }
 
