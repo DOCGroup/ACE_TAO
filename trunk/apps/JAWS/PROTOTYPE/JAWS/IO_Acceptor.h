@@ -104,7 +104,7 @@ public:
   // virtual int accept (size_t bytes_to_read = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
-  virtual ACE_HANDLE get_handle (void);
+  // virtual ACE_HANDLE get_handle (void);
   // Get the listener's handle
 
 private:
