@@ -7,9 +7,9 @@ project(NavDisplayGUI_exec) : ciao_component, qt, qt_moc {
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
   includes  += ../NavDisplay
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
-  idlgendir = ./
 
   IDL_Files {
+    gendir = .
     ../NavDisplay/NavDisplayEI.idl
   }
 

@@ -15,11 +15,6 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.7 foreign
 
-<%if(idl_files)%> 
-<%if(idlflags)%>
-TAO_IDLFLAGS = <%idlflags%>
-<%endif%>
-<%endif%>
 <%if(includes)%>
 INCLUDES =<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>

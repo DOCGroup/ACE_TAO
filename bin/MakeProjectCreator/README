@@ -59,7 +59,6 @@ project(project_name) : baseproject, anotherbaseproject {
   exename   = foo
   includes += "."
   libpaths  = directory
-  idlflags -= -Sc
 
   Source_Files {
     file1.cpp
@@ -107,11 +106,6 @@ dllout		If defined, specifies where the dynamic libraries will be
                 placed.  This overrides libout in the dynamic case.
 libout		Specifies where the dynamic and static libraries will be placed
 install		Specifies where executables will be installed
-idlflags	Specifies the idl flags to be used when processing idl files
-idlgendir       Specifies the output directory for idl generated files.
-                If a listed idl file has a directory as part of the name,
-                the generated files will go in that directory unless
-                idlgendir specifies otherwise.
 pch_header	Specifies the precompiled header file name
 pch_source	Specifies the precompiled source file name
 ssl             Specifies that the project will use ssl
@@ -145,7 +139,6 @@ specific        This scope allows assignments that are specific to a
                 particular project type.  The syntax is as follows:
 
                 specific(<project type> [, <project type> ...]) {
-                  idlflags += -Ge 1
                   lit_libs += c
                   ...
                 }
@@ -430,7 +423,7 @@ Defaulting Behavior
    listed) or the custom files components are specified and none of the
    custom generated files are listed in the corresponding lists
 
-   the custom files are added to the custom files component list if the
+   the custom files are added to the custom files component list if they
    weren't specified and all of the (would be) generated files will be added
    to the front of the corresponding lists (source, inline and header lists)
 

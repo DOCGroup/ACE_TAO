@@ -17,7 +17,6 @@
 //   mwc.pl -type make -value_template configurations=aCC
 // ***********************************************************************
 
-conditional_include "idl_compiler"
 conditional_include "common"
 
 configurations = gcc

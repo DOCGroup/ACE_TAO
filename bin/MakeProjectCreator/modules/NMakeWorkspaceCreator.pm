@@ -116,7 +116,7 @@ sub write_comps {
             'Defaulting to ' . $default . '.' . $crlf .
             '!ENDIF' . $crlf;
 
-  foreach my $target ('ALL', 'DEPEND', 'IDL_STUBS', 'CLEAN', 'REALCLEAN') {
+  foreach my $target ('ALL', 'DEPEND', 'CLEAN', 'REALCLEAN') {
     print $fh $crlf .
               $target . ':' . $crlf;
     $self->write_project_targets($fh, 'CFG="$(CFG)" ' . $target, \@list);

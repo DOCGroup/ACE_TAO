@@ -59,10 +59,6 @@ CPPFLAGS      = $(PICFLAGS) $(GENFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%f
 <%if(arflags)%>
 ARFLAGS       = <%arflags%>
 <%endif%>
-<%if(idl_files)%>
-IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
-IDL_SRC       =<%foreach(idl_files)%> <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp<%endfor%>
-<%endif%>
 SRC           =<%foreach(source_files)%> <%source_file%><%endfor%>
 OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%>
 LDFLAGS       =<%if(libpaths)%><%foreach(libpaths)%> -L<%libpath%><%endfor%><%endif%><%foreach(configurations)%><%if(linkflags)%> <%linkflags%><%endif%><%endfor%>
@@ -78,40 +74,6 @@ OUTPUT_OPTION = -o $@
 #----------------------------------------------------------------------------
 <%marker(local)%>
 
-<%if(custom_types)%>
-GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
-<%foreach(custom_types)%>
-<%if(custom_types->libpath)%>
-DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
-LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
-PATH              := $(PATH):<%custom_type->libpath%>
-
-<%endif%>
-<%foreach(custom_type->input_files)%>
-<%if(custom_type->input_file->output_files)%>
-<%foreach(custom_type->input_file->output_files)%>
-<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>: <%custom_type->input_file%>
-	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
-
-<%endfor%>
-<%endif%>
-<%endfor%>
-<%endfor%>
-.PRECIOUS: $(GENERATED_DIRTY)
-all: $(GENERATED_DIRTY)
-
-<%endif%>
-<%foreach(configurations)%>
-<%if(tempinc)%>
-all: $(TEMPINCDIR)
-
-$(TEMPINCDIR):
-	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) 2> /dev/null || true
-
-<%endif%>
-<%endfor%>
 <%if(exename)%>
 all: $(BIN) <%if(install)%>install<%endif%>
 
@@ -168,6 +130,40 @@ $(LIB): $(OBJS)
 	$(AR) $(ARFLAGS) $(LIB) $(OBJS)<%foreach(configurations)%><%if(tempinc)%> `find $(TEMPINCDIR) -type f`<%endif%><%endfor%>
 
 <%endif%>
+<%if(custom_types)%>
+GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
+<%foreach(custom_types)%>
+<%if(custom_types->libpath)%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
+
+<%endif%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+<%foreach(custom_type->input_file->output_files)%>
+<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>: <%custom_type->input_file%>
+	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+
+<%endfor%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+.PRECIOUS: $(GENERATED_DIRTY)
+all: $(GENERATED_DIRTY)
+
+<%endif%>
+<%foreach(configurations)%>
+<%if(tempinc)%>
+all: $(TEMPINCDIR)
+
+$(TEMPINCDIR):
+	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) 2> /dev/null || true
+
+<%endif%>
+<%endfor%>
 <%foreach(source_files)%>
 <%noextension(source_file)%>.o: <%source_file%>
 	$(COMPILE.cc) <%source_file%> $(OUTPUT_OPTION)

@@ -1,7 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-conditional_include "idl_compiler_win32"
 conditional_include "common"
 
 configurations     = Release Debug

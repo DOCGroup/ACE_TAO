@@ -42,7 +42,6 @@ my(%validNames) = ('exename'         => 1,
                    'libpaths'        => 1,
                    'install'         => 1,
                    'includes'        => 1,
-                   'idlflags'        => 1,
                    'defaultlibs'     => 0,
                    'after'           => 1,
                    'libs'            => 0,
@@ -59,7 +58,6 @@ my(%validNames) = ('exename'         => 1,
                    'avoids'          => 1,
                    'tagname'         => 1,
                    'tagchecks'       => 1,
-                   'idlgendir'       => 1,
                    'macros'          => 1,
                   );
 
@@ -98,7 +96,6 @@ my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C
            'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
            'header_files'        => [ "\\.h", "\\.hpp", "\\.hxx", "\\.hh", ],
            'inline_files'        => [ "\\.i", "\\.inl", ],
-           'idl_files'           => [ "\\.idl", ],
            'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
            'resource_files'      => [ "\\.rc", ],
           );
@@ -108,17 +105,9 @@ my(%ec) = ('source_files' => $vc{'template_files'},
           );
 
 ## Match up assignments with the valid components
-my(%ma) = ('idl_files'    => [ 'idlgendir', 'idlflags' ],
-          );
+my(%ma) = ();
 
-my(%genext) = ('idl_files' => {'automatic'     => 1,
-                               'pre_filename'  => [ '' ],
-                               'pre_extension' => [ 'C', 'S' ],
-                               'source_files'  => [ '\\.cpp', '\\.cxx', '\\.cc', '\\.C', ],
-                               'inline_files'  => [ '\\.i', '\\.inl', ],
-                               'header_files'  => [ '\\.h', '\\.hpp', '\\.hxx', '\\.hh', ],
-                              },
-              );
+my(%genext) = ();
 
 my($grouped_key) = 'grouped_';
 
@@ -1671,27 +1660,12 @@ sub prepend_gendir {
 
   if (defined $key) {
     foreach my $ma (@{$self->{'matching_assignments'}->{$gentype}}) {
-      ##
-      ## When IDL_Files is a custom definition, change this to
-      ## if ($ma eq 'gendir') { -- CAE 1/27/2004
-      ##
-      if ($ma =~ /gendir/) {
+      if ($ma eq 'gendir') {
         if (defined $self->{'flag_overrides'}->{$gentype}->{$key}->{$ma}) {
           return "$self->{'flag_overrides'}->{$gentype}->{$key}->{$ma}/" .
                  basename($created);
         }
       }
-    }
-  }
-
-  ##
-  ## When IDL_Files is a custom definition, this elsif clause needs to
-  ## be removed completely. -- CAE 1/27/2004
-  ##
-  elsif ($gentype eq 'idl_files') {
-    my($gendir) = $self->get_assignment('idlgendir');
-    if (defined $gendir) {
-      return "$gendir/" . basename($created);
     }
   }
 
@@ -2099,7 +2073,7 @@ sub get_custom_value {
       my($cinput)  = $input;
       $cinput =~ s/\.[^\.]+$//;
       foreach my $pf (@{$self->{'generated_exts'}->{$based}->{'pre_filename'}}) {
-        foreach my $vc (keys %{$self->{'valid_components'}}, $generic) {
+        foreach my $vc (sort keys %{$self->{'valid_components'}}, $generic) {
           push(@outputs,
                $self->check_custom_output($based, $pf,
                                           $cinput, $vc, $vcomps{$vc}));
