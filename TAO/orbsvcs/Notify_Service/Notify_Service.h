@@ -20,9 +20,33 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Task.h"
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
+
+
+class Worker : public ACE_Task_Base
+{
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
+public:
+  Worker (void);
+  // ctor
+
+  void orb (CORBA::ORB_ptr orb);
+
+  virtual int svc (void);
+  // The thread entry point.
+
+private:
+  CORBA::ORB_var orb_;
+  // The orb
+};
 
 class Notify_Service
 {
@@ -102,5 +126,11 @@ protected:
 
   CosNaming::NamingContext_var naming_;
   // A naming context.
+
+  Worker worker_;
+  // Worker for TP reactor mode.
+
+  int nthreads_;
+  // Number of worker threads.
 };
 #endif /* NOTIFY_SERVICE_H */
