@@ -1,3 +1,11 @@
+Mon Jan 10 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          When the IORInterceptor Adapter is requested but can't be
+          retrieved we throw an internal error. Added an ACE_ERROR in
+          front of it so that it is much easier to detect what went
+          wrong and caused the internal error
+
 Mon Jan 10 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.h:
