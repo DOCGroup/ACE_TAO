@@ -4,6 +4,8 @@
 #define TAO_TRADER_TEST_UTILS_H
 
 #include "TTestS.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Read_Buffer.h"
 #include "orbsvcs/CosTradingC.h"
 
 class TT_Info
@@ -169,6 +171,32 @@ public:
 
   static const int NUM_QUERIES;
   static const char* QUERIES[][3];
+};
+
+class TT_Parse_Args
+  // = TITLE
+  // Utility to parse the command-line arguments to the trading service tests. 
+{
+  public:
+  
+  TT_Parse_Args (int& argc, char** argv);
+
+  ~TT_Parse_Args ();
+  
+  int federated () const;
+  // True if the test should test the federated features of the trading
+  // service.
+
+  int quiet () const;
+  // True if the tests should supress all but the most essential output. 
+
+  char* ior () const;
+  // Not null if the test user supplied an explicit ior.
+
+  private:
+
+  int federated_, quiet_;
+  char* ior_; 
 };
 
 #endif /* TAO_TRADER_TEST_UTILS_H */

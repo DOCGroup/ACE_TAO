@@ -10,25 +10,6 @@
 
 ACE_RCSID(Trading, export_test, "$Id$")
 
-void
-parse_args (int argc, char *argv[],
-            CORBA::Boolean& federated,
-            CORBA::Boolean& verbose)
-{
-  int opt;
-  ACE_Get_Opt get_opt (argc, argv, "fq");
-
-  verbose = 1;
-  federated = 0;
-  while ((opt = get_opt ()) != EOF)
-    {
-      if (opt == 'f')
-        federated = 1;
-      else if (opt == 'q')
-        verbose = 0;
-    }
-}
-
 int
 main (int argc, char** argv)
 {
@@ -39,15 +20,16 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Command line argument interpretation.
-      CORBA::Boolean federated = 0,
-        verbose = 0;
-      ::parse_args (argc, argv, federated, verbose);
+      TT_Parse_Args parse_args (argc, argv);
 
       // Init the orb and bootstrap to the trading service.
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
-      CORBA::Object_var trading_obj =
-      	orb->resolve_initial_references ("TradingService");
+
+      char* ior = parse_args.ior ();
+      CORBA::Object_var trading_obj = (ior == 0) ?
+        orb->resolve_initial_references ("TradingService") :
+        orb->string_to_object (ior);
       
       if (CORBA::is_nil (trading_obj.in ()))
       	ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +45,7 @@ main (int argc, char** argv)
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
-                                               verbose,
+                                               ! parse_args.quiet (),
                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -79,7 +61,7 @@ main (int argc, char** argv)
       type_exporter.add_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (federated)
+      if (parse_args.federated ())
         {
           type_exporter.add_all_types_to_all (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -98,7 +80,7 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (lookup_if.in (), verbose, TAO_TRY_ENV);
+      TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // = Test series.
@@ -130,7 +112,7 @@ main (int argc, char** argv)
       offer_exporter.export_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      if (federated)
+      if (parse_args.federated ())
         {
           offer_exporter.export_offers_to_all (TAO_TRY_ENV);
           TAO_CHECK_ENV;
