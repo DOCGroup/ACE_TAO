@@ -1,3 +1,14 @@
+Mon Feb 24 09:15:04 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/POA.cpp (TAO_POA):
+
+	  Fixed "better conversion" warning.
+
+	  Added missing ACE_CHECK after ACE_ENDTRY.  Without it, the
+	  re-thrown emulated exception in the ACE_CATCHANY block will be
+	  ignored, incorrectly allowing code after that block to be
+	  executed.
+
 Mon Feb 24 08:44:39 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicInterface/DII_ClientRequestInfo.h:
