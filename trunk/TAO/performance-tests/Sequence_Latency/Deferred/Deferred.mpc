@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(* sequence server): server, strategies {
-  avoids += minimum_corba
+project(* sequence server): server, strategies, minimum_corba {
 
   Source_Files {
     Roundtrip.cpp
@@ -10,9 +9,8 @@ project(* sequence server): server, strategies {
   }
 }
 
-project(* sequence client): server, strategies, dynamicinterface {
+project(* sequence client): server, strategies, dynamicinterface, minimum_corba {
   exename  = client
-  avoids  += minimum_corba
 
   Source_Files {
     TestC.cpp

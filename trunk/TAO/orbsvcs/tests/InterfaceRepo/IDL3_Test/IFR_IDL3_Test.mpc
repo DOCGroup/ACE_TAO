@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoexe, ifr_client {
-  avoids  += minimum_corba
+project: taoexe, ifr_client, minimum_corba {
   exename  = IDL3_Test
   
   Source_Files {

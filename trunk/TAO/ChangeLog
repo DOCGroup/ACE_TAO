@@ -1,3 +1,81 @@
+Wed Aug 11 09:36:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	 * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	 * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+	 * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+	 * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	 * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+	 * examples/OBV/Typed_Events/Typed_Events.mpc:
+	 * examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+	 * examples/POA/DSI/POA_DSI.mpc:
+	 * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+	 * examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+	 * examples/POA/FindPOA/POA_FindPOA.mpc:
+	 * examples/POA/Forwarding/POA_Forwarding.mpc:
+	 * examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+	 * examples/POA/Loader/POA_Loader.mpc:
+	 * examples/POA/NewPOA/POA_NewPOA.mpc:
+	 * examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+	 * examples/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+	 * examples/POA/POA_BiDir/POA_BiDir.mpc:
+	 * examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+	 * examples/POA/TIE/POA_TIE.mpc:
+	 * examples/Quoter/Quoter.mpc:
+	 * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+	 * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+	 * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+	 * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+	 * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+	 * orbsvcs/examples/ORT/ORT.mpc:
+	 * orbsvcs/orbsvcs/CosEvent.mpc:
+	 * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+	 * orbsvcs/orbsvcs/FaultTolerance.mpc:
+	 * orbsvcs/orbsvcs/FtRtEvent.mpc:
+	 * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+	 * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+	 * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	 * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+	 * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+	 * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+	 * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+	 * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+	 * orbsvcs/tests/FT_App/FT_App.mpc:
+	 * orbsvcs/tests/InterfaceRepo/Application_Test/IFR_Application_Test.mpc:
+	 * orbsvcs/tests/InterfaceRepo/IDL3_Test/IFR_IDL3_Test.mpc:
+	 * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_IFR_Test.mpc:
+	 * orbsvcs/tests/InterfaceRepo/Persistence_Test/IFR_Persistence_Test.mpc:
+	 * orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+	 * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+	 * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+	 * performance-tests/Latency/DII/DII.mpc:
+	 * performance-tests/Latency/DSI/DSI.mpc:
+	 * performance-tests/Latency/Deferred/Deferred.mpc:
+	 * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+	 * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+	 * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+	 * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+	 * performance-tests/Sequence_Latency/DII/DII.mpc:
+	 * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+	 * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+	 * tao/DynamicInterface.mpc:
+	 * tests/Bug_1636_Regression/test.mpc:
+	 * tests/POA/Default_Servant/Default_Servant.mpc:
+	 * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+	 * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+	 * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+	 * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+	 * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+	 * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+	 * tests/RTCORBA/Policies/Policies.mpc:
+	 * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+	 * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+	 * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+	 * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+	 * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+	 * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+	  Changed to inherit from minimum_corba instead of providing avoids
+	  statements to eliminate duplicate entries in list.
+
 Wed Aug 11 13:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Oneway_Buffering/admin.cpp:

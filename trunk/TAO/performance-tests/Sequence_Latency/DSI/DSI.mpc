@@ -1,15 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*sequence server) : server, strategies, dynamicinterface {
-  avoids  += minimum_corba
+project(*sequence server) : server, strategies, dynamicinterface, minimum_corba {
   Source_Files {
     Roundtrip.cpp
     server.cpp
   }
 }
-project(*sequence client): taoexe, strategies {
-  avoids += minimum_corba
+project(*sequence client): taoexe, strategies, minimum_corba {
   Source_Files {
     TestC.cpp
     client.cpp
