@@ -425,7 +425,7 @@ typedef unsigned long long ACE_UINT64;
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if !defined EWOULDBLOCK
+#  if defined (UNDER_CE) && (UNDER_CE == 4)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY
@@ -463,7 +463,7 @@ typedef unsigned long long ACE_UINT64;
 #    define EDQUOT                  WSAEDQUOT
 #    define ESTALE                  WSAESTALE
 #    define EREMOTE                 WSAEREMOTE
-#  endif /* !defined (EWOULDBLOCK) */
+#  endif /* UNDER_CE == 4 */
 # endif /* _WINSOCK2API */
 
 # if defined (ACE_HAS_FORE_ATM_WS2)
