@@ -1,3 +1,16 @@
+Wed Jun 16 01:12:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html: Updated information wrt
+	  collocation support.
+
+	* docs/poa_migration.html:
+	* docs/compiler.html: Removed section about having to
+	  include both stubs and skeletons in the client side and how to
+	  generate "pure client" code.
+
+	* TAO-INSTALL.html: Updated intructions on creating MSVC
+	  projects.  Removed VC 4.2 section.
+
 Tue Jun 15 22:16:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/CC_command.cpp 
