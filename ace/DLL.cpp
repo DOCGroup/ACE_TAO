@@ -97,7 +97,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int close_on_destruction,
                  ACE_SHLIB_HANDLE handle)
 {
-  ACE_TRACE ("ACE_DLL::open");
+  ACE_TRACE ("ACE_DLL::open_i");
   
   this->error_ = 0;
 
