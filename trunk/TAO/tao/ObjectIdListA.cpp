@@ -31,16 +31,19 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectId (
     "IDL:omg.org/CORBA/ORB_ObjectId:1.0",
     "ORB_ObjectId",
-    &::_tao_tc_CORBA::_tc_string);
+    &CORBA::_tc_string);
   
 namespace CORBA
 {
@@ -51,24 +54,24 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectId (
     "IDL:omg.org/CORBA/ORB_ObjectId:1.0",
     "ORB_ObjectId",
-    &::_tao_tc_CORBA::_tc_string);
+    &CORBA::_tc_string);
   
 namespace CORBA
 {
@@ -76,18 +79,28 @@ namespace CORBA
     &_tao_tc_CORBA_ORB_ObjectId;
 }
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_ORB_ObjectIdList_0 (
-    CORBA::tk_sequence,
-    &CORBA::_tc_ORB_ObjectId,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_ORB_ObjectIdList_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_ORB_ObjectId,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_ORB_ObjectIdList_0 =
+      &CORBA_ORB_ObjectIdList_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectIdList (
     "IDL:omg.org/CORBA/ORB_ObjectIdList:1.0",
     "ORB_ObjectIdList",
-    &::_tao_tc_CORBA_ORB_ObjectIdList_0);
+    &TAO::TypeCode::tc_CORBA_ORB_ObjectIdList_0);
   
 namespace CORBA
 {
@@ -97,8 +110,76 @@ namespace CORBA
 
 
 
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ORB_ObjectIdList &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ORB_ObjectIdList>::insert_copy (
+      _tao_any,
+      CORBA::ORB_ObjectIdList::_tao_any_destructor,
+      TAO::TypeCode::tc_CORBA_ORB_ObjectIdList_0,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ORB_ObjectIdList *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ORB_ObjectIdList>::insert (
+      _tao_any,
+      CORBA::ORB_ObjectIdList::_tao_any_destructor,
+      TAO::TypeCode::tc_CORBA_ORB_ObjectIdList_0,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ORB_ObjectIdList *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ORB_ObjectIdList *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ORB_ObjectIdList *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ORB_ObjectIdList>::extract (
+        _tao_any,
+        CORBA::ORB_ObjectIdList::_tao_any_destructor,
+        TAO::TypeCode::tc_CORBA_ORB_ObjectIdList_0,
+        _tao_elem
+      );
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::ORB_ObjectIdList
+      >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::ORB_ObjectIdList \
+      >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

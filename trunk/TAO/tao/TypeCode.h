@@ -408,6 +408,8 @@ namespace CORBA
     /// Destruction callback for Anys.
     static void CORBA::TypeCode::_tao_any_destructor (void * x);
 
+    typedef CORBA::TypeCode_var _var_type;
+
   protected:
 
     /// Constructor.
