@@ -170,10 +170,6 @@ TAO_GIOP_Message_NonReactive_Handler::read_message (TAO_Transport *transport,
           continue;
         }
 
-      if (bytes == 0)
-        return -1;
-
-
       if (bytes == 0 ||
           bytes == -1)
       {
