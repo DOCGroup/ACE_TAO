@@ -33,6 +33,7 @@
 class TAO_Root_POA;
 class TAO_Active_Object_Map;
 struct TAO_Active_Object_Map_Entry;
+
 namespace TAO
 {
   namespace Portable_Server

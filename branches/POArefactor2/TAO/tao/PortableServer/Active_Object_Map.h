@@ -33,39 +33,7 @@ class TAO_Id_Uniqueness_Strategy;
 class TAO_Lifespan_Strategy;
 class TAO_Id_Assignment_Strategy;
 class TAO_Id_Hint_Strategy;
-
-/**
- * @struct TAO_Active_Object_Map_Entry
- *
- * @brief Value field of the active object map.
- *
- * We need a mapping from and to all of the following fields:
- * user_id, system_id, and servant.  Therefore, we keep
- * all the fields together in the map.
- */
-struct TAO_Active_Object_Map_Entry
-{
-  /// Default constructor.
-  TAO_Active_Object_Map_Entry (void);
-
-  /// User id.
-  PortableServer::ObjectId user_id_;
-
-  /// System id.
-  PortableServer::ObjectId system_id_;
-
-  /// Servant.
-  PortableServer::Servant servant_;
-
-  /// Reference count on outstanding requests on this servant.
-  CORBA::UShort reference_count_;
-
-  /// Has this servant been deactivated already?
-  CORBA::Boolean deactivated_;
-
-  /// Priority of this servant.
-  CORBA::Short priority_;
-};
+struct TAO_Active_Object_Map_Entry;
 
 /**
  * @class TAO_Active_Object_Map

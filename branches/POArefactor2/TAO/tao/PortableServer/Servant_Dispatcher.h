@@ -65,10 +65,10 @@ public:
                                          TAO_POA_Manager &poa_manager,
                                          const TAO_POA_Policy_Set &policies,
                                          ACE_Lock &lock,
-                                    TAO_SYNCH_MUTEX &thread_lock,
-                                    TAO_ORB_Core &orb_core,
-                                    TAO_Object_Adapter *object_adapter
-                                    ACE_ENV_ARG_DECL) = 0;
+                                         TAO_SYNCH_MUTEX &thread_lock,
+                                         TAO_ORB_Core &orb_core,
+                                         TAO_Object_Adapter *object_adapter
+                                         ACE_ENV_ARG_DECL) = 0;
 };
 
 #include /**/ "ace/post.h"

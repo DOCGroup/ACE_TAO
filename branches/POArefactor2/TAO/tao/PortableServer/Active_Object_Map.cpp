@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Active_Object_Map.h"
+#include "Active_Object_Map_Entry.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)

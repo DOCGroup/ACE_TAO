@@ -17,6 +17,7 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Active_Object_Map.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
@@ -81,6 +82,7 @@ namespace TAO
       const PortableServer::ObjectId &id
       ACE_ENV_ARG_DECL)
     {
+
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
       int result = this->active_object_map_->
         find_servant_and_system_id_using_user_id (id,

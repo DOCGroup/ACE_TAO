@@ -1,5 +1,7 @@
 // $Id$
 
+#include "Active_Object_Map_Entry.h"
+
 ACE_INLINE int
 TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant,
                                           int &deactivated)
