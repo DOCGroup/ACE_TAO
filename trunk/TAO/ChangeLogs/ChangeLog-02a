@@ -1,3 +1,11 @@
+Wed Jun 20 11:46:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/DynAny_Test/test_dynarray.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+
+          Modified literal constants passed to the [] operator
+          of a sequence to explicitly be unsigned.
+
 Wed Jun 20 11:11:13 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/examples/Notify/Filter/Filter.dsp:
