@@ -7708,6 +7708,11 @@ ACE_OS::num_processors_online (void)
 #endif
 }
 
+// Include if_arp so that getmacaddr can use the
+// arp structure.
+#if defined (sun)
+# include /**/ <net/if_arp.h>
+#endif
 
 int
 ACE_OS::getmacaddress (struct macaddr_node_t *node) 
@@ -7722,26 +7727,26 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     ADAPTER_STATUS adapt;
     NAME_BUFFER    NameBuff [30];
   };
-     
+  
   NCB         ncb;
   LANA_ENUM   lenum;
   unsigned char result;
- 
-  ACE_OS::memset( &ncb, 0, sizeof(ncb) );
+  
+  ACE_OS::memset (&ncb, 0, sizeof(ncb));
   ncb.ncb_command = NCBENUM;
   ncb.ncb_buffer  = ACE_reinterpret_cast (unsigned char*,&lenum);
   ncb.ncb_length  = sizeof(lenum);
      
-  result = Netbios( &ncb );
+  result = Netbios (&ncb);
  
-  for(int i=0; i < lenum.length ;i++)
+  for(int i = 0; i < lenum.length; i++)
     {
-      ACE_OS::memset( &ncb, 0, sizeof(ncb));
+      ACE_OS::memset (&ncb, 0, sizeof(ncb));
       ncb.ncb_command  = NCBRESET;
-      ncb.ncb_lana_num = lenum.lana[i];
+      ncb.ncb_lana_num = lenum.lana [i];
  
       /** Reset the netbios */
-      result = Netbios( &ncb );
+      result = Netbios (&ncb);
          
       if (ncb.ncb_retcode != NRC_GOODRET) 
 	{
@@ -7749,19 +7754,18 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 	}
  
       ADAPTERSTAT adapter;
-      ACE_OS::memset( &ncb, 0, sizeof (ncb) );
-      ACE_OS::strcpy(ACE_static_cast(char*,ncb.ncb_callname), "*");
+      ACE_OS::memset (&ncb, 0, sizeof (ncb));
+      ACE_OS::strcpy (ACE_static_cast (char*, ncb.ncb_callname), "*");
       ncb.ncb_command     = NCBASTAT;
       ncb.ncb_lana_num    = lenum.lana[i];
-      ncb.ncb_buffer      = ACE_reinterpret_cast (unsigned char*,&adapter);
-      ncb.ncb_length      = sizeof(adapter);
+      ncb.ncb_buffer      = ACE_reinterpret_cast (unsigned char*, &adapter);
+      ncb.ncb_length      = sizeof (adapter);
  
-      result = Netbios( &ncb );
+      result = Netbios (&ncb);
  
-      if ( result == 0 )
+      if (result == 0)
 	{
-	  ACE_OS::memcpy (
-			  node->node,
+	  ACE_OS::memcpy (node->node,
 			  adapter.adapt.adapter_address, 
 			  6);
 	  return 0;
@@ -7773,7 +7777,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   int result = 0;
  
   /** obtain the local host name */
-  char hostname[MAXHOSTNAMELEN];
+  char hostname [MAXHOSTNAMELEN];
   ACE_OS::hostname (hostname, sizeof (hostname));
  
   /** Get the hostent to use with ioctl */
@@ -7800,41 +7804,38 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   struct sockaddr_in *psa = 
     (struct sockaddr_in *)&(ar.arp_pa);
  
-  ACE_OS::memset (
-		  &ar, 
+  ACE_OS::memset (&ar, 
 		  0, 
 		  sizeof (struct arpreq));
  
   psa->sin_family = AF_INET;
  
-  ACE_OS::memcpy ( 
-		  &(psa->sin_addr), 
+  ACE_OS::memcpy (&(psa->sin_addr), 
 		  *paddrs, 
-		  sizeof( struct in_addr)); 
+		  sizeof (struct in_addr)); 
  
-  if (ACE_OS::ioctl ( handle, 
-		      SIOCGARP, 
-		      &ar) == -1)
+  if (ACE_OS::ioctl (handle, 
+                     SIOCGARP, 
+                     &ar) == -1)
     {
       return -1;
     }
- 
+  
   ACE_OS::close (handle);
-                         
-  ACE_OS::memcpy (
-		  node->node,
+  
+  ACE_OS::memcpy (node->node,
 		  ar.arp_ha.sa_data,
 		  6);
- 
+  
   return 0;
- 
+  
 #elif defined (linux)
- 
+  
   struct ifreq ifr;
      
   ACE_HANDLE handle = 
-    ACE_OS::socket(PF_INET, SOCK_DGRAM, 0);
- 
+    ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
+  
   if (handle == ACE_INVALID_HANDLE) 
     {
       return -1;
@@ -7842,23 +7843,23 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
  
   ACE_OS::strcpy (ifr.ifr_name, "eth0");
  
-  if (ACE_OS::ioctl(handle/*s*/, SIOCGIFHWADDR, &ifr) < 0) 
+  if (ACE_OS::ioctl (handle/*s*/, SIOCGIFHWADDR, &ifr) < 0) 
     {
-      ACE_OS::close(handle);
+      ACE_OS::close (handle);
       return -1;
     }
  
   struct sockaddr* sa = 
     (struct sockaddr *) &ifr.ifr_addr;
-
-  ACE_OS::memcpy (
-		  node->node, 
-		  sa->sa_data, 6);
+  
+  ACE_OS::memcpy (node->node, 
+		  sa->sa_data, 
+                  6);
 
   return 0;
 
 #elif
-  ACE_UNUSED_ARG    (node);
+  ACE_UNUSED_ARG (node);
   ACE_NOTSUP_RETURN (-1);
 #endif
 }
