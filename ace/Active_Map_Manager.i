@@ -29,6 +29,14 @@ ACE_Active_Map_Manager_Key::generation (void) const
   return this->generation_;
 }
 
+ACE_INLINE int 
+ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs)
+{
+  return 
+    this->index_ == rhs.index_ &&
+    this->generation_ == rhs.generation_;
+}
+
 ACE_INLINE void 
 ACE_Active_Map_Manager_Key::index (u_long i)
 {
