@@ -82,6 +82,17 @@ public:
     ACE_UINT32 lower;   /* less significant 32 bits */
   };
 
+  struct md5_string
+  {
+    int type;
+    ACE_Time_Value tv;
+    pid_t pid;
+    pid_t pgid;
+    pid_t ppid;
+    uid_t uid;
+    gid_t gid;
+  };
+
   static void send_report (ACE_Message_Block *mb);
 
   static ACE_UINT32 alloc_srcid (ACE_UINT32 addr);

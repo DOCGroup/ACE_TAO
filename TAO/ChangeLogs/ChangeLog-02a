@@ -1,3 +1,10 @@
+Wed Nov 14 13:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP.h:
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: Moved typedef of struct md5_string
+	  from .cpp file to header file.  Cast third parameter of
+	  sdes.add_item() to unsigned char.
+
 Tue Nov 13 20:58:02 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/md5.h: Changed comments from C++ style

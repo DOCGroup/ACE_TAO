@@ -187,16 +187,7 @@ ACE_INT32 random32 (int);
 ACE_UINT32
 TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
 {
-  struct
-    {
-      int type;
-      ACE_Time_Value tv;
-      pid_t pid;
-      pid_t pgid;
-      pid_t ppid;
-      uid_t uid;
-      gid_t gid;
-    } s;
+  md5_string s;
 
   s.type = addr;
   s.tv = ACE_OS::gettimeofday ();
@@ -684,7 +675,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
                       -1);
     }
   else
-    sdes.add_item (my_ssrc, sdes_type, value.length (), value.c_str ());
+    sdes.add_item (my_ssrc, sdes_type, (unsigned char)value.length (), value.c_str ());
 
   // create the message block
   char *cp_ptr;
