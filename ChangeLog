@@ -1,3 +1,9 @@
+Thu Jul 11 20:42:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (creat): The Win32 implementation of this function was
+	  broken.  Thanks to Marvin Greenberg <mgreenberg@dctd.saic.com>
+	  for submitting the fix.
+
 Thu Jul 11 18:37:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/URL_Addr.cpp (string_to_addr):

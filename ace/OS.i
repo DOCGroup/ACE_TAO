@@ -7901,7 +7901,7 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
   ACE_OSCALL_RETURN (::pace_creat (filename, mode),
                      ACE_HANDLE, ACE_INVALID_HANDLE);
 #elif defined (ACE_WIN32)
-  return ACE_OS::open (filename, mode);
+  return ACE_OS::open (filename, O_CREAT|O_TRUNC|O_WRONLY, mode);
 #elif defined(ACE_PSOS)
    ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
                               S_IRUSR | S_IWUSR | S_IXUSR),
