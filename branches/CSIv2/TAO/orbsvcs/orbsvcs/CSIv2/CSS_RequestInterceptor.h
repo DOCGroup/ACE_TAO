@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/CSIC.h"
+
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
@@ -33,7 +35,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 namespace TAO
 {
@@ -52,7 +53,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    CSS_Requestinterceptor (void);
+    CSS_RequestInterceptor (void);
 
     /**
      * @name Methods Required by the Client Request Interceptor
@@ -94,6 +95,28 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
     //@}
+
+  private:
+
+    ///
+    bool extract_sas_context (PortableInterceptor::ClientRequestInfo_ptr info,
+                              CSI::SASContextBody & sas_context
+                              ACE_ENV_ARG_DECL);
+
+    void get_authorization_token (CSI::AuthorizationToken & t
+                                  ACE_ENV_ARG_DECL);
+
+    void get_identity_token (CSI::IdentityToken & t
+                             ACE_ENV_ARG_DECL);
+
+    void get_gss_token (CSI::GSSToken & t
+                        ACE_ENV_ARG_DECL);
+
+    void complete_context (const CSI::CompleteEstablishContext & /* cec */
+                           ACE_ENV_ARG_DECL);
+
+    void invalidate_context (const CSI::ContextError & /* ce */
+                             ACE_ENV_ARG_DECL);
 
   };
 
