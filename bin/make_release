@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 #
 # Creates an ACE or TAO kit.  Intended to be called from the
-# ACE or TAO top-level Makefiles.
+# ACE or TAO top-level GNUMakefiles.
 #
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -282,9 +282,9 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   }
 
   $status = &generate_makefiles ();
-  
+
   if ($status != 0) {
-      die "$0: failed to generate makefiles\n";
+      die "$0: failed to generate GNUMakefiles\n";
   }
 
   $status = &create_kit ();
@@ -743,7 +743,7 @@ sub diff () {
 
 
 ########
-######## Generate Makefiles and workspace/project files.
+######## Generate GNUMakefiles and workspace/project files.
 ########
 sub generate_makefiles () {
 
@@ -822,18 +822,18 @@ sub create_kit () {
 
   if ($kit eq 'ace+tao+ciao') {
       # Create a list of files that needs to be packed with CIAO
-      # including ACE+TAO.  
+      # including ACE+TAO.
       my $tmp_rel_file = '';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUMakefile show_release_files`);
       $release_files .= ' ';
       $release_files .= $tmp_rel_file;
       $tmp_rel_file = '';
       $release_files .= ' ';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/Makefile show_release_files`);
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/GNUMakefile show_release_files`);
       $release_files .= $tmp_rel_file;
 
       print "RELEASE FILES from CIAO are $release_files \n";
-      
+
       $build_command =
           "$rm ACE+TAO+CIAO.zip; " .
           "$find $release_files $release_filter | $egrep $bin_files | " .
@@ -867,7 +867,7 @@ sub create_kit () {
   if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
       # Set the relese files once again
     my $tmp_rel_file = '';
-    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
+    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUMakefile show_release_files`);
     $release_files = $base_release_files;
     $release_files .= ' ';
     $release_files .= $tmp_rel_file;
@@ -907,18 +907,18 @@ sub create_kit () {
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
 
         $status = &generate_em3 ();
-  
+
         if ($status != 0) {
             die "$0: failed to generate em3 files\n";
         }
       $status = &bootstrap_autotools ();
-      
+
       if ($status != 0) {
           die "$0: failed to bootstrap autotools\n";
       }
 
       # Reset it again with autoconf files
-      chomp ($release_files = `$make -f ACE_wrappers/Makefile show_autoconf_release_files`);
+      chomp ($release_files = `$make -f ACE_wrappers/GNUMakefile show_autoconf_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
@@ -953,7 +953,7 @@ sub create_kit () {
       $archives = " ACE.tar.gz ACE-lib.tar.gz ".
 	          "ACE.zip ACE-lib.zip ACE.tar.bz2 ACE-lib.tar.bz2 ";
   }
-  
+
   # Now dispose of ACE in all its glory
   $checksum_command =
     "$shell_cd $dest; " .

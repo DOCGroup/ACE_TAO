@@ -321,7 +321,7 @@ sub wanted {
         ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^\.disable\z/s &&
-        ! /^Makefile.*\z/s
+        ! /^GNUMakefile.*\z/s
       );
     }
 
