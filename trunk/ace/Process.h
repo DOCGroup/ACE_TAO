@@ -60,7 +60,7 @@ protected:
   //
   // @@ These sizes should be taken from the appropriate
   // POSIX/system header files and/or defined dynamically.
-  enum 
+  enum
   {
     MAX_COMMAND_LINE_OPTIONS = 128,
     ENVIRONMENT_BUFFER = 16 * 1024, // 16K
@@ -121,7 +121,10 @@ public:
   // on success, -1 on failure.
 
   int command_line (LPTSTR argv[]);
+  int command_line (LPCTSTR argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
+  // @@ The non-const version is provided only for backwards
+  //    compatibility
 
   u_long creation_flags (void) const;
   // Get.
