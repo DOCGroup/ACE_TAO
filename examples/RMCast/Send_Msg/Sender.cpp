@@ -2,16 +2,12 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-
 #include <ace/OS.h>
+#include <ace/Log_Msg.h>
+
 #include <ace/RMCast/Socket.h>
 
-#include <iostream>
-
 #include "Protocol.h"
-
-using std::cerr;
-using std::endl;
 
 class args {};
 
@@ -47,7 +43,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   }
   catch (args const&)
   {
-    cerr << "usage: " << argv[0] << " <IPv4 Multicast Address>" << endl;
+    ACE_ERROR ((LM_ERROR,
+                "usage: %s <IPv4 multicast address>:<port>\n", argv[0]));
   }
 
   return 1;

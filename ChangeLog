@@ -1,3 +1,10 @@
+Fri Mar  4 15:18:50 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* examples/RMCast/Send_Msg/Receiver.cpp:
+	* examples/RMCast/Send_Msg/Sender.cpp: Replaced usage of
+	std::vector and std::cerr with ACE_Vector and ACE_ERROR/ACE_DEBUG
+	respectively. This should fix warnings in VC6 build.
+
 Fri Mar  4 12:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Manager.cpp:
