@@ -26,7 +26,8 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   //     Defines the methods in the <ACE_SOCK_Stream> abstraction.
   //     
   // = DESCRIPTION
-  //     This adds additional wrapper methods atop the <ACE_SOCK_IO> class.
+  //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
+  //     class.
 {
 public:
   //= The following two methods use write and read system calls.
