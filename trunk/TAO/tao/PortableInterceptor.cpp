@@ -36,7 +36,7 @@ send_request (TAO_ClientRequestInfo *ri,
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
-ACE_INLINE void
+void
 TAO_ClientRequestInterceptor_Adapter::
 receive_reply (TAO_ClientRequestInfo *ri,
                CORBA::Environment &ACE_TRY_ENV)
@@ -68,7 +68,7 @@ receive_reply (TAO_ClientRequestInfo *ri,
 
 }
 
-ACE_INLINE void
+void
 TAO_ClientRequestInterceptor_Adapter::
 receive_exception (TAO_ClientRequestInfo *ri,
                    CORBA::Environment &ACE_TRY_ENV)
@@ -120,7 +120,7 @@ receive_exception (TAO_ClientRequestInfo *ri,
   ACE_CHECK;
 }
 
-ACE_INLINE void
+void
 TAO_ClientRequestInterceptor_Adapter::
 receive_other (TAO_ClientRequestInfo *ri,
                CORBA::Environment &ACE_TRY_ENV)
@@ -159,7 +159,7 @@ TAO_ServerRequestInterceptor_Adapter::
 {
 }
 
-ACE_INLINE void
+void
 TAO_ServerRequestInterceptor_Adapter::
 receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -182,7 +182,7 @@ receive_request_service_contexts (
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
-ACE_INLINE void
+void
 TAO_ServerRequestInterceptor_Adapter::
 receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                  CORBA::Environment &ACE_TRY_ENV)
@@ -216,7 +216,7 @@ receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     }
 }
 
-ACE_INLINE void
+void
 TAO_ServerRequestInterceptor_Adapter::
 send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
             CORBA::Environment &ACE_TRY_ENV)
@@ -247,7 +247,7 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
-ACE_INLINE void
+void
 TAO_ServerRequestInterceptor_Adapter::
 send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                 CORBA::Environment &ACE_TRY_ENV)
@@ -300,7 +300,7 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
   ACE_CHECK;
 }
 
-ACE_INLINE void
+void
 TAO_ServerRequestInterceptor_Adapter::
 send_other (PortableInterceptor::ServerRequestInfo_ptr ri,
             CORBA::Environment &ACE_TRY_ENV)
