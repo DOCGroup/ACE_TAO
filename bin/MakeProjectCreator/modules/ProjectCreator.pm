@@ -1153,7 +1153,7 @@ sub generate_default_pch_filenames {
     my($matching) = undef;
     foreach my $file (@$files) {
       foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
-        if ($file =~ /(.*_pch$ext)/) {
+        if ($file =~ /(.*_pch$ext)$/) {
           $self->process_assignment('pch_header', $1);
           ++$count;
           if ($file =~ /$pname/) {
@@ -1173,7 +1173,7 @@ sub generate_default_pch_filenames {
     my($matching) = undef;
     foreach my $file (@$files) {
       foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
-        if ($file =~ /(.*_pch$ext)/) {
+        if ($file =~ /(.*_pch$ext)$/) {
           $self->process_assignment('pch_source', $1);
           ++$count;
           if ($file =~ /$pname/) {

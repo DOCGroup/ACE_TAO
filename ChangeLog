@@ -1,3 +1,10 @@
+Fri Aug  1 06:37:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where pch files were being picked up even if they did
+          not end with a valid extension.
+
 Thu Jul 31 14:22:17 2003  Justin Michel  <michel_j@ociweb.com>
 
         * bin/create_ace_build.pl:
@@ -9,7 +16,7 @@ Thu Jul 31 14:22:17 2003  Justin Michel  <michel_j@ociweb.com>
           Added .disable to the list of files that won't be linked
         by create_ace_build.pl.
           Added legacy libpaths so that generated Makefiles will be
-        reverse compatible with existing ones, as a temporary 
+        reverse compatible with existing ones, as a temporary
         workaround until everything is MPC generated.
           Fixed some typos in base mpb files.
 
