@@ -1,4 +1,6 @@
+// $Id$
 project(*Supplier): rtnotify {
+  avoids += minimum_corba
   Source_Files {
     Supplier.cpp
     Supplier_Client.cpp
@@ -8,6 +10,7 @@ project(*Supplier): rtnotify {
 }
 
 project(*Consumer): rtnotify, notifytest, rtportableserver {
+  avoids += minimum_corba
   Source_Files {
     Consumer.cpp
     Consumer_Client.cpp
