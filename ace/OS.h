@@ -303,15 +303,15 @@
 #   endif /* ACE_HAS_UNICODE && UNICODE */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
-# if !defined (ACE_DEFAULT_SERVER_HOST)
-#   define ACE_DEFAULT_SERVER_HOST "localhost"
-# endif /* ACE_DEFAULT_SERVER_HOST */
-
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
 #   define ACE_LOCALHOST ASYS_TEXT("localhost")
 # endif
+
+# if !defined (ACE_DEFAULT_SERVER_HOST)
+#   define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
+# endif /* ACE_DEFAULT_SERVER_HOST */
 
 // Default shared memory key
 # if !defined (ACE_DEFAULT_SHM_KEY)
