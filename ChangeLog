@@ -1,3 +1,8 @@
+Mon Sep  2 16:48:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp (ctime_r_test): Corrected ACE_Log_Msg to use
+          %P, not %p, to list process ID.
+
 Mon Sep  2 13:17:26 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Memory_Pool.{h cpp}:
