@@ -216,58 +216,16 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 
-#if defined (ACE_HAS_USING_KEYWORD)
-// TIE class: Refer to CORBA v2.2, Section 20.34.4
-template <class T>
-class TAO_PortableServer_Export ReplyHandler_tie : public ReplyHandler
-{
-public:
-  ReplyHandler_tie (T &t);
-  // the T& ctor
-  ReplyHandler_tie (T &t, PortableServer::POA_ptr poa);
-  // ctor taking a POA
-  ReplyHandler_tie (T *tp, CORBA::Boolean release=1);
-  // ctor taking pointer and an ownership flag
-  ReplyHandler_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
-  // ctor with T*, ownership flag and a POA
-  ~ReplyHandler_tie (void);
-  // dtor
-
-  // TIE specific functions
-  T *_tied_object (void);
-  // return the underlying object
-  void _tied_object (T &obj);
-  // set the underlying object
-  void _tied_object (T *obj, CORBA::Boolean release=1);
-  // set the underlying object and the ownership flag
-  CORBA::Boolean _is_owner (void);
-  // do we own it
-  void _is_owner (CORBA::Boolean b);
-  // set the ownership
-
-  // overridden ServantBase operations
-  PortableServer::POA_ptr _default_POA (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-private:
-  T *ptr_;
-  PortableServer::POA_var poa_;
-  CORBA::Boolean rel_;
-
-  // copy and assignment are not allowed
-  ReplyHandler_tie (const ReplyHandler_tie &);
-  void operator= (const ReplyHandler_tie &);
-};
-
-#endif /* ACE_HAS_USING_KEYWORD */
-
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
 }
 TAO_NAMESPACE_CLOSE
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
+
 #include "MessagingS_T.h"
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS.i"

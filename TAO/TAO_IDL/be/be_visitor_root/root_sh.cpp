@@ -47,32 +47,18 @@ be_visitor_root_sh::init (void)
   if (tao_cg->start_server_header (be_global->be_get_server_hdr_fname ())
         == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root_sh::init - "
-                         "Error :%p: Unable to open server header file : %s\n",
-                         "start_server_header",
-                         be_global->be_get_server_hdr_fname ()),
-                        -1);
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_root_sh::init - "
+          "Error :%p: Unable to open server header file : %s\n",
+          "start_server_header",
+          be_global->be_get_server_hdr_fname ()
+        ),
+        -1
+      );
     }
 
-  if (be_global->gen_tie_classes ())
-    {
-      if (tao_cg->start_server_template_header (
-              be_global->be_get_server_template_hdr_fname ()
-            )
-          == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_root_sh::init - "
-              "Error:Unable to openin server template header file : %s\n",
-              be_global->be_get_server_template_hdr_fname ()
-            ), 
-            -1
-          );
-        }
-    }
-  // set the stream and the next state
+  // set the stream and the next state.
   this->ctx_->stream (tao_cg->server_header ());
   return 0;
 }

@@ -23,8 +23,6 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (be_interface *node
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  //  os->gen_ifdef_macro (node->flat_name (), "THRU_POA_PROXY_IMPL_");
-  os->decr_indent (0);
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
       << "//                    ThruPOA  Impl. Declaration" << be_nl
@@ -61,7 +59,8 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (be_interface *node
     *os << node->thru_poa_proxy_impl_name () << " (void);" << be_nl << be_nl;
 
     // Dtor
-    *os << "virtual ~" << node->thru_poa_proxy_impl_name () << " (void) { }" << be_nl << be_nl;
+    *os << "virtual ~" << node->thru_poa_proxy_impl_name () 
+        << " (void) { }" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -71,7 +70,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (be_interface *node
                          "codegen for scope failed\n"), -1);
     }
 
-  *os << "};" << be_uidt << be_nl << be_nl;
+  *os << be_uidt_nl << "};" << be_nl;
   *os << be_nl
       << "//" << be_nl
       << "//                ThruPOA  Proxy Impl. Declaration" << be_nl

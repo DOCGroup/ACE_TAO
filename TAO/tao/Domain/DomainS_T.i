@@ -19,6 +19,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
 POA_CORBA_DomainManager_tie<T>::POA_CORBA_DomainManager_tie (T &t)
@@ -244,3 +245,7 @@ void POA_CORBA_ConstructionPolicy_tie<T>::destroy  (
 ACE_TRY_ENV
   );
 }
+
+#endif /* ACE_HAS_USING_KEYWORD */
+
+
