@@ -669,7 +669,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_public_ci::visit_string (be_string *)
+be_visitor_union_branch_public_ci::visit_string (be_string *node)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
@@ -688,12 +688,21 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
 
   // three methods to set the string value
 
-  // (1) set method from char*
+  // (1) set method from char* or wchar*
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
-      << "ACE_INLINE void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (char *val)"
-      << be_nl
+      << "ACE_INLINE void" << be_nl;
+
+  if (node->width () == sizeof (char))
+    {
+      *os << bu->name () << "::" << ub->local_name () << " (char *val)";
+    }
+  else
+    {
+      *os << bu->name () << "::" << ub->local_name () << " (CORBA::WChar *val)";
+    }
+
+  *os << be_nl
       << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
   *os << "// set the discriminant val" << be_nl;
@@ -722,12 +731,20 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
 
   *os << "}\n\n";
 
-  // (2) set method from const char *
+  // (2) set method from const char * or const wchar *
   *os << "// accessor to set the member" << be_nl
       << "ACE_INLINE void" << be_nl
-      << bu->name () << "::" << ub->local_name ()
-      << " (const char *val)" << be_nl
-      << "{\n";
+      << bu->name () << "::" << ub->local_name ();
+
+  if (node->width () == sizeof (char))
+    {
+      *os << " (const char *val)" << be_nl << "{\n";
+    }
+  else
+    {
+      *os << " (const CORBA::WChar *val)" << be_nl << "{\n";
+    }
+
   os->incr_indent ();
   // set the discriminant to the appropriate label
   *os << "// set the discriminant val" << be_nl;
@@ -752,16 +769,32 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
   *os << ";" << be_nl;
 
   *os << "// set the value" << be_nl
-      << "this->u_." << ub->local_name () << "_ = "
-      << "CORBA::string_dup (val);" << be_uidt_nl;
-  *os << "}\n\n";
+      << "this->u_." << ub->local_name () << "_ = ";
 
-  // (3) set from const String_var&
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::string_dup (val);" << be_uidt_nl << "}\n\n";
+    }
+  else
+    {
+      *os << "CORBA::wstring_dup (val);" << be_uidt_nl << "}\n\n";
+    }
+
+  // (3) set from const String_var& or WString_var&
   *os << "// accessor to set the member" << be_nl
       << "ACE_INLINE void" << be_nl
-      << bu->name () << "::" << ub->local_name ()
-      << " (const CORBA::String_var &val)" << be_nl
-      << "{" << be_idt_nl;
+      << bu->name () << "::" << ub->local_name ();
+
+  if (node->width () == sizeof (char))
+    {
+      *os << " (const CORBA::String_var &val)" << be_nl;
+    }
+  else
+    {
+      *os << " (const CORBA::WString_var &val)" << be_nl;
+    }
+
+  *os << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
   *os << "// set the discriminant val" << be_nl;
   *os << "this->_reset (";
@@ -784,16 +817,33 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
 
   *os << ";" << be_nl;
 
-  *os << "// set the value" << be_nl
-      << "CORBA::String_var " << ub->local_name ()
-      << "_var = val;" << be_nl
+  *os << "// set the value" << be_nl;
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::String_var " << ub->local_name ();
+    }
+  else
+    {
+      *os << "CORBA::WString_var " << ub->local_name ();
+    }
+
+  *os << "_var = val;" << be_nl
       << "this->u_." << ub->local_name () << "_ = "
       << ub->local_name () << "_var._retn ();" << be_uidt_nl;
   *os << "}\n\n";
 
   // get method
-  *os << "ACE_INLINE const char *" << be_nl
-      << bu->name () << "::" << ub->local_name ()
+  if (node->width () == sizeof (char))
+    {
+      *os << "ACE_INLINE const char *" << be_nl;
+    }
+  else
+    {
+      *os << "ACE_INLINE const CORBA::WChar *" << be_nl;
+    }
+
+  *os << bu->name () << "::" << ub->local_name ()
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl

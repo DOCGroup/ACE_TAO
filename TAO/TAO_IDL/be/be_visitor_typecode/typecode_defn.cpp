@@ -1453,8 +1453,17 @@ be_visitor_typecode_defn::gen_typecode (be_string *node)
   // no typecode optimizations for anonymous strings
 
   os->indent (); // start from the current indentation level
+
   // emit the enumeration
-  *os << "CORBA::tk_string, " << be_nl;
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::tk_string, " << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::tk_wstring, " << be_nl;
+    }
+
   // size of the enum
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 

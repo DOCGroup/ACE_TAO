@@ -220,12 +220,20 @@ be_visitor_operation_rettype_vardecl_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_operation_rettype_vardecl_cs::visit_string (be_string * /* node*/)
+be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "char* _tao_retval = 0;";
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "char* _tao_retval = 0;";
+    }
+  else
+    {
+      *os << "CORBA::WChar* _tao_retval = 0;";
+    }
 
   *os << be_nl << be_nl;
   return 0;

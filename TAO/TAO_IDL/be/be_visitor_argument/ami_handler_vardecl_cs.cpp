@@ -295,7 +295,7 @@ int be_visitor_args_ami_handler_vardecl_cs::visit_sequence (be_sequence *node)
   return 0;
 }
 
-int be_visitor_args_ami_handler_vardecl_cs::visit_string (be_string *)
+int be_visitor_args_ami_handler_vardecl_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -307,14 +307,17 @@ int be_visitor_args_ami_handler_vardecl_cs::visit_string (be_string *)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-#if 0 /* ASG */
-      *os << "CORBA::String_var _tao_var_"
-          << arg->local_name () << ";" << be_nl;
-      *os << "char *&" << arg->local_name () << " = _tao_var_"
-          << arg->local_name () << ".out ();" << be_nl;
-#endif
-      *os << "CORBA::String_var "
-          << arg->local_name () << ";\n";
+
+      if (node->width () == sizeof (char))
+        {
+          *os << "CORBA::String_var ";
+        }
+      else
+        {
+          *os << "CORBA::WString_var ";
+        }
+
+      *os << arg->local_name () << ";\n";
       break;
     }
   return 0;

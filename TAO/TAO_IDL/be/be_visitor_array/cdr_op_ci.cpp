@@ -545,6 +545,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // the following have a _var type and must be 
               // handled in a special way
               case AST_Decl::NT_string:
+              case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
                 *os << ".out ()";
@@ -589,6 +590,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // the following have a _var type and must be 
               // handled in a special way
               case AST_Decl::NT_string:
+              case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
                 *os << ".out ()";
@@ -642,6 +644,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // the following have a _var type and must be 
               // handled in a special way
               case AST_Decl::NT_string:
+              case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
                 *os << ".in ()";
@@ -686,6 +689,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // the following have a _var type and must be 
               // handled in a special way
               case AST_Decl::NT_string:
+              case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
               case AST_Decl::NT_interface_fwd:
                 *os << ".in ()";

@@ -400,19 +400,39 @@ int be_visitor_operation_rettype_compiled_marshal::visit_string (be_string *node
         }
       else
         {
-          *os << "CORBA::Any::from_string ((char *)_tao_retval.in (), "
-              << node->max_size ()->ev ()->u.ulval - 1 << ")";
+          if (node->width () == sizeof (char))
+            {
+              *os << "CORBA::Any::from_string ((char *)_tao_retval.in (), ";
+            }
+          else
+            {
+              *os << "CORBA::Any::from_wstring ((CORBA::WChar *)_tao_retval.in (), ";
+            }
+
+          *os << node->max_size ()->ev ()->u.ulval - 1 << ")";
         }
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       // differentiate between bounded and unbounded
       if (node->max_size ()->ev ()->u.ulval == 0)
-        // unbounded
-        *os << "_tao_retval";
+        {
+          // unbounded
+          *os << "_tao_retval";
+        }
       else
-        *os << "CORBA::Any::to_string (_tao_retval, "
-            << node->max_size ()->ev ()->u.ulval - 1 << ")";
+        {
+          if (node->width () == sizeof (char))
+            {
+              *os << "CORBA::Any::to_string (_tao_retval, ";
+            }
+          else
+            {
+              *os << "CORBA::Any::to_wstring (_tao_retval, ";
+            }
+
+          *os << node->max_size ()->ev ()->u.ulval - 1 << ")";
+        }
     }
   else
     {

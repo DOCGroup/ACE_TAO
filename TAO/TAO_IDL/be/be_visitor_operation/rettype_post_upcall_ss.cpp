@@ -79,7 +79,7 @@ be_visitor_operation_rettype_post_upcall_ss::visit_sequence (be_sequence *)
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_string (be_string * /* node*/)
+be_visitor_operation_rettype_post_upcall_ss::visit_string (be_string *)
 {
   return 0;
 }

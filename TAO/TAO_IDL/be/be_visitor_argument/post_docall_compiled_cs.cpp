@@ -171,7 +171,7 @@ be_visitor_args_post_docall_compiled_cs::visit_valuetype_fwd (be_valuetype_fwd *
 #endif /* IDL_HAS_VALUETYPE */
 
 int
-be_visitor_args_post_docall_compiled_cs::visit_string (be_string *)
+be_visitor_args_post_docall_compiled_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -182,7 +182,18 @@ be_visitor_args_post_docall_compiled_cs::visit_string (be_string *)
       break;
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << "CORBA::string_free (" << arg->local_name () << ");" << be_nl;
+
+      if (node->width () == sizeof (char))
+        {
+          *os << "CORBA::string_free (" << arg->local_name () 
+              << ");" << be_nl;
+        }
+      else
+        {
+          *os << "CORBA::wstring_free (" << arg->local_name () 
+              << ");" << be_nl;
+        }
+
       break;
     case AST_Argument::dir_OUT:
       break;

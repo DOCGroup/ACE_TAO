@@ -705,7 +705,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuetype_field_cs::visit_string (be_string *)
+be_visitor_valuetype_field_cs::visit_string (be_string *node)
 {
   be_decl *ub =
     this->ctx_->node (); // get field node
@@ -724,13 +724,23 @@ be_visitor_valuetype_field_cs::visit_string (be_string *)
 
   // three methods to set the string value
 
-  // (1) set method from char*
+  // (1) set method from char* or wchar*
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op() << "void" << be_nl;
-  this->op_name(bu,os);
-  *os << "::" << ub->local_name () << " (char *val)"
-      << be_nl
+      << this->pre_op () << "void" << be_nl;
+  this->op_name (bu, 
+                 os);
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "::" << ub->local_name () << " (char *val)";
+    }
+  else
+    {
+      *os << "::" << ub->local_name () << " (CORBA::WChar *val)";
+    }
+
+  *os << be_nl
       << "{" << be_idt_nl;
 
       *os << "// set the value" << be_nl
@@ -739,50 +749,96 @@ be_visitor_valuetype_field_cs::visit_string (be_string *)
           << " = val;" << be_uidt_nl
       << "}" << be_nl;
 
-  // (2) set method from const char *
+  // (2) set method from const char * or const wchar*
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op() << "void" << be_nl;
-  this->op_name(bu,os);
-  *os << "::" << ub->local_name ()
-      << " (const char *val)" << be_nl
-      << "{\n";
+      << this->pre_op () << "void" << be_nl;
+  this->op_name (bu,
+                 os);
+  *os << "::" << ub->local_name ();
+
+  if (node->width () == sizeof (char))
+    {
+      *os << " (const char *val)" << be_nl;
+    }
+  else
+    {
+      *os << " (const CORBA::WChar *val)" << be_nl;
+    }
+
+  *os << "{\n";
   os->incr_indent ();
 
-      *os << "// set the value" << be_nl
-          << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-          << " = "
-          << "CORBA::string_dup (val);" << be_uidt_nl;
+  *os << "// set the value" << be_nl
+      << "this->"
+      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
+      << " = ";
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::string_dup (val);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "CORBA::wstring_dup (val);" << be_uidt_nl;
+    }
 
   *os << "}" << be_nl;
 
   // (3) set from const String_var&
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op() << "void" << be_nl;
-  this->op_name(bu,os);
-  *os << "::" << ub->local_name ()
-      << " (const CORBA::String_var &val)" << be_nl
-      << "{" << be_idt_nl;
-      *os << ";" << be_nl;
+      << this->pre_op () << "void" << be_nl;
+  this->op_name (bu,
+                 os);
+  *os << "::" << ub->local_name ();
 
-      *os << "// set the value" << be_nl
-          << "CORBA::String_var " << ub->local_name ()
-          << "_var = val;" << be_nl
-          << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-          << " = "
-          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+  if (node->width () == sizeof (char))
+    {
+      *os << " (const CORBA::String_var &val)" << be_nl;
+    }
+  else
+    {
+      *os << " (const CORBA::WString_var &val)" << be_nl;
+    }
+
+  *os << "{" << be_idt_nl;
+  *os << ";" << be_nl;
+
+  *os << "// set the value" << be_nl;
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::String_var " << ub->local_name ();
+    }
+  else
+    {
+      *os << "CORBA::WString_var " << ub->local_name ();
+    }
+
+  *os << "_var = val;" << be_nl
+      << "this->"
+      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
+      << " = "
+      << ub->local_name () << "_var._retn ();" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
   // get method
-  *os << this->pre_op() << "const char *" << be_nl;
-  this->op_name(bu,os);
+  if (node->width () == sizeof (char))
+    {
+      *os << this->pre_op () << "const char *" << be_nl;
+    }
+  else
+    {
+      *os << this->pre_op () << "const CORBA::WChar *" << be_nl;
+    }
+
+  this->op_name (bu,
+                 os);
   *os << "::" << ub->local_name ()
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
       << "}\n\n";
   return 0;
