@@ -1,3 +1,10 @@
+Sun Mar 14 12:28:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+          Fixed warnings in the MinGW build. Thanks to Martin Corino
+          <mcorino@remedy.nl> for supplying the patches.
+
 Sun Mar 14 12:18:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
