@@ -447,11 +447,11 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
-      ACE_Message_Block header_mb (header, header_size);
-      ACE_Message_Block trailer_mb (trailer, trailer_size);
+      ACE_Message_Block hdr_mb (header, header_size);
+      ACE_Message_Block trl_mb (trailer, trailer_size);
 
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer
-        (header_mb.duplicate (), header_size, trailer_mb.duplicate (), trailer_size);
+        (hdr_mb.duplicate (), header_size, trl_mb.duplicate (), trailer_size);
 
       ACE_Asynch_Transmit_File tf;
 

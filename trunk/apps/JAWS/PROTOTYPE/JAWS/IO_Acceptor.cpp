@@ -95,15 +95,19 @@ JAWS_IO_Synch_Acceptor::get_handle (void)
 
 
 JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor (void)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   : acceptor_ (*(new ACE_Asynch_Acceptor<JAWS_Asynch_Handler>)),
     acceptor_ptr_ (&acceptor_)
+#endif
 {
 }
 
 JAWS_IO_Asynch_Acceptor::~JAWS_IO_Asynch_Acceptor (void)
 {
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   delete this->acceptor_ptr_;
   this->acceptor_ptr_ = 0;
+#endif
 }
 
 int
@@ -188,15 +192,19 @@ JAWS_IO_Asynch_Acceptor::close (void)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 template class ACE_Asynch_Acceptor<JAWS_Asynch_Handler>;
-template class ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>;
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
+template class ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 #pragma instantiate ACE_Asynch_Acceptor<JAWS_Asynch_Handler>
-#pragma instantiate  ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
 #pragma instantiate  ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
+#pragma instantiate  ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
