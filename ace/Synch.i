@@ -83,6 +83,7 @@ ACE_File_Lock::set_handle (ACE_HANDLE h)
 {
 // ACE_TRACE ("ACE_File_Lock::set_handle");
   this->lock_.handle_ = h;
+  this->removed_ = 0;
 }
 
 ACE_INLINE const ACE_rwlock_t &
