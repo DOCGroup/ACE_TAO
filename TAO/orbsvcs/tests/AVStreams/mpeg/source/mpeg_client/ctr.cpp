@@ -153,7 +153,7 @@ javaCmdRead(char *buf, int size)
     cmdBuffer += size;
     return 0;
   }
-  while ((val = read(cmdSocket, (buf), (size))) <= 0)
+  while ((val = read(javaSocket, (buf), (size))) <= 0)
     {
     if (val == -1 && errno == EINTR) return 1;
     if (!val) {
