@@ -37,10 +37,10 @@
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
 #include "ace/Atomic_Op.h"
-
+#include "ace/Thread_Mutex.h"
 
 // Keep track of how many completions are still expected.
-static ACE_Atomic_Op <ACE_Thread_Mutex, size_t> Completions_To_Go;
+static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
 
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
