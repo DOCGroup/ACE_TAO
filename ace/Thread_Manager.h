@@ -124,7 +124,8 @@ public:
 	       long flags = THR_NEW_LWP,
 	       long priority = ACE_DEFAULT_THREAD_PRIORITY,
 	       int grp_id = -1,
-	       ACE_Task_Base *task = 0);
+	       ACE_Task_Base *task = 0,
+	       ACE_hthread_t thread_handles[] = 0);
   // Create N new threads, all of which execute <func>.  
   // Returns: on success a unique group id that can be used to control
   // all of the threads in the same group.  On failure, returns -1.

@@ -172,14 +172,39 @@ main (int, char *[])
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
+  ACE_hthread_t *thread_handles;
 
-  if (ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS,
-					       ACE_THR_FUNC (&worker),
-					       (void *) ITERATIONS,
-					       THR_BOUND | THR_DETACHED) == -1)
-    ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
+  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[ACE_MAX_THREADS], -1);
 
-  ACE_Thread_Manager::instance ()->wait ();
+  if (ACE_Thread_Manager::instance ()->spawn_n 
+      ((ACE_thread_t *) 0,
+       ACE_MAX_THREADS,
+       ACE_THR_FUNC (worker), 
+       (void *) ITERATIONS,
+       THR_BOUND,
+       ACE_DEFAULT_THREAD_PRIORITY,
+       -1,
+       0,
+       0,
+       thread_handles) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+
+#if !defined (VXWORKS)
+      // VxWorks doesn't support thr_join() semantics...  Someday
+      // we'll fix this.
+      ACE_Thread_Manager::instance ()->wait ();
+#else
+      // Wait for all the threads to reach their exit point and then join
+      // with all the exiting threads.
+      for (int i = 0;
+	   i < ACE_MAX_THREADS;
+	   i++)
+	if (ACE_Thread::join (thread_handles[i]) == -1)
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+#endif /* VXWORKS */     
+
+  delete [] thread_handles;
+
 #else
   ACE_ERROR ((LM_ERROR,
 	      "threads are not supported on this platform\n"));
