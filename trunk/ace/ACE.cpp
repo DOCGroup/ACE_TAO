@@ -1467,12 +1467,12 @@ int
 ACE::max_handles (void)
 {
   ACE_TRACE ("ACE::max_handles");
-#if defined (_SC_OPEN_MAX)
-  return ACE_OS::sysconf (_SC_OPEN_MAX);
-#elif defined (RLIMIT_NOFILE)
+#if defined (RLIMIT_NOFILE)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   return rl.rlim_cur;
+#elif defined (_SC_OPEN_MAX)
+  return ACE_OS::sysconf (_SC_OPEN_MAX);
 #elif defined (FD_SETSIZE)
   return FD_SETSIZE;
 #else

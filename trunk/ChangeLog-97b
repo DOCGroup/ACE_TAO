@@ -1,20 +1,21 @@
-Thu Oct 23 15:30:17 1997  Steve Huston  <shuston@riverace.com>
+Thu Oct 23 13:50:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Timer_Hash_T.h, Timer_Hash.cpp, Timer_Heap_T.h, Timer_Heap.cpp,
-	  Timer_List_T.h, Timer_List.cpp, Timer_Queue_T.h, Timer_Queue.cpp,
-	  Timer_Wheel_T.h, Timer_Wheel.cpp: Replaced all occurences of
-	  ACE_HPUX_BROKEN_TEMPLATES with ACE_HAS_BROKEN_HPUX_TEMPLATES.
-
-Thu Oct 23 11:20:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/ACE.cpp (max_handles): By default, we now try to use the
+ 	  getrlimit() function before sysconf() since sysconf() doesn't
+ 	  work "correctly" for NO _SC_OPEN_MAX (i.e., it just returns the
+ 	  original value, which might have been changed by setrlimit().
+  	  What a pain...
 
 	* ace/ACE.cpp (max_handles): If FD_SETSIZE is enabled return
 	  this as the number of handles.  This isn't perfect, but it's
 	  probably better than returning -1.
 
 	* ace/Select_Reactor.cpp (open): Added a call to
-	  ACE::set_handle_limit() if the requested size for the Reactor is
-	  greater than the current max number of descriptors in the process.
-	  Thanks to Neil Lavelle <nlavelle@imcl.com> for motivating this.
+ 	  ACE::set_handle_limit() if the requested size for the Reactor is
+ 	  greater than the current max number of descriptors in the
+ 	  process.  Also check to make sure that the user isn't ask for
+ 	  more than the FD_SETSIZE.  Thanks to Neil Lavelle
+ 	  <nlavelle@imcl.com> for motivating this.
 
 	* ace/Thread_Manager: Changed the name THR_FUNC to
  	  ACE_THR_MEMBER_FUNC since it's now a global typedef on VxWorks
@@ -36,6 +37,13 @@ Thu Oct 23 11:20:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/Singleton.cpp (dump): There was a typo in the dump() method
  	  for ACE_TSS_Singleton, it should be
  	  ACE_TSS_Singleton::instance_i().  I've fixed this.
+
+Thu Oct 23 15:30:17 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Hash_T.h, Timer_Hash.cpp, Timer_Heap_T.h, Timer_Heap.cpp,
+	  Timer_List_T.h, Timer_List.cpp, Timer_Queue_T.h, Timer_Queue.cpp,
+	  Timer_Wheel_T.h, Timer_Wheel.cpp: Replaced all occurences of
+	  ACE_HPUX_BROKEN_TEMPLATES with ACE_HAS_BROKEN_HPUX_TEMPLATES.
 
 Wed Oct 22 23:23:29 1997  Nanbor Wang    <nw1@COYOTE>
 
@@ -719,7 +727,6 @@ Thu Oct 16 20:44:40 1997  James C Hu  <jxh@cs.wustl.edu>
 	  on NT.  Hopefully this will fix it.  Fix suggested by Rob Head
 	  (rhead@virtc.com).
 
->>>>>>> 4.444
 Thu Oct 16 14:21:34 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Proactor.cpp: Replaced #include "ace/Servie_Config.h" with
