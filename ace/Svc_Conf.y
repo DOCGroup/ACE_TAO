@@ -158,7 +158,8 @@ module
           if (mt->init (args.argc (), args.argv ()) == -1
               || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
             {
-              ACE_ERROR ((LM_ERROR, ASYS_TEXT ("dynamic initialization failed for Module %s\n"),
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("dynamic initialization failed for Module %s\n"),
                           ASYS_WIDE_STRING ($<static_node_>1->name ())));
               yyerrno++;
             }
@@ -189,9 +190,10 @@ module
       if (mt != 0
           && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
-                     ASYS_WIDE_STRING ($<static_node_>1->name ()),
-                     ASYS_WIDE_STRING (($<static_node_>-1)->name ())));
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                      ASYS_WIDE_STRING ($<static_node_>1->name ()),
+                      ASYS_WIDE_STRING (($<static_node_>-1)->name ())));
           yyerrno++;
         }
     }
@@ -209,8 +211,15 @@ svc_location
       if (sym != 0)
         {
           ACE_Service_Type_Impl *stp
-            = ace_create_service_type (ASYS_WIDE_STRING ($1), $2, sym, flags, gobbler);
-          $$ = new ACE_Service_Type (ASYS_WIDE_STRING ($1), stp, $3->handle (), $4);
+            = ace_create_service_type (ASYS_WIDE_STRING ($1),
+                                       $2,
+                                       sym,
+                                       flags,
+                                       gobbler);
+          $$ = new ACE_Service_Type (ASYS_WIDE_STRING ($1),
+                                     stp,
+                                     $3->handle (),
+                                     $4);
         }
       else
         {
@@ -283,8 +292,11 @@ pathname
 void
 yyerror (const char *s)
 {
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("[error %d] on line %d: %s\n"),
-              ++yyerrno, yylineno, ASYS_WIDE_STRING (s)));
+  ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT ("[error %d] on line %d: %s\n"),
+              ++yyerrno,
+              yylineno,
+              ASYS_WIDE_STRING (s)));
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
@@ -301,7 +313,8 @@ get_module (ACE_Static_Node *str_rec,
 
   if (sr == 0 || st == 0 || mt == 0)
     {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
                   ASYS_WIDE_STRING (svc_name),
                   ASYS_WIDE_STRING (str_rec->name ())));
       yyerrno++;
@@ -325,7 +338,8 @@ get_module (ACE_Static_Node *str_rec,
 
   if (sr == 0 || st == 0 || mt == 0)
     {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
                   wname,
                   ASYS_WIDE_STRING (str_rec->name ())));
       yyerrno++;
@@ -380,7 +394,8 @@ ace_create_service_type (const ASYS_TCHAR *name,
                       0);
       break;
     default:
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("unknown case\n")));
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("unknown case\n")));
       yyerrno++;
       break;
     }
