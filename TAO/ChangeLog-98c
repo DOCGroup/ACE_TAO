@@ -1,3 +1,23 @@
+Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp : 
+	* TAO_IDL/driver/drv_args.cpp :
+		Some more robust handling for failure on running
+	<gperf>. Also updated the warning message when failure on
+	running.
+			
+		We try to run the $ACE_ROOT/bin/gperf. If $ACE_ROOT doesnt
+		exist then we try to execute "gperf" hoping that PATH is
+		set correctly. If -g option is used, we use that path to
+		execute gperf. If nothing works, we print the following
+		the note.
+	"TAO_IDL:Note:GPERF could not be executed. Using Dynamich Hashed OpLookup instead of Perfect Hashing\n"
+	"To make use of Perfect Hashing\n"
+        "\t-Build the <gperf> program at $ACE_ROOT/apps/gperf\n"
+        "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
+        "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details"
+ 	
+
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
                           Irfan Pyarali  <irfan@cs.wustl.edu>
 
