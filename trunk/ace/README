@@ -96,6 +96,7 @@ ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
 ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
+ACE_HAS_RENAMED_MAIN			Renames "main (int, char *[])" to ace_main (int, char *[]), for platforms such as g++/VxWorks that don't allow main
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SET_T_ERRNO			Platform has a function to set t_errno (e.g., Tandem).
