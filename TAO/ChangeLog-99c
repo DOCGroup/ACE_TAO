@@ -1,3 +1,10 @@
+Wed May 12 16:26:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references): 
+	Changed the const CORBA::String to char * as is expected by the
+	test suite and also by the CORBA v2.2 spec vide page 20-115,
+	section 20-39-20. 
+
 Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
