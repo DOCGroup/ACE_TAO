@@ -1,3 +1,11 @@
+Wed Oct  8 13:56:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/Obj_Module.cpp:
+        * apps/soreduce/SO_Group.cpp:
+          Fixed compile errors that appeared in the MinGW build. Used
+          the ACE_OS version of methods instead of the native ones.
+
 Wed Oct  8 07:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/asnmp/address.cpp:
