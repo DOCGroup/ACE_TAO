@@ -1,3 +1,8 @@
+Fri Jun  2 15:33:08 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the Notify section with
+	  information on project schedule.
+
 Fri Jun  2 10:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
