@@ -10,15 +10,20 @@ project(CosProperty) : orbsvcslib, core, portableserver {
   pch_source   =
 
   IDL_Files {
+    CosProperty.idl
+
+    // This is a wrappper for backwards compatibility
     CosPropertyService.idl
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    Property {
-      CosPropertyServiceC.cpp
-      CosPropertyServiceS.cpp
-      Property
-    }
+  Source_Files {
+    CosPropertyC.cpp
+    CosPropertyS.cpp
+    Property
+  }
+
+  Header_Files {
+    Property
   }
 
   Template_Files {

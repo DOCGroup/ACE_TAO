@@ -29,7 +29,7 @@
 #include "ace/SOCK_Acceptor.h"
 
 #include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/CosPropertyS.h"
 #include "orbsvcs/AVStreamsS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/CosNamingC.h"
