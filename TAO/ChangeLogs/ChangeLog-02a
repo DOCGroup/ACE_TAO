@@ -1,3 +1,7 @@
+Sat Aug 11 08:14:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Native_Exceptions/test_i.cpp: Fixed warning with KCC.
+
 Fri Aug 10 10:59:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Native_Exceptions/test_i.cpp:
