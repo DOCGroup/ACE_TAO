@@ -124,13 +124,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
+  int retval = 0;
+
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
     defined (__hpux)
 
   ACE_DLL dll;
-
-  int retval = 0;
 
   retval += basic_test (dll);
 
