@@ -32,6 +32,18 @@ TAO_Operation_Details::argument_flag (void) const
   return this->argument_flag_;
 }
 
+ACE_INLINE TAO_Service_Context &
+TAO_Operation_Details::request_service_context (void)
+{
+  return this->request_service_info_;
+}
+
+ACE_INLINE const TAO_Service_Context &
+TAO_Operation_Details::request_service_context (void) const
+{
+  return this->request_service_info_;
+}
+
 ACE_INLINE IOP::ServiceContextList &
 TAO_Operation_Details::request_service_info (void)
 {
@@ -47,15 +59,15 @@ TAO_Operation_Details::request_service_info (void) const
 }
 
 ACE_INLINE TAO_Service_Context &
-TAO_Operation_Details::request_service_context (void)
+TAO_Operation_Details::reply_service_context (void)
 {
-  return this->request_service_info_;
+  return this->reply_service_info_;
 }
 
 ACE_INLINE const TAO_Service_Context &
-TAO_Operation_Details::request_service_context (void) const
+TAO_Operation_Details::reply_service_context (void) const
 {
-  return this->request_service_info_;
+  return this->reply_service_info_;
 }
 
 ACE_INLINE IOP::ServiceContextList &
@@ -70,18 +82,6 @@ TAO_Operation_Details::reply_service_info (void) const
 {
   // @@ This should go ...
   return this->reply_service_context ().service_info ();
-}
-
-ACE_INLINE TAO_Service_Context &
-TAO_Operation_Details::reply_service_context (void)
-{
-  return this->reply_service_info_;
-}
-
-ACE_INLINE const TAO_Service_Context &
-TAO_Operation_Details::reply_service_context (void) const
-{
-  return this->reply_service_info_;
 }
 
 ACE_INLINE void
