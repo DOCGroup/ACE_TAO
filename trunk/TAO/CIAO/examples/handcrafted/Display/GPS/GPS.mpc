@@ -17,13 +17,17 @@ project(GPS_stub): ciao_client {
   }
 }
 
-project(GPS_svnt) : ciao_server {
+project(GPS_svnt) : ciao_servant {
   depends += HUDisplay_svnt GPS_stub
   sharedname  = GPS_svnt
   libs    += GPS_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
   dllflags = GPS_SVNT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
 
   IDL_Files {
     GPSE.idl
@@ -37,7 +41,7 @@ project(GPS_svnt) : ciao_server {
 }
 
 
-project(GPS_exec) : ciao_server {
+project(GPS_exec) : ciao_component {
   depends   += GPS_svnt
   sharedname = GPS_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
@@ -55,7 +59,7 @@ project(GPS_exec) : ciao_server {
   }
 }
 
-project(GPS_tracing_exec) : ciao_server {
+project(GPS_tracing_exec) : ciao_component {
   depends   += GPS_svnt
   sharedname = GPS_tracing_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt

@@ -14,12 +14,16 @@ project(hello_stub): ciao_client {
   }
 }
 
-project(hello_servants) : ciao_server {
+project(hello_servants) : ciao_servant {
   depends += hello_stub
   sharedname  = hello_servants
   libs    += hello_stub
   idlflags  +=  -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_SERVANT_Export -Wb,export_include=hello_servants_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
   dllflags = HELLO_SERVANT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
 
   IDL_Files {
     helloE.idl
@@ -32,7 +36,7 @@ project(hello_servants) : ciao_server {
   }
 }
 
-project(hello_executors) : ciao_server {
+project(hello_executors) : ciao_component {
   depends   += hello_servants
   sharedname = hello_executors
   libs      += hello_stub hello_servants

@@ -17,13 +17,17 @@ project(BMClosedED_stub): ciao_client {
   }
 }
 
-project(BMClosedED_svnt) : ciao_server {
+project(BMClosedED_svnt) : ciao_servant {
   depends += BasicSP_svnt BMClosedED_stub
   sharedname  = BMClosedED_svnt
   libs    += BMClosedED_stub BasicSP_stub BasicSP_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_SVNT_Export -Wb,export_include=BMClosedED_svnt_export.h
   dllflags = BMCLOSEDED_SVNT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
 
   IDL_Files {
     BMClosedEDE.idl
@@ -37,7 +41,7 @@ project(BMClosedED_svnt) : ciao_server {
 }
 
 
-project(BMClosedED_exec) : ciao_server {
+project(BMClosedED_exec) : ciao_component {
   depends   += BMClosedED_svnt
   sharedname = BMClosedED_exec
   libs      += BMClosedED_stub BMClosedED_svnt BasicSP_stub BasicSP_svnt
@@ -54,4 +58,3 @@ project(BMClosedED_exec) : ciao_server {
     BMClosedED_exec.cpp
   }
 }
-

@@ -1,3 +1,31 @@
+Tue Jun 24 15:42:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Updated mpc file generator to
+	  take advantage of the new CIDL rules.
+
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/OEP/BasicSP/EC/EC.mpc:
+	* examples/OEP/Display/GPS/GPS.mpc:
+	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/OEP/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/BasicSP/BasicSP.mpc:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Hello/hello.mpc: Updated mpc files to take
+	  advantage of the new CIDL build rules, and to use the new
+	  ciao_servant mpc template for building servant DLLs and
+	  ciao_component mpc template for building component executor
+	  DLLs..
+
 Sun Jun 22 15:23:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/BasicSP/EC/EC.mpc:

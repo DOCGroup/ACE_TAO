@@ -16,7 +16,7 @@ project(HUDisplay_stub): ciao_client {
   }
 }
 
-project(HUDisplay_svnt) : ciao_server {
+project(HUDisplay_svnt) : ciao_servant {
   depends +=  HUDisplay_stub
   sharedname  = HUDisplay_svnt
   libs    += HUDisplay_stub
