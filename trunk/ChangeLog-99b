@@ -1,3 +1,9 @@
+Thu Jan 28 16:43:17 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Active_Map_Manager_T.(h i): Renamed BASE to ACE_AMM_BASE - BASE
+          conflicted with something in AIX xlC.  Also fixed #pragma
+          implementatation to work on xlC.
+
 Thu Jan 28 10:04:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.cpp: 
