@@ -634,7 +634,10 @@ main (int argc,
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
 
 // = Handle Gobbler
 template class ACE_Node<ACE_HANDLE>;
