@@ -1,4 +1,3 @@
-// IOStream.cpp
 // $Id$
 
 #if !defined (ACE_IOSTREAM_C)
@@ -83,7 +82,7 @@
   // function will be invoked by the first >>.  Since it returns
   // a myiostream&, the second >> will be invoked as desired.  */
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Streambuf::get_handle (void)
 {
   return 0;
@@ -129,6 +128,10 @@ ACE_Streambuf::underflow (void)
       setb (this->eback_saved_,
             this->eback_saved_ + streambuf_size_, 0);
 
+      // Remember that we are now in getMode.  This will help us if
+      // we're called prior to a mode change as well as helping us
+      // when the mode does change.
+      this->cur_mode_ = this->get_mode_;
       // Using the new values for base (), initialize the get area.
       // This simply sets eback (), gptr () and egptr () described
       // earlier.
@@ -137,11 +140,6 @@ ACE_Streambuf::underflow (void)
       // Set the put buffer such that puts will be disabled.  Any
       // attempt to put data will now cause overflow to be invoked.
       setp (0, 0);
-
-      // Remember that we are now in getMode.  This will help us if
-      // we're called prior to a mode change as well as helping us
-      // when the mode does change.
-      this->cur_mode_ = this->get_mode_;
     }
   else  // base () has been initialized already...
     {
@@ -235,14 +233,13 @@ ACE_Streambuf::overflow (int c)
       setb (this->pbase_saved_,
             this->pbase_saved_ + streambuf_size_, 0);
 
+      // Set the mode for optimization.
+      this->cur_mode_ = this->put_mode_;
       // Set the put area using the new base () values.
       setp (base (), ebuf ());
 
       // Disable the get area.
       setg (0, 0, 0);
-
-      // Set the mode for optimization.
-      this->cur_mode_ = this->put_mode_;
     }
   else  // We're already reading or writing
     {
@@ -366,11 +363,11 @@ ACE_Streambuf::flushbuf (void)
   // ACE_Time_Value to (0,1);
   // if (this->recv (tbuf, 1, MSG_PEEK, &to) == -1)
   // {
-  // 	if (errno != ETIME)
-  //	{
-  //		perror ("OOPS preparing to send to peer");
-  // 		return EOF;
-  //	}
+  //    if (errno != ETIME)
+  //    {
+  //            perror ("OOPS preparing to send to peer");
+  //            return EOF;
+  //    }
   // }
   //
   // The correct way to handle this is for the application to trap
@@ -451,7 +448,7 @@ ACE_Streambuf::ACE_Streambuf (u_int streambuf_size, int io_mode)
  (void)reset_put_buffer ();
 }
 
-u_int 
+u_int
 ACE_Streambuf::streambuf_size (void)
 {
   return streambuf_size_;
@@ -460,7 +457,7 @@ ACE_Streambuf::streambuf_size (void)
 // Return the number of bytes not yet gotten. eback + get_waiting =
 // gptr.
 
-u_int 
+u_int
 ACE_Streambuf::get_waiting (void)
 {
   return this->gptr_saved_ - this->eback_saved_;
@@ -469,7 +466,7 @@ ACE_Streambuf::get_waiting (void)
 // Return the number of bytes in the get area (includes some already
 // gotten); eback + get_avail = egptr.
 
-u_int 
+u_int
 ACE_Streambuf::get_avail (void)
 {
   return this->egptr_saved_ - this->eback_saved_;
@@ -478,7 +475,7 @@ ACE_Streambuf::get_avail (void)
 // Return the number of bytes to be 'put' onto the stream media.
 // pbase + put_avail = pptr.
 
-u_int 
+u_int
 ACE_Streambuf::put_avail (void)
 {
   return this->pptr_saved_ - this->pbase_saved_;
@@ -486,13 +483,13 @@ ACE_Streambuf::put_avail (void)
 
 // Typical usage:
 //
-//	u_int  newGptr  = otherStream->get_waiting ();
-//	u_int  newEgptr = otherStream->get_avail ();
-//	char * newBuf   = otherStream->reset_get_buffer ();
-//	char * oldgetbuf = myStream->reset_get_buffer (newBuf, otherStream->streambuf_size (), newGptr, newEgptr);
+//      u_int  newGptr  = otherStream->get_waiting ();
+//      u_int  newEgptr = otherStream->get_avail ();
+//      char * newBuf   = otherStream->reset_get_buffer ();
+//      char * oldgetbuf = myStream->reset_get_buffer (newBuf, otherStream->streambuf_size (), newGptr, newEgptr);
 //
-//	'myStream' now has the get buffer of 'otherStream' and can use it in any way.
-//	'otherStream' now has a new, empty get buffer.
+//      'myStream' now has the get buffer of 'otherStream' and can use it in any way.
+//      'otherStream' now has a new, empty get buffer.
 
 char *
 ACE_Streambuf::reset_get_buffer (char *newBuffer,
@@ -541,9 +538,9 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
 
 // Typical usage:
 //
-//	u_int  newPptr = otherStream->put_avail ();
-//	char * newBuf  = otherStream->reset_put_buffer ();
-//	char * oldputbuf = otherStream->reset_put_buffer (newBuf, otherStream->streambuf_size (), newPptr);
+//      u_int  newPptr = otherStream->put_avail ();
+//      char * newBuf  = otherStream->reset_put_buffer ();
+//      char * oldputbuf = otherStream->reset_put_buffer (newBuf, otherStream->streambuf_size (), newPptr);
 
 char *
 ACE_Streambuf::reset_put_buffer (char *newBuffer,
