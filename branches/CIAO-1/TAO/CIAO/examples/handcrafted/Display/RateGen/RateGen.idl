@@ -31,4 +31,4 @@ module HUDisplay
   };
 };
 
-#endif /* RATEGEN_GEN */
+#endif /* RATEGEN_IDL */

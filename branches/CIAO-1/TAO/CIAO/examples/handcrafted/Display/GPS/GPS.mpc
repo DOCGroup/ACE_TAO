@@ -1,3 +1,5 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay GPS"
 
 project(GPS_stub): ciao_client {
   depends += HUDisplay_stub
@@ -39,6 +41,7 @@ project(GPS_exec) : ciao_server {
   sharedname = GPS_exec
   libs      += GPS_stub HUDisplay_stub GPS_svnt
   libpaths += ..
+  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
   dllflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {

@@ -81,6 +81,7 @@ project('."$com_name".'_exec) : ciao_server {
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$lib_depend $com_name".'_svnt'."
   $lib_paths".'
+  idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export -Wb,export_include='."$com_name".'_exec_export.h
   dllflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -93,7 +94,9 @@ project('."$com_name".'_exec) : ciao_server {
 ';
 }
 
-$mpc_template = '
+$mpc_template = '// $Id$
+// This file is generated with "'."generate_component_mpc.pl $flags".'"
+
 project('."$com_name".'_stub): ciao_client {'."
   $stub_depend".'
   sharedname = '."$com_name".'_stub
