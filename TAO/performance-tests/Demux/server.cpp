@@ -2,25 +2,23 @@
 
 #include "tao_demux_i.h"
 
-#ifdef USE_QUANTIFY
-#include <quantify.h>
-#endif
+#if defined (ACE_HAS_QUANTIFY)
+# include <quantify.h>
+#endif /* ACE_HAS_QUANTIFY */
 
-#include <iostream.h>
-#include <fstream.h>
-
+#include "ace/streams.h"
 #include "ace/SString.h"
 
 ACE_RCSID(Demux_Test, server, "$Id$")
 
 void print_exception (const CORBA_Exception     *x,
-		      const char                  *info,
-		      FILE                        *stream
-		      );
+                      const char                  *info,
+                      FILE                        *stream
+                      );
 
 #if !defined (__cplusplus)
-typedef void (*SIG_TYP)(); 
-#endif 
+typedef void (*SIG_TYP)();
+#endif
 
 #ifdef SVR4
 void
@@ -34,7 +32,7 @@ sigpipe ()
 
 //****************** perf hash for obj lookup *************
 // for perfect hash
-struct object_db 
+struct object_db
 {
   char *name; // name of method
   CORBA_Object_ptr obj; //fn pointer to obj impl
@@ -51,14 +49,14 @@ public:
 
   ~TAO_Perfect_Hash_ObjTable (void);
 
-  virtual int bind (const CORBA_OctetSeq &key, 
-		    CORBA_Object_ptr obj);
+  virtual int bind (const CORBA_OctetSeq &key,
+                    CORBA_Object_ptr obj);
   // Registers a CORBA_Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA_OctetSeq &key, 
-		    CORBA_Object_ptr &obj);
+  virtual int find (const CORBA_OctetSeq &key,
+                    CORBA_Object_ptr &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 
@@ -113,7 +111,7 @@ TAO_Perfect_Hash_ObjTable::find (const CORBA_OctetSeq &key, CORBA_Object_ptr &ob
 }
 
 //****************** perf hash for opname lookup *************
-struct method_db 
+struct method_db
 {
   char *name; // name of method
   TAO_Skeleton skel_ptr_; //fn pointer to obj impl
@@ -130,13 +128,13 @@ public:
   ~TAO_Perfect_Hash_Op_Table (void);
 
   virtual int find (const CORBA_String &opname,
-		    TAO_Skeleton &skel_ptr);
+                    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
   virtual int bind (const CORBA_String &opname,
-		    const TAO_Skeleton skelptr);
+                    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 private:
@@ -154,14 +152,14 @@ TAO_Perfect_Hash_Op_Table::~TAO_Perfect_Hash_Op_Table (void)
 
 int
 TAO_Perfect_Hash_Op_Table::bind (const CORBA_String &opname,
-				 const TAO_Skeleton skelptr)
+                                 const TAO_Skeleton skelptr)
 {
   return 0; // nothing to do
 }
 
 int
 TAO_Perfect_Hash_Op_Table::find (const CORBA_String &opname,
-				 TAO_Skeleton &skelptr)
+                                 TAO_Skeleton &skelptr)
 {
   method_db *entry;
 
@@ -211,8 +209,8 @@ main (int argc, char *const *argv)
   TAO_Operation_Table *optbl = new TAO_Perfect_Hash_Op_Table (&mh);
 
   TAO_Operation_Table_Parameters *op_params =
-     TAO_OP_TABLE_PARAMETERS::instance(); 
-			 
+     TAO_OP_TABLE_PARAMETERS::instance();
+
   fstream iorfile;  // stores the object references of all the objects
   fstream outfile;
   CORBA_String str; // scratch area
@@ -236,52 +234,52 @@ main (int argc, char *const *argv)
   while ((c = getopt (argc, argv, "ui:t:o:m:")) != -1)
     {
       switch (c)
-	{
-	case 't':
-	  switch (*optarg)
-	    {
-	    case 'l':
-	      op_params->lookup_strategy
-		(TAO_Operation_Table_Parameters::TAO_LINEAR); 
-	      break;
-	    case 'a':
-	      op_params->lookup_strategy
-		(TAO_Operation_Table_Parameters::TAO_ACTIVE_DEMUX);
-	      break;
-	    case 'g':
-	      op_params->lookup_strategy
-		(TAO_Operation_Table_Parameters::TAO_PERFECT_HASH); 
-	      op_params->concrete_strategy (optbl);
-	      break;
-	    case 'd':
-	    default:
-	      op_params->lookup_strategy
-		(TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH);
-	      break;
-	    }
-	  break;
-	case 'u':
-	  use_ior = 1;
-	  orb_name = "";
-	  break;
-	case 'i':
-	  iter = atoi (optarg);
-	  break;
-	case 'o':
-	  numObjs = atoi(optarg);
-	  break;
-	case 'm':
-	  numMethods = atoi(optarg);
-	  break;
-	default:
-	  goto usage;
-	}
+        {
+        case 't':
+          switch (*optarg)
+            {
+            case 'l':
+              op_params->lookup_strategy
+                (TAO_Operation_Table_Parameters::TAO_LINEAR);
+              break;
+            case 'a':
+              op_params->lookup_strategy
+                (TAO_Operation_Table_Parameters::TAO_ACTIVE_DEMUX);
+              break;
+            case 'g':
+              op_params->lookup_strategy
+                (TAO_Operation_Table_Parameters::TAO_PERFECT_HASH);
+              op_params->concrete_strategy (optbl);
+              break;
+            case 'd':
+            default:
+              op_params->lookup_strategy
+                (TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH);
+              break;
+            }
+          break;
+        case 'u':
+          use_ior = 1;
+          orb_name = "";
+          break;
+        case 'i':
+          iter = atoi (optarg);
+          break;
+        case 'o':
+          numObjs = atoi(optarg);
+          break;
+        case 'm':
+          numMethods = atoi(optarg);
+          break;
+        default:
+          goto usage;
+        }
     }
 
   TAO_Avg = 0;
   TAO_Loop = 0;
   TAO_HowMany = iter*numObjs*numMethods;
-    
+
   //
   // Receiver
   //
@@ -294,10 +292,10 @@ main (int argc, char *const *argv)
   iorfile.close();
   cout << "Server ready to handle events" << endl;
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
   quantify_clear_data();
   quantify_start_recording_data();
-#endif
+#endif /* ACE_HAS_QUANTIFY */
 
   ACE_Service_Config::run_reactor_event_loop();
 
@@ -314,4 +312,3 @@ usage:
   fprintf (stderr, Usage);
   return(1);
 }
-
