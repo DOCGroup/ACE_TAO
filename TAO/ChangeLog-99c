@@ -1,3 +1,43 @@
+Fri Sep 10 16:11:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAC.h: Added LocalityConstrainedServantBase to the
+	  PortableServer namespace.
+
+	* tao/MessagingS (Policies): Since messaging policies are always
+	  collocated, they now use multiple inheritance from the new
+	  TAO_Locality_Constrained_ServantBase class to get locality
+	  constraints and POA registration behavior.
+
+	* tao/POA_CORBA.h (Policy): Changed POA_CORBA::Policy to inherit
+	  from TAO_Locality_Constrained_ServantBase instead of
+	  TAO_Local_ServantBase when TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+	  is turned on.  This will give us the locality constrained
+	  policies, while still giving the semantics of registering with
+	  the POA.
+
+	  Note that the collocated stubs of most policies still use direct
+	  access to the servant.  Therefore, if absolutely normal servant
+	  behavior is desired, these stubs need to be changed to use the
+	  through POA policy.
+
+	* tao/Servant_Base.h (TAO_Locality_Constrained_ServantBase): Added
+	  a new class TAO_Locality_Constrained_ServantBase.
+
+          TAO_Local_ServantBase does not register with the POA and does
+	  not produce a valid stub, i.e., object references of this
+	  servant cannot be exported.  The (collocated) stubs of these
+	  servants will always be direct, i.e., call directly to the
+	  servant and don't call through the POA since this servant is not
+	  registered with the POA.
+
+	  TAO_Locality_Constrained_ServantBase does register with the POA.
+	  However, it does not produce a valid stub, i.e., object
+	  references of this servant cannot be exported.  The (collocated)
+	  stubs of these servants can either call directly to the servant
+	  or go through the POA.
+
+	  Bug 313 was fixed by the above changes.
+
 Fri Sep 10 16:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp (handle_input): Changed to use our
