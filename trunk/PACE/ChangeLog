@@ -1,3 +1,9 @@
+Wed Jun 28 09:21:07 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Makefile:
+        * pace/Makefile:
+          Changed inlining to be the default.
+
 Tue Jun 27 23:09:34 2000 John Heitmann <jwh1@cs.wustl.edu>
 
         * pace/posix/unistd.h:

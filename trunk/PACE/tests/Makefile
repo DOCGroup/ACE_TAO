@@ -20,12 +20,16 @@ ifeq ($(PACE_SYSNAME),)
 endif # ! PACE_SYSNAME
 
 # If we are inlining the PACE functions then we don't want to include
-# the PACE library. If we're not inlining then we need to include the
-# PACE library.
-ifeq (1,$(inline))
+# the PACE library (and we need to define PACE_HAS_INLINE). If we're not
+# inlining then we need to include the PACE library. Inlining is the default.
+ifndef inline
   CFLAGS += -DPACE_HAS_INLINE
-else # ! inline
-  LIBS += -L$(PACE_ROOT)/pace -lPACE
+else
+  ifeq (0,$(inline))
+    LIBS += -L$(PACE_ROOT)/pace -lPACE
+  else
+    CFLAGS += -DPACE_HAS_INLINE
+  endif # inline
 endif # ! inline
 
 VPATH:=common:arpa:config:netinet:sys
