@@ -110,7 +110,7 @@ private:
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-char *ST_AMH_Server::ior_output_file_  = "test.ior";
+char *ST_AMH_Server::ior_output_file_  = (char *) "test.ior";
 
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
