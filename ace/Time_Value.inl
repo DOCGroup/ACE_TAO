@@ -150,24 +150,6 @@ ACE_Time_Value::usec (long usec)
   this->tv_.tv_usec = usec;
 }
 
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator *= (double d)
-{
-  double time =
-    ((double) this->sec ()) * ACE_ONE_SECOND_IN_USECS + this->usec ();
-  time *= d;
-  // Truncate time to usable range <-2^31, 2^31) secs
-  if (time > (double)(1<<31)*ACE_ONE_SECOND_IN_USECS-1.0)
-    time = (double)(1<<31)*ACE_ONE_SECOND_IN_USECS-1.0;
-  else if (time < -(double)(1<<31)*ACE_ONE_SECOND_IN_USECS)
-    time = -(double)(1<<31)*ACE_ONE_SECOND_IN_USECS;
-  long sec = (long)(time / ACE_ONE_SECOND_IN_USECS);
-  this->sec (sec);
-  this->usec ((long)(time - ((double) sec) * ACE_ONE_SECOND_IN_USECS));
-  this->normalize ();
-  return *this;
-}
-
 ACE_INLINE ACE_Time_Value
 operator * (double d, const ACE_Time_Value &tv)
 {

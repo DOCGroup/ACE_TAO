@@ -1,63 +1,78 @@
+Mon May 17 22:38:48 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+        * ace/Time_Value.cpp (operator *):
+        * ace/Time_Value.h (operator *):
+        * ace/Time_Value.inl (operator *):
+          operator *(double) moved from *inl into *cpp. The multiplication
+          algorithm change to extend the range of results to
+          <ACE_INT_MIN, ACE_INT_MAX>. Doxygen docs for operator *
+          extended.
+        * tests/Time_Value_Test.cpp:
+          Added several tests for the result of multiplication by
+          double.
+
+
 Mon May 17 16:48:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Add #include
-	  "AIO_CLD_export.h" to the non-AIO section so it will at least
-	  build and load on non-AIO systems.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Add #include
+          "AIO_CLD_export.h" to the non-AIO section so it will at least
+          build and load on non-AIO systems.
 
 Mon May 17 15:46:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS3/jaws3/Templates.cpp: Added missing ACE_Atomic_Op_Ex
-	  instantiation. Thanks to Johnny Willemsen for this fix.
+        * apps/JAWS3/jaws3/Templates.cpp: Added missing ACE_Atomic_Op_Ex
+          instantiation. Thanks to Johnny Willemsen for this fix.
 
 Mon May 17 13:29:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Web_Crawler/URL.h: Changed return type of send_request()
-	  to ssize_t, matching change to HTTP_URL.h from:
-	  Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
+        * examples/Web_Crawler/URL.h: Changed return type of send_request()
+          to ssize_t, matching change to HTTP_URL.h from:
+          Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
 
 Mon May 17 19:19:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * tests/SOCK_Dgram_Bcast_Test.cpp (run_auto_test):
-	  Removed warning on declared, but not used function.
-	  Added OS_NS_unistd.h include to make sure ACE_OS::sleep is
-	  declared.
+
+        Removed warning on declared, but not used function.
+        Added OS_NS_unistd.h include to make sure ACE_OD::sleep is
+        declared.
 
 Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_stdio.h (tempnam): Had to remove the default 'dir' value
-	  on the wchar variant because it conflicts with the char version
-	  when defaults are taken into account.
+        * ace/OS_NS_stdio.h (tempnam): Had to remove the default 'dir' value
+          on the wchar variant because it conflicts with the char version
+          when defaults are taken into account.
 
-	* ace/OS_NS_stdio.inl (tempnam): For the wchar_t variant, have to
-	  copy the narrow-char name to a wide-char string and free() the
-	  original.
-	  (fopen (wchar_t *...)): ACE_TEXT_ALWAYS_CHAR doesn't convert a
-	  string if ACE_USES_WCHAR setting already matches ACE_TCHAR. Thus, to
-	  force a convert of wchar_t to char, use ACE_Wide_To_Ascii directly.
+        * ace/OS_NS_stdio.inl (tempnam): For the wchar_t variant, have to
+          copy the narrow-char name to a wide-char string and free() the
+          original.
+          (fopen (wchar_t *...)): ACE_TEXT_ALWAYS_CHAR doesn't convert a
+          string if ACE_USES_WCHAR setting already matches ACE_TCHAR. Thus, to
+          force a convert of wchar_t to char, use ACE_Wide_To_Ascii directly.
 
 Mon May 17 11:58:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/WIN32_Asynch_IO.cpp (writev): If the passed-in chain of
-	  ACE_Message_Blocks contains a 0-length block, it would cause
-	  a iovec to be uninitialized and still passed to WSASend(). This is
-	  fixed. Thanks to Ken Kane <kkane@livevault.com> for reporting this.
+        * ace/WIN32_Asynch_IO.cpp (writev): If the passed-in chain of
+          ACE_Message_Blocks contains a 0-length block, it would cause
+          a iovec to be uninitialized and still passed to WSASend(). This is
+          fixed. Thanks to Ken Kane <kkane@livevault.com> for reporting this.
 
 Mon May 17 17:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/Time_Value.inl:
-	  Fixed a bug in operator *=( double ) which caused overflow for
-	  results greater than 2 seconds. Thanks to Mirek Pabich
-	  <miropabich@tenbit.pl> for this patch.
+        * ace/Time_Value.inl:
+          Fixed a bug in operator *=( double ) which caused overflow for
+          results greater than 2 seconds. Thanks to Mirek Pabich
+          <miropabich@tenbit.pl> for this patch.
 
 Mon May 17 08:45:18 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* bin/g++dep:
-	  Document all the crazy sed commands that are used in this
-	  script.  Also, simplified the data flow by using a single sed
-	  invocation (and a single sed script) to apply all the
-	  transformations.  Reduce the number of temporary files, and
-	  ensure that the sed script file is removed if an error or
-	  interrupt occurs.
+        * bin/g++dep:
+          Document all the crazy sed commands that are used in this
+          script.  Also, simplified the data flow by using a single sed
+          invocation (and a single sed script) to apply all the
+          transformations.  Reduce the number of temporary files, and
+          ensure that the sed script file is removed if an error or
+          interrupt occurs.
 
 Mon May 17 12:40:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -134,210 +149,210 @@ Sun May 16 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/Sock_Connect.cpp (get_bcast_addr):
-	The loop over interfaces was buggy the same way as previously in mk_broadcast.
-	Fixed. It seems sa_len is serious portability problem. Shall
-	ACE_HAS_SA_LEN macro be defined and respected?
+        * ace/Sock_Connect.cpp (get_bcast_addr):
+        The loop over interfaces was buggy the same way as previously in mk_broadcast.
+        Fixed. It seems sa_len is serious portability problem. Shall
+        ACE_HAS_SA_LEN macro be defined and respected?
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
-	FreeBSD also has sockaddr.sa_len, hence the loop over interfaces shall
-	work correctly.
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
+        FreeBSD also has sockaddr.sa_len, hence the loop over interfaces shall
+        work correctly.
 
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
-	ACE_ERROR message modified to print the name of problematic interface.
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
+        ACE_ERROR message modified to print the name of problematic interface.
 
 Sat May 15 19:17:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
-	Quick fix to previous bugfix. It seems that not every system (eg. Linux)
-	provides sockaddr.sa_len. Previous fix (see below) restricted now to AIX,
-	QNX and CHORUS, where sa_len is avalaible.
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
+        Quick fix to previous bugfix. It seems that not every system (eg. Linux)
+        provides sockaddr.sa_len. Previous fix (see below) restricted now to AIX,
+        QNX and CHORUS, where sa_len is avalaible.
 
 Sat May 15 17:25:17 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/SOCK_Dgram_Bcast.h:
-	* ace/SOCK_Dgram_Bcast.cpp:
-	  Fixed bug in mk_broadcast related with incorrect length of struct ifreq.
-	  Thanks to Mirek Pabich <miropabich@tenbit.pl> for this patch.
-	* tests/SOCK_Dgram_Bcast_Test.cpp:
-	  tests/tests.mpc:
-	  test/run_test.lst:
-	  New automatic test for checking against bugs similiar to those reported by
-	  Mirek Pabich. The usability of the test is restricted, as some errors in
-	  broadcast handling can be detected only in LAN transmission.
-	* tests/tests.mpc:
-	  MT_Reference_Counted_Event_Handler_Test project name truncated to
-	  MT_Ref_Counted_Event_Handler_Test.
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Bcast.cpp:
+          Fixed bug in mk_broadcast related with incorrect length of struct ifreq.
+          Thanks to Mirek Pabich <miropabich@tenbit.pl> for this patch.
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          tests/tests.mpc:
+          test/run_test.lst:
+          New automatic test for checking against bugs similiar to those reported by
+          Mirek Pabich. The usability of the test is restricted, as some errors in
+          broadcast handling can be detected only in LAN transmission.
+        * tests/tests.mpc:
+          MT_Reference_Counted_Event_Handler_Test project name truncated to
+          MT_Ref_Counted_Event_Handler_Test.
 
 Fri May 14 22:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/event.mpb:
 
-	  Reordered subprojects to force TAO_Messaging library to be
-	  listed in static link commands after TAO_DynamicInterface
-	  library.  The latter depends on the former.  Addresses static
-	  build link-time errors.  Thanks to Chad for providing a patch.
+          Reordered subprojects to force TAO_Messaging library to be
+          listed in static link commands after TAO_DynamicInterface
+          library.  The latter depends on the former.  Addresses static
+          build link-time errors.  Thanks to Chad for providing a patch.
 
 Fri May 14 14:22:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Service_Repository.{h cpp} (insert): If there's no space left in
-	  in the service repository, set errno to ENOSPC before returning -1.
-	  (remove): Added an optional argument that can receive the
-	  service record pointer for the removed service. If the pointer is
-	  returned to the caller, it is not deleted. If the pointer is not
-	  returned to the caller (the default) it is deleted (this is the
-	  historic behavior). This is needed to properly support removing
-	  a service record quickly after inserting it during service
-	  initialization. See "Tue Mar 16 2004 <Ivan.Murphy@siemens.com>
-	  ACE version 5.4 P4", below.
+        * ace/Service_Repository.{h cpp} (insert): If there's no space left in
+          in the service repository, set errno to ENOSPC before returning -1.
+          (remove): Added an optional argument that can receive the
+          service record pointer for the removed service. If the pointer is
+          returned to the caller, it is not deleted. If the pointer is not
+          returned to the caller (the default) it is deleted (this is the
+          historic behavior). This is needed to properly support removing
+          a service record quickly after inserting it during service
+          initialization. See "Tue Mar 16 2004 <Ivan.Murphy@siemens.com>
+          ACE version 5.4 P4", below.
 
 Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Functor.{h i}: The ACE_Hash, ACE_Equal_To, and ACE_Less_Than
-	  "char"-type specializations were being done as ACE_TCHAR, and if
-	  ACE_USES_WCHAR defined, also as ACE_ANTI_TCHAR. These are now changed
-	  to always do 'char' and, if ACE_HAS_WCHAR, also wchar_t. Thus,
-	  they're both compiled whenever possible and not only when
-	  ACE_USES_WCHAR is set up.
+        * ace/Functor.{h i}: The ACE_Hash, ACE_Equal_To, and ACE_Less_Than
+          "char"-type specializations were being done as ACE_TCHAR, and if
+          ACE_USES_WCHAR defined, also as ACE_ANTI_TCHAR. These are now changed
+          to always do 'char' and, if ACE_HAS_WCHAR, also wchar_t. Thus,
+          they're both compiled whenever possible and not only when
+          ACE_USES_WCHAR is set up.
 
-	* ace/OS_NS_stdio.{h, inl}: Added wchar_t variants of tempnam ()
-	  and rename ().
+        * ace/OS_NS_stdio.{h, inl}: Added wchar_t variants of tempnam ()
+          and rename ().
 
-	* ace/OS_NS_sys_stat.{h, inl}: Added a wchar_t variant of stat ().
+        * ace/OS_NS_sys_stat.{h, inl}: Added a wchar_t variant of stat ().
 
-	* ace/OS_NS_unistd.{h, inl}: Added a wchar_t variant of unlink ().
+        * ace/OS_NS_unistd.{h, inl}: Added a wchar_t variant of unlink ().
 
-	* examples/Web_Crawler/Command_Processor.cpp (execute): Make sure
-	  the URL path string is narrow. (insert): Use ACE_TEXT around
-	  string literals.
+        * examples/Web_Crawler/Command_Processor.cpp (execute): Make sure
+          the URL path string is narrow. (insert): Use ACE_TEXT around
+          string literals.
 
-	* examples/Web_Crawler/HTTP_URL.{h cpp} (send_request): Change return
-	  type from int to ssize_t, matching the normal types used in ACE.
-	  Use size_t, not int, for string size.
+        * examples/Web_Crawler/HTTP_URL.{h cpp} (send_request): Change return
+          type from int to ssize_t, matching the normal types used in ACE.
+          Use size_t, not int, for string size.
 
-	* examples/Web_Crawler/Mem_Map_Stream.cpp (recv): Cast the length
-	  to off_t to match what seek() expects.
+        * examples/Web_Crawler/Mem_Map_Stream.cpp (recv): Cast the length
+          to off_t to match what seek() expects.
 
-	* examples/Web_Crawler/main.cpp:
-	* examples/Web_Crawler/Web_Crawler.{h, cpp}:
-	* examples/Web_Crawler/Options.{h, cpp}: Changed main() to ACE_TMAIN()
-	  and all the command line options processing to ACE_TCHAR.
+        * examples/Web_Crawler/main.cpp:
+        * examples/Web_Crawler/Web_Crawler.{h, cpp}:
+        * examples/Web_Crawler/Options.{h, cpp}: Changed main() to ACE_TMAIN()
+          and all the command line options processing to ACE_TCHAR.
 
-	* examples/Web_Crawler/URL_Addr.cpp: Add ACE_TEXT to string literals.
+        * examples/Web_Crawler/URL_Addr.cpp: Add ACE_TEXT to string literals.
 
-	Changes merged in from Siemens Medical Systems:
-	Tue May 11 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P15
+        Changes merged in from Siemens Medical Systems:
+        Tue May 11 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P15
         * tests/Proactor_Scatter_Gather_Test.cpp: Close down the proactor
-	  before finishing otherwise the object manager will hang.
+          before finishing otherwise the object manager will hang.
 
-	Mon Apr 26 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P13
+        Mon Apr 26 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P13
         * ace/Registry_Name_Space.cpp: Removed 64-bit warnings.
 
-	Fri Apr 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P12
+        Fri Apr 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P12
         * ace/Based_Pointer_T.h: Made target_ and base_offset_ type
-	  ptrdiff_t instead of long to avoid problems with 64bit.
+          ptrdiff_t instead of long to avoid problems with 64bit.
 
-	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P8
-	* ace/DLL_Manager.cpp:
-	* ace/NT_Service.cpp:
-	  Use ACE_LIB_TEXT instead of ACE_TEXT.
+        Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P8
+        * ace/DLL_Manager.cpp:
+        * ace/NT_Service.cpp:
+          Use ACE_LIB_TEXT instead of ACE_TEXT.
 
-	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P7
-	* ace/OS_NS_sys_stat.{h,inl}: Added a wchar version of mkdir().
+        Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P7
+        * ace/OS_NS_sys_stat.{h,inl}: Added a wchar version of mkdir().
 
-	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P6
-	* ace/OS_NS_fcntl.cpp (open):
-	* ace/OS_NS_stdio.{h inl}:
-	* ace/OS_NS_sys_mman.inl (mmap):
-	* ace/OS_NS_Thread.inl (mutex_init, event_init, sema_init):
-	  Added a thread safe method
-	  ACE_OS::default_win32_security_attributes_r().
+        Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P6
+        * ace/OS_NS_fcntl.cpp (open):
+        * ace/OS_NS_stdio.{h inl}:
+        * ace/OS_NS_sys_mman.inl (mmap):
+        * ace/OS_NS_Thread.inl (mutex_init, event_init, sema_init):
+          Added a thread safe method
+          ACE_OS::default_win32_security_attributes_r().
 
-	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
-	* ace/Service_Config.cpp: Insert component into repository before
+        Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
+        * ace/Service_Config.cpp: Insert component into repository before
           calling init as in the init the component may access the service
-	  repository.
+          repository.
 
-	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P3
+        Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P3
         * ace/Functor.i,h: Added the classes ACE_Hash<const wchar_t *> and
-	  ACE_Hash<wchar_t *> which had gone missing between 5.0.7 and
-	  5.3.1/5.4.
+          ACE_Hash<wchar_t *> which had gone missing between 5.0.7 and
+          5.3.1/5.4.
 
-	Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>	ACE 5.4 P2
-	* ace/OS_NS_stdio.{h,cpp,inl}: Added wchar version of fopen().
+        Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>        ACE 5.4 P2
+        * ace/OS_NS_stdio.{h,cpp,inl}: Added wchar version of fopen().
 
-	Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>	ACE 5.4 P1
-	* ace/OS_NS_stdlib.{h,inl}: Added wchar_t version of putenv().
+        Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>        ACE 5.4 P1
+        * ace/OS_NS_stdlib.{h,inl}: Added wchar_t version of putenv().
 
 Fri May 14 10:00:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac:
-	* ace/README (ACE_HAS_EXPLICIT_KEYWORD, ACE_HAS_MUTABLE_KEYWORD):
-	* ace/CDR_Base.h:
-	* ace/config-borland-common.h:
-	* ace/config-g++-common.h:
-	* ace/config-icc-common.h:
-	* ace/config-lite.h (ACE_EXPLICIT, ACE_MUTABLE):
-	* ace/config-openvms.h:
-	* ace/config-tandem-nsk-mips-v2.h:
-	* ace/config-win32-ghs.h:
-	* ace/config-win32-msvc-6.h:
-	* ace/config-win32-msvc-7.h:
-	* ace/config-win32-visualage.h:
-	* m4/config_h.m4:
+        * configure.ac:
+        * ace/README (ACE_HAS_EXPLICIT_KEYWORD, ACE_HAS_MUTABLE_KEYWORD):
+        * ace/CDR_Base.h:
+        * ace/config-borland-common.h:
+        * ace/config-g++-common.h:
+        * ace/config-icc-common.h:
+        * ace/config-lite.h (ACE_EXPLICIT, ACE_MUTABLE):
+        * ace/config-openvms.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc-6.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-visualage.h:
+        * m4/config_h.m4:
 
-	  ACE now requires C++ "explicit" and "mutable" keyword support.
-	  Document these macros as deprecated, and removed all related
-	  references.
+          ACE now requires C++ "explicit" and "mutable" keyword support.
+          Document these macros as deprecated, and removed all related
+          references.
 
-	* ace/Auto_Ptr.h:
-	* ace/Bound_Ptr.h:
-	* ace/CDR_Stream.h:
-	* ace/Configuration.h:
-	* ace/DEV_Addr.h:
-	* ace/Date_Time.h:
-	* ace/Dirent.h:
-	* ace/FILE_Addr.h:
-	* ace/INET_Addr.h:
-	* ace/Local_Tokens.h:
-	* ace/MEM_Addr.h:
-	* ace/Parse_Node.h:
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/SString.h:
+        * ace/Auto_Ptr.h:
+        * ace/Bound_Ptr.h:
+        * ace/CDR_Stream.h:
+        * ace/Configuration.h:
+        * ace/DEV_Addr.h:
+        * ace/Date_Time.h:
+        * ace/Dirent.h:
+        * ace/FILE_Addr.h:
+        * ace/INET_Addr.h:
+        * ace/Local_Tokens.h:
+        * ace/MEM_Addr.h:
+        * ace/Parse_Node.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SString.h:
 
-	  Replaced all uses of "ACE_EXPLICIT" and "ACE_MUTABLE" with
-	  "explicit" and "mutable", respectively.  These ACE macros are
-	  deprecated.
+          Replaced all uses of "ACE_EXPLICIT" and "ACE_MUTABLE" with
+          "explicit" and "mutable", respectively.  These ACE macros are
+          deprecated.
 
 Thu May 13 21:59:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/CDR_Base.h (ACE_CDR::Boolean):
+        * ace/CDR_Base.h (ACE_CDR::Boolean):
 
-	  Potential ambiguities can occur if some classes, for example,
-	  contain implicit conversion operators whose return values can
-	  themselves be implicitly converted to a bool even though bool
-	  was not the intended type.  If multiple CDR stream insertion
-	  operators (for example) exist, including one that accepts the
-	  ACE_OutputCDR::from_boolean type, the compiler may be unable to
-	  choose the appropriate insertion operator.  As of yet, this
-	  problem does not appear to occur if the ACE_CDR::Boolean type is
-	  an "unsigned char" instead of "bool".  If the C++ "explicit"
-	  keyword is unavailable to us, resort to making ACE_CDR::Boolean
-	  an unsigned char, which also happens to be a valid
-	  implementation.  Fixes TAO builds on platforms that do not
-	  support the C++ "explicit" keyword.
+          Potential ambiguities can occur if some classes, for example,
+          contain implicit conversion operators whose return values can
+          themselves be implicitly converted to a bool even though bool
+          was not the intended type.  If multiple CDR stream insertion
+          operators (for example) exist, including one that accepts the
+          ACE_OutputCDR::from_boolean type, the compiler may be unable to
+          choose the appropriate insertion operator.  As of yet, this
+          problem does not appear to occur if the ACE_CDR::Boolean type is
+          an "unsigned char" instead of "bool".  If the C++ "explicit"
+          keyword is unavailable to us, resort to making ACE_CDR::Boolean
+          an unsigned char, which also happens to be a valid
+          implementation.  Fixes TAO builds on platforms that do not
+          support the C++ "explicit" keyword.
 
-	* ace/Synch_Traits.h:
+        * ace/Synch_Traits.h:
 
-	  Corrected doxygen documentation.
+          Corrected doxygen documentation.
 
 Thu May 13 21:07:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
-	  Fixed compile-time errors for !ACE_WIN32 && !ACE_HAS_AIO_CALLS
-	  case.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+          Fixed compile-time errors for !ACE_WIN32 && !ACE_HAS_AIO_CALLS
+          case.
 
 Fri May 14 07:05:43 2004  Olli Savia  <ops@iki.fi>
 

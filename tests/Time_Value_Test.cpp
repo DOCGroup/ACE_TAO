@@ -1,3 +1,4 @@
+#include <iostream>
 // $Id$
 
 // ============================================================================
@@ -11,7 +12,7 @@
 // = DESCRIPTION
 //      This is a simple test of ACE_Time_Value.  No command line arguments
 //      are needed to run the test.  It also tests the ACE_U_LongLong class.
-//      Because ACE_U_LongLong is used for ACE_hrtime_t on some platforms,
+//      Because ACE_U_LongLong i s used for ACE_hrtime_t on some platforms,
 //      this seems like a reasonable place to test it.
 //
 // = AUTHOR
@@ -214,6 +215,47 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (tv5 == tv7);
   ACE_ASSERT (tv7 == tv8); // That's right!  See above . . .
   ACE_ASSERT (tv9 == tv6);
+
+  // test multiplication by double
+  // test simple multiplication
+  tv1.set( 1, 1 );
+  tv2.set( 2, 2 );
+  tv1 *= 2.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  tv1.set( 1, 1 );
+  tv2.set( -2, -2 );
+  tv1 *= -2.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+
+  // test usec shift
+  tv1.set( 1, 999999 );
+  tv2.set( 19, 999990 );
+  tv1 *= 10.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  tv1.set( 1, 999999 );
+  tv2.set( -19, -999990 );
+  tv1 *= -10.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+
+  // test results near limits
+  tv1.set( ( ACE_INT32_MAX >> 1 ) , 499999 );
+  tv2.set( -( ( ACE_INT32_MAX >> 1 ) << 1 ), -999998 );
+  tv1 *= -2.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  tv1.set( ACE_INT32_MAX >> 1, 499999 );
+  tv2.set( ( ( ACE_INT32_MAX >> 1 ) << 1 ), 999998 );
+  tv1 *= 2.0;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+
+  // test saturated result
+  tv1.set( ACE_INT32_MAX - 1, 499999 );
+  tv2.set( ACE_INT32_MAX, 999999  );
+  tv1 *= ACE_INT32_MAX;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  tv1.set( ACE_INT32_MAX - 1, 499999 );
+  tv2.set( ACE_INT32_MIN, -999999  );
+  tv1 *= ACE_INT32_MIN;
+  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
   if (test_ace_u_longlong () != 0)
