@@ -22,6 +22,7 @@ namespace CCF
       class EventType;
       class Home;
       class HomeFactory;
+      class HomeFinder;
 
       //
       //
@@ -55,6 +56,9 @@ namespace CCF
 
         virtual HomeFactory&
         home_factory () = 0;
+
+        virtual HomeFinder&
+        home_finder () = 0;
       };
     }
   }

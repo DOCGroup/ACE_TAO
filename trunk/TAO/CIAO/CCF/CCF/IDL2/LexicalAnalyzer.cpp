@@ -39,6 +39,7 @@ namespace CCF
       keyword_table_.insert ("interface" );
       keyword_table_.insert ("local"     );
       keyword_table_.insert ("module"    );
+      keyword_table_.insert ("oneway"    );
       keyword_table_.insert ("out"       );
       keyword_table_.insert ("raises"    );
       keyword_table_.insert ("sequence"  );

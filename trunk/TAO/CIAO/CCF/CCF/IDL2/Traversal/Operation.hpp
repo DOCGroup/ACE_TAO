@@ -95,56 +95,69 @@ namespace CCF
       //
       //
       //
-      struct Operation : Node<SemanticGraph::Operation>
+      template <typename T>
+      struct OperationTemplate : Node<T>
       {
         virtual void
-        traverse (Type&);
+        traverse (T&);
 
         virtual void
-        pre (Type&);
+        pre (T&);
 
         virtual void
-        returns (Type&, EdgeDispatcherBase&);
+        returns (T&, EdgeDispatcherBase&);
 
         virtual void
-        returns (Type&);
+        returns (T&);
 
         virtual void
-        name (Type&);
+        name (T&);
 
         virtual void
-        receives (Type&, EdgeDispatcherBase&);
+        receives (T&, EdgeDispatcherBase&);
 
         virtual void
-        receives (Type&);
+        receives (T&);
 
         virtual void
-        receives_pre (Type&);
+        receives_pre (T&);
 
         virtual void
-        receives_post (Type&);
+        receives_post (T&);
 
         virtual void
-        raises (Type&, EdgeDispatcherBase&);
+        raises (T&, EdgeDispatcherBase&);
 
         virtual void
-        raises (Type&);
+        raises (T&);
 
         virtual void
-        raises_pre (Type&);
+        raises_pre (T&);
 
         virtual void
-        raises_post (Type&);
+        raises_post (T&);
 
         virtual void
-        raises_none (Type&);
+        raises_none (T&);
 
         virtual void
-        post (Type&);
+        post (T&);
 
         virtual void
-        comma (Type&);
+        comma (T&);
       };
+
+      typedef
+      OperationTemplate<SemanticGraph::Operation>
+      Operation;
+
+      typedef
+      OperationTemplate<SemanticGraph::OneWayOperation>
+      OneWayOperation;
+
+      typedef
+      OperationTemplate<SemanticGraph::TwoWayOperation>
+      TwoWayOperation;
     }
   }
 }

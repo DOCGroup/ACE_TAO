@@ -28,6 +28,7 @@ namespace CCF
               event_type_ (ctx_),
               home_ (ctx_),
               home_factory_ (ctx_),
+              home_finder_ (ctx_),
               include_ (ctx_, context, dout, *this),
               provides_ (ctx_),
               publishes_ (ctx_),

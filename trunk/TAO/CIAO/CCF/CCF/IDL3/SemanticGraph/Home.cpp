@@ -12,7 +12,7 @@ namespace CCF
     {
       using Introspection::TypeInfo;
       using Introspection::Access;
-      
+
       // Home
       //
       //
@@ -43,7 +43,8 @@ namespace CCF
         home_factory_init_ ()
         {
           TypeInfo ti (typeid (HomeFactory));
-          ti.add_base (Access::PUBLIC, true, Operation::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, TwoWayOperation::static_type_info ());
           return ti;
         }
 
@@ -63,7 +64,8 @@ namespace CCF
         home_finder_init_ ()
         {
           TypeInfo ti (typeid (HomeFinder));
-          ti.add_base (Access::PUBLIC, true, Operation::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, TwoWayOperation::static_type_info ());
           return ti;
         }
 

@@ -322,6 +322,9 @@ namespace CCF
           return dynamic_cast<Returns&> (belongs ());
         }
 
+        virtual bool
+        one_way () const = 0;
+
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -354,6 +357,56 @@ namespace CCF
       private:
         Receives_ receives_;
         Raises_ raises_;
+      };
+
+
+      //
+      //
+      //
+      class OneWayOperation : public virtual Operation
+      {
+      public:
+        virtual bool
+        one_way () const
+        {
+          return true;
+        }
+
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        OneWayOperation ()
+        {
+          type_info (static_type_info ());
+        }
+      };
+
+
+      //
+      //
+      //
+      class TwoWayOperation : public virtual Operation
+      {
+      public:
+        virtual bool
+        one_way () const
+        {
+          return false;
+        }
+
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        TwoWayOperation ()
+        {
+          type_info (static_type_info ());
+        }
       };
     }
   }

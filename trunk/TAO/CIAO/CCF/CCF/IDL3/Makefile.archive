@@ -24,6 +24,7 @@ translated_units += SemanticAction/Impl/Component.o   \
                     SemanticAction/Impl/Factory.o     \
                     SemanticAction/Impl/Home.o        \
                     SemanticAction/Impl/HomeFactory.o \
+                    SemanticAction/Impl/HomeFinder.o  \
                     SemanticAction/Impl/Include.o     \
                     SemanticAction/Impl/Provides.o    \
                     SemanticAction/Impl/Publishes.o   \

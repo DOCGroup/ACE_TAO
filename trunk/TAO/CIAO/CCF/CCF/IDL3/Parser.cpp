@@ -25,10 +25,12 @@ namespace CCF
           EMITS     ("emits"    ),
           EVENTTYPE ("eventtype"),
           HOME      ("home"     ),
+          FINDER    ("finder"   ),
           MANAGES   ("manages"  ),
           PROVIDES  ("provides" ),
           PUBLISHES ("publishes"),
           USES      ("uses"     ),
+
 
           // Component
           //
@@ -53,15 +55,18 @@ namespace CCF
           act_component_end         (
             f.component (), &SemanticAction::Component::end),
 
+
           // Provides
           //
           act_provides_type (f.provides (), &SemanticAction::Provides::type),
           act_provides_name (f.provides (), &SemanticAction::Provides::name),
 
+
           // Uses
           //
           act_uses_type (f.uses (), &SemanticAction::Uses::type),
           act_uses_name (f.uses (), &SemanticAction::Uses::name),
+
 
           // Publishes
           //
@@ -71,15 +76,18 @@ namespace CCF
           act_publishes_name (
             f.publishes (), &SemanticAction::Publishes::name),
 
+
           // Emits
           //
           act_emits_type (f.emits (), &SemanticAction::Emits::type),
           act_emits_name (f.emits (), &SemanticAction::Emits::name),
 
+
           // Consumes
           //
           act_consumes_type (f.consumes (), &SemanticAction::Consumes::type),
           act_consumes_name (f.consumes (), &SemanticAction::Consumes::name),
+
 
           // EventType
           //
@@ -100,6 +108,7 @@ namespace CCF
 
           act_event_type_end (
             f.event_type (), &SemanticAction::EventType::end),
+
 
           // Home
           //
@@ -124,6 +133,7 @@ namespace CCF
           act_home_end (
             f.home (), &SemanticAction::Home::end),
 
+
           // HomeFactory
           //
           act_home_factory_name (
@@ -133,7 +143,19 @@ namespace CCF
             f.home_factory (), &SemanticAction::HomeFactory::parameter),
 
           act_home_factory_raises (
-            f.home_factory (), &SemanticAction::HomeFactory::raises)
+            f.home_factory (), &SemanticAction::HomeFactory::raises),
+
+
+          // HomeFinder
+          //
+          act_home_finder_name (
+            f.home_finder (), &SemanticAction::HomeFinder::name),
+
+          act_home_finder_parameter (
+            f.home_finder (), &SemanticAction::HomeFinder::parameter),
+
+          act_home_finder_raises (
+            f.home_finder (), &SemanticAction::HomeFinder::raises)
 
     {
       IDL2::Parser::extension =
@@ -143,8 +165,8 @@ namespace CCF
         |  extension
         ;
 
+      // component
       //
-      // Component
       //
 
       component_decl =
@@ -211,8 +233,8 @@ namespace CCF
         )
         ;
 
+      // ports
       //
-      // Component body elements
       //
       provides_decl =
            PROVIDES
@@ -249,10 +271,10 @@ namespace CCF
         >> SEMI
         ;
 
-      //
-      // Eventtype
-      //
 
+      // eventtype
+      //
+      //
       eventtype_decl =
            EVENTTYPE
         >> (
@@ -297,7 +319,7 @@ namespace CCF
         ;
 
       //
-      // Home
+      // home
       //
       home_decl =
            home_header
@@ -329,11 +351,12 @@ namespace CCF
              attribute_decl
            | operation_decl
            | home_factory_decl
+           | home_finder_decl
         )
         ;
 
+      // home factory
       //
-      // Home factory
       //
       home_factory_decl =
            FACTORY
@@ -360,6 +383,37 @@ namespace CCF
       home_factory_raises_list =
            identifier[act_home_factory_raises]
         >> *(COMMA >> identifier[act_home_factory_raises])
+        ;
+
+
+      // home finder
+      //
+      //
+      home_finder_decl =
+           FINDER
+        >> simple_identifier[act_home_finder_name]
+        >> LPAREN
+        >> home_finder_parameter_list
+        >> RPAREN
+        >> !(RAISES >> LPAREN >> home_finder_raises_list >> RPAREN)
+        >> SEMI
+        ;
+
+      home_finder_parameter_list =
+        *(
+              home_finder_parameter
+           >> *(COMMA >> home_finder_parameter)
+        )
+        ;
+
+      home_finder_parameter =
+           IN
+        >> (identifier >> simple_identifier)[act_home_finder_parameter]
+        ;
+
+      home_finder_raises_list =
+           identifier[act_home_finder_raises]
+        >> *(COMMA >> identifier[act_home_finder_raises])
         ;
     }
   }

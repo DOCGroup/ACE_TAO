@@ -20,6 +20,7 @@ cxx_translation_units := Component.cpp   \
                          Factory.cpp     \
                          Home.cpp        \
                          HomeFactory.cpp \
+                         HomeFinder.cpp  \
                          Include.cpp     \
                          Provides.cpp    \
                          Publishes.cpp   \

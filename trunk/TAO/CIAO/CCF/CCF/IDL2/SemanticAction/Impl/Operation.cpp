@@ -2,6 +2,7 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
+#include "CCF/IDL2/SemanticGraph/Fundamental.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
 
 #include <iostream>
@@ -31,6 +32,22 @@ namespace CCF
         }
 
         void Operation::
+        one_way ()
+        {
+          if (ctx.trace ()) cerr << "oneway ";
+
+          op_ = &ctx.tu ().new_node<OneWayOperation> ();
+        }
+
+        void Operation::
+        two_way ()
+        {
+          if (ctx.trace ()) cerr << "twoway ";
+
+          op_ = &ctx.tu ().new_node<TwoWayOperation> ();
+        }
+
+        void Operation::
         type (IdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << "operation " << id;
@@ -40,11 +57,20 @@ namespace CCF
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
 
+          struct NotVoid : Resolve {};
+
           try
           {
             try
             {
-              type_ = &resolve<Type> (from, name, complete);
+              Type& t (resolve<Type> (from, name, complete));
+
+              if (op_->one_way ())
+              {
+                if (dynamic_cast<Void*> (&t) == 0) throw NotVoid ();
+              }
+
+              type_ = &t;
             }
             catch (Resolve const&)
             {
@@ -69,6 +95,11 @@ namespace CCF
           {
             cerr << "type \'" << e.name () << "\' is not complete" << endl;
           }
+          catch (NotVoid const&)
+          {
+            cerr << "oneway operation should have void as a return type"
+                 << endl;
+          }
         }
 
         void Operation::
@@ -76,19 +107,12 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << " " << id << endl;
 
-          op_ = 0;
+          SimpleName name (id->lexeme ());
+          ctx.tu ().new_edge<Defines> (ctx.scope (), *op_, name);
 
           if (type_)
           {
-            SimpleName name (id->lexeme ());
-
-            SemanticGraph::Operation& o (
-              ctx.tu ().new_node<SemanticGraph::Operation> ());
-
-            ctx.tu ().new_edge<Returns> (o, *type_);
-            ctx.tu ().new_edge<Defines> (ctx.scope (), o, name);
-
-            op_ = &o;
+            ctx.tu ().new_edge<Returns> (*op_, *type_);
           }
         }
 
@@ -101,15 +125,20 @@ namespace CCF
           if (ctx.trace ()) cerr << "parameter " << direction << " "
                                  << type_id << " " << name_id << endl;
 
-          if (op_ == 0) return;
-
           Name name (type_id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
+
+          struct NotIn : Resolve {};
 
           try
           {
             try
             {
+              if (op_->one_way () && direction != Direction::in)
+              {
+                throw NotIn ();
+              }
+
               Type& t (resolve<Type> (from, name, complete));
 
               Parameter* p;
@@ -159,6 +188,11 @@ namespace CCF
           {
             cerr << "type \'" << e.name () << "\' is not complete" << endl;
           }
+          catch (NotIn const&)
+          {
+            cerr << "parameter of oneway operation should have \'in\' "
+                 << "direction" << endl;
+          }
         }
 
 
@@ -167,15 +201,17 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "raises " << id << endl;
 
-          if (op_ == 0) return;
-
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
+
+          struct OneWay : Resolve {};
 
           try
           {
             try
             {
+              if (op_->one_way ()) throw OneWay ();
+
               SemanticGraph::Exception& e (
                 resolve<SemanticGraph::Exception> (from, name));
 
@@ -199,6 +235,10 @@ namespace CCF
                  << "\' is not an exception declaration" << endl;
             cerr << "using non-exception type in raises declaration is "
                  << "illegal" << endl;
+          }
+          catch (OneWay const&)
+          {
+            cerr << "oneway operation may not raise exceptions" << endl;
           }
         }
       }

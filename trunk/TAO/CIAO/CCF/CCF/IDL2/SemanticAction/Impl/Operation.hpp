@@ -30,6 +30,12 @@ namespace CCF
           Operation (Context& c);
 
           virtual void
+          one_way ();
+
+          virtual void
+          two_way ();
+
+          virtual void
           type (IdentifierPtr const& id);
 
           virtual void
