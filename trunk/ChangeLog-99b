@@ -3,6 +3,10 @@ Thu Apr 22 10:46:17 1999  Steve Huston  <shuston@riverace.com>
         * apps/JAWS/server: Added $(ACELIB) to LDLIBS to build libJAWS on AIX
           with xlC.
 
+	* tests/New_Fail_Test.cpp: Added __GNUG__ to the platforms which do not
+          actually perform the test; added some more explanation and a better
+          log message for when it doesn't actually run.
+
 Thu Apr 22 10:28:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-minimal.h: removed suppression of ACE_TSS_EMULATION
