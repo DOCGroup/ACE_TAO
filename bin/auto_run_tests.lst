@@ -59,6 +59,7 @@ TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/Hello/run_test.pl
 TAO/tests/Cache_Growth_Test/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
+TAO/tests/Muxed_GIOP_Versions/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/File_IO/run_test.pl: !ST !MINIMUM
 TAO/tests/MT_Server/run_test.pl: !ST
