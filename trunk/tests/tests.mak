@@ -173,9 +173,9 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "SOCK_Connector_Test - Win32 Debug"
-RSC=rc.exe
+# PROP Target_Last_Scanned "Timeprobe_Test - Win32 Debug"
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "Handle_Set_Test - Win32 Debug"
 
@@ -209,10 +209,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -223,8 +225,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Handle_Set_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Handle_Set_Test.exe" 
 LINK32_OBJS= \
@@ -267,10 +269,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -281,8 +285,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Mem_Map_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Mem_Map_Test.exe" 
 LINK32_OBJS= \
@@ -325,10 +329,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -339,8 +345,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Naming_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Naming_Test.exe" 
 LINK32_OBJS= \
@@ -383,10 +389,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -397,8 +405,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Timer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Timer_Test.exe" 
 LINK32_OBJS= \
@@ -441,10 +449,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -455,8 +465,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactors_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactors_Test.exe" 
 LINK32_OBJS= \
@@ -499,10 +509,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -513,8 +525,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SString_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SString_Test.exe" 
 LINK32_OBJS= \
@@ -557,10 +569,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -571,8 +585,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Time_Value_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Time_Value_Test.exe" 
 LINK32_OBJS= \
@@ -615,10 +629,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -629,8 +645,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Timer_Queue_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Timer_Queue_Test.exe" 
 LINK32_OBJS= \
@@ -673,10 +689,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -687,8 +705,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/UPIPE_SAP_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/UPIPE_SAP_Test.exe" 
 LINK32_OBJS= \
@@ -731,10 +749,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -745,8 +765,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Buffer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Buffer_Test.exe" 
 LINK32_OBJS= \
@@ -789,10 +809,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -803,8 +825,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Time_Service_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Time_Service_Test.exe" 
 LINK32_OBJS= \
@@ -847,10 +869,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -861,8 +885,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SPIPE_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SPIPE_Test.exe" 
 LINK32_OBJS= \
@@ -905,10 +929,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -919,8 +945,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Buffer_Stream_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Buffer_Stream_Test.exe" 
 LINK32_OBJS= \
@@ -963,10 +989,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -977,8 +1005,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Barrier_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Barrier_Test.exe" 
 LINK32_OBJS= \
@@ -1021,10 +1049,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1035,8 +1065,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reader_Writer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reader_Writer_Test.exe" 
 LINK32_OBJS= \
@@ -1079,10 +1109,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1093,8 +1125,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Recursive_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Recursive_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -1137,10 +1169,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1151,8 +1185,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Task_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Task_Test.exe" 
 LINK32_OBJS= \
@@ -1195,10 +1229,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1209,8 +1245,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -1253,10 +1289,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1267,8 +1305,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/TSS_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/TSS_Test.exe" 
 LINK32_OBJS= \
@@ -1311,10 +1349,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1325,8 +1365,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Pool_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Pool_Test.exe" 
 LINK32_OBJS= \
@@ -1369,10 +1409,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1383,8 +1425,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Future_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Future_Test.exe" 
 LINK32_OBJS= \
@@ -1427,10 +1469,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1441,8 +1485,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Tokens_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Tokens_Test.exe" 
 LINK32_OBJS= \
@@ -1485,10 +1529,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1499,8 +1545,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Message_Queue_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Message_Queue_Test.exe" 
 LINK32_OBJS= \
@@ -1543,10 +1589,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1557,8 +1605,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Map_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Map_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -1601,10 +1649,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1615,8 +1665,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Pipe_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Pipe_Test.exe" 
 LINK32_OBJS= \
@@ -1659,10 +1709,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1673,8 +1725,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Process_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Process_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -1717,10 +1769,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1731,8 +1785,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SV_Shared_Memory_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SV_Shared_Memory_Test.exe" 
 LINK32_OBJS= \
@@ -1775,10 +1829,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1789,8 +1845,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/MM_Shared_Memory_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/MM_Shared_Memory_Test.exe" 
 LINK32_OBJS= \
@@ -1833,10 +1889,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1847,8 +1905,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Service_Config_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Service_Config_Test.exe" 
 LINK32_OBJS= \
@@ -1891,10 +1949,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1905,8 +1965,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SOCK_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SOCK_Test.exe" 
 LINK32_OBJS= \
@@ -1949,10 +2009,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1963,8 +2025,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Message_Block_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Message_Block_Test.exe" 
 LINK32_OBJS= \
@@ -2007,10 +2069,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2021,8 +2085,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Notify_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Notify_Test.exe" 
 LINK32_OBJS= \
@@ -2065,10 +2129,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2079,8 +2145,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/IOStream_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/IOStream_Test.exe" 
 LINK32_OBJS= \
@@ -2123,10 +2189,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2137,8 +2205,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Process_Strategy_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Process_Strategy_Test.exe" 
 LINK32_OBJS= \
@@ -2181,10 +2249,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2195,8 +2265,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Conn_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Conn_Test.exe" 
 LINK32_OBJS= \
@@ -2239,10 +2309,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2253,8 +2325,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Simple_Message_Block_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Simple_Message_Block_Test.exe" 
 LINK32_OBJS= \
@@ -2298,10 +2370,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2312,8 +2386,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Exceptions_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Exceptions_Test.exe" 
 LINK32_OBJS= \
@@ -2357,10 +2431,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2371,8 +2447,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Task_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Task_Test.exe" 
 LINK32_OBJS= \
@@ -2415,10 +2491,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2429,8 +2507,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Sigset_Ops_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Sigset_Ops_Test.exe" 
 LINK32_OBJS= \
@@ -2473,10 +2551,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2487,8 +2567,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/MsgQueue_Notifications_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/MsgQueue_Notifications_Test.exe" 
 LINK32_OBJS= \
@@ -2532,10 +2612,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2546,8 +2628,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Enum_Interfaces_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Enum_Interfaces_Test.exe" 
 LINK32_OBJS= \
@@ -2590,10 +2672,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2604,8 +2688,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Hash_Map_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Hash_Map_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -2648,10 +2732,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2662,8 +2748,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Semaphore_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Semaphore_Test.exe" 
 LINK32_OBJS= \
@@ -2706,10 +2792,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2720,8 +2808,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Atomic_Op_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Atomic_Op_Test.exe" 
 LINK32_OBJS= \
@@ -2764,10 +2852,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2778,8 +2868,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/MT_SOCK_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/MT_SOCK_Test.exe" 
 LINK32_OBJS= \
@@ -2822,10 +2912,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2836,8 +2928,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Reactor_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Reactor_Test.exe" 
 LINK32_OBJS= \
@@ -2880,10 +2972,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2894,8 +2988,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Performance_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Performance_Test.exe" 
 LINK32_OBJS= \
@@ -2939,10 +3033,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2953,8 +3049,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Notify_Performance_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Notify_Performance_Test.exe" 
 LINK32_OBJS= \
@@ -2995,10 +3091,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3009,8 +3107,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -3053,10 +3151,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3067,8 +3167,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SOCK_Connector_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SOCK_Connector_Test.exe" 
 LINK32_OBJS= \
@@ -3111,9 +3211,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Basic_Types_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fp"$(INTDIR)/Basic_Types_Test.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3124,8 +3227,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Basic_Types_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Basic_Types_Test.exe" 
 LINK32_OBJS= \
@@ -3168,9 +3271,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3181,8 +3287,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Env_Value_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Env_Value_Test.exe" 
 LINK32_OBJS= \
@@ -3225,9 +3331,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/OrdMultiSet_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fp"$(INTDIR)/OrdMultiSet_Test.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3238,8 +3347,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/OrdMultiSet_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/OrdMultiSet_Test.exe" 
 LINK32_OBJS= \
@@ -3282,9 +3391,12 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Timeprobe_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fp"$(INTDIR)/Timeprobe_Test.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3295,8 +3407,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Timeprobe_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Timeprobe_Test.exe" 
 LINK32_OBJS= \
@@ -3308,9 +3420,6 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
-
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -3339,75 +3448,77 @@ CPP_SBRS=.\.
 
 SOURCE=.\Handle_Set_Test.cpp
 DEP_CPP_HANDL=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Handle_Set_Test.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
@@ -3424,68 +3535,41 @@ DEP_CPP_HANDL=\
 
 SOURCE=.\Mem_Map_Test.cpp
 DEP_CPP_MEM_M=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Mem_Map_Test.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
@@ -3502,109 +3586,111 @@ DEP_CPP_MEM_M=\
 
 SOURCE=.\Naming_Test.cpp
 DEP_CPP_NAMIN=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Name_Proxy.h"\
-	{$(INCLUDE)}"\ace\Name_Request_Reply.h"\
-	{$(INCLUDE)}"\ace\Name_Space.h"\
-	{$(INCLUDE)}"\ace\Naming_Context.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Name_Proxy.h"\
+	"..\ace/Name_Request_Reply.h"\
+	"..\ace/Name_Space.h"\
+	"..\ace/Naming_Context.h"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Naming_Test.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
@@ -3621,77 +3707,79 @@ DEP_CPP_NAMIN=\
 
 SOURCE=.\Reactor_Timer_Test.cpp
 DEP_CPP_REACT=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -3708,118 +3796,122 @@ DEP_CPP_REACT=\
 
 SOURCE=.\Reactors_Test.cpp
 DEP_CPP_REACTO=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Reactors_Test.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -3836,68 +3928,39 @@ DEP_CPP_REACTO=\
 
 SOURCE=.\SString_Test.cpp
 DEP_CPP_SSTRI=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\SString_Test.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -3914,68 +3977,39 @@ DEP_CPP_SSTRI=\
 
 SOURCE=.\Time_Value_Test.cpp
 DEP_CPP_TIME_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Time_Value_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
@@ -3992,89 +4026,91 @@ DEP_CPP_TIME_=\
 
 SOURCE=.\Timer_Queue_Test.cpp
 DEP_CPP_TIMER=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Hash.h"\
-	{$(INCLUDE)}"\ace\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Hash_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Hash.h"\
+	"..\ace/Timer_Hash_T.cpp"\
+	"..\ace/Timer_Hash_T.h"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
+	"..\ace/Timer_List.h"\
+	"..\ace/Timer_List_T.cpp"\
+	"..\ace/Timer_List_T.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Timer_Wheel.h"\
+	"..\ace/Timer_Wheel_T.cpp"\
+	"..\ace/Timer_Wheel_T.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Timer_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -4091,140 +4127,144 @@ DEP_CPP_TIMER=\
 
 SOURCE=.\UPIPE_SAP_Test.cpp
 DEP_CPP_UPIPE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SPIPE.h"\
-	{$(INCLUDE)}"\ace\SPIPE.i"\
-	{$(INCLUDE)}"\ace\SPIPE_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Addr.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Addr.i"\
-	{$(INCLUDE)}"\ace\SPIPE_Stream.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream.cpp"\
-	{$(INCLUDE)}"\ace\Stream.h"\
-	{$(INCLUDE)}"\ace\Stream.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\UPIPE_Acceptor.h"\
-	{$(INCLUDE)}"\ace\UPIPE_Acceptor.i"\
-	{$(INCLUDE)}"\ace\UPIPE_Addr.h"\
-	{$(INCLUDE)}"\ace\UPIPE_Connector.h"\
-	{$(INCLUDE)}"\ace\UPIPE_Connector.i"\
-	{$(INCLUDE)}"\ace\UPIPE_Stream.h"\
-	{$(INCLUDE)}"\ace\UPIPE_Stream.i"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream.cpp"\
+	"..\ace/Stream.h"\
+	"..\ace/Stream.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/UPIPE_Acceptor.h"\
+	"..\ace/UPIPE_Acceptor.i"\
+	"..\ace/UPIPE_Addr.h"\
+	"..\ace/UPIPE_Connector.h"\
+	"..\ace/UPIPE_Connector.i"\
+	"..\ace/UPIPE_Stream.h"\
+	"..\ace/UPIPE_Stream.i"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\UPIPE_SAP_Test.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -4241,107 +4281,111 @@ DEP_CPP_UPIPE=\
 
 SOURCE=.\Priority_Buffer_Test.cpp
 DEP_CPP_PRIOR=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Priority_Buffer_Test.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
@@ -4358,70 +4402,41 @@ DEP_CPP_PRIOR=\
 
 SOURCE=.\Time_Service_Test.cpp
 DEP_CPP_TIME_S=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Process.h"\
+	"..\ace/Process.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Time_Service_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_S) "$(INTDIR)"
@@ -4438,83 +4453,85 @@ DEP_CPP_TIME_S=\
 
 SOURCE=.\SPIPE_Test.cpp
 DEP_CPP_SPIPE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SPIPE.h"\
-	{$(INCLUDE)}"\ace\SPIPE.i"\
-	{$(INCLUDE)}"\ace\SPIPE_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Addr.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Addr.i"\
-	{$(INCLUDE)}"\ace\SPIPE_Connector.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Connector.i"\
-	{$(INCLUDE)}"\ace\SPIPE_Stream.h"\
-	{$(INCLUDE)}"\ace\SPIPE_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Connector.h"\
+	"..\ace/SPIPE_Connector.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\SPIPE_Test.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
@@ -4531,122 +4548,126 @@ DEP_CPP_SPIPE=\
 
 SOURCE=.\Buffer_Stream_Test.cpp
 DEP_CPP_BUFFE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream.cpp"\
-	{$(INCLUDE)}"\ace\Stream.h"\
-	{$(INCLUDE)}"\ace\Stream.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream.cpp"\
+	"..\ace/Stream.h"\
+	"..\ace/Stream.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Buffer_Stream_Test.obj" : $(SOURCE) $(DEP_CPP_BUFFE) "$(INTDIR)"
@@ -4663,70 +4684,72 @@ DEP_CPP_BUFFE=\
 
 SOURCE=.\Barrier_Test.cpp
 DEP_CPP_BARRI=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Barrier_Test.obj" : $(SOURCE) $(DEP_CPP_BARRI) "$(INTDIR)"
@@ -4743,72 +4766,74 @@ DEP_CPP_BARRI=\
 
 SOURCE=.\Reader_Writer_Test.cpp
 DEP_CPP_READE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Reader_Writer_Test.obj" : $(SOURCE) $(DEP_CPP_READE) "$(INTDIR)"
@@ -4825,72 +4850,74 @@ DEP_CPP_READE=\
 
 SOURCE=.\Recursive_Mutex_Test.cpp
 DEP_CPP_RECUR=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Recursive_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_RECUR) "$(INTDIR)"
@@ -4907,118 +4934,122 @@ DEP_CPP_RECUR=\
 
 SOURCE=.\Task_Test.cpp
 DEP_CPP_TASK_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Task_Test.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -5035,71 +5066,73 @@ DEP_CPP_TASK_=\
 
 SOURCE=.\Thread_Manager_Test.cpp
 DEP_CPP_THREA=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Thread_Manager_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Thread_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
@@ -5116,71 +5149,73 @@ DEP_CPP_THREA=\
 
 SOURCE=.\TSS_Test.cpp
 DEP_CPP_TSS_T=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\TSS_Test_Errno.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\TSS_Test.obj" : $(SOURCE) $(DEP_CPP_TSS_T) "$(INTDIR)"
@@ -5197,118 +5232,122 @@ DEP_CPP_TSS_T=\
 
 SOURCE=.\Thread_Pool_Test.cpp
 DEP_CPP_THREAD=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Thread_Pool_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
@@ -5325,123 +5364,127 @@ DEP_CPP_THREAD=\
 
 SOURCE=.\Future_Test.cpp
 DEP_CPP_FUTUR=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Activation_Queue.h"\
-	{$(INCLUDE)}"\ace\Activation_Queue.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Future.cpp"\
-	{$(INCLUDE)}"\ace\Future.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Method_Object.h"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Activation_Queue.h"\
+	"..\ace/Activation_Queue.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Future.cpp"\
+	"..\ace/Future.h"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Method_Object.h"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Future_Test.obj" : $(SOURCE) $(DEP_CPP_FUTUR) "$(INTDIR)"
@@ -5458,120 +5501,122 @@ DEP_CPP_FUTUR=\
 
 SOURCE=.\Tokens_Test.cpp
 DEP_CPP_TOKEN=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Remote_Tokens.h"\
-	{$(INCLUDE)}"\ace\Remote_Tokens.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Token_Collection.h"\
-	{$(INCLUDE)}"\ace\Token_Collection.i"\
-	{$(INCLUDE)}"\ace\Token_Invariants.h"\
-	{$(INCLUDE)}"\ace\Token_Invariants.i"\
-	{$(INCLUDE)}"\ace\Token_Request_Reply.h"\
-	{$(INCLUDE)}"\ace\Token_Request_Reply.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Process.h"\
+	"..\ace/Process.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Remote_Tokens.h"\
+	"..\ace/Remote_Tokens.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token_Collection.h"\
+	"..\ace/Token_Collection.i"\
+	"..\ace/Token_Invariants.h"\
+	"..\ace/Token_Invariants.i"\
+	"..\ace/Token_Request_Reply.h"\
+	"..\ace/Token_Request_Reply.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -5588,107 +5633,113 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\Message_Queue_Test.cpp
 DEP_CPP_MESSA=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Message_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
@@ -5705,94 +5756,96 @@ DEP_CPP_MESSA=\
 
 SOURCE=.\Map_Manager_Test.cpp
 DEP_CPP_MAP_M=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
@@ -5809,74 +5862,45 @@ DEP_CPP_MAP_M=\
 
 SOURCE=.\Pipe_Test.cpp
 DEP_CPP_PIPE_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Process.h"\
+	"..\ace/Process.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
@@ -5893,72 +5917,57 @@ DEP_CPP_PIPE_=\
 
 SOURCE=.\Process_Mutex_Test.cpp
 DEP_CPP_PROCE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Process.h"\
+	"..\ace/Process.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Process_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -5975,68 +5984,70 @@ DEP_CPP_PROCE=\
 
 SOURCE=.\SV_Shared_Memory_Test.cpp
 DEP_CPP_SV_SH=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\SV_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
@@ -6053,73 +6064,75 @@ DEP_CPP_SV_SH=\
 
 SOURCE=.\MM_Shared_Memory_Test.cpp
 DEP_CPP_MM_SH=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Shared_Memory.h"\
-	{$(INCLUDE)}"\ace\Shared_Memory_MM.h"\
-	{$(INCLUDE)}"\ace\Shared_Memory_MM.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Shared_Memory.h"\
+	"..\ace/Shared_Memory_MM.h"\
+	"..\ace/Shared_Memory_MM.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\MM_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_MM_SH) "$(INTDIR)"
@@ -6136,84 +6149,86 @@ DEP_CPP_MM_SH=\
 
 SOURCE=.\Service_Config_Test.cpp
 DEP_CPP_SERVI=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Service_Config_Test.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
@@ -6230,89 +6245,91 @@ DEP_CPP_SERVI=\
 
 SOURCE=.\SOCK_Test.cpp
 DEP_CPP_SOCK_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
@@ -6329,123 +6346,127 @@ DEP_CPP_SOCK_=\
 
 SOURCE=.\Message_Block_Test.cpp
 DEP_CPP_MESSAG=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAG) "$(INTDIR)"
@@ -6462,129 +6483,133 @@ DEP_CPP_MESSAG=\
 
 SOURCE=.\Reactor_Notify_Test.cpp
 DEP_CPP_REACTOR=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Select_Reactor.h"\
+	"..\ace/Select_Reactor.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token.h"\
+	"..\ace/Token.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Reactor_Notify_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR) "$(INTDIR)"
@@ -6601,150 +6626,154 @@ DEP_CPP_REACTOR=\
 
 SOURCE=.\IOStream_Test.cpp
 DEP_CPP_IOSTR=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IOStream.h"\
-	{$(INCLUDE)}"\ace\IOStream_T.cpp"\
-	{$(INCLUDE)}"\ace\IOStream_T.h"\
-	{$(INCLUDE)}"\ace\IOStream_T.i"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IOStream.h"\
+	"..\ace/IOStream_T.cpp"\
+	"..\ace/IOStream_T.h"\
+	"..\ace/IOStream_T.i"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\IOStream_Test.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -6761,149 +6790,153 @@ DEP_CPP_IOSTR=\
 
 SOURCE=.\Process_Strategy_Test.cpp
 DEP_CPP_PROCES=\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Process_Strategy_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Process_Strategy_Test.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -6920,157 +6953,161 @@ DEP_CPP_PROCES=\
 
 SOURCE=.\Conn_Test.cpp
 DEP_CPP_CONN_=\
-	"..\ace\LOCK_SOCK_Acceptor.cpp"\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Connector.cpp"\
+	"..\ace/Connector.h"\
+	"..\ace/Connector.i"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/LOCK_SOCK_Acceptor.cpp"\
+	"..\ace/LOCK_SOCK_Acceptor.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Conn_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\LOCK_SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Conn_Test.obj" : $(SOURCE) $(DEP_CPP_CONN_) "$(INTDIR)"
@@ -7087,70 +7124,72 @@ DEP_CPP_CONN_=\
 
 SOURCE=.\Simple_Message_Block_Test.cpp
 DEP_CPP_SIMPL=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Simple_Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_SIMPL)\
@@ -7168,89 +7207,91 @@ DEP_CPP_SIMPL=\
 
 SOURCE=.\Reactor_Exceptions_Test.cpp
 DEP_CPP_REACTOR_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Dgram.h"\
-	{$(INCLUDE)}"\ace\SOCK_Dgram.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Dgram.h"\
+	"..\ace/SOCK_Dgram.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Reactor_Exceptions_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_)\
@@ -7268,120 +7309,124 @@ DEP_CPP_REACTOR_=\
 
 SOURCE=.\Priority_Task_Test.cpp
 DEP_CPP_PRIORI=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Sched_Params.h"\
-	{$(INCLUDE)}"\ace\Sched_Params.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Sched_Params.h"\
+	"..\ace/Sched_Params.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Priority_Task_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORI) "$(INTDIR)"
@@ -7398,68 +7443,39 @@ DEP_CPP_PRIORI=\
 
 SOURCE=.\Sigset_Ops_Test.cpp
 DEP_CPP_SIGSE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
@@ -7475,122 +7491,126 @@ DEP_CPP_SIGSE=\
 # Begin Source File
 
 SOURCE=.\MsgQueue_Notifications_Test.cpp
-DEP_CPP_MESSAGE=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+DEP_CPP_MSGQU=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
-"$(INTDIR)\MsgQueue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAGE)\
+"$(INTDIR)\MsgQueue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MSGQU)\
  "$(INTDIR)"
 
 
@@ -7605,72 +7625,43 @@ DEP_CPP_MESSAGE=\
 
 SOURCE=.\Enum_Interfaces_Test.cpp
 DEP_CPP_ENUM_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Enum_Interfaces_Test.obj" : $(SOURCE) $(DEP_CPP_ENUM_) "$(INTDIR)"
@@ -7687,87 +7678,89 @@ DEP_CPP_ENUM_=\
 
 SOURCE=.\Hash_Map_Manager_Test.cpp
 DEP_CPP_HASH_=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Hash_Map_Manager_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Hash_Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_HASH_) "$(INTDIR)"
@@ -7784,72 +7777,74 @@ DEP_CPP_HASH_=\
 
 SOURCE=.\Semaphore_Test.cpp
 DEP_CPP_SEMAP=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Semaphore_Test.obj" : $(SOURCE) $(DEP_CPP_SEMAP) "$(INTDIR)"
@@ -7866,68 +7861,53 @@ DEP_CPP_SEMAP=\
 
 SOURCE=.\Atomic_Op_Test.cpp
 DEP_CPP_ATOMI=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Atomic_Op_Test.obj" : $(SOURCE) $(DEP_CPP_ATOMI) "$(INTDIR)"
@@ -7944,89 +7924,91 @@ DEP_CPP_ATOMI=\
 
 SOURCE=.\MT_SOCK_Test.cpp
 DEP_CPP_MT_SO=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\MT_SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_MT_SO) "$(INTDIR)"
@@ -8043,165 +8025,169 @@ DEP_CPP_MT_SO=\
 
 SOURCE=.\Priority_Reactor_Test.cpp
 DEP_CPP_PRIORIT=\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Connector.cpp"\
+	"..\ace/Connector.h"\
+	"..\ace/Connector.i"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Priority_Reactor.h"\
+	"..\ace/Priority_Reactor.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Select_Reactor.h"\
+	"..\ace/Select_Reactor.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token.h"\
+	"..\ace/Token.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Priority_Reactor_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Priority_Reactor.h"\
-	{$(INCLUDE)}"\ace\Priority_Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Priority_Reactor_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORIT)\
@@ -8219,167 +8205,171 @@ DEP_CPP_PRIORIT=\
 
 SOURCE=.\Reactor_Performance_Test.cpp
 DEP_CPP_REACTOR_P=\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Connector.cpp"\
+	"..\ace/Connector.h"\
+	"..\ace/Connector.i"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Select_Reactor.h"\
+	"..\ace/Select_Reactor.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token.h"\
+	"..\ace/Token.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	".\Reactor_Performance_Test.h"\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Reactor_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_P)\
@@ -8397,125 +8387,129 @@ DEP_CPP_REACTOR_P=\
 
 SOURCE=.\Notify_Performance_Test.cpp
 DEP_CPP_NOTIF=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Profile_Timer.h"\
-	{$(INCLUDE)}"\ace\Profile_Timer.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.h"\
-	{$(INCLUDE)}"\ace\Select_Reactor.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Repository.h"\
-	{$(INCLUDE)}"\ace\Service_Repository.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies.i"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Select_Reactor.h"\
+	"..\ace/Select_Reactor.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token.h"\
+	"..\ace/Token.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Notify_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_NOTIF)\
@@ -8533,70 +8527,72 @@ DEP_CPP_NOTIF=\
 
 SOURCE=.\Thread_Mutex_Test.cpp
 DEP_CPP_THREAD_=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Thread_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD_) "$(INTDIR)"
@@ -8613,83 +8609,54 @@ DEP_CPP_THREAD_=\
 
 SOURCE=.\SOCK_Connector_Test.cpp
 DEP_CPP_SOCK_C=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\SOCK_Connector_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
@@ -8706,68 +8673,39 @@ DEP_CPP_SOCK_C=\
 
 SOURCE=.\Basic_Types_Test.cpp
 DEP_CPP_BASIC=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Basic_Types_Test.obj" : $(SOURCE) $(DEP_CPP_BASIC) "$(INTDIR)"
@@ -8784,73 +8722,44 @@ DEP_CPP_BASIC=\
 
 SOURCE=.\Env_Value_Test.cpp
 DEP_CPP_ENV_V=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Env_Value_T.cpp"\
-	{$(INCLUDE)}"\ace\Env_Value_T.h"\
-	{$(INCLUDE)}"\ace\Env_Value_T.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Env_Value_T.cpp"\
+	"..\ace/Env_Value_T.h"\
+	"..\ace/Env_Value_T.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Process.h"\
+	"..\ace/Process.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Env_Value_Test.obj" : $(SOURCE) $(DEP_CPP_ENV_V) "$(INTDIR)"
@@ -8867,68 +8776,70 @@ DEP_CPP_ENV_V=\
 
 SOURCE=.\OrdMultiSet_Test.cpp
 DEP_CPP_ORDMU=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\OrdMultiSet_Test.obj" : $(SOURCE) $(DEP_CPP_ORDMU) "$(INTDIR)"
@@ -8945,76 +8856,79 @@ DEP_CPP_ORDMU=\
 
 SOURCE=.\Timeprobe_Test.cpp
 DEP_CPP_TIMEP=\
-	{$(INCLUDE)}"\.\test_config.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\Basic_Types.h"\
-	{$(INCLUDE)}"\ace\Basic_Types.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config-WinCE.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
-	{$(INCLUDE)}"\ace\inc_user_config.h"\
-	{$(INCLUDE)}"\ace\iosfwd.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\streams.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\sys_conf.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Timeprobe.cpp"\
-	{$(INCLUDE)}"\ace\Timeprobe.h"\
-	{$(INCLUDE)}"\ace\Timeprobe.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Timeprobe.h"\
+	"..\ace/Timeprobe.i"\
+	"..\ace/Timeprobe_T.cpp"\
+	"..\ace/Timeprobe_T.h"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
 	
 
 "$(INTDIR)\Timeprobe_Test.obj" : $(SOURCE) $(DEP_CPP_TIMEP) "$(INTDIR)"
