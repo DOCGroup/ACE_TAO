@@ -1,3 +1,9 @@
+Sun Apr 16 17:15:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ifrfwd.h:
+	  Fixed typo in typedef of IR_ComponentRepository to
+	  IR::ComponentRepository.
+
 Sun Apr 16 17:04:03 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
