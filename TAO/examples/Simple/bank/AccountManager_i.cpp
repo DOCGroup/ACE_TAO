@@ -59,11 +59,11 @@ AccountManager_i::open (const char *name,
                       name,
                       initial_balance));
 
-          ACE_NEW_THROW_RETURN (result,
-                                Account_i (name,
-                                           initial_balance),
-                                CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                                Bank::Account::_nil ());
+          ACE_NEW_THROW_EX (result,
+                            Account_i (name,
+                                       initial_balance)
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+          ACE_CHECK_RETURN (Bank::Account::_nil ());
 
           // Enter the new Account in the hash map. If the <bind>
           // fails throw an UNKNOWN exception. <result> may be valid

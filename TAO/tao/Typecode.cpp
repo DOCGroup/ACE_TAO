@@ -1728,9 +1728,10 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   // @@EXC@@ We should use Auto_Ptr_Array to make this exception
   // safe.
   CORBA::Any_ptr* label_list;
-  ACE_NEW_THROW_RETURN (label_list,
-                        CORBA::Any_ptr [member_count],
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+  ACE_NEW_THROW_EX (label_list,
+                    CORBA::Any_ptr [member_count],
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
   // get the discriminant TC
   CORBA::TypeCode_ptr tc = this->discriminator_type (ACE_TRY_ENV);
@@ -1770,10 +1771,10 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 
       // @@EXC@@ Need to check memory allocation failure.
       ACE_Message_Block* mb = ACE_Message_Block::duplicate(out.begin ());
-      ACE_NEW_THROW_RETURN (label_list[i],
-                            CORBA::Any (tc, mb),
-                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                            0);
+      ACE_NEW_THROW_EX (label_list[i],
+                        CORBA::Any (tc, mb),
+                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (0);
 
       if (stream.skip_string () == 0
           || this->skip_typecode (stream) == 0)
@@ -1783,7 +1784,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                         "TypeCode::private_member_label "
                         "error getting typecode for member %d\n",
                         i));
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO),
                             0);
         }
     }

@@ -123,23 +123,24 @@ TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO
 }
 
 void TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer,
-                                                           CORBA::Environment &TAO_IN_ENV)
+                                                           CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->connected ())
-    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
-                   TAO_IN_ENV);
+    ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+
 
   if (push_consumer == CosEventComm::PushConsumer::_nil())
-    TAO_THROW_ENV (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
-                   TAO_IN_ENV);
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
 
-  ACE_NEW_THROW (this->wrapper_,
-                 TAO_CosEC_PushConsumerWrapper (push_consumer),
-                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (this->wrapper_,
+                    TAO_CosEC_PushConsumerWrapper (push_consumer),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
-  this->pps_->connect_push_consumer (this->wrapper_->_this (TAO_IN_ENV),
+  // @@ This code is not exception safe.
+  this->pps_->connect_push_consumer (this->wrapper_->_this (ACE_TRY_ENV),
                                        this->qos_,
-                                       TAO_IN_ENV);
+                                       ACE_TRY_ENV);
 }
 
 int

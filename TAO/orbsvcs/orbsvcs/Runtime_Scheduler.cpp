@@ -59,12 +59,12 @@ ACE_Runtime_Scheduler::lookup (const char * entry_point,
 
 RtecScheduler::RT_Info *
 ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
-                            CORBA::Environment &TAO_IN_ENV)
+                            CORBA::Environment &ACE_TRY_ENV)
      TAO_THROW_SPEC((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
-    TAO_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (),
+    ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (),
                       0);
   // Note: there is no memory leak here, according to the CORBA spec,
   // we are supposed to allocate an structure and return it, the
@@ -72,10 +72,10 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
 
   // Allocate a new RT_Info
   RtecScheduler::RT_Info* info;
-  ACE_NEW_THROW_RETURN (info,
-                        RtecScheduler::RT_Info,
-                        CORBA::NO_MEMORY (),
-                        0);
+  ACE_NEW_THROW_EX (info,
+                    RtecScheduler::RT_Info,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
 
 
   info->entry_point = rt_info_[handle - 1].entry_point;

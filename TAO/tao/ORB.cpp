@@ -927,7 +927,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // We do not use ACE_NEW cause we want to return an exception if this
   // fails.
 
-  // @@ Fred, please use ACE_NEW_THROW_RETURN instead!
+  // @@ Fred, please use ACE_NEW_THROW_EX and ACE_CHECK instead!
   TAO_IIOP_Profile *pfile =
     new TAO_IIOP_Profile (this->orb_core_->orb_params ()->host (),
                           this->orb_core_->orb_params ()->addr ().get_port_number (),
@@ -950,7 +950,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
       // @@ Fred, but you don't do this...
 
       // Plus we want to return an exception.  @@ If that's the only
-      // reason, then you can use ACE_NEW_THROW_RETURN.
+      // reason, then you can use ACE_NEW_THROW_EX and ACE_CHECK.
       data = new TAO_Stub (id, pfile);
       // pfile is given to TAO_Stub!
 

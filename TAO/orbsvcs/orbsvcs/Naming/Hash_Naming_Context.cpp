@@ -496,20 +496,22 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &TAO_IN_ENV)
                    this->poa_id_.c_str (),
                    this->counter_++);
 
-  ACE_NEW_THROW_RETURN (c_impl,
-                        TAO_Hash_Naming_Context (poa_.in (),
-                                                     poa_id,
-                                                     this->hash_table_size_),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                        result._retn ());
+  ACE_NEW_THROW_EX (c_impl,
+                    TAO_Hash_Naming_Context (poa_.in (),
+                                             poa_id,
+                                             this->hash_table_size_),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (result._retn ());
+
   // Put c_impl into the auto pointer temporarily, in case next
   // allocation fails.
   ACE_Auto_Basic_Ptr<TAO_Hash_Naming_Context> impl_temp (c_impl);
 
-  ACE_NEW_THROW_RETURN (c,
-                        TAO_Naming_Context (c_impl),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                        result._retn ());
+  ACE_NEW_THROW_EX (c,
+                    TAO_Naming_Context (c_impl),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (result._retn ());
+
   // Allocation succeeded, get rid of auto pointer.
   impl_temp.release ();
 
@@ -624,9 +626,10 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
   bi = CosNaming::BindingIterator::_nil ();
-  ACE_NEW_THROW (bl,
-                 CosNaming::BindingList (0),
-                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (bl,
+                    CosNaming::BindingList (0),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
   // Obtain a lock before we proceed with the operation.
   ACE_GUARD_THROW (ACE_Lock,
@@ -636,9 +639,10 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
 
   // Dynamically allocate hash map iterator.
   TAO_Hash_Naming_Context::HASH_MAP::ITERATOR *hash_iter = 0;
-  ACE_NEW_THROW (hash_iter,
-                 TAO_Hash_Naming_Context::HASH_MAP::ITERATOR (context_),
-                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (hash_iter,
+                    TAO_Hash_Naming_Context::HASH_MAP::ITERATOR (context_),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
   // Number of bindings that will go into the BindingList.
   CORBA::ULong n;
@@ -751,10 +755,10 @@ TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
-  ACE_NEW_THROW_RETURN (binding,
-                        CosNaming::Binding,
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                        0);
+  ACE_NEW_THROW_EX (binding,
+                    CosNaming::Binding,
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
   b = binding;
 
   ACE_GUARD_THROW_RETURN (ACE_Lock,
@@ -811,10 +815,10 @@ TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
 {
   // We perform an allocation before obtaining the lock so that an out
   // parameter is allocated in case we fail to obtain the lock.
-  ACE_NEW_THROW_RETURN (bl,
-                        CosNaming::BindingList (0),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                        0);
+  ACE_NEW_THROW_EX (bl,
+                    CosNaming::BindingList (0),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
   // Obtain a lock.
   ACE_GUARD_THROW_RETURN (ACE_Lock,
                           ace_mon,

@@ -527,10 +527,10 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
             this->inp_stream_.start ();
           CORBA_Any any (tcp, cdr);
           CORBA_Exception *exception;
-          ACE_NEW_THROW_RETURN (exception,
-                                CORBA_UnknownUserException (any),
-                                CORBA::NO_MEMORY (CORBA::COMPLETED_YES),
-                                TAO_INVOKE_EXCEPTION);
+          ACE_NEW_THROW_EX (exception,
+                            CORBA_UnknownUserException (any),
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_YES));
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           // @@ Think about a better way to raise the exception here,
           // maybe we need some more macros?
