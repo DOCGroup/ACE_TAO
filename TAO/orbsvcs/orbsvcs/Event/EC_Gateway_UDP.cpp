@@ -98,16 +98,26 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
 }
 
 void
-TAO_ECG_UDP_Sender::close (CORBA::Environment &env)
+TAO_ECG_UDP_Sender::close (CORBA::Environment &ACE_TRY_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (env);
-  if (env.exception () != 0) return;
+  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -120,7 +130,7 @@ TAO_ECG_UDP_Sender::disconnect_push_consumer (CORBA::Environment &)
 
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
-                          CORBA::Environment & TAO_IN_ENV)
+                          CORBA::Environment & ACE_TRY_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - \n"));
 
@@ -157,8 +167,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 
       // Grab the right mcast group for this event...
       RtecUDPAdmin::UDP_Addr udp_addr;
-      this->addr_server_->get_addr (header, udp_addr, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+      this->addr_server_->get_addr (header, udp_addr, ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Start building the message
       TAO_OutputCDR cdr;
@@ -167,11 +177,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       // marshal a modified version of the header, but the payload is
       // marshal without any extra copies.
       cdr.write_ulong (1);
-      cdr.encode (RtecEventComm::_tc_EventHeader, &header, 0, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+      cdr.encode (RtecEventComm::_tc_EventHeader, &header, 0, ACE_TRY_ENV);
+      ACE_CHECK;
 
-      cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+      cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, ACE_TRY_ENV);
+      ACE_CHECK;
 
       const int TAO_WRITEV_MAX = IOV_MAX;
       iovec iov[TAO_WRITEV_MAX];
@@ -219,8 +229,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                                    fragment_count,
                                    iov,
                                    iovcnt,
-                                   TAO_IN_ENV);
-              TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+                                   ACE_TRY_ENV);
+              ACE_CHECK;
               fragment_id++;
               fragment_offset += max_fragment_payload;
 
@@ -246,8 +256,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                                    fragment_count,
                                    iov,
                                    iovcnt,
-                                   TAO_IN_ENV);
-              TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+                                   ACE_TRY_ENV);
+              ACE_CHECK;
               fragment_id++;
               fragment_offset += max_fragment_payload;
 
@@ -267,8 +277,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                                    fragment_count,
                                    iov,
                                    iovcnt,
-                                   TAO_IN_ENV);
-              TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+                                   ACE_TRY_ENV);
+              ACE_CHECK;
               fragment_id++;
               fragment_offset += fragment_size;
 
@@ -692,17 +702,26 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
 }
 
 void
-TAO_ECG_UDP_Receiver::close (CORBA::Environment &env)
+TAO_ECG_UDP_Receiver::close (CORBA::Environment &ACE_TRY_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (env);
-  if (env.exception () != 0) return;
+  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -1045,6 +1064,17 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
   this->ec_->remove_observer (this->handle_, TAO_IN_ENV);
   this->handle_ = 0;
   TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+
+  {
+    PortableServer::POA_var poa =
+      this->observer_._default_POA (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->observer_, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
+    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
+  }
 
   return 0;
 }

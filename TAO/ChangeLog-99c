@@ -1,3 +1,13 @@
+Wed May 12 10:18:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/TODO.html:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Some servants where not beign properly deactivated, thanks to
+	  J. Russell Noseworthy <rnosewor@objectsciences.com> for pointing 
+	  this out.
+
 Wed May 12 10:16:15 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/corbafwd.h:

@@ -93,7 +93,7 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
 }
 
 void
-TAO_EC_Gateway_IIOP::close (CORBA::Environment &env)
+TAO_EC_Gateway_IIOP::close (CORBA::Environment &ACE_TRY_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
@@ -105,22 +105,45 @@ TAO_EC_Gateway_IIOP::close (CORBA::Environment &env)
            j != this->consumer_proxy_map_.end ();
            ++j)
         {
-          (*j).int_id_->disconnect_push_consumer (env);
+          (*j).int_id_->disconnect_push_consumer (ACE_TRY_ENV);
           CORBA::release ((*j).int_id_);
-          TAO_CHECK_ENV_RETURN_VOID (env);
+          ACE_CHECK;
         }
       this->consumer_proxy_map_.close ();
     }
 
-  this->default_consumer_proxy_->disconnect_push_consumer (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  this->default_consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->default_consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
-  this->supplier_proxy_->disconnect_push_supplier (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  {
+    PortableServer::POA_var poa =
+      this->supplier_._default_POA (ACE_TRY_ENV);
+    ACE_CHECK;
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+    ACE_CHECK;
+    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    ACE_CHECK;
+  }
+
+  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+  {
+    PortableServer::POA_var poa =
+      this->consumer_._default_POA (ACE_TRY_ENV);
+    ACE_CHECK;
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (&this->consumer_, ACE_TRY_ENV);
+    ACE_CHECK;
+    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    ACE_CHECK;
+  }
 }
 
 void
