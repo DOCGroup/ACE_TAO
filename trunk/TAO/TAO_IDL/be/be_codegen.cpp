@@ -478,8 +478,12 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
                                         << "#pragma warning(disable:4250)\n"
                                         << "#endif /* _MSC_VER */\n\n";
 
+      // generate the include statement for the server header
+      *this->server_template_skeletons_ << "#include \"" <<
+        idl_global->be_get_server_template_hdr_fname () << "\"\n\n";
+      
       // generate the code that includes the inline file if not included in the
-  // header file
+      // header file
       *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
       *this->server_template_skeletons_ << "#include \"" <<
         idl_global->be_get_server_template_inline_fname () << "\"\n";
