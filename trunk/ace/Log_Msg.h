@@ -89,11 +89,6 @@
 
 #include "ace/Log_Record.h"
 
-// In case ace/stdcpp.h is not #included before this header . . .
-#if !defined(ACE_STDCPP_H)
-  class ostream;
-#endif
-
 #if defined (__Lynx__)
 # undef STDERR
 #endif
