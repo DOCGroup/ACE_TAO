@@ -1512,7 +1512,7 @@ int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::set_flags");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -1538,7 +1538,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
     return -1;
   else
     return 0;
-#endif /* ACE_WIN32 && VXWORKS */
+#endif /* ACE_WIN32 || ACE_LACKS_FCNTL */
 }
 
 // Flags are the file status flags to turn off.
@@ -1548,7 +1548,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::clr_flags");
 
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -1574,7 +1574,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
     return -1;
   else
     return 0;
-#endif /* ACE_WIN32 || VXWORKS */
+#endif /* ACE_WIN32 || ACE_LACKS_FCNTL */
 }
 
 int
