@@ -19,7 +19,7 @@ Sun Apr  4 18:19:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  that it attempts to link instead of just compile.  Hopefully
 	  this will make the test "tougher."
 
-	* m4/compilers.m4:
+	* m4/compiler.m4:
 
 	  Added `-features=castop' compiler flag and completed support for
  	  `-features=rtti' via `--enable-rtti'.  These flags only work for
