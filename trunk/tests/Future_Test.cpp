@@ -398,10 +398,10 @@ main (int, char *[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-		  (int) task_count,
-		  (int) future_count,
-		  (int) capsule_count,
-		  (int) methodobject_count));
+		  task_count.value (),
+		  future_count.value (),
+		  capsule_count.value (),
+		  methodobject_count.value ()));
     }
 
   // Close things down.
@@ -414,11 +414,11 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-	      (int) task_count,
-	      (int) future_count,
-	      (int) capsule_count,
-	      (int) methodobject_count));
-
+	      task_count.value (),
+	      future_count.value (),
+	      capsule_count.value (),
+	      methodobject_count.value ()));
+  
   {
     // Check if set then get works, older versions of ACE_Future
     // will lock forever (or until the timer expires), will use a small

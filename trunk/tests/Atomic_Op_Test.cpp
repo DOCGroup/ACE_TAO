@@ -29,26 +29,24 @@ main (int, char *[])
 {
   ACE_START_TEST ("Atomic_Op_Test");
 
-  ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5L);
+  ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5);
 
-  // These should be foo == 5L, etc., but bugs with certain compilers
-  // break this.
-  ACE_ASSERT (foo.operator== (5L));
+  ACE_ASSERT (foo == 5);
 
   ++foo;
-  ACE_ASSERT (foo.operator== (6L));
+  ACE_ASSERT (foo == 6);
 
   --foo;
-  ACE_ASSERT (foo.operator== (5L));
+  ACE_ASSERT (foo == 5);
 
   foo += 10;
-  ACE_ASSERT (foo.operator== (15L));
+  ACE_ASSERT (foo == 15);
 
   foo -= 10;
-  ACE_ASSERT (foo.operator== (5L));
+  ACE_ASSERT (foo == 5);
 
   foo = 5L;
-  ACE_ASSERT (foo.operator== (5L));
+  ACE_ASSERT (foo == 5);
 
   ACE_END_TEST;
   return 0;
