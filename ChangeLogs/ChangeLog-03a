@@ -9,6 +9,9 @@ Wed Aug 28 06:12:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Timer_Queue_Test.cpp:
           Fixed unicode build error
 
+        * ace/Timer_Wheel_T.cpp:
+          Fixed doxygen tags.
+
 Tue Aug 27 19:09:17 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Get_Opt.h: Documentation improvements.
