@@ -1,3 +1,14 @@
+Sat Apr 29 19:41:39 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * tests/Endpoint_Per_Priority/client.dsp:
+        * tests/Endpoint_Per_Priority/server.dsp:
+
+          These were not set up to the standard type of configuration
+          we normally use.
+
 Sat Apr 29 19:20:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Buffered_Oneways/client.dsp:
