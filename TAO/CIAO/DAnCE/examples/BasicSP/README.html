@@ -17,13 +17,7 @@ This document describes how to compile/run the HUDisplay example with the new Dn
     </A>
 
     Copy the file into the <code> $CIAO_ROOT/bin </code> directory.
-  </LI>
-
-  <LI> Generate the make/project files for the DnC directory by using <code> $ACE_ROOT/bin/mwc.pl </code> script:
-    <UL>
-    <LI> <em> linux: </em> <code> [in $CIAO_ROOT/DnC] mwc.pl </code> </LI>
-    <LI> <em> windows: </em> <code> [in %CIAO_ROOT%/DnC] mwc.pl </code> </LI>
-    </UL>
+    Build ACE, TAO, DAnCE before you proceed.
   </LI>
 
   <LI> Generate the project/make files for the <em> BasicSP </em> example directory:
@@ -51,6 +45,7 @@ This document describes how to compile/run the HUDisplay example with the new Dn
   <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d HUDisplay.cdp -k file://EM.ior </code>
   
   <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/BasicSP/EC/controller to start the application.
+       Please make sure that the component IOR file for the EC component is present when you run the client.
 
   <BR/>
   </LI>
