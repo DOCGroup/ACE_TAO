@@ -35,10 +35,10 @@ print GNUPLOT
   "set grid ytics\n" .
   "set xlabel \"Number of Low priority Clients\"\n" .
   "set ylabel \"Latency per two-way request, microseconds\n" .
-  "set linestyle 1 linetype 1 pointtype 1\n" .
-  "set linestyle 2 linetype 2 pointtype 2\n" .
-  "  plot 'h' title \"High Priority Client\" with linespoints ls 1\n" .
-  "replot 'l' title \"Low Priority Clients\" with linespoints ls 2\n" .
+  "set linestyle 1 linetype 2 pointtype 2\n" .
+  "set linestyle 2 linetype 1 pointtype 1\n" .
+  "  plot 'l' title \"Low Priority Clients\" with linespoints ls 2\n" .
+  "replot 'h' title \"High Priority Client\" with linespoints ls 1\n" .
   "set yrange [] writeback\n" .
   "replot 'h' notitle with errorbars ls 1\n" .
   "set output \"plot.eps\"\n" .
