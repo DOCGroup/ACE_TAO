@@ -7,22 +7,22 @@ Control::Control (Widget &parent)
 {
   // Instantiate the  sub-components of the Control
   this->frame_ = XmCreateFrame (parent,
-                                "frame",
+                                (char *) "frame",
                                 0,
                                 0 );
 
   this->rowcolumn_ = XmCreateRowColumn (this->frame_,
-                                        "rwc",
+                                         (char *)"rwc",
                                         0,
                                         0 );
 
   this->startwidget_ = XmCreatePushButton (this->rowcolumn_,
-                                           "Start",
+                                           (char *) "Start",
                                            0,
                                            0);
 
   this->stopwidget_ = XmCreatePushButton (this->rowcolumn_,
-                                          "Stop",
+                                          (char *) "Stop",
                                           0,
                                           0);
 }
