@@ -161,9 +161,5 @@ namespace TAO
   }
 }
 
-#if defined (__ACE_INLINE__)
-#include "HTIOP_Transport.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* TRANSPORT_H */

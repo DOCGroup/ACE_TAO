@@ -21,11 +21,6 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
-#if !defined (__ACE_INLINE__)
-# include "HTIOP_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Connection_Handler,
            "$Id$")
