@@ -28,10 +28,10 @@
 #define _MPEG_ROUTINE_H
 
 #include "include/common.h"
-#ifdef LINUX
-#else
-int usleep(unsigned int usec);
-#endif
+
+
+
+
 void beep(void);
 int get_hostname(char *name, int len);
 long get_usec(void);
