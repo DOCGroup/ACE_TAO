@@ -575,7 +575,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       this->orb_core_->get_protocols_hooks ()->validate_policy_type (slot,
                                                                      type_value,
                                                                      ACE_TRY_ENV);
-      if (type_value == 0 | type_value == 3)
+      if ((type_value == 0) | (type_value == 3))
         ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
     }
 
