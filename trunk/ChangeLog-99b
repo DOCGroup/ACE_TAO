@@ -1,3 +1,8 @@
+Thu May 20 15:35:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/TkReactor_Test.cpp:
+	  It was not compiling if ACE_HAS_TK was not defined.
+
 Thu May 20 15:33:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU:
