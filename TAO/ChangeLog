@@ -1,3 +1,10 @@
+Sun Jun 13 17:10:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Added needed includes
+
 Sun Jun 13 07:56:20 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * interop-tests/wchar/client.cpp:
