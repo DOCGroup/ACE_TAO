@@ -339,6 +339,39 @@ to Graham for providing the OSE tools!
          file I/O.  Avoid using iostreams because of implementation
          differences across platforms.<p>
   </ul>
+
+  <li><strong>UNICODE conformity</strong><p>
+  <ul>
+    <li>Use <strong><code>ASYS_TEXT</code></strong> and
+        <strong><code>ASYS_WIDE_STRING</code></strong> for format
+        strings and other string arguments passed to
+        <code>ACE_DEBUG</code> or <code>ACE_ERROR</code>.  For
+        example,<p>
+        <pre>
+          void
+          ACE_FOO::ace_bar (int err, ASYS_TCHAR *astr)
+          {
+            ACE_TRACE ("ACE_FOO::ace_bar");
+
+            ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("From ACE_FOO::ace_bar")));
+
+            if (err)
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("(%P) Printing this string %s\n"),
+                          astr));
+          }
+        </pre>
+        <p>
+        This is because ACE also support platforms which use UNICODE
+        in most of their APIs.  On these platforms, ACE also uses
+        UNICODE as its system string type.<p>
+    <li><strong><code>ACE_TRACE</code></strong> handles conversion
+        between char strings and UNICODE strings automatically.<p>
+    <li>Other helper macros include
+        <strong><code>ASYS_MULTIBYTE_STRING</code></strong> and
+        <strong><code>ASYS_ONLY_MULTIBYTE_STRING</code></strong>. See
+        the end of <a href="../ace/OS.h">OS.h</a> for more details.<p>
+  </ul><p>
 </ul><p>
 
 <p><HR><P>
@@ -444,7 +477,7 @@ to Graham for providing the OSE tools!
 
 <hr>
 <!-- hhmts start -->
-Last modified: Thu Jan 15 15:48:05 CST 1998
+Last modified: Sun Apr 12 18:58:50 CDT 1998
 <!-- hhmts end -->
 
 </body>
