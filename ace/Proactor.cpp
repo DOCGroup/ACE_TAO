@@ -209,10 +209,10 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 			    int used_with_reactor_event_loop)
   :
 #if defined (ACE_HAS_AIO_CALLS)
-#if defined (AIO_LISTIO_MAX)
-  aiocb_list_max_size_ (AIO_LISTIO_MAX),
-#else /* AIO_LISTIO_MAX */
-  aiocb_list_max_size_ (2),
+#if defined (_POSIX_RTSIG_MAX)
+  aiocb_list_max_size_ (_POSIX_RTSIG_MAX),
+#else /* _POSIX_RTSIG_MAX */
+  aiocb_list_max_size_ (8),
 #endif /* AIO_LISTIO_MAX */
   aiocb_list_cur_size_ (0),
 #else /* ACE_HAS_AIO_CALLS */
@@ -232,6 +232,11 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
        ai++)
     aiocb_list_[ai] = 0;
   ACE_UNUSED_ARG (tq);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "aiocb_list: Maxsize = %d, Cursize = %d\n",
+              aiocb_list_max_size_,
+              aiocb_list_cur_size_));
 #else /* ACE_HAS_AIO_CALLS */
   // create the completion port
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
@@ -582,9 +587,8 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 #if defined (ACE_HAS_AIO_CALLS)
   // Is there any entries in the list.
   if (this->aiocb_list_cur_size_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "No AIO pending"),
-                      0);
+    // No aio is pending.
+    return 0;
 
   // Wait for asynch operation to complete.
   timespec timeout;
@@ -615,21 +619,25 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   size_t ai;
   ssize_t nbytes = 0;
   for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
-    // Analyze error and return values.
-    if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
-      {
-        if ((nbytes = aio_return (aiocb_list_[ai])) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%p):AIO failed"),
-                            -1);
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "An aio has finished\n"));
-            // This AIO is done.
-            break;
-          }
-      }
+    {
+      if (aiocb_list_ [ai] == 0)
+        continue;
+      // Analyze error and return values.
+      if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
+        {
+          if ((nbytes = aio_return (aiocb_list_[ai])) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%p):AIO failed"),
+                              -1);
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "An aio has finished\n"));
+              // This AIO is done.
+              break;
+            }
+        }
+    }
 
   if (ai == this->aiocb_list_max_size_)
     // Nothing completed.
@@ -832,32 +840,6 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 
   this->handler_.handle_time_out (this->time_, this->act ());
 }
-
-#if defined (ACE_HAS_AIO_CALLS)
-int
-ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr)
-{
-  // Is there any place?
-  if (this->aiocb_list_cur_size_ >= this->aiocb_list_max_size_)
-    return -1;
-
-  // Find the first free slot.
-  size_t ai;
-  for (ai = 0;
-       ai < this->aiocb_list_max_size_;
-       ai++)
-    if (this->aiocb_list_[ai] == 0)
-      break;
-
-  if (ai == this->aiocb_list_max_size_)
-    return -1;
-
-  // Store the pointers.
-  this->aiocb_list_[ai] = aiocb_ptr;
-  this->aiocb_list_cur_size_ ++;
-  return 0;
-}
-#endif /* ACE_HAS_AIO_CALLS */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Timer_Queue_T<ACE_Handler *,
