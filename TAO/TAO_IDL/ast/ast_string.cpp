@@ -133,18 +133,28 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   unsigned long bound = ms->ev ()->u.ulval;
 
-  if (bound > 0)
+  static char namebuf[NAMEBUFSIZE];
+  static char boundbuf[NAMEBUFSIZE];
+  ACE_OS::memset (namebuf,
+                  '\0',
+                  NAMEBUFSIZE);
+  ACE_OS::memset (boundbuf,
+                  '\0',
+                  NAMEBUFSIZE);
+
+  if (bound)
     {
-      static char namebuf[NAMEBUFSIZE];
-      ACE_OS::memset (namebuf,
-                      '\0',
-                      NAMEBUFSIZE);
-      ACE_OS::sprintf (namebuf,
-                       "CORBA_%sSTRING_%d",
-                       (wide == 1 ? "" : "W"),
+      ACE_OS::sprintf (boundbuf,
+                       "_%d",
                        bound);
-      this->flat_name_ = ACE::strnew (namebuf);
     }
+
+  ACE_OS::sprintf (namebuf,
+                   "CORBA_%sSTRING%s",
+                   (wide == 1 ? "" : "W"),
+                   boundbuf);
+
+  this->flat_name_ = ACE::strnew (namebuf);
 }
 
 AST_String::~AST_String (void)

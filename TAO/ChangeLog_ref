@@ -1,3 +1,12 @@
+Fri Aug 29 17:52:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_string.cpp:
+
+          Changed the constructor to proactively compute and store the flat
+          name for unbounded (w)strings, as it already did for bounded
+          (w)strings. This simplifies consistent generation of the ifdef
+          guards by the traits visitor.
+
 Fri Aug 29 16:31:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
