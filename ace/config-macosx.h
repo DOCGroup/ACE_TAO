@@ -3,8 +3,8 @@
 
 // This configuration file is designed to work with the MacOS X operating system.
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_MACOSX_H
+#define ACE_CONFIG_MACOSX_H
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
@@ -21,11 +21,6 @@
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
 #endif /* ACE_HAS_PENTIUM */
-
-// Platform specific directives
-
-#define __MACOSX__
-#define ACE_HAS_MACOSX_DYLIB
 
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
@@ -111,9 +106,6 @@
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
-// Compiler/platform defines a union semun for SysV shared memory.
-#define ACE_LACKS_SEMBUF_T
-
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
 
@@ -170,4 +162,15 @@
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 
-#endif /* ACE_CONFIG_H */
+#define ACE_HAS_SEMUN
+#define ACE_HAS_SIGINFO_T 
+#define ACE_LACKS_SIGINFO_H 
+#define ACE_HAS_UCONTEXT_T 
+#define ACE_HAS_GETIFADDRS 
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
+
+// Remove the following when Apple fixes static template member problem in their
+// compiler
+#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 0
+
+#endif /* ACE_CONFIG_MACOSX_H */

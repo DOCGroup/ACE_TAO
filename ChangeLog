@@ -1,3 +1,23 @@
+Thu Oct 17 19:18:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/config-macosx.h: 
+	   - Remove define of __MACOSX__, and use constant __APPLE__
+	     instead defined by Apple's gcc.
+	   - Removed definitions:
+	      ACE_HAS_MACOSX_DYLIB, ACE_LACKS_SEMBUF_T
+	   - Added definitions:
+	     ACE_HAS_SEMUN, #define ACE_HAS_SIGINFO_T, #define ACE_LACKS_SIGINFO_H,
+	     ACE_HAS_UCONTEXT_T, ACE_HAS_GETIFADDRS, ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+	   - Defined ACE_HAS_POSITION_INDEPENDENT_POINTERS to 0 for temporary
+	     Apple gcc bug workaround.
+
+	* ace/Log_Msg.cpp (ACE_Log_Msg::log): Add check for __APPLE__ to catch
+	  right prototype for sys_errlist.
+
+	* ace/OS.h: Remove unnecessary __MACOSX__ check.
+
+	* include/makeinclude/platform_macosx.GNU: Minor cleanups.
+
 Thu Oct 17 13:47:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Added typedef for ACE_recursive_mutex_state for
