@@ -47,10 +47,10 @@ int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
     int rval;
 
-    ACE_DEBUG ((LM_INFO, "(%P|%t) Xmit::send() sending (%s)(%d)\n", message->rd_ptr(), message->length() ));
+    ACE_DEBUG ((LM_INFO, "(%P|%t) Xmit::send() sending buff of len %d\n", message->length() ));
 
      /* Since we're going to be sending data that may have been
-        compressed and encrypted it's probably important for the
+        compressed it's probably important for the
         receiver to get an entire "block" instead of having a
         partial read.
 
@@ -75,7 +75,8 @@ int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
         containing msize and the message data and send it all at
         once.
      */
-    rval = this->peer().send_n( message->rd_ptr(), message->length(), 0, timeout );
+    rval = this->peer().send_n(message->rd_ptr(), 
+                               message->length(), 0, timeout);
 
      // Release the message block since we're done with it.
     message->release();

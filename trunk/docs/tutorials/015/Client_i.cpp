@@ -39,7 +39,7 @@ int Client::open( void )
         // to ensure that our data is in the correct format when
         // received by the server.  Thus, we open the stream and
         // transfer ownership of the peer.
-    return stream().open( peer() );
+    return stream().open( peer(), 0, true);
 }
 
 // The remainder of the functions just delegate to the stream.

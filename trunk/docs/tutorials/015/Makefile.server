@@ -11,9 +11,10 @@ FILES += Protocol_Stream
 FILES += Protocol_Task
 FILES += Xmit
 FILES += Recv
+FILES += CompressionSocket
 FILES += Compressor
-FILES += Crypt
-
+FILES += CompressorBase
+FILES += ZlibCompressor
 FILES += Handler
 FILES += Server_i
 

@@ -46,7 +46,8 @@ int Protocol_Task::svc(void)
    we're moving data upstream or downstream and invoke the appropriate
    virtual function to handle it.
 */
-int Protocol_Task::process(ACE_Message_Block * message, ACE_Time_Value *timeout)
+int Protocol_Task::process(ACE_Message_Block * message, 
+                           ACE_Time_Value *timeout)
 {
     if( this->is_writer() )
     {
