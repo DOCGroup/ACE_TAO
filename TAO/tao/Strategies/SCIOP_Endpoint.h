@@ -1,10 +1,12 @@
-// $Id$
+// -*- C++ -*-
+
 //===========================================================================
 /**
  *  @file     SCIOP_Endpoint.h
  *
- *   SCIOP implementation of PP Framework Endpoint interface.
+ *  SCIOP implementation of PP Framework Endpoint interface.
  *
+ *  $Id$
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
@@ -78,10 +80,6 @@ public:
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
   virtual TAO_Endpoint *duplicate (void);
-
-  /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  /// endpoints are equivalent iff their port and host are the same.
-  virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (void);
