@@ -37,8 +37,13 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-template <typename HANDLER, typename DATA>
-int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&));
+namespace Config_Handler_Test
+{
+  template <typename HANDLER, typename DATA>
+    int run_test (int argc, 
+		  ACE_TCHAR *argv[], 
+		  void (HANDLER::*func) (DATA&));
+}
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

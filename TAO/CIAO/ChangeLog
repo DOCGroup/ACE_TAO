@@ -1,3 +1,20 @@
+Sun Oct 10 02:47:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/CompIntrDesc_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/CompPkgDesc_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/Domain_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/Handler_Test.h:
+	* DAnCE/tests/Config_Handlers/IAD_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/PC_Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/Plan_Handler_Test.cpp:
+
+	  Fix for MSVC6 build errors. They compile fine on MSVC6 now. I am
+	  just hoping that this fix also addresses compile errors in
+	  Borland. The Borland compilation errors are also similar to the
+	  MSVC6 errors and hence the hope!
+
 Sun Oct 10 00:21:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
