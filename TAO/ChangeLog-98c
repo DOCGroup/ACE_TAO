@@ -8,6 +8,10 @@ Fri Aug 14 09:46:44 1998  David L. Levine  <levine@cs.wustl.edu>
           replaced ACE_UINT32 static cast with ACE_U64_TO_U32, so that
           it works with ACE_LACKS_LONGLONG_T.
 
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+          replaced long static casts with ACE_U64_TO_U32, so that
+          they work with ACE_LACKS_LONGLONG_T.
+
 Fri Aug 14 09:15:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosTimeBase.idl:
