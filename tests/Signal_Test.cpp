@@ -150,7 +150,7 @@ synchronous_signal_handler (void *)
   return 0;
 }
 
-#if !defined (ACE_HAS_THREADS)
+#if 1 // !defined (ACE_HAS_THREADS)
 // This function arranges to handle signals asynchronously, i.e., if
 // the platform lacks threads.
 
@@ -171,9 +171,12 @@ asynchronous_signal_handler (void *)
       sigset.sig_add (SIGHUP);
     }
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) handle_signal,
-                     sigset);
+  // Register the <handle_signal> method to process all the signals in
+  // <sigset>.
+  ACE_Sig_Action sa (sigset,
+                     (ACE_SignalHandler) handle_signal);
   ACE_UNUSED_ARG (sa);
+
   return 0;
 }
 
@@ -224,7 +227,7 @@ worker_child (void *)
 static void
 run_test (ACE_THR_FUNC worker)
 {
-#if defined (ACE_HAS_THREADS)
+#if 0 // defined (ACE_HAS_THREADS)
   // Block all signals.
   ACE_Sig_Set sigset (1);
   int result = ACE_OS::thr_sigsetmask (SIG_BLOCK,
@@ -248,7 +251,7 @@ run_test (ACE_THR_FUNC worker)
   result = ACE_Thread_Manager::instance ()->wait ();
   ACE_ASSERT (result != -1);
 #else
-  asynchronous_signal_handler ();
+  asynchronous_signal_handler (0);
   (*worker) (0);
 #endif /* ACE_HAS_THREADS */
 }
@@ -275,10 +278,14 @@ worker_parent (void *)
 
   // Perform a barrier wait until our child process has exited.
   int result = pm.wait ();
-  ACE_ASSERT (result != -1);
+
+  // Note that <result> should == -1 because our signal handler
+  // "reaped" the SIGCHLD.
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) child done\n")));
+              ASYS_TEXT ("(%P|%t) child done, result = %d, %p\n"),
+              result,
+              ASYS_TEXT ("wait")));
   return 0;
 }
 

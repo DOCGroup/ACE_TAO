@@ -31,13 +31,13 @@ template <class CORBA_REF>
 class ACE_CORBA_Ref
 {
   // = TITLE
-  //    A wrapper for helping with orbix object references.
+  //    A wrapper for helping with Orbix object references.
   //
   // = DESCRIPTION
-  //    ACE_CORBA_Ref is parameterized by the type of orbix object
+  //    <ACE_CORBA_Ref> is parameterized by the type of orbix object
   //    reference to be used.  The construtor, operator=, and the
-  //    destructor of ACE_CORBA_Ref perform implicit duplicates and
-  //    releases in order to help make the use of orbix object
+  //    destructor of <ACE_CORBA_Ref> perform implicit duplicates and
+  //    releases in order to help make the use of Orbix object
   //    references transparent.
 public:
   ACE_CORBA_Ref (void);
@@ -55,7 +55,7 @@ public:
 
   CORBA_REF *operator-> (void) const;
   // Smart pointer to forward all CORBA_REF calls to the underlying
-  // orbix reference.
+  // Orbix reference.
 
   int operator== (CORBA_REF *) const;
   // Pointer comparison.
