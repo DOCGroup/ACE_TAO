@@ -1,3 +1,12 @@
+Fri May 29 08:22:36 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Log_Msg.cpp, Trace.cpp: Changed decision for
+	  order-of-include/inline from ACE_WIN32 to
+	  ACE_HAS_ONE_DEFINITION_RULE.  This completes the changes needed
+	  to be able to use the newer versions of HP aC++.
+
+	* ace/config-win32.h: Set ACE_HAS_ONE_DEFINITION_RULE.
+
 Thu May 28 16:17:41 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/README: Added ACE_HAS_ONE_DEFINITION_RULE.
