@@ -8,6 +8,7 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_CString sched_policy_str = "fifo";
 
