@@ -1,6 +1,17 @@
+Thu Jan 24 14:53:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_doxygen.pl:
+	* etc/acexml.doxygen: Added the doxygen config file for XML
+	  subdirectory.
+
+	* Makefile: Added XML subdirectory into the lists to be compiled
+	  and be included in the release.
+
+	* XML/*: Merged in the XML parser code.
+
 Thu Jan 24 10:14:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_wchar.h: Added definition for ACE_TEXT_SearchPath.
+	* ace/ace_wchar.h: Added the definition for ACE_TEXT_SearchPath.
 
 	* ace/Lib_Find.cpp (ldfind): Fixed UNICODE and Fuzz builds
 	  errors.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for

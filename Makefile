@@ -21,7 +21,8 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs
+          websvcs \
+	  XML
 
 CLONE   = Makefile \
           ace \
@@ -35,6 +36,7 @@ CLONE   = Makefile \
           TAO \
           tests \
           websvcs \
+	  XML \
           PACE
 
 #----------------------------------------------------------------------------
@@ -134,6 +136,7 @@ CONTROLLED_FILES = \
         THANKS \
         TODO \
         VERSION \
+	XML \
         acconfig.h \
         ace \
         ace-config.1.in \
