@@ -1,3 +1,9 @@
+Mon May 17 09:49:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+          Because of the MPC conversion we don't need a special tao_imr
+          location for windows anymore
+
 Fri May 14 22:04:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/Linear_Network_Priority_Mapping.cpp (to_network):
