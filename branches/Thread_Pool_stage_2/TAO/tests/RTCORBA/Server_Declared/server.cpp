@@ -3,10 +3,8 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Pool_Per_Endpoint.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-
-#include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -82,13 +80,12 @@ const char *ior_output_file1 = "test1.ior";
 const char *ior_output_file2 = "test2.ior";
 CORBA::Short poa_priority = -1;
 CORBA::Short object_priority = -1;
-CORBA::Short wrong_priority = -1;
 
 // Parse command-line arguments.
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:o:a:b:c:");
+  ACE_Get_Opt get_opts (argc, argv, "p:o:a:b:");
   int c, result;
 
   while ((c = get_opts ()) != -1)
@@ -122,16 +119,6 @@ parse_args (int argc, char *argv[])
                             -1);
         break;
 
-      case 'c':
-        result = ::sscanf (get_opts.optarg,
-                           "%hd",
-                           &wrong_priority);
-        if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-c> option"),
-                            -1);
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -140,7 +127,6 @@ parse_args (int argc, char *argv[])
                            "-o <iorfile2> "
                            "-a <poa_priority> "
                            "-b <object_priority> "
-                           "-c <wrong_priority> "
                            "\n",
                            argv [0]),
                           -1);
@@ -216,46 +202,13 @@ create_object (RTPortableServer::POA_ptr poa,
   return 0;
 }
 
-void
-exception_test (RTPortableServer::POA_ptr poa,
-                Test_i *server_impl,
-                CORBA::Short priority,
-                const char *msg,
-                CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      // Register with poa.
-      PortableServer::ObjectId_var id =
-        poa->activate_object_with_priority (server_impl,
-                                            priority,
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var server =
-        poa->id_to_reference (id.in (),
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, msg));
-    }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BAD_PARAM exception is caught as expected.\n"));
-    }
-  ACE_CATCHANY
-    {
-      ACE_DEBUG ((LM_DEBUG, msg));
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-}
-
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
       // ORB.
@@ -342,24 +295,12 @@ main (int argc, char *argv[])
       if (result == -1)
         return 1;
 
-          // Attempt to create object 3, overriding POA's priority with
-      // the priority value that does not match server resource
-      // configuration.  Should get BAD_PARAM exception.
-      exception_test (rt_poa.in (), &server_impl, wrong_priority,
-                      "ERROR: BAD_PARAM exception not thrown.\n",
-                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Activate POA manager.
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Start ORB event loop.
-      // @@ Currently we are using Reactor per priority to emulate
-      // threadpool with lanes.  Once POA threadpools are implemented,
-      // this code should be replaced with standard threadpool apis.
-      TAO_Pool_Per_Endpoint pool (orb.in ());
-      pool.run (ACE_TRY_ENV);
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
@@ -374,4 +315,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

@@ -276,6 +276,9 @@ ORB_CORE_FILES = \
   Policy_Set \
   Default_Endpoint_Selector_Factory \
   POA_Extension_Initializer \
+  Thread_Lane_Resources \
+  Thread_Lane_Resources_Manager \
+  Default_Thread_Lane_Resources_Manager \
   Default_Stub_Factory
 
 DYNAMIC_ANY_FILES =
@@ -284,14 +287,8 @@ TEMPLATE_FILES = \
   Acceptor_Impl \
   Connector_Impl \
   Connector_Impl \
-  CONV_FRAMES_T \
-  GIOPS_T \
-  IOPS_T \
-  PollableS_T \
   Sequence_T \
-  TAOS_T \
-  TAO_Singleton \
-  TimeBaseS_T
+  TAO_Singleton
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO

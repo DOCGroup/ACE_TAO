@@ -9,31 +9,12 @@
 
 ACE_RCSID (TAO, RT_ORB_Loader, "$Id$")
 
-int
-TAO_RT_ORB_Loader::Initializer (void)
-{
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_RT_ORB_Loader);
-
-  return 0;
-}
-
 TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
 {
 }
 
 TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
 {
-}
-
-CORBA::Object_ptr 
-TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr,
-                                  int,
-                                  char *[],
-                                  CORBA::Environment &)
-     ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return CORBA::Object::_nil ();
 }
 
 int
@@ -145,9 +126,7 @@ TAO_RT_ORB_Loader::init (int argc,
   return 0;
 }
 
-
 /////////////////////////////////////////////////////////////////////
-
 
 ACE_FACTORY_DEFINE (TAO, TAO_RT_ORB_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
@@ -157,4 +136,3 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-

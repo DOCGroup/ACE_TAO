@@ -596,7 +596,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
   TAO_Stub *objdata = orb_core->create_stub (type_hint.in (),
                                              mp,
-                                             orb_core,
                                              TAO_default_environment ());
   // @@ RTCORBA_Subsetting FIX THIS!!  ACE_CHECK_RETURN (0);
 

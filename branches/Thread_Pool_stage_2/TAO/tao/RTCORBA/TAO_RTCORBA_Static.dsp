@@ -103,7 +103,7 @@ SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.i
+SOURCE=.\RT_Thread_Lane_Resources_Manager.i
 # End Source File
 # Begin Source File
 
@@ -163,7 +163,7 @@ SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.h
+SOURCE=.\RT_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
@@ -259,7 +259,7 @@ SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
+SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 

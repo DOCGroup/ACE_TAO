@@ -4,218 +4,42 @@ This is a test for RTCORBA::PriorityBandedConnectionPolicy.
 
 Description
 -----------
-This test consists of seven mini-tests, each exercising
-some aspect of PriorityBandedConnectionPolicy:
+
+This test consists of several mini-tests, each exercising some aspect
+of PriorityBandedConnectionPolicy:
 
 (Server)
 
-1. Attempt to create a POA with
-   RTCORBA::PriorityBandedConnectionPolicy but without the
-   RTCORBA::PriorityModelPolicy.  Should get POA::InvalidPolicy
-   exception.
+- Attempt to create a POA for which the bands do not match thread
+  lanes.  Should get POA::InvalidPolicy exception.
 
-2. Attempt to create a POA with
-   RTCORBA::PriorityBandedConnectionPolicy where bands do not match
-   the resources of the POA, i.e., threadpool lanes/endpoints.
-   Should get POA::InvalidPolicy exception.
-
-3. Create a POA with RTCORBA::SERVER_DECLARED priority model and
-   RTCORBA::PriorityBandedConnectionPolicy.  Attempt to register an
-   object with priority that doesn't match the resources/configuration
-   of that POA, i.e., its priority bands.  Should get BAD_PARAM exception.
+- Attempt to register an servant with priority that doesn't match the
+  resources/configuration of that POA, i.e., its bands/lanes.  Should
+  get BAD_PARAM exception.
 
 (Client)
 
-4. Set RTCORBA::PriorityBandedConnectionPolicy on the object where
-   bands do not match server resources, i.e., threadpool
-   lanes/endpoints.  Attempt an invocation on the object.  Should get
-   INV_POLICY exception.
+- Set RTCORBA::PriorityBandedConnectionPolicy on the object where
+  bands do not match server resources, i.e., threadpool lanes.
+  Attempt an invocation on the object.  Should get INV_POLICY
+  exception.
 
-5. Set RTCORBA::PriorityBandedConnectionPolicy on the object with
-   CLIENT_PROPAGATED priority model where bands match server
-   resources.  Attempt several invocations on the object, changing the
-   priority of the invoking client thread before each.  This should
-   succeed, Verify that correct band is being used for each invocation, and
-   that appropriate server threadpool lane is providing the service.
+- Now attempt one more invocation on the same object (with
+  CLIENT_PROPAGATED and bands), but with the client thread priority
+  not matching any of the bands.  Should get INV_POLICY exception.
 
-6. Now attempt one more invocation on the same object (with
-   CLIENT_PROPAGATED and bands), but with the client thread priority
-   not matching any of the bands.  Should get INV_POLICY exception.
+- Set RTCORBA::PriorityBandedConnectionPolicy on the object with
+  CLIENT_PROPAGATED priority model where bands match server resources.
+  Attempt several invocations on the object, changing the priority of
+  the invoking client thread before each.  This should succeed.
+  Verify that correct band is being used for each invocation, and that
+  appropriate server threadpool lane is providing the service.
 
-7. Attempt invocation on an object with SERVER_DECLARED priority model
-   and RTCORBA::PriorityBandedConnectionPolicy set using the client
-   thread with priority not matching any of the object's priority
-   bands.  This should succeed. Verify the correct band and server
-   threadpool lane are being used for the invocation.
-
-Scenario:
+- Attempt invocation on an object with SERVER_DECLARED priority model
+  and RTCORBA::PriorityBandedConnectionPolicy set using the client
+  thread with priority not matching any of the object's priority
+  bands.  This should succeed. Verify the correct band and server
+  threadpool lane are being used for the invocation.
 
 
-To run (on Unix):
--------
-$./server [-n <ior_output_file1> -o <ior_output_file2>]
-          [-w <wrong_priority> -b <bands_file>]
-           -p <poa_priority>
-           -ORBdebuglevel 1 -ORBSvcConf server.conf
-           -ORBendpoint iiop://targethost:0/priority=<priority_for_band1>
-           -ORBendpoint iiop://targethost:0/priority=<priority_for_band2>
-           [more endpoints if desired]
-
-$./client [-n <ior1> -o <ior2>]
-           -a <client_priority1> -b <client_priority2> -c <client_priority3>
-
-
-Options:
---------
-         Server:
-
--n <ior_output_file1>   Default: test1.ior
-                        Filename for output of the first object's IOR
-                        (the object with CLIENT_PROPAGATED priority
-                        model.)
-
--o <ior_output_file2>   Default: test2.ior
-                        Filename for output of the second object's IOR
-                        (the object with SERVER_DECLARED priority
-                        model and PriorityBandedConnectionPolicy set.)
-
--b <bands_file>         Default: bands
-                        Name of the file containing priority bands
-                        used for the test (on server and client).
-
-                        The format of the file is a single line, with
-                        no leading or trailing spaces, with a list of
-                        all bands' lows and highs.  Single space
-                        is used to separate values.  For example:
-                        65 69 74 76 80 80
-
--p <poa_priority>       Default: -1, must be overridden.
-                        SERVER_DECLARED priority of the poa.  Must
-                        match one of the bands specified in the
-                        <bands_file>.
-
--w <wrong_priority>     Default: -1
-                        Priority not matching any of the priority
-                        bands.  Used for test #3.
-
--ORBdebuglevel 1        Default: none
-                        This ORB option is useful for verifying that
-                        correct band/threadpool lane are used during
-                        invocations.
-
-The following are the required server ORB options for this test.
-These options help set up server resources to emulate POA
-threadpool with ORB pool.  Once POA threadpools are implemented, these
-options will go away.
--ORBSvcConf server.conf
--ORBendpoint xxxx://targethost:0/priority=<priority_for_band1>
--ORBendpoint xxxx://targethost:0/priority=<priority_for_band2>
-... There must be enough endpoints to cover all bands specified in
-the <bands_file>.  For an example, see run_test.pl
-
-         Client:
-
--n <ior1>               Default: file://test1.ior
-                        IOR for the first object (with
-                        CLIENT_PROPAGATED priority model).
-
--o <ior2>               Default: file://test2.ior
-                        IOR for the second object (with
-                        SERVER_DECLARED priority model and priority
-                        bands).
-
--a <client_priority1>   Default: -1, must be overridden.
-                        Client thread priority that will be used for
-                        one of the invocations.  Must match one of the
-                        bands specified in the <bands_file>.  Used for
-                        test #5.
-
--b <client_priority2>   Default: -1, must be overridden.
-                        Client thread priority that will be used for
-                        one of the invocations.  Must match one of the
-                        bands specified in the <bands_file>.  Used for
-                        test #5.
-
--c <client_priority3>   Default: -1, must be overridden.
-                        Client thread priority that will be used for
-                        one of the invocations.  Must not match any
-                        of the bands specified in the <bands_file>.
-                        Used for test #6.
-
-Expected output:
-----------------
-Below is the output from run_test.pl on Unix. (On windows, different
-priority values are used).  See run_test.pl for more info.  Note, due
-to the use of -ORBdebuglevel option, test output may differ from what
-is shown above as ORB debug messages are modified and added.
-
-In general, tests 1, 2, 3, 4, and 6 must result in expected exceptions
-being caught.  In test 5 and 7, object and server thread priorities
-must match one of the priority bands, and all of the priority values
-must correspond to those specified with the command-line options.
-
-********** RTCORBA Priority Banded Connections Unit Test
-TAO (25332|1) Loaded default protocol <IIOP_Factory>
-TAO (25332|1) Loaded default protocol <UIOP_Factory>
-TAO (25332|1) Loaded default protocol <SHMIOP_Factory>
-
-     Test 1
-InvalidPolicy exception is caught as expected.
-
-     Test 2
-InvalidPolicy exception is caught as expected.
-
-     Test 3
-BAD_PARAM exception is caught as expected.
-
-Activated object one as <IOR:000000000000000d49444c3a546573743a312e30000000000000000100000000000000da00010200000
-0000a6c6f63616c686f737400e0150000002314010f004e53543a1ade88000056de000000010000000100000000000000010000000100000
-0000400000000000000080000000054414f000000000100000014000000000001000100000000000101090000000054414f0200000042000
-00000000000030000000a6c6f63616c686f737400e015004200000000000a6c6f63616c686f737400e017005000000000000a6c6f63616c6
-86f737400e016004b0000000000020000001a0000000000000001544100020000000a00000000000000000000>
-
-
-Activated object two as <IOR:000000000000000d49444c3a546573743a312e30000000000000000100000000000000f600010200000
-0000a6c6f63616c686f737400e0150000002314010f004e53543a1ade8800005aff000000020000000100000000000000010000000100000
-0000400000000000000080000000054414f000000000100000014000000000001000100000000000101090000000054414f0200000042000
-00000000000030000000a6c6f63616c686f737400e015004200000000000a6c6f63616c686f737400e017005000000000000a6c6f63616c6
-86f737400e016004b0000000000020000003600000000000000025441000700000014000000000000000300410045004a004c00500050544
-100020000000a00000000000000010043>
-
-
-     Test 4
-INV_POLICY exception is caught as expected.
-
-     Test 5
-TAO (25332|5) IIOP connection from client<127.0.0.1:57368> on 17
-RTCORBA::CLIENT_PROPAGATED processing (25332|5): original thread priority 75 temporarily changed to 76
-
-Object bands:
-1) 65  69
-2) 74  76
-3) 80  80
-Object priority: 76  Servant thread priority: 76
-Band 2 was used for this invocation
-TAO (25332|6) IIOP connection from client<127.0.0.1:57369> on 18
-
-Object bands:
-1) 65  69
-2) 74  76
-3) 80  80
-Object priority: 80  Servant thread priority: 80
-Band 3 was used for this invocation
-
-     Test 6
-INV_POLICY exception is caught as expected.
-
-     Test 7
-TAO (25332|4) IIOP connection from client<127.0.0.1:57370> on 19
-
-Object bands:
-1) 65  69
-2) 74  76
-3) 80  80
-Object priority: 67  Servant thread priority: 66
-Band 1 was used for this invocation
-
-Server ORB event loop finished
+Check run_test.pl to see how to set up a run for this test.

@@ -62,7 +62,8 @@ TAO_IIOP_SSL_Acceptor::close (void)
 }
 
 int
-TAO_IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr)
+TAO_IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr,
+                               ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_IIOP_SSL_CREATION_STRATEGY (this->orb_core_,
@@ -79,7 +80,7 @@ TAO_IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr)
                   -1);
 
   if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (this),
+                                 reactor,
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)

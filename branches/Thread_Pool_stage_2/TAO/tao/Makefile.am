@@ -44,7 +44,6 @@ PLUGGABLE_PROTOCOLS_FILES = \
   UIOP_Acceptor.cpp \
   UIOP_Connect.cpp \
   IORC.cpp \
-  IORS.cpp \
   IORManipulation.cpp
 
 PLUGGABLE_MESSAGING_FILES = \
@@ -98,11 +97,8 @@ ORB_CORE_FILES = \
   ORB.cpp \
   corbafwd.cpp \
   PolicyC.cpp \
-  PolicyS.cpp \
   DomainC.cpp \
-  DomainS.cpp \
   TimeBaseC.cpp \
-  TimeBaseS.cpp \
   Principal.cpp \
   Sequence.cpp \
   MProfile.cpp \
@@ -166,25 +162,24 @@ ORB_CORE_FILES = \
   Asynch_Timeout_Handler.cpp \
   Dynamic_Adapter.cpp \
   IOPC.cpp \
-  IOPS.cpp \
   PollableC.cpp \
-  PollableS.cpp \
   CONV_FRAMEC.cpp \
-  CONV_FRAMES.cpp \
   Tagged_Components.cpp \
   Services.cpp \
   NVList.cpp \
   MessagingC.cpp \
-  MessagingS.cpp \
   Policy_Manager.cpp \
   Messaging_Policy_i.cpp \
   TAOC.cpp \
-  TAOS.cpp \
   Buffering_Constraint_Policy.cpp \
   GIOPC.cpp \
   TAO_Singleton_Manager.cpp \
   DLL_ORB.cpp \
-  Endpoint_Selector_Factory.cpp
+  Endpoint_Selector_Factory.cpp \
+  Thread_Lane_Resources \
+  Thread_Lane_Resources_Manager \
+  Default_Thread_Lane_Resources_Manager
+
 
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la

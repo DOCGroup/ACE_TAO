@@ -33,4 +33,3 @@ ACE_INLINE
 TAO_Bands_Protocol_Selector::TAO_Bands_Protocol_Selector (void)
 {
 }
-

@@ -4,10 +4,8 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
 #include "ace/Task.h"
-
-#include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 class Worker_Thread : public ACE_Task_Base
 {
@@ -142,23 +140,12 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
-      // First check that we have sufficient priority range to run the
-      // test, i.e., more than 1 priority level.
-      int max_priority =
-        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
-
-      if (max_priority == min_priority)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Not enough priority levels on this platform"
-                      "to run the test, aborting\n"));
-          return 0;
-        }
-
       // Initialize the ORB, resolve references and parse arguments.
 
       // ORB.
@@ -366,4 +353,3 @@ Worker_Thread::svc (void)
   ACE_ENDTRY;
   return 0;
 }
-

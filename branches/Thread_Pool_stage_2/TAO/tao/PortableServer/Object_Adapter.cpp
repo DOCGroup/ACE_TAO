@@ -21,6 +21,8 @@
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
 #include "tao/POA_Extension_Initializer.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -123,6 +125,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_in_progress_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
     root_ (0),
+    default_validator_ (orb_core),
     default_poa_policies_ ()
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
@@ -578,18 +581,15 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
-#if 0
-  TAO_POA_Policy_Set root_poa_policies (this->default_poa_policies ());
+  // This makes sure that the default resources are open when the Root
+  // POA is created.
+  this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  if (policies == 0)
-    {
-      // RootPOA policies defined in spec
-      root_poa_policies.implicit_activation (
-           PortableServer::IMPLICIT_ACTIVATION);
+  // Set the default Server Protocol Policy.
+  this->set_default_server_protocol_policy (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      policies = &root_poa_policies;
-    }
-#else
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -598,25 +598,30 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
-  TAO_Implicit_Activation_Policy implicit_activation_policy (
-                                      PortableServer::IMPLICIT_ACTIVATION);
+  TAO_Implicit_Activation_Policy
+    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
+
   policies.merge_policy (&implicit_activation_policy,
                          ACE_TRY_ENV);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#endif /* 0 */
+  // Merge policies from the ORB level.
+  this->validator ().merge_policies (policies.policies (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
-  this->root_ = this->servant_dispatcher_->create_POA (root_poa_name,
-                                                       *poa_manager,
-                                                       policies,
-                                                       0,
-                                                       this->lock (),
-                                                       this->thread_lock (),
-                                                       this->orb_core_,
-                                                       this,
-                                                       ACE_TRY_ENV);
+  this->root_ =
+    this->servant_dispatcher_->create_POA (root_poa_name,
+                                           *poa_manager,
+                                           policies,
+                                           0,
+                                           this->lock (),
+                                           this->thread_lock (),
+                                           this->orb_core_,
+                                           this,
+                                           ACE_TRY_ENV);
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that
@@ -630,6 +635,23 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   (void) safe_poa_manager._retn ();
 }
 
+void
+TAO_Object_Adapter::set_default_server_protocol_policy (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Thread_Lane_Resources &default_lane_resources =
+    this->orb_core_.thread_lane_resources_manager ().default_lane_resources ();
+
+  TAO_Acceptor_Registry &acceptor_registry =
+    default_lane_resources.acceptor_registry ();
+
+  TAO_Protocols_Hooks *protocols_hooks =
+    this->orb_core_.get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  protocols_hooks->set_default_server_protocol_policy (acceptor_registry,
+                                                       ACE_TRY_ENV);
+  ACE_CHECK;
+}
 
 void
 TAO_Object_Adapter::close (int wait_for_completion,

@@ -13,6 +13,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 
@@ -287,8 +288,8 @@ TAO_DIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                 this->transport ());
+  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                  this->transport ());
 }
 
 // @@ Frank: Hopefully this isn't needed

@@ -13,6 +13,7 @@ DIRS = \
 	Thread_Pool \
 	MT_Client_Protocol_Priority \
         RTMutex \
+	Policy_Combinations \
 	ORB_init
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,7 +1,5 @@
 // $Id$
 
-
-
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
@@ -54,7 +52,7 @@
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
 #   if !defined (_MSC_VER) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0) 
+                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 using std::set_unexpected;
 #   endif /* !_MSC_VER */
 #  else
@@ -67,11 +65,7 @@ using std::set_unexpected;
 # include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-
-
 ACE_RCSID(tao, ORB, "$Id$")
-
-
 
 static const char ior_prefix [] = "IOR:";
 
@@ -1354,23 +1348,6 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
   return this->orb_core ()->list_initial_references (ACE_TRY_ENV);
 }
 
-TAO_Stub *
-CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
-                               const char *type_id,
-                               CORBA::PolicyList *policy_list,
-                               TAO_Acceptor_Filter *filter,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  return this->orb_core_->create_stub_object (key,
-                                              type_id,
-                                              policy_list,
-                                              filter,
-                                              ACE_TRY_ENV);
-}
-
 void
 CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
 {
@@ -2026,7 +2003,6 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   // Now make the TAO_Stub.
   TAO_Stub *data = this->orb_core_->create_stub ((char *) 0,
                                                  mprofile,
-                                                 this->orb_core_,
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

@@ -30,16 +30,11 @@ class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 public:
   // Constructor.
   TAO_RTCORBA_Initializer (void);
-
-  static int init (void);
-  // Used to force the initialization of the ORB code.
 };
 
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
-
-static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 
 #include "ace/post.h"
 #endif /* TAO_RTCORBA_H_ */

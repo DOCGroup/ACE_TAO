@@ -1,0 +1,39 @@
+$Id$
+
+Description:
+
+Test combines and tests several RT policies in different ways.
+
+- The IDL interface has two methods: method() and
+  prioritized_method().
+
+- The client sets its thread to the default priority, calls method()
+  which returns a priority.  If the priority returned is different
+  from <TAO_INVALID_PRIORITY>, the client sets its thread to the
+  priority returned by the server and calls prioritized_method()
+
+- The servant returns the <client_priority_> member in method().  In
+  prioritized_method(), it makes sure that the thread running the
+  upcall is at priority <server_priority_>.  These two members allow
+  several different policies to be tested with the same code.
+
+- In addition to testing servants in the RootPOA and in a simple child
+  POA, the following policy combinations are tested in this example:
+  ________________________________________
+
+  Thread-pool    BANDS   PRIORITY MODEL
+  ________________________________________
+
+  Default Pool     NO   CLIENT_PROPAGATED
+  Default Pool     NO   SERVER_DECLARED
+  Without Lanes    NO   CLIENT_PROPAGATED
+  Without Lanes    NO   SERVER_DECLARED
+  With Lanes       NO   CLIENT_PROPAGATED
+  With Lanes       NO   SERVER_DECLARED
+  Default Pool    YES   CLIENT_PROPAGATED
+  Default Pool    YES   SERVER_DECLARED
+  Without Lanes   YES   CLIENT_PROPAGATED
+  Without Lanes   YES   SERVER_DECLARED
+  With Lanes      YES   CLIENT_PROPAGATED
+  With Lanes      YES   SERVER_DECLARED
+

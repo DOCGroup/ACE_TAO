@@ -89,9 +89,9 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 // TODO =
 //    2) For V1.[1,2] there are tagged components
 int
-TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile,
-                                    CORBA::Boolean share_profile)
+TAO_SSLIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                     TAO_MProfile &mprofile,
+                                     CORBA::Short priority)
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
@@ -99,17 +99,20 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (share_profile == 1)
-    return this->create_shared_profile (object_key,
-                                        mprofile);
+  if (priority == TAO_INVALID_PRIORITY)
+    return this->create_new_profile (object_key,
+                                     mprofile,
+                                     priority);
   else
-    return this->create_new_profiles (object_key,
-                                     mprofile);
+    return this->create_shared_profile (object_key,
+                                        mprofile,
+                                        priority);
 }
 
 int
-TAO_SSLIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
-                                          TAO_MProfile &mprofile)
+TAO_SSLIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+                                         TAO_MProfile &mprofile,
+                                         CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
@@ -138,6 +141,7 @@ TAO_SSLIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
                                           this->orb_core_,
                                           &(this->ssl_component_)),
                       -1);
+      pfile->endpoint ()->priority (priority);
 
       if (mprofile.give_profile (pfile) == -1)
         {
@@ -196,7 +200,8 @@ TAO_SSLIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
 
 int
 TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
-                                            TAO_MProfile &mprofile)
+                                            TAO_MProfile &mprofile,
+                                            CORBA::Short priority)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
@@ -241,8 +246,8 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
         ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                           ssliop_profile->endpoint ());
 
-      ssliop_endp->priority (this->priority ());
-      ssliop_endp->iiop_endpoint ()->priority (this->priority ());
+      ssliop_endp->priority (priority);
+      ssliop_endp->iiop_endpoint ()->priority (priority);
 
       if (mprofile.give_profile (ssliop_profile) == -1)
         {
@@ -309,14 +314,14 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
                                          this->addrs_[index].get_port_number (),
                                          this->addrs_[index]),
                       -1);
-      iiop_endp->priority (this->priority_);
+      iiop_endp->priority (priority);
 
       ACE_NEW_RETURN (ssl_endp,
                       TAO_SSLIOP_Endpoint (&(this->ssl_component_),
                                            iiop_endp),
                       -1);
 
-      ssl_endp->priority (this->priority_);
+      ssl_endp->priority (priority);
       ssliop_profile->add_endpoint (ssl_endp);
     }
 
@@ -356,6 +361,7 @@ TAO_SSLIOP_Acceptor::close (void)
 
 int
 TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                           ACE_Reactor *reactor,
                            int major,
                            int minor,
                            const char *address,
@@ -371,6 +377,7 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->TAO_IIOP_SSL_Acceptor::open (orb_core,
+                                         reactor,
                                          major,
                                          minor,
                                          address,
@@ -382,11 +389,14 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   ACE_INET_Addr addr (this->ssl_component_.port,
                       this->addrs_[0].get_host_addr ());
 
-  return this->ssliop_open_i (orb_core, addr);
+  return this->ssliop_open_i (orb_core,
+                              addr,
+                              reactor);
 }
 
 int
 TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                   ACE_Reactor *reactor,
                                    int major,
                                    int minor,
                                    const char *options)
@@ -401,6 +411,7 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->TAO_IIOP_SSL_Acceptor::open_default (orb_core,
+                                                 reactor,
                                                  major,
                                                  minor,
                                                  options) == -1)
@@ -418,12 +429,15 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return this->ssliop_open_i (orb_core, addr);
+  return this->ssliop_open_i (orb_core,
+                              addr,
+                              reactor);
 }
 
 int
 TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
-                                    const ACE_INET_Addr& addr)
+                                    const ACE_INET_Addr& addr,
+                                    ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
@@ -445,14 +459,12 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                   TAO_SSLIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
-  ACE_Reactor *r = this->orb_core_->reactor (this);
-
   // Set the reactor in the underlying ACE_SSL_SOCK_Acceptor to force
   // it to use the one the ORB was configured to use.
-  this->accept_strategy_->acceptor ().reactor (r);
+  this->accept_strategy_->acceptor ().reactor (reactor);
 
   if (this->ssl_acceptor_.open (addr,
-                                r,
+                                reactor,
                                 this->creation_strategy_,
                                 this->accept_strategy_,
                                 this->concurrency_strategy_) == -1)
@@ -588,23 +600,11 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
 
           if (name == "priority")
             {
-              CORBA::Short corba_priority =
-                ACE_static_cast (CORBA::Short,
-                                 ACE_OS::atoi (value.c_str ()));
-
-              if (corba_priority >= 0
-                  /* && corba_priority < 32768 */)
-                // priority_ and corba_priority will always be less
-                // than 32768 since CORBA::Short is a signed 16 bit
-                // integer.
-                this->priority_ = corba_priority;
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid ")
-                                   ACE_TEXT ("IIOP/SSL endpoint ")
-                                   ACE_TEXT ("priority: <%s>\n"),
-                                   value.c_str ()),
-                                  -1);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 value.c_str ()),
+                                -1);
             }
           else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
             {

@@ -12,6 +12,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -360,7 +361,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->transport_cache ()->find_transport (
+  if (this->orb_core ().lane_resources ().transport_cache ().find_transport (
         desc,
         base_transport) == 0)
     {
@@ -378,7 +379,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
-      this->orb_core ()->transport_cache ()->purge ();
+      this->orb_core ()->lane_resource ().transport_cache ().purge ();
 
       // Setup the establishment of trust connection properties, if
       // any.
@@ -470,7 +471,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->transport_cache ()->cache_transport (
+        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
           desc,
           base_transport);
 
