@@ -46,7 +46,8 @@ namespace TAO
       TAO_POA *poa,
       IdUniquenessStrategy* id_uniqueness_strategy,
       IdAssignmentStrategy* id_assignment_strategy,
-      RequestProcessingStrategy* request_processing_strategy)
+      RequestProcessingStrategy* request_processing_strategy
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (id_uniqueness_strategy);
       ACE_UNUSED_ARG (id_assignment_strategy);

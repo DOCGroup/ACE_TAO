@@ -376,8 +376,7 @@ namespace TAO
         {
           return
             this->request_processing_strategy_->locate_servant (system_id,
-                                                                servant
-                                                                ACE_ENV_ARG_PARAMETER);
+                                                                servant);
         }
     }
 
