@@ -61,24 +61,6 @@ namespace CONV_FRAME
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:743
 
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
-
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CONV_FRAME_CodeSetId (
-    "IDL:omg.org/CONV_FRAME/CodeSetId:1.0",
-    "CodeSetId",
-    &CORBA::_tc_ulong);
-  
-namespace CONV_FRAME
-{
-  ::CORBA::TypeCode_ptr const _tc_CodeSetId =
-    &_tao_tc_CONV_FRAME_CodeSetId;
-}
-
 namespace TAO
 {
   namespace TypeCode

@@ -745,7 +745,11 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  if (!base || base->accept (this) == -1)
+  // Generate typecode for the base type, being careful to avoid doing
+  // so a for a typedef since that could recursively cause multiple
+  // base type TypeCode definitions to be generated.
+  if (!base || (base->node_type () != AST_Decl::NT_typedef
+                && base->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")

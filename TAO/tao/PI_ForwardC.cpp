@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "PI_ForwardC.h"
@@ -46,7 +46,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be/be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,14 +55,14 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ServerId (
     "IDL:omg.org/PortableInterceptor/ServerId:1.0",
     "ServerId",
-    &::_tao_tc_CORBA::_tc_string);
+    &CORBA::_tc_string);
   
 namespace PortableInterceptor
 {
@@ -73,14 +73,14 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ORBId (
     "IDL:omg.org/PortableInterceptor/ORBId:1.0",
     "ORBId",
-    &::_tao_tc_CORBA::_tc_string);
+    &CORBA::_tc_string);
   
 namespace PortableInterceptor
 {
@@ -91,36 +91,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
-
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_string,
-    0U);
-  
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_StringSeq (
-    "IDL:omg.org/CORBA/StringSeq:1.0",
-    "StringSeq",
-    &::_tao_tc_CORBA_sequence_0);
-  
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_StringSeq =
-    &_tao_tc_CORBA_StringSeq;
-}
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
@@ -138,36 +109,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
-
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_octet,
-    0U);
-  
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_OctetSeq (
-    "IDL:omg.org/CORBA/OctetSeq:1.0",
-    "OctetSeq",
-    &::_tao_tc_CORBA_sequence_0);
-  
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_OctetSeq =
-    &_tao_tc_CORBA_OctetSeq;
-}
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
@@ -185,14 +127,14 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_AdapterManagerId (
     "IDL:omg.org/PortableInterceptor/AdapterManagerId:1.0",
     "AdapterManagerId",
-    &::_tao_tc_CORBA::_tc_long);
+    &CORBA::_tc_long);
   
 namespace PortableInterceptor
 {
@@ -203,14 +145,14 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_AdapterState (
     "IDL:omg.org/PortableInterceptor/AdapterState:1.0",
     "AdapterState",
-    &::_tao_tc_CORBA::_tc_short);
+    &CORBA::_tc_short);
   
 namespace PortableInterceptor
 {
@@ -219,12 +161,3 @@ namespace PortableInterceptor
 }
 
 
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
