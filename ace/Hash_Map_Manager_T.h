@@ -812,6 +812,34 @@ public:
  * these constraints can be alleviated via template
  * specialization, as shown in the $ACE_ROOT/tests/Conn_Test.cpp
  * test.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Hash Table
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       Yes
+ *   - Search speed
+ *       O(1)
+ *   - Insert/replace speed
+ *       O(1), can be longer if the hash map has to resize
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for key type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *   - Requirements for object type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator<
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager : public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>

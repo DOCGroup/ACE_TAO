@@ -38,6 +38,28 @@ const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
  * class uses the copy semantic paradigm, though it is okay to use
  * reference counted smart pointers (see ACE_Ptr&lt;T&gt;) with this
  * template class.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       ACE_Array
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
  */
 template<class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
 class ACE_Vector : public ACE_Array<T>
