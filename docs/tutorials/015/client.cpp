@@ -4,7 +4,7 @@
 /* The Client object will implement the nasty details of connecting to 
    communicating with the server
 */
-#include "Client.h"
+#include "Client_i.h"
 
 int main(int argc, char *argv[])
 {

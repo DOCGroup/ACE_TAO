@@ -1,7 +1,7 @@
 
 // $Id$
 
-#include "Server.h"
+#include "Server_i.h"
 
 // A signal handler that will close the server object
 extern "C" void handler (int)
