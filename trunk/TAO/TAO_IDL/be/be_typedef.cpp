@@ -230,14 +230,6 @@ be_typedef::gen_typecode (void)
   return 0;
 }
 
-long
-be_typedef::tc_size (void)
-{
-  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
-  // actual encapsulation length
-  return 4 + 4 + this->tc_encap_len ();
-}
-
 // generate encapsulation. A typedef is an alias to its base type
 int
 be_typedef::gen_encapsulation  (void)
@@ -283,6 +275,14 @@ be_typedef::gen_encapsulation  (void)
 }
 
 long
+be_typedef::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
+}
+
+long
 be_typedef::tc_encap_len (void)
 {
   if (this->encap_len_ == -1) // not computed yet
@@ -303,7 +303,7 @@ be_typedef::tc_encap_len (void)
               "be_typedef::tc_encap_len - bad base type\n"));
           return 0;
         }
-      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += bt->tc_size ();
 
     }
   return this->encap_len_;
