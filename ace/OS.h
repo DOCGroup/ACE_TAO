@@ -960,11 +960,6 @@ struct ACE_sema_t
 };
 #endif /* !ACE_HAS_POSIX_SEM */
 
-#if !defined (VXWORKS) && !defined (ACE_WIN32)
-typedef short ACE_id_t;
-typedef short ACE_pri_t;
-#endif /* ! VXWORKS) && ! ACE_WIN32 */
-
 #else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
@@ -972,9 +967,6 @@ typedef rwlock_t ACE_rwlock_t;
 #if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #endif /* !ACE_HAS_POSIX_SEM */
-#include <sys/priocntl.h>
-typedef id_t ACE_id_t;
-typedef pri_t ACE_pri_t;
 #endif /* !ACE_HAS_STHREADS */
 #elif defined (ACE_HAS_STHREADS)
 // Typedefs to help compatibility with Windows NT and Pthreads.
@@ -1033,8 +1025,6 @@ typedef semaphore * ACE_sema_t;
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
-typedef short ACE_id_t;
-typedef short ACE_pri_t;
 
 #elif defined (ACE_HAS_WTHREADS)
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
@@ -1528,7 +1518,7 @@ struct iovec
 };
 
 typedef DWORD ACE_id_t;
-typedef DWORD ACE_pri_t;
+typedef WORD ACE_pri_t;
 
 #else /* !defined (ACE_WIN32) */
 
@@ -1852,6 +1842,16 @@ extern "C"
   int msgctl (int, int, struct msqid_ds *);
 }
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
+
+#if defined (ACE_HAS_STHREADS)
+#include <sys/priocntl.h>
+typedef id_t ACE_id_t;
+typedef pri_t ACE_pri_t;
+#else
+typedef long ACE_id_t;
+typedef short ACE_pri_t;
+#endif /* ACE_HAS_STHREADS */
+
 #endif /* ACE_WIN32 */
 
 #if defined (VXWORKS)
