@@ -131,7 +131,7 @@
 #endif /* ACE_HAS_CUSTOM_EXPORT_MACROS */
 
 #include "ace/ACE_export.h"
-#include "ace/Svc_export.h"
+#include "ace/svc_export.h"
 
 // This is a whim of mine -- that instead of annotating a class with
 // ACE_Export in its declaration, we make the declaration near the TOP
