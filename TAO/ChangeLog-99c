@@ -136,7 +136,7 @@ Fri Aug 27 17:06:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  init() method now resets flag that denotes that the ORB has
 	  shutdown to zero, indicating that the newly created ORB has not
 	  shutdown.  Previously, if an ORB was shutdown and then
-	  reinitialized with ORB::ORB_init() then the shutdown flag would
+	  reinitialized with CORBA::ORB_init() then the shutdown flag would
 	  still indicate that it is shutdown.
 
 	  Added CORBA::Environment argument to open() method to allow
