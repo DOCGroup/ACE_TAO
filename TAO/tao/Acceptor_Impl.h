@@ -25,6 +25,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+
+// Forward declarations.
+class TAO_ORB_Core;
+
 template <class SVC_HANDLER>
 class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {

@@ -4,19 +4,19 @@
 // ============================================================================
 //
 // = LIBRARY
-//   TAO
+//     TAO
 //
 // = FILENAME
-//   Acceptor_Impl.cpp
+//     Acceptor_Impl.cpp
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
-//   Ossama Othman <othman@cs.wustl.edu>
+//     Carlos O'Ryan <coryan@uci.edu>
+//     Ossama Othman <othman@uci.edu>
 //
 // ============================================================================
 
-#ifndef TAO_ACCEPTOR_IMPL_C
-#define TAO_ACCEPTOR_IMPL_C
+#ifndef TAO_ACCEPTOR_IMPL_CPP
+#define TAO_ACCEPTOR_IMPL_CPP
 
 #include "tao/Acceptor_Impl.h"
 
@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Table.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
@@ -191,6 +192,6 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (v
 }
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-#endif /* TAO_ACCEPTOR_IMPL_C */
+#endif /* TAO_ACCEPTOR_IMPL_CPP */

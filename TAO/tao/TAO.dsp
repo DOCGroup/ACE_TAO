@@ -1582,6 +1582,25 @@ SOURCE=.\ORB_Core.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Table.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3253,6 +3272,10 @@ SOURCE=.\ORB_Strategies_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Table.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\orbconf.h
 # End Source File
 # Begin Source File
@@ -3766,6 +3789,10 @@ SOURCE=.\orb_core.i
 # Begin Source File
 
 SOURCE=.\ORB_Strategies_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Table.inl
 # End Source File
 # Begin Source File
 
