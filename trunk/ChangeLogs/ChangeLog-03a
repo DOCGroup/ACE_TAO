@@ -1,3 +1,17 @@
+Fri Oct 20 20:46:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (chdir): Added !defined (AIX) to the !defined (ACE_WIN32)
+          && defined (<Visual Age C++>) to get it to build clean on AIX.
+
+        * ace/ace-dll.icc: Added Base_Thread_Adapter, Thread_Adapter,
+          Flag_Manip, Handle_Ops, Init_ACE, Lib_Find, Sock_Connect,
+          OS_Log_Msg_Attributes, Malloc_Allocator, PI_Malloc,
+          Thread_Exit, Log_Msg_IPC, OS_Thread_Adapter, Log_Msg_Backend,
+          Thread_Control (h and cpp).
+
+        * ace/Handle_Ops.cpp:
+        * ace/PI_Malloc.cpp: Corrected ACE_RCSID args.
+
 Fri Oct 20 16:38:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ace_dll.dsp:
