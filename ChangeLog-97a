@@ -1,3 +1,35 @@
+Fri Apr 25 12:45:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added a new macro called ACE_HAS_SIG_MACROS for the
+ 	  case where the frigging OS defines things like sigismember and
+ 	  sigfillset as macros (ugh).
+
+	* ace/FILE_IO.h: Removed a trailing default initializer from the
+ 	  send() method since it was ambiguous.  Thanks to Carlos O'Ryan
+ 	  for reporting this bug.
+
+	* ace/OS.i (select): Unfortunately the (operator timeval*) defined
+ 	  for ACE_Time_Value was not used in ACE_OS::select (int width,
+ 	  fd_set *rfds, fd_set *wfds, fd_set *efds, const ACE_Time_Value
+ 	  *timeout) because the operator cannot be applied for a
+ 	  ACE_Time_Value*.  Therefore, I fixed this as follows:
+
+	  ACE_SOCKCALL_RETURN (::select (width, 
+				 (ACE_FD_SET_TYPE *) rfds, 
+				 (ACE_FD_SET_TYPE *) wfds, 
+				 (ACE_FD_SET_TYPE *) efds, 
+				 timeout == 0 ? 0 : (timeval *) *timeout) , int, -1);
+
+	  Thanks to Carlos O'Ryan for reporting this bug.
+
+	* ace: Applied a slew of patches from Carlos O'Ryan in order to
+ 	  get ACE to compile on HP/UX 10.x with the aCC compiler.
+
+	* ace/Shared_Memory_MM: Export the filename in
+ 	  ACE_Shared_Memory_MM class in order to aid debugging.  Thanks to
+ 	  Ashish Singhai <singhai@delirius.cs.uiuc.edu> for reporting
+ 	  this.
+
 Fri Apr 25 14:58:38 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Timers: Updated the following files to make it compile on
@@ -73,34 +105,6 @@ Thu Apr 24 21:13:51 1997    <irfan@TWOSTEP>
 	* ace/Shared_Memory_MM.i: Fixed typo.
 
 	* ace/SOCK_Connector.cpp: Fixed typo.
-
-Fri Apr 25 00:11:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/FILE_IO.h: Removed a trailing default initializer from the
- 	  send() method since it was ambiguous.  Thanks to Carlos O'Ryan
- 	  for reporting this bug.
-
-	* ace/OS.i (select): Unfortunately the (operator timeval*) defined
- 	  for ACE_Time_Value was not used in ACE_OS::select (int width,
- 	  fd_set *rfds, fd_set *wfds, fd_set *efds, const ACE_Time_Value
- 	  *timeout) because the operator cannot be applied for a
- 	  ACE_Time_Value*.  Therefore, I fixed this as follows:
-
-	  ACE_SOCKCALL_RETURN (::select (width, 
-				 (ACE_FD_SET_TYPE *) rfds, 
-				 (ACE_FD_SET_TYPE *) wfds, 
-				 (ACE_FD_SET_TYPE *) efds, 
-				 timeout == 0 ? 0 : (timeval *) *timeout) , int, -1);
-
-	  Thanks to Carlos O'Ryan for reporting this bug.
-
-	* ace: Applied a slew of patches from Carlos O'Ryan in order to
- 	  get ACE to compile on HP/UX 10.x with the aCC compiler.
-
-	* ace/Shared_Memory_MM: Export the filename in
- 	  ACE_Shared_Memory_MM class in order to aid debugging.  Thanks to
- 	  Ashish Singhai <singhai@delirius.cs.uiuc.edu> for reporting
- 	  this.
 
 Thu Apr 24 13:56:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -286,22 +290,11 @@ Tue Apr 22 20:17:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	  library and re-make the pthreaded library.
  
 	  A shared library must be name as lib<name>.so.<version
-	  number> (e.g. libACE.4.1.0).  Therefore, if you want to take
-	  advantage of shared library (libACE.so), you'll need to either
- 	
-	  1. move libACE.so to /usr/local/lib, rename it as libACE.so.4.1.5
-	     then, you'll be able to use it after reboot (or, use 'ldconfig
-	     -m' to "merge" it into current cache immediately, or
-	  2. rename it as libACE.so.4.1.5 and do an 'ldconfig -m
-	     $WRAPPER_ROOT/ace' to put it into cache.  You may want to put
-	     it into <rc> file.
-
-	  No matter which scheme you use, you'll need to have root privilege
-	  to do it (invoke the shared object into system.)
-	  I would recommend adding a post-compile hook in the Makefile so we
-	  FreeBSDers can rename the shared library to it's proper name with
-	  correct major and minor version number attached.  (which is a
-	  trick BSD library makefiles use.)
+	  number> (e.g. libACE.4.1.0).  I would recommend adding a
+	  post-compile hook in the Makefile so we FreeBSDers can
+	  rename the shared library to it's proper name with correct
+	  major and minor version number attached.  (which is a trick
+	  BSD library makefiles use.) 
 
 	* examples/OS/Process/process.cpp (main): Replaced the use of
  	  "/bin/cat" with "cat" since we are now using execvp().  Thanks

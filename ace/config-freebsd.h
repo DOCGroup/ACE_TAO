@@ -12,6 +12,7 @@
 // Platform specific directives
 #define FreeBSD
 
+#define ACE_HAS_SIG_MACROS
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
 #define ACE_NEEDS_SYSTIME_H
