@@ -128,6 +128,30 @@
 #define ACE_DB(X) X
 #endif /* ACE_NDEBUG */
 
+// ACE_NO_HEAP_CHECK macro can be used to suppress false report of 
+// memory leaks. It turns off the built-in heap checking until the
+// block is left. The old state will then be restored
+// Only used for Win32 (in the moment).
+#if defined(ACE_WIN32)
+	#if defined (_DEBUG)
+		class ACE_No_Heap_Check {
+			int old_state;
+		public:
+			ACE_No_Heap_Check() 
+				: old_state( _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG )) 
+								 { _CrtSetDbgFlag( old_state & ~_CRTDBG_ALLOC_MEM_DF );}
+		   ~ACE_No_Heap_Check () { _CrtSetDbgFlag( old_state );}
+		};
+
+		#define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
+	#else /* !_DEBUG*/
+		#define ACE_NO_HEAP_CHECK
+	#endif /* _DEBUG*/
+
+#else /* !ACE_WIN32 */
+	#define ACE_NO_HEAP_CHECK
+#endif /* ACE_WIN32 */
+
 // Increase the range of "address families".
 #define AF_SPIPE (AF_MAX + 1)
 #define AF_FILE (AF_MAX + 2)
@@ -161,7 +185,7 @@
 // GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
 // it doesn't complain about unused args, so don't bother with them.
 #define ACE_UNUSED_ARG(a)
-#elif defined (__GNUC__) || defined (ACE_HAS_IRIX62_THREADS)
+#elif defined (__GNUC__) || defined (ACE_HAS_IRIX_GETTIMEOFDAY)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.
@@ -1291,7 +1315,6 @@ typedef int ACE_thread_key_t;
 #undef sigaddset
 #undef sigdelset
 #undef sigismember
-
 #include <sys/regset.h>
 #endif /* SCO */
 
