@@ -1571,17 +1571,28 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
     id = CORBA::string_dup (type_id);
 
   TAO_Stub *stub = 0;
+
   // Create a profile container and have Acceptor_Registry populate it
   // with profiles as appropriate.
   TAO_MProfile mp (0);
-  if (this->acceptor_registry ()->make_mprofile (key, mp, filter)
-      == -1
-      || mp.profile_count () == 0)
+  if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                                         CORBA::SystemException::_tao_minor_code (
-                                                                                  TAO_MPROFILE_CREATION_ERROR, 0 ),
-                                         CORBA::COMPLETED_NO ),
+         CORBA::SystemException::_tao_minor_code (
+                                                  TAO_MPROFILE_CREATION_ERROR, 0 ),
+         CORBA::COMPLETED_NO ),
+                        0);
+    }
+  
+  // Make sure we have at least one profile.  <mp> may end up being
+  // empty if none of the acceptor endpoints have the right priority
+  // for this object, for example.
+  if (mp.profile_count () == 0)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (
+         CORBA::SystemException::_tao_minor_code (
+                                                  TAO_MPROFILE_CREATION_ERROR, 0 ),
+         CORBA::COMPLETED_NO ),
                         0);
     }
 

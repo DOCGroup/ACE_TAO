@@ -625,6 +625,11 @@ public:
   // delegate to the service to see what the service has to do for
   // this case.
 
+  int open (CORBA::Environment &ACE_TRY_ENV);
+  // Set up the ORB Core's acceptor to listen on the
+  // previously-specified port for requests.  Returns -1 on failure,
+  // else 0.
+
 protected:
 
   ~TAO_ORB_Core (void);
@@ -642,11 +647,6 @@ protected:
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
   // Implement the input_cdr_*_allocator() routines using pre-fetched
   // TSS resources.  This minimizes the number of calls to them.
-
-  int open (CORBA::Environment &ACE_TRY_ENV);
-  // Set up the ORB Core's acceptor to listen on the
-  // previously-specified port for requests.  Returns -1 on failure,
-  // else 0.
 
   int set_default_policies (void);
   // Set ORB-level policy defaults for this ORB.  Currently sets

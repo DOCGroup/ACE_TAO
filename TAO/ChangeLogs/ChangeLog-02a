@@ -1,3 +1,55 @@
+Fri Oct 20 02:05:09 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/PortableServer/POA.h
+	* tao/PortableServer/POA.i
+	* tao/PortableServer/POA.cpp:
+
+	  - Changed <activate_object>, <activate_object_with_id>,
+	    <create_reference>, <create_reference_with_id> to use POA's
+	    server_priority rather than -1.  This ensures that
+	    servant/object's effective priority is stored right with it. 
+	
+	  - Added TAO_ORB_Core &orb_core_ member to TAO_POA_Policies.
+
+	  - Added RTCORBA::PriorityModelPolicy validation during POA
+	    creation (i.e., <validate_priority_model>)
+
+	  - Added RTCORBA::ServerProtocolPolicy validation during POA
+	    creation (i.e., <validate_server_protocol>)
+
+	  - Removed <validate_client_protocol> method because this policy
+  	    doesn't need to be validated.
+
+	  - Added CORBA::Environment argument to <validity_check>, because
+	    different exception may need to be thrown based on which
+	    policies cause the problem.
+
+	  - Added validation logic to <valid_priority> method.
+
+	  - Invoke <valid_priority> only in <activate*> methods, in
+	    <create_reference*> methods this check happens when filter
+	    populates mprofile.
+	
+	* tao/ORB_Core.cpp (create_stub_object):
+
+	  Throw CORBA::BAD_PARAM if mprofile ends up being empty.  This
+	  may happen when none of the acceptor endpoints have the right
+	  priority for the object we are creating.
+	
+	* tao/ORB_Core.h:
+
+	  Make <open> method public.  It needs to be invoked from POA
+	  during policy validation procedures.
+	
+	* tests/RTCORBA/Server_Declared/run_test.pl:
+ 
+          Fixed typo. 
+	
+	* tests/RTCORBA/Server_Declared/server.cpp:
+
+	  Set id_uniqueness policy on the child poa to <MULTIPLE_ID>,
+	  in order to use the same servant for several objects.
+
 Thu Oct 19 17:33:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB_Core.cpp:
