@@ -173,7 +173,7 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
 
   TAO_CHECK_ENV_RETURN (env, 0);
 
-  return str;
+  return str._retn ();
 }
   
 // Enter the ORB event loop.
