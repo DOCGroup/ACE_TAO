@@ -1,24 +1,34 @@
+Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (thr_yield): on VxWorks, changed argument of
+          ::taskDelay () from 0 to 1.  With an argument of 0,
+          ::taskDelay () doesn't appear to yield the current thread.
+
+        * tests/run_tests.vxworks: Reactor_Notify_Test is OK on
+          VxWorks now.
+
 Thu Apr 02 16:23:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.i (dump): Also changed the method from HANDLE
- 	  to ACE_HANDLE.
+        * ace/WFMO_Reactor.i (dump): Also changed the method from HANDLE
+          to ACE_HANDLE.
 
 Thu Apr  2 15:36:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Added
+        * ace: Added
 
-	  #define ACE_HAS_STL_QUEUE_CONFLICT
+          #define ACE_HAS_STL_QUEUE_CONFLICT
 
-	  to the config files which had ACE_HAS_STL_MAP_CONFLICT defined, i.e.,:
-	  config-sunos5.5-g++.h
-	  config-sunos5.5-sunc++-4.x.h
+          to the config files which had ACE_HAS_STL_MAP_CONFLICT defined,
+          i.e.,
+          config-sunos5.5-g++.h
+          config-sunos5.5-sunc++-4.x.h
 
-  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
- 	  reporting this.
+          Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+          reporting this.
 
 Thu Apr  2 15:14:35 1998  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.h (dump): Renamed HANDLE to ACE_HANDLE.
+        * ace/WFMO_Reactor.h (dump): Renamed HANDLE to ACE_HANDLE.
 
 Thu Apr 02 14:23:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -30,22 +40,22 @@ Thu Apr 02 14:23:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Apr 01 18:59:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (dump): Added dump() methods.
+        * ace/WFMO_Reactor.cpp (dump): Added dump() methods.
 
-	* ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Reverted
- 	  Nanbor's change.  The flag is properly set in
- 	  ACE_Msg_WFMO_Reactor::alertable_handle_events().
+        * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Reverted
+          Nanbor's change.  The flag is properly set in
+          ACE_Msg_WFMO_Reactor::alertable_handle_events().
 
 Wed Apr  1 15:40:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace: Made the WMFO_Reactor and Select_Reactor's dump() methods
-	  virtual to underscore the fact that the Reactor_Impl's new
-	  dump() method is also virtual.
+        * ace: Made the WMFO_Reactor and Select_Reactor's dump() methods
+          virtual to underscore the fact that the Reactor_Impl's new
+          dump() method is also virtual.
 
-	* ace/OS.h: Changed ACE_HAS_STL_MAP_CONFLICT to
- 	  ACE_HAS_STL_QUEUE_CONFLICT for the appropriate cases in ACE.
-  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
- 	  reporting this.
+        * ace/OS.h: Changed ACE_HAS_STL_MAP_CONFLICT to
+          ACE_HAS_STL_QUEUE_CONFLICT for the appropriate cases in ACE.
+          Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+          reporting this.
 
         * ace/CORBA_Handler.cpp (ACE_CORBA_Handler): The reference_count_
           data member wasn't being initialized correctly.  Thanks to
