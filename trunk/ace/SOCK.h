@@ -30,7 +30,7 @@ class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
   // = TITLE
   //     An abstract class which forms the basis for more specific
-  //     classes (such as ACE_SOCK_Acceptor and ACE_SOCK_Connector).
+  //     classes (such as ACE_SOCK_Acceptor and ACE_SOCK_Stream).
   //     Do not instantiate this class.
   //
   // = DESCRIPTION
