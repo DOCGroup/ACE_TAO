@@ -1,3 +1,19 @@
+Tue Dec 24 12:49:21 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h (struct siginfo_t): added declaration of
+	  siginfo_t (ACE_HANDLE *handles) to match definition in OS.cpp.
+	  Thanks to James Johnson for pointing this out.
+
+	* ace/OS.cpp (thr_create): fixed position of
+	  #endif /* !ACE_LACKS_THREAD_STACK_SIZE */ directive, it
+	  needed to be before the closing '}' of the block.  Thanks to
+	  James Johnson for pointing this out, also.
+
+	* apps/Gateway/Peer/Gateway_Handler.h:  changed #include "Event.h"
+	  to be #include "Peer_Message.h" so that Peer_Header::ROUTING_ID
+	  can be referenced in the class declaration.  This subproject
+	  still doesn't build, though; I think that Event.h is needed.
+
 Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_three.cpp (main): Changed the use of
