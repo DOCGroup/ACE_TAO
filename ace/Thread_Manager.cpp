@@ -70,14 +70,14 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_id_ = %d"), this->thr_id_));
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_state_ = %d"), this->thr_state_));
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ncleanup_info_.cleanup_hook_ = %x"), this->cleanup_info_.cleanup_hook_));
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nflags_ = %x\n"), this->flags_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_id_ = %d"), this->thr_id_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_state_ = %d"), this->thr_state_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ncleanup_info_.cleanup_hook_ = %x"), this->cleanup_info_.cleanup_hook_));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nflags_ = %x\n"), this->flags_));
 
-	ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+        ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
@@ -903,6 +903,11 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
 
   int result = ACE_Thread::join (td->thr_handle_);
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+  ::pthread_detach (&td->thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+
   if (result != 0)
     {
       // Since the thread are being joined, we should
@@ -912,6 +917,7 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
       errno = result;
       return -1;
     }
+
   return 0;
 }
 
@@ -1296,8 +1302,16 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   for (int i = 0;
        i < copy_count && result != -1;
        i++)
-    if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
-      result = -1;
+    {
+      if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
+        result = -1;
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+      // Must explicitly detach threads.  Threads without THR_DETACHED
+      // were detached in ACE_OS::thr_create ().
+      ::pthread_detach (&copy_table[i].thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+    }
 
   delete [] copy_table;
 
@@ -1476,10 +1490,18 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     {
 #endif /* CHORUS */
       while (this->terminated_thr_queue_.dequeue_head (item) == 0)
-        if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-            || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
-            ACE_Thread::join (item.thr_handle_);
-      // Detached handles shouldn't reached here.
+        {
+          if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+              || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+            // Detached handles shouldn't reached here.
+              ACE_Thread::join (item.thr_handle_);
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+          // Must explicitly detach threads.  Threads without
+          // THR_DETACHED were detached in ACE_OS::thr_create ().
+          ::pthread_detach (&item.thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+        }
 #if defined (CHORUS)
     }
 #endif /* CHORUS */
@@ -1560,8 +1582,16 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   int result = 0;
 
   for (int i = 0; i < copy_count && result != -1; i++)
-    if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
-      result = -1;
+    {
+      if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
+        result = -1;
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+      // Must explicitly detach threads.  Threads without THR_DETACHED
+      // were detached in ACE_OS::thr_create ().
+      ::pthread_detach (&copy_table[i].thr_handle_);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+    }
 
   delete [] copy_table;
 
