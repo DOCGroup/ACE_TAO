@@ -33,24 +33,19 @@
 
 #include "Trader.h"
 
-  // *************************************************************
-  // TAO_Property_Evaluator
-  // *************************************************************
-
 class TAO_ORBSVCS_Export TAO_Property_Evaluator
-//
-// = TITLE
-//   This class abstracts away the details of obtaining property
-//   values and property types. Since the procedure for obtaining the
-//   value or type of a dynamic property is disparate from the method
-//   for a static property, TAO_Property_Evaluator provides methods
-//   that will unify the two approaches under a single
-//   interface. Since dynamic properties aren't necessarily supported
-//   by a trader, this class accounts for that contingency. The use of
-//   indexed lookups allows them to occur in constant time on the
-//   CORBA sequences, but requires that the client know the layout of
-//   properties ahead of time.
 {
+  // = TITLE
+  //   This class abstracts away the details of obtaining property
+  //   values and property types. Since the procedure for obtaining the
+  //   value or type of a dynamic property is disparate from the method
+  //   for a static property, TAO_Property_Evaluator provides methods
+  //   that will unify the two approaches under a single
+  //   interface. Since dynamic properties aren't necessarily supported
+  //   by a trader, this class accounts for that contingency. The use of
+  //   indexed lookups allows them to occur in constant time on the
+  //   CORBA sequences, but requires that the client know the layout of
+  //   properties ahead of time.
 public:
 
   TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
@@ -88,7 +83,7 @@ public:
   // property name. If the index is out of bounds, the method returns
   // a null pointer (that is, 0).
 
- protected:
+protected:
 
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
@@ -107,29 +102,23 @@ public:
   // cause seg faults, since the client wouldn't be able to tell
   // whether or not the return value should be freed.
 
- private:
+private:
 
   TAO_Property_Evaluator (const TAO_Property_Evaluator&);
   TAO_Property_Evaluator& operator= (const TAO_Property_Evaluator&);
 };
 
-  // *************************************************************
-  // TAO_Property_Evaluator_By_Name
-  // *************************************************************
-
-class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name :
-  public TAO_Property_Evaluator
-//
-// = TITLE
-//    This class extends the TAO_Property_Evaluator to allow lookups
-//    based on the property name of interest. Since the property
-//    information is contained within an integer indexed array,
-//    lookups may occur in O(n) time, where n is the length of the
-//    array. To make lookups by name more efficient,
-//    TAO_Property_Evaluator_By_Name creates a mapping of property
-//    names to integer indicies, upon which lookups are guaranteed to
-//    be O(lg n).
+class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
+  // = TITLE
+  //    This class extends the TAO_Property_Evaluator to allow lookups
+  //    based on the property name of interest. Since the property
+  //    information is contained within an integer indexed array,
+  //    lookups may occur in O(n) time, where n is the length of the
+  //    array. To make lookups by name more efficient,
+  //    TAO_Property_Evaluator_By_Name creates a mapping of property
+  //    names to integer indicies, upon which lookups are guaranteed to
+  //    be O(lg n).
 public:
 
   TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
@@ -174,23 +163,16 @@ private:
   // constructor.
 };
 
-  // *************************************************************
-  // TAO_Dynamic_Property
-  // *************************************************************
-
-class TAO_ORBSVCS_Export TAO_Dynamic_Property :
-  public virtual POA_CosTradingDynamic::DynamicPropEval,
-  public virtual PortableServer::RefCountServantBase
-// = TITLE
-//   Little helper class that you can extend to have your dynamic
-//   property handler construct CosTradingDynamic::DynamicProp structs.
+class TAO_ORBSVCS_Export TAO_Dynamic_Property : public virtual POA_CosTradingDynamic::DynamicPropEval, public virtual PortableServer::RefCountServantBase
 {
+  // = TITLE
+  //   Little helper class that you can extend to have your dynamic
+  //   property handler construct CosTradingDynamic::DynamicProp structs.
 public:
 
   TAO_Dynamic_Property (void) {}
-
   TAO_Dynamic_Property (const TAO_Dynamic_Property &) {}
-
+  void operator= (const TAO_Dynamic_Property &) {}
   virtual ~TAO_Dynamic_Property (void);
 
   void destroy (void);
@@ -204,37 +186,31 @@ public:
   // Dynamic property evaluation call-back method.
 
   CosTradingDynamic::DynamicProp*
-    construct_dynamic_prop (const char* name,
-                            CORBA::TypeCode_ptr returned_type,
-                            const CORBA::Any& extra_info);
+  construct_dynamic_prop (const char* name,
+                          CORBA::TypeCode_ptr returned_type,
+                          const CORBA::Any& extra_info);
   // Method to construct a dynamic property structure suitable for
   // exporting in a CosTrading::PropertyStruct to the Trading Service.
 
- private:
+private:
 
   CosTradingDynamic::DynamicPropEval_var prop_;
 };
 
-
-  // *************************************************************
-  // TAO_Policies
-  // *************************************************************
-
 class TAO_Policies
-//
-// = TITLE
-// This class ensures that policies submitted to Lookup make sense,
-// have the correct value types, and don't exceed the maximums set
-// through the Admin Interface.
-//
-// = DESCRIPTION
-// TAO_Policies does an admirable job of reconciling differences
-// between the default parameter settings of the Trader and the import
-// and other policies set by the client. Unbeknownst to its client
-// TAO_Policies hides this arbitration, and records whether the user
-// policy was chosen, or the default. This information gets returned
-// to the invoker of the query method.
 {
+  // = TITLE
+  // This class ensures that policies submitted to Lookup make sense,
+  // have the correct value types, and don't exceed the maximums set
+  // through the Admin Interface.
+  //
+  // = DESCRIPTION
+  // TAO_Policies does an admirable job of reconciling differences
+  // between the default parameter settings of the Trader and the import
+  // and other policies set by the client. Unbeknownst to its client
+  // TAO_Policies hides this arbitration, and records whether the user
+  // policy was chosen, or the default. This information gets returned
+  // to the invoker of the query method.
 public:
 
 #define TAO_NUM_POLICIES  11
@@ -380,7 +356,7 @@ public:
 
   CosTrading::TraderName* starting_trader (CORBA::Environment& _env) const
     ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-                    CosTrading::Lookup::InvalidPolicyValue));
+                     CosTrading::Lookup::InvalidPolicyValue));
   // BEGIN SPEC
   // The "starting_trader" policy facilitates the distribution of the
   // trading service itself. It allows an importer to scope a search
@@ -487,10 +463,6 @@ private:
   // For the validating identifier names.
 };
 
-  // *************************************************************
-  // TAO_Policy_Creator
-  // *************************************************************
-
 class TAO_ORBSVCS_Export TAO_Policy_Creator
 {
   // = TITLE
@@ -571,17 +543,12 @@ private:
   // The number of policies so far in the sequence.
 };
 
-
-  // *************************************************************
-  // TAO_Offer_Modifier
-  // *************************************************************
-
 class TAO_Offer_Modifier
-// = TITLE
-//   This class deletes, modifies, and adds properties to a given
-//   offer according to the rules of the modify method on the Register
-//   interface.
 {
+  // = TITLE
+  //   This class deletes, modifies, and adds properties to a given
+  //   offer according to the rules of the modify method on the Register
+  //   interface.
 public:
 
   TAO_Offer_Modifier (const char* type,
@@ -595,9 +562,9 @@ public:
   void delete_properties (const CosTrading::PropertyNameSeq& deletes,
                           CORBA::Environment& _env)
     ACE_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
-                    CosTrading::Register::MandatoryProperty,
-                    CosTrading::IllegalPropertyName,
-                    CosTrading::DuplicatePropertyName));
+                     CosTrading::Register::MandatoryProperty,
+                     CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName));
   // Delete the properties whose names were given to the
   // constructor. Ensure we don't delete mandatory properties.
 
@@ -621,17 +588,14 @@ private:
   TAO_Offer_Modifier (const TAO_Offer_Modifier&);
   TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
 
-  typedef ACE_Hash_Map_Manager_Ex
-    <
-    TAO_String_Hash_Key,
-    CosTrading::Property*,
-    ACE_Hash<TAO_String_Hash_Key>,
-    ACE_Equal_To<TAO_String_Hash_Key>,
-    ACE_Null_Mutex
-    >
-    Property_Table;
+  typedef ACE_Hash_Map_Manager_Ex <TAO_String_Hash_Key,
+                                   CosTrading::Property *,
+                                   ACE_Hash<TAO_String_Hash_Key>,
+                                   ACE_Equal_To<TAO_String_Hash_Key>,
+                                   ACE_Null_Mutex>
+          Property_Table;
 
-  const char* type_;
+  const char *type_;
   // The type of the offer.
 
   Property_Table props_;
@@ -648,26 +612,22 @@ private:
   // A reference to the offer undergoing change.
 };
 
-  // *************************************************************
-  // TAO_Offer_Filter
-  // *************************************************************
-
 class TAO_Offer_Filter
-// = TITLE
-//    The purpose of this class is to ensure that offers that
-//    shouldn't be considered by the TAO_Constraint_Interpreter
-//    aren't.
-//
-// = DESCRIPTION
-//    There two classes of reasons why an offer for a correct
-//    type shouldn't be considered: 1) The default parameters of the
-//    Trader or policies passed to the Lookup::query method deem it
-//    inappropriate to consider offers with modifiable (i.e., not
-//    readonly) or dynamic properties. 2) We've exceeded the
-//    default or provided cardinality constraints. TAO_Offer_Filter
-//    ensures that violation of policies doesn't occur. It's the
-//    enforcer.
 {
+  // = TITLE
+  //    The purpose of this class is to ensure that offers that
+  //    shouldn't be considered by the TAO_Constraint_Interpreter
+  //    aren't.
+  //
+  // = DESCRIPTION
+  //    There two classes of reasons why an offer for a correct
+  //    type shouldn't be considered: 1) The default parameters of the
+  //    Trader or policies passed to the Lookup::query method deem it
+  //    inappropriate to consider offers with modifiable (i.e., not
+  //    readonly) or dynamic properties. 2) We've exceeded the
+  //    default or provided cardinality constraints. TAO_Offer_Filter
+  //    ensures that violation of policies doesn't occur. It's the
+  //    enforcer.
 public:
 
   TAO_Offer_Filter (TAO_Policies& policies,
@@ -734,17 +694,13 @@ private:
   // may be bad.
 };
 
-  // *************************************************************
-  // TAO_Property_Filter
-  // *************************************************************
-
 class TAO_Property_Filter
-// = TITLE
-//
-//   The Ace_Property_Filter copies those properties specified in a
-//   CosTrading::Lookup::SpecifiedProps from a source
-//   CosTrading::Offer to a destination CosTrading::Offer.
 {
+  // = TITLE
+  //
+  //   The Ace_Property_Filter copies those properties specified in a
+  //   CosTrading::Lookup::SpecifiedProps from a source
+  //   CosTrading::Offer to a destination CosTrading::Offer.
 public:
 
   typedef CosTrading::Lookup::SpecifiedProps SPECIFIED_PROPS;
@@ -773,9 +729,5 @@ private:
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;
 };
-
-  // *************************************************************
-  // Miscellaneous
-  // *************************************************************
 
 #endif /* TAO_TRADER_UTILS_H */
