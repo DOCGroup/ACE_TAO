@@ -58,14 +58,14 @@ TAO::Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 template<>
-CORBA::Boolean
+ACE_INLINE CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAList>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 template<>
-CORBA::Boolean
+ACE_INLINE CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAList>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
