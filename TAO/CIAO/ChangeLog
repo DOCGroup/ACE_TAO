@@ -1,3 +1,17 @@
+Fri Jan  2 16:09:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ciao/Container_Base.cpp:
+
+	  Fixed a compile error in single threaded configuration.
+	
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/XML_Helpers/RTConfig_Handlers.cpp:
+
+	  Fixed more warnings with g++, mostly from the wrong usage of
+	  _var's. 
+
 Fri Jan  2 15:36:07 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:

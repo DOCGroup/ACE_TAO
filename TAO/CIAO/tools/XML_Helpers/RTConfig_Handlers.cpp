@@ -123,7 +123,7 @@ CIAO::RTConfig_Handler::startElement (const ACEXML_Char *,
           // Store the good parsed results.
           CORBA::ULong len = this->policy_set_->configs.length ();
           this->policy_set_->configs.length (len+1);
-          this->policy_set_->configs[len] = newpolicy;
+          this->policy_set_->configs[len] = newpolicy.in ();
         }
       return;
 
@@ -179,7 +179,8 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
           // Store the good parsed results.
           CORBA::ULong len = this->rtresources.tpl_configs.length ();
           this->rtresources.tpl_configs.length (len+1);
-          this->rtresources.tpl_configs[len] = this->tpl_config_;
+          this->rtresources.tpl_configs[len] =
+            this->tpl_config_.in ();
           this->state_ = RTRESOURCES;
         }
       return;
@@ -190,7 +191,8 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
           // Store the good parsed results.
           CORBA::ULong len = this->rtresources.pb_configs.length ();
           this->rtresources.pb_configs.length (len+1);
-          this->rtresources.pb_configs[len] = this->bands_config_;
+          this->rtresources.pb_configs[len] =
+            this->bands_config_.in ();
           this->state_ = RTRESOURCES;
         }
       return;
@@ -201,7 +203,8 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
           // Store the good parsed results.
           CORBA::ULong len = this->policysets.length ();
           this->policysets.length (len+1);
-          this->policysets[len] = this->policy_set_;
+          this->policysets[len] =
+            this->policy_set_.in ();
           this->state_ = START;
         }
       return;
@@ -360,7 +363,7 @@ CIAO::RTConfig_Handler::parse_threadpool_attrs (ACEXML_Attributes *alist
   // Store the good parsed results.
   CORBA::ULong len = this->rtresources.tp_configs.length ();
   this->rtresources.tp_configs.length (len+1);
-  this->rtresources.tp_configs[len] = tp_config;
+  this->rtresources.tp_configs[len] = tp_config.in ();
 }
 
 void

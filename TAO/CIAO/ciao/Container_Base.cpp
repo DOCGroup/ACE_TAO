@@ -33,7 +33,7 @@ CIAO::Container::_ciao_the_ORB ()
 
 ///////////////////////////////////////////////////////////////
 
-ACE_Atomic_Op <ACE_Thread_Mutex, long>
+ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
 CIAO::Session_Container::serial_number_ (0);
 
 CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o)
