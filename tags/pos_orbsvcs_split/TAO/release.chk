@@ -1,0 +1,125 @@
+# $Id$ -*- Picture -*-
+ 
+# Hint: use picture-mode to make editing this easier (C-c . will set
+# the direction to "down".
+ 
+Legend:
+        Platforms are indicated by position within square brackets, i.e.,
+        [ABCDEF] where
+ 
+        A = Solaris/CC
+        B = NT (MSVC++ 5.0)
+        C = Solaris/g++
+        D = IRIX 
+        E = Linux/g++
+        F = Solaric/EGCS
+        G = DEC/cxx
+        H = Other (Linux/egcs, ????) Specify in the NOTES section
+ 		   
+        The state is indicated using the following symbols:
+ 		   
+        0 = doesn't work
+        1 = works  
+        c = compiles but does not work correctly
+        x = not attempted or unknown
+        P = Purified
+ 	           
+ A B C D E F G H   
+[x x x x x x x x] libTAO compiles
+[x x x x x x x x] TAO_IDL compiles
+[x x x x x x x x] liborbsvcs compiles
+       	           
+[x x x x x x x x] IDL_Cubit server
+[x x x x x x x x] IDL_Cubit client
+[x x x x x x x x] DII_Cubit client
+       	           
+[x x x x x x x x] Param_Test compiles
+[x x x x x x x x]    SII short
+[x x x x x x x x]    SII ubstring
+[x x x x x x x x]    SII bdstring
+[x x x x x x x x]    SII fixed_struct
+[x x x x x x x x]    SII strseq
+[x x x x x x x x]    SII bounded_strseq
+[x x x x x x x x]    SII var_struct
+[x x x x x x x x]    SII nested_struct
+[x x x x x x x x]    SII struct_seq
+[x x x x x x x x]    SII bounded_struct_seq
+[x x x x x x x x]    SII any
+[x x x x x x x x]    SII objref
+[x x x x x x x x]    SII objref_sequence
+[x x x x x x x x]    SII any_sequence
+[x x x x x x x x]    SII short_sequence
+[x x x x x x x x]    SII long_sequence
+[x x x x x x x x]    SII bounded_short_sequence
+[x x x x x x x x]    SII bounded_long_sequence
+[x x x x x x x x]    SII fixed_array
+[x x x x x x x x]    SII var_array
+       	     
+[x x x x x x x x]    DII short
+[x x x x x x x x]    DII ubstring
+[x x x x x x x x]    DII bdstring
+[x x x x x x x x]    DII fixed_struct
+[x x x x x x x x]    DII strseq
+[x x x x x x x x]    DII bounded_strseq
+[x x x x x x x x]    DII var_struct
+[x x x x x x x x]    DII nested_struct
+[x x x x x x x x]    DII struct_seq
+[x x x x x x x x]    DII bounded_struct_seq
+[x x x x x x x x]    DII any
+[x x x x x x x x]    DII objref
+[x x x x x x x x]    DII objref_sequence
+[x x x x x x x x]    DII any_sequence
+[x x x x x x x x]    DII short_sequence
+[x x x x x x x x]    DII long_sequence
+[x x x x x x x x]    DII bounded_short_sequence
+[x x x x x x x x]    DII bounded_long_sequence
+[x x x x x x x x]    DII fixed_array
+[x x x x x x x x]    DII var_array
+       	     
+[x x x x x x x x] Simple
+[x x x x x x x x] NestedUpcall/Reactor
+[x x x x x x x x] NestedUpcall/Triangle_Test
+[x x x x x x x x] NestedUpcall/MT_Client_Test
+       	     
+[x x x x x x x x] Simple_Naming
+[x x x x x x x x] Event_Latency
+[x x x x x x x x] EC_Throughput
+[x x x x x x x x] EC_Multiple
+[x x x x x x x x] Logger
+       	     
+[x x x x x x x x] MT_Cubit compiles
+[x x x x x x x x] 	runs for Octet
+[x x x x x x x x] 	runs for Short
+[x x x x x x x x] 	runs for Long
+[x x x x x x x x] 	runs for Struct
+       	     
+[x x x x x x x x] POA/RootPOA
+[x x x x x x x x] POA/FindPOA
+[x x x x x x x x] POA/NewPOA
+[x x x x x x x x] POA/Generic_Servant
+[x x x x x x x x] POA/On_Demand_Activation
+[x x x x x x x x] POA/Explicit_Activation
+[x x x x x x x x] POA/Default_Servant
+[x x x x x x x x] Thruput/TAO
+       	   
+NOTES	   
+* Solaris/CC
+	   
+* NT	   
+	   
+* Solaris/g++
+	   
+* IRIX	   
+	   
+* Linux/g++
+	   
+* Solaris/EGCS
+
+* DEC
+ 
+* Other (Linux/egcs, Solaris/egcs, etc.)
+
+# eval:(overwrite-mode nil)
+# Local Variables:
+# mode:indented-text
+# End:
