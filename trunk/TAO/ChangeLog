@@ -1,3 +1,10 @@
+Wed Apr 30 17:13:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Removed unused parameter in gen_base_class_tmplinst().
+
 Wed Apr 30 16:31:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:

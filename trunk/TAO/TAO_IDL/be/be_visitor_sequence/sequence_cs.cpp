@@ -225,7 +225,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
        && nt != AST_Decl::NT_wstring)
       || ! node->unbounded ())
     {
-      if (this->gen_base_class_tmplinst (node, bt) == -1)
+      if (this->gen_base_class_tmplinst (node) == -1)
         {
           return -1;
         }
@@ -815,8 +815,7 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 }
 
 int
-be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
-                                                 be_type *elem)
+be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
