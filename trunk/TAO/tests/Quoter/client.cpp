@@ -250,6 +250,8 @@ Quoter_Client::init_naming_service (void)
     // or to use the life cycle service
     factoryName[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
     
+    ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
+
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 
         factory_Finder_var_->find_factories (factoryName, TAO_TRY_ENV);
@@ -258,6 +260,9 @@ Quoter_Client::init_naming_service (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Did not get a Generic Quoter Factory.\n"),
                          -1);
+
+    ACE_DEBUG ((LM_DEBUG, "Got a proper reference of a factory.\n"));
+
 
     // Get the first object reference to a factory.
     CORBA::Object_var quoter_FactoryObj_var;
@@ -278,7 +283,7 @@ Quoter_Client::init_naming_service (void)
     // to a direct Quoter Factory
     // factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
     // to a Quoter Generic Factory
-    generic_Factory_var_ = Stock::Quoter_Generic_Factory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
+    generic_Factory_var_ = CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
 
     TAO_CHECK_ENV;
 
@@ -365,11 +370,18 @@ Quoter_Client::init (int argc, char **argv)
       CosLifeCycle::Key genericFactoryName (1);  // max = 1 
       genericFactoryName.length(1);
       genericFactoryName[0].id = CORBA::string_dup ("Generic_Quoter_Factory");
-      CORBA::Object_var quoterObject_var = 
-          this->generic_Factory_var_->create_object (genericFactoryName,
-                                                     0, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
 
+      CosLifeCycle::Criteria criteria(1);
+      criteria.length (1);
+      criteria[0].name = CORBA::string_dup ("filter");
+      criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
+      
+      CORBA::Object_var quoterObject_var = 
+	this->generic_Factory_var_->create_object (genericFactoryName,
+						   criteria,
+						   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
       this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
       TAO_CHECK_ENV;
 

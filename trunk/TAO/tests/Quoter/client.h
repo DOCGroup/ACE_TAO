@@ -25,6 +25,7 @@
 #include "ace/Thread_Manager.h"
 #include "tao/corba.h"
 #include "QuoterC.h"
+#include "orbsvcs/CosLifeCycleC.h"
 
 class Quoter_Client
 {
@@ -75,7 +76,7 @@ private:
   Stock::Quoter_Factory_var factory_var_;
   // Pointer to a factory
 
-  Stock::Quoter_Generic_Factory_var generic_Factory_var_;
+  CosLifeCycle::GenericFactory_var generic_Factory_var_;
   // Pointer to a generic factory
 
   CORBA::Environment env_;

@@ -135,20 +135,57 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       // Bind the Quoter GenericFactory to the IDL_Quoter naming
       // context.
-      CosNaming::Name quoter_Generic_Factory_Name_ (1);
-      quoter_Generic_Factory_Name_.length (1);
-      quoter_Generic_Factory_Name_[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
+      CosNaming::Name quoter_Generic_Factory_Name (1);
+      quoter_Generic_Factory_Name.length (1);
+      quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
-      quoterNamingContext_var_->bind (quoter_Generic_Factory_Name_,
+      quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
                                       this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
+
+      // now the Quoter GenericFactory is bound to the Naming Context
+      // the Generic Factory should try to register itself to the closest 
+      // Life Cycle Service is order to be called.
+      
+      // get the Quoter_Life_Cycle_Service
+      CosNaming::Name quoter_Life_Cycle_Service_Name (1);
+      quoter_Life_Cycle_Service_Name.length (1);
+      quoter_Life_Cycle_Service_Name[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
+
+      CORBA::Object_var quoter_Life_Cycle_Service_Obj_var = 
+        quoterNamingContext_var_->resolve (quoter_Life_Cycle_Service_Name,
+					   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      Stock::Quoter_Life_Cycle_Service_var  quoter_Life_Cycle_Service_var = 
+        Stock::Quoter_Life_Cycle_Service::_narrow (quoter_Life_Cycle_Service_Obj_var.in (),
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+       
+      ACE_DEBUG ((LM_DEBUG,
+                  "Have a proper reference to the Quoter Life Cycle Service.\n"));
+
+      CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
+
+      // @@ necessary if you specify an ORB port not equal to 0
+      // ACE_Time_Value time_Value = 0;
+      // orb_manager_.orb()->run (&time_Value);
+      // register with the Quoter_Life_Cycle_Service
+      quoter_Life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
+						      "Bryan 503",               // location
+						      "Generic Factory",         // description 
+						      object_var,
+						      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG,
+                  "Registered the Quoter GenericFactory to the Quoter Life Cycle Service.\n"));
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      TAO_TRY_ENV.print_exception ("Quoter_Generic_Factory_Server::init: Exception");
     }
   TAO_ENDTRY;
   

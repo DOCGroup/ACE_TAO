@@ -16,13 +16,15 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "Life_Cycle_Service_Impl.h"
 #include "QuoterC.h"
+#include "Life_Cycle_Service_Impl.h"
+
 
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
 // Constructor
 Quoter_Life_Cycle_Service_Impl::Quoter_Life_Cycle_Service_Impl (void)
+  : factory_trader_ptr_ (0)
 {
 }
 
@@ -46,46 +48,92 @@ Quoter_Life_Cycle_Service_Impl::create_object (const CosLifeCycle::Key &factory_
                                             const CosLifeCycle::Criteria &the_criteria,
                                             CORBA::Environment &_env_there)
 {
+  ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl:create_object: called.\n"));
   // Exceptions are forwarded, not handled !!
 
   if (factory_trader_ptr_ != 0)
     {
-      if (criteria_evaluator_var_ == 0)
-	{
-	  ACE_NEW_RETURN (criteria_evaluator_var_, Quoter_Criteria_Evaluator(the_criteria), 0);
-	}
-      else // the object is instantiated already
-	{
-	  CORBA::Environment env;
-
-	  // feed in the criteria
-	  criteria_evaluator_var_->setCriteria (the_criteria, _env_there);
-
-	  if (_env_there.exception() != 0)
-	    {
-	      return 0;
-	    } 
-	}
+      Quoter_Criteria_Evaluator criteria_Evaluator(the_criteria);
+      ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl:create_object: new evaluator.\n"));
       
-      if (criteria_evaluator_var_ != 0)
-	{	  
-	  CORBA::String filter = criteria_evaluator_var_->getFilter (_env_there);
-	  
-	  if (_env_there.exception() != 0)
-	    {
-	      return 0;
-	    } 
-	  
-	  CORBA::Object_ptr object_ptr = factory_trader_ptr_->query (filter);
-	  	  
-	  if (object_ptr != 0)
-	    ACE_DEBUG ((LM_DEBUG, "Factory reference OK.\n"));    
-
-	  return CORBA::Object::_duplicate (object_ptr);
-	}
-      else // pointer is wrong
+      ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl:create_object: getFilter will be called.\n"));
+      
+      CORBA::String filter = criteria_Evaluator.getFilter (_env_there);
+      
+      if (_env_there.exception() != 0)
 	{
 	  return 0;
+	} 
+      
+      ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl:create_object: query(%s) will be called.\n",filter));
+
+      CORBA::Object_ptr genericFactoryObj_ptr = factory_trader_ptr_->query (filter);
+      
+      ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl:create_object: query was called.\n"));
+      
+      if (CORBA::is_nil (genericFactoryObj_ptr))
+	ACE_ERROR_RETURN ((LM_ERROR, 
+			   "Quoter_Life_Cycle_Service_Impl::create_object: Factory is nil!\n"),
+			  0);
+      else // everyting is ok
+	ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl::create_object: Object reference OK.\n"));    
+
+      // Now we have a proper reference to a Generic Factory
+      // the create_object call will be forwarded to this factory
+
+
+      // Check if it is a valid Quoter Generic Factory reference
+      if (CORBA::is_nil (genericFactoryObj_ptr)) 
+	{ // throw a NoFactory exception  
+	  _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+	  return 0;
+	}
+      else 
+	{ 
+	  // Check if it is a valid Quoter Factory reference.
+	  if (CORBA::is_nil (genericFactoryObj_ptr)) // throw a NoFactory exception.
+	    {      
+	      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+	      return 0;
+	    }
+	  
+	  CORBA::Environment env_here;
+	  
+	  CosLifeCycle::GenericFactory_var genericFactory_var = 
+	    CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr, 
+					    env_here);
+	  
+	  // see if there is an exception, if yes then throw the NoFactory exception
+	  if (env_here.exception () != 0) // throw a NoFactory exception  
+	    { 
+	      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+	      return 0;
+	    }
+	  
+	  if (CORBA::is_nil (genericFactory_var.in()))      
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Quoter_Life_Cycle_Service_Impl::create_object: Invalid Generic Factory.\n"),
+			      0);
+	  
+	  ACE_DEBUG ((LM_DEBUG, "Quoter_Life_Cycle_Service_Impl::create_object: Generic Factory reference OK.\n"));    
+	  
+	  // Now retrieve the Quoter obj ref corresponding to the key.
+	  CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
+									    the_criteria,
+									    _env_there);
+      
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Quoter_Life_Cycle_Service_Impl::create_object: Forwarded request.\n"));
+	  
+	  if (CORBA::is_nil (object_var.in()))
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Quoter_Life_Cycle_Service_Impl::create_object: Null object refeference returned by factory.\n"),
+			      0);
+	  
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Quoter_Life_Cycle_Service_Impl::create_object: Return a object reference to a new object.\n"));
+	  
+	  return CORBA::Object::_duplicate (object_var.in());
 	}
     }
   else
@@ -114,7 +162,7 @@ Quoter_Life_Cycle_Service_Impl::register_factory (const char * name,
   ACE_DEBUG ((LM_DEBUG, "Registered a factory with:\n"
 	      "     name: %s\n"
 	      "     location: %s\n"
-	      "     description: %s\n"
+	      "     description: %s\n",
 	      name, location, description));       
 }
 

@@ -17,10 +17,10 @@
 #include "Factory_Trader.h"
 #include "Criteria_Evaluator.h"
 
-#if !defined (QUOTER_GENERIC_FACTORY_IMPL_H)
-#define QUOTER_GENERIC_FACTORY_IMPL_H
+#if !defined (QUOTER_LIFE_CYCLE_SERVICE_IMPL_H)
+#define QUOTER_LIFE_CYCLE_SERVICE_IMPL_H
 
-class Quoter_Life_Cycle_Service_Impl : public POA_Stock::Quoter_Life_Cycle_Service 
+class Quoter_Life_Cycle_Service_Impl : public POA_Stock::Quoter_Life_Cycle_Service
 {
   // = TILE
   //   A CosLifeCycle conforming Generic Factory for the Quoter
@@ -50,8 +50,9 @@ public:
   // Registers a factory with specified properties
 
 private:
-  Stock::Criteria_Evaluator_var criteria_evaluator_var_;
   Factory_Trader *factory_trader_ptr_;  
 };
 
-#endif /* QUOTER_GENERIC_FACTORY_IMPL_H */
+#endif /* QUOTER_LIFE_CYCLE_SERVICE_IMPL_H */
+
+
