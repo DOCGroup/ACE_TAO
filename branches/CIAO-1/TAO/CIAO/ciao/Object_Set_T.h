@@ -70,6 +70,11 @@ namespace CIAO
     CORBA::ULong copy (CORBA::ULong size,
                        COBJ **buffer);
 
+    /**
+     * Check if an object is in the set.  Return 0 if false.
+     */
+    int object_in_set (COBJ::_ptr_type objref);
+
     /// Query the current size the set contains.
     CORBA::ULong size (void) const;
 

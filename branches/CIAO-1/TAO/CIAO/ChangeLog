@@ -1,3 +1,11 @@
+Sat Feb 08 20:45:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/*: WiP intermediate checkins.
+
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.cpp (object_in_set): Added a new method to
+	  check if an object is already in the set or not.
+
 Fri Feb 07 23:35:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Object_Set_T.h:

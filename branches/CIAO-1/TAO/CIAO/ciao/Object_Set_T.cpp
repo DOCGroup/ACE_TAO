@@ -105,4 +105,19 @@ CIAO::Object_Set<COBJ>::copy (CORBA::ULong len,
 
   return len;
 }
+
+template <class COBJ> int
+CIAO::Object_Set<COBJ>::object_in_set (COBJ::_ptr_type objref)
+{
+  if (CORBA::_is_nil (objref))  // Don't count nil objref
+    return 0;
+
+  CORBA::ULong i = 0;
+
+  for (; i < this->size_; ++i)
+    if (objref->_is_equivalent (this->buffer_[i])) // _is_equivalent could be unreliable?
+      return -1;
+
+  return 0;
+}
 #endif /* CIAO_OBJECT_SET_T_C */
