@@ -1,3 +1,9 @@
+Wed Dec  8 10:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer_Functions.{h,cpp}:
+          Remove the string_to_objectid with string and length argument. It is
+          not in the spec, it can't be used by any user, so zapped it.
+
 Wed Dec  8 10:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer_Functions.{h,cpp}:
