@@ -6,7 +6,7 @@ CC              = gcc
 # for no threads
 CXX		= g++
 CFLAGS		+= -w
-CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
+CCFLAGS		+= -w -fno-implicit-templates -fno-strict-prototypes
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            = -lsocket

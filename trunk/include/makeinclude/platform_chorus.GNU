@@ -12,7 +12,8 @@ CC		= gcc
 CXX		= g++
 		
 CFLAGS		+= -w
-CCFLAGS		+= -w -fno-strict-prototypes     	\
+CCFLAGS		+= -w -fno-implicit-templates		\
+		   -fno-strict-prototypes     		\
 		   -D_POSIX_THREADS 			\
 		   -D_POSIX_THREAD_SAFE_FUNCTIONS
 

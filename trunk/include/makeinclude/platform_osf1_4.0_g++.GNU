@@ -4,7 +4,7 @@
 CC		= gcc
 CXX		= g++
 CFLAGS          += -D_REENTRANT
-CCFLAGS         += $(CFLAGS) -fno-strict-prototypes
+CCFLAGS         += -D_REENTRANT -fno-implicit-templates -fno-strict-prototypes
 LD		= $(CXX)
 DLD		= $(CXX)
 LIBS		+= -lpthread -lmach -lexc -ltli -lrt

@@ -3,7 +3,7 @@
 CC		= gcc
 CXX             = g++
 CFLAGS		+= -w
-CCFLAGS		+= $(CFLAGS) -D__m88k__ -fno-strict-prototypes    #### -frepo
+CCFLAGS		+= -w -D__m88k__ -fno-implicit-templates -fno-strict-prototypes
 DLD		= $(CXX) 
 LD		= $(CXX) 
 INCLDIRS	+= -I$(WRAPPER_ROOT) -I.
