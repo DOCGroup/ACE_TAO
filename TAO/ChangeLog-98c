@@ -1,3 +1,7 @@
+Wed Mar 25 22:06:19 1998  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* tao/TAO.cpp: Added accessors for child/root poa.
+
 Wed Mar 25 15:10:48 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/encode.cpp: In the encoding of exceptions, we were not

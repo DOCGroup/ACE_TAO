@@ -73,6 +73,12 @@ public:
       
   CORBA::ORB_ptr orb (void);
   // Accessor which returns the ORB pointer.
+
+  PortableServer::POA_ptr root_poa (void);
+  // Accessor which returns the root poa
+
+  PortableServer::POA_ptr child_poa (void);
+  // Accessor which returns the child poa
   
 protected:
   CORBA::ORB_var orb_;
