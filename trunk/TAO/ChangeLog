@@ -1,3 +1,18 @@
+Thu Sep 23 22:14:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* Bala found the following problems for me:
+
+	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+	  I returned the result of a void function in a void function.
+	  Perfectly legal C++, but MSVC6 is too lame.  On the other hand I
+	  do not care to skip the return statement, and it is actually
+	  clearer written the new way.
+
+	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+	  Try to work an MSVC6 wart.  Use a base class of the traits
+	  instead of using the traits directly.  Slightly less elegant,
+	  but not the end of the world.
+
 Thu Sep 23 19:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
