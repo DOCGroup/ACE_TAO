@@ -34,7 +34,9 @@ Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
 	  (fini):
 
 	  Release the reference to the priority mapping manager.  Fixes a
-	  memory leak.
+	  memory leak.  We won't need to do this once we change the
+	  priority_mapping_manager_ member to be a non-static
+	  CORBA::Object_var.
 
 Sat Jan 27 16:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
