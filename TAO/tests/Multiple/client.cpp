@@ -2,6 +2,8 @@
 
 # include "Collocation_Tester.h"
 
+ACE_RCSID (tests, client, "$Id$")
+
 int main (int argc, char *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
