@@ -116,7 +116,7 @@ public:
 
   /// If <disable_notify_pipe> is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
-  /// but will elide the <notify()> feature.  If <mask_signals> is 
+  /// but will elide the <notify()> feature.  If <mask_signals> is
   /// 1 the reactor is "signal-safe" when dispatching handlers to
   /// signal events, whereas if <mask_signals> is 0 the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
@@ -131,7 +131,7 @@ public:
   /// Initialize @c ACE_Select_Reactor with size @arg size.
   /// If @arg disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
-  /// but will elide the notification feature.  If @arg mask_signals is 
+  /// but will elide the notification feature.  If @arg mask_signals is
   /// 1 the reactor is "signal-safe" when dispatching handlers to
   /// signal events, whereas if @arg mask_signals is 0 the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
@@ -183,13 +183,14 @@ public:
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
 
-  // = The following method is deprecated.  Use <timer_queue> instead.
+  /// @deprecated The following method is deprecated.  Use <timer_queue> instead.
   /// Set a user specified timer queue.
   virtual int set_timer_queue (ACE_Timer_Queue *tq);
 
   /// Set a user-specified timer queue.
-  /// Return the current <ACE_Timer_Queue>.
   virtual int timer_queue (ACE_Timer_Queue *tq);
+
+  /// Return the current <ACE_Timer_Queue>.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
   /// Close down the select_reactor and release all of its resources.
