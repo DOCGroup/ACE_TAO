@@ -3302,7 +3302,7 @@ ACE::sock_error (int error)
       return ACE_LIB_TEXT ("handle is not a socket");
       /* NOTREACHED */
     case WSAEWOULDBLOCK:
-      return ACE_LIB_TEXT ("socket marked as non-blocking and SO_LINGER set not 0");
+      return ACE_LIB_TEXT ("resource temporarily unavailable");
       /* NOTREACHED */
     case WSAEADDRINUSE:
       return ACE_LIB_TEXT ("address already in use");
@@ -3332,7 +3332,7 @@ ACE::sock_error (int error)
       return ACE_LIB_TEXT ("address not available");
       /* NOTREACHED */
     case WSAEISCONN:
-      return ACE_LIB_TEXT ("Socket is already connected");
+      return ACE_LIB_TEXT ("socket is already connected");
       /* NOTREACHED */
     default:
       ACE_OS::sprintf (unknown_msg, ACE_LIB_TEXT ("unknown error: %d"), error);
