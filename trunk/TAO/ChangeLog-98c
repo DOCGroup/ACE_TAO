@@ -1,3 +1,8 @@
+Wed May  6 23:58:22 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor.h: 
+	  Added missing int in method declaration.
+
 Wed May 06 23:51:37 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp: 
