@@ -1,3 +1,7 @@
+Thu Feb 26 13:31:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/Makefile: added "all" target for CROSS-COMPILE platforms.
+
 Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/NestedUpcall/client.cpp: Cast (char *) to 0 which is used
@@ -16,16 +20,16 @@ Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  lists.
 
 	* tao/TAO.dsp: Added tao_util.cpp into this project.
-	
+
 	* tao/tao_util.h (TAO_ORB_Manager): Added TAO_Export flag.
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Added Ior_Multicast.cpp and
 	  Naming_Utils.cpp into this project.
-	
-	* orbsvcs/orbsvcs/Naming/Ior_Multicast.h: 
+
+	* orbsvcs/orbsvcs/Naming/Ior_Multicast.h:
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Added
 	  TAO_ORBSVCS_Export flag.
-	  
+
 	* orbsvcs/Naming_Service/Naming_Service.cpp: Added a return
 	  statement to muffle MSVC.
 
@@ -57,12 +61,12 @@ Wed Feb 25 22:47:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
 	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:		
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
 	* tests/Cubit/TAO/MT_Cubit/cubit_i.h: Made changes to have the
  	option to specify oneway calls instead of the usual two-way
  	cube_X() call.  Now, you can specify the "-o" argument on the
  	client side.
-	
+
 Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/client.cpp (parse_args): Similar to
