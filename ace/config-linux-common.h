@@ -41,12 +41,17 @@
   // its timeout argument, use ::poll () instead.
 # define ACE_HAS_POLL
 
+# if !defined (__USE_XOPEN_EXTENDED)
+#   include <unistd.h>
+    // unistd.h only declares getpgid () ifdef __USE_XOPEN_EXTENDED.
+    extern "C" __pid_t getpgid __P ((__pid_t __pid));
+# endif /* ! __USE_XOPEN_EXTENDED */
+
   // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
   //        on Alpha.  I assume that they're necessary on Intel as well,
   //        but that may depend on the version of glibc that is used.
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
-# define ACE_LACKS_GETPGID
 # define ACE_LACKS_RPC_H
 # define ACE_LACKS_SYSTIME_H
   // The strtok_r declaration is protected in string.h.
