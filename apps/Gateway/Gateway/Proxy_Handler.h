@@ -20,27 +20,22 @@
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Svc_Handler.h"
-#include "Event_Forwarding_Discriminator.h"
-#include "Consumer_Dispatch_Set.h"
+#include "Config_Files.h"
 #include "Event.h"
 
 // Forward declaration.
-class Proxy_Handler_Connector;
 class ACE_Event_Channel;
 
-class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, SYNCH_STRATEGY>
+class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
   // = TITLE
-  //    Proxy_Handler contains info about connection state and addressing.
+  //     Proxy_Handler contains info about connection state and addressing.
   //
   // = DESCRIPTION
   //     The Proxy_Handler classes process events sent to the Event
   //     Channel from Suppliers and forward them to Consumers.
 {
 public:
-  Proxy_Handler (ACE_Event_Channel &, 
-		 const ACE_INET_Addr &remote_addr,
-		 const ACE_INET_Addr &local_addr,
-		 ACE_INT32 conn_id);
+  Proxy_Handler (const Proxy_Config_Info &);
 
   virtual int open (void * = 0);
   // Initialize and activate a single-threaded Proxy_Handler (called by
@@ -131,72 +126,18 @@ protected:
   // the events from Consumers and Suppliers.
 };
 
-class Supplier_Proxy : public Proxy_Handler
+class Proxy_Handler_Factory : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
-  //     Handles reception of Events from Suppliers
+  //     Creates the appropriate type of <Proxy_Handler>
   //
   // = DESCRIPTION
-  //     Performs framing and error checking.
+  //     <Proxy_Handler>s can include <Consumer_Proxy>,
+  //     <Supplier_Proxy>, <Thr_Consumer_Proxy>, or
+  //     <Thr_Supplier_Proxy>).
 {
 public:
-  // = Initialization method.
-  Supplier_Proxy (ACE_Event_Channel &, 
-		  const ACE_INET_Addr &remote_addr,
-		  const ACE_INET_Addr &local_addr,
-		  ACE_INT32 conn_id);
-
-protected:
-  // = All the following methods are upcalls, so they can be protected.
-
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Receive and process peer events.
-
-  virtual int recv (ACE_Message_Block *&);
-  // Receive an event from a Supplier.
-
-  int forward (ACE_Message_Block *event);
-  // Forward the <event> to its appropriate Consumer.  This delegates
-  // to the <ACE_Event_Channel> to do the actual forwarding.
-
-  ACE_Message_Block *msg_frag_;
-  // Keep track of event fragment to handle non-blocking recv's from
-  // Suppliers.
-};
-
-class Consumer_Proxy : public Proxy_Handler
-  // = TITLE
-  //     Handles transmission of events to Consumers.
-  //
-  // = DESCRIPTION
-  //     Performs queueing and error checking.  Uses a single-threaded
-  //     Reactive approach to handle flow control.
-{
-public:
-  // = Initialization method.
-  Consumer_Proxy (ACE_Event_Channel &, 
-		  const ACE_INET_Addr &remote_addr,
-		  const ACE_INET_Addr &local_addr,
-		  ACE_INT32 conn_id);
-
-  virtual int put (ACE_Message_Block *event, 
-		   ACE_Time_Value * = 0);
-  // Send an event to a Consumer (may be queued if necessary).
-
-protected:
-  // = We'll allow up to 16 megabytes to be queued per-output proxy.
-  enum {MAX_QUEUE_SIZE = 1024 * 1024 * 16};
-
-  virtual int handle_output (ACE_HANDLE);
-  // Finish sending event when flow control conditions abate.
-
-  int nonblk_put (ACE_Message_Block *mb);
-  // Perform a non-blocking put().
-
-  virtual ssize_t send (ACE_Message_Block *);
-  // Send an event to a Consumer.
-
-  virtual int handle_input (ACE_HANDLE);
-  // Receive and process shutdowns from a Consumer.
+  Proxy_Handler *make_proxy_handler (const Proxy_Config_Info &);
+  // Make the appropriate type of <Proxy_Handler>.
 };
 
 #endif /* _PROXY_HANDLER */

@@ -6,6 +6,23 @@
 #include "ace/Service_Config.h"
 #include "Peer.h"
 
+class Service_Ptr
+  // = TITLE
+  //     Holds the <ACE_Service_Object> * until we're done. 
+{
+public:
+  Service_Ptr (ACE_Service_Object *so)
+    : service_object_ (so) {}
+
+  ~Service_Ptr (void) { this->service_object_->fini (); }
+
+  ACE_Service_Object *operator-> () { return this->service_object_; }
+
+private:
+  ACE_Service_Object *service_object_;
+  // Holds the service object until we're done.
+};
+
 int
 main (int argc, char *argv[])
 {
@@ -15,30 +32,28 @@ main (int argc, char *argv[])
     {
       if (errno != ENOENT)
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
-      else // Use static binding.
+      else // Use static linking.
 	{
-	  ACE_Service_Object *so = ACE_SVC_INVOKE (Peer_Acceptor);
+	  Service_Ptr sp = ACE_SVC_INVOKE (Peer_Acceptor);
 	  
-	  if (so->init (argc - 1, argv + 1) == -1)
+	  if (sp->init (argc - 1, argv + 1) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "init", 1));
+	  
+	  // Run forever, performing the configured services until we
+	  // are shut down by a SIGINT/SIGQUIT signal.
+
+	  daemon.run_reactor_event_loop ();
+
+	  // Destructors of Service_Ptr's automagically call fini().
+
 	}
     }
+  else // Use dynamic linking.
 
-  // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
-
-  ACE_Sig_Set sig_set;
-  sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGQUIT);
-
-  // Register ourselves to receive SIGINT and SIGQUIT so we can shut
-  // down gracefully via signals.
-  ACE_Service_Config::reactor ()->register_handler (sig_set, &sa);
-
-  // Run forever, performing the configured services until we are shut
-  // down by a SIGINT/SIGQUIT signal.
-
-  daemon.run_reactor_event_loop ();
+    // Run forever, performing the configured services until we are shut
+    // down by a SIGINT/SIGQUIT signal.
+    
+    daemon.run_reactor_event_loop ();
 
   return 0;
 }

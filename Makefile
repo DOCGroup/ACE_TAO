@@ -52,6 +52,7 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/BIBLIOGRAPHY \
 	        ACE_wrappers/ChangeLog \
+	        ACE_wrappers/ChangeLog-97a \
 	        ACE_wrappers/ChangeLog-96b \
 	        ACE_wrappers/ChangeLog-96a \
 	        ACE_wrappers/ChangeLog-95 \

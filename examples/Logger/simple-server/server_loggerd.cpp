@@ -1,9 +1,9 @@
-// This server daemon collects, formats, and displays logging
 // $Id$
 
+// This server daemon collects, formats, and displays logging
 // information forwarded from client daemons running on other hosts in
 // the network.
-
+//
 // In addition, it also illustrates how the ACE_Reactor framework is
 // used.
 
@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else if (REACTOR::instance ()->register_handler 
-	   (&peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
+	   (&peer_acceptor, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
 
   // Run forever, performing logging service.

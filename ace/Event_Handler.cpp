@@ -46,18 +46,18 @@ ACE_Event_Handler::set_handle (ACE_HANDLE)
 // Gets the priority of this handler. 
 
 int
-ACE_Event_Handler::get_priority (void) const
+ACE_Event_Handler::priority (void) const
 {
-  ACE_TRACE ("ACE_Event_Handler::get_priority");
+  ACE_TRACE ("ACE_Event_Handler::priority");
   return this->priority_;
 }
 
 // Sets the priority 
 
 void
-ACE_Event_Handler::set_priority (int priority)
+ACE_Event_Handler::priority (int priority)
 {
-  ACE_TRACE ("ACE_Event_Handler::set_priority");
+  ACE_TRACE ("ACE_Event_Handler::priority");
   this->priority_ = priority;
 }
 

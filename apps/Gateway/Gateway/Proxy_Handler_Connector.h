@@ -18,7 +18,8 @@
 #define _IO_HANDLER_CONNECTOR
 
 #include "ace/Connector.h"
-#include "Thr_Proxy_Handler.h"
+#include "ace/SOCK_Connector.h"
+#include "Proxy_Handler.h"
 
 class Proxy_Handler_Connector : public ACE_Connector<Proxy_Handler, ACE_SOCK_CONNECTOR>
   // = TITLE

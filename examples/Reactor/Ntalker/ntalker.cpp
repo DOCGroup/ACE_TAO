@@ -115,10 +115,9 @@ Handle_Events::Handle_Events (u_short udp_port,
   if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1) 
     ACE_OS::perror ("can't subscribe to multicast group"), ACE_OS::exit (1);
 
-  // disable loopbacks
-  
-//  if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
-//    ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
+  // Disable loopbacks.
+  //  if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
+  //    ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
 
   this->handle_set_.set_bit (0);
   this->handle_set_.set_bit (this->mcast_.get_handle ());

@@ -18,7 +18,7 @@
 #define _CONSUMER_MAP_H
 
 #include "ace/Map_Manager.h"
-#include "Concurrency_Strategies.h"
+#include "ace/Synch.h"
 #include "Event.h"
 #include "Consumer_Dispatch_Set.h"
 
@@ -39,7 +39,7 @@ public:
   // Break any association of EXID.
 
 public:
-  ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX> map_;
+  ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, ACE_Null_Mutex> map_;
   // Map that associates Event Addrs (external ids) with Consumer_Dispatch_Set *'s
   // <internal IDs>.
 };
@@ -54,7 +54,7 @@ public:
   int advance (void);
 
 private:
-  ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX> map_iter_;
+  ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, ACE_Null_Mutex> map_iter_;
   // Map we are iterating over.
 };
 #endif /* _CONSUMER_MAP_H */
