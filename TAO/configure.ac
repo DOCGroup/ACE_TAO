@@ -202,7 +202,6 @@ AC_CONFIG_FILES([
   orbsvcs/Makefile
   orbsvcs/Naming_Service/Makefile
   orbsvcs/Notify_Service/Makefile
-  orbsvcs/PSS/Makefile
   orbsvcs/Scheduling_Service/Makefile
   orbsvcs/TAO_Service/Makefile
   orbsvcs/Time_Service/Makefile

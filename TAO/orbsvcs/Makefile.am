@@ -1,7 +1,6 @@
 ##  Process this file with automake to create Makefile.in
 
 SUBDIRS = \
-	PSS \
 	TAO_Service \
 	orbsvcs \
 	Trading_Service \

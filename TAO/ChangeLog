@@ -1,3 +1,14 @@
+Thu Feb 24 07:13:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/PSS/Makefile.am:
+
+	  Removed.
+
+	* orbsvcs/Makefile.am:
+	* configure.ac:
+
+	  Remove PSS from list of subdirs.
+
 Thu Feb 24 06:57:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/OBV/Supports/Supports_Test.mpc:
