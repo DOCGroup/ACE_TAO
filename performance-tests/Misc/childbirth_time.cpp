@@ -71,7 +71,7 @@
 #define SUBPROGRAM "date"
 #endif
 
-const int MULTIPLY_FACTOR = 10;
+int MULTIPLY_FACTOR = 10;
 typedef double (*Profiler)(size_t);
 static int do_exec_after_fork = 0;
 
@@ -287,10 +287,47 @@ prof_tm_thread (size_t iteration)
 #endif
 }
 
+static double
+prof_mutex_base (size_t iteration)
+{
+#if defined (ACE_HAS_THREADS)
+  ACE_Thread_Mutex plain;
+  if (iteration != 0)
+    {
+      ACE_Profile_Timer ptimer;
+      ACE_Profile_Timer::ACE_Elapsed_Time et;
+      double time = 0;
+
+      for (size_t i = 0; i < iteration; i++)
+        {
+          ACE_STOP_SIGN;
+          ptimer.start ();
+
+          for (size_t j=0; j < MULTIPLY_FACTOR; j++)
+            {
+              plain.acquire ();
+              plain.release ();
+            }
+
+          ptimer.stop ();
+          ptimer.elapsed_time (et);
+          time += et.real_time;
+        }
+      iteration *= MULTIPLY_FACTOR;
+      return time / iteration;
+    }
+  else
+    return -1.0;
+#else
+  ACE_UNUSED_ARG (iteration);
+  ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform."), -1);
+#endif
+}
+
 int
 main (int argc, char* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:pftahme");
+  ACE_Get_Opt get_opt (argc, argv, "n:pftahmxe");
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;
@@ -322,6 +359,11 @@ main (int argc, char* argv[])
         case 'm':
           profiler = prof_tm_thread;
           profile_name = "ACE_Thread_Manager::spawn_n ()";
+          break;
+        case 'x':
+          profiler = prof_mutex_base;
+          profile_name = "ACE_Thread_Mutex Baseline";
+          MULTIPLY_FACTOR = 100;
           break;
         case 'h':                       // use high resolution timer
           ACE_High_Res_Timer::get_env_global_scale_factor ();
