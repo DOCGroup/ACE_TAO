@@ -109,7 +109,8 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (n_processes);
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
-  pid_t pid = proc_mgr.start (0);
+  ACE_Process_Options options (0);
+  pid_t pid = proc_mgr.start (options);
 
   switch (pid)
     {
