@@ -357,8 +357,8 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
                     0,         // locking strategy
                     0,         // flags
                     0,         // priority
-                    ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::max, // absolute time of deadline
+                    ACE_Time_Value::zero,     // execution time
+                    ACE_Time_Value::max_time, // absolute time of deadline
                     data_block) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
