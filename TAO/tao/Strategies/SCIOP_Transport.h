@@ -23,6 +23,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
+#include "strategies_export.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/Synch.h"
@@ -43,7 +44,7 @@ class TAO_Acceptor;
  * Specialization of the base TAO_Transport class to handle the SCIOP
  * protocol.
  */
-class TAO_Export TAO_SCIOP_Transport : public TAO_Transport
+class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
 

@@ -28,6 +28,15 @@ OBJFILES = \
 	$(OBJDIR)\DIOP_Connection_Handler.obj \
 	$(OBJDIR)\DIOP_Endpoint.obj \
 	$(OBJDIR)\uiop_endpoints.obj \
+   $(OBJDIR)\SCIOP_Acceptor.obj \
+   $(OBJDIR)\SCIOP_Connection_Handler.obj \
+   $(OBJDIR)\SCIOP_Connector.obj \
+   $(OBJDIR)\SCIOP_Endpoint.obj \
+   $(OBJDIR)\SCIOP_Factory.obj \
+   $(OBJDIR)\SCIOP_Lite_Factory.obj \
+   $(OBJDIR)\SCIOP_Profile.obj \
+   $(OBJDIR)\SCIOP_Transport.obj \
+   $(OBJDIR)\sciop_endpoints.obj \
 	$(OBJDIR)\advanced_resource.obj \
 	$(OBJDIR)\FIFO_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\LFU_Connection_Purging_Strategy.obj \
