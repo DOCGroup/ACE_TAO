@@ -68,7 +68,7 @@ IORInterceptor::establish_components (
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "EXCEPTION: "
-                           "IORIntferceptor::establish_components:");
+                           "IORInterceptor::establish_components:");
 
       ACE_ASSERT (false);
     }
