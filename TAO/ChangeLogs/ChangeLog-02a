@@ -1,3 +1,31 @@
+Wed May  3 15:30:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/skip.cpp:
+        * tao/append.cpp:
+          The append() and skip() operations for unions with an enum in
+          the discriminant were not working correctly.
+          Thanks to Ron Klein <rklein@west.raytheon.com> for reporting the
+          bug and providing a test for it.
+
+        * tao/Any.cpp:
+          Cosmetic fixes.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/small_union.h:
+        * tests/Param_Test/small_union.cpp:
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/tests.h:
+          Add a new regression tests for unions that use an enum as their
+          discriminant.  Also use them in the Any test.
+
 Wed May  3 11:54:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile:

@@ -333,7 +333,6 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
 {
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_append = 1;
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
@@ -341,8 +340,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   for (int i = 0; i < member_count
-         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-         && continue_append == 1;
+         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
        i++)
     {
       // get member type
@@ -357,13 +355,12 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_append == 1)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO_Marshal_Struct::encode detected error\n")));
+                ACE_TEXT ("TAO_Marshal_Struct::append detected error\n")));
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
@@ -534,8 +531,17 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         case CORBA::tk_enum:
           {
             CORBA::ULong d;
-            // @@ Will this work????
+
+#if 0
+            // Create an special Any to handle this case.
+            CORBA::Any tmp;
+            tmp._tao_replace (CORBA::_tc_ulong,
+                              any->_tao_byte_order (),
+                              any->_tao_get_cdr ());
+            if ((tmp >>= d) && d == enum_v)
+#else
             if ((*any >>= d) && d == enum_v)
+#endif 0
               current_member = i;
           }
           break;

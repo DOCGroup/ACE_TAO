@@ -6,7 +6,7 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    any.h
+//    small_union.h
 //
 // = DESCRIPTION
 //     Tests Anys
@@ -16,36 +16,22 @@
 //
 // ============================================================================
 
-#ifndef PARAM_TEST_ANY_H
-#define PARAM_TEST_ANY_H
+#ifndef PARAM_TEST_SMALL_UNION_H
+#define PARAM_TEST_SMALL_UNION_H
 
 #include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test Anys
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-class Test_Any
+class Test_Small_Union
 {
 public:
-  Test_Any (void);
+  Test_Small_Union (void);
   // ctor
 
-  ~Test_Any (void);
+  ~Test_Small_Union (void);
   // dtor
-
-  enum
-  {
-    ANY_SHORT = 0,
-    ANY_STRING,
-    ANY_OBJREF,
-    ANY_ARRAY,
-    ANY_SHORT_SEQ,
-    ANY_BD_SHORT_SEQ,
-    ANY_STRUCT,
-    ANY_BIG_UNION,
-    ANY_SMALL_UNION,
-    ANY_LAST_TEST_ITEM
-  };
 
   int run_sii_test (Param_Test_ptr objref,
                     CORBA::Environment &env);
@@ -78,22 +64,22 @@ private:
   // operation name
 
   Coffee_var cobj_;
-  // Coffee object used to test Any with object.
+  // Coffee object used to test Small_Union with object.
 
   static size_t counter;
   // test counter.
 
-  CORBA::Any in_;
+  Param_Test::Small_Union in_;
   // in parameter
 
-  CORBA::Any inout_;
+  Param_Test::Small_Union inout_;
   // inout parameter
 
-  CORBA::Any_var out_;
+  Param_Test::Small_Union_var out_;
   // out parameter
 
-  CORBA::Any_var ret_;
+  Param_Test::Small_Union_var ret_;
   // return value
 };
 
-#endif /* PARAM_TEST_ANY_H */
+#endif /* PARAM_TEST_SMALL_UNION_H */
