@@ -119,7 +119,8 @@ RoundTrip_Impl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Implementation for the probided inferface.
 CORBA::Long
-RoundTrip_Impl::LatencyTest_Impl::cube_long (CORBA::Long data)
+RoundTrip_Impl::LatencyTest_Impl::cube_long (CORBA::Long data
+		                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return data*data*data;
