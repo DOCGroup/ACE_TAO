@@ -1,3 +1,8 @@
+Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * ace/TTY_IO:  Removed the #define for ACE_BUILD_DLL, since it 
+          is already defined in the .dsp file.
+
 Sun Jul 16 19:36:17 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/QoS_Session.h:
