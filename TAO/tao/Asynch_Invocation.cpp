@@ -46,26 +46,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Asynch_Invocation_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (TAO_Stub *stub,
-                                                        const char *operation,
-                                                        TAO_ORB_Core* orb_core)
-  : TAO_GIOP_Invocation (stub,
-                         operation,
-                         orb_core)
-{
-}
-
-TAO_GIOP_Asynch_Invocation::~TAO_GIOP_Asynch_Invocation (void)
-{
-}
-
-// ****************************************************************
-
 void
 TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->TAO_GIOP_Asynch_Invocation::start (ACE_TRY_ENV);
+  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
   // If there was a previous reply, cleanup its state first.
@@ -242,7 +227,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Asynch_Invocation::invoke (1, ACE_TRY_ENV);
+  retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)

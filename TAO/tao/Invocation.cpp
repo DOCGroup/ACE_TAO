@@ -85,8 +85,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  //if (this->transport_ != 0)
-  //this->transport_->idle ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -249,8 +247,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   return TAO_INVOKE_OK;
 }
 
-// ****************************************************************
-
 int
 TAO_GIOP_Invocation::close_connection (void)
 {
@@ -364,6 +360,12 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 }
 
 // ****************************************************************
+
+TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
+{
+  if (this->transport_ != 0)
+    this->transport_->idle ();
+}
 
 void
 TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
@@ -706,6 +708,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
+TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
+{
+  if (this->transport_ != 0)
+    this->transport_->idle ();
+}
+
 void
 TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -724,8 +732,13 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-// Send request, block until any reply comes back
+TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
+{
+  if (this->transport_ != 0)
+    this->transport_->idle ();
+}
 
+// Send request, block until any reply comes back. 
 void
 TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

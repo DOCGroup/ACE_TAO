@@ -318,6 +318,8 @@ public:
 
     TAO_AMI_ARGUMENT_INVOKE_CS,
 
+    TAO_AMI_HANDLER_SKELETON_CS,
+
     // Emitting code for root.
     TAO_ROOT_CH,
     TAO_ROOT_CI,
