@@ -57,7 +57,8 @@ protected:
                        int grp_id = -1,
                        void *stack = 0,
                        size_t stack_size = 0,
-                       ACE_Task_Base *task = 0);
+                       ACE_Task_Base *task = 0,
+                       bool inherit_priority = false);
 
   int flags_;
 };
