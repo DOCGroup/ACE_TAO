@@ -1,3 +1,13 @@
+Tue Jun 18 15:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
+	  No AMH ExceptionHolder valuetypes' raise operations need the
+	  CORBA Environment variable.  Changed code so that the generated
+	  method declarations for AMH ExceptionHolders reflect this.
+	  Thanks also to Craig Rodrigues <crodrigu@bbn.com> for pointing
+	  this out. The IDL compiler also generates better formatted code
+	  for the raise operation now.
+
 Tue Jun 18 13:54:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
