@@ -1,3 +1,10 @@
+Thu May 20 21:28:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Fixed a few MSVC warnings and prefixed the Direction enumeration
+	  to DIR_ since IN,OUT and INOUT are MSVC keywords. 
+
+
 Thu May 20 21:09:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.cpp:
