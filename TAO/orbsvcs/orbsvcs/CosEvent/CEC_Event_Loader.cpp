@@ -425,16 +425,16 @@ TAO_CEC_Event_Loader::fini (void)
       // Do Nothing
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-
-  ACE_TRY
+  ACE_TRY_EX (foo)
     {
       // Unbind the Naming Service
       if (this->bind_to_naming_service_)
         {
           this->naming_context_->unbind (this->channel_name_
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (foo);
         }
 
       // Since we created them, we also have to delete them.
@@ -452,6 +452,7 @@ TAO_CEC_Event_Loader::fini (void)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
