@@ -176,12 +176,12 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
       
-      /*
+
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       ami_test_var->sendc_set_yadda (the_handler_var.in (),
                                      4711,
                                      ACE_TRY_ENV);
@@ -190,7 +190,6 @@ main (int argc, char *argv[])
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      */
 
       // End test of attributes
 
@@ -207,11 +206,14 @@ main (int argc, char *argv[])
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
 
+      //while (orb->work_pending())
+      //  orb->perform_work ();
+   
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       //if (shutdown_flag)
       //  ami_test_var->shutdown ();
     }
