@@ -30,7 +30,7 @@ ifndef TAO_ORBSVCS
                 Sched \
                 Event \
                 CosEvent \
-		Concurrency
+                Concurrency
 
   # Old versions of gcc cannot compile these services
   ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
@@ -42,11 +42,11 @@ ifndef TAO_ORBSVCS
 
     # Trader uses DynAny which is disabled when compiling with minimum
     # CORBA support.  LifeCycle, Log, AV and Notify depend on Trader
-    # so don't build them either.
-    TAO_ORBSVCS += Trader LifeCycle Log AV
+    # so don't build them either, with minimum CORBA.
+    TAO_ORBSVCS += Trader Log AV
 
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      TAO_ORBSVCS += Notify
+      TAO_ORBSVCS += LifeCycle Notify
     endif # ACE_HAS_GNUG_PRE_2_8
 
   endif # minimum_corba
