@@ -157,8 +157,9 @@ protected:
   RtecEventChannelAdmin::EventChannel_var rmt_ec_;
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
 
-  /// Our local and remote RT_Infos.
+  /// Our remote RT_Infos.
   RtecBase::handle_t rmt_info_;
+  /// Our local RT_Infos.
   RtecBase::handle_t lcl_info_;
 
   /// Our consumer personality....

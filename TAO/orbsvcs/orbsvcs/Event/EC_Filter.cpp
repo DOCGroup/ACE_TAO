@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_Filter.h"
+#include "EC_QOS_Info.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Filter.i"
