@@ -192,6 +192,9 @@ ACE_TAG       = -ta $(ACE_TAG_VALUE)
 TAO_TAG_VALUE = $(shell head -1 TAO/VERSION | perl -ne \
                 's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";')
 TAO_TAG       = -tt $(TAO_TAG_VALUE)
+CIAO_TAG_VALUE = $(shell head -1 TAO/CIAO/VERSION | perl -ne \
+                's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "CIAO-$$_";')
+CIAO_TAG       = -tc $(CIAO_TAG_VALUE)
 APPLY_NEW_TAG      = tag
 CHECK              =
 GENERATE_MAN_PAGES = -g
