@@ -1,3 +1,8 @@
+Sun Jun 27 10:22:03 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Logging_Strategy.h: Clarified the use of the ACE_Reactor.
+	  Thanks to Randy Secrest <secrest@ieee.org> for motivating this.
+
 Sat Jun 26 11:44:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/XtReactor_Test.cpp:

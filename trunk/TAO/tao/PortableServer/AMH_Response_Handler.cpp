@@ -47,28 +47,25 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
       {
         return;
       }
-    // It would be slightly more efficient to *NOT* release the lock
-    // before calling _tao_rh_send_exception(), but this code is way
-    // out of the critical path.
-  }
 
-  // Is sending the exception to the client fails, then we just
-  // give up, release the transport and return.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
-                             (TAO_AMH_REPLY_LOCATION_CODE,
-                              EFAULT),
-                             CORBA::COMPLETED_NO);
-      this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHALL
-    {
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
+    // If sending the exception to the client fails, then we just give
+    // up, release the transport and return.
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+      {
+        CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
+                               (TAO_AMH_REPLY_LOCATION_CODE,
+                                EFAULT),
+                               CORBA::COMPLETED_NO);
+        this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHALL
+      {
+      }
+    ACE_ENDTRY;
+    ACE_CHECK;
+  }
 }
 
 void
