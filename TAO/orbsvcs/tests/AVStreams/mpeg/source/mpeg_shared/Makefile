@@ -6,11 +6,11 @@
 
 MAKEFILE = Makefile
 LIBNAME  = libmpeg_shared
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
+LIB2     = $(LIBNAME).a
+SHLIB2   = $(LIBNAME).$(SOEXT)
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 #TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
@@ -37,20 +37,21 @@ CPPFLAGS += -I$(MPEG_ROOT)
 
 LIBS 	+= -lTAO -lACE
 
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+else
+  override INSTALL =
+endif # ! AV
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifneq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BUILD =
-  override INSTALL =
-endif # ! AV
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

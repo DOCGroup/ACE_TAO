@@ -10,7 +10,7 @@ endif
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-FILES= vcr
+FILES = vcr
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -19,20 +19,20 @@ LIBS 	+= -lTAO -lACE -lorbsvcs
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
+BIN2 = vcr
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # AV
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = vcr
-endif # AV
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -49,7 +49,7 @@ LDFLAGS +=  -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE 
 CPPFLAGS += -i -DSH_MEM -DNDEBUG -I/project/doc/pkg/X11/include -L/project/doc/pkg/X11/lib
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o Log obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
