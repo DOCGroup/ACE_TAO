@@ -1,3 +1,12 @@
+Thu Jan 23 11:30:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IFR_Client/Container_i.cpp (store_label):
+
+          Changed a static cast from ulonglong to u_int to use
+          ACE_U64_TO_U32. Thanks to Rob Andzik <andzik@rtlogic.com>
+          for reporting the problem on VxWorks and Carlos O'Ryan
+          <coryan@atdesk.com> for pointing out the fix.
+
 Thu Jan 23 10:54:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp (get_reference):
