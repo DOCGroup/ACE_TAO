@@ -333,6 +333,8 @@ libACE_Streams_la_SOURCES = \
   CDR_Base.cpp \
   CDR_Stream.cpp \
   Codeset_IBM1047.cpp \
+  Codeset_Registry.cpp \
+  Codeset_Registry_db.cpp \
   Message_Queue.cpp \
   Task.cpp
 
@@ -554,6 +556,7 @@ HEADER_FILES = \
   Capabilities.h \
   Cleanup_Strategies_T.h \
   Codeset_IBM1047.h \
+  Codeset_Registry.h \
   Configuration.h \
   Configuration_Import_Export.h \
   Connector.h \
