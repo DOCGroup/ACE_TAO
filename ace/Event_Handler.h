@@ -27,6 +27,7 @@
 class ACE_Message_Block;
 class ACE_Reactor;
 class ACE_Thread_Manager;
+class ACE_Process;
 
 typedef u_long ACE_Reactor_Mask;
 
@@ -106,6 +107,9 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
   // Called when timer expires.
+
+  virtual int handle_exit (ACE_Process *);
+  // Called when a process exits.
 
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);

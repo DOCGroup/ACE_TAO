@@ -1,3 +1,21 @@
+Sat Sep  4 14:43:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Signal_Test.cpp: Finished off the test so that it now
+	  works for all the various combinations of synchronous and
+ 	  asynchronous tests.  Now, to make it work on Linux...
+
+	* ace/OS.h: The use of ACE_static_cast in the ACE_FACTORY_DEFINE macro
+	  didn't make any sense, so I've replaced it with
+ 	  ACE_dynamic_cast.
+
+	* ace/Process_Manager.*,
+  	* ace/Process.*,
+	* ace/OS.h:
+	  Created a new typedef called ACE_exitcode that factors out the
+ 	  difference between Win32 and UNIX exit codes from wait()
+ 	  operations.  Thanks to Dave Madden <dhm@mersenne.com> for
+ 	  suggesting this.
+
 Sat Sep 04 12:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (shm_open,close,filesize,ftruncate,mmap): moved
@@ -5,6 +23,29 @@ Sat Sep 04 12:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
           being used by ACE_OS::sema_init.
 
 Fri Sep  3 11:57:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Event_Handler.h (ACE_Event_Handler): Added the new
+	  handle_exit() method, which is called by the ACE_Process_Manager
+ 	  when a process exits.  Thanks to Dave Madden <dhm@mersenne.com>
+ 	  for contributing this.
+
+	* ace/Process.*,
+	  ace/Process_Manager.*: Integrated a new round of changes from
+ 	  Dave Madden <dhm@mersenne.com> that factor out most of the
+ 	  remaining differences between Win32 and UNIX.
+
+	* ace/OS.h,
+	* ace/config-win32-common.h: Added a #ifndef for __IBMCPP__ to
+	  make things work for Visual Age C++.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+
+	* ace/{ACE,OS}: Added ACE_HAS_UNICODE to conditionally compile the
+ 	  strnew() definition.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+
+	* ace: Added a new optimized ace-dll.icc file so that ACE will
+	  build better with IBM's Visual Age C++.  Thanks to Boris Kaminer
+ 	  <kaminer.boris@cherus.msk.ru> for contributing this.
 
         * ace/OS.h,
         * ace/config-win32-common.h: Added a #ifndef for __IBMCPP__ to

@@ -51,11 +51,9 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-//
 // Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
-// happy, it was necessary to have the definitions of the methods of 
+// happy, it was necessary to have the definitions of the methods of
 // the Accept_Strategy before the instantiations.
-//
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
