@@ -70,8 +70,8 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.i \
  $(WRAPPER_ROOT)/ace/Local_Tokens.h \
- $(WRAPPER_ROOT)/ace/Stack.h \
- $(WRAPPER_ROOT)/ace/Stack.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Local_Tokens.i \
  $(WRAPPER_ROOT)/ace/Token_Manager.i \
