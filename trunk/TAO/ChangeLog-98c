@@ -1,5 +1,8 @@
 Fri Mar 20 19:46:43 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tao/sequence_T: Added the full complement of get_buffer(),
+ 	  replace(), and release() calls to TAO's sequences.
+
 	* docs/releasenotes/index.html (href): Reformatted the DOVE 
 	  demo section of the release notes a bit.
 

@@ -70,7 +70,7 @@ protected:
   // Assume ownership and set length to 0.
 
   TAO_Base_Sequence (const TAO_Base_Sequence &rhs);
-  TAO_Base_Sequence &operator=(const TAO_Base_Sequence &rhs);
+  TAO_Base_Sequence &operator= (const TAO_Base_Sequence &rhs);
   // Copy constructor and assignment operator are protected, the
   // derived classes must provided the right semantics for the buffer
   // copy, only the static fields are actually copy.
