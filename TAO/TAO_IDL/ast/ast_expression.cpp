@@ -101,9 +101,9 @@ AST_Expression::fill_definition_details()
 AST_Expression::AST_Expression(UTL_ScopedName *nm)
 	      : pd_ec(EC_symbol),
 		pd_ev(NULL),
-		pd_n(nm),
 		pd_v1(NULL),
-		pd_v2(NULL)
+		pd_v2(NULL),
+		pd_n(nm)
 {
   fill_definition_details();
 }
@@ -113,10 +113,10 @@ AST_Expression::AST_Expression(UTL_ScopedName *nm)
  */
 AST_Expression::AST_Expression(AST_Expression *v, ExprType t)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_n(NULL),
-		pd_ev(NULL)
+		pd_n(NULL)
 {
   fill_definition_details();
 
@@ -132,9 +132,9 @@ AST_Expression::AST_Expression(AST_Expression *v, ExprType t)
 AST_Expression::AST_Expression(ExprComb c, AST_Expression *ev1,
 			       AST_Expression *ev2)
 	      : pd_ec(c),
+		pd_ev(NULL),
 		pd_v1(ev1),
 		pd_v2(ev2),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -145,9 +145,9 @@ AST_Expression::AST_Expression(ExprComb c, AST_Expression *ev1,
  */
 AST_Expression::AST_Expression(short sv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -162,9 +162,9 @@ AST_Expression::AST_Expression(short sv)
  */
 AST_Expression::AST_Expression(unsigned short usv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -179,9 +179,9 @@ AST_Expression::AST_Expression(unsigned short usv)
  */
 AST_Expression::AST_Expression(long lv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -196,9 +196,9 @@ AST_Expression::AST_Expression(long lv)
  */
 AST_Expression::AST_Expression(long lv, ExprType t)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -213,9 +213,9 @@ AST_Expression::AST_Expression(long lv, ExprType t)
  */
 AST_Expression::AST_Expression(unsigned long ulv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -230,9 +230,9 @@ AST_Expression::AST_Expression(unsigned long ulv)
  */
 AST_Expression::AST_Expression(float fv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -247,9 +247,9 @@ AST_Expression::AST_Expression(float fv)
  */
 AST_Expression::AST_Expression(double dv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -264,9 +264,9 @@ AST_Expression::AST_Expression(double dv)
  */
 AST_Expression::AST_Expression(char cv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -281,9 +281,9 @@ AST_Expression::AST_Expression(char cv)
  */
 AST_Expression::AST_Expression(unsigned char ov)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -298,9 +298,9 @@ AST_Expression::AST_Expression(unsigned char ov)
  */
 AST_Expression::AST_Expression(String *sv)
 	      : pd_ec(EC_none),
+		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
-		pd_ev(NULL),
 		pd_n(NULL)
 {
   fill_definition_details();
@@ -371,7 +371,12 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.sval = (short) ev->u.oval;
       ev->et = AST_Expression::EV_short;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
     case AST_Expression::EV_string:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
     case AST_Expression::EV_none:
@@ -425,6 +430,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.usval = (unsigned short) ev->u.oval;
       ev->et = AST_Expression::EV_ushort;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -473,6 +483,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.lval = (long) ev->u.oval;
       ev->et = AST_Expression::EV_long;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -525,6 +540,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.ulval = (unsigned long) ev->u.oval;
       ev->et = AST_Expression::EV_ulong;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -567,6 +587,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.bval = (ev->u.oval == 0) ? I_FALSE : I_TRUE;
       ev->et = AST_Expression::EV_bool;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -611,6 +636,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.fval = (float) ev->u.oval;
       ev->et = AST_Expression::EV_float;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -653,6 +683,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.dval = (double) ev->u.oval;
       ev->et = AST_Expression::EV_double;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -709,6 +744,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->u.cval = (char) ev->u.oval;
       ev->et = AST_Expression::EV_char;
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -765,6 +805,11 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return ev;
     case AST_Expression::EV_octet:
       return ev;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
     case AST_Expression::EV_string:
     case AST_Expression::EV_any:
     case AST_Expression::EV_void:
@@ -794,6 +839,12 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     default:
       return NULL;
     }
+  case AST_Expression::EV_longlong:
+  case AST_Expression::EV_ulonglong:
+  case AST_Expression::EV_longdouble:
+  case AST_Expression::EV_wchar:
+  case AST_Expression::EV_wstring:
+    return NULL;
   }
 }
 
@@ -1062,6 +1113,11 @@ AST_Expression::coerce(AST_Expression::ExprType t)
 
   copy->et = pd_ev->et;
   switch (pd_ev->et) {
+  case EV_longlong:
+  case EV_ulonglong:
+  case EV_longdouble:
+  case EV_wchar:
+  case EV_wstring:
   case EV_void:
   case EV_none:
   case EV_any:
@@ -1193,7 +1249,7 @@ AST_Expression::operator==(AST_Expression *vc)
   switch (pd_ev->et) {
   case EV_short:
     return (pd_ev->u.sval == vc->ev()->u.sval) ? I_TRUE : I_FALSE;
- case EV_ushort:
+  case EV_ushort:
     return (pd_ev->u.usval == vc->ev()->u.usval) ? I_TRUE : I_FALSE;
   case EV_long:
     return (pd_ev->u.lval == vc->ev()->u.lval) ? I_TRUE : I_FALSE;
@@ -1219,6 +1275,11 @@ AST_Expression::operator==(AST_Expression *vc)
       return I_FALSE;
     else
       return (pd_ev->u.strval == vc->ev()->u.strval) ? I_TRUE : I_FALSE;
+  case EV_longlong:
+  case EV_ulonglong:
+  case EV_longdouble:
+  case EV_wchar:
+  case EV_wstring:
   case EV_any:
   case EV_void:
   case EV_none:
@@ -1266,6 +1327,11 @@ AST_Expression::compare(AST_Expression *vc)
       return I_FALSE;
     else
       return (pd_ev->u.strval == vc->ev()->u.strval) ? I_TRUE : I_FALSE;
+  case EV_longlong:
+  case EV_ulonglong:
+  case EV_longdouble:
+  case EV_wchar:
+  case EV_wstring:
   case EV_any:
   case EV_void:
   case EV_none:
@@ -1339,6 +1405,11 @@ dump_expr_val(ostream &o, AST_Expression::AST_ExprValue *ev)
   case AST_Expression::EV_string:
     if (ev->u.strval != NULL)
       ev->u.strval->dump(o);
+  case AST_Expression::EV_longlong:
+  case AST_Expression::EV_ulonglong:
+  case AST_Expression::EV_longdouble:
+  case AST_Expression::EV_wchar:
+  case AST_Expression::EV_wstring:
   case AST_Expression::EV_any:
   case AST_Expression::EV_none:
   case AST_Expression::EV_void:
