@@ -271,6 +271,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
   else
     {
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+      this->base_addr_ = this->mmap_.addr ();
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */

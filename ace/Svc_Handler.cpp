@@ -159,10 +159,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::shutdown (void)
       this->reactor ()->cancel_timer (this);
 
       if (this->peer ().get_handle () != ACE_INVALID_HANDLE)
-        {
-          // Remove self from reactor.
-          this->reactor ()->remove_handler (this, mask);
-        }
+        // Remove self from reactor.
+        this->reactor ()->remove_handler (this, mask);
     }
 
   // Remove self from the recycler.
