@@ -49,10 +49,16 @@ while ( $#ARGV >= 0)
     elsif ($ARGV[0] =~ m/^-remote/i) {
         $local = 0;
     }
-    elsif ($ARGV[0] =~ m/^-assmbly/i) {
+    elsif ($ARGV[0] =~ m/^-assembly/i) {
         shift;
         if ($#ARGV >= 0) {
             $assembly = PerlACE::LocalFile ("$ARGV[0]");
+        }
+    }
+    elsif ($ARGV[0] =~ m/^-work_step/i) {
+        shift;
+        if ($#ARGV >= 0) {
+            $work_step = $ARGV[0];
         }
     }
     else {
