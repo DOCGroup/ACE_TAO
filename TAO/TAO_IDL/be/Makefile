@@ -45,7 +45,7 @@ BE_FILES	= \
 		be_factory \
 		be_sunsoft \
 		be_decl \
-		be_scope 
+		be_scope
 
 FILES	 = $(BE_FILES)
 
@@ -54,7 +54,7 @@ LOBJ    = $(addsuffix .o,$(FILES))
 SHOBJ   = $(addsuffix .so,$(FILES))
 
 
-LDLIBS  =  -lbe
+LDLIBS  =  -lACE
 LIBS	= -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
