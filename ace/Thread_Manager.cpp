@@ -154,7 +154,7 @@ ACE_Thread_Descriptor::terminate ()
 #endif /* ACE_WIN32 */
            }
 #endif /* ! VXWORKS */
-         
+
          // Remove thread descriptor from the table.
          if (this->tm_ != 0)
            tm_->remove_thr (this, close_handle);
@@ -1480,15 +1480,18 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
     // Didn't find the thread we want or the thread is not joinable.
   }
 
-# if defined (__xlC__)
+# if defined (_AIX)
   // The AIX xlC compiler does not match the proper function here - it
   // confuses ACE_Thread::join(ACE_thread_t, ACE_thread_t *, void **=0) and
   // ACE_Thread::join(ACE_hthread_t, void **=0).  At least at 3.1.4.7 and .8.
   // The 2nd arg is ignored for pthreads anyway.
+
+  // And, g++ on AIX needs the three-arg thr_join, also, to pick up the
+  // proper version from the AIX libraries.
   if (ACE_Thread::join (tdb.thr_handle_, &tdb.thr_handle_, status) == -1)
-# else
+# else  /* ! _AIX */
   if (ACE_Thread::join (tdb.thr_handle_, status) == -1)
-# endif /* __xlC__ */
+# endif /* ! _AIX */
     return -1;
 
 # if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
