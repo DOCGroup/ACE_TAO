@@ -29,12 +29,10 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export RequestProcessingStrategyAOMOnly
-      : public virtual RequestProcessingStrategy
+      : public RequestProcessingStrategy
     {
     public:
       RequestProcessingStrategyAOMOnly (void);
-
-      virtual ~RequestProcessingStrategyAOMOnly (void);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

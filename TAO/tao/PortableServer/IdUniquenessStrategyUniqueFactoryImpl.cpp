@@ -12,10 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessStrategyUniqueFactoryImpl::~IdUniquenessStrategyUniqueFactoryImpl (void)
-    {
-    }
-
     IdUniquenessStrategy*
     IdUniquenessStrategyUniqueFactoryImpl::create (
       ::PortableServer::IdUniquenessPolicyValue value)

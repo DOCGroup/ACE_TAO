@@ -28,11 +28,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export IdAssignmentStrategy :
-       public virtual Policy_Strategy
+       public Policy_Strategy
     {
     public:
-      virtual ~IdAssignmentStrategy (void);
-
       virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);

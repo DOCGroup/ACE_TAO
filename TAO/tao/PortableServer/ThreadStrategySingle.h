@@ -38,11 +38,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ThreadStrategySingle :
-       public virtual ThreadStrategy
+       public ThreadStrategy
     {
     public:
-      virtual ~ThreadStrategySingle (void);
-
       virtual int enter ();
 
       virtual int exit ();

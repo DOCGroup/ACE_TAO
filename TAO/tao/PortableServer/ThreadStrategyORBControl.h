@@ -29,11 +29,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ThreadStrategyORBControl
-       : public virtual ThreadStrategy
+       : public ThreadStrategy
     {
     public:
-      virtual ~ThreadStrategyORBControl (void);
-
       virtual int enter ();
 
       virtual int exit ();

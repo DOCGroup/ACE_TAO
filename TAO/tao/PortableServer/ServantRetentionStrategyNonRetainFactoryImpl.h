@@ -30,11 +30,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ServantRetentionStrategyNonRetainFactoryImpl
-       : public virtual ServantRetentionStrategyFactory
+       : public ServantRetentionStrategyFactory
     {
     public:
-      virtual ~ServantRetentionStrategyNonRetainFactoryImpl (void);
-
       /// Create a new servant retention strategy
       virtual ServantRetentionStrategy* create (
         ::PortableServer::ServantRetentionPolicyValue value);

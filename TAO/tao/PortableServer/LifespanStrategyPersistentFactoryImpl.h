@@ -28,11 +28,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export LifespanStrategyPersistentFactoryImpl
-      : public virtual LifespanStrategyFactory
+      : public LifespanStrategyFactory
     {
     public:
-      virtual ~LifespanStrategyPersistentFactoryImpl (void);
-
       /// Create a new strategy
       virtual LifespanStrategy* create (
         ::PortableServer::LifespanPolicyValue value);

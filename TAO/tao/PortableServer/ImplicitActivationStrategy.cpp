@@ -10,10 +10,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ImplicitActivationStrategy::~ImplicitActivationStrategy (void)
-    {
-    }
-
     void
     ImplicitActivationStrategy::strategy_init (
       TAO_Root_POA * /*poa*/

@@ -22,10 +22,6 @@ namespace TAO
     {
     }
 
-    LifespanStrategyTransient::~LifespanStrategyTransient ()
-    {
-    }
-
     void
     LifespanStrategyTransient::notify_startup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {

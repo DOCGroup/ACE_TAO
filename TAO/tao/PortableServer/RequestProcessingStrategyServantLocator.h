@@ -39,12 +39,10 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export RequestProcessingStrategyServantLocator
-      : public virtual RequestProcessingStrategyServantManager
+      : public RequestProcessingStrategyServantManager
     {
     public:
       RequestProcessingStrategyServantLocator (void);
-
-      virtual ~RequestProcessingStrategyServantLocator (void);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 

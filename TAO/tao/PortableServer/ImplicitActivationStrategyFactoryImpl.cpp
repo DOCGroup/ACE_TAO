@@ -13,42 +13,34 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ImplicitActivationStrategyFactoryImpl::~ImplicitActivationStrategyFactoryImpl (void)
-    {
-    }
     ImplicitActivationStrategy*
     ImplicitActivationStrategyFactoryImpl::create (
       ::PortableServer::ImplicitActivationPolicyValue value)
     {
       ImplicitActivationStrategy* strategy = 0;
+      const char * strategy_name = 0;
 
       switch (value)
       {
         case ::PortableServer::IMPLICIT_ACTIVATION :
         {
-          strategy =
-            ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyImplicit");
-
-          if (strategy == 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("ImplicitActivationStrategyImplicit")));
+          strategy_name = "ImplicitActivationStrategyImplicit";
           break;
         }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
         {
-          strategy =
-            ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyExplicit");
-
-          if (strategy == 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("ImplicitActivationStrategyExplicit")));
+          strategy_name = "ImplicitActivationStrategyExplicit";
           break;
         }
       }
+
+      strategy =
+        ACE_Dynamic_Service<ImplicitActivationStrategy>::instance (strategy_name);
+
+      if (strategy == 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
+                    strategy_name));
 
       return strategy;
     }

@@ -19,10 +19,6 @@ namespace TAO
     {
     }
 
-    RequestProcessingStrategyAOMOnly::~RequestProcessingStrategyAOMOnly()
-    {
-    }
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     PortableServer::ServantManager_ptr

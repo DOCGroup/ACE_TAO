@@ -30,7 +30,7 @@ namespace TAO
     class ThreadStrategy;
 
     class TAO_PortableServer_Export ThreadStrategyFactory
-       : public virtual StrategyFactory
+       : public StrategyFactory
     {
     public:
       /// Create a new servant retention strategy

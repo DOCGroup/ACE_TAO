@@ -12,10 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdAssignmentStrategyFactoryImpl::~IdAssignmentStrategyFactoryImpl (void)
-    {
-    }
-
     IdAssignmentStrategy*
     IdAssignmentStrategyFactoryImpl::create (
       ::PortableServer::IdAssignmentPolicyValue value)
