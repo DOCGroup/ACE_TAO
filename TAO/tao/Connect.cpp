@@ -261,11 +261,10 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 void
 TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
-  TAO_SVC_HANDLER *this_ptr = this;
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
-  ACE_TIMEPROBE ("  -> Connection_Handler::send_response - start");
+  TAO_SVC_HANDLER *this_ptr = this;
   TAO_GIOP::send_request (this_ptr, output);
-  ACE_TIMEPROBE ("  -> Connection_Handler::send_response - end");
 }
 
 int
@@ -277,7 +276,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // 2. construct a complete request
   // 3. dispatch that request and return any required reply and errors
 
-  ACE_TIMEPROBE ("  -> Connection_Handler::handle_input");
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
@@ -337,7 +336,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (response_required || error_encountered)
     this->send_response (output);
 
-  ACE_TIMEPROBE ("  -> Connection_Handler::handle_input done");
   return result;
 }
 
@@ -406,7 +404,7 @@ int
 TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 					     int is_twoway)
 {
-  ACE_TIMEPROBE ("  -> Client_Connection_Handler::send_request - start");
+  ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -452,7 +450,6 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       this->expecting_response_ = 0;
     }
 
-  ACE_TIMEPROBE ("  -> Client_Connection_Handler::send_request - done");
   return 0;
 }
 

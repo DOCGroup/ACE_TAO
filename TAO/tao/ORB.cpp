@@ -192,10 +192,21 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     return -1;
 
   // Loop "forever" handling client requests.
-
+  
+  const int max_iterations = 100;
+  int counter = 0;
   while (this->should_shutdown_ == 0)
     {
-      ACE_TIMEPROBE ("  -> CORBA_ORB::run handling events");
+      counter++;
+      if (counter == max_iterations)
+        {
+          ACE_TIMEPROBE_PRINT_USING_TABLE (TAO_Timeprobe_Description);
+          ACE_TIMEPROBE_RESET;
+          counter = 0;
+        }
+
+      ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
+
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
@@ -206,7 +217,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           /* NOTREACHED */
         default: // Some handlers were dispatched, so keep on processing
                  // requests until we're told to shutdown .
-          ACE_TIMEPROBE ("  -> CORBA_ORB::run events handled");
           break;
           /* NOTREACHED */
         }

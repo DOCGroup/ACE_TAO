@@ -1,67 +1,114 @@
 // $Id$
 
-#if !defined (ACE_TIMEPROBE_H)
-#define ACE_TIMEPROBE_H
+//#define ACE_COMPILE_TIMEPROBES
+//#define ACE_ENABLE_TIMEPROBES
+//#define ACE_MT_TIMEPROBES
+//#define ACE_TSS_TIMEPROBES
 
-#include "ace/Synch.h"
+#include "ace/Timeprobe.h"
 
-class ACE_Timeprobe
-{
-  // @@ Please comment me.
-public:
-  static ACE_Timeprobe &instance (void);
+static const char *TAO_Timeprobe_Description[] = 
+{ 
 
-  void timeprobe (const char *id);
+  "TAO Timeprobe Description Table",
 
-  void print_times (void) const;
+  "GIOP::send_request - start",
+  "GIOP::send_request - end",
 
-  void reset (void);
+  "GIOP::recv_request - start",
+  "GIOP::recv_request - end",
 
-  void destroy (void);
+  "GIOP::read_buffer - start",
+  "GIOP::read_buffer - end",
 
-private:
-  ACE_Timeprobe (void);
-  ~ACE_Timeprobe (void);
+  "GIOP::RequestHeader_init - start",
+  "GIOP::RequestHeader_init - end",
 
-  ACE_Timeprobe (const ACE_Timeprobe &); 
-  // Not implemented.
+  "GIOP::LocateRequestHeader_init - start",
+  "GIOP::LocateRequestHeader_init - end",
 
-private:
-  static ACE_Timeprobe *instance_;
+  "Server_Connection_Handler::send_response - start",
+  "Server_Connection_Handler::send_response - end",
 
-  enum { SLOTS = 8192 };
+  "Server_Connection_Handler::handle_input - start",
+  "Server_Connection_Handler::handle_input - end",
 
-  ACE_SYNCH_MUTEX mutex_;
+  "Client_Connection_Handler::send_request - start",
+  "Client_Connection_Handler::send_request - end",
 
-  u_int current_slot_;
+  "CORBA_ORB::run - start",
+  "CORBA_ORB::run - end",
 
-  struct timeprobe_t
-  {
-    const char *id_;
-    ACE_hrtime_t time_;
-    ACE_thread_t thread_;
-  };
+  "POA::locate_poa_i - start",
+  "POA::locate_poa_i - end",
 
-  timeprobe_t timeprobes [SLOTS];
+  "POA::locate_poa_and_servant_i - start",
+  "POA::locate_poa_and_servant_i - end",
 
-  // @@ Don't we have a macro that does this?
-  friend class null_friend_to_avoid_compiler_warning_about_no_friends;
+  "POA::find_servant - start",
+  "POA::find_servant - end",
+
+  "POA::dispatch_servant - start",
+  "POA::dispatch_servant - end",
+
+  "POA::parse_key - start",
+  "POA::parse_key - end",
+
+  "Servant::_dispatch - start",
+  "Servant::_dispatch - end",
+
+
 };
 
-#if defined (ACE_ENABLE_TIMEPROBES)
-#  define ACE_TIMEPROBE_RESET ACE_Timeprobe::instance ().reset ()
-#  define ACE_TIMEPROBE(id) ACE_Timeprobe::instance ().timeprobe (id)
-#  define ACE_TIMEPROBE_PRINT ACE_Timeprobe::instance ().print_times ()
-#  define ACE_TIMEPROBE_FINI ACE_Timeprobe::instance ().destroy ()
-#else
-#  define ACE_TIMEPROBE_RESET
-#  define ACE_TIMEPROBE(id)
-#  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_FINI
-#endif /* ACE_ENABLE_TIMEPROBES */
+enum 
+{
+  TAO_TIMEPROBE_DESCRIPTION_TABLE,
 
-#if defined (__ACE_INLINE__)
-#include "Timeprobe.i"
-#endif /* __ACE_INLINE__ */
+  TAO_GIOP_SEND_REQUEST_START,
+  TAO_GIOP_SEND_REQUEST_END,
 
-#endif /* ACE_TIMEPROBE_H */
+  TAO_GIOP_RECV_REQUEST_START,
+  TAO_GIOP_RECV_REQUEST_END,
+
+  TAO_GIOP_READ_BUFFER_START,
+  TAO_GIOP_READ_BUFFER_END,
+
+  TAO_GIOP_REQUEST_HEADER_INIT_START,
+  TAO_GIOP_REQUEST_HEADER_INIT_END,
+
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END,
+
+  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START,
+  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
+
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
+
+  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+
+  TAO_CORBA_ORB_RUN_START,
+  TAO_CORBA_ORB_RUN_END,
+
+  TAO_POA_LOCATE_POA_I_START,
+  TAO_POA_LOCATE_POA_I_END,
+
+  TAO_POA_LOCATE_POA_AND_SERVANT_I_START,
+  TAO_POA_LOCATE_POA_AND_SERVANT_I_END,
+
+  TAO_POA_FIND_SERVANT_START,
+  TAO_POA_FIND_SERVANT_END,
+
+  TAO_POA_DISPATCH_SERVANT_START,
+  TAO_POA_DISPATCH_SERVANT_END,
+
+  TAO_POA_PARSE_KEY_START,
+  TAO_POA_PARSE_KEY_END,
+
+  TAO_SERVANT_DISPATCH_START,
+  TAO_SERVANT_DISPATCH_END,
+
+  TAO_LAST_TIMEPROBE_ENTRY
+
+};
