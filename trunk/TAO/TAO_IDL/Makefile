@@ -110,6 +110,7 @@ FILES = tao_idl \
 	be/be_scope \
 	be/be_visitor \
 	be/be_visitor_args \
+	be/be_visitor_array \
 	be/be_visitor_attribute \
 	be/be_visitor_constant \
 	be/be_visitor_context \

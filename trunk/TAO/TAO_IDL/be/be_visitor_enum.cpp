@@ -216,8 +216,8 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << node->name () << " _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", &"
-      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
+      << "_tao_any.replace (" << node->tc_name () << ", new "
+      << node->name () << "(_tao_elem), 1, _tao_env);" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "

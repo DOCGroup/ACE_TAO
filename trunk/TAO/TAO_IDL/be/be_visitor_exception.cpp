@@ -1090,8 +1090,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << node->name () << " &_tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", &"
-      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
+      << "_tao_any.replace (" << node->tc_name () << ", new "
+      << node->name () << "(_tao_elem), 1, _tao_env);" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
@@ -1099,7 +1099,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
+      << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "

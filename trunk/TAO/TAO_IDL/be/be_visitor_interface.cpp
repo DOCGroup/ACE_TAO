@@ -1966,7 +1966,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
+      << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
@@ -2111,7 +2111,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
   *os << be_uidt << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
-      << "PortableServer::POA_ptr poa_;" << be_nl
+      << "PortableServer::POA_var poa_;" << be_nl
       << "CORBA::Boolean rel_;" << be_nl << be_nl
       << "// copy and assignment are not allowed" << be_nl
       << tiename << " (const " << tiename << " &);" << be_nl
@@ -2255,11 +2255,18 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename << "<T>::_default_POA (CORBA::Environment &env)" << be_nl
       << "{" << be_idt_nl
-      << "if (!CORBA::is_nil (this->poa_))" << be_idt_nl
-      << "return this->poa_;" << be_uidt_nl
+      << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
+      << "return PortableServer::POA::_duplicate (this->poa_.in ());"
+      << be_uidt_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();" << be_nl
+      << "PortableServer::POA_var result = poa->_this (env);" << be_nl
+      << "if (env.exception () != 0)" << be_idt_nl
+      << "return PortableServer::POA::_nil ();" << be_uidt_nl
       << "else" << be_idt_nl
-      << "return TAO_ORB_Core_instance ()->root_poa ();"
-      << be_uidt << be_uidt_nl
+      << "return result._retn ();" << be_uidt << be_uidt_nl
+      << "}" << be_uidt
       << "}\n\n";
 
   // generate code for the operations in the scope

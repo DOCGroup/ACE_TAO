@@ -591,14 +591,14 @@ be_visitor_typedef_ch::visit_array (be_array *node)
   be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
-  if (this->ctx_->alias ()) // typedef of a typedef
+  // is the base type an alias to an array node or an actual array node
+  if (this->ctx_->alias ())
     bt = this->ctx_->alias ();
   else
     bt = node;
 
-  if (!bt->imported () &&
-      bt->node_type () == AST_Decl::NT_array) // direct typedef of a base node
-                                              // type
+  // is our base type an array node. If so, generate code for that array node
+  if (bt->node_type () == AST_Decl::NT_array)
     {
       // let the base class visitor handle this case
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -610,30 +610,36 @@ be_visitor_typedef_ch::visit_array (be_array *node)
                              ),  -1);
         }
     }
+  else
+    {
+      // base type is simply an alias to an array node. Simply output the
+      // required typedefs
 
-  // now generate the typedefs
-  os->indent ();
-  // typedef the type and the _slice type
-  *os << "typedef " << bt->nested_type_name (scope)
-      << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-  *os << "typedef " << bt->nested_type_name (scope, "_slice")
-      << " " << tdef->nested_type_name (scope, "_slice") << ";" << be_nl;
-  // typedef the _var, _out, and _forany types
-  *os << "typedef " << bt->nested_type_name (scope, "_var")
-      << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-  *os << "typedef " << bt->nested_type_name (scope, "_out")
-      << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
-  *os << "typedef " << bt->nested_type_name (scope, "_forany")
-      << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
-  // the _alloc, _dup, and free methods
-  *os << tdef->nested_type_name (scope, "_slice") << " *"
-      << tdef->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-  *os << tdef->nested_type_name (scope, "_slice") << " *"
-      << tdef->nested_type_name (scope, "_dup") << " ("
-      << tdef->nested_type_name (scope, "_slice") << " *slice);" << be_nl;
-  *os << tdef->nested_type_name (scope, "_slice") << " *"
-      << tdef->nested_type_name (scope, "_free") << " ("
-      << tdef->nested_type_name (scope, "_slice") << " *slice);" << be_nl;
+      os->indent ();
+      // typedef the type and the _slice type
+      *os << "typedef " << bt->nested_type_name (scope)
+          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_slice")
+          << " " << tdef->nested_type_name (scope, "_slice") << ";" << be_nl;
+      // typedef the _var, _out, and _forany types
+      *os << "typedef " << bt->nested_type_name (scope, "_var")
+          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_out")
+          << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_forany")
+          << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
+      // the _alloc, _dup, copy, and free methods
+      *os << "static " << tdef->nested_type_name (scope, "_slice") << " *"
+          << tdef->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
+      *os << "static " << tdef->nested_type_name (scope, "_slice") << " *"
+          << tdef->nested_type_name (scope, "_dup") << " (const "
+          << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
+      *os << "static void " << tdef->nested_type_name (scope, "_copy") << " ("
+          << tdef->nested_type_name (scope, "_slice") << " *_tao_to, const "
+          << tdef->nested_type_name (scope, "_slice") << " *_tao_from);" << be_nl;
+      *os << "static void " << tdef->nested_type_name (scope, "_free") << " ("
+          << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
+    }
   return 0;
 }
 
@@ -1011,6 +1017,46 @@ be_visitor_typedef_ci::visit_array (be_array *node)
                              "base class visitor failed \n"
                              ),  -1);
         }
+    }
+  else
+    {
+      // generate the inline code for alloc, dup, copy, and free methods
+
+      // alloc method
+      os->indent ();
+      *os << "ACE_INLINE " << tdef->name () << "_slice *" << be_nl;
+      *os << tdef->name () << "_alloc (void)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return " << bt->name () << "_alloc ();" << be_uidt_nl;
+      *os << "}\n\n";
+
+      // dup method
+      os->indent ();
+      *os << "ACE_INLINE " << tdef->name () << "_slice *" << be_nl;
+      *os << tdef->name () << "_dup (const " << tdef->name ()
+          << "_slice *_tao_src)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return " << bt->name () << "_dup (_tao_src);" << be_uidt_nl;
+      *os << "}\n\n";
+
+      // copy method
+      os->indent ();
+      *os << "ACE_INLINE void" << be_nl;
+      *os << tdef->name () << "_copy (" << tdef->name ()
+          << "_slice *_tao_dest, const " << tdef->name ()
+          << "_slice *_tao_src)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << bt->name () << "_copy (_tao_dest, _tao_src);" << be_uidt_nl;
+      *os << "}\n\n";
+
+      // free method
+      os->indent ();
+      *os << "ACE_INLINE void" << be_nl;
+      *os << tdef->name () << "_free (" << tdef->name ()
+          << "_slice *_tao_src)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << bt->name () << "_free (_tao_src);" << be_uidt_nl;
+      *os << "}\n\n";
     }
   return 0;
 }
