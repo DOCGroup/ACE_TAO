@@ -1,3 +1,10 @@
+Wed Oct 23 16:32:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: Added a check to
+	  ensure that the contents are not compiled if the dependant
+	  libraries are not available. Thanks to Sandeep Neema
+	  <neemask@corvette.vuse.vanderbilt.edu> for reporting this.
+
 Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
