@@ -16,7 +16,6 @@ DIRS = \
         ior_corbaname \
 	Property \
         Simple_Naming \
-        Time \
 	Trading
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
