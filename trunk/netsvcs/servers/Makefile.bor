@@ -1,3 +1,4 @@
+# $Id$
 
 NAME = main
 OBJFILES = $(OBJDIR)\$(NAME).obj
