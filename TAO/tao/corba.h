@@ -106,12 +106,13 @@
 //#include "tao/xdr.h"
 
 // include all the *.i file here
-#  if defined (__ACE_INLINE__)
+#if defined (__ACE_INLINE__)
+#include "tao/cdr.i" //always
+#include "tao/typecode.i"
 #include "tao/any.i"
 #include "tao/boa.i"
 #include "tao/object.i"  // should always be
 #include "tao/orbobj.i"
-#include "tao/typecode.i"
 #include "tao/svrrqst.i"
 //#include "tao/factories.i"
 #include "tao/params.i"
@@ -119,13 +120,11 @@
 #include "tao/server_factory.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
-#include "cdr.i" //always
-#include "marshal.i" // always
-#include "iiopobj.i"
-#include "iioporb.i"
-#include "connect.i"
-#include "roa.i"
+#include "tao/marshal.i" // always
+#include "tao/iiopobj.i"
+#include "tao/iioporb.i"
+#include "tao/connect.i"
+#include "tao/roa.i"
 #endif /* __ACE_INLINE__ */
-
 
 #endif /* TAO_CORBA_H */

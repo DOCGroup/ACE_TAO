@@ -78,7 +78,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
                       CORBA::Boolean orb_owns_data) 
                       
-  : value_ (value) ,
+  : value_ (value),
     orb_owns_data_ (orb_owns_data) 
 {
   type_ = tc;
@@ -186,6 +186,7 @@ deep_copy (CORBA::TypeCode_ptr tc,
         CORBA::Principal_ptr src, dst;
 
         src = *(CORBA::Principal_ptr *) source;
+	// @@ Andy, please make sure to check for memory failure.
         dst = *(CORBA::Principal_ptr *) dest = new CORBA::Principal;
 
         // Principals are just opaque IDs ... copy them
@@ -195,6 +196,7 @@ deep_copy (CORBA::TypeCode_ptr tc,
 
         if (dst->id.length > 0) 
 	  {
+	    // @@ Andy, please make sure to check for memory failure.
 	    dst->id.buffer = new CORBA::Octet [(unsigned) dst->id.length];
 	    ACE_OS::memcpy (dst->id.buffer, src->id.buffer,
 			    (size_t) dst->id.length);
