@@ -421,9 +421,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBMulticastDiscoveryEndpoint")))
         {
-          // Specify mcast address:port for the Naming Service Multicast
-          // Discovery Protocol.
-
+          // Specify mcast address:port@network_interface for the
+          // Naming Service Multicast Discovery Protocol.
+          // If there is no colon, its only the port no.
+          // If there is a '@' also, it means that the network
+          // interface name is specified.
           this->orb_params ()->mcast_discovery_endpoint (current_arg);
 
           arg_shifter.consume_arg ();

@@ -103,6 +103,8 @@ private:
 
   ACE_SOCK_Dgram response_;
   // socket for response to the multicast
+
+  const char *mcast_nic_;
 };
 
 #include "ace/post.h"
