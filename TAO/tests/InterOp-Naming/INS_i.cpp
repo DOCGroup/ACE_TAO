@@ -27,6 +27,8 @@ char *
 INS_i::test_ins (CORBA::Environment &env)
 ACE_THROW_SPEC (( CORBA::SystemException ))
 {
+  ACE_UNUSED_ARG (env);
+
   ACE_DEBUG ((LM_DEBUG,
               "Inside Operation\n"));
   return CORBA::string_dup ("Success");
