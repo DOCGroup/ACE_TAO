@@ -585,8 +585,6 @@ ACE_EventChannel::~ACE_EventChannel (void)
 void
 ACE_EventChannel::destroy (CORBA::Environment &)
 {
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
   {
     ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
