@@ -22,6 +22,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 #include "orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export CosProperty_Hash_Key 
 {
