@@ -1,0 +1,6 @@
+project (XML_Common) : acelib {
+   depends = ace
+   sharedname = ACEXML
+   dllflags   = ACEXML_BUILD
+   libs = z zzip
+}

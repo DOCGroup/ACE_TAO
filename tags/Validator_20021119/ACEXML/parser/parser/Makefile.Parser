@@ -1,0 +1,49 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+
+MAKEFILE        = Makefile.Parser
+DEPENDENCY_FILE = .depend.Makefile.Parser
+LIB_UNCHECKED   = libACEXML_Parser.a
+SHLIB_UNCHECKED = libACEXML_Parser.$(SOEXT)
+
+
+
+FILES = \
+  Entity_Manager \
+  Parser \
+  ParserContext \
+  ParserInternals
+
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+LSRC   = $(addsuffix .cpp, $(FILES))
+ACELIB = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+CPPFLAGS     += -I../../..
+LDFLAGS      += -L../../../ace
+
+ACE_SHLIBS = -lACEXML $(ACELIB)
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/MT_Client/client.tss.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <static id="Resource_Factory" params="-ORBresources tss"/>
+</ACE_Svc_Conf>

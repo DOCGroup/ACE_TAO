@@ -1,0 +1,15 @@
+NAME = gatewayd
+OBJFILES = \
+	$(OBJDIR)\Concrete_Connection_Handlers.obj \
+	$(OBJDIR)\Config_Files.obj \
+	$(OBJDIR)\File_Parser.obj \
+	$(OBJDIR)\Gateway.obj \
+	$(OBJDIR)\Event_Channel.obj \
+	$(OBJDIR)\Event_Forwarding_Discriminator.obj \
+	$(OBJDIR)\Options.obj \
+	$(OBJDIR)\Connection_Handler.obj \
+	$(OBJDIR)\Connection_Handler_Acceptor.obj \
+	$(OBJDIR)\Connection_Handler_Connector.obj \
+	$(OBJDIR)\gatewayd.obj
+!include <$(ACE_ROOT)\apps\build.bor>
+

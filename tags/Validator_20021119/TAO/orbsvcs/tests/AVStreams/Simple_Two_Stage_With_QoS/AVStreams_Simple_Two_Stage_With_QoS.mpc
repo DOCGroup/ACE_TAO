@@ -1,0 +1,22 @@
+project(sender): avstreamsexe {
+  depends  += QoS
+  requires += rapi
+  libs     += ACE_QoS
+  exename   = sender
+
+  Source_Files {
+    sender.cpp
+  }
+}
+
+project(receiver): avstreamsexe {
+  depends  += QoS
+  requires += rapi
+  libs     += ACE_QoS
+  exename   = receiver
+
+  Source_Files {
+    receiver.cpp
+  }
+}
+
