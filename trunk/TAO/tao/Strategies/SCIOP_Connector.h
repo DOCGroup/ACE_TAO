@@ -45,7 +45,7 @@ class TAO_SCIOP_Endpoint;
  * for establishing a connection with a server and is called from the
  * Connector_Registory.
  */
-class TAO_Export TAO_SCIOP_Connector : public TAO_Connector
+class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 {
 public:
   // = Initialization and termination methods.

@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "strategies_export.h"
+
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
@@ -25,13 +27,13 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_Strategies_Export
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
+#  define TAO_EXPORT_NESTED_MACRO TAO_Strategies_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -44,7 +46,7 @@
 struct TAO_SCIOP_Endpoint_Info;
 class TAO_SCIOP_Endpoint_Info_var;
 
-struct TAO_Export TAO_SCIOP_Endpoint_Info
+struct TAO_Strategies_Export TAO_SCIOP_Endpoint_Info
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -58,7 +60,7 @@ struct TAO_Export TAO_SCIOP_Endpoint_Info
   CORBA::Short priority;
 };
 
-extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_SCIOP_Endpoint_Info;
+extern TAO_Strategies_Export CORBA::TypeCode_ptr  _tc_TAO_SCIOP_Endpoint_Info;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -113,7 +115,7 @@ class TAO_SCIOPEndpointSequence_var;
 // TAO_SCIOPEndpointSequence
 // *************************************************************
 
-class TAO_Export TAO_SCIOPEndpointSequence : public
+class TAO_Strategies_Export TAO_SCIOPEndpointSequence : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -149,7 +151,7 @@ public:
 // class TAO_SCIOPEndpointSequence_var
 // *************************************************************
 
-class TAO_Export TAO_SCIOPEndpointSequence_var
+class TAO_Strategies_Export TAO_SCIOPEndpointSequence_var
 {
 public:
   TAO_SCIOPEndpointSequence_var (void); // default constructor
@@ -183,21 +185,21 @@ private:
 #endif /* end #if !defined */
 
 
-extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_SCIOPEndpointSequence;
+extern TAO_Strategies_Export CORBA::TypeCode_ptr  _tc_TAO_SCIOPEndpointSequence;
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_SCIOP_Endpoint_Info &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_SCIOP_Endpoint_Info &);
+TAO_Strategies_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_SCIOP_Endpoint_Info &);
+TAO_Strategies_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_SCIOP_Endpoint_Info &);
 
 #if !defined _TAO_CDR_OP_TAO_SCIOPEndpointSequence_H_
 #define _TAO_CDR_OP_TAO_SCIOPEndpointSequence_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_Strategies_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const TAO_SCIOPEndpointSequence &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_Strategies_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     TAO_SCIOPEndpointSequence &
   );

@@ -23,12 +23,13 @@
 
 #if TAO_HAS_SCIOP == 1
 
+#include "strategies_export.h"
 #include "ace/Service_Config.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Export TAO_SCIOP_Lite_Protocol_Factory :
+class TAO_Strategies_Export TAO_SCIOP_Lite_Protocol_Factory :
   public TAO_Protocol_Factory
 {
 public:
@@ -62,8 +63,8 @@ private:
   int minor_;
 };
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_SCIOP_Lite_Protocol_Factory)
-ACE_FACTORY_DECLARE (TAO, TAO_SCIOP_Lite_Protocol_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)
+ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

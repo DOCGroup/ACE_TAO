@@ -35,7 +35,7 @@
  * This class defines the SCIOP profile as specified in the CORBA
  * specification.
  */
-class TAO_Export TAO_SCIOP_Profile : public TAO_Profile
+class TAO_Strategies_Export TAO_SCIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that SCIOP uses or expects.
