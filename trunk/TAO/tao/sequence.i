@@ -165,8 +165,8 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 // ****************************************************************
 
 ACE_INLINE
-TAO_String_Manager::TAO_String_Manager(char** buffer,
-				       CORBA::Boolean release)
+TAO_String_Manager::TAO_String_Manager (char **buffer,
+				        CORBA::Boolean release)
   :  ptr_ (buffer),
      release_ (release)
 {

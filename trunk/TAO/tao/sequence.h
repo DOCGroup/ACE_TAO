@@ -81,7 +81,7 @@ protected:
   CORBA::ULong length_;
   // The current number of elements in the buffer.
 
-  void* buffer_;
+  void *buffer_;
   // The buffer with all the elements, casting must be done in derived
   // classes.
 
@@ -182,13 +182,12 @@ class TAO_Export TAO_String_Manager
   //
   // = DESCRIPTION
   //   Similar to the mapping for sequences of objects (and other
-  //   pseudo objects) the mapping for sequences of strings
-  //   requires an auxiliar class or <Manager> to handle the
-  //   allocation and deallocation of the string.
-  //   The main difference with respect to String_var classes is that
-  //   automatic release is not controlled on a per-item basis, but
-  //   for the sequence as a whole.
-  //   The difference wrt Object_Manager is that strings are
+  //   pseudo objects) the mapping for sequences of strings requires
+  //   an auxiliar class or <Manager> to handle the allocation and
+  //   deallocation of the string.  The main difference with respect
+  //   to String_var classes is that automatic release is not
+  //   controlled on a per-item basis, but for the sequence as a
+  //   whole.  The difference wrt Object_Manager is that strings are
   //   duplicated using CORBA::string_copy() as opposed to
   //   T::_duplicate(), and released using CORBA::string_free()
   //   instead of CORBA::release()
@@ -204,11 +203,10 @@ public:
   // friend template<CORBA::ULong MAX>
   //   class TAO_Bounded_String_Sequence<TAO_String_Manager,MAX>;
 
-
   TAO_String_Manager (const TAO_String_Manager &);
   // copy constructor
 
-  TAO_String_Manager (char* *buffer, CORBA::Boolean release);
+  TAO_String_Manager (char **buffer, CORBA::Boolean release);
   // constructor from address of an element
 
   ~TAO_String_Manager (void);
@@ -224,8 +222,8 @@ public:
   // cast  (read-only)
 
 private:
-  char* *ptr_;
-  // address of string element from the parent's buffer
+  char **ptr_;
+  // Address of string element from the parent's buffer.
 
   CORBA::Boolean release_;
   // control memory managment semantics.
