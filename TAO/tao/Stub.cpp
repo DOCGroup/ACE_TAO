@@ -767,7 +767,11 @@ TAO_Stub::buffering_constraint (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 template class auto_ptr<TAO_Policy_Set>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
 template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -776,7 +780,11 @@ template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #pragma instantiate auto_ptr<TAO_Policy_Set>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

@@ -2203,36 +2203,45 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  template class ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
 # endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
-  template class ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>;
-  template class auto_ptr<ACE_Thread_Descriptor>;
-  template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
-  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
-  template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
-  template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-  template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
-  template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
-  template class ACE_Node<ACE_Thread_Descriptor*>;
-  template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
-  template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
-  template class ACE_Free_List<ACE_Thread_Descriptor>;
-  template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+template class auto_ptr<ACE_Thread_Descriptor>;
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
+template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
+template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
+template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
+template class ACE_Node<ACE_Thread_Descriptor*>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
+template class ACE_Free_List<ACE_Thread_Descriptor>;
+template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  #pragma instantiate ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>
-# endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
-  #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>
-  #pragma instantiate auto_ptr<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
-  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
-  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
-  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
-  #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
+#  if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+#    pragma instantiate ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>
+#   endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+#  pragma instantiate auto_ptr<ACE_Thread_Descriptor>
+#  pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
+#  pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>
+#  pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
+#  pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+#  pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>
+#  pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+#  pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
+#  pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
+#  pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
+#  pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
+#  pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

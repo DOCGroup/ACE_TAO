@@ -12,7 +12,11 @@ template class ACE_Unbounded_Queue_Iterator<ACE_TString>;
 template class ACE_Unbounded_Set<ACE_TString>;
 template class ACE_Unbounded_Set_Iterator<ACE_TString>;
 template class auto_ptr<ACE_Obstack>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
 template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 template class ACE_Message_Queue<ACE_SYNCH>;
 template class ACE_Message_Queue_Iterator<ACE_SYNCH>;
@@ -47,7 +51,11 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 #pragma instantiate ACE_Unbounded_Set<ACE_TString>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_TString>
 #pragma instantiate auto_ptr<ACE_Obstack>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #pragma instantiate ACE_Message_Queue<ACE_SYNCH>
 #pragma instantiate ACE_Message_Queue_Iterator<ACE_SYNCH>
