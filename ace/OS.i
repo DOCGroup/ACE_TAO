@@ -5866,10 +5866,11 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ::strncpy (buf, result, buflen);
   return buf;
 #else
-#if defined (HPUX_10)
+# if defined (HPUX_10)
   return (::asctime_r(t, buf, buflen) == 0 ? buf : (char *)0);
-#endif /* HPUX_10 */
+# else
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
+# endif /* HPUX_10 */
 #endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else
   char *result;
