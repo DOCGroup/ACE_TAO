@@ -27,7 +27,6 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/ACE_export.h"
-#include "ace/OS_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -51,7 +50,7 @@
 //typedef const char **SYS_SIGLIST;
 
 # if !defined (ACE_HAS_SIGINFO_T)
-struct ACE_OS_Export siginfo_t
+struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
   siginfo_t (ACE_HANDLE *handles);      // JCEJ 12/23/96
