@@ -1015,7 +1015,7 @@ public:
   static const ACE_Time_Value zero;
   // Constant "0".
 
-  static const ACE_Time_Value max;
+  static const ACE_Time_Value max_time;
   // Constant for maximum time representable.
 
   // = Initialization methods.
@@ -5926,17 +5926,17 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
   // platforms use different names for these constants.
 
   // Number of realtime signals provided in the system.
-  // _POSIX_RTSIG_MAX is the upper limit on the number of real time 
+  // _POSIX_RTSIG_MAX is the upper limit on the number of real time
   // signals supported in a posix-4 compliant system.
 #if defined (_POSIX_RTSIG_MAX)
 #define ACE_RTSIG_MAX _POSIX_RTSIG_MAX
 #else /* not _POSIX_RTSIG_MAX */
   // POSIX-4 compilant system has to provide atleast 8 RT signals.
   // @@ Make sure the platform does *not* define this constant with
-  // some other name. If yes, use that instead of 8.(Alex) 
+  // some other name. If yes, use that instead of 8.(Alex)
 #define ACE_RTSIG_MAX 8
 #endif /* _POSIX_RTSIG_MAX */
-  
+
   // The signal used for all the Asynch_Operations.
 #define ACE_SIG_AIO SIGRTMIN
 
