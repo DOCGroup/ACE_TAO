@@ -4,14 +4,22 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/ace_wchar.h"
+#include "ace/ACE.h"
 #include "Reactor_Logging_Server_Adapter.h"
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
+  int i;
+  char *char_argv[argc];
+  for (i = 0; i < argc; ++i)
+    char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
   ACE_NEW_RETURN (server_,
                   Reactor_Logging_Server<ACCEPTOR>
-                    (argc, argv, ACE_Reactor::instance ()), -1);
+                    (argc, char_argv, ACE_Reactor::instance ()), -1);
+  for (i = 0; i < argc; ++i)
+    ACE::strdelete (char_argv[i]);
   return 0;
 }
 
