@@ -1,3 +1,8 @@
+Wed Jun 19 11:57:02 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/auto_run_tests.lst:
+	  Disable TAO/tests/Nested_Upcall_Crash on minimum_corba builds.
+
 Tue Jun 18 14:29:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp: Reverted the file to the previous version
