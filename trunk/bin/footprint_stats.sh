@@ -19,6 +19,7 @@ LIBS="ace/libACE.a \
     TAO/tao/libTAO.a \
     TAO/tao/PortableServer/libTAO_PortableServer.a \
     TAO/tao/Strategies/libTAO_Strategies.a \
+    TAO/tao/SmartProxies/libTAO_SmartProxies.a \
     TAO/tao/DynamicAny/libTAO_DynamicAny.a \
     TAO/tao/DynamicInterface/libTAO_DynamicInterface.a \
     TAO/tao/IFR_Client/libTAO_IFR_Client.a \
@@ -31,8 +32,8 @@ LIBS="ace/libACE.a \
     TAO/tao/IORInterceptor/libTAO_IORInterceptor.a \
     TAO/tao/Messaging/libTAO_Messaging.a \
     TAO/tao/ObjRefTemplate/libTAO_ObjRefTemplate.a \
-    TAO/tao/ObjRefTemplate/libTAO_Valuetype.a \
-    TAO/tao/ObjRefTemplate/libTAO_RTScheduler.a \
+    TAO/tao/ValueType/libTAO_Valuetype.a \
+    TAO/tao/RTScheduling/libTAO_RTScheduler.a \
     TAO/tao/RTPortableServer/libTAO_RTPortableServer.a"
 
 cd $ACE_ROOT
