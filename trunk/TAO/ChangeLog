@@ -1,3 +1,9 @@
+Tue Mar 15 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+          Define the Initiator_Server within the test scope so that we know for
+          sure it is destructed before the other cleanup actions
+
 Tue Mar 15 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
