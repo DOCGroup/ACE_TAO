@@ -26,11 +26,11 @@ main (int argc, char *argv [])
 
 Driver::Driver (void)
   : n_consumers_ (1),
-    event_count_ (100),
+    n_suppliers_ (1),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0),
-    recv_count_ (0)
+    active_count_ (0)
 {
 }
 
@@ -41,12 +41,12 @@ Driver::run (int argc, char* argv[])
 {
   TAO_TRY
     {
-      CORBA::ORB_var orb =
+      this->orb_ =
         CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -66,13 +66,13 @@ Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
                   "  consumers = <%d>\n"
-                  "  event count = <%d>\n"
+                  "  suppliers = <%d>\n"
                   "  supplier Event A = <%d>\n"
                   "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n",
 
                   this->n_consumers_,
-                  this->event_count_,
+                  this->n_suppliers_,
                   this->event_a_,
                   this->event_b_,
 
@@ -112,7 +112,7 @@ Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService");
+        this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
@@ -150,7 +150,7 @@ Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      if (orb->run () == -1)
+      if (this->orb_->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
@@ -173,10 +173,8 @@ Driver::run (int argc, char* argv[])
 }
 
 void
-Driver::push_consumer (void* consumer_cookie,
-                       ACE_hrtime_t arrival,
-                       const RtecEventComm::EventSet& events,
-                       CORBA::Environment &_env)
+Driver::shutdown_consumer (void*,
+                           CORBA::Environment &)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -184,54 +182,29 @@ Driver::push_consumer (void* consumer_cookie,
   //
   // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
 
-  if (events.length () == 0)
-    {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
-      return;
-    }
-
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->recv_count_mutex_);
-
-  this->recv_count_ += events.length ();
-
-  int x = this->event_count_ / 100;
-  if (this->recv_count_ % x == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "ECT_Consumer (%P|%t): %d events received\n",
-		  this->recv_count_));
-    }
-
-  if (this->recv_count_ >= this->event_count_)
-    {
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
-    }
-
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
-
-  for (u_int i = 0; i < events.length (); ++i)
-    {
-      const RtecEventComm::Event& e = events[i];
-
-      if (e.data.payload.mb () == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
-          continue;
-        }
-    }
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  this->active_count_--;
+  if (this->active_count_ <= 0)
+    this->orb_->shutdown ();
 }
 
 void
 Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
                            CORBA::Environment &_env)
 {
+  {
+    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    this->active_count_ = this->n_consumers_;
+  }
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", i);
 
       ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+               Test_Consumer (this,
+                              this->consumers_ + i,
+                              this->n_suppliers_));
 
       this->consumers_[i]->connect (buf,
                                     this->event_a_,
@@ -255,7 +228,7 @@ Driver::disconnect_consumers (CORBA::Environment &_env)
 int
 Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:n:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, "dc:s:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -266,8 +239,8 @@ Driver::parse_args (int argc, char *argv [])
           this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
-        case 'n':
-          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+        case 's':
+          this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case 'h':
@@ -290,9 +263,9 @@ Driver::parse_args (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[ORB options] "
-                      "-s <global|local> "
-                      "-a (send data in events) "
-                      "-h <args> "
+                      "-c <n_consumers> "
+                      "-s <n_suppliers> "
+                      "-h <event_a,event_b> "
                       "-p <pid file name> "
                       "\n",
                       argv[0]));
@@ -300,14 +273,14 @@ Driver::parse_args (int argc, char *argv [])
         }
     }
 
-  if (this->event_count_ <= 0)
+  if (this->n_suppliers_ <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: event count (%d) is out of range, "
+                  "%s: number of suppliers (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->event_count_,
-                  100));
-      this->event_count_ = 100;
+                  argv[0], this->n_suppliers_,
+                  1));
+      this->n_suppliers_ = 1;
     }
 
   if (this->n_consumers_ <= 0)
@@ -322,9 +295,14 @@ Driver::parse_args (int argc, char *argv [])
 
 // ****************************************************************
 
-Test_Consumer::Test_Consumer (Driver *driver, void *cookie)
+Test_Consumer::Test_Consumer (Driver *driver,
+                              void *cookie,
+                              int n_suppliers)
   : driver_ (driver),
-    cookie_ (cookie)
+    cookie_ (cookie),
+    n_suppliers_ (n_suppliers),
+    recv_count_ (0),
+    shutdown_count_ (0)
 {
 }
 
@@ -398,7 +376,42 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->driver_->push_consumer (this->cookie_, arrival, events, _env);
+
+  if (events.length () == 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      return;
+    }
+
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  this->recv_count_ += events.length ();
+
+  if (this->recv_count_ % 100 == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "ECT_Consumer (%P|%t): %d events received\n",
+		  this->recv_count_));
+    }
+
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+
+  for (u_int i = 0; i < events.length (); ++i)
+    {
+      const RtecEventComm::Event& e = events[i];
+
+      if (e.data.payload.mb () == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
+          continue;
+        }
+      if (events[i].header.type == ACE_ES_EVENT_SHUTDOWN)
+        {
+          this->shutdown_count_++;
+          if (this->shutdown_count_ >= this->n_suppliers_)
+            this->driver_->shutdown_consumer (this->cookie_, _env);
+        }
+    }
 }
 
 void
