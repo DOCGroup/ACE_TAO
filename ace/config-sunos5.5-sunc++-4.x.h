@@ -70,6 +70,9 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SVR4_TIME
 
+// Only enable this if you don't mind linking with -lposix4
+// #defined ACE_HAS_CLOCK_GETTIME
+
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
 
