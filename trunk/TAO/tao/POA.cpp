@@ -4,7 +4,6 @@
 #include "ace/Auto_Ptr.h"
 
 #include "tao/POA.h"
-#include "tao/POAManager.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Request.h"
 #include "tao/Server_Strategy_Factory.h"
