@@ -24,6 +24,17 @@ Wed Sep  1 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep  1 07:43:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* tests/Message_Queue_Notifications_Test.cpp (producer): Fixed 
+	  this test so it works with the changes to
+ 	  ACE_Message_Queue::is_full_i() below.  Thanks to Rick Robinson
+ 	  for this fix, as well.
+
+        * ace/Message_Queue_T.inl: Changed the implementation of
+          is_full_i() so the comparision operator is >= rather than >,
+          which makes it possible to use a 0 high water mark to disable
+          the enqueue side of the queue.  Thanks to Rick Robinson
+          <rick@oyarsa.com> for reporting this.
+
 	* ace/POSIX_Proactor.h: Updated the documentation to use
 	  the right names for ACE_POSIX_SIG_Proactor and
  	  ACE_POSIX_AIOCB_Proactor.  Thanks to John D. Robertson
@@ -211,17 +222,6 @@ Mon Aug 30 18:31:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Removed checks for ACE_HAS_SYS_IOCTL_H.
 
-Mon Aug 30 15:55:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ace/Message_Queue_T.inl (is_full_i): Reverted the change
-
-          Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-          since it seemed to break some regression tests.  If Rick
-          Robinson can figure out how to fix things so the tests don't
-          break we'll try again later.  Thanks to Chris Cleeland for
-          reporting this.
-
 Mon Aug 30 17:38:22 2004  Steve Huston  <shuston@riverace.com>
 
         Changes that get PocketPC/WinCE back into a state where they build.
@@ -324,14 +324,6 @@ Sun Aug 29 16:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         Added '__GLIBC_MINOR__ < 2' test for setting ACE_POLL_IS_BROKEN
         on Alpha platform.
-
-Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ace/Message_Queue_T.inl: Changed the implementation of
-          is_full_i() so the comparision operator is >= rather than >,
-          which makes it possible to use a 0 high water mark to disable
-          the enqueue side of the queue.  Thanks to Rick Robinson
-          <rick@oyarsa.com> for reporting this.
 
 Fri Aug 27 11:40:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
