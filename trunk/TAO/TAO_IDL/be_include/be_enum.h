@@ -42,6 +42,9 @@ public:
   virtual int member_count (void);
   // return the count of members
 
+  // Convert a numeric value to the enum's string name for it.
+  virtual UTL_ScopedName        *value_to_name (const unsigned long v);
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
