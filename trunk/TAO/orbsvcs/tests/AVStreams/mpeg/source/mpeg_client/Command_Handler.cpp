@@ -36,7 +36,7 @@ Command_Handler::Command_Handler (ACE_HANDLE command_handle)
 
 Command_Handler::~Command_Handler (void)
 {
-  this->remove_handlers ();
+  //  this->remove_handlers ();
   if (ACE_OS::getpid () == CTRpid)
     ::remove_all_semaphores ();
 }
@@ -530,6 +530,7 @@ Command_Handler::init_av (void)
           tmp = CmdVPclearScreen;
           CmdWrite(&tmp, 1);
         }
+      cerr << "returning from init_av \n";
       return 0;
     }
   cerr << "returning from init_av \n";
@@ -792,7 +793,7 @@ Command_Handler::init_audio_channel (char *audiofile)
 #endif
                 }
                 abuffer->ABprocess(this->audio_data_handle_);
-                this->remove_handlers ();
+                //                this->remove_handlers ();
                 // Before shutting down the orb remove all the handlers registered with it.
                 ACE_DEBUG ((LM_DEBUG,"(%P|%t) Before shutdown"));
                 this->orb_manager_.orb ()->shutdown ();
@@ -814,16 +815,7 @@ Command_Handler::init_audio_channel (char *audiofile)
 int
 Command_Handler::remove_handlers (void)
 {
-  int result;
-  result = this->client_sig_handler_.remove_handler ();
-  
-  if (TAO_ORB_Core_instance ()->reactor ()->remove_handler (&this->notification_handler_,
-                                                              ACE_Event_Handler::READ_MASK) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) remove_handler for notification handler failed\n"),
-                      -1);
   return 0;
-  
 }
 
 void
@@ -1072,7 +1064,7 @@ Command_Handler::init_video_channel (char *videofile)
                 }
               else
                 {
-                  this->remove_handlers ();
+                  //                  this->remove_handlers ();
                   this->orb_manager_.orb ()->shutdown ();
                   return 1;
                 }
@@ -1135,7 +1127,7 @@ Command_Handler::init_video_channel (char *videofile)
                   }
                 }
                 ACE_OS::read (sp[0], buf, 1); /* read a garbage byte, to sync with VB */
-                fprintf (stderr,"(%P|%t) Command process read a garbage bytes\n");
+                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Command process read a garbage bytes\n"));
                 ::close(sp[0]);
                 ACE_OS::free (buf);
               }
@@ -2150,7 +2142,7 @@ Client_Sig_Handler::Client_Sig_Handler (Command_Handler *command_handler)
 Client_Sig_Handler::~Client_Sig_Handler (void)
 {
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this,
-                                            ACE_Event_Handler::NULL_MASK);
+                                                        ACE_Event_Handler::NULL_MASK);
 
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
 }
@@ -2198,10 +2190,10 @@ Client_Sig_Handler::remove_handler (void)
 {
   if (TAO_ORB_Core_instance ()->reactor ()->remove_handler (this,
                                                             ACE_Event_Handler::NULL_MASK) == -1)
-    ACE_DEBUG ((LM_DEBUG,"(%P)remove_handler failed for client_sig handler"));
+    ACE_DEBUG ((LM_DEBUG,"(%P)remove_handler failed for client_sig handler for null mask\n"));
 
   if (TAO_ORB_Core_instance ()->reactor ()->remove_handler (sig_set) == -1)
-    ACE_DEBUG ((LM_DEBUG,"(%P)remove_handler failed for client_sig handler"));
+    ACE_DEBUG ((LM_DEBUG,"(%P)remove_handler failed for client_sig handler for sig set\n"));
   return 0;
 }
 

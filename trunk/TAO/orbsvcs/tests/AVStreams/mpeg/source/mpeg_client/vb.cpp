@@ -1111,7 +1111,7 @@ Notification_Handler::handle_input (ACE_HANDLE fd)
   switch (message[0])
     {
     case EXIT:
-      ACE_DEBUG ((LM_DEBUG,"AB process exiting because of exit signal\n"));
+      ACE_DEBUG ((LM_DEBUG,"VB process exiting because of exit signal\n"));
       set_exit_routine_tag(0);
       VideoBuffer::VBdeleteBuf();
       ACE_Reactor::instance ()->end_event_loop (); 

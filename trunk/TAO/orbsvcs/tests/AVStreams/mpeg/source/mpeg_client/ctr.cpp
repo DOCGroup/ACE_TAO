@@ -976,13 +976,17 @@ int CTRmain(int argc,
       int result = command_handler.run ();
       if (ABpid == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,"(%d) Restarting the ACE_Reactor::instance ()",ACE_OS::getpid ()));
+          ACE_DEBUG ((LM_DEBUG,"(%d) Restarting the ACE_Reactor::instance ()\n",ACE_OS::getpid ()));
           ACE_Reactor::instance ()->run_event_loop ();
+          int result = TAO_ORB_Core_instance ()->reactor ()->remove_handler (&command_handler,
+                                                                             ACE_Event_Handler::READ_MASK);
+          if (result == -1)
+            ACE_DEBUG ((LM_DEBUG,"(%P)Remove handler for Command Handler failed\n"));
         }
 
       if (VBpid == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,"(%d) Restarting the ACE_Reactor::instance ()",ACE_OS::getpid ()));
+          ACE_DEBUG ((LM_DEBUG,"(%d) Restarting the ACE_Reactor::instance ()\n",ACE_OS::getpid ()));
           ACE_Reactor::instance ()->run_event_loop ();
         }
       
