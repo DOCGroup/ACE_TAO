@@ -540,7 +540,7 @@ Client_i::print_util_stats (void)
                   this->util_thread_->get_number_of_computations (),
                   this->ts_->loop_count_,
                   this->ts_->util_test_time_,
-                  this->ts_->remote_invocations_ == 1 ? 
+                  this->ts_->remote_invocations_ == 1 ?
                     "NOW run the same test again, adding the \"-l\" option.  See README file for explanation.":
                     " "
                   ));
@@ -849,7 +849,7 @@ main (int argc, char *argv[])
 #elif defined (VXWORKS)
   // Shoot myself.  Otherwise, there's a General Protection Fault.
   // This will leak memory, but that's preferable.  It looks like the
-  // problem might be due to static objects in libTAO or liborbsvcs?
+  // problem might be due to static objects in libTAO.
   int status;
   ACE_OS::thr_exit (&status);
 #endif /* CHORUS */
