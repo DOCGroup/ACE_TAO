@@ -36,6 +36,11 @@
 #include "tao/Environment.h"
 #include "tao/Sequence.h"
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
+
 namespace CORBA
 {
   class Request;
