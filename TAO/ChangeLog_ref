@@ -1,3 +1,8 @@
+Sun Jul 06 11:00:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bench/wire/testC.cpp: Updated to use the Invocation
+	  classes.  
+
 Sat Jul 05 18:38:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp (TAO): 
