@@ -1,3 +1,9 @@
+Thu Feb  7 16:37:16 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Fixed (this time I did test it) the operation table for builds
+	  without gperf.
+
 Thu Feb  7 13:13:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
@@ -235,17 +241,17 @@ Fri Feb  1 06:44:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Thu Jan 31 13:17:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 
-	* TAO/tao/PortableServer/AMH_Response_Handler.h:
-	* TAO/tao/PortableServer/AMH_Response_Handler.cpp:
+	* tao/PortableServer/AMH_Response_Handler.h:
+	* tao/PortableServer/AMH_Response_Handler.cpp:
 	  Add method to send exceptions back to the client.
 	  Cleanup some of the code and left @@ comments for Mayur.
 
-	* TAO/TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface.cpp:
 	  Fixed operation table entry for the _interface()
 	  pseudo-operation, it was broken for non-GPERF tables.
 
-	* TAO/TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
-	* TAO/TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
 	  Add the AMH_*ExceptionHolder node after the AMH*_ResponseHandler
 	  node in the AST, that seems to generate the C++ code in the
 	  right order.
@@ -254,15 +260,15 @@ Thu Jan 31 13:17:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  when creating arguments for the *_excep() operations.
 	  Add code to generate the *_excep() operations in the ResponseHandler.
 
-	* TAO/TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
 	  Remove obsolete comment.
 
-	* TAO/TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
 	  Generate different code for _excep() and regular operations.
 	  Needs a little more work to detect _excep() operations reliable,
 	  but it is close enough for goverment work :-)
 
-	* TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
 	  Simplify implementation of gen_throw_spec(), with a little work
 	  it could be turned into an static function, making it more
 	  reusable.  Similar changed could be made to
@@ -1083,7 +1089,7 @@ Fri Jan 25 11:24:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Jan 25 12:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
-        * TAO/performance-tests/AMH_Single_Threaded_Latency/*.bor:
+        * performance-tests/AMH_Single_Threaded_Latency/*.bor:
           Added BCB makefiles
 
 Fri Jan 25 00:04:05 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
@@ -1096,23 +1102,23 @@ Fri Jan 25 00:04:05 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Thu Jan 24 20:15:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/AMH_Single_Threaded_Latency.dsw:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.dsp:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.dsp:
+	* performance-tests/AMH_Single_Threaded_Latency/AMH_Single_Threaded_Latency.dsw:
+	* performance-tests/AMH_Single_Threaded_Latency/client.dsp:
+	* performance-tests/AMH_Single_Threaded_Latency/server.dsp:
 	  Workspace and projects for the AMH performance test.
 
 Thu Jan 24 18:51:21 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO/performance-tests/AMH_Single_Threaded_Latency:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.cpp:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.cpp:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/Makefile:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/run_test.pl:
-	* TAO/performance-tests/Makefile:
-	* TAO/performance-tests/Makefile.bor:
-	* TAO/performance-tests/README:
+	* performance-tests/AMH_Single_Threaded_Latency:
+	* performance-tests/AMH_Single_Threaded_Latency/client.cpp:
+	* performance-tests/AMH_Single_Threaded_Latency/server.cpp:
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h:
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
+	* performance-tests/AMH_Single_Threaded_Latency/Makefile:
+	* performance-tests/AMH_Single_Threaded_Latency/run_test.pl:
+	* performance-tests/Makefile:
+	* performance-tests/Makefile.bor:
+	* performance-tests/README:
 	  Performance test for AMH based on the Single_Threaded_Latency
 	  test.
 
@@ -1281,10 +1287,10 @@ Wed Jan 23 13:09:40 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO/tao/Makefile:
-	* TAO/tao/Makefile.bor:
-	* TAO/tao/PortableServer/Makefile:
-	* TAO/tao/PortableServer/Makefile.bor:
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Makefile.bor:
 
 	  Updated the files with the changes of moving the
 	  AMH_Response_Handler files from `tao' and `tao/PortableServer'.
