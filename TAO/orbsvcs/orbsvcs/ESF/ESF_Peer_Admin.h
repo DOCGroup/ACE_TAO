@@ -68,7 +68,7 @@ public:
    */
   virtual void peer_connected (PEER *peer,
                                CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <peer> has reconnected, i.e. its client has invoked the
@@ -78,7 +78,7 @@ public:
    */
   virtual void peer_reconnected (PEER *peer,
                                  CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <peer> has been disconnected. The default implementation
@@ -87,7 +87,7 @@ public:
    */
   virtual void peer_disconnected (PEER *peer,
                                   CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 // ****************************************************************

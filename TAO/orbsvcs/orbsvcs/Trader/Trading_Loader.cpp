@@ -190,7 +190,7 @@ CORBA::Object_ptr
 TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
                                    int argc, char *argv[],
                                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the ORB
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);

@@ -1,3 +1,21 @@
+Fri May 11 08:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+	* orbvscs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvc/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: More fixes for
+	  FORTE 6.1.
+
 Fri May 11 07:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Client_Priority_Policy.cpp:
