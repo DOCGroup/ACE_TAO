@@ -124,7 +124,10 @@ public:
     // storage.
     VERBOSE = 010,
     // Display messages in a verbose manner.
-    SILENT = 020
+    VERBOSE_LITE = 020,
+    // Display messages in a less verbose manner (i.e., only print
+    // information that can change between calls).
+    SILENT = 040
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
   };
@@ -134,7 +137,7 @@ public:
   static ACE_Log_Msg *instance (void);
   // Returns a pointer to the Singleton.
 
-  static int exists(void);
+  static int exists (void);
   // Returns non-null if an ACE_Log_Msg exists for the calling thread.
 
   ACE_Log_Msg (void);

@@ -68,7 +68,7 @@ enum ACE_Log_Priority
 
   LM_MAX = LM_EMERGENCY,
   // The maximum logging priority.
-  
+
   // Do not use!!, this enum value ensures that the underlying
   // integral type for this enum is at least 32 bits.
 #if !defined (ACE_HAS_BROKEN_ENUMS)

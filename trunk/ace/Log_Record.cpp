@@ -7,6 +7,27 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
+const char *ACE_Log_Record::priority_names_[] = 
+{
+  "LM_SHUTDOWN",
+  "LM_TRACE",
+  "LM_DEBUG",
+  "LM_INFO",
+  "LM_NOTICE",
+  "LM_WARNING",
+  "LM_STARTUP",
+  "LM_ERROR",
+  "LM_CRITICAL",
+  "LM_ALERT",
+  "LM_EMERGENCY"
+};
+
+const char *
+ACE_Log_Record::priority_name (ACE_Log_Priority p)
+{
+  return ACE_Log_Record::priority_names_[ACE::log2 (p)];
+}
+
 u_long
 ACE_Log_Record::priority (void) const
 {
@@ -92,14 +113,14 @@ ACE_Log_Record::ACE_Log_Record (void)
 
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-		       int verbose, 
+		       u_long verbose_flag, 
 		       FILE *fp)
 {
   // ACE_TRACE ("ACE_Log_Record::print");
 
   int ret;
 
-  if (verbose)
+  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
       ASYS_TCHAR ctp[26]; // 26 is a magic number...
@@ -116,17 +137,25 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
       const ASYS_TCHAR *lhost_name = host_name ==
         0 ? ASYS_TEXT ("<local_host>") : host_name;
 
-      ret =  ACE_OS::fprintf (fp, ASYS_TEXT ("%s.%d %s@%s@%d@%d@%s"),
+      ret =  ACE_OS::fprintf (fp,
+                              ASYS_TEXT ("%s.%d %s@%s@%d@%s@%s"),
 			      ctp + 4, 
 			      this->time_stamp_.usec () / 1000,
 			      ctp + 20, 
 			      lhost_name, 
 			      this->pid_,
-			      this->type_, 
+			      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
 			      this->msg_data_);
     }
+  else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
+    ret =  ACE_OS::fprintf (fp,
+                            ASYS_TEXT ("%s@%s"),
+                            ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                            this->msg_data_);
   else
-    ret =  ACE_OS::fprintf (fp, ASYS_TEXT ("%s"), this->msg_data_);
+    ret =  ACE_OS::fprintf (fp,
+                            ASYS_TEXT ("%s"),
+                            this->msg_data_);
 
   if (ret > 0)
     ACE_OS::fflush (fp);
@@ -136,12 +165,12 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 #if !defined (ACE_HAS_WINCE)
 int
 ACE_Log_Record::print (const ASYS_TCHAR host_name[],
-		       int verbose, 
+		       u_long verbose_flag, 
 		       ostream &s)
 {
   // ACE_TRACE ("ACE_Log_Record::print");
 
-  if (verbose)
+  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
       ASYS_TCHAR ctp[26]; // 26 is a magic number...
@@ -168,9 +197,12 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 	<< '@'
 	<< this->pid_
 	<< '@'
-	<< this->type_
+	<< ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_))
 	<< '@';
     }
+  else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
+    s << ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_))
+       << '@';
 
   s << this->msg_data_;
   s.flush ();
@@ -179,7 +211,7 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 #else /* ACE_HAS_WINCE */
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-		       int verbose, 
+		       u_long verbose_flag, 
                        ACE_CE_Bridge *log_window)
 {
   // ACE_TRACE ("ACE_Log_Record::print");
@@ -187,7 +219,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   int ret;
   CString *msg = new CString ();
 
-  if (verbose)
+  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
       ASYS_TCHAR ctp[26]; // 26 is a magic number...
@@ -204,15 +236,19 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
       const ASYS_TCHAR *lhost_name = host_name ==
         0 ? ASYS_TEXT ("<local_host>") : host_name;
 
-      msg->Format (ASYS_TEXT ("%s.%d %s@%s@%d@%d@%s"),
-                  ctp + 4, 
-                  this->time_stamp_.usec () / 1000,
-                  ctp + 20, 
-                  lhost_name, 
-                  this->pid_,
-                  this->type_, 
-                  this->msg_data_);
+      msg->Format (ASYS_TEXT ("%s.%d %s@%s@%d@%s@%s"),
+                   ctp + 4, 
+                   this->time_stamp_.usec () / 1000,
+                   ctp + 20, 
+                   lhost_name, 
+                   this->pid_,
+                   ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                   this->msg_data_);
     }
+  else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
+      msg->Format (ASYS_TEXT ("%s@%s"),
+                   ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                   this->msg_data_);
   else
     msg->Format (ASYS_TEXT ("%s"), this->msg_data_);
 
