@@ -91,7 +91,7 @@ namespace
          << "_Servant::" << a->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return this->executor_->" << a->name ().simple ()
          << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -127,7 +127,7 @@ namespace
       os << " val" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "this->executor_->" << a->name ().simple () << " (" << endl
          << "val" << endl
          << STRS[ENV_ARG] << ");" << endl
@@ -231,7 +231,7 @@ namespace
          << (d->begin () == d->end () ? STRS[ENV_SNGL_SRC] : STRS[ENV_SRC])
          << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << (void_return_type ? "" : "return ")
          << "this->executor_->" << d->name ().simple () << " (";
 
@@ -305,7 +305,7 @@ namespace
          << (f->begin () == f->end () ? STRS[ENV_SNGL_SRC] : STRS[ENV_SRC])
          << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::Components::EnterpriseComponent_var _ciao_ec =" << endl
          << "this->executor_->" << f->name ().simple () << " (";
 
@@ -320,7 +320,7 @@ namespace
 
       os << endl
          << (f->begin () == f->end () ? STRS[ENV_SNGL_ARG] : STRS[ENV_ARG])
-         << ");" << endl
+         << ");"
          << "ACE_CHECK_RETURN (" << retval << "::_nil ());"
          << endl << endl
          << retval.scope () << "::CCM_" << retval.simple ()
@@ -328,7 +328,7 @@ namespace
          << retval.scope () << "::CCM_" << retval.simple ()
          << "::_narrow (" << endl
          << "_ciao_ec.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl << endl
+         << STRS[ENV_ARG] << ");" << endl
          << "return this->_ciao_activate_component (" << endl
          << "_ciao_comp.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
@@ -422,7 +422,7 @@ namespace
       if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
       os << i->name ().simple () << "_Servant::" << i->name ().simple ()
@@ -433,12 +433,12 @@ namespace
          << ": executor_ (" << i->name ().scope () << "::CCM_"
          << i->name ().simple () << "::_duplicate (executor))," << endl
          << "ctx_ (::Components::CCMContext::_duplicate (c))" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << i->name ().simple () << "_Servant::~" << i->name ().simple ()
          << "_Servant (void)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
     }
 
@@ -455,24 +455,24 @@ namespace
          << i->name ().simple () << "_Servant::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << "ACE_THROW_SPEC ((CORBA::SystemException))" << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionContext_var sc =" << endl
          << "::Components::SessionContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
          << "if (! CORBA::is_nil (sc.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "return sc->get_CCM_object (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl
          << "::Components::EntityContext_var ec =" << endl
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
          << "if (! CORBA::is_nil (ec.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "return ec->get_CCM_object (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl
@@ -511,7 +511,7 @@ namespace
       if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << "namespace CIAO_GLUE" << endl
-           << "{" << endl;
+           << "{";
       }
 
       os << c->name ().simple () << "_Context::"
@@ -522,12 +522,12 @@ namespace
          << ": home_ (::Components::CCMHome::_duplicate (home))," << endl
          << "container_ (c)," << endl
          << "servant_ (sv)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << c->name ().simple () << "_Context::~"
          << c->name ().simple () << "_Context (void)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << "// Operations from ::Components::CCMContext." << endl << endl;
@@ -537,7 +537,7 @@ namespace
          << "get_caller_principal (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::Components::Principal::_nil ());" << endl
@@ -548,7 +548,7 @@ namespace
          << "get_CCM_home (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return ::Components::CCMHome::_duplicate (this->home_.in ());"
          << endl
          << "}" << endl << endl;
@@ -560,7 +560,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IS] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -571,7 +571,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IS] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::Components::Transaction::UserTransaction::_nil ());" << endl
@@ -580,11 +580,10 @@ namespace
       os << "CORBA::Boolean" << endl
          << c->name ().simple () << "_Context::"
          << "is_caller_in_role (" << endl
-         << "const char *role" << endl
+         << "const char * /* role */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
-         << "ACE_UNUSED_ARG (role);" << endl
+         << "{"
          << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -595,7 +594,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IS] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (CORBA::NO_IMPLEMENT ());" << endl
          << "}" << endl << endl;
 
@@ -609,21 +608,21 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IS] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (this->component_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "CORBA::Object_var obj =" << endl
          << "this->container_->get_objref (" << endl
          << "this->servant_" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
          << "this->component_ =" << endl
          << c->name () << "::_narrow (" << endl
          << "obj.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
          << "if (CORBA::is_nil (this->component_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::INTERNAL ()," << endl
          << "::CORBA::Object::_nil ());" << endl
@@ -649,7 +648,7 @@ namespace
          << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return " << d->type ()->name () << "::_duplicate (" << endl
          << "this->ciao_uses_" << d->name ().simple ()
          << "_.in ());" << endl
@@ -664,14 +663,14 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_AC] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (! CORBA::is_nil (this->ciao_uses_"
          << d->name ().simple () << "_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
          << "}" << endl << endl
          << "if (CORBA::is_nil (c))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (" << STRS[EXCP_IC] << " ());" << endl
          << "}" << endl << endl
          << "this->ciao_uses_" << d->name ().simple () << "_ =" << endl
@@ -685,10 +684,10 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (this->ciao_uses_"
          << d->name ().simple () << "_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_NC] << " ()," << endl
          << d->type ()->name () << "::_nil ());" << endl
@@ -707,32 +706,32 @@ namespace
          << d->type ()->name () << " *ev" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_Active_Map_Manager<" << endl //@@ gcc bug
          << d->type ()->name ()
          << "Consumer_var>::iterator end =" << endl
          << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.end ();" << endl << endl
+         << "_map_.end ();" << endl
          << "for (ACE_Active_Map_Manager<" << endl //@@ gcc bug
          << d->type ()->name ()
          << "Consumer_var>::iterator iter =" << endl
          << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.begin ();" << endl
-         << "iter != end;" << endl
+         << "_map_.begin ();"
+         << "iter != end;"
          << "++iter)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_Active_Map_Manager<" << endl //@@ gcc bug
          << d->type ()->name ()
          << "Consumer_var>::ENTRY &entry = *iter;" << endl
          << d->type ()->name () << "Consumer_var c =" << endl
          << d->type ()->name () << "Consumer::_narrow (" << endl
          << "entry.int_id_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << "entry.int_id_->push_" << d->type ()->name ().simple ()
          << " (" << endl
          << "ev" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "}" << endl
          << "}" << endl << endl;
@@ -745,21 +744,19 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (c))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << endl
          << "}" << endl << endl
          << d->type ()->name () << "Consumer_var sub =" << endl
-         << d->type ()->name () << "Consumer::_duplicate (c);"
-         << endl << endl
-         << "ACE_Active_Map_Manager_Key key;" << endl
+         << d->type ()->name () << "Consumer::_duplicate (c);" << endl
+         << "ACE_Active_Map_Manager_Key key;"
          << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.bind (sub.in (), key);" << endl << endl
-         << "sub._retn ();" << endl << endl
+         << "_map_.bind (sub.in (), key);"
+         << "sub._retn ();" << endl
          << STRS[COMP_CK] << "_var retv = "
          << "new ::CIAO::Map_Key_Cookie (key);"
-         << endl
          << "return retv._retn ();" << endl
          << "}" << endl << endl;
 
@@ -771,19 +768,19 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
-         << d->type ()->name () << "Consumer_var retv;" << endl
-         << "ACE_Active_Map_Manager_Key key;" << endl << endl
+         << "{"
+         << d->type ()->name () << "Consumer_var retv;"
+         << "ACE_Active_Map_Manager_Key key;" << endl
          << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)"
          << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IC] << " ()," << endl
          << d->type ()->name () << "Consumer::_nil ());" << endl
          << "}" << endl << endl
          << "if (this->ciao_publishes_" << d->name ().simple ()
          << "_map_.unbind (key, retv) != 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IC] << " ()," << endl
          << d->type ()->name () << "Consumer::_nil ());" << endl
@@ -801,7 +798,7 @@ namespace
          << d->type ()->name () << " *ev" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "this->ciao_emits_" << d->name ().simple ()
          << "_consumer_->push_" << d->type ()->name ().simple () 
          << " (" << endl
@@ -817,14 +814,14 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_AC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (c))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (CORBA::BAD_PARAM ());" << endl
          << "}" << endl << endl
          << "if (! CORBA::is_nil (this->ciao_emits_" << d->name ().simple ()
          << "_consumer_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
          << "}" << endl << endl
          << "this->ciao_emits_" << d->name ().simple ()
@@ -838,10 +835,10 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (this->ciao_emits_" << d->name ().simple ()
          << "_consumer_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_NC] << " ()," << endl
          << d->type ()->name () << "Consumer::_nil ());" << endl
@@ -884,7 +881,7 @@ namespace
       if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << "namespace CIAO_GLUE" << endl
-             << "{" << endl;
+             << "{";
       }
 
       // Servant Constructor
@@ -897,26 +894,26 @@ namespace
          << ": executor_ (" << c->name ().scope () << "::CCM_"
          << c->name ().simple () << "::_duplicate (exe))," << endl
          << "container_ (c)" << endl
-         << "{" << endl
+         << "{"
          << "this->context_ = "
          << "new " << c->name ().simple () << "_Context (h, c, this);"
-         << endl << endl
+         << endl
          << "ACE_TRY_NEW_ENV" << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionComponent_var scom =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "exe" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_TRY_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_TRY_CHECK;" << endl
          << "if (! ::CORBA::is_nil (scom.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "scom->set_session_context (" << endl
          << "this->context_" << endl
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl
          << "}" << endl
          << "ACE_CATCHANY" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl
          << "ACE_ENDTRY;" << endl
          << "}" << endl << endl;
@@ -924,23 +921,23 @@ namespace
       // Servant Destructor
       os << c->name ().simple () << "_Servant::~"
          << c->name ().simple () << "_Servant (void)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_TRY_NEW_ENV" << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionComponent_var scom =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_TRY_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_TRY_CHECK;" << endl
          << "if (! ::CORBA::is_nil (scom.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "scom->ccm_remove (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
          << "}" << endl
          << "ACE_CATCHANY" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl
-         << "ACE_ENDTRY;" << endl << endl
+         << "ACE_ENDTRY;" << endl
          << "this->context_->_remove_ref ();" << endl
          << "}" << endl << endl;
     }
@@ -973,9 +970,9 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::BAD_PARAM ()," << endl
          << "::CORBA::Object::_nil ());" << endl
@@ -987,7 +984,7 @@ namespace
     {
       os << "if (ACE_OS::strcmp (name, \""
          << p->name ().simple () << "\") == 0)" << endl
-         << "{" << endl
+         << "{"
          << "return this->provide_" << p->name ().simple ()
          << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl;
@@ -1005,7 +1002,7 @@ namespace
          << c->name ().simple () << "_Servant::get_all_facets (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1016,7 +1013,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1025,19 +1022,17 @@ namespace
          << "CORBA::Object_ptr object_ref" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "if (::CORBA::is_nil (object_ref))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::BAD_PARAM (), 0);" << endl
          << "}" << endl << endl
          << "::CORBA::Object_var the_other =" << endl
          << "object_ref->_get_component (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "ACE_CHECK_RETURN (0);" << endl
          << "::CORBA::Object_var me =" << endl
          << "this->context_->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "ACE_CHECK_RETURN (0);" << endl
          << "return me->_is_equivalent (" << endl
          << "the_other.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
@@ -1067,19 +1062,19 @@ namespace
          << "_Servant::provide_" << p->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "if (::CORBA::is_nil (this->provide_"
          << p->name ().simple () << "_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << p->name ().scope ().scope () << "::CCM_"
          << p->type ()->name ().simple ()
          << "_var fexe =" << endl
          << "this->executor_->get_" << p->name ().simple ()
-         << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+         << " (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << "if (::CORBA::is_nil (fexe.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::INTERNAL ()," << endl
          << p->type ()->name () << "::_nil ());" << endl
@@ -1089,19 +1084,19 @@ namespace
          << "fexe.in ()," << endl
          << "this->context_);" << endl
          << "PortableServer::ServantBase_var safe_servant (svt);"
-         << endl << endl
+         << endl
          << "::CORBA::Object_var obj =" << endl
          << "this->container_->install_servant (" << endl
          << "svt" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << p->type ()->name () << "_var fo =" << endl
          << p->type ()->name () << "::_narrow (" << endl
          << "obj.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << "this->provide_" << p->name ().simple () << "_ = fo;" << endl
          << "}" << endl << endl
          << "return " << p->type ()->name ()
@@ -1143,9 +1138,12 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_AC] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
-         << "{" << endl
+         << "{"
+         << "// If the component has no receptacles, this will be unused." 
+         << endl
+         << "ACE_UNUSED_ARG (connection);" << endl
          << "if (name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
          << "}" << endl << endl;
     }
@@ -1155,21 +1153,21 @@ namespace
     {
       os << "if (ACE_OS::strcmp (name, \""
          << u->name ().simple () << "\") == 0)" << endl
-         << "{" << endl
+         << "{"
          << u->type ()->name () << "_var _ciao_conn =" << endl
          << u->type ()->name () << "::_narrow (" << endl
          << "connection" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (0);" << endl
          << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
          << endl
          << "}" << endl << endl
          << "// Simplex connect." << endl
          << "this->connect_" << u->name ().simple () << " (" << endl
          << "_ciao_conn.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl << endl
+         << STRS[ENV_ARG] << ");" << endl
          << "return 0;" << endl
          << "}" << endl << endl;
     }
@@ -1183,12 +1181,12 @@ namespace
       os << "::Components::ConnectionDescriptions *" << endl
          << c->name ().simple () << "_Servant::get_connections ("
          << endl
-         << "const char *name" << endl
+         << "const char * /* name */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1197,7 +1195,7 @@ namespace
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1209,7 +1207,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
     }
@@ -1235,7 +1233,7 @@ namespace
       os << "CORBA::Object_ptr" << endl
          << c->name ().simple () << "_Servant::disconnect (" << endl
          << "const char *name," << endl
-         << STRS[COMP_CK] << " *ck" << endl
+         << STRS[COMP_CK] << " * /* ck */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
@@ -1243,9 +1241,9 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_CR] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
@@ -1257,7 +1255,7 @@ namespace
     {
       os << "if (ACE_OS::strcmp (name, \""
          << u->name ().simple () << "\") == 0)" << endl
-         << "{" << endl
+         << "{"
          << "// Simplex disconnect." << endl
          << "return this->disconnect_" << u->name ().simple ()
          << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1299,7 +1297,7 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_AC] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "this->context_->connect_" << p->name ().simple () << " ("
          << endl
          << "c" << endl
@@ -1313,7 +1311,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->disconnect_" << p->name ().simple ()
          << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1325,7 +1323,7 @@ namespace
          << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->get_connection_"
          << p->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1358,9 +1356,9 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (sink_name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
@@ -1372,7 +1370,7 @@ namespace
     {
       os << "if (ACE_OS::strcmp (sink_name, \""
          << c->name ().simple () << "\") == 0)" << endl
-         << "{" << endl
+         << "{"
          << "return this->get_consumer_" << c->name ().simple ()
          << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl;
@@ -1389,7 +1387,7 @@ namespace
       os << "void" << endl
          << c->name ().simple () << "_Servant::connect_consumer ("
          << endl
-         << "const char *emitter_name," << endl
+         << "const char * /* emitter_name */," << endl
          << STRS[COMP_ECB] << "_ptr consumer" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -1397,20 +1395,20 @@ namespace
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_AC] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (::CORBA::NO_IMPLEMENT ());" << endl
          << "}" << endl << endl;
 
       os << STRS[COMP_ECB] << "_ptr" << endl
          << c->name ().simple () << "_Servant::disconnect_consumer ("
          << endl
-         << "const char *source_name" << endl
+         << "const char * /* source_name */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1419,7 +1417,7 @@ namespace
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1431,7 +1429,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
     }
@@ -1470,7 +1468,7 @@ namespace
          << "ctx_ (" << c->scope ()->name ().scope ()
          << "::CCM_" << c->scope ()->name ().simple ()
          << "_Context::_duplicate (c))" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << c->scope ()-> name ().simple () << "_Servant::"
@@ -1479,7 +1477,7 @@ namespace
          << "_Servant::~" << c->type ()->name ().simple ()
          << "Consumer_" << c->name ().simple ()
          << "_Servant (void)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << "CORBA::Object_ptr" << endl
@@ -1489,7 +1487,7 @@ namespace
          << "_Servant::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return this->ctx_->get_CCM_object "
          << "(" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl;
@@ -1503,7 +1501,7 @@ namespace
          << c->type ()->name () << " *evt" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "this->executor_->push_" << c->name ().simple ()
          << " (" << endl
          << "evt" << endl
@@ -1521,14 +1519,14 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_BET] << "))" << endl
-         << "{" << endl
+         << "{"
          << c->type ()->name () << "_var ev_type =" << endl
-         << c->type ()->name () << "::_downcast (ev);" << endl << endl
+         << c->type ()->name () << "::_downcast (ev);" << endl
          << "if (ev_type != 0)" << endl
-         << "{" << endl
+         << "{"
          << "this->push_" << c->type ()->name ().simple () << " (" << endl
          << "ev_type.in ()" << endl
-         << STRS[ENV_SNGL_ARG] << ");" << endl << endl
+         << STRS[ENV_SNGL_ARG] << ");" << endl
          << "return;" << endl
          << "}" << endl << endl
          << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
@@ -1539,10 +1537,10 @@ namespace
          << "get_consumer_" << c->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "if (CORBA::is_nil (this->consumes_" << c->name ().simple ()
          << "_.in ()))" << endl
-         << "{" << endl
+         << "{"
          << c->scope ()-> name ().simple () << "_Servant::"
          << c->type ()->name ().simple ()
          << "Consumer_" << c->name ().simple ()
@@ -1552,21 +1550,21 @@ namespace
          << "Consumer_" << c->name ().simple ()
          << "_Servant (" << endl
          << "this->executor_.in ()," << endl
-         << "this->context_);" << endl
+         << "this->context_);"
          << "PortableServer::ServantBase_var safe_servant (svt);"
-         << endl << endl
+         << endl
          << "CORBA::Object_var obj =" << endl
          << "this->container_->install_servant (" << endl
          << "svt" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN ("
-         << c->type ()->name () << "Consumer::_nil ());" << endl << endl
+         << c->type ()->name () << "Consumer::_nil ());" << endl
          << c->type ()->name () << "Consumer_var eco =" << endl
          << c->type ()->name () << "Consumer::_narrow (" << endl
          << "obj.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN ("
-         << c->type ()->name () << "Consumer::_nil ());" << endl << endl
+         << c->type ()->name () << "Consumer::_nil ());" << endl
          << "this->consumes_" << c->name ().simple () << "_ = eco;" << endl
          << "}" << endl << endl
          << "return " << c->type ()->name ()
@@ -1605,9 +1603,9 @@ namespace
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (publisher_name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
          << endl
          << "}" << endl << endl;
@@ -1618,14 +1616,14 @@ namespace
     {
       os << "if (ACE_OS::strcmp (publisher_name, \""
            << p->name ().simple () << "\") == 0)" << endl
-           << "{" << endl
+           << "{"
            << p->type ()->name () << "Consumer_var _ciao_consumer =" << endl
            << p->type ()->name () << "Consumer::_narrow (" << endl
            << "subscribe" << endl
-           << STRS[ENV_ARG] << ");" << endl
-           << "ACE_CHECK_RETURN (0);" << endl << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl
            << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
-           << "{" << endl
+           << "{"
            << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
            << endl
            << "}" << endl << endl
@@ -1671,9 +1669,9 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "if (publisher_name == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
@@ -1685,7 +1683,7 @@ namespace
     {
       os << "if (ACE_OS::strcmp (publisher_name, \""
          << p->name ().simple () << "\") == 0)" << endl
-         << "{" << endl
+         << "{"
          << "return this->unsubscribe_" << p->name ().simple ()
          << " (" << endl
          << "ck" << endl
@@ -1709,7 +1707,7 @@ namespace
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1721,7 +1719,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1752,7 +1750,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->subscribe_" << p->name ().simple ()
          << " (" << endl
          << "c" << endl
@@ -1767,7 +1765,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->unsubscribe_"
          << p->name ().simple () << " (" << endl
          << "ck" << endl
@@ -1801,7 +1799,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_AC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "this->context_->connect_" << e->name ().simple ()
          << " (" << endl
          << "c" << endl
@@ -1815,7 +1813,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->disconnect_"
          << e->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1833,7 +1831,7 @@ namespace
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1845,7 +1843,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl << endl;
     }
@@ -1888,7 +1886,7 @@ namespace
          << c->name ().simple () << "_Servant::get_component_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
@@ -1898,7 +1896,7 @@ namespace
          << c->name ().simple () << "_Servant::get_ccm_home (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "return this->context_->get_CCM_home "
          << "(ACE_ENV_SINGLE_ARG_PARAMETER);" << endl
          << "}" << endl << endl;
@@ -1909,7 +1907,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NKA] << "))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_NKA] << " (), 0);" << endl
          << "}" << endl << endl;
 
@@ -1920,7 +1918,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_ICF] << "))" << endl
-         << "{" << endl
+         << "{"
          << "// CIAO to-do" << endl
          << "}" << endl << endl;
 
@@ -1930,7 +1928,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
-         << "{" << endl
+         << "{"
          << "// CIAO to-do" << endl
          << "}" << endl << endl;
 
@@ -1938,34 +1936,31 @@ namespace
          << c->name ().simple () << "_Servant::get_all_ports (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::Components::ComponentPortDescription_var retv =" << endl
-         << "new OBV_Components::ComponentPortDescription;" << endl << endl
+         << "new OBV_Components::ComponentPortDescription;" << endl
          << "::Components::FacetDescriptions_var facets_desc =" << endl
-         << "this->get_all_facets (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "this->get_all_facets (" << STRS[ENV_SNGL_ARG] << ");"
+         << "ACE_CHECK_RETURN (0);" << endl
          << "::Components::ReceptacleDescriptions_var receptacle_desc ="
          << endl
          << "this->get_all_receptacles (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "ACE_CHECK_RETURN (0);" << endl
          << "::Components::ConsumerDescriptions_var consumer_desc =" << endl
          << "this->get_all_consumers (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "ACE_CHECK_RETURN (0);" << endl
          << "::Components::EmitterDescriptions_var emitter_desc =" << endl
-         << "this->get_all_emitters (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << "this->get_all_emitters (" << STRS[ENV_SNGL_ARG] << ");"
+         << "ACE_CHECK_RETURN (0);" << endl
          << "::Components::PublisherDescriptions_var publisher_desc ="
          << endl
          << "this->get_all_publishers (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
-         << "retv->facets (facets_desc.in ());" << endl
-         << "retv->receptacles (receptacle_desc.in ());" << endl
-         << "retv->consumers (consumer_desc.in ());" << endl
-         << "retv->emitters (emitter_desc.in ());" << endl
-         << "retv->publishers (publisher_desc.in ());" << endl << endl
+         << "ACE_CHECK_RETURN (0);" << endl
+         << "retv->facets (facets_desc.in ());"
+         << "retv->receptacles (receptacle_desc.in ());"
+         << "retv->consumers (consumer_desc.in ());"
+         << "retv->emitters (emitter_desc.in ());"
+         << "retv->publishers (publisher_desc.in ());" << endl
          << "return retv._retn ();" << endl
          << "}" << endl << endl;
 
@@ -1973,24 +1968,24 @@ namespace
          << c->name ().simple () << "_Servant::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionContext_var sc =" << endl
          << "::Components::SessionContext::_narrow (" << endl
          << "this->context_" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (sc.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "return sc->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
          << endl
          << "}" << endl << endl
          << "::Components::EntityContext_var ec =" << endl
          << "::Components::EntityContext::_narrow (" << endl
          << "this->context_" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl
          << "if (! ::CORBA::is_nil (ec.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "return ec->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
          << endl
          << "}" << endl << endl
@@ -2005,14 +2000,14 @@ namespace
          << c->name ().simple () << "_Servant::_ciao_activate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionComponent_var temp =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "temp->ccm_activate (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
          << "}" << endl << endl;
@@ -2021,14 +2016,14 @@ namespace
          << c->name ().simple () << "_Servant::_ciao_passivate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::Components::SessionComponent_var temp =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "temp->ccm_passivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
          << "}" << endl << endl;
@@ -2096,7 +2091,7 @@ namespace
       if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
       os << h->name ().simple () << "_Servant::"
@@ -2107,12 +2102,12 @@ namespace
          << ": executor_ (" << h->name ().scope () << "::CCM_"
          << h->name ().simple () << "::_duplicate (exe))," << endl
          << "container_ (c)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << h->name ().simple () << "_Servant::~"
          << h->name ().simple () << "_Servant (void)" << endl
-         << "{" << endl
+         << "{"
          << "}" << endl << endl;
 
       os << "// Home factory and other operations." << endl << endl;
@@ -2135,7 +2130,7 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << "::Components::CreateFailure))" << endl
-         << "{" << endl
+         << "{"
          << "return this->create (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl;
 
@@ -2147,26 +2142,25 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << "::Components::CreateFailure))" << endl
-         << "{" << endl
+         << "{"
          << "if (this->executor_.in () == 0)" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::INTERNAL ()," << endl
          << h->manages ()->name () << "::_nil ());" << endl
          << "}" << endl << endl
          << "Components::EnterpriseComponent_var _ciao_ec =" << endl
          << "this->executor_->create (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
          << "ACE_CHECK_RETURN (" << h->manages ()->name ()
-         << "::_nil ());" << endl << endl
+         << "::_nil ());" << endl
          << h->manages ()->name ().scope () << "::CCM_"
          << h->manages ()->name ().simple () << "_var _ciao_comp =" << endl
          << h->manages ()->name ().scope () << "::CCM_"
          << h->manages ()->name ().simple () << "::_narrow (" << endl
          << "_ciao_ec.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name ()
-         << "::_nil ());" << endl << endl
+         << "::_nil ());" << endl
          << "return this->_ciao_activate_component (" << endl
          << "_ciao_comp.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
@@ -2178,7 +2172,7 @@ namespace
          << h->name ().simple () << "_Servant::get_component_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
@@ -2188,7 +2182,7 @@ namespace
          << h->name ().simple () << "_Servant::get_home_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
@@ -2201,18 +2195,18 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
-         << "{" << endl
+         << "{"
          << h->manages ()->name () << "_var _ciao_comp =" << endl
          << h->manages ()->name () << "::_narrow (" << endl
          << "comp" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << "if (CORBA::is_nil (_ciao_comp.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "ACE_THROW (CORBA::INTERNAL ());" << endl
          << "}" << endl << endl
-         << "_ciao_comp->remove (" << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << "_ciao_comp->remove (" << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << "this->_ciao_passivate_component (" << endl
          << "_ciao_comp.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
@@ -2227,45 +2221,45 @@ namespace
          << h->manages ()->name ().simple () << "_ptr exe" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
+         << "{"
          << "::CORBA::Object_var hobj =" << endl
          << "this->container_->get_objref (" << endl
          << "this" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << "::Components::CCMHome_var home =" << endl
          << "::Components::CCMHome::_narrow (" << endl
          << "hobj" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << h->manages ()->name ().simple () << "_Servant *svt =" << endl
          << "new " << h->manages ()->name ().simple () << "_Servant ("
          << endl
          << "exe," << endl
          << "home.in ()," << endl
-         << "this->container_);" << endl << endl
-         << "PortableServer::ServantBase_var safe (svt);" << endl
-         << "PortableServer::ObjectId_var oid;" << endl << endl
+         << "this->container_);" << endl
+         << "PortableServer::ServantBase_var safe (svt);"
+         << "PortableServer::ObjectId_var oid;" << endl
          << "CORBA::Object_var objref =" << endl
          << "this->container_->install_component (" << endl
          << "svt," << endl
          << "oid.out ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl << endl
-         << "svt->_ciao_activate (" << STRS[ENV_SNGL_ARG] << ");" << endl
+         << endl
+         << "svt->_ciao_activate (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << h->manages ()->name () << "_var ho =" << endl
          << h->manages ()->name () << "::_narrow (" << endl
          << "objref.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl << endl
+         << endl
          << "if (this->component_map_.bind (oid.in (), svt) == 0)" << endl
-         << "{" << endl
+         << "{"
          << "safe._retn ();" << endl
          << "}" << endl << endl
          << "return ho._retn ();" << endl
@@ -2277,21 +2271,20 @@ namespace
          << h->manages ()->name () << "_ptr comp" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{" << endl
-         << "PortableServer::ObjectId_var oid;" << endl << endl
+         << "{"
+         << "PortableServer::ObjectId_var oid;" << endl
          << "this->container_->uninstall_component (" << endl
          << "comp," << endl
          << "oid.out ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK;" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
          << h->manages ()->name ().simple () << "_Servant *servant = 0;"
-         << endl << endl
+         << endl
          << "if (this->component_map_.unbind (oid.in (), servant) == 0)"
          << endl
-         << "{" << endl
+         << "{"
          << "PortableServer::ServantBase_var safe (servant);" << endl
          << "servant->_ciao_passivate (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
          << "ACE_CHECK;" << endl
          << "}" << endl
          << "}" << endl << endl;
@@ -2335,7 +2328,8 @@ namespace
     Declarations const& declarations_;
 
   public:
-    NamespaceEmitter (ostream& os_, Declarations const& declarations)
+    NamespaceEmitter (ostream& os_, 
+                      Declarations const& declarations)
       : SourceEmitterBase (os_),
         declarations_ (declarations)
     {
@@ -2347,7 +2341,7 @@ namespace
       if (declarations_.contains_suborder (m->order ()))
       {
         os << STRS[GLUE_NS] << "_" << m->name ().simple () << endl
-           << "{" << endl;
+           << "{";
       }
     }
 
@@ -2390,9 +2384,9 @@ namespace
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c" << endl
          << STRS[ENV_SRC] << ")" << endl
-         << "{" << endl
+         << "{"
          << "if (p == 0)" << endl
-         << "{" << endl
+         << "{"
          << "return 0;" << endl
          << "}" << endl << endl
          << h->name ().scope () << "::CCM_"
@@ -2400,10 +2394,10 @@ namespace
          << h->name ().scope () << "::CCM_" << h->name ().simple ()
          << "::_narrow (" << endl
          << "p" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "ACE_CHECK_RETURN (0);" << endl << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK_RETURN (0);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
-         << "{" << endl
+         << "{"
          << "return 0;" << endl
          << "}" << endl << endl
          << "return new" << endl;
