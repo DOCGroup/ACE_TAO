@@ -28,6 +28,18 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 # define PACE_ERRNO_NO_SUPPORT() errno=ENOTSUP
 
+#include <windows.h>
+
+// Perform a mapping of Win32 error numbers into POSIX errnos.
+# define PACE_FAIL_RETURN(RESULT) do { \
+  switch (GetLastError ()) { \
+  case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
+  case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
+  case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
+  case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
+  } \
+  return RESULT; } while (0)
+
 /* A couple useful inline functions for checking whether bits are
    enabled or disabled.
  */
