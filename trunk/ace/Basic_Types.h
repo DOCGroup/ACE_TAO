@@ -165,8 +165,6 @@
 # endif  /* ACE_SIZEOF_LONG_LONG == 8 */
 #endif /* defined (ACE_SIZEOF_LONG_LONG) */
 
-# define ACE_SIZEOF_LONG_LONG 8
-
 // If the platform lacks a long long, define one.
 #if defined (ACE_LACKS_LONGLONG_T)
   class ACE_Export ACE_U_LongLong
@@ -232,6 +230,8 @@
     ACE_UINT32 lo_;
   };
 
+# define ACE_SIZEOF_LONG_LONG 8
+
 #elif !defined (ACE_SIZEOF_LONG_LONG)
   // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
   // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
@@ -247,6 +247,8 @@
       typedef unsigned long long ACE_UINT64;
 #   endif /* sun */
 # endif /* !defined ACE_UINT64_DEFINED */
+
+# define ACE_SIZEOF_LONG_LONG 8
 #endif /* !defined ACE_SIZEOF_LONG_LONG */
 
 #if !defined (ACE_UINT64_DEFINED)
