@@ -133,7 +133,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     {
       // Special case.
       char temphost[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
+      if (addr.get_host_name (temphost, sizeof temphost) != 0)
         return -1;
       else
         return this->set (temphost,
@@ -164,7 +164,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     {
       // Special case.
       char temphost[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
+      if (addr.get_host_name (temphost, sizeof temphost) != 0)
         return -1;
       else
         return this->set (temphost,
