@@ -23,7 +23,8 @@ DIRS  =	Simple_Naming \
 	CosEC_Multiple \
 	ImplRepo \
 	Sched_Conf \
-	Time
+	Time \
+	Event
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -62,4 +62,5 @@ ACE_INLINE void
 EC_Driver::Throughput_Stats::sample (void)
 {
   this->n_++;
+  this->stop_ = ACE_OS::gethrtime ();
 }

@@ -35,6 +35,9 @@ EC_Consumer::connect (
     int shutdown_event_type,
     CORBA::Environment &ACE_TRY_ENV)
 {
+  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+    return; // @@ Throw?
+
   this->shutdown_event_type_ = shutdown_event_type;
 
   RtecEventComm::PushConsumer_var objref = this->_this (ACE_TRY_ENV);
@@ -98,6 +101,8 @@ EC_Consumer::push (const RtecEventComm::EventSet& events,
     }
 
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  if (this->push_count_ == 0)
+    this->throughput_.start ();
 
   // We start the timer as soon as we receive the first event...
   this->throughput_.sample ();

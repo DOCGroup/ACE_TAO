@@ -56,6 +56,9 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event,
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
+  if (this->push_count_ == 0)
+    this->throughput_.start ();
+
   // We start the timer as soon as we receive the first event...
   this->throughput_.sample ();
 
@@ -75,16 +78,26 @@ void
 EC_Supplier::event_type (int event_number,
                          RtecEventComm::Event &event)
 {
-  int i = event_number % this->qos_.publications.length ();
-  int type = this->qos_.publications[i].event.header.type;
-  if (type == this->shutdown_event_type_)
-    i = 0;
+  CORBA::ULong l = this->qos_.publications.length ();
 
-  RtecEventComm::EventHeader& header =
-    this->qos_.publications[i].event.header;
+  if (l == 0)
+    {
+      event.header.source = 0;
+      event.header.type = this->shutdown_event_type_;
+    }
+  else
+    {
+      int i = event_number % l;
+      int type = this->qos_.publications[i].event.header.type;
+      if (type == this->shutdown_event_type_)
+        i = 0;
 
-  event.header.source = header.source;
-  event.header.type = header.type;
+      RtecEventComm::EventHeader& header =
+        this->qos_.publications[i].event.header;
+
+      event.header.source = header.source;
+      event.header.type = header.type;
+    }
 }
 
 void
@@ -106,6 +119,9 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
                       int shutdown_event_type,
                       CORBA::Environment &ACE_TRY_ENV)
 {
+  if (CORBA::is_nil (this->consumer_proxy_.in ()))
+    return; // @@ Throw?
+
   this->qos_ = qos;
   this->shutdown_event_type_ = shutdown_event_type;
 
