@@ -127,8 +127,8 @@ the target.  This restriction should be removed in the near future.<p>
 <P><CODE>TAO_IDL</CODE> on NT will look for the Microsoft Visual C++ 
 compiler as "C:\Program Files\DevStudio\VC\bin\CL.EXE".  If this 
 compiler is located elsewhere (or if using a different compiler)
-add a variable CPP_LOCATION to your environment.  This variable will
-override the default.
+add a variable CPP_LOCATION to your environment and set it to the compiler
+you want to use.  This variable will override the default.
 </P>
 
 Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set 
@@ -146,7 +146,7 @@ files in the correct place.</P>
   <LI>Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
       ace-vc50.dsw, whichever is in your copy of ACE). <P>
   
-  <LI>Make sure <CODE>ACE_wrappers\ace</CODE> is listed in the Executable 
+  <LI>Make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable 
       Directories in Tools|Options.  This is needed if using the TAO_IDL
       compiler under MSVC.<P>
 
@@ -161,7 +161,7 @@ files in the correct place.</P>
 <H4><A NAME="taoace">TAOACE.dsw</A></H4>
 
 <P>TAOACE.dsw is a Visual C++ 5 workspace that loads the projects 
-ACE, TAO, TAO_IDL (the compiler), orbsvcs, and the Naming Service.  
+ACE, TAO, TAO_IDL (the compiler), orbsvcs, gperf and the Naming Service.  
 The dependencies are set up to correctly between the projects so for 
 example, ACE will be built automatically when TAO is built.  An easy
 way to compile everything is to just compile the debug or release 
@@ -232,7 +232,7 @@ adding an IDL file named foobar.idl into a VC project.
   <LI>Click on the "Custom Build" tab. Add this entry as the build command 
       for IDL files:<BR><BR>
 
-      <PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
+      <PRE>tao_idl $(InputName).idl</PRE>
       Notice that your absolute path to TAO_IDL may vary.</LI>
 
   <LI>Now add the following entries as "Output file(s)."<BR><BR>
@@ -256,8 +256,8 @@ adding an IDL file named foobar.idl into a VC project.
 
   <LI>We are all set. Click OK.</LI>
 
-  <LI>Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to 
-      server project.</LI>
+  <LI>Add foobarC.cpp and foobarS.cpp to both the client and server 
+      project.</LI>
 </OL>
 
 <p>Notice that these procedures only setup the IDL compiler to perform 
