@@ -807,7 +807,7 @@
 /* Platform supports STREAMS */
 #undef ACE_HAS_STREAMS
 
-/* Platform s  upports STREAM pipes */
+/* Platform supports STREAM pipes */
 #undef ACE_HAS_STREAM_PIPES
 
 /* Compiler/platform supports strerror () */
