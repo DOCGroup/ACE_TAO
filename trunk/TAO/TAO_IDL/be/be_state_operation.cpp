@@ -338,17 +338,17 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
-                  *os << bt->name () << " retval;" << nl;
+                  *os << bt->name () << " *retval = new " << bt->name () << "*;" << nl;
                 }
               else
                 {
-                  *os << "char *retval;" << nl;
+                  *os << "char **retval = new char*;" << nl;
                 }
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
-              *os << "retval";
+              *os << "*retval";
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
