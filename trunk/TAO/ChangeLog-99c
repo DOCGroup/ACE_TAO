@@ -1,3 +1,10 @@
+Fri Aug 20 13:48:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	  Modified my earlier change to the way a return 
+	  valuetype is declared in the stub. This clears up
+	  compile errors in TAO/esamples/OBV/Typed_Events.
+
 Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
