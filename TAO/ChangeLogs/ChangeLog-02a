@@ -1,3 +1,22 @@
+Tue Apr 17 21:21:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Tester.cpp:
+	* tests/Collocation/Coll_Tester.h: Added shutdown method to
+	  destroy the RootPOA and the ORB.  The lack of it was causing the
+	  test to crash.
+
+	* tests/Collocation/Collocation.dsw: Redefined project
+	  dependencies.
+
+	* tests/Collocation/Makefile.test:
+	* tests/Collocation/Collocation.cpp:
+	* tests/Collocation/main.cpp:
+	* tests/Collocation/Collocation.dsp: Renamed <main.cpp> to
+	  <Collocation.cpp> so that both Win32 and UNIX build the same
+	  executable.
+
+	  Thanks to Carlos for pointing them out.
+
 Tue Apr 17 15:48:20 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_close):

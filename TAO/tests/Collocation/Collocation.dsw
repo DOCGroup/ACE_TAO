@@ -3,22 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Diamond"=.\Diamond.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name Coll_Test_Stubs
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Coll_Test_Stubs"=.\Coll_Test_Stubs.dsp - Package Owner=<4>
+Project: "Coll_Test_Stubs DLL"=.\Coll_Test_Stubs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -41,6 +26,24 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Diamond
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Diamond DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Diamond DLL"=.\Diamond.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Coll_Test_Stubs DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -56,3 +59,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
