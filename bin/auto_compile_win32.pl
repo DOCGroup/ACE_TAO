@@ -234,6 +234,7 @@ TAO/tests/POA/Identity/Identity.dsw, POA Identity:
 TAO/tests/IORManipulation/IORManipulation.dsw, IORTest:
 TAO/tests/Connection_Purging/Connection_Purging.dsw, POA Connection Purging:
 TAO/tests/ORB_init/ORB_init.dsw, ORB_init:
+TAO/tests/ORB_destroy/ORB_destroy.dsw, ORB_destroy:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Server:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Client:
 TAO/tests/Leader_Followers/Leader_Followers.dsw, Leader_Followers Server:
@@ -455,6 +456,7 @@ TAO/tests/POA/Identity/Identity.dsw, POA Identity:
 TAO/tests/IORManipulation/IORManipulation.dsw, IORTest:
 TAO/tests/Connection_Purging/Connection_Purging.dsw, POA Connection Purging:
 TAO/tests/ORB_init/ORB_init.dsw, ORB_init:
+TAO/tests/ORB_destroy/ORB_destroy.dsw, ORB_destroy:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Server:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Client:
 TAO/tests/Leader_Followers/Leader_Followers.dsw, Leader_Followers Server:

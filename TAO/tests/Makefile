@@ -23,6 +23,7 @@ DIRS  = CDR \
         IORManipulation \
         Connection_Purging \
         ORB_init \
+        ORB_destroy \
         Nested_Event_Loop \
         Leader_Followers \
 	Object_Loader \
