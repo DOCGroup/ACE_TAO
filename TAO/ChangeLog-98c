@@ -1,3 +1,13 @@
+Wed Nov 19 12:22:50 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_name_service): Reverted some of the
+ 	minor changes below, specifically the use of ACE_ERROR_RETURN
+ 	rather than ACE_ERROR/return.  ACE_ERROR_RETURN cannot be used
+ 	as-is because the 2nd parameter is used as an 'int' to specify the
+ 	operational status, and the return value of this function is NOT
+ 	an int.  Also had to add a missing semi-colon which caused none of
+ 	the code to compile.
+
 Wed Nov 19 12:07:42 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.37, released Wed Nov 19 12:07:42 1997.
@@ -18,18 +28,18 @@ Wed Nov 19 09:15:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Nov 19 08:44:12 1997  Brian Mendel <brian.r.mendel@boeing.com>
 
-        * tests/Cubit/TAO/DII_Cubit/default.bld:
-        * tests/Cubit/TAO/DII_Cubit/clnt.bld:
-        * tests/Cubit/TAO/DII_Cubit/svr.bld:
-        * tests/Cubit/TAO/IDL_Cubit/default.bld:
-        * tests/Cubit/TAO/IDL_Cubit/clnt.bld:
-        * tests/Cubit/TAO/IDL_Cubit/svr.bld:
-        * tests/Cubit/TAO/MT_Cubit/default.bld:
-        * tests/Cubit/TAO/MT_Cubit/clnt.bld:
-        * tests/Cubit/TAO/MT_Cubit/svr.bld:  Added build files in the new
+	* tests/Cubit/TAO/DII_Cubit/default.bld:
+	* tests/Cubit/TAO/DII_Cubit/clnt.bld:
+	* tests/Cubit/TAO/DII_Cubit/svr.bld:
+	* tests/Cubit/TAO/IDL_Cubit/default.bld:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.bld:
+	* tests/Cubit/TAO/IDL_Cubit/svr.bld:
+	* tests/Cubit/TAO/MT_Cubit/default.bld:
+	* tests/Cubit/TAO/MT_Cubit/clnt.bld:
+	* tests/Cubit/TAO/MT_Cubit/svr.bld:  Added build files in the new
           test structure for VxWorks using the GHS compiler.
 
-        * tests/Cubit/Build: Removed the obsolete build directory for vxWorks.
+	* tests/Cubit/Build: Removed the obsolete build directory for vxWorks.
 
 Wed Nov 19 07:47:13 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
