@@ -963,7 +963,7 @@ class ACE_Fixed_Set;
 /**
  * @class ACE_Fixed_Set_Iterator
  *
- * @brief Interates through an unordered set.
+ * @brief Iterates through an unordered set.
  *
  * This implementation of an unordered set uses a fixed array.
  * Allows deletions while iteration is occurring.
@@ -1007,6 +1007,51 @@ private:
 };
 
 /**
+ * @class ACE_Fixed_Set_Const_Iterator
+ *
+ * @brief Iterates through a const unordered set.
+ *
+ * This implementation of an unordered set uses a fixed array.
+ */
+template <class T, size_t ACE_SIZE>
+class ACE_Fixed_Set_Const_Iterator
+{
+public:
+  // = Initialization method.
+  ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s);
+
+  // = Iteration methods.
+
+  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (T *&next_item);
+
+  /// Move forward by one element in the set.  Returns 0 when all the
+  /// items in the set have been seen, else 1.
+  int advance (void);
+
+  /// Move to the first element in the set.  Returns 0 if the
+  /// set is empty, else 1.
+  int first (void);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Set we are iterating over.
+  const ACE_Fixed_Set<T, ACE_SIZE> &s_;
+
+  /// How far we've advanced over the set.
+  ssize_t next_;
+};
+
+/**
  * @class ACE_Fixed_Set
  *
  * @brief Implement a simple unordered set of <T> with maximum <ACE_SIZE>.
@@ -1019,9 +1064,11 @@ class ACE_Fixed_Set
 {
 public:
   friend class ACE_Fixed_Set_Iterator<T, ACE_SIZE>;
+  friend class ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>;
 
   // Trait definition.
   typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> ITERATOR;
+  typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> CONST_ITERATOR;
 
   // = Initialization and termination methods.
   /// Constructor.
@@ -1097,7 +1144,7 @@ class ACE_Bounded_Set;
 /**
  * @class ACE_Bounded_Set_Iterator
  *
- * @brief Interates through an unordered set.
+ * @brief Iterates through an unordered set.
  *
  * This implementation of an unordered set uses a Bounded array.
  * Allows deletions while iteration is occurring.
