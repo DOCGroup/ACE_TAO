@@ -14,13 +14,13 @@ SHLIB    = $(LIBNAME).so
 # These are components that are only headers and must be installed
 CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
 CORBA_SRCS = any corbacom except nvlist object orbobj principa \
-	request svrrqst boa typecode
+	request svrrqst poa typecode
 
 # These are components that are only headers and must be installed
 OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
-              default_client default_server server_factory client_factory Orb_Core
-OTHERS_INLN = any boa cdr connect iiopobj iioporb object orbobj params svrrqst typecode marshal \
-              default_client default_server server_factory client_factory Orb_Core
+              default_client default_server server_factory client_factory orb_core
+OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst typecode marshal \
+              default_client default_server server_factory client_factory orb_core
 # These are components that are either header & source or source-only
 OTHERS_SRCS = \
 	giop \
@@ -32,7 +32,7 @@ OTHERS_SRCS = \
 	default_server \
 	server_factory \
 	client_factory \
-	Orb_Core \
+	orb_core \
 	objtable \
 	optable \
 	connect \

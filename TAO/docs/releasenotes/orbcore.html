@@ -27,18 +27,17 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
-	<LI>Remove BOA and ROA names from the ORB.</LI>
+	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
+	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
-	<LI>Change CORBA_ORB::open() to return an error status (first
-	cut at this already there--needs to be checked out).</LI>
-
-	<LI>Put README file in multiCubit test.</li>
-
-	<li>Clean up build under g++.  All 'function used before
-	declared inline' warnings have been eliminated.  Also, all
-	other warnings (except for one that is nearly unavoidable)
-	have been eliminated.
-	</li>
+	<LI>The lock used in <code>giop.cpp:626</code> originally
+	appeared in the IIOP-1.4 code base.  Its purpose was to
+	protect access to the <code>fwd_profile</code> data member.
+	The original features are available, but they are currently
+	not used because none of our concurrency models present a
+	thread-unsafe condition.  The <a
+	href="../../ChangeLog">ChangeLog</a> presents more details on
+	the subject.</li>
 
 	<li>Fixed problems seen by <a
 	href="mailto:brian.r.mendel@boeing.com">Brian Mendel</a> of
@@ -54,21 +53,25 @@
 	special code in that area which was not tested until Boeing
 	got hold of the code.</li>
 
-	<LI>The lock used in <code>giop.cpp:626</code> originally
-	appeared in the IIOP-1.4 code base.  Its purpose was to
-	protect access to the <code>fwd_profile</code> data member.
-	The original features are available, but they are currently
-	not used because none of our concurrency models present a
-	thread-unsafe condition.  The <a
-	href="../../ChangeLog">ChangeLog</a> presents more details on
-	the subject.</li>
+	<li>Clean up build under g++.  All 'function used before
+	declared inline' warnings have been eliminated.  Also, all
+	other warnings (except for one that is nearly unavoidable)
+	have been eliminated.
+	</li>
+
+	<LI>Remove BOA and ROA names from the ORB.</LI>
+
+	<LI>Change CORBA_ORB::open() to return an error status (first
+	cut at this already there--needs to be checked out).</LI>
+
+	<LI>Put README file in multiCubit test.</li>
 
       </BLOCKQUOTE>
 
       Ongoing Work:
 
       <BLOCKQUOTE>
-	<LI>Verify ACE_ & TAO on Linux.</LI>
+	<LI>Verify ACE & TAO on Linux.</LI>
 
 	<LI>Use Purify to eliminate straggling problems.</LI>
 
@@ -77,6 +80,23 @@
       Critical Work:
 
       <BLOCKQUOTE>
+	<li>Use <code>truss</code> to verify for <a
+	href="mailto:PAUL.G.WEHLAGE@cdev.com">Paul Wehlage</a> that
+	TAO really uses <code>select</code> vs. <code>recv</code> for
+	<b>-R</b> vs. <b>-T</b>.</li>
+
+	<li>Rename <code>boa.*</code> to <code>poa.*</code>.</li>
+
+	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
+	in which a thread of control can request that
+	<code>CORBA_ORB::run()</code> should return and no longer
+	service requests.</li>
+
+	<LI>Add pre-cached connection on client side.  Clients will
+	pass in a comma-separated list of <em>host:port</em>
+	destinations using the <code>CORBA::ORB_init()</code>
+	interface.</LI>
+
 	<LI>
 	  Verify that, in the ORB-per-thread concurrency model, it's
 	  possible to have a factory in each thread that creates a
@@ -90,19 +110,6 @@
 	  Using existing Cubit-like examples (that poor app is so
 	  weary) should reduce development time to a couple of hours.
 	</LI>
-
-	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
-	in which a thread of control can request that
-	<code>CORBA_ORB::run()</code> should return and no longer
-	service requests.</li>
-
-	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
-	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
-
-	<LI>Add pre-cached connection on client side.  Clients will
-	pass in a comma-separated list of <em>host:port</em>
-	destinations using the <code>CORBA::ORB_init()</code>
-	interface.</LI>
 
 	<LI>Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
 
