@@ -11,6 +11,14 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1>
 COUNTER ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::request_count_ = (COUNTER) 0;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
+int 
+ACE_Server_Logging_Acceptor::make_svc_handler (SERVER_LOGGING_HANDLER *&handler)
+{
+  ACE_NEW_RETURN (handler, SERVER_LOGGING_HANDLER (ACE_Service_Config::thr_mgr (),
+						   &this->lock_));
+  return 0;
+}
+
 int
 ACE_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
 {
@@ -53,7 +61,8 @@ ACE_Server_Logging_Acceptor::init (int argc,
 
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
-  if (this->open (this->service_addr_, ACE_Service_Config::reactor (),
+  if (this->open (this->service_addr_, 
+		  ACE_Service_Config::reactor (),
 		  0, 0, 0, 
 		  &this->scheduling_strategy_,
 		  "Logging Server", "ACE single-threaded logging service") == -1)
@@ -80,7 +89,11 @@ ACE_Server_Logging_Acceptor::init (int argc,
 }
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1>
-ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::ACE_Server_Logging_Handler (ACE_Thread_Manager *)
+ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::ACE_Server_Logging_Handler 
+  (ACE_Thread_Manager *,
+   ACE_SYNCH_MUTEX_T *lock)
+    : lock_ (*lock)
+    
 {
   this->host_name_[0] = '\0'; // Initialize to a known state.
 }
@@ -89,16 +102,12 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1> int
 ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logging_record (void)
 {
   ssize_t len;
-  // Lock used to serialize access to std output 
-  // (this should be in the class, but the SunC++ compiler is broken...)
-  static ACE_SYNCH_MUTEX lock;
 
-  // Perform two recv's to emulate record-oriented semantiCLS.
-  // Note that this code is not entirely portable since it
-  // relies on the fact that sizeof (ssize_t) is the same
-  // on both the sender and receiver side.  To correctly
-  // handle this is painful, and we leave it as an exercise
-  // for the reader ;-).
+  // Perform two recv's to emulate record-oriented semantics.  Note
+  // that this code is not entirely portable since it relies on the
+  // fact that sizeof (ssize_t) is the same on both the sender and
+  // receiver side.  To correctly handle this is painful, and we leave
+  // it as an exercise for the reader ;-).
 
   ssize_t n = this->peer ().recv (&len, sizeof len);
 
@@ -134,7 +143,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
 	  {
 	    // Serialize output, if necessary (i.e., if we are running
 	    // in separate threads).
-	    // ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock, -1);
+	    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
 	    lp.print (this->host_name_, 0, stderr);
 	  }

@@ -254,7 +254,7 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
 			       ACE_Module<ACE_SYNCH_2> *tail)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::open");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   ACE_Task<ACE_SYNCH_2> *h1 = 0, *h2 = 0;
   ACE_Task<ACE_SYNCH_2> *t1 = 0, *t2 = 0;
@@ -310,7 +310,7 @@ template <ACE_SYNCH_1> int
 ACE_Stream<ACE_SYNCH_2>::close (int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::close");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->stream_head_ != 0 
       && this->stream_tail_ != 0)
@@ -436,7 +436,7 @@ ACE_Stream<ACE_SYNCH_2>::link (ACE_Stream<ACE_SYNCH_2> &us)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::link");
   
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   return this->link_i (us);
 }  
@@ -492,7 +492,7 @@ template <ACE_SYNCH_1> int
 ACE_Stream<ACE_SYNCH_2>::unlink (void)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::unlink");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
   return this->unlink_i ();
 }
 

@@ -92,19 +92,13 @@ Proxy_Handler_Connector::initiate_connection (Proxy_Handler *proxy_handler,
   return 0;
 }
 
-#if defined (ACE_MT_SAFE)
-typedef ACE_RW_Mutex RW_MUTEX;
-#else
-typedef ACE_Null_Mutex RW_MUTEX;
-#endif /* ACE_MT_SAFE */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<Proxy_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<Proxy_Handler>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Proxy_Handler> *, RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Proxy_Handler> *, RW_MUTEX>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Proxy_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Proxy_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Proxy_Handler> *>;
-template class ACE_Guard<RW_MUTEX>;
-template class ACE_Read_Guard<RW_MUTEX>;
-template class ACE_Write_Guard<RW_MUTEX>;
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

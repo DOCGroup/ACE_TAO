@@ -34,7 +34,8 @@ class ACE_Server_Logging_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE
   //     Defines the classes that perform server logging daemon
   //     functionality.
 public:
-  ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0,
+			      ACE_SYNCH_MUTEX_T *lock = 0);
 
   virtual int open (void * = 0);
   // Hook called by <Server_Logging_Acceptor> when connection is
@@ -54,6 +55,9 @@ protected:
 
   char host_name_[MAXHOSTNAMELEN + 1];
   // Name of the host we are connected to.
+
+  ACE_SYNCH_MUTEX_T &lock_;
+  // Reference to the lock used to serialize output.
 };
 
 #if !defined (ACE_HAS_TLI)
@@ -79,10 +83,20 @@ public:
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.
 
+protected:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
 
+  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
+  // Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
+  // specialize this since the <lock_> held by this Acceptor must be
+  // passed into the <SERVER_LOGGING_HANDLER>.
+
 private:
+  ACE_SYNCH_MUTEX_T lock_;
+  // Lock used to serialize output by the various
+  // <ACE_Server_Logging_Handler>'s.
+
   ACE_Schedule_All_Reactive_Strategy<SERVER_LOGGING_HANDLER> scheduling_strategy_;
   // The scheduling strategy is designed for Reactive services.
 };

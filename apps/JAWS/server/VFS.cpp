@@ -225,7 +225,7 @@ JAWS_VFS_Node::uritopath (void)
 #if !defined (ACE_WIN32)
       char pw_buf[BUFSIZ];
       struct passwd pw_struct;
-      if (ACE_OS::getpwnam_r(buf, &pw_struct, pw_buf, sizeof (pw_buf)) == 0)
+      if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf, sizeof (pw_buf)) == 0)
         return;
       ACE_OS::strcpy (buf, pw_struct.pw_dir);
 #endif /* ACE_WIN32 */

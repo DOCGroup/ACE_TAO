@@ -7,7 +7,7 @@ LOCK_SOCK_Acceptor<LOCK>::accept (ACE_SOCK_Stream &ns,
                                   ACE_Time_Value *to,
                                   int r) const
 {
-  ACE_Guard<LOCK> m ((LOCK &)this->lock_);
+  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
 
   return ACE_SOCK_Acceptor::accept (ns, ra, to, r);
 }

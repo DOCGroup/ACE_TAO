@@ -345,14 +345,12 @@ STDIN_Token::create_proxy (const char *token, char type)
   return 0;
 }
 
-
 int
 main (int argc, char* argv[])
 {
   STDIN_Token st;
   return st.open (argc, argv);
 }
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Map_Manager<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;

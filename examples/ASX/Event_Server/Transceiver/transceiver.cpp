@@ -205,15 +205,9 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_MT_SAFE)
-typedef ACE_RW_Mutex RW_MUTEX;
-#else
-typedef ACE_Null_Mutex RW_MUTEX;
-#endif /* ACE_MT_SAFE */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<Event_Transceiver>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Event_Transceiver> *, RW_MUTEX>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Event_Transceiver> *, RW_MUTEX>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

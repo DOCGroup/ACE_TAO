@@ -22,12 +22,6 @@
 #include "Consumer_Dispatch_Set.h"
 #include "Event_Forwarding_Discriminator.h"
 
-#if defined (ACE_HAS_THREADS)
-typedef ACE_Thread_Mutex REF_COUNT_MUTEX;
-#else
-typedef ACE_Null_Mutex REF_COUNT_MUTEX;
-#endif /* ACE_HAS_THREADS */
-
 typedef ACE_Null_Mutex MAP_MUTEX;
 
 class ACE_Svc_Export ACE_Event_Channel_Options
@@ -41,7 +35,7 @@ public:
   ~ACE_Event_Channel_Options (void);
   // Termination.
 
-  ACE_Lock_Adapter<REF_COUNT_MUTEX> *locking_strategy_;
+  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy_;
   // Points to the locking strategy used for serializing access to the
   // reference count in <ACE_Message_Block>.  If it's 0, then there's
   // no locking strategy and we're using a REACTIVE concurrency
