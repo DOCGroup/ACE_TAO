@@ -1,3 +1,0 @@
-This directory contains some of Sun's rpc headers that have been fixed
-(though not thoroughly) to work with ANSI C and C++. I have installed
-them in my standard C include path.
