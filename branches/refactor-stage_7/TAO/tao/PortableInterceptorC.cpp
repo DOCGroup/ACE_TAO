@@ -3374,228 +3374,7 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::OctetSeq>;
-
-/*
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::OctetSeq,
-        CORBA::OctetSeq_var,
-        CORBA::OctetSeq_out
-      >;
-*/
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::StringSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::StringSeq,
-        CORBA::StringSeq_var,
-        CORBA::StringSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::Policy>;
-
-/*
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var,
-        CORBA::Policy_out
-      >;
-*/
-
-#endif /* end #if !defined */
-
-/*
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
-*/
-
-#if !defined (_DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<Dynamic::ParameterList>;
-
-/*
-  template class
-    TAO::Var_Size_Arg_Traits<
-        Dynamic::ParameterList,
-        Dynamic::ParameterList_var,
-        Dynamic::ParameterList_out
-      >;
-*/
-
-#endif /* end #if !defined */
-
-#if !defined (_DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<Dynamic::ExceptionList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        Dynamic::ExceptionList,
-        Dynamic::ExceptionList_var,
-        Dynamic::ExceptionList_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_TAGGEDPROFILE__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_TAGGEDPROFILE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::TaggedProfile>;
-
-/*
-  template class
-    TAO::Var_Size_Arg_Traits<
-        IOP::TaggedProfile,
-        IOP::TaggedProfile_var,
-        IOP::TaggedProfile_out
-      >;
-*/
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_TAGGEDCOMPONENT__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_TAGGEDCOMPONENT__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::TaggedComponent>;
-
-#if 0
-  template class
-    TAO::Var_Size_Arg_Traits<
-        IOP::TaggedComponent,
-        IOP::TaggedComponent_var,
-        IOP::TaggedComponent_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::TaggedComponentSeq>;
-
-#if 0
-  template class
-    TAO::Var_Size_Arg_Traits<
-        IOP::TaggedComponentSeq,
-        IOP::TaggedComponentSeq_var,
-        IOP::TaggedComponentSeq_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_SERVICECONTEXT__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_SERVICECONTEXT__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::ServiceContext>;
-
-#if 0
-  template class
-    TAO::Var_Size_Arg_Traits<
-        IOP::ServiceContext,
-        IOP::ServiceContext_var,
-        IOP::ServiceContext_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-#if 0
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::InvalidTypeForEncoding
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::FormatMismatch
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::TypeMismatch
-      >;
-#endif /*if 0*/
-
-#if !defined (_IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::CodecFactory>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        IOP::CodecFactory_ptr,
-        IOP::CodecFactory_var,
-        IOP::CodecFactory_out
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::CodecFactory::UnknownEncoding
-      >;
-
-#endif /*if 0*/
-
-#endif /* end #if !defined */
-
- template class
-    TAO::Any_Dual_Impl_T<
-        PortableInterceptor::ForwardRequest
-      >;
-
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableInterceptor::InvalidSlot
-      >;
-
+  template class TAO::Objref_Traits<PortableInterceptor::Interceptor>;
 
   template class
     TAO_Objref_Var_T<
@@ -3611,6 +3390,9 @@ operator>>= (
     TAO::Any_Impl_T<
         PortableInterceptor::Interceptor
       >;
+
+  template class TAO::Objref_Traits<PortableInterceptor::Current>;
+
   template class
     TAO_Objref_Var_T<
         PortableInterceptor::Current
@@ -3626,13 +3408,7 @@ operator>>= (
         PortableInterceptor::Current
       >;
 
-#if 0
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        IOP::ServiceContext,
-        IOP::ServiceContext_var
-      >;
-#endif
+  template class TAO::Objref_Traits<PortableInterceptor::RequestInfo>;
 
   template class
     TAO_Objref_Var_T<
@@ -3649,48 +3425,7 @@ operator>>= (
         PortableInterceptor::RequestInfo
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ClientRequestInfo_ptr,
-        PortableInterceptor::ClientRequestInfo_var,
-        PortableInterceptor::ClientRequestInfo_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-#if 0
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        IOP::TaggedComponent,
-        IOP::TaggedComponent_var
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        IOP::sequence,
-        IOP::sequence_var
-      >;
-
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        IOP::ServiceContext
-      >;
-
-#endif
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var
-      >;
+  template class TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>;
 
   template class
     TAO_Objref_Var_T<
@@ -3707,21 +3442,7 @@ operator>>= (
         PortableInterceptor::ClientRequestInfo
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ServerRequestInfo_ptr,
-        PortableInterceptor::ServerRequestInfo_var,
-        PortableInterceptor::ServerRequestInfo_out
-      >;
-#endif
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>;
 
   template class
     TAO_Objref_Var_T<
@@ -3738,26 +3459,7 @@ operator>>= (
         PortableInterceptor::ServerRequestInfo
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInterceptor>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ClientRequestInterceptor_ptr,
-        PortableInterceptor::ClientRequestInterceptor_var,
-        PortableInterceptor::ClientRequestInterceptor_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ClientRequestInfo_ptr
-      >;
+  template class TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>;
 
   template class
     TAO_Objref_Var_T<
@@ -3774,26 +3476,7 @@ operator>>= (
         PortableInterceptor::ClientRequestInterceptor
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInterceptor>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ServerRequestInterceptor_ptr,
-        PortableInterceptor::ServerRequestInterceptor_var,
-        PortableInterceptor::ServerRequestInterceptor_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ServerRequestInfo_ptr
-      >;
+  template class TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>;
 
   template class
     TAO_Objref_Var_T<
@@ -3810,21 +3493,7 @@ operator>>= (
         PortableInterceptor::ServerRequestInterceptor
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::PolicyFactory>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::PolicyFactory_ptr,
-        PortableInterceptor::PolicyFactory_var,
-        PortableInterceptor::PolicyFactory_out
-      >;
-#endif
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableInterceptor::PolicyFactory>;
 
   template class
     TAO_Objref_Var_T<
@@ -3841,90 +3510,7 @@ operator>>= (
         PortableInterceptor::PolicyFactory
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::IORInterceptor>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::IORInterceptor_ptr,
-        PortableInterceptor::IORInterceptor_var,
-        PortableInterceptor::IORInterceptor_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-  template class TAO::Objref_Traits<PortableInterceptor::IORInterceptor>;
-
-#if 0
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::IORInterceptor
-      >;
-#endif
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ORBInitInfo>;
-
-#if 0
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ORBInitInfo_ptr,
-        PortableInterceptor::ORBInitInfo_var,
-        PortableInterceptor::ORBInitInfo_out
-      >;
-#endif
-
-#endif /* end #if !defined */
-
-#if 0
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableInterceptor::ORBInitInfo::DuplicateName
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableInterceptor::ORBInitInfo::InvalidName
-      >;
-#endif
-
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::ORBInitInfo
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::ORBInitializer
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ClientRequestInterceptor_ptr
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ServerRequestInterceptor_ptr
-      >;
-
-#if 0
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::IORInterceptor_ptr
-      >;
-#endif
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::PolicyFactory_ptr
-      >;
+  template class TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>;
 
   template class
     TAO_Objref_Var_T<
@@ -3936,11 +3522,12 @@ operator>>= (
         PortableInterceptor::ORBInitInfo
       >;
 
-
   template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ORBInitInfo_ptr
+    TAO::Any_Impl_T<
+        PortableInterceptor::ORBInitInfo
       >;
+
+  template class TAO::Objref_Traits<PortableInterceptor::ORBInitializer>;
 
   template class
     TAO_Objref_Var_T<
@@ -3952,209 +3539,23 @@ operator>>= (
         PortableInterceptor::ORBInitializer
       >;
 
+  template class
+    TAO::Any_Impl_T<
+        PortableInterceptor::ORBInitializer
+      >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::OctetSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::OctetSeq, \
-        CORBA::OctetSeq_var, \
-        CORBA::OctetSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::StringSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::StringSeq, \
-        CORBA::StringSeq_var, \
-        CORBA::StringSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::Policy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var, \
-        CORBA::Policy_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
-      >
-
-#if !defined (_DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<Dynamic::ParameterList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        Dynamic::ParameterList, \
-        Dynamic::ParameterList_var, \
-        Dynamic::ParameterList_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<Dynamic::ExceptionList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        Dynamic::ExceptionList, \
-        Dynamic::ExceptionList_var, \
-        Dynamic::ExceptionList_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_TAGGEDPROFILE__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_TAGGEDPROFILE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::TaggedProfile>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        IOP::TaggedProfile, \
-        IOP::TaggedProfile_var, \
-        IOP::TaggedProfile_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_TAGGEDCOMPONENT__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_TAGGEDCOMPONENT__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::TaggedComponent>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        IOP::TaggedComponent, \
-        IOP::TaggedComponent_var, \
-        IOP::TaggedComponent_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::TaggedComponentSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        IOP::TaggedComponentSeq, \
-        IOP::TaggedComponentSeq_var, \
-        IOP::TaggedComponentSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_IOP_SERVICECONTEXT__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_SERVICECONTEXT__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::ServiceContext>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        IOP::ServiceContext, \
-        IOP::ServiceContext_var, \
-        IOP::ServiceContext_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::InvalidTypeForEncoding \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::FormatMismatch \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::TypeMismatch \
-      >
-
-#if !defined (_IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::CodecFactory>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        IOP::CodecFactory_ptr, \
-        IOP::CodecFactory_var, \
-        IOP::CodecFactory_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::CodecFactory::UnknownEncoding \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::Interceptor>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::Interceptor, \
-        TAO::Objref_Traits<PortableInterceptor::Interceptor> \
+        PortableInterceptor::Interceptor
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::Interceptor, \
-        TAO::Objref_Traits<PortableInterceptor::Interceptor> \
+        PortableInterceptor::Interceptor
       >
 
 # pragma instantiate \
@@ -4162,26 +3563,16 @@ operator>>= (
         PortableInterceptor::Interceptor \
       >
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableInterceptor::ForwardRequest \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableInterceptor::InvalidSlot \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::Current>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::Current, \
-        TAO::Objref_Traits<PortableInterceptor::Current> \
+        PortableInterceptor::Current
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::Current, \
-        TAO::Objref_Traits<PortableInterceptor::Current> \
+        PortableInterceptor::Current
       >
 
 # pragma instantiate \
@@ -4189,16 +3580,16 @@ operator>>= (
         PortableInterceptor::Current \
       >
 
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::RequestInfo>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::RequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::RequestInfo> \
+        PortableInterceptor::RequestInfo
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::RequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::RequestInfo> \
+        PortableInterceptor::RequestInfo
       >
 
 # pragma instantiate \
@@ -4206,35 +3597,16 @@ operator>>= (
         PortableInterceptor::RequestInfo \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ClientRequestInfo_ptr, \
-        PortableInterceptor::ClientRequestInfo_var, \
-        PortableInterceptor::ClientRequestInfo_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        IOP::ServiceContext \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ClientRequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo> \
+        PortableInterceptor::ClientRequestInfo
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ClientRequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo> \
+        PortableInterceptor::ClientRequestInfo
       >
 
 # pragma instantiate \
@@ -4242,30 +3614,16 @@ operator>>= (
         PortableInterceptor::ClientRequestInfo \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ServerRequestInfo_ptr, \
-        PortableInterceptor::ServerRequestInfo_var, \
-        PortableInterceptor::ServerRequestInfo_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ServerRequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo> \
+        PortableInterceptor::ServerRequestInfo
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ServerRequestInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo> \
+        PortableInterceptor::ServerRequestInfo
       >
 
 # pragma instantiate \
@@ -4273,35 +3631,16 @@ operator>>= (
         PortableInterceptor::ServerRequestInfo \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ClientRequestInterceptor>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ClientRequestInterceptor_ptr, \
-        PortableInterceptor::ClientRequestInterceptor_var, \
-        PortableInterceptor::ClientRequestInterceptor_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ClientRequestInfo_ptr \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ClientRequestInterceptor, \
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor> \
+        PortableInterceptor::ClientRequestInterceptor
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ClientRequestInterceptor, \
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor> \
+        PortableInterceptor::ClientRequestInterceptor
       >
 
 # pragma instantiate \
@@ -4309,35 +3648,16 @@ operator>>= (
         PortableInterceptor::ClientRequestInterceptor \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ServerRequestInterceptor>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ServerRequestInterceptor_ptr, \
-        PortableInterceptor::ServerRequestInterceptor_var, \
-        PortableInterceptor::ServerRequestInterceptor_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ServerRequestInfo_ptr \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ServerRequestInterceptor, \
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor> \
+        PortableInterceptor::ServerRequestInterceptor
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ServerRequestInterceptor, \
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor> \
+        PortableInterceptor::ServerRequestInterceptor
       >
 
 # pragma instantiate \
@@ -4345,30 +3665,16 @@ operator>>= (
         PortableInterceptor::ServerRequestInterceptor \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::PolicyFactory>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::PolicyFactory_ptr, \
-        PortableInterceptor::PolicyFactory_var, \
-        PortableInterceptor::PolicyFactory_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::PolicyFactory>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::PolicyFactory, \
-        TAO::Objref_Traits<PortableInterceptor::PolicyFactory> \
+        PortableInterceptor::PolicyFactory
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::PolicyFactory, \
-        TAO::Objref_Traits<PortableInterceptor::PolicyFactory> \
+        PortableInterceptor::PolicyFactory
       >
 
 # pragma instantiate \
@@ -4376,81 +3682,16 @@ operator>>= (
         PortableInterceptor::PolicyFactory \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::IORInterceptor>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::IORInterceptor_ptr, \
-        PortableInterceptor::IORInterceptor_var, \
-        PortableInterceptor::IORInterceptor_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate TAO::Objref_Traits<PortableInterceptor::IORInterceptor>
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableInterceptor::IORInterceptor \
-      >
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ORBInitInfo>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ORBInitInfo_ptr, \
-        PortableInterceptor::ORBInitInfo_var, \
-        PortableInterceptor::ORBInitInfo_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableInterceptor::ORBInitInfo::DuplicateName \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableInterceptor::ORBInitInfo::InvalidName \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ClientRequestInterceptor_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ServerRequestInterceptor_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::IORInterceptor_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::PolicyFactory_ptr \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ORBInitInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ORBInitInfo> \
+        PortableInterceptor::ORBInitInfo
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ORBInitInfo, \
-        TAO::Objref_Traits<PortableInterceptor::ORBInitInfo> \
+        PortableInterceptor::ORBInitInfo
       >
 
 # pragma instantiate \
@@ -4458,21 +3699,16 @@ operator>>= (
         PortableInterceptor::ORBInitInfo \
       >
 
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ORBInitInfo_ptr \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableInterceptor::ORBInitializer>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableInterceptor::ORBInitializer, \
-        TAO::Objref_Traits<PortableInterceptor::ORBInitializer> \
+        PortableInterceptor::ORBInitializer
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableInterceptor::ORBInitializer, \
-        TAO::Objref_Traits<PortableInterceptor::ORBInitializer> \
+        PortableInterceptor::ORBInitializer
       >
 
 # pragma instantiate \

@@ -624,69 +624,10 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if 0
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::InvalidTypeForEncoding
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::FormatMismatch
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::TypeMismatch
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::CodecFactory::UnknownEncoding
-      >;
-
   template class
     TAO::Any_Dual_Impl_T<
         Messaging::PolicyValue::_tao_seq_CORBA_Octet_
       >;
-
-#endif /*if 0*/
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Messaging::PolicyValue
-      >;
-
 
   template class
     TAO_Var_Var_T<
@@ -702,6 +643,11 @@ CORBA::Boolean operator>> (
     TAO_Out_T<
         Messaging::PolicyValue,
         Messaging::PolicyValue_var
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Messaging::PolicyValue
       >;
 
   template class
@@ -723,8 +669,8 @@ CORBA::Boolean operator>> (
         Messaging::PolicyValue
       >;
 
-#if !defined (_MESSAGING_POLICYVALUESEQ_EXPLICIT_CS_)
-#define _MESSAGING_POLICYVALUESEQ_EXPLICIT_CS_
+#if !defined (_MESSAGING_POLICYVALUESEQ__EXPLICIT_CS_)
+#define _MESSAGING_POLICYVALUESEQ__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -739,56 +685,6 @@ CORBA::Boolean operator>> (
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::InvalidTypeForEncoding \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::FormatMismatch \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::TypeMismatch \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::CodecFactory::UnknownEncoding \
-      >
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
@@ -835,8 +731,8 @@ CORBA::Boolean operator>> (
         Messaging::PolicyValue \
       >
 
-#if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
-#define _MESSAGING_POLICYVALUESEQ_CS_
+#if !defined (_MESSAGING_POLICYVALUESEQ__EXPLICIT_CS_)
+#define _MESSAGING_POLICYVALUESEQ__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \

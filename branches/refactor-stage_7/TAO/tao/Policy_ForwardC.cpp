@@ -647,14 +647,6 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<CORBA::Policy>;
-
-  /*template class
-    TAO::Any_Impl_T<
-        CORBA::Policy
-      >;
-  */
-
   template class
     TAO_Object_Manager<
         CORBA::Policy,
@@ -689,8 +681,8 @@ CORBA::Boolean operator>> (
           >
       >;
 
-#if !defined (_CORBA_POLICYLIST_EXPLICIT_CS_)
-#define _CORBA_POLICYLIST_EXPLICIT_CS_
+#if !defined (_CORBA_POLICYLIST__EXPLICIT_CS_)
+#define _CORBA_POLICYLIST__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Object_Sequence<
@@ -736,13 +728,6 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<CORBA::Policy>
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        CORBA::Policy \
-      >
-
 # pragma instantiate \
     TAO_MngSeq_Var_T< \
         CORBA::PolicyList, \
@@ -771,8 +756,8 @@ CORBA::Boolean operator>> (
           > \
       >
 
-#if !defined (_CORBA_POLICYLIST_CS_)
-#define _CORBA_POLICYLIST_CS_
+#if !defined (_CORBA_POLICYLIST__EXPLICIT_CS_)
+#define _CORBA_POLICYLIST__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Object_Sequence< \

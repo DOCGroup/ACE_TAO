@@ -689,8 +689,8 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
+#if !defined (_CORBA_POLICY__ARG_TRAITS_EXPLICIT_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_EXPLICIT_CS_
 
   template class TAO::Arg_Traits<CORBA::Policy>;
 
@@ -704,8 +704,8 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
+#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_EXPLICIT_CS_)
+#define _CORBA_INTERFACEDEF__ARG_TRAITS_EXPLICIT_CS_
 
   template class TAO::Arg_Traits<CORBA::InterfaceDef>;
 
