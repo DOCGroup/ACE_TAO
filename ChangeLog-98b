@@ -1,7 +1,13 @@
+Thu Nov  5 23:10:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (wait_task): Fixed a wrong parenthesis
+	  pair.  Thanks to Bob McWhirter <bob@werken.com> for figuring
+	  this out.
+
 Thu Nov  5 21:41:26 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/017
-          Began the ACE_Barrier tutorial.  So far, it's just code but I'll 
+          Began the ACE_Barrier tutorial.  So far, it's just code but I'll
           add the usual heavy comments & commentary in the next few days or
           so.  I'll update the docs/tutorials/index.html after that.
 
