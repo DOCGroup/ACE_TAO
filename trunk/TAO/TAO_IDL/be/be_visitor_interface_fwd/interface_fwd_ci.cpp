@@ -42,7 +42,7 @@ be_visitor_interface_fwd_ci::~be_visitor_interface_fwd_ci (void)
 }
 
 int
-be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *)
 {
   // _var and _out class generation for interfaces has been moved to the
   // .cpp file - nothing to do here at the moment.
