@@ -35,7 +35,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
                     host_info->h_length);
 
   // This starts out initialized to all zeros!
-  server_ = ACE_INET_Addr(port, mcast_addr);
+  server_ = ACE_INET_Addr (port, mcast_addr);
 
   if (logger_.subscribe (server_) == -1)
       perror("can't subscribe to multicast group"), exit(1);
