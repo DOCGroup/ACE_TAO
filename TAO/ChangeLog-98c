@@ -1,3 +1,9 @@
+Fri Nov 14 16:42:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/tao_internals.cpp (fake_service_entries_i): Made sure that
+ 	the resource factory faked entry had the proper number of
+ 	arguments specified.
+
 Fri Nov 14 14:11:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/lib/Makefile: 
