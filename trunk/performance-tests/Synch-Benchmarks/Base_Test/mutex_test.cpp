@@ -88,3 +88,11 @@ typedef Baseline_Lock_Test<ACE_Recursive_Thread_Mutex> Baseline_Recursive_Mutex_
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Recursive_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Recursive_Mutex_Test)
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class Baseline_Lock_Test<ACE_Thread_Mutex>;
+template class Baseline_Lock_Test<ACE_Recursive_Thread_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Baseline_Lock_Test<ACE_Thread_Mutex>
+#pragma instantiate Baseline_Lock_Test<ACE_Recursive_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
