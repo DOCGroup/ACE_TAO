@@ -1142,6 +1142,33 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_deadline_message_queue (size_t 
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
+ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_deadline_cleanup_message_queue (size_t hwm,
+                                                                                 size_t lwm,
+                                                                                 ACE_Notification_Strategy *ns,
+                                                                                 u_long static_bit_field_mask,
+                                                                                 u_long static_bit_field_shift,
+                                                                                 u_long pending_threshold,
+                                                                                 u_long dynamic_priority_max,
+                                                                                 u_long dynamic_priority_offset)
+{
+  ACE_Deadline_Cleanup_Message_Strategy *adcms;
+
+  ACE_NEW_RETURN (adcms,
+                  ACE_Deadline_Cleanup_Message_Strategy (static_bit_field_mask,
+                                                         static_bit_field_shift,
+                                                         pending_threshold,
+                                                         dynamic_priority_max,
+                                                         dynamic_priority_offset),
+                  0);
+
+  return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*adcms, hwm, lwm, ns);
+}
+  // factory method for a dynamically prioritized (by time to deadline) 
+  // ACE_Dynamic_Message_Queue, with automatic cleanup of beyond late messages
+
+
+template <ACE_SYNCH_DECL>
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
 ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hwm,
                                                                        size_t lwm,
                                                                        ACE_Notification_Strategy *ns,
@@ -1166,5 +1193,31 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hw
 }
   // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
 
+
+template <ACE_SYNCH_DECL>
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
+ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_cleanup_message_queue (size_t hwm,
+                                                                               size_t lwm,
+                                                                               ACE_Notification_Strategy *ns,
+                                                                               u_long static_bit_field_mask,
+                                                                               u_long static_bit_field_shift,
+                                                                               u_long pending_threshold,
+                                                                               u_long dynamic_priority_max,
+                                                                               u_long dynamic_priority_offset)
+{
+  ACE_Laxity_Message_Strategy *alcms;
+
+  ACE_NEW_RETURN (alcms,
+                  ACE_Laxity_Cleanup_Message_Strategy (static_bit_field_mask,
+                                                       static_bit_field_shift,
+                                                       pending_threshold,
+                                                       dynamic_priority_max,
+                                                       dynamic_priority_offset),
+                  0);
+
+  return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*alcms, hwm, lwm, ns);
+}
+  // factory method for a dynamically prioritized (by laxity) 
+  // ACE_Dynamic_Message_Queue, with automatic cleanup of beyond late messages
 
 #endif /* ACE_MESSAGE_QUEUE_T_C */

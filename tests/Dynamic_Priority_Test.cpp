@@ -264,21 +264,38 @@ main (int, ASYS_TCHAR *[])
  
   ACE_Message_Queue<ACE_MT_SYNCH> *test_queue = 0;
 
-  test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_static_message_queue (max_queue);
+  // test factory, static message queue
+  test_queue = ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_static_message_queue (max_queue);
+  ACE_ASSERT (test_queue != 0);
   run_test (test_queue, send_order, static_receipt_order);
   delete test_queue;
 
+  // test factory, dynamic message queue (deadline strategy, no cleanup)
   test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_deadline_message_queue (max_queue);
+  ACE_ASSERT (test_queue != 0);
   run_test (test_queue, send_order, deadline_receipt_order);
   delete test_queue;
 
+  // test factory, dynamic message queue (laxity strategy, no cleanup)
   test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_laxity_message_queue (max_queue);
+  ACE_ASSERT (test_queue != 0);
   run_test (test_queue, send_order, laxity_receipt_order);
+  delete test_queue;
+
+  // test factory (deadline strategy, with cleanup)
+  test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_deadline_cleanup_message_queue (max_queue);
+  ACE_ASSERT (test_queue != 0);
+  delete test_queue;
+
+  // test factory (laxity strategy, with cleanup)
+  test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_laxity_cleanup_message_queue (max_queue);
+  ACE_ASSERT (test_queue != 0);
   delete test_queue;
 
   ACE_END_TEST;
   return 0;
 }
+
 
 
 

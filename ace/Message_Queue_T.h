@@ -475,6 +475,19 @@ public:
   // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
+    create_deadline_cleanup_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                                           size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+                                           ACE_Notification_Strategy * = 0,
+                                           u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                                           u_long static_bit_field_shift = 10,            // 10 low order bits
+                                           u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                                           u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                                           u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // factory method for a dynamically prioritized (by time to deadline) 
+  // ACE_Dynamic_Message_Queue, with automatic deletion of beyond late messages
+
+
+  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                  ACE_Notification_Strategy * = 0,
@@ -484,6 +497,18 @@ public:
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
   // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
+
+  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
+    create_laxity_cleanup_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                                         size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+                                         ACE_Notification_Strategy * = 0,
+                                         u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                                         u_long static_bit_field_shift = 10,            // 10 low order bits
+                                         u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                                         u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                                         u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // factory method for a dynamically prioritized (by laxity) 
+  // ACE_Dynamic_Message_Queue, with automatic deletion of beyond late messages
 };
 
 #if defined (__ACE_INLINE__)
