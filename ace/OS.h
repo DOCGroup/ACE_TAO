@@ -1518,7 +1518,7 @@ struct iovec
 };
 
 typedef DWORD ACE_id_t;
-typedef WORD ACE_pri_t;
+typedef int ACE_pri_t;
 
 #else /* !defined (ACE_WIN32) */
 
