@@ -42,7 +42,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
       int priority =
         ACE_Sched_Params::priority_min (this->policy_);
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
       RTCORBA::PriorityMapping *pm =
         this->orb_->orb_core ()->priority_mapping ();
       const CORBA::Short corba_priority = (*i)->priority ();
@@ -54,7 +54,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) - creating thread at priority %d:%d\n"),
                     priority, corba_priority));
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */
       if (this->activate (this->flags_,
                           this->poolsize_, /* number of threads */
                           1, /* force active */

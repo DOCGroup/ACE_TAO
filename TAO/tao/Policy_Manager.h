@@ -22,7 +22,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/POA_CORBA.h"
 
@@ -246,6 +246,6 @@ public:
 # include "tao/Policy_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_POLICY_MANAGER_H */

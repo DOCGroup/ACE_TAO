@@ -145,13 +145,13 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent",
                                                               ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in (),
                                    ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Start off with no constraints.
   TAO::BufferingConstraint buffering_constraint;
@@ -181,17 +181,17 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
     orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
                         buffering_constraint_any,
                         ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Setup the constraints (at the ORB level).
   policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                         CORBA::ADD_OVERRIDE,
                                         ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // We are done with the policy.
   buffering_constraint_policy_list[0]->destroy (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Setup the none sync scope policy, i.e., the ORB will buffer AMI
   // calls.
@@ -210,17 +210,17 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_none_any,
                         ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Setup the none sync scope (at the ORB level).
   policy_current->set_policy_overrides (sync_none_policy_list,
                                         CORBA::ADD_OVERRIDE,
                                         ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // We are now done with these policies.
   sync_none_policy_list[0]->destroy (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
 
 int

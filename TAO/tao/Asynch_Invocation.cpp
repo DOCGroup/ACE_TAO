@@ -48,8 +48,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Asynch_Invocation_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 void
 TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
@@ -106,8 +106,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 //**************************************************************************
 

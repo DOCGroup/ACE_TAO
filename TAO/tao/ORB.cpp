@@ -33,7 +33,7 @@
 #include "tao/Request.h"
 #include "tao/MProfile.h"
 
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #  include "tao/InterfaceC.h"
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
@@ -41,11 +41,11 @@
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 #include "tao/Buffering_Constraint_Policy.h"
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # if defined (ACE_MVS)
@@ -411,7 +411,7 @@ CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 CORBA_Object_ptr
 CORBA_ORB::resolve_policy_manager (CORBA::Environment& ACE_TRY_ENV)
 {
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Manager *policy_manager =
     this->orb_core_->policy_manager ();
   if (policy_manager == 0)
@@ -420,18 +420,18 @@ CORBA_ORB::resolve_policy_manager (CORBA::Environment& ACE_TRY_ENV)
   return policy_manager->_this (ACE_TRY_ENV);
 #else
   return CORBA_Object::_nil ();
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 {
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
   return policy_current._this (ACE_TRY_ENV);
 #else
   return CORBA_Object::_nil ();
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 CORBA_Object_ptr
@@ -989,7 +989,7 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
 CORBA_TypeCode_ptr
 CORBA_ORB::create_interface_tc (const char * id,
@@ -1652,7 +1652,7 @@ CORBA_ORB::string_to_object (const char *str,
 
 // ****************************************************************
 
-#if defined(TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
 CORBA_ORB::create_policy (CORBA::PolicyType type,
@@ -1709,7 +1709,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
                     CORBA::Policy::_nil ());
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 

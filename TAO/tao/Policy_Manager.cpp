@@ -2,7 +2,7 @@
 
 #include "tao/Policy_Manager.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
@@ -516,4 +516,4 @@ TAO_Policy_Current::implementation (void) const
   return *TAO_TSS_RESOURCES::instance ()->policy_current_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

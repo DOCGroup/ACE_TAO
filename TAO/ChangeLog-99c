@@ -1,3 +1,153 @@
+Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h: 
+
+	  - Changed the following variables to have a [0/1]
+	  definition. Simply being defined or undefined was not powerful
+	  enough to allow the user to be really selective.
+
+	  TAO_HAS_RT_CORBA
+	  TAO_HAS_CORBA_MESSAGING
+	  TAO_HAS_AMI
+	  TAO_HAS_AMI_POLLER
+	  TAO_HAS_AMI_CALLBACK
+	  TAO_HAS_INTERFACE_REPOSITORY
+
+	  - These changes are similar to the one Ossama and I made for
+	  TAO_HAS_UIOP.
+
+	  - This meant that TAO_DISABLE_RT_CORBA was no longer necessary.
+
+	  - Nanbor should probably think about doing the same to
+	  TAO_HAS_INTERCEPTORS.  Also, somebody should look into
+	  TAO_HAS_VALUETYPE.
+	
+	  - TAO_HAS_AMI is new and is similar to the <ami> make rule.
+
+	  - The following files were changed to comply with the above
+	  changes:
+
+            Asynch_Invocation.cpp
+            Asynch_Invocation.h
+            Asynch_Invocation.i
+            Buffering_Constraint_Policy.cpp
+            Buffering_Constraint_Policy.h
+            Client_Priority_Policy.cpp
+            Client_Priority_Policy.h
+            Client_Priority_Policy.i
+            Direct_Priority_Mapping.cpp
+            Direct_Priority_Mapping.h
+            InterfaceC.cpp
+            InterfaceC.h
+            Invocation.cpp
+            Linear_Priority_Mapping.cpp
+            Linear_Priority_Mapping.h
+            Makefile
+            MessagingC.cpp
+            MessagingC.h
+            MessagingC.i
+            MessagingS.cpp
+            MessagingS.h
+            MessagingS.i
+            MessagingS_T.cpp
+            MessagingS_T.i
+            Messaging_Policy_i.cpp
+            Messaging_Policy_i.h
+            ORB.cpp
+            ORB.h
+            ORB_Core.cpp
+            ORB_Core.h
+            ORB_Core.i
+            Object.cpp
+            Object.h
+            POA_CORBA.h
+            Policy_Manager.cpp
+            Policy_Manager.h
+            PollableC.cpp
+            PollableC.h
+            PollableS.cpp
+            PollableS.h
+            Pool_Per_Endpoint.cpp
+            Priority_Mapping.cpp
+            Priority_Mapping.h
+            RT_Current.cpp
+            RT_Current.h
+            Reply_Dispatcher.cpp
+            Reply_Dispatcher.h
+            Reply_Dispatcher.i
+            Stub.cpp
+            Stub.h
+            Sync_Strategies.cpp
+            Sync_Strategies.h
+            TAOC.cpp
+            TAOC.h
+            TAOC.i
+            TAOS.cpp
+            TAOS.h
+            Typecode_Constants.cpp
+            corbafwd.h
+            default_resource.cpp
+            rtcorbafwd.cpp
+            rtcorbafwd.h
+	
+	* rules.tao.GNU: 
+
+	  - If <minimum_corba> is enabled, disable <rt_corba> and
+	  <corba_messaging> by default.  Users can still override this to
+	  enable <rt_corba> and <corba_messaging> even if <minimum_corba>
+	  is enabled.
+
+	  - Changed <minimum_corba> to be overriden to 0 if it is not
+	  defined to be 1.  This make <minimum_corba> consistent with
+	  other variables.
+
+	  - Added new flags: <ami_callback> and <ami_poller>.  Both of
+	  these are 0 by default.
+
+	  - Added new flag <ami>.  This one flag can be used to control
+	  both <ami_callback> and <ami_poller>.  However, the users can
+	  still control <ami_callback> and <ami_poller> independently.
+
+	  - Changed -DTAO_DISABLE_RT_CORBA to -DTAO_HAS_RT_CORBA=0.
+
+	  - Changed -DTAO_HAS_CORBA_MESSAGING to -DTAO_HAS_CORBA_MESSAGING=1
+
+	  - Changed -DTAO_HAS_INTERFACE_REPOSITORY to -DTAO_HAS_INTERFACE_REPOSITORY=1
+	
+	  - Added -DTAO_HAS_RT_CORBA=1 when rt_corba=1
+	 
+	  - Added -DTAO_HAS_CORBA_MESSAGING=0 when corba_messaging=0
+
+	* TAO: Changed 
+
+	  ifndef minimum_corba
+
+	  to:
+
+	  ifeq ($(minimum_corba),0)
+
+	  to make it consistent with the other variables for the following
+	  Makefiles:
+
+	  - examples/Makefile
+	  - examples/POA/Makefile
+	  - orbsvcs/Makefile
+	  - orbsvcs/orbsvcs/Makefile
+	  - orbsvcs/tests/Makefile
+	  - performance-tests/Makefile
+	  - performance-tests/Cubit/TAO/Makefile
+	  - tao/Makefile
+	  - tests/Makefile
+	
+	* examples/Buffered_AMI/client.cpp (setup_buffering_constraints):
+	  Changed all ACE_TRY_CHECK to be ACE_CHECK. This is because we
+	  are not in a try block.
+
+	* examples/Makefile (DIRS): Compile Buffered_AMI only when
+	  <ami_callback> is 1.
+
+	* tests/Makefile (DIRS): Compile the AMI test if <ami_callback> is 1.
+
 Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
   
 	* TAO/orbsvcs/orbsvcs/: Modified Makefile.bor to include new
