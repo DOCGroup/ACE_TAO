@@ -1,3 +1,9 @@
+Fri Jun 25 07:41:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline to include
+          directories containing files with template definitions
+          in a -I.
+
 Thu Jun 24 22:42:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe): fixed UNICOS
