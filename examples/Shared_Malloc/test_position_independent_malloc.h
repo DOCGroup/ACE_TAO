@@ -18,7 +18,7 @@ struct Dummy_Data
 // Some more dummy data.
 struct Long_Test
 {
-  ACE_Based_Pointer<long> bpl_;
+  ACE_Based_Pointer_Basic<long> bpl_;
   long array_[10];
 };
 

@@ -82,6 +82,9 @@ initialize (MALLOC *allocator)
   long longCont1 = *lt->bpl_;
   long longCont3 = lt->bpl_[3];
 
+  ACE_UNUSED_ARG (longCont1);
+  ACE_UNUSED_ARG (longCont3);
+
   // Test in local memory using long (array/pointer)
   ACE_NEW_RETURN (ptr,
                   long[5],
@@ -177,10 +180,8 @@ main (int argc, char *argv[])
 template class ACE_Based_Pointer<Dummy_Data>;
 template class ACE_Based_Pointer_Basic<Dummy_Data>;
 template class ACE_Based_Pointer_Basic<long>;
-template class ACE_Based_Pointer<long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<Dummy_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<long>
-#pragma instantiate ACE_Based_Pointer<long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
