@@ -12,7 +12,7 @@
 #define SP_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
+#include "ciao/DeploymentC.h"
 #include "Config_Handler_export.h"
 
 #include <xercesc/util/XercesDefs.hpp>

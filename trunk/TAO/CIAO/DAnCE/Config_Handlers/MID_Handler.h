@@ -4,7 +4,7 @@
 #define MID_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
+#include "ciao/DeploymentC.h"
 #include "Config_Handler_export.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"

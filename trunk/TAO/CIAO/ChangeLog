@@ -1,3 +1,42 @@
+Mon Aug 16 12:42:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/CAD_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/CPK_Handler.h:
+	* DAnCE/Config_Handlers/CPR_Handler.h:
+	* DAnCE/Config_Handlers/Cap_Handler.h:
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.h:
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.h:
+	* DAnCE/Config_Handlers/DT_Handler.h:
+	* DAnCE/Config_Handlers/Domain_Handler.h:
+	* DAnCE/Config_Handlers/ERE_Handler.h:
+	* DAnCE/Config_Handlers/IAD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IR_Handler.h:
+	* DAnCE/Config_Handlers/MID_Handler.h:
+	* DAnCE/Config_Handlers/NIA_Handler.h:
+	* DAnCE/Config_Handlers/PCI_Handler.h:
+	* DAnCE/Config_Handlers/PC_Handler.h:
+	* DAnCE/Config_Handlers/Plan_Handler.h:
+	* DAnCE/Config_Handlers/Process_Element.h:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/RS_Handler.h:
+	* DAnCE/Config_Handlers/RUK_Handler.h:
+	* DAnCE/Config_Handlers/Requirement_Handler.h:
+	* DAnCE/Config_Handlers/SPK_Handler.h:
+	* DAnCE/Config_Handlers/SP_Handler.h:
+	* DAnCE/Config_Handlers/TPD_Handler.h:
+	* DAnCE/Config_Handlers/Utils.h:
+
+	  Use ciao/ to include any header files from core ciao. 
+	
+	* DAnCE/ciao/CCM_Core.mpc:
+	* DAnCE/tests/Config_Handlers/handler_test.mpb:
+	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+
+	  Use the right libraries for linking. This should probably
+	  address some of the core build errors on the scoreboard. 
+
 Sun Aug 15 18:32:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:

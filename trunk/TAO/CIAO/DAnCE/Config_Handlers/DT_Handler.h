@@ -12,7 +12,6 @@
 #define DT_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
 #include "Config_Handler_export.h"
 #include "tao/ORB.h"
 
