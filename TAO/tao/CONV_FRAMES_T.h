@@ -39,27 +39,15 @@
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_sth.cpp:116
 
 namespace POA_CONV_FRAME
 {
 } // module CONV_FRAME
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:1096
-
-#if defined (__ACE_INLINE__)
-#include "CONV_FRAMES_T.inl"
-#endif /* defined INLINE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "CONV_FRAMES_T.cpp"
-#endif /* defined REQUIRED SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("CONV_FRAMES_T.cpp")
-#endif /* defined REQUIRED PRAGMA */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

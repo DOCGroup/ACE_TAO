@@ -54,21 +54,17 @@
 
 namespace POA_CONV_FRAME
 {
-  
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:80
 
 } // module CONV_FRAME
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:999
 
 #include "CONV_FRAMES_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "CONV_FRAMES.inl"
-#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
