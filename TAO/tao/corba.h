@@ -66,7 +66,7 @@
 #include "tao/Sequence.h"
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
-#include "tao/ObjectIDListC.h"
+#include "tao/ObjectIdListC.h"
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 
