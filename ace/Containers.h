@@ -68,6 +68,9 @@ public:
   int is_full (void) const;
   // Returns 1 if the container is full, otherwise returns 0. 
 
+  size_t size (void) const;
+  // The number of items in the stack.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -135,6 +138,9 @@ public:
   int is_full (void) const;
   // Returns 1 if the container is full, otherwise returns 0. 
 
+  size_t size (void) const;
+  // The number of items in the stack.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -197,6 +203,7 @@ class ACE_Unbounded_Stack
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
 {
+  friend class ACE_Unbounded_Stack_Iterator<T>;
 public:
   // = Initialization, assignemnt, and termination methods.
   ACE_Unbounded_Stack (void);
@@ -249,6 +256,9 @@ public:
 
   int find (const T &item) const;
   // Finds if <item> occurs the set.  Returns 1 if finds, else 0.
+
+  size_t size (void) const;
+  // The number of items in the stack.
 
   void dump (void) const;
   // Dump the state of an object.
