@@ -90,48 +90,6 @@
 
     <hr>
     <P>
-    <h2><A NAME="Common Options">Common Endpoint-Specific Options</A></h2>
-    <P>
-      TAO supports the following options that are common to all
-      pluggable protocol endpoints:
-      <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
-        <TR>
-          <TH>Option</TH>
-          <TH>Description</TH>
-        </TR>
-        <TR>
-          <TD>
-            <CODE>priority</CODE>
-          </TD>
-          <TD>
-            The <CODE>priority</CODE> option allows a given
-            <STRONG>CORBA</STRONG> priority to be assigned to the
-            endpoint.  This is useful when utilizing TAO's real-time
-            CORBA support.  The format for the <CODE>priority</CODE>
-            is:
-            <BLOCKQUOTE>
-              <CODE>priority=</CODE><I>value</I>
-            </BLOCKQUOTE>
-            where <I>value</I> is a priority in the range
-            <CODE>0</CODE> to <CODE>32767</CODE>.
-            <P>
-              The native operating system priority to which the CORBA
-              priority is mapped to depends on the platform, and on
-              the priority mapping method TAO is configured with
-              (e.g. <I>direct</I> or <I>linear</I>).  By default TAO
-              maps CORBA priorities to native priorities linearly.
-            <P>
-              It is not always possible to achieve a one-to-one
-              mapping of the CORBA priority to the native operating
-              system priority.  As such, it is possible for more than
-              one CORBA priority to correspond to the same native
-              operating system priority.
-          </TD>
-        </TR>
-      </TABLE>
-
-    <hr>
-    <P>
     <h2><A NAME="IIOP">IIOP Endpoints</A></h2>
     TAO's IIOP pluggable protocol utilizes TCP/IP as its underlying
     transport mechanism.
@@ -154,12 +112,12 @@
     <P>
       Options are separated from the addresses by a forward slash
       '<CODE>/</CODE>'.  For instance, if an IIOP endpoint should have
-      a CORBA priority of 50 associated with it, then the following
+      a property foobar of 50 associated with it, then the following
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://hostname:port/priority=50
+          -ORBEndpoint iiop://hostname:port/foobar=50
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -334,9 +292,9 @@
     <UL>
       <LI><CODE>-ORBEndpoint iiop://1.0@foo1:0</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456/priority=300</CODE></LI>
-      <LI><CODE>-ORBEndpoint iiop:///priority=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
-      <LI><CODE>-ORBEndpoint iiop://:2020/priority=12345</CODE>
+      <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBEndpoint iiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBEndpoint iiop://:2020/foobar=12345</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@:1234</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@,1.0@:1234,1.1@</CODE>
@@ -367,13 +325,13 @@
 
     <P>
       Options are separated from the addresses by a forward slash
-      '<CODE>/</CODE>'.  For instance, if a SHMIOP endpoint should have
-      a CORBA priority of 50 associated with it, then the following
+      '<CODE>/</CODE>'.  For instance, if an IIOP endpoint should have
+      a property foobar of 50 associated with it, then the following
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint shmiop://port/priority=50
+          -ORBEndpoint shmiop://port/foobar=50
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -409,9 +367,9 @@
     <UL>
       <LI><CODE>-ORBEndpoint shmiop://1.0@0</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.0@0,3456</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.0@0,3456/priority=300</CODE></LI>
-      <LI><CODE>-ORBEndpoint shmiop:///priority=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
-      <LI><CODE>-ORBEndpoint shmiop://2020/priority=12345</CODE>
+      <LI><CODE>-ORBEndpoint shmiop://1.0@0,3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBEndpoint shmiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBEndpoint shmiop://2020/foobar=12345</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.1@1234</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.1@,1.0@1234,1.1@</CODE>
@@ -441,13 +399,13 @@
 
     <P>
       Options are separated from the addresses by a vertical bar
-      '<CODE>|</CODE>'.  For instance, if an UIOP endpoint should have
-      a CORBA priority of 50 associated with it, then the following
+      '<CODE>|</CODE>'.  For instance, if an IIOP endpoint should have
+      a property foobar of 50 associated with it, then the following
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|priority=50'
+          -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|foobar=50'
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -511,8 +469,8 @@
     <UL>
       <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo1</CODE>
       <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
-      <LI><CODE>-ORBEndpoint 'uiop://1.1@/tmp/bar|priority=300'</CODE></LI>
-      <LI><CODE>-ORBEndpoint 'uiop://|priority=2'</CODE>
+      <LI><CODE>-ORBEndpoint 'uiop://1.1@/tmp/bar|foobar=300'</CODE></LI>
+      <LI><CODE>-ORBEndpoint 'uiop://|foobar=2'</CODE>
       <LI><CODE>-ORBEndpoint uiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
     </UL>
