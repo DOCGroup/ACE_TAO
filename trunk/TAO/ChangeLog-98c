@@ -1,3 +1,13 @@
+Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_structure,be_union}.cpp: Carlos had removed the
+	if !imported check in the member counting function, but it had
+	crept in again, maybe due to me. So this is fixed again.
+
+	* test/Cubit/TAO/IDL/svr.cpp: Removed the hack which was
+	separating command line arguments starting with O. We leave this
+	task to the newly added Arg_Shifter.
+
 Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Cleaned up lots of places
@@ -61,7 +71,7 @@ Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Mon Nov 17 18:40:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/orb_core.i: 
+	* tao/orb_core.i:
 	  Some data was not initialized when used from a thread different
 	  than the one doing ORB_init (even though we choose a global ORB
 	  in the svc.conf file). Chris found a fix for this. The affected
