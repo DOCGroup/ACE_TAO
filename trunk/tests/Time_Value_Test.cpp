@@ -118,9 +118,6 @@ test_ace_u_longlong (void)
                                   (ACE_U_LongLong) (ull6 / 0x10000u / 0xd),
                                   0, 0x13b04ec4);
 
-  ACE_OS::fprintf (stderr, "%lx\n",
-                   (0xffffffffu - 0xd0000 + 1) / 0xd0000 * 0xfff4  +  0xfff4  +  0x20 / 0xd0000 + ((0xffffffffu - 0xd0000 + 1) % 0xd0000 * 0));
-
   errors += check_ace_u_longlong ("ull6 % 5",
                                   (ACE_U_LongLong) (ull6 % 5),
                                   0, 1);
