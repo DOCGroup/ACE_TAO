@@ -17,9 +17,15 @@ ACE_RCSID(tao, Connection_Handler, "$Id$")
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
    transport_ (0),
-   tss_resources_ (orb_core->get_tss_resources ())
-  //,   is_registered_ (0)
+   tss_resources_ (orb_core->get_tss_resources ()),
+   pending_upcalls_ (1),
+   pending_upcall_lock_ (0)
+
 {
+  // @@todo: We need to have a distinct option/ method in the resource
+  // factory for this and TAO_Transport.
+  this->pending_upcall_lock_ =
+    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
 }
 
 
@@ -30,6 +36,8 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   this->orb_core_ = 0;
   this->tss_resources_ = 0;
   TAO_Transport::release (this->transport_);
+
+  delete this->pending_upcall_lock_;
 }
 
 
