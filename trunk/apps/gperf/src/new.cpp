@@ -40,7 +40,7 @@ _RWSTD_THROW_SPEC ((std::bad_alloc))
 #endif /* _RWSTD_THROW_SPEC */
 {
   // @@ This function should probably be replaced with something from
-  // ACE, e.g., some type of ACE_Memory_Allocator. 
+  // ACE, e.g., some type of ACE_Memory_Allocator.
 
   static char *buf_start = 0;          // Large array used to reduce calls to NEW.
   static char *buf_end = 0;            // Indicates end of BUF_START.
@@ -56,13 +56,13 @@ _RWSTD_THROW_SPEC ((std::bad_alloc))
   // chunk. Note we use a heuristic that grows the buffer either by
   // size of the request or by twice the previous size, whichever is
   // larger.
-  
+
   if (buf_start + size >= buf_end)
     {
       buf_size *= 2;
       if (buf_size < size)
-	buf_size = size;
-      if (buf_start = (char *) malloc (buf_size))
+        buf_size = size;
+      if ((buf_start = (char *) malloc (buf_size)))
         buf_end = buf_start + buf_size;
       else
         ACE_ERROR ((LM_ERROR,
@@ -80,7 +80,7 @@ _RWSTD_THROW_SPEC ((std::bad_alloc))
 
 // We need this deletion operator in order to make the linker happy.
 
-void 
+void
 operator delete (void *ptr)
 {
   // We cannot call free here, as it doesn't match the mallocs.  free
