@@ -21,6 +21,11 @@ Tue Sep 30 08:35:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Atomic_Op.i: added CVS header.
 
+	* ace/Object_Manager.{h,cpp}: removed Filecache arrays, because
+	  Filecache no longer needs them.
+	
+	* ace/Filecache.{h,cpp}: removed unused static Filecache::lock_.
+	
 	* tests/test_config.h: Added 1 second sleep to ACE_END_TEST to
 	  allow all threads to terminate gracefully.
 	  VxWorks only: removed the hack removal of the log file, because
