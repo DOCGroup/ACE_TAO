@@ -19,6 +19,8 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+#include "ace/Service_Config.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -59,7 +61,7 @@ public:
 
   /// The hook to be set for the ClientProtocolPolicy.
   static Client_Protocols_Hook client_protocols_hook_;
- 
+
   /// Invoke the server_protocols hook if present.
   /**
    * The timeout hook is used to determine if the client_protocols policy is

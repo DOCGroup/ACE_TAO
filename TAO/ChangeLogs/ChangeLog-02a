@@ -1,3 +1,28 @@
+Wed Jan 24 09:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBANAME_Parser.h:
+        * tao/DLL_ORB.h:
+        * tao/DLL_Parser.h:
+        * tao/Default_Protocols_Hooks.h:
+        * tao/FILE_Parser.h:
+        * tao/IIOP_Factory.h:
+        * tao/IIOP_Lite_Factory.h:
+        * tao/Protocols_Hooks.h:
+        * tao/RT_ORB_Loader.h:
+        * tao/default_client.h:
+        * tao/default_resource.h:
+        * tao/default_server.h:
+        * tao/qt_resource.h:
+        * tao/xt_resource.h:
+          Fixed use of ACE_STATIC_SVC_DECLARE() it should be
+          ACE_STATIC_SVC_DECLARE_EXPORT()
+
+        * tao/RT_Protocols_Hooks.h:
+        * tao/Connection_Cache_Manager.cpp:
+          Add missing #include, this should fix some problems in Tru64/CXX
+          and SunOS/SunCC4.2 builds.
+
 Wed Jan 24 10:41:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/diffs/InterfaceC.*.diff:
@@ -9,20 +34,20 @@ Wed Jan 24 10:41:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jan 24 00:27:47 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
-	  (receive_request_service_contexts, receive_request):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
+          (receive_request_service_contexts, receive_request):
 
-	  Moved the secure invocation interception code from the
-	  receive_request() interception point to the
-	  receive_request_service_contexts() interception point since it
-	  executed earlier in the request handling path.
+          Moved the secure invocation interception code from the
+          receive_request() interception point to the
+          receive_request_service_contexts() interception point since it
+          executed earlier in the request handling path.
 
-	* tests/Portable_Interceptors/ForwardRequest/client.cpp (main):
+        * tests/Portable_Interceptors/ForwardRequest/client.cpp (main):
 
-	  Improved test by verifying no two consecutive invocation results
-	  are the same.  The test is designed so that this situation
-	  should never occur.  If it does, then it is a clear indication
-	  that PortableInterceptor::ForwardRequest support is broken.
+          Improved test by verifying no two consecutive invocation results
+          are the same.  The test is designed so that this situation
+          should never occur.  If it does, then it is a clear indication
+          that PortableInterceptor::ForwardRequest support is broken.
 
 Wed Jan 24 08:26:52 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 

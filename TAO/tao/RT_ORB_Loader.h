@@ -31,19 +31,19 @@ public:
 
   /// Constructor
   TAO_RT_ORB_Loader (void);
-  
+
   /// Creates a RT_ORB and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
     ACE_THROW_SPEC (());
-  
+
   /// Sets RT_Current and Priority_Mapping_Manager
   void set_objects (TAO_ORB_Core *orb_core);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_RT_ORB_Loader)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO, TAO_RT_ORB_Loader)
 
 #include "ace/post.h"

@@ -77,7 +77,7 @@ private:
 # include "tao/DLL_ORB.inl"
 #endif  /* ! __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_DLL_ORB)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_ORB)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_ORB)
 
 #include "ace/post.h"

@@ -95,7 +95,7 @@ protected:
 # include "tao/default_server.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_Default_Server_Strategy_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
 #include "ace/post.h"
