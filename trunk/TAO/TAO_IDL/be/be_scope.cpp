@@ -1,12 +1,23 @@
 //
 // $Id$
 //
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_scope.h"
+#include "be_valuetype.h"
+#include "be_component.h"
+#include "be_home.h"
+#include "be_module.h"
+#include "be_exception.h"
+#include "be_union.h"
+#include "be_structure.h"
+#include "be_enum.h"
+#include "be_operation.h"
+#include "be_factory.h"
+#include "be_root.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_scope, "$Id$")
-
+ACE_RCSID (be, 
+           be_scope, 
+           "$Id$")
 
 // Default Constructor.
 be_scope::be_scope (void)
@@ -43,10 +54,16 @@ be_scope::comma (void) const
 be_decl *
 be_scope::decl (void)
 {
-  switch (this->scope_node_type())
+  switch (this->scope_node_type ())
     {
     case AST_Decl::NT_interface:
       return be_interface::narrow_from_scope (this);
+    case AST_Decl::NT_valuetype:
+      return be_valuetype::narrow_from_scope (this);
+    case AST_Decl::NT_component:
+      return be_component::narrow_from_scope (this);
+    case AST_Decl::NT_home:
+      return be_home::narrow_from_scope (this);
     case AST_Decl::NT_module:
       return be_module::narrow_from_scope (this);
     case AST_Decl::NT_root:
@@ -71,18 +88,7 @@ be_scope::decl (void)
 void
 be_scope::destroy (void)
 {
-  for (UTL_ScopeActiveIterator iter (this, IK_decls);
-       !iter.is_done ();
-       iter.next ())
-    {
-      AST_Decl *i = iter.item ();
-      i->destroy ();
-      delete i;
-      i = 0;
-    }
-  // Still some glitches, but the call should eventually
-  // be made here.
-  //  UTL_Scope::destroy ();
+  UTL_Scope::destroy ();
 }
 
 int

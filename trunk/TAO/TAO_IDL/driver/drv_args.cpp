@@ -66,14 +66,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // drv_args.c - Argument parsing for IDL compiler main driver
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "drv_private.h"
-#include        "drv_extern.h"
-#include        "be.h"
-#include        "ace/Process.h"
+#include "idl_defines.h"
+#include "global_extern.h"
+#include "drv_extern.h"
+#include "be_global.h"
+#include "be_extern.h"
+#include "ace/Process.h"
 
-ACE_RCSID(driver, drv_args, "$Id$")
+ACE_RCSID (driver, 
+           drv_args, 
+           "$Id$")
+
+extern long DRV_nfiles;
+extern const char *DRV_files[];
 
 // Push a file into the list of files to be processed
 static void
@@ -86,16 +91,19 @@ DRV_push_file (const char *s)
 static void
 DRV_prep_cpp_arg (char *s)
 {
-  char *newarg = new char[512];
+  char *newarg = 0;
+  ACE_NEW (newarg,
+           char[512]);
   char *farg;
 
   newarg[0] = '\0';
 
   for (farg = ACE_OS::strtok (s, ",");
-       farg != NULL;
+       farg != 0;
        farg = ACE_OS::strtok (0, ","))
     {
-      ACE_OS::strcat (newarg, farg);
+      ACE_OS::strcat (newarg, 
+                      farg);
     }
 
   DRV_cpp_putarg (newarg);
@@ -241,19 +249,18 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -GC \t\tGenerate the code for using AMI Call back model\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gd \t\tGenerate the code for direct collocation. Default")
+      ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
       ACE_TEXT (" CORBA::Environment arguments (disabled by default")
       ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
-      ACE_TEXT (" (unopt by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
-      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -281,11 +288,27 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GC \t\tGenerate the code for using AMI Call back model\n")
+      ACE_TEXT (" -Gm \t\tEnable support for CORBA components\n")
+      ACE_TEXT (" (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gp \t\tGenerate the code for thru-POA collocation")
+      ACE_TEXT (" (default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gsp \t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
+      ACE_TEXT (" (unopt by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -428,6 +451,114 @@ DRV_usage (void)
       LM_DEBUG,
       ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
     ));
+}
+
+// Return 0 on success, -1 failure. The <errno> corresponding to the
+// error that caused the GPERF execution is also set.
+int
+DRV_check_gperf (void)
+{
+  // If absolute path is not specified yet, let us call just
+  // "gperf". Hopefully PATH is set up correctly to locate the gperf.
+  if (idl_global->gperf_path () == 0)
+    {
+      // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+      idl_global->gperf_path (ACE_GPERF);
+#else
+      idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
+    }
+
+  // If we have absolute path for the <gperf> rather than just the
+  // executable name <gperf>, make sure the file exists
+  // firsts. Otherwise just call <gperf>. Probably PATH is set
+  // correctly to take care of this.
+
+  // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
+#else
+  if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
+#endif /* ACE_GPERF */
+    {
+      // It is absolute path. Check the existance, permissions and
+      // the modes.
+      if (ACE_OS::access (idl_global->gperf_path (),
+                          F_OK | X_OK) == -1)
+        {
+          // Problem with the file. No point in having the absolute
+          // path. Swith to "gperf".
+          // If ACE_GPERF is defined then use that gperf program
+          //instead of "gperf."
+#if defined (ACE_GPERF)
+          idl_global->gperf_path (ACE_GPERF);
+#else
+          idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
+        }
+    }
+
+  // Just call gperf in silent mode. It will come and immly exit.
+
+  // Using ACE_Process.
+  ACE_Process process;
+  ACE_Process_Options process_options;
+
+  // Set the command line for the gperf program.
+  process_options.command_line ("%s"
+                                " "
+                                "-V",
+                                idl_global->gperf_path ());
+
+  // Spawn a process for gperf.
+  if (process.spawn (process_options) == -1)
+    {
+      return -1;
+    }
+
+#if defined (ACE_WIN32)
+  // No wait or anything in Win32.
+  return 0;
+#endif /* ACE_WIN32 */
+
+  // Wait for gperf to complete.
+  ACE_exitcode wait_status = 0;
+  if (process.wait (&wait_status) == -1)
+    {
+      return -1;
+    }
+  else
+    {
+      // Wait is sucessful, we will check the exit code from the
+      // spawned process.
+      if (WIFEXITED (wait_status))
+        {
+          // Normal exit.
+
+          // Check the exit value of the spawned process. ACE_Process
+          // exits with <errno> as exit code, if it is not able to
+          // exec gperf program, so get the exit code now and set that
+          // to <errno> again, so that it can be used to print error
+          // messages.
+          errno = WEXITSTATUS (wait_status);
+          if (errno)
+            {
+              // <exec> has failed.
+              return -1;
+            }
+          else
+            {
+              // Everything was alright.
+              return 0;
+            }
+        }
+      else
+        {
+          // Not a normal exit. No <errno> might be set.
+          return -1;
+        }
+    }
 }
 
 // Parse arguments on command line
@@ -1012,6 +1143,7 @@ DRV_parse_args (long ac, char **av)
 
                   ACE_OS::exit (99);
                 }
+
               break;
             case 'G':
               // Enable generation of ...
@@ -1042,9 +1174,44 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 's')
                 {
                   if (av[i][3] == 'p')
-                    // smart proxies
-                    be_global->gen_smart_proxies (I_TRUE);
+                    {
+                      // smart proxies
+                      be_global->gen_smart_proxies (I_TRUE);
+                    }
+                  else
+                    {
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand ")
+                          ACE_TEXT ("the '%s' option\n"),
+                          av[i]
+                        ));
 
+                      ACE_OS::exit (99);
+                    }
+
+                  break;
+                }
+              else if (av[i][2] == 'i')
+                {
+                  if (av[i][3] == 'c')
+                    {
+                      // inline constants
+                      be_global->gen_inline_constants (I_TRUE);
+                    }
+                  else
+                    {
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand ")
+                          ACE_TEXT ("the '%s' option\n"),
+                          av[i]
+                        ));
+
+                      ACE_OS::exit (99);
+                    }
+
+                  break;
                 }
               else if (av[i][2] == 't')
                 {
@@ -1065,6 +1232,11 @@ DRV_parse_args (long ac, char **av)
                 {
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
+                }
+              else if (av[i][2] == 'm')
+                {
+                  // enable CORBA component support
+                  idl_global->component_support (1);
                 }
               else if (av[i][2] == 'I')
                 {
@@ -1261,110 +1433,3 @@ DRV_parse_args (long ac, char **av)
     }
 }
 
-// Return 0 on success, -1 failure. The <errno> corresponding to the
-// error that caused the GPERF execution is also set.
-int
-DRV_check_gperf (void)
-{
-  // If absolute path is not specified yet, let us call just
-  // "gperf". Hopefully PATH is set up correctly to locate the gperf.
-  if (idl_global->gperf_path () == 0)
-    {
-      // If ACE_GPERF is defined then use that gperf program instead of "gperf."
-#if defined (ACE_GPERF)
-      idl_global->gperf_path (ACE_GPERF);
-#else
-      idl_global->gperf_path ("gperf");
-#endif /* ACE_GPERF */
-    }
-
-  // If we have absolute path for the <gperf> rather than just the
-  // executable name <gperf>, make sure the file exists
-  // firsts. Otherwise just call <gperf>. Probably PATH is set
-  // correctly to take care of this.
-
-  // If ACE_GPERF is defined then use that gperf program instead of "gperf."
-#if defined (ACE_GPERF)
-  if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
-#else
-  if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
-#endif /* ACE_GPERF */
-    {
-      // It is absolute path. Check the existance, permissions and
-      // the modes.
-      if (ACE_OS::access (idl_global->gperf_path (),
-                          F_OK | X_OK) == -1)
-        {
-          // Problem with the file. No point in having the absolute
-          // path. Swith to "gperf".
-          // If ACE_GPERF is defined then use that gperf program
-          //instead of "gperf."
-#if defined (ACE_GPERF)
-          idl_global->gperf_path (ACE_GPERF);
-#else
-          idl_global->gperf_path ("gperf");
-#endif /* ACE_GPERF */
-        }
-    }
-
-  // Just call gperf in silent mode. It will come and immly exit.
-
-  // Using ACE_Process.
-  ACE_Process process;
-  ACE_Process_Options process_options;
-
-  // Set the command line for the gperf program.
-  process_options.command_line ("%s"
-                                " "
-                                "-V",
-                                idl_global->gperf_path ());
-
-  // Spawn a process for gperf.
-  if (process.spawn (process_options) == -1)
-    {
-      return -1;
-    }
-
-#if defined (ACE_WIN32)
-  // No wait or anything in Win32.
-  return 0;
-#endif /* ACE_WIN32 */
-
-  // Wait for gperf to complete.
-  ACE_exitcode wait_status = 0;
-  if (process.wait (&wait_status) == -1)
-    {
-      return -1;
-    }
-  else
-    {
-      // Wait is sucessful, we will check the exit code from the
-      // spawned process.
-      if (WIFEXITED (wait_status))
-        {
-          // Normal exit.
-
-          // Check the exit value of the spawned process. ACE_Process
-          // exits with <errno> as exit code, if it is not able to
-          // exec gperf program, so get the exit code now and set that
-          // to <errno> again, so that it can be used to print error
-          // messages.
-          errno = WEXITSTATUS (wait_status);
-          if (errno)
-            {
-              // <exec> has failed.
-              return -1;
-            }
-          else
-            {
-              // Everything was alright.
-              return 0;
-            }
-        }
-      else
-        {
-          // Not a normal exit. No <errno> might be set.
-          return -1;
-        }
-    }
-}

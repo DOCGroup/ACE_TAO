@@ -118,6 +118,14 @@ SOURCE=.\be\be_codegen.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_constant.cpp
 # End Source File
 # Begin Source File
@@ -159,6 +167,10 @@ SOURCE=.\be\be_global.cpp
 # Begin Source File
 
 SOURCE=.\be\be_helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_home.cpp
 # End Source File
 # Begin Source File
 
@@ -222,6 +234,10 @@ SOURCE=.\be\be_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_sunsoft.cpp
 # End Source File
 # Begin Source File
@@ -243,6 +259,10 @@ SOURCE=.\be\be_union.cpp
 # Begin Source File
 
 SOURCE=.\be\be_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_union_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -282,6 +302,14 @@ SOURCE=.\be\be_visitor_attribute.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_constant.cpp
 # End Source File
 # Begin Source File
@@ -307,6 +335,10 @@ SOURCE=.\be\be_visitor_factory.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_field.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_home.cpp
 # End Source File
 # Begin Source File
 
@@ -342,6 +374,10 @@ SOURCE=.\be\be_visitor_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_typecode.cpp
 # End Source File
 # Begin Source File
@@ -358,6 +394,10 @@ SOURCE=.\be\be_visitor_union_branch.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_union_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_valuetype.cpp
 # End Source File
 # Begin Source File
@@ -368,10 +408,6 @@ SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\be_include\be.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\be_include\be_argument.h
@@ -387,6 +423,14 @@ SOURCE=.\be_include\be_attribute.h
 # Begin Source File
 
 SOURCE=.\be_include\be_codegen.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_component_fwd.h
 # End Source File
 # Begin Source File
 
@@ -414,6 +458,10 @@ SOURCE=.\be_include\be_expression.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_extern.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_factory.h
 # End Source File
 # Begin Source File
@@ -431,6 +479,10 @@ SOURCE=.\be_include\be_global.h
 # Begin Source File
 
 SOURCE=.\be_include\be_helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_home.h
 # End Source File
 # Begin Source File
 
@@ -490,6 +542,10 @@ SOURCE=.\be_include\be_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_sunsoft.h
 # End Source File
 # Begin Source File
@@ -510,6 +566,10 @@ SOURCE=.\be_include\be_union_branch.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_union_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_union_label.h
 # End Source File
 # Begin Source File
@@ -526,6 +586,10 @@ SOURCE=.\be_include\be_visitor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_amh_pre_proc.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_ami_pre_proc.h
 # End Source File
 # Begin Source File
@@ -539,6 +603,14 @@ SOURCE=.\be_include\be_visitor_array.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_component_fwd.h
 # End Source File
 # Begin Source File
 
@@ -567,6 +639,10 @@ SOURCE=.\be_include\be_visitor_factory.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_field.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_home.h
 # End Source File
 # Begin Source File
 
@@ -602,6 +678,10 @@ SOURCE=.\be_include\be_visitor_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_typecode.h
 # End Source File
 # Begin Source File
@@ -615,6 +695,10 @@ SOURCE=.\be_include\be_visitor_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_union_fwd.h
 # End Source File
 # Begin Source File
 

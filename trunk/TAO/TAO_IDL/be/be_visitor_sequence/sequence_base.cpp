@@ -18,22 +18,16 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, sequence_base, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           sequence_base, 
+           "$Id$")
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements
 // each sequence type.
 // ****************************************************************
 
-be_visitor_sequence_base::
-be_visitor_sequence_base (be_visitor_context *ctx)
+be_visitor_sequence_base::be_visitor_sequence_base (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -47,7 +41,9 @@ int
 be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
   *os << node->name ();
+
   return 0;
 }
 
@@ -133,7 +129,19 @@ be_visitor_sequence_base::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_sequence_base::visit_structure_fwd (be_structure_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_base::visit_union (be_union *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_base::visit_union_fwd (be_union_fwd *node)
 {
   return this->visit_node (node);
 }
@@ -176,8 +184,8 @@ be_visitor_sequence_base::visit_typedef (be_typedef *node)
 }
 
 be_visitor_sequence_base_template_args::
-  be_visitor_sequence_base_template_args (be_visitor_context *ctx,
-                                          be_sequence *seq)
+be_visitor_sequence_base_template_args (be_visitor_context *ctx,
+                                        be_sequence *seq)
   : be_visitor_sequence_base (ctx),
     beseq_ (seq)
 {
@@ -186,7 +194,7 @@ be_visitor_sequence_base_template_args::
 
 
 be_visitor_sequence_base_template_args::
-  ~be_visitor_sequence_base_template_args (void)
+~be_visitor_sequence_base_template_args (void)
 {
   //no-op
 }

@@ -19,10 +19,13 @@
 #define TAO_BE_VALUETYPE_H
 
 #include "be_interface.h"
+#include "ast_valuetype.h"
+#include "ast_field.h"
 
 class TAO_OutStream;
 
-class be_valuetype : public virtual be_interface
+class be_valuetype : public virtual be_interface,
+                     public virtual AST_ValueType
 {
   // = TITLE
   //    Backend-class for valuetypes
@@ -36,17 +39,23 @@ public:
   // Default constructor.
 
   be_valuetype (UTL_ScopedName *n,
-                AST_Interface **ih,
-                long nih,
-                idl_bool set_abstract = 0);
+                AST_Interface **inherits,
+                long n_inherits,
+                AST_ValueType *inherits_concrete,
+                AST_Interface **inherits_flat,
+                long n_inherits_flat,
+                AST_Interface **supports,
+                long n_supports,
+                AST_Interface *supports_concrete,
+                idl_bool abstract,
+                idl_bool truncatable);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
-  // and supported interfaces <ih>, the number of inherited interfaces <nih>,
-  // and any pragmas <p>.
+  // and supported interfaces <ih>, and the number of inherited interfaces <nih>
 
   ~be_valuetype (void);
   // Destructor.
 
-  virtual void redefine (AST_Interface *from);
+  virtual void redefine (AST_ValueType *from);
 
   idl_bool opt_accessor (void);
   // Should generate optimized form?
@@ -66,15 +75,15 @@ public:
   // Generate the _out implementation.
 
   virtual int gen_helper_header (char *local_name = 0,
-         char *full_name = 0);
+                                 char *full_name = 0);
   // Generate the helper functions definition.
 
   virtual int gen_helper_inline (char *local_name = 0,
-         char *full_name = 0);
+                                 char *full_name = 0);
   // Generate the helper functions inline implementation.
 
   virtual int gen_helper_stubs (char *local_name = 0,
-        char *full_name = 0);
+                                char *full_name = 0);
   // Generate the helper functions implementation.
 
   const char *full_obv_skel_name (void);
@@ -87,11 +96,32 @@ public:
   // For building the name for private data fields.
   be_valuetype *statefull_inherit (void);
 
+  /// Load the insert queue with all the interfaces we support, and
+  /// call the generic version of traverse_inheritance_graph().
+  int traverse_supports_list_graphs (
+      tao_code_emitter gen,
+      TAO_OutStream *os,
+      idl_bool abstract_paths_only = I_FALSE
+    );
+
+  /// Load the insert queue with the concrete interface we support, and
+  /// call the generic version of traverse_inheritance_graph().
+  int traverse_concrete_inheritance_graph (
+      tao_code_emitter gen,
+      TAO_OutStream *os
+    );
+
+  idl_bool supports_abstract (void) const;
+  // Do we support at least one abstract interface?
+
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
  // Narrowing.
-  DEF_NARROW_METHODS1 (be_valuetype, be_interface);
+  DEF_NARROW_METHODS2 (be_valuetype, be_interface, AST_ValueType);
   DEF_NARROW_FROM_DECL (be_valuetype);
   DEF_NARROW_FROM_SCOPE (be_valuetype);
 
@@ -106,8 +136,29 @@ public:
   virtual idl_bool in_recursion (AST_Type *node = 0);
   // Check if we are in recursion.
 
+  static int abstract_supports_helper (be_interface *node,
+                                       be_interface *base,
+                                       TAO_OutStream *os);
+  // Helper method passed to the template method to generate code for
+  // adding abstract supported interfaces to the inheritance list.
+
+  static int gen_abstract_init_helper (be_interface *node,
+                                       be_interface *base,
+                                       TAO_OutStream *os);
+  // Helper method to initialize the val_ member of the generated
+  // C++ class for each abstract interface that we support.
+
+  static int gen_skel_helper (be_interface *node,
+                              be_interface *base,
+                              TAO_OutStream *os);
+  // Helper method to generate *_skel operations for the concrete
+  // interface that we support (if any) and those of its base classes.
+
 private:
   char *full_obv_skel_name_;
+
+  idl_bool supports_abstract_;
+  // Do we support at least one abstract interface?
 };
 
 #endif  // if !defined

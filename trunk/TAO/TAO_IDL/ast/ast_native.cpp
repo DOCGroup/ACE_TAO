@@ -1,26 +1,22 @@
 // $Id$
 
+#include "ast_native.h"
+#include "ast_visitor.h"
 
-// AST_Native: New IDL type added by the POA spec
-
-#include "idl.h"
-#include "idl_extern.h"
-
-ACE_RCSID(ast, ast_native, "$Id$")
-
-// Constructor(s).
+ACE_RCSID (ast, 
+           ast_native, 
+           "$Id$")
 
 AST_Native::AST_Native (void)
 {
 }
 
-AST_Native::AST_Native(UTL_ScopedName *n)
+AST_Native::AST_Native (UTL_ScopedName *n)
   : AST_Decl (AST_Decl::NT_native,
               n)
 {
 }
 
-// Destructor.
 AST_Native::~AST_Native (void)
 {
 }

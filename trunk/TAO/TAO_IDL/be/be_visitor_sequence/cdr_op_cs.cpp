@@ -19,21 +19,18 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, cdr_op_cs, "$Id$")
+ACE_RCSID (be_visitor_sequence, 
+           cdr_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
-// stubs file
+// stubs file.
 // ***************************************************************************
 
-be_visitor_sequence_cdr_op_cs::be_visitor_sequence_cdr_op_cs
-(be_visitor_context *ctx)
+be_visitor_sequence_cdr_op_cs::be_visitor_sequence_cdr_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -47,7 +44,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
   if (this->ctx_->alias ())
     {
-      // we are here because the base type of the sequence node is
+      // We are here because the base type of the sequence node is
       // itself a sequence i.e., this is a case of sequence of
       // typedef'd sequence. For the case of sequence of
       // anonymous sequence, see comment below.
@@ -55,15 +52,18 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
   else
     {
-      if (node->cli_stub_cdr_op_gen () ||
-          node->imported () ||
-          node->is_local ())
-        return 0;
+      if (node->cli_stub_cdr_op_gen ()
+          || node->imported ()
+          || node->is_local ())
+        {
+          return 0;
+        }
 
       TAO_OutStream *os = this->ctx_->stream ();
 
       be_type *bt =
         be_type::narrow_from_decl (node->base_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,9 +78,13 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
-          if (this->gen_anonymous_base_type (bt,
-                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS)
-              == -1)
+          int status = 
+              this->gen_anonymous_base_type (
+                  bt,
+                  TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS
+                );
+
+          if (status == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -90,21 +94,25 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
             }
         }
 
-      // generate the CDR << and >> operator defns
+      // Generate the CDR << and >> operator defns.
 
-      // save the sequence node for further use
+      // Save the sequence node for further use.
       this->ctx_->node (node);
+
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
       // If we're an anonymous sequence, we must protect against
       // being declared more than once.
       if (!this->ctx_->tdef ())
         {
-          *os << "\n#if !defined _TAO_CDR_OP_"
+          *os << "#if !defined _TAO_CDR_OP_"
               << node->flat_name () << "_CPP_" << be_nl
-              << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_\n\n";
+              << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
+              << be_nl << be_nl;
         }
 
-      //  set the sub state as generating code for the output operator
+      //  Set the sub state as generating code for the output operator.
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
@@ -113,11 +121,13 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      // first encode the sequence length
-      *os << "if (strm << _tao_sequence.length ())" << be_nl
+      // First encode the sequence length.
+      *os << "CORBA::ULong _tao_seq_len = _tao_sequence.length ();" 
+          << be_nl << be_nl;
+      *os << "if (strm << _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
-      // now encode the sequence elements
-      *os << "// encode all elements" << be_nl;
+      // Now encode the sequence elements.
+      *os << "// Encode all elements." << be_nl;
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
@@ -135,35 +145,28 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
             }
         }
 
-      *os << "}" << be_nl
-          << "return 0; // error" << be_uidt_nl
-          << "}\n\n";
+      *os << "}" << be_uidt_nl << be_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-      //  set the sub state as generating code for the input operator
+      //  Set the sub state as generating code for the input operator.
       os->indent ();
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+
       *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
           << "TAO_InputCDR &strm," << be_nl
           << node->name () << " &_tao_sequence" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl;
-      // first retrieve the length and adjust the sequence length accordingly
-      *os << "CORBA::ULong _tao_seq_len;" << be_nl;
-      *os << "if (strm >> _tao_seq_len)" << be_nl
+      // First retrieve the length and adjust the sequence length accordingly.
+      *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+      *os << "if (strm >> _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
-
-      // Add a sanity check for the length of a sequence.
-      *os << "// Add a check to the length of the sequence" << be_nl;
-      *os << "// to make sure it does not exceed the length" << be_nl;
-      *os << "// of the stream. (See bug 1159.)" << be_nl;
-      *os << "if (_tao_seq_len > strm.length())" << be_idt_nl;
-      *os << "return 0;" << be_uidt_nl;
-
-      // now check if the length does not exceed the maximum. We do this only
+      // Now check if the length does not exceed the maximum. We do this only
       // for bounded sequences
       AST_Expression *expr = node->max_size ();
-      // dimension value
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+
+      if (expr == 0 || (expr != 0 && expr->ev () == 0))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -176,8 +179,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         {
           if (expr->ev ()->u.ulval > 0)
             {
-              // we are dealing with a bounded sequence. Check if we are within
-              // bounds
+              // We are dealing with a bounded sequence. Check if we are within
+              // bounds.
               *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_nl
                   << "{" << be_idt_nl;
             }
@@ -191,17 +194,26 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      *os << "// set the length of the sequence" << be_nl
-                << "_tao_sequence.length (_tao_seq_len);" << be_nl;
+      *os << "// Set the length of the sequence." << be_nl
+          << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
       // Now we do a check for the sequence length to be non zero.
-            // If length is 0 we return true.
+      // If length is 0 we return true.
       *os << "// If length is 0 we return true." << be_nl;
-      *os << "if (0 >= _tao_seq_len) " << be_idt_nl;
-      *os << "return 1;" << be_uidt_nl;
+      *os << "if (0 >= _tao_seq_len) " << be_idt_nl
+          << "{" << be_idt_nl;
+      *os << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
+      // Add a sanity check for the length of a sequence.
+      *os << "// Add a check to the length of the sequence" << be_nl;
+      *os << "// to make sure it does not exceed the length" << be_nl;
+      *os << "// of the stream. (See bug 58.)" << be_nl;
+      *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
+          << "{" << be_idt_nl;
+      *os << "return 0;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
-
-      *os << "// retrieve all the elements" << be_nl;
+      *os << "// Retrieve all the elements." << be_nl;
 
 
       if (bt->node_type () == AST_Decl::NT_sequence)
@@ -222,12 +234,13 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       if (expr->ev ()->u.ulval > 0)
         {
-          // we are dealing with a bounded sequence.
-          *os << "}" << be_uidt_nl;
+          // We are dealing with a bounded sequence.
+          *os << "}" << be_uidt << be_uidt_nl;
         }
-      *os << "}" << be_nl
-          << "return 0; // error" << be_uidt_nl
-          << "}\n\n";
+
+      *os << "}" << be_uidt_nl << be_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
       if (!this->ctx_->tdef ())
         {
@@ -238,10 +251,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       node->cli_stub_cdr_op_gen (1);
     }
+
   return 0;
 }
-
-// handle all the base types
 
 int
 be_visitor_sequence_cdr_op_cs::visit_array (be_array *node)
@@ -280,35 +292,34 @@ be_visitor_sequence_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 }
 
 int
-be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_sequence_cdr_op_cs::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   switch (node->pt ())
     {
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
-      // let the helper handle this
       return this->visit_node (node);
     case AST_PredefinedType::PT_void:
-      // error
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"
-                         ), -1);
+                         "Bad primitive type\n"), 
+                        -1);
     default:
-      // all other primitive types. Handle them as shown below
       break;
     };
 
-  // we get here if the "type" of individual elements of the sequence is a
+  // We get here if the "type" of individual elements of the sequence is a
   // primitive type. In this case, we treat the sequence as a single
   // dimensional sequence (even of it was multi-dimensional), and pass
   // the total length of the sequence as a cross product of the
-  // dimensions
+  // dimensions.
 
-  // grab the sequence node
   be_sequence *sequence = this->ctx_->be_node_as_sequence ();
 
   if (!sequence)
@@ -320,12 +331,13 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // handle octet sequences using the optimizations provided by the TAO ORB
-  // Core. If these optimizations are not available, then use the normal form
+  // Handle octet sequences using the optimizations provided by the TAO ORB
+  // Core. If these optimizations are not available, then use the normal form.
 
   if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
     {
       *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl;
+
       switch (this->ctx_->sub_state ())
         {
         case TAO_CodeGen::TAO_CDR_INPUT:
@@ -376,12 +388,14 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                              "bad sub state\n"),
                             -1);
         }
+
       *os << "\n#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */" << be_nl;
     }
 
   *os << "return strm.";
-  // based on our substate, we may be reading from a stream or writing into a
-  // stream
+
+  // Based on our substate, we may be reading from a stream or writing into a
+  // stream/
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -398,7 +412,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // determine what kind of sequence are we reading/writing
+  // Determine what kind of sequence are we reading/writing.
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_long:
@@ -449,7 +463,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // handle special case to avoid compiler errors
+  // Handle special case to avoid compiler errors.
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_char:
@@ -478,7 +492,10 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   *os << "_tao_sequence.length ());" << be_uidt_nl;
 
   if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
-    *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */" << be_nl;
+    {
+      *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */" << be_nl;
+    }
+
   return 0;
 }
 
@@ -503,34 +520,27 @@ be_visitor_sequence_cdr_op_cs::visit_union (be_union *node)
 int
 be_visitor_sequence_cdr_op_cs::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node); // save the typedef node for use in code generation
-                            // as we visit the base type
-
-  // the node to be visited in the base primitve type that gets typedefed
+  this->ctx_->alias (node);
   be_type *bt = node->primitive_base_type ();
+
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"
-                         ), -1);
+                         "Bad primitive type\n"), 
+                        -1);
     }
 
   this->ctx_->alias (0);
   return 0;
 }
 
-// helper
 int
 be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_sequence *node = this->ctx_->be_node_as_sequence ();
-
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (!node)
     {
@@ -541,16 +551,20 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         -1);
     }
 
-  // initialize a boolean variable
-  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
+  be_visitor_sequence_base visitor (&ctx);
 
-  // we get here if the "type" of individual elements of the sequence is not a
-  // primitive type. In this case, we are left with no other alternative but to
-  // encode/decode element by element
+  // Initialize a boolean variable.
+  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
+
+  // We get here if the "type" of individual elements of the sequence is not a
+  // primitive type. In this case, we are left with no other alternative but
+  // to encode/decode element by element.
 
   AST_Expression *expr = node->max_size ();
-  // dimension value
-  if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+
+  if (expr == 0 || (expr != 0 && expr->ev () == 0))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -558,11 +572,12 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                          "bad sequence dimension\n"),
                         -1);
     }
+
   if (expr->ev ()->et == AST_Expression::EV_ulong)
     {
-      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.length ()"
+      *os << "for (CORBA::ULong i = 0; i < _tao_seq_len"
           << " && _tao_marshal_flag; "
-          << "i++)" << be_nl
+          << "++i)" << be_idt_nl
           << "{" << be_idt_nl;
     }
   else
@@ -574,9 +589,9 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         -1);
     }
 
-  // if the type was a string, an obj ref, or a pseudo-obj, we are dealing with
-  // a manager type and hence we must use the appropriate in () and out ()
-  // methods.
+  // If the type was a string, an obj ref, or a pseudo-obj, we are dealing
+  // with a manager type and hence we must use the appropriate in() and
+  // out() methods.
   //
 
   switch (this->ctx_->sub_state ())
@@ -585,7 +600,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
       switch (bt->node_type ())
         {
         case AST_Decl::NT_array:
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -596,7 +611,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
           *os << "_forany tmp (";
 
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -608,7 +623,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           *os << "_alloc ());" << be_nl;
           *os << "_tao_marshal_flag = (strm >> tmp);" << be_nl;
 
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -619,7 +634,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
           *os << "_copy (_tao_sequence[i], tmp.in ());" << be_nl;
 
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -629,6 +644,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_free (tmp.inout ());" << be_uidt_nl;
+
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
@@ -643,9 +659,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                    "bad string node\n"),
                                   -1);
               }
+
             if (str->max_size ()->ev ()->u.ulval == 0)
               {
-                // unbounded
+                // Unbounded.
                 *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
                     << be_uidt_nl;
               }
@@ -661,19 +678,27 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                     *os << "_tao_marshal_flag = (strm >> "
                         << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
-                *os << str->max_size ()->ev ()->u.ulval << "));" << be_uidt_nl;
+
+                *os << str->max_size ()->ev ()->u.ulval << "));" 
+                    << be_uidt_nl;
               }
           }
           break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" << be_uidt_nl;
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" 
+              << be_uidt_nl;
+
           break;
         case AST_Decl::NT_pre_defined:
           {
-            // we need to separately handle this case of pseudo objects because
-            // they have a _var type
-            be_predefined_type *pt = be_predefined_type::narrow_from_decl (bt);
+            // We need to separately handle this case of pseudo objects
+            // because they have a _var type.
+            be_predefined_type *pt = 
+              be_predefined_type::narrow_from_decl (bt);
+
             if (!pt)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -683,28 +708,37 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                   -1);
               }
 
-            if (pt->pt () == AST_PredefinedType::PT_pseudo)
+            AST_PredefinedType::PredefinedType pdt = pt->pt ();
+
+            if (pdt == AST_PredefinedType::PT_pseudo
+                || pdt == AST_PredefinedType::PT_object)
               {
                 *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
                     << be_uidt_nl;
               }
             else
               {
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" << be_uidt_nl;
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" 
+                    << be_uidt_nl;
               }
           }
+
           break;
         default:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" << be_uidt_nl;
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" 
+              << be_uidt_nl;
+
           break;
         }
+
       *os << "}";
+
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       switch (bt->node_type ())
         {
         case AST_Decl::NT_array:
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -715,7 +749,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
           *os << "_var tmp_var (" << be_idt << be_idt_nl;
 
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -730,21 +764,27 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           // function signature, MSVC++ 5.0 needs the const cast,
           // and many other compilers just won't do it.
           *os << "#if defined (_MSC_VER) && (_MSC_VER <= 1100)";
+
           os->indent ();
+
           *os << be_idt << be_idt_nl;
           *os << "ACE_const_cast (const " << this->ctx_->node ()->name ()
               << ", _tao_sequence)[i]\n";
           *os << "#else";
+
           os->indent ();
+
           *os << be_nl;
           *os << "_tao_sequence[i]\n";
           *os << "#endif /* defined (_MSC_VER) && (_MSC_VER <= 1100) */";
+
           os->indent ();
+
           *os << be_uidt_nl;
           *os << ")" << be_uidt << be_uidt_nl;
           *os << ");" << be_uidt_nl;
 
-          if (bt->accept (visitor) == -1)
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -755,16 +795,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
           *os << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp";
+
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
           *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ()";
+
           break;
         case AST_Decl::NT_pre_defined:
           {
-            be_predefined_type *pt = be_predefined_type::narrow_from_decl (bt);
+            be_predefined_type *pt = 
+              be_predefined_type::narrow_from_decl (bt);
+
             if (!pt)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -774,7 +820,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                   -1);
               }
 
-            if (pt->pt () == AST_PredefinedType::PT_pseudo)
+            AST_PredefinedType::PredefinedType pdt = pt->pt ();
+
+            if (pdt == AST_PredefinedType::PT_pseudo
+                || pdt == AST_PredefinedType::PT_object)
               {
                 *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ()";
               }
@@ -783,13 +832,17 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                 *os << "_tao_marshal_flag = (strm << _tao_sequence[i]";
               }
           }
+
           break;
         default:
           *os << "_tao_marshal_flag = (strm << _tao_sequence[i]";
+
           break;
         }
+
       *os << ");" << be_uidt_nl
           << "}";
+
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -799,9 +852,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         -1);
     }
 
-  *os << be_nl;
+  *os << be_uidt_nl<< be_nl;
   *os << "return _tao_marshal_flag;" << be_uidt_nl;
 
-  delete visitor;
   return 0;
 }

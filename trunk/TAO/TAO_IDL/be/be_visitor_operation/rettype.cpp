@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype, "$Id$")
+ACE_RCSID (be_visitor_operation, 
+           rettype, 
+           "$Id$")
 
 
 // ****************************************************************************
@@ -166,9 +162,10 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name ();
 
-      // If it's not TCKind, it's either TypeCode or ValueBase.
+      // If it's not TCKind, it's either Object, TypeCode or ValueBase.
       if (ACE_OS::strcmp (bt->local_name ()->get_string (), "TCKind") != 0)
         {
           *os << "_ptr";
@@ -252,7 +249,7 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << " *";
     }
@@ -299,7 +296,7 @@ be_visitor_operation_rettype::visit_union (be_union *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << " *";
     }

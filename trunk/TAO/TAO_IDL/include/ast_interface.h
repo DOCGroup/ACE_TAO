@@ -71,18 +71,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
 #include "ast_type.h"
 #include "utl_scope.h"
-#include "ast_decl.h"
-
+#include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
-  // Constructor(s).
   AST_Interface (void);
 
   AST_Interface (UTL_ScopedName *n,
@@ -95,27 +91,21 @@ public:
 
   virtual ~AST_Interface (void);
 
-  // Data Accessors.
+  // This serves for both interfaces, value types and components.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 
+  // This serves only for interfaces, but it is called
+  // from the corresponding AST_ValueType function().
   virtual void redefine (AST_Interface *from);
 
-  AST_Interface **inherits (void);
+  AST_Interface **inherits (void) const;
 
-  void set_inherits (AST_Interface **i);
+  long n_inherits (void) const;
 
-  long n_inherits (void);
+  AST_Interface **inherits_flat (void) const;
 
-  void set_n_inherits (long i);
-
-  AST_Interface **inherits_flat (void);
-
-  void set_inherits_flat (AST_Interface **i);
-
-  long n_inherits_flat (void);
-
-  void set_n_inherits_flat (long i);
+  long n_inherits_flat (void) const;
 
   void be_add_operation (AST_Operation *);
 
@@ -125,23 +115,14 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  virtual idl_bool is_defined (void)
+  idl_bool is_defined (void)
   {
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
 
-  idl_bool is_valuetype (void);
-
-  void set_valuetype (void);
-
-  idl_bool is_abstract_valuetype (void);
-
-  void set_abstract_valuetype (void);
-
-  // Check if any member's name clashes with a parent's
-  // member's name, or if any parents' members' names
-  // clash with each other.
-  void inherited_name_clash (void);
+  // Check if we have redefined any of our parents' operations or attributes,
+  // and check if there is such a clash among the parents
+  virtual idl_bool redef_clash (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -158,15 +139,6 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 protected:
-
-  idl_bool is_valuetype_;
-  //
-
-private:
-  // Helper function for fwd_redefinition_helper.
-  static idl_bool compare_names (AST_Interface *that,
-                                 AST_Interface *other);
-
   // Data.
 
   // Immediate ancestors.
@@ -177,6 +149,22 @@ private:
   AST_Interface **pd_inherits_flat;
   long pd_n_inherits_flat;
 
+  // Queue data structure needed for breadth-first traversal of
+  // inheritance tree.
+  ACE_Unbounded_Queue<AST_Interface *> insert_queue;
+
+  // For a special case of a deeply nested inheritance graph and one specific
+  // way of inheritance in which a node that was already visited,
+  // but is not present in
+  // the queue, gets inserted at the tail. This situation arises when a node
+  // multiply inherits from two or more interfaces in which the first parent is
+  // higher up in the tree than the second parent. In addition, if the second
+  // parent turns out to be a child of the first .
+
+  // Queue of dequeued nodes to be searched for the above case.
+  ACE_Unbounded_Queue<AST_Interface *> del_queue;
+
+protected:
   // Scope Management Protocol.
   friend int tao_yyparse (void);
 
@@ -184,15 +172,19 @@ private:
 
   virtual AST_Exception *fe_add_exception (AST_Exception *e);
 
-  virtual AST_Attribute *fe_add_attribute(AST_Attribute *a);
+  virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
 
   virtual AST_Field *fe_add_field (AST_Field *o);
 
-  virtual AST_Operation *fe_add_operation(AST_Operation *o);
+  virtual AST_Operation *fe_add_operation (AST_Operation *o);
 
   virtual AST_Union *fe_add_union (AST_Union *u);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+
+  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
@@ -202,7 +194,19 @@ private:
 
   virtual AST_Native *fe_add_native (AST_Native *n);
 
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
+  // Lookup based on the local name, override of UTL_Scope definition.
+  // This version checks for redefinitions of attributes or operations.
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            idl_bool treat_as_ref);
+
+  void redef_clash_populate_r (AST_Interface *t);
+  // Populate the insert queue with our parents, and, if we are a
+  // valuetype, with our supported interface and our parents'
+  // supported interfaces.
+
+  int insert_non_dup (AST_Interface *t);
+  // Do non-duplicating insert of bi, by searching both the
+  // insert queue and the delete queue.
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH

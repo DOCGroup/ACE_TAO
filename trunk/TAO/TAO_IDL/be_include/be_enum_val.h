@@ -42,14 +42,12 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
+  //Cleanup.
+  virtual void destroy (void);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl);
   DEF_NARROW_FROM_DECL (be_enum_val);
-
-protected:
-  virtual int compute_size_type (void);
-  // Trivial implementation, but it avoids a switch statement
-  // in be_decl::size_type().
 };
 
 #endif

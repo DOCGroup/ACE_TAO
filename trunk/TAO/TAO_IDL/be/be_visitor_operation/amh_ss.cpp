@@ -10,11 +10,9 @@
 */
 //=============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_operation.h"
+ACE_RCSID (be_visitor_operation,
+           amh_ss,
+           "$Id$")
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
     be_visitor_context *ctx
@@ -111,7 +109,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
           if (marshal_visitor.visit_argument (argument) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_compiled_visitor_operation_ss::"
+                                 "(%N:%l) be_visitor_operation_ss::"
                                  "visit_operation - "
                                  "codegen for demarshal failed\n"),
                                 -1);

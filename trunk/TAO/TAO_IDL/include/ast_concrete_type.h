@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 #define _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 
+#include "ast_type.h"
+
 // Class for all concrete types.
 // This is useful to group together IDL types other than objects.
 

@@ -62,33 +62,25 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ENUM_AST_ENUM_HH
 #define _AST_ENUM_AST_ENUM_HH
 
-// Representation of enum:
+#include "ast_concrete_type.h"
+#include "utl_scope.h"
 
-/*
-** DEPENDENCIES: ast_concrete_type.hh, utl_scope.hh, ast_enum_val.hh,
-**               utl_scoped_name.hh, utl_strlist.hh, ast_expression.hh,
-**
-** USE: Included from ast.hh
-*/
+class AST_EnumVal;
 
 class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType,
                                    public virtual UTL_Scope
 {
 public:
-  // Operations.
-
-  // Constructor(s)
   AST_Enum (void);
   AST_Enum (UTL_ScopedName *n,
             idl_bool local,
             idl_bool abstract);
 
-  // Destructor.
   virtual ~AST_Enum (void);
 
   // Narrowing
@@ -100,16 +92,16 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Look up an AST_EnumVal by value
-  virtual AST_EnumVal *lookup_by_value (const AST_Expression *v);
+  AST_EnumVal *lookup_by_value (const AST_Expression *v);
 
   // Get value to be assigned to next enumerator.
-  virtual unsigned long next_enum_val (void);
+  unsigned long next_enum_val (void);
 
   // Return the count of members
   virtual int member_count (void);
 
   // Convert a numeric value to the enum's string name for it.
-  virtual UTL_ScopedName *value_to_name (const unsigned long v);
+  UTL_ScopedName *value_to_name (const unsigned long v);
 
   // Cleanup function.
   virtual void destroy (void);

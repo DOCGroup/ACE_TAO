@@ -1,6 +1,4 @@
-
 /* -*- c++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -46,8 +44,6 @@ public:
   static int method_helper (be_interface *derived,
                             be_interface *node,
                             TAO_OutStream *os);
-
-
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_IH_H_ */

@@ -18,13 +18,22 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_enum.h"
+#include "be_typedef.h"
+#include "be_predefined_type.h"
+#include "be_union.h"
+#include "be_union_branch.h"
+#include "be_helper.h"
+#include "be_extern.h"
+#include "ast_union_label.h"
 
 #include "be_visitor_union.h"
+#include "be_visitor_enum.h"
+#include "be_visitor_context.h"
+#include "be_visitor_union_branch.h"
+#include "be_visitor_typecode.h"
+#include "be_visitor_context.h"
 
-// include all the individual files
 #include "be_visitor_union/discriminant_ch.cpp"
 #include "be_visitor_union/discriminant_ci.cpp"
 #include "be_visitor_union/discriminant_cs.cpp"
@@ -38,4 +47,6 @@
 #include "be_visitor_union/cdr_op_ci.cpp"
 #include "be_visitor_union/cdr_op_cs.cpp"
 
-ACE_RCSID(be, be_visitor_union, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_union, 
+           "$Id$")

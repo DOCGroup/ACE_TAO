@@ -3,7 +3,7 @@
 // ================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_codegen.h
@@ -22,9 +22,6 @@
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "TAO_IDL_BE_Export.h"
-
-#define NAMEBUFSIZE 1024
-// Maximum length of static buffers used to store names.
 
 class TAO_Visitor_Factory;
 class TAO_OutStream;
@@ -108,7 +105,6 @@ public:
 
       TAO_ATTRIBUTE_SMART_PROXY_CH,             // in client header
       TAO_ATTRIBUTE_SMART_PROXY_CS,             // in client source
-      TAO_ATTRIBUTE_INTERCEPTORS_CH,            // in client header
       TAO_ATTRIBUTE_INTERCEPTORS_CS,            // in client source
       TAO_ATTRIBUTE_INTERCEPTORS_SH,            // in server header
       TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source
@@ -180,7 +176,6 @@ public:
       TAO_INTERFACE_TIE_SI,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
-      TAO_INTERFACE_INTERCEPTORS_CH,
       TAO_INTERFACE_INTERCEPTORS_CS,
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,
@@ -306,11 +301,6 @@ public:
       TAO_OPERATION_RETTYPE_IS,               // return type in client header op
       TAO_OPERATION_RETTYPE_OTHERS,           // ... in other cases
 
-      TAO_OPERATION_INVOKE_ARG_LIST,           // Generate the signature needed to invoke
-      // the operation given. The signature generated
-      // consists of the name of the arguments, without
-      // any type
-
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
       // ... for client header
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
@@ -325,9 +315,6 @@ public:
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
       TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,  // private member list list for request info                                                                  // ... for server source
-
-      //    TAO_OPERATION_ARGLIST_PROXY_IMPL_CH,    // Proxy impl arg list generation
-      // in client header
 
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
       // in client/server  header
@@ -445,6 +432,9 @@ public:
       TAO_STRUCT_CDR_OP_CI,
       TAO_STRUCT_CDR_OP_CS,
 
+      // Emitting code for a forward declared struct.
+      TAO_STRUCT_FWD_CH,
+
       // Emitting code for typedefs.
       TAO_TYPEDEF_CH,
       TAO_TYPEDEF_CI,
@@ -465,6 +455,9 @@ public:
       TAO_UNION_CDR_OP_CI,
       TAO_UNION_CDR_OP_CS,
 
+      // Emitting code for a forward declared union.
+      TAO_UNION_FWD_CH,
+
       // Emitting code for the discriminant.
       TAO_UNION_DISCTYPEDEFN_CH,
       TAO_UNION_DISCTYPEDEFN_CI,
@@ -476,7 +469,6 @@ public:
       TAO_UNION_PUBLIC_CS,
       TAO_UNION_PUBLIC_ASSIGN_CS,
       TAO_UNION_PUBLIC_RESET_CS,
-      TAO_UNION_PUBLIC_ACCESS_CS,
 
       // Emitting code for private members of the union.
       TAO_UNION_PRIVATE_CH,

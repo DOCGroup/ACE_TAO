@@ -22,12 +22,8 @@
 #ifndef TAO_BE_VISITOR_MODULE_H
 #define TAO_BE_VISITOR_MODULE_H
 
-#include "be_visitor.h"
 #include "be_visitor_scope.h"
-
 #include "be_visitor_module/module.h"
-// we need derived module visitors for the client and server header files. For
-// the others, they use the default module visitor
 #include "be_visitor_module/module_ch.h"
 #include "be_visitor_module/module_sh.h"
 #include "be_visitor_module/module_ih.h"

@@ -18,18 +18,14 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_typecode/typecode_defn.h"
-
-ACE_RCSID(be_visitor_structure, structure_cs, "$Id$")
-
+ACE_RCSID (be_visitor_structure, 
+           structure_cs, 
+           "$Id$")
 
 // ***************************************************************************
-// for client stubs
+// For client stubs.
 // ***************************************************************************
+
 be_visitor_structure_cs::be_visitor_structure_cs (be_visitor_context *ctx)
   : be_visitor_structure (ctx)
 {
@@ -39,8 +35,8 @@ be_visitor_structure_cs::~be_visitor_structure_cs (void)
 {
 }
 
-// Visit the structure node and its scope.
-int be_visitor_structure_cs::visit_structure (be_structure *node)
+int 
+be_visitor_structure_cs::visit_structure (be_structure *node)
 {
   if (!node->cli_stub_gen () && !node->imported ())
     {
@@ -88,4 +84,5 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
     }
 
   return 0;
+
 }

@@ -19,50 +19,54 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_sequence.h"
+#include "be_sequence.h"
+#include "be_typedef.h"
+#include "be_interface.h"
+#include "be_interface_fwd.h"
+#include "be_predefined_type.h"
+#include "be_visitor.h"
+#include "utl_identifier.h"
+#include "idl_defines.h"
 
-ACE_RCSID(be, be_sequence, "$Id$")
+ACE_RCSID (be, 
+           be_sequence, 
+           "$Id$")
 
 
 be_sequence::be_sequence (void)
   : mt_ (be_sequence::MNG_UNKNOWN)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
   this->has_constructor (I_TRUE);
 }
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
+                          UTL_ScopedName *n,
                           idl_bool local,
                           idl_bool abstract)
   : be_scope (AST_Decl::NT_sequence),
     be_type (AST_Decl::NT_sequence,
-             0),
+             n),
     be_decl (AST_Decl::NT_sequence,
-             0),
+             n),
     UTL_Scope (AST_Decl::NT_sequence),
     AST_Sequence (v,
                   t,
+                  n,
                   t->is_local () || local,
                   abstract),
     AST_ConcreteType (AST_Decl::NT_sequence,
-                      0),
+                      n),
     AST_Type (AST_Decl::NT_sequence,
-              0),
+              n),
     AST_Decl (AST_Decl::NT_sequence,
-              0,
+              n,
               I_TRUE),
     COMMON_Base (t->is_local () || local,
                  abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
-  // A sequence data type is always VARIABLE.
-  this->size_type (be_decl::VARIABLE);
-
   // Always the case.
   this->has_constructor (I_TRUE);
 }
@@ -135,7 +139,8 @@ be_sequence::gen_name (void)
       ACE_OS::sprintf (ulval_str,
                        "_%lu",
                        this->max_size ()->ev ()->u.ulval);
-      ACE_OS::strcat (namebuf, ulval_str);
+      ACE_OS::strcat (namebuf, 
+                      ulval_str);
     }
 
   return ACE_OS::strdup (namebuf);
@@ -228,28 +233,23 @@ be_sequence::managed_type (void)
       switch (prim_type->node_type ())
         {
         case AST_Decl::NT_interface:
-        case AST_Decl::NT_interface_fwd:
-          {
-            int is_valuetype = 0;
-            be_interface *bf = be_interface::narrow_from_decl (prim_type);
-            if (bf != 0)
-              is_valuetype = bf->is_valuetype ();
-            else
-              {
-                be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (prim_type);
-                if (bff != 0)
-                  is_valuetype = bff->is_valuetype ();
-              }
-            if (is_valuetype)
-              {
-                this->mt_ = be_sequence::MNG_VALUE;
-              }
-            else
-              {
-          this->mt_ = be_sequence::MNG_OBJREF;
-              }
+          if (prim_type->is_abstract ())
+            {
+              this->mt_ = be_sequence::MNG_ABSTRACT;
+            }
+          else
+            {
+              this->mt_ = be_sequence::MNG_OBJREF;
+            }
+
           break;
-          }
+        case AST_Decl::NT_interface_fwd:
+          this->mt_ = be_sequence::MNG_OBJREF;
+          break;
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
+          this->mt_ = be_sequence::MNG_VALUE;
+          break;
         case AST_Decl::NT_string:
           this->mt_ = be_sequence::MNG_STRING;
           break;
@@ -260,20 +260,15 @@ be_sequence::managed_type (void)
           {
             be_predefined_type *bpd =
               be_predefined_type::narrow_from_decl (prim_type);
+            AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
-            if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+            if (pt == AST_PredefinedType::PT_pseudo)
               {
-                // If this pseudo is a CORBA::Object, then the managed type is
-                // an objref.
-                if (!ACE_OS::strcmp (bpd->local_name ()->get_string (),
-                                     "Object"))
-                  {
-                    this->mt_ = be_sequence::MNG_OBJREF;
-                  }
-                else
-                  {
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                  }
+                this->mt_ = be_sequence::MNG_PSEUDO;
+              }
+            else if (pt == AST_PredefinedType::PT_object)
+              {
+                this->mt_ = be_sequence::MNG_OBJREF;
               }
             else
               {
@@ -367,6 +362,23 @@ be_sequence::instance_name ()
                            this->flat_name (),
                            this->max_size ()->ev ()->u.ulval);
         }
+
+      break;
+    case be_sequence::MNG_ABSTRACT:
+      if (this->unbounded ())
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Unbounded_Abstract_Sequence_%s",
+                           this->flat_name ());
+        }
+      else
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_Abstract_Sequence_%s_%lu",
+                           this->flat_name (),
+                           this->max_size ()->ev ()->u.ulval);
+        }
+
       break;
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
@@ -382,6 +394,7 @@ be_sequence::instance_name ()
                            this->flat_name (),
                            this->max_size ()->ev ()->u.ulval);
         }
+
       break;
     case be_sequence::MNG_STRING:
       if (this->unbounded ())
@@ -395,6 +408,7 @@ be_sequence::instance_name ()
                            "_TAO_Bounded_String_Sequence_%s",
                            this->flat_name  ());
         }
+
       break;
     case be_sequence::MNG_WSTRING:
       if (this->unbounded ())
@@ -408,6 +422,7 @@ be_sequence::instance_name ()
                            "_TAO_Bounded_WString_Sequence_%s",
                            this->flat_name ());
         }
+
       break;
     default: // Not a managed type.
       if (this->unbounded ())
@@ -437,6 +452,7 @@ be_sequence::instance_name ()
                             this->flat_name (),
                             this->max_size ()->ev ()->u.ulval);
         }
+
       break;
     }
 

@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           rettype_vardecl_ss, 
+           "$Id$")
 
 // ************************************************************************
 //    be_visitor_operation_rettype_vardecl_ss
@@ -34,8 +29,8 @@ ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
 //    of the return type.
 // ************************************************************************
 
-be_visitor_operation_rettype_vardecl_ss::be_visitor_operation_rettype_vardecl_ss
-(be_visitor_context *ctx)
+be_visitor_operation_rettype_vardecl_ss::
+be_visitor_operation_rettype_vardecl_ss (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -104,7 +99,7 @@ visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-// like be_compiled_visitor_operation_rettype_vardecl_ss
+// Like be_visitor_operation_rettype_vardecl_ss.
 int
 be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
 {
@@ -143,6 +138,7 @@ visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_any:
@@ -222,7 +218,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_structure (be_structure *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << "::" << bt->name () << "_var _tao_retval;\n";
     }
@@ -270,7 +266,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << "::" << bt->name () << "_var _tao_retval;\n";
     }

@@ -52,12 +52,6 @@ public:
   virtual int visit_enum (be_enum *node);
   // visit an enum
 
-  virtual int visit_predefined_type (be_predefined_type *node);
-  // visit predefined type node
-
-  virtual int visit_string (be_string *node);
-  // visit a typedef
-
   virtual int visit_sequence (be_sequence *node);
   // visit a sequence
 
@@ -66,7 +60,6 @@ public:
 
   virtual int visit_union (be_union *node);
   // visit a union
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_H_ */

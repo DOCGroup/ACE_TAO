@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype_fwd.h"
-
-ACE_RCSID(be_visitor_valuetype_fwd, valuetype_fwd_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           valuetype_fwd_ch, 
+           "$Id$")
 
 be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -104,7 +99,6 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);
-  bfd->cli_hdr_gen (I_TRUE);
 
   return 0;
 }

@@ -74,12 +74,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // (implemented as a list of Strings, a UTL_StrList), and a raises
 // clause (implemented as an array of AST_Exceptions).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_operation.h"
+#include "ast_predefined_type.h"
+#include "ast_argument.h"
+#include "ast_exception.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_namelist.h"
+#include "utl_exceptlist.h"
+#include "utl_identifier.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
+#include "global_extern.h"
 
-ACE_RCSID(ast, ast_operation, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_operation, 
+           "$Id$")
 
 AST_Operation::AST_Operation (void)
   : pd_return_type (0),
@@ -136,6 +146,23 @@ AST_Operation::~AST_Operation (void)
 }
 
 // Public operations.
+
+int
+AST_Operation::void_return_type (void)
+{
+  AST_Type* type = this->return_type ();
+
+  if (type->node_type () == AST_Decl::NT_pre_defined
+      && (AST_PredefinedType::narrow_from_decl (type)->pt ()
+            == AST_PredefinedType::PT_void))
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
 
 // Return the member count.
 int
@@ -203,16 +230,12 @@ AST_Operation::compute_argument_attr (void)
   if (this->nmembers () > 0)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
           // Get the next AST decl node.
-          d = si->item ();
+          d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
@@ -227,11 +250,7 @@ AST_Operation::compute_argument_attr (void)
                   this->has_native_ = 1;
                 }
             }
-
-          si->next ();
         }
-
-      delete si;
     }
 
   type = AST_Type::narrow_from_decl (this->return_type ());
@@ -267,6 +286,16 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
     }
 
   return this->pd_exceptions;
+}
+
+AST_Argument *
+AST_Operation::be_add_argument (AST_Argument *arg)
+{
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg,
+                           0,
+                           0);
+  return arg;
 }
 
 // Add these exceptions (identified by name) to this scope.

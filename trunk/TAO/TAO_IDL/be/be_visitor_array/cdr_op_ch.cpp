@@ -19,15 +19,11 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_visitor_sequence/cdr_op_ch.h"
 
-#include "be_visitor_array.h"
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_array, cdr_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_array, 
+           cdr_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client header
@@ -77,8 +73,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const ";
-  // @@ TODO: this should be done in the node, it is absurd to repeat
-  // this code all over the visitors!!!!
+
   if (!this->ctx_->tdef ())
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());

@@ -34,8 +34,12 @@ class be_interface;
 class be_interface_fwd;
 class be_valuetype;
 class be_valuetype_fwd;
+class be_component;
+class be_component_fwd;
+class be_home;
 class be_factory;
 class be_structure;
+class be_structure_fwd;
 class be_exception;
 class be_expression;
 class be_enum;
@@ -44,6 +48,7 @@ class be_field;
 class be_argument;
 class be_attribute;
 class be_union;
+class be_union_fwd;
 class be_union_branch;
 class be_union_label;
 class be_constant;
@@ -100,10 +105,22 @@ public:
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
 
+  virtual int visit_component (be_component *node);
+  // visit component
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit component_fwd
+
+  virtual int visit_home (be_home *node);
+  // visit component home
+
   virtual int visit_factory (be_factory *node);
   // Visit a OBV factory construct.
 
   virtual int visit_structure (be_structure *node);
+  // visit a structure
+
+  virtual int visit_structure_fwd (be_structure_fwd *node);
   // visit a structure
 
   virtual int visit_exception (be_exception *node);
@@ -128,6 +145,9 @@ public:
   // visit an attribute
 
   virtual int visit_union (be_union *node);
+  // visit union
+
+  virtual int visit_union_fwd (be_union_fwd *node);
   // visit union
 
   virtual int visit_union_branch (be_union_branch *node);

@@ -50,7 +50,6 @@ public:
 
   virtual int visit_array (be_array *node);
   // visit array
-
 };
 
 #endif /* _BE_VISITOR_ARRAY_CDR_OP_CS_H_ */

@@ -47,7 +47,6 @@ public:
 
   virtual int post_process (be_decl *);
   // any post processing that needs to be done after a scope element is handled
-
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CI_H_ */

@@ -62,58 +62,63 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_global.cc - Implementation of class IDL_GlobalData
-//
+#include "idl_global.h"
+#include "global_extern.h"
+#include "ast_root.h"
+#include "ast_generator.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "utl_err.h"
+#include "utl_string.h"
 
-#include        "idl.h"
-#include        "idl_extern.h"
-
-ACE_RCSID(util, utl_global, "$Id$")
+ACE_RCSID (util, 
+           utl_global, 
+           "$Id$")
 
 // Define an increment for the size of the array used to store names of
-// included files
-#undef          INCREMENT
-#define         INCREMENT       64
+// included files.
+#undef INCREMENT
+#define INCREMENT 64
 
 IDL_GlobalData::IDL_GlobalData (void)
-    : pd_scopes (0),
-      pd_root (0),
-      pd_gen (0),
-      pd_err (0),
-      pd_err_count (0),
-      pd_lineno (0),
-      pd_filename (0),
-      pd_main_filename (0),
-      pd_real_filename (0),
-      pd_stripped_filename (0),
-      pd_import (I_FALSE),
-      pd_in_main_file (I_FALSE),
-      pd_prog_name (0),
-      pd_cpp_location (0),
-      pd_compile_flags (0),
-      pd_be (0),
-      pd_local_escapes (0),
-      pd_indent (0),
-      pd_read_from_stdin (I_FALSE),
-      pd_include_file_names (0),
-      pd_n_include_file_names (0),
-      pd_n_alloced_file_names (0),
-      included_idl_files_ (0),
-      n_included_idl_files_ (0),
-      n_allocated_idl_files_ (0),
-      pd_parse_state (PS_NoState),
-      pd_idl_src_file (0),
-      gperf_path_ (0),
-      temp_dir_ (0),
-      ident_string_ (0),
-      obv_support_ (I_FALSE),
-      case_diff_error_ (I_TRUE),
-      idl_flags_ (""),
-      last_seen_index_ (1),
-      repeat_include_ (0)
- {
+  : pd_root (0),
+    pd_gen (0),
+    pd_err (0),
+    pd_err_count (0),
+    pd_lineno (0),
+    pd_filename (0),
+    pd_main_filename (0),
+    pd_real_filename (0),
+    pd_stripped_filename (0),
+    pd_import (I_FALSE),
+    pd_in_main_file (I_FALSE),
+    pd_prog_name (0),
+    pd_cpp_location (0),
+    pd_compile_flags (0),
+    pd_be (0),
+    pd_local_escapes (0),
+    pd_indent (0),
+    pd_read_from_stdin (I_FALSE),
+    pd_include_file_names (0),
+    pd_n_include_file_names (0),
+    pd_n_alloced_file_names (0),
+    included_idl_files_ (0),
+    n_included_idl_files_ (0),
+    n_allocated_idl_files_ (0),
+    pd_parse_state (PS_NoState),
+    pd_idl_src_file (0),
+    gperf_path_ (0),
+    temp_dir_ (0),
+    ident_string_ (0),
+    obv_support_ (I_FALSE),
+    component_support_ (I_FALSE),
+    case_diff_error_ (I_TRUE),
+    nest_orb_ (I_FALSE),
+    idl_flags_ (""),
+    last_seen_index_ (1)
+{
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
   // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
@@ -162,16 +167,10 @@ IDL_GlobalData::~IDL_GlobalData (void)
 }
 
 // Get or set scopes stack
-UTL_ScopeStack *
+UTL_ScopeStack &
 IDL_GlobalData::scopes (void)
 {
   return this->pd_scopes;
-}
-
-void
-IDL_GlobalData::set_scopes (UTL_ScopeStack *s)
-{
-  this->pd_scopes = s;
 }
 
 // Get or set root of AST
@@ -412,10 +411,10 @@ IDL_GlobalData::set_local_escapes (const char *e)
 {
   if (this->pd_local_escapes != 0)
     {
-      ACE_OS::free (this->pd_local_escapes);
+      delete [] this->pd_local_escapes;
     }
 
-  this->pd_local_escapes = ACE_OS::strdup (e);
+  this->pd_local_escapes = ACE::strnew (e);
 }
 
 // Get or set indent object
@@ -472,7 +471,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   unsigned long i;
   long seen = this->seen_include_file_before (n);
 
-  // Check if we need to store it at all or whether we've seen it already
+  // Check if we need to store it at all or whether we've seen it already.
   if (seen)
     {
       this->last_seen_index_ = seen;
@@ -489,16 +488,22 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
         }
       else
         {
           o_include_file_names = this->pd_include_file_names;
           o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
-          for (i = 0; i < o_n_alloced_file_names; i++)
-            this->pd_include_file_names[i] = o_include_file_names[i];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
+
+          for (i = 0; i < o_n_alloced_file_names; ++i)
+            {
+              this->pd_include_file_names[i] = o_include_file_names[i];
+            }
+
           delete [] o_include_file_names;
         }
     }
@@ -552,7 +557,6 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
       else
         {
           // Adding more storage.
-
           char** old_included_idl_files =
             this->included_idl_files_;
           size_t n_old_allocated_idl_files =
@@ -560,8 +564,12 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
           this->n_allocated_idl_files_ += INCREMENT;
           ACE_NEW (this->included_idl_files_,
                    char *[this->n_allocated_idl_files_]);
-          for (size_t i = 0; i < n_old_allocated_idl_files; i++)
-            this->included_idl_files_ [i] = old_included_idl_files [i];
+
+          for (size_t i = 0; i < n_old_allocated_idl_files; ++i)
+            {
+              this->included_idl_files_ [i] = old_included_idl_files [i];
+            }
+
           delete [] old_included_idl_files;
         }
     }
@@ -717,18 +725,18 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
   case AST_PredefinedType::PT_void:
     return AST_Expression::EV_void;
   default:
-    return AST_Expression::EV_any;
+    return AST_Expression::EV_enum;
   }
 }
 
 // returns the IDL source file being copiled
-UTL_String* IDL_GlobalData::idl_src_file()
+UTL_String* IDL_GlobalData::idl_src_file (void)
 {
   return this->pd_idl_src_file;
 }
 
 // set the source IDL file that is being parsed
-void IDL_GlobalData::idl_src_file(UTL_String *s)
+void IDL_GlobalData::idl_src_file (UTL_String *s)
 {
   this->pd_idl_src_file = s;
 }
@@ -797,6 +805,18 @@ IDL_GlobalData::obv_support (void)
 }
 
 void
+IDL_GlobalData::component_support (idl_bool val)
+{
+  this->component_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::component_support (void)
+{
+  return this->component_support_;
+}
+
+void
 IDL_GlobalData::case_diff_error (idl_bool val)
 {
   this->case_diff_error_ = val;
@@ -806,6 +826,18 @@ idl_bool
 IDL_GlobalData::case_diff_error (void)
 {
   return this->case_diff_error_;
+}
+
+void
+IDL_GlobalData::nest_orb (idl_bool val)
+{
+  this->nest_orb_ = val;
+}
+
+idl_bool
+IDL_GlobalData::nest_orb (void)
+{
+  return this->nest_orb_;
 }
 
 void
@@ -839,8 +871,12 @@ IDL_GlobalData::destroy (void)
       this->pd_stripped_filename = 0;
     }
 
-  delete [] this->ident_string_;
-  this->ident_string_ = 0;
+  if (this->pd_idl_src_file != 0)
+    {
+      this->pd_idl_src_file->destroy ();
+      delete this->pd_idl_src_file;
+      this->pd_idl_src_file = 0;
+    }
 
   size_t size = this->pragma_prefixes ().size  ();
   char *trash = 0;
@@ -851,6 +887,25 @@ IDL_GlobalData::destroy (void)
       delete [] trash;
       trash = 0;
     }
+
+  this->pd_root->destroy ();
+  delete this->pd_root;
+  this->pd_root = 0;
+
+  delete this->pd_err;
+  this->pd_err = 0;
+  delete this->pd_gen;
+  this->pd_gen = 0;
+  delete this->pd_indent;
+  this->pd_indent = 0;
+  delete [] this->pd_local_escapes;
+  this->pd_local_escapes = 0;
+  delete [] this->gperf_path_;
+  this->gperf_path_ = 0;
+  delete [] this->temp_dir_;
+  this->temp_dir_ = 0;
+  delete [] this->ident_string_;
+  this->ident_string_ = 0;
 }
 
 void
@@ -966,28 +1021,3 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
   return retval;
 }
-
-long
-IDL_GlobalData::last_seen_index (void) const
-{
-  return this->last_seen_index_;
-}
-
-void
-IDL_GlobalData::last_seen_index (long val)
-{
-  this->last_seen_index_ = val;
-}
-
-idl_bool
-IDL_GlobalData::repeat_include (void) const
-{
-  return this->repeat_include_;
-}
-
-void
-IDL_GlobalData::repeat_include (idl_bool val)
-{
-  this->repeat_include_ = val;
-}
-

@@ -1,33 +1,41 @@
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+//
+// $Id$
+//
 
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           remote_proxy_broker_cs, 
+           "$Id$")
 
-ACE_RCSID (be_visitor_interface, base_proxy_broker_cs, "$Id$")
-
-be_visitor_interface_remote_proxy_broker_cs::be_visitor_interface_remote_proxy_broker_cs (be_visitor_context *ctx)
+be_visitor_interface_remote_proxy_broker_cs::
+be_visitor_interface_remote_proxy_broker_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_remote_proxy_broker_cs::~be_visitor_interface_remote_proxy_broker_cs (void)
+be_visitor_interface_remote_proxy_broker_cs::
+~be_visitor_interface_remote_proxy_broker_cs (void)
 {
   // No-Op.
 }
 
 int
-be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node)
+be_visitor_interface_remote_proxy_broker_cs::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   // Generate the class declaration.
   os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" << be_nl
+      << "///////////////////////////////////////////////////////////////////////" 
+      << be_nl
       << "//           Remote & Base  Proxy Broker Implementation" << be_nl
       << "//" << be_nl << be_nl;
 
@@ -82,11 +90,11 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
       << "return this->remote_proxy_impl_;"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
-
    *os << be_nl
       << "//" << be_nl
       << "//           End Remote & Base Proxy Broker Implementation" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
+
   return 0;
 }

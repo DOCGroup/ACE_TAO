@@ -19,20 +19,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, tie_si, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           tie_si, 
+           "$Id$")
 
 
 // ************************************************************************
 // Interface visitor for server inline
 // ************************************************************************
 
-be_visitor_interface_tie_si::be_visitor_interface_tie_si (be_visitor_context *ctx)
+be_visitor_interface_tie_si::be_visitor_interface_tie_si (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -44,46 +42,67 @@ be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
 int
 be_visitor_interface_tie_si::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-  static char fulltiename [NAMEBUFSIZE]; // holds the class name
-  static char localtiename [NAMEBUFSIZE]; // holds the tie name
-  static char localskelname [NAMEBUFSIZE]; // holds the local skeleton name
+  if (node->srv_inline_gen () || node->imported () || node->is_abstract ())
+    {
+      return 0;
+    }
 
-  if (node->srv_inline_gen () || node->imported ())
-    return 0;
+  TAO_OutStream *os;
+  static char fulltiename [NAMEBUFSIZE];
+  static char localtiename [NAMEBUFSIZE];
+  static char localskelname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fulltiename, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (localtiename, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (localskelname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (fulltiename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (localtiename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (localskelname, 
+                  '\0',
+                   NAMEBUFSIZE);
 
   os = this->ctx_->stream ();
 
-  // generate the skeleton class name which will be used to determine the TIE
-  // class name
+  // Generate the skeleton class name which will be used to determine the TIE
+  // class name.
 
-  // we are outermost
-  ACE_OS::sprintf (fulltiename, "%s_tie", node->full_skel_name ());
+  // We are outermost.
+  ACE_OS::sprintf (fulltiename, 
+                   "%s_tie", 
+                   node->full_skel_name ());
+
   if (!node->is_nested ())
     {
-      ACE_OS::sprintf (localskelname, "POA_%s",
+      ACE_OS::sprintf (localskelname, 
+                       "POA_%s",
                        node->local_name ());
-      ACE_OS::sprintf (localtiename, "POA_%s_tie",
+      ACE_OS::sprintf (localtiename, 
+                       "POA_%s_tie",
                        node->local_name ());
     }
   else
     {
-      ACE_OS::sprintf (localskelname, "%s",
+      ACE_OS::sprintf (localskelname, 
+                       "%s",
                        node->local_name ());
-      ACE_OS::sprintf (localtiename, "%s_tie",
+      ACE_OS::sprintf (localtiename, 
+                       "%s_tie",
                        node->local_name ());
     }
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_nested ())
     {
       *os << "#if defined (ACE_HAS_USING_KEYWORD)\n\n";
     }
 
-  os->indent (); // start with whatever indentation level we are at
+  os->indent ();
+
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl << be_nl;
 
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
@@ -170,7 +189,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "}\n\n";
 
-  if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)
+  int status =
+    node->traverse_inheritance_graph (
+              be_visitor_interface_tie_si::method_helper, 
+              os
+            );
+
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh_ss::"
@@ -192,19 +217,29 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
                                             be_interface *node,
                                             TAO_OutStream *os)
 {
+  // Any methods from abstract parents have already been
+  // "added" to the derived interface scope by the overridden 
+  // visit_scope() method in be_visitor_interface, so we can skip
+  // this base interface, if it is abstract.
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
+
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
   ctx.interface (derived);
   ctx.stream (os);
+  be_visitor_interface_tie_si visitor (&ctx);
 
-  be_visitor* visitor = tao_cg->make_visitor (&ctx);
-  if (visitor == 0 || visitor->visit_scope (node) == -1)
+  if (visitor.visit_scope (node) == -1)
+
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh::"
-                         "method_helper\n"), -1);
+                         "method_helper\n"), 
+                        -1);
     }
-  delete visitor;
+
   return 0;
 }

@@ -24,12 +24,13 @@
 
 #include "be_scope.h"
 #include "be_decl.h"
+#include "be_codegen.h"
 #include "ast_operation.h"
-#include "be_operation_strategy.h"
 
 class AST_Type;
 class be_visitor;
 class be_argument;
+class be_operation_strategy;
 
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,
@@ -48,12 +49,6 @@ public:
 
   ~be_operation (void);
   // Destructor.
-
-  int void_return_type (void);
-  // Returns 1 if the operation has a void return type.
-
-  be_argument *add_argument_to_scope (be_argument *arg);
-  // Add an argument to the scope.
 
   virtual void destroy (void);
   // Cleanup method.
@@ -86,9 +81,6 @@ public:
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
-  int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
   be_operation_strategy *strategy_;
   // Member for holding the strategy for covering
   // differences between various operations, e.g. sendc_, raise_

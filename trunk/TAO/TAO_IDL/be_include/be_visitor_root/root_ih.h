@@ -21,8 +21,6 @@
 #ifndef _BE_VISITOR_ROOT_ROOT_IH_H_
 #define _BE_VISITOR_ROOT_ROOT_IH_H_
 
-
-
 class be_visitor_root_ih : public be_visitor_root
 {
   //

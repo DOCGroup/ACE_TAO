@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // is implemented to create nodes of AST classes subclassed in this BE
 
 #include "TAO_IDL_BE_Export.h"
+#include "ast_generator.h"
 
 class TAO_IDL_BE_Export be_generator : public AST_Generator
 {
@@ -101,11 +102,38 @@ public:
                                                   idl_bool local,
                                                   idl_bool abstract);
 
-  virtual AST_Interface *create_valuetype (UTL_ScopedName *n,
-                                           AST_Interface **ih,
-                                           long nih);
+  virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
+                                           AST_Interface **inherits,
+                                           long n_inherits,
+                                           AST_ValueType *inherits_concrete,
+                                           AST_Interface **inherits_flat,
+                                           long n_inherits_flat,
+                                           AST_Interface **supports,
+                                           long n_supports,
+                                           AST_Interface *supports_concrete,
+                                           idl_bool abstract,
+                                           idl_bool truncatable);
 
-  virtual AST_InterfaceFwd *create_valuetype_fwd (UTL_ScopedName *n);
+  virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
+                                                  idl_bool abstract);
+
+  virtual AST_Component *create_component (UTL_ScopedName *n,
+                                           AST_Component *base_component,
+                                           AST_Interface **supports,
+                                           long n_supports,
+                                           AST_Interface **supports_flat,
+                                           long n_supports_flat);
+
+  virtual AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n);
+
+  virtual AST_Home *create_home (UTL_ScopedName *n,
+                                 AST_Home *base_home,
+                                 AST_Component *managed_component,
+                                 AST_ValueType *primary_key,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface **supports_flat,
+                                 long n_supports_flat);
 
   virtual AST_Exception *create_exception (UTL_ScopedName *n,
                                            idl_bool local,
@@ -114,6 +142,8 @@ public:
   virtual AST_Structure *create_structure (UTL_ScopedName *n,
                                            idl_bool local,
                                            idl_bool abstract);
+
+  virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
 
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
                                  idl_bool local,
@@ -139,10 +169,12 @@ public:
                                            idl_bool local,
                                            idl_bool abstract);
 
-  virtual AST_Union *create_union(AST_ConcreteType *dt,
-                                  UTL_ScopedName *n,
-                                  idl_bool local,
-                                  idl_bool abstract);
+  virtual AST_Union *create_union (AST_ConcreteType *dt,
+                                   UTL_ScopedName *n,
+                                   idl_bool local,
+                                   idl_bool abstract);
+
+  virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
 
   virtual AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
                                                 AST_Type *ft,
@@ -192,6 +224,7 @@ public:
 
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
+                                         UTL_ScopedName *n,
                                          idl_bool local,
                                          idl_bool abstract);
 

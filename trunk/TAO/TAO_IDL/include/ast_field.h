@@ -67,7 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FIELD_AST_FIELD_HH
 #define _AST_FIELD_AST_FIELD_HH
 
-// Representation of a generic field
+// Representation of a generic field.
 
 // Used as member in structures, exceptions and unions, and as a base
 // type for attributes and arguments to operations
@@ -76,10 +76,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // is used directly inside a structure, the second when it is used as
 // the base type for attributes and operations.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
 #include "ast_decl.h"
+#include "utl_scoped_name.h"
 
+class AST_Type;
 
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {

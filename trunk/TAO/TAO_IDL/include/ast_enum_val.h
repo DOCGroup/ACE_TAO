@@ -67,7 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ENUM_VAL_AST_ENUM_VAL_HH
 #define _AST_ENUM_VAL_AST_ENUM_VAL_HH
 
-// Representation of enumerator in enum.
+#include "ast_constant.h"
 
 // An enumerator is a constant of type unsigned long.
 

@@ -11,12 +11,9 @@
 */
 //=============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-#include "be_visitor_operation.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_sh, 
+           "$Id$")
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
     be_visitor_context *ctx
@@ -29,10 +26,10 @@ be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
 {
 }
 
-/** The node is the original interface node but we 'tweak' with the
-    local_name and the the operation signatures to generate the AMH
-    skeleton on the 'fly'.
-*/
+// The node is the original interface node but we 'tweak' with the
+// local_name and the the operation signatures to generate the AMH
+// skeleton on the 'fly'.
+
 int
 be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 {
@@ -47,10 +44,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-
-  ACE_CString class_name; // holds the class name
-
+  TAO_OutStream *os = this->ctx_->stream ();
+  ACE_CString class_name;
   os->indent ();
 
   // We shall have a POA_ prefix only if we are at the topmost level.
@@ -366,7 +361,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                                            original_arg->name ()),
                               -1);
 
-              operation->add_argument_to_scope (arg);
+              operation->be_add_argument (arg);
             }
         }
     }

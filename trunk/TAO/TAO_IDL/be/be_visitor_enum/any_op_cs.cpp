@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_enum.h"
-
-ACE_RCSID(be_visitor_enum, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_enum, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Enum visitor for generating Any operator declarations in the client
@@ -52,8 +48,8 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the Any <<= and >>= operator declarations
-  // Any <<= and >>= operators
+  // Generate the Any <<= and >>= operator declarations
+  // Any <<= and >>= operators.
   os->indent ();
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << " _tao_elem)" << be_nl

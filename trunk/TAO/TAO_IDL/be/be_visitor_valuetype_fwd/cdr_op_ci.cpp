@@ -20,27 +20,25 @@
 //
 // ================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype_fwd.h"
-
-ACE_RCSID(be_visitor_valuetype_fwd, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the
 // client header
 // ****************************************************************
 
-be_visitor_valuetype_fwd_cdr_op_ci::
-be_visitor_valuetype_fwd_cdr_op_ci (be_visitor_context *ctx)
+be_visitor_valuetype_fwd_cdr_op_ci::be_visitor_valuetype_fwd_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_valuetype_fwd_cdr_op_ci::
-~be_visitor_valuetype_fwd_cdr_op_ci (void)
+be_visitor_valuetype_fwd_cdr_op_ci::~be_visitor_valuetype_fwd_cdr_op_ci (
+    void
+  )
 {
 }
 

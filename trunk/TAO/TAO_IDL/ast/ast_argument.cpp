@@ -70,10 +70,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Additionally they have a direction field which takes values
 // from the enum AST_Argument::Direction.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_argument.h"
+#include "ast_visitor.h"
 
-ACE_RCSID(ast, ast_argument, "$Id$")
+ACE_RCSID (ast, 
+           ast_argument, 
+           "$Id$")
 
 // Static functions.
 
@@ -93,8 +95,6 @@ direction_to_string (AST_Argument::Direction d)
 
   return 0;
 }
-
-// Constructor(s) and destructor.
 
 AST_Argument::AST_Argument (void)
   : pd_direction (dir_IN)
@@ -117,8 +117,6 @@ AST_Argument::~AST_Argument (void)
 {
 }
 
-// Redefinition of inherited virtual operations.
-
 // Dump this AST_Argument node to the ostream o.
 void
 AST_Argument::dump (ostream &o)
@@ -132,8 +130,6 @@ AST_Argument::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_argument (this);
 }
-
-// Data accessors.
 
 AST_Argument::Direction
 AST_Argument::direction (void)

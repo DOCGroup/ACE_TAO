@@ -18,17 +18,12 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, sequence_ci, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           sequence_ci, 
+           "$Id$")
 
 // ***********************************************************
-// sequence visitor for inline generation
+// Sequence visitor for inline generation.
 // ***********************************************************
 
 
@@ -76,7 +71,8 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_ci::"
                              "visit_sequence - "
-                             "codegen for _var failed\n"), -1);
+                             "codegen for _var failed\n"), 
+                            -1);
         }
 
       if (this->gen_out_impl (node) == -1)
@@ -84,7 +80,8 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_ci::"
                              "visit_sequence - "
-                             "codegen for _out failed\n"), -1);
+                             "codegen for _out failed\n"), 
+                            -1);
         }
 
       // Generate the endif macro for the sequence type.
@@ -106,7 +103,8 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "gen_instantiate_template_name - "
-                         "Bad element type\n"), -1);
+                         "Bad element type\n"), 
+                        -1);
     }
 
   // Generate the appropriate sequence type.
@@ -115,6 +113,7 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
     case be_sequence::MNG_VALUE:
+    case be_sequence::MNG_ABSTRACT:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);
@@ -219,11 +218,15 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
                          "visit_sequence - "
-                         "Bad element type\n"), -1);
+                         "Bad element type\n"), 
+                        -1);
     }
 
   // Generate the var implementation in the inline file.
   os->indent ();
+
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl;
@@ -234,11 +237,11 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   // Default constuctor.
   *os << "ACE_INLINE" << be_nl
       << fname << "::" << lname
-      << " (void) // default constructor" << be_nl
+      << " (void)" << be_nl
       << "  " << ": ptr_ (0)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  // Constuctorr from a _ptr.
+  // Constuctor from a _ptr.
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name ()
       << " *p)" << be_nl;
@@ -248,7 +251,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   // Copy constructor.
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const ::" << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "if (p.ptr_)" << be_idt_nl;
   *os << "ACE_NEW (this->ptr_, ::" << node->name ()
@@ -258,7 +261,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "}" << be_nl << be_nl;
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// fixed-size base types only" << be_nl;
       *os << "ACE_INLINE" << be_nl;
@@ -272,7 +275,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
   // Destructor.
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *os << fname << "::~" << lname << " (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "delete this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
@@ -317,7 +320,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       << "}\n\n";
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// fixed-size types only" << be_nl;
       *os << "ACE_INLINE ::" << fname << " &" << be_nl;
@@ -370,7 +373,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "}" << be_nl << be_nl;
 
   // Variable-size base types only.
-  if (bt->size_type () == be_decl::VARIABLE)
+  if (bt->size_type () == AST_Type::VARIABLE)
     {
       *os << "// variable-size types only" << be_nl;
       *os << "ACE_INLINE" << be_nl;
@@ -388,17 +391,9 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_elemtype sr_visitor (&ctx);
 
-  if (visitor == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "gen_var_impl - "
-                         "Bad visitor\n"), -1);
-    }
-
-  if (bt->accept (visitor) == -1)
+  if (bt->accept (&sr_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -442,13 +437,15 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       && nt != AST_Decl::NT_wstring
       && nt != AST_Decl::NT_interface
       && nt != AST_Decl::NT_interface_fwd
+      && nt != AST_Decl::NT_valuetype
       && nt != AST_Decl::NT_array
-      && pdt != AST_PredefinedType::PT_pseudo)
+      && pdt != AST_PredefinedType::PT_pseudo
+      && pdt != AST_PredefinedType::PT_object)
     {
       // Const.
       *os << "ACE_INLINE const ";
 
-      if (bt->accept (visitor) == -1)
+      if (bt->accept (&sr_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_ci::"
@@ -463,7 +460,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
       *os << "return ACE_const_cast (const ";
 
-      if (bt->accept (visitor) == -1)
+      if (bt->accept (&sr_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_ci::"
@@ -476,8 +473,6 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
       *os << "}" << be_nl << be_nl;
     }
-
-  delete visitor;
 
   // in, inout, out, and _retn.
   *os << "ACE_INLINE const ::" << node->name () << " &" << be_nl;
@@ -527,11 +522,21 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   char lname [NAMEBUFSIZE];
 
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", node->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_out", node->local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_out", 
+                   node->full_name ());
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_out", 
+                   node->local_name ()->get_string ());
 
   // Retrieve base type.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
@@ -547,6 +552,9 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   // Generate the out implementation in the inline file.
 
   os->indent ();
+
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl;
@@ -629,17 +637,9 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_elemtype sr_visitor (&ctx);
 
-  if (visitor == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "gen_out_impl - "
-                         "Bad visitor\n"), -1);
-    }
-
-  if (bt->accept (visitor) == -1)
+  if (bt->accept (&sr_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -647,8 +647,6 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
                          "[] ret type gen failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   *os << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;

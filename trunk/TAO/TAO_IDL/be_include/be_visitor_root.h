@@ -22,9 +22,7 @@
 #ifndef TAO_BE_VISITOR_ROOT_H
 #define TAO_BE_VISITOR_ROOT_H
 
-#include "be_visitor.h"
 #include "be_visitor_scope.h"
-
 #include "be_visitor_root/root.h"
 #include "be_visitor_root/root_ch.h"
 #include "be_visitor_root/root_ci.h"

@@ -1,11 +1,11 @@
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_stream_factory.h"
 #include "be_sunsoft.h"
 
-ACE_RCSID(be, be_factory, "$Id$")
+ACE_RCSID (be, 
+           be_streamfactory, 
+           "$Id$")
 
 // Constructor.
 TAO_OutStream_Factory::TAO_OutStream_Factory (void)

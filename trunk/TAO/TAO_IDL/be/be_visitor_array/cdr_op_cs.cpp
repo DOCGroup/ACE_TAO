@@ -19,11 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_array.h"
+ACE_RCSID (be_visitor_array, 
+           cdr_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client

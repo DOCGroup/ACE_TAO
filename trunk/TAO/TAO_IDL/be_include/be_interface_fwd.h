@@ -7,11 +7,11 @@
 //    TAO IDL
 //
 // = FILENAME
-//    be_interface.h
+//    be_interface_fwd.h
 //
 // = DESCRIPTION
-//    Extension of class AST_Interface_Fwd that provides additional
-//    means for C++ mapping of an interface.
+//    Extension of class AST_InterfaceFwd that provides additional
+//    means for C++ mapping of a forward declared interface.
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
@@ -36,7 +36,7 @@ class be_interface_fwd : public virtual AST_InterfaceFwd,
   //   be_interface_fwd
   //
   // =DESCRIPTION
-  //   Extensions to the AST_Interface_Fwd class
+  //   Extensions to the AST_InterfaceFwd class
 public:
   be_interface_fwd (void);
   // Default constructor.

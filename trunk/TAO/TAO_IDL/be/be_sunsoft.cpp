@@ -1,11 +1,14 @@
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
 #include "be_sunsoft.h"
+#include "ast_expression.h"
+#include "utl_identifier.h"
+#include "utl_idlist.h"
+#include "utl_string.h"
 
-ACE_RCSID(be, be_sunsoft, "$Id$")
+ACE_RCSID (be, 
+           be_sunsoft, 
+           "$Id$")
 
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
   : TAO_OutStream ()
@@ -167,6 +170,9 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           break;
         case AST_Expression::EV_wstring:
           this->TAO_OutStream::print ("L\"%s\"", ev->u.wstrval);
+          break;
+        case AST_Expression::EV_enum:
+          this->print (expr->n ());
           break;
         default:
           break;

@@ -20,23 +20,35 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be_visitor_interface.h"
-#include "be.h"
+#include "be_interface.h"
 #include "be_interface_strategy.h"
+#include "be_attribute.h"
+#include "be_operation.h"
+#include "be_visitor.h"
+#include "be_helper.h"
+#include "be_stream_factory.h"
+#include "be_extern.h"
+#include "utl_identifier.h"
+#include "ast_generator.h"
+#include "global_extern.h"
+#include "idl_defines.h"
+#include "nr_extern.h"
+#include "ace/Process.h"
 
-ACE_RCSID(be, be_interface, "$Id$")
+ACE_RCSID (be, 
+           be_interface, 
+           "$Id$")
 
 // Default constructor.
 be_interface::be_interface (void)
   : skel_count_ (0),
     in_mult_inheritance_ (-1),
-    original_interface_ (0)
+    original_interface_ (0),
+    has_mixed_parentage_ (I_FALSE)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-  this->size_type (be_decl::VARIABLE); // Always the case.
+  this->size_type (AST_Type::VARIABLE); // Always the case.
   this->has_constructor (I_TRUE);      // Always the case.
 }
 
@@ -62,12 +74,19 @@ be_interface::be_interface (UTL_ScopedName *n,
                  abstract),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
-    original_interface_ (0)
+    original_interface_ (0),
+    has_mixed_parentage_ (I_FALSE)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-  this->size_type (be_decl::VARIABLE); // always the case
+  this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
+
+  if (! abstract && this->node_type () == AST_Decl::NT_interface)
+    {
+      this->analyze_parentage (ih,
+                               nih);
+    }
 }
 
 be_interface::~be_interface (void)
@@ -443,9 +462,9 @@ be_interface::gen_def_ctors_helper (be_interface* node,
 
   static int first = 0;
 
-  if(node != base)
+  if (node != base)
     {
-      if(first)
+      if (first)
         {
           *os << be_global->impl_class_prefix () << base->flat_name ()
               << be_global->impl_class_suffix () << " ()";
@@ -481,13 +500,43 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl
                 << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
-                << ")" // constructor
+                << ")"
                 << be_nl;
-      *os << ": CORBA_Object (objref, _tao_collocated, servant)" << be_uidt_nl;
-      *os << "{" << be_idt_nl
+      *os << ": CORBA_Object (objref, _tao_collocated, servant)";
+
+      if (this->has_mixed_parentage_)
+        {
+          *os << be_idt;
+
+          int status = 
+            this->traverse_inheritance_graph (
+                      be_interface::gen_abstract_init_helper, 
+                      os,
+                      I_TRUE
+                    );
+
+          if (status == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "be_interface::gen_stub_ctor - "
+                          "inheritance graph traversal failed\n"));
+            }
+
+          *os << "," << be_nl
+              << "CORBA_AbstractBase (objref, _tao_collocated, servant)"
+              << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_uidt;
+        }
+
+      *os << be_nl << "{" << be_idt_nl
                 << "this->" << this->flat_name ()
-          << "_setup_collocation (_tao_collocated);" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+          << "_setup_collocation (_tao_collocated);";
+
+      *os << be_uidt_nl
+          << "}" << be_nl << be_nl;
     }
 }
 
@@ -519,6 +568,9 @@ be_interface::gen_var_defn (char *interface_name)
   // Generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account
   // for over here.
+
+  *ch << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf
@@ -583,12 +635,30 @@ be_interface::gen_var_defn (char *interface_name)
       << "static " << interface_name
       << "_ptr tao_nil (void);" << be_nl
       << "static " << interface_name
-      << "_ptr tao_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object *" << be_nl
-      << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "static CORBA::Object * tao_upcast (void *);"
-      << be_uidt_nl << be_nl;
+      << "_ptr tao_narrow (" << be_idt << be_idt_nl;
+
+  if (this->is_abstract ())
+    {
+      *ch << "CORBA::AbstractBase *" << be_nl;
+    }
+  else
+    {
+      *ch << "CORBA::Object *" << be_nl;
+    }
+
+  *ch << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  if (this->is_abstract ())
+    {
+      *ch << "static CORBA::AbstractBase * tao_upcast (void *);";
+    }
+  else
+    {
+      *ch << "static CORBA::Object * tao_upcast (void *);";
+    }
+
+  *ch << be_uidt_nl << be_nl;
 
   // Private.
   *ch << "private:" << be_idt_nl;
@@ -772,7 +842,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   *cs << "return val;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  // Hooks for the global static functions used by non-defined interfaces.
+  // Hooks for the flat name global functions used by references to 
+  // non-defined interfaces.
   *cs << "::" << interface_full_name
       << "_ptr" << be_nl
       << fname << "::tao_duplicate ("
@@ -798,9 +869,18 @@ be_interface::gen_var_impl (char *interface_local_name,
       << "}" << be_nl << be_nl;
 
   *cs << "::" << interface_full_name << "_ptr" << be_nl
-      << fname << "::tao_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object *p" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << fname << "::tao_narrow (" << be_idt << be_idt_nl;
+
+  if (this->is_abstract ())
+    {
+      *cs << "CORBA::AbstractBase *p" << be_nl;
+    }
+  else
+    {
+      *cs << "CORBA::Object *p" << be_nl;
+    }
+
+  *cs << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return ::" << interface_full_name
@@ -808,8 +888,16 @@ be_interface::gen_var_impl (char *interface_local_name,
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *cs << "CORBA::Object *" << be_nl
-      << fname << "::tao_upcast (void *src)" << be_nl
+  if (this->is_abstract ())
+    {
+      *cs << "CORBA::AbstractBase *" << be_nl;
+    }
+  else
+    {
+      *cs << "CORBA::Object *" << be_nl;
+    }
+
+  *cs << fname << "::tao_upcast (void *src)" << be_nl
       << "{" << be_idt_nl
       << interface_local_name << " **tmp =" << be_idt_nl
       << "ACE_static_cast (" << interface_local_name
@@ -840,6 +928,9 @@ be_interface::gen_out_defn (char *interface_name)
                    interface_name);
 
   TAO_OutStream *ch = tao_cg->client_header ();
+
+  *ch << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the out definition (always in the client header)
   *ch << "class " << be_global->stub_export_macro ()
@@ -1013,12 +1104,21 @@ be_interface::gen_out_impl (char *interface_local_name,
   *cs << fname << "::operator-> (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
-  *cs << "}\n\n";
+  *cs << "}" << be_nl << be_nl;
+
+  *cs << "// *************************************************************"
+      << "\n\n";
 
   return 0;
 }
 
 // ****************************************************************
+
+TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
+    void
+  )
+{
+}
 
 class TAO_IDL_Gen_OpTable_Worker : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
@@ -1046,7 +1146,8 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface * /* derived_interface */,
 {
   // Generate entries for the derived class using the properties of its
   // ancestors.
-  return base_interface->gen_optable_entries (this->skeleton_name_, os);
+  be_interface *bi = be_interface::narrow_from_decl (base_interface);
+  return bi->gen_optable_entries (this->skeleton_name_, os);
 }
 
 int
@@ -1059,19 +1160,33 @@ be_interface::gen_operation_table (const char *flat_name,
     case BE_GlobalData::TAO_DYNAMIC_HASH:
       {
         // Init the outstream appropriately.
-        TAO_OutStream *os =
-          this->strategy_->get_out_stream ();
+        TAO_OutStream *os = this->strategy_->get_out_stream ();
 
         // Start from current indentation level.
         os->indent ();
 
         // Start the table generation.
         *os << "static const TAO_operation_db_entry " << flat_name <<
-          "_operations [] = {\n";
+          "_operations [] = {" << be_nl;
+
         os->incr_indent (0);
+
+        // Make sure the queues are empty.
+        this->insert_queue.reset ();
+        this->del_queue.reset ();
+
+        // Insert ourselves in the queue.
+        if (insert_queue.enqueue_tail (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_interface::gen_operation_table - "
+                               "error generating entries\n"),
+                              -1);
+          }
 
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+
         if (this->traverse_inheritance_graph (worker, os) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1080,24 +1195,22 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        os->indent ();
         *os << "{\"_is_a\", &" << skeleton_class_name
-            << "::_is_a_skel},\n";
+            << "::_is_a_skel}," << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "{\"_non_existent\", &" << skeleton_class_name
-            << "::_non_existent_skel},\n";
+            << "::_non_existent_skel}," << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "{\"_interface\", &" << skeleton_class_name
-            << "::_interface_skel}\n";
+            << "::_interface_skel}" << be_uidt_nl;
+
         this->skel_count_++;
 
-        os->decr_indent ();
         *os << "};\n" << be_nl;
-
         *os << "static const CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
             << " TAO_Skeleton>) * (" << (3 * this->skel_count_)
@@ -1130,9 +1243,10 @@ be_interface::gen_operation_table (const char *flat_name,
         // Temp file name.
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
-                        char [ACE_OS::strlen (idl_global->temp_dir ()) +
-                             ACE_OS::strlen (flat_name) +
-                             ACE_OS::strlen (".gperf") + 1],
+                        char [ACE_OS::strlen (idl_global->temp_dir ())
+                              + ACE_OS::strlen (flat_name)
+                              + ACE_OS::strlen (".gperf") 
+                              + 1],
                         -1);
 
         ACE_OS::sprintf (temp_file,
@@ -1158,8 +1272,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // interface.
 
         // Retrieve the singleton instance to the outstream factory.
-        TAO_OutStream_Factory *factory =
-          TAO_OUTSTREAM_FACTORY::instance ();
+        TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
         // Get a new instance for the temp file.
         TAO_OutStream *os = factory->make_outstream ();
@@ -1192,8 +1305,22 @@ be_interface::gen_operation_table (const char *flat_name,
         // Add the gperf input header.
         this->gen_gperf_input_header (os);
 
+        // Make sure the queues are empty.
+        this->insert_queue.reset ();
+        this->del_queue.reset ();
+
+        // Insert ourselves in the queue.
+        if (insert_queue.enqueue_tail (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_interface::gen_operation_table - "
+                               "error generating entries\n"),
+                              -1);
+          }
+
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+
         if (this->traverse_inheritance_graph (worker, os) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1204,27 +1331,28 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Generate the skeleton for the is_a method.
         os->indent ();
+
         *os << "_is_a, &"
             << skeleton_class_name
-            << "::_is_a_skel\n";
+            << "::_is_a_skel" << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "_non_existent, &"
             << skeleton_class_name
-            << "::_non_existent_skel\n";
+            << "::_non_existent_skel" << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "_component, &"
             << skeleton_class_name
-            << "::_component_skel\n";
+            << "::_component_skel" << be_nl;
         this->skel_count_++;
 
-        os->indent ();
         *os << "_interface, &"
             << skeleton_class_name
-            << "::_interface_skel\n";
+            << "::_interface_skel" << be_nl;
+
         this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things
@@ -1412,20 +1540,26 @@ be_interface::gen_optable_entries (const char *full_skeleton_name,
   return 0;
 }
 
-// ****************************************************************
-
-class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
+void
+be_interface::analyze_parentage (AST_Interface **parents,
+                                 long n_parents)
 {
-public:
-  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
+  for (long i = 0; i < n_parents; ++i)
+    {
+      if (parents[i]->is_abstract ())
+        {
+          this->has_mixed_parentage_ = I_TRUE;
+          break;
+        }
+    }
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *output_stream,
-                    be_interface *base_interface);
+  if (this->has_mixed_parentage_)
+    {
+      be_global->mixed_parentage_interfaces.enqueue_tail (this);
+    }
+}
 
-private:
-  be_interface::tao_code_emitter emitter_;
-};
+// ****************************************************************
 
 be_code_emitter_wrapper::
 be_code_emitter_wrapper (be_interface::tao_code_emitter emitter)
@@ -1448,34 +1582,15 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
 // out by the function passed as argument.
 int
 be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
-                                          TAO_OutStream *os)
+                                          TAO_OutStream *os,
+                                          idl_bool abstract_paths_only)
 {
-  be_code_emitter_wrapper wrapper (gen);
-
-  return this->traverse_inheritance_graph (wrapper, os);
-}
-
-int
-be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-                                          TAO_OutStream *os)
-{
-  // Queue data structure needed for breadth-first traversal of
-  // inheritance tree.
-  ACE_Unbounded_Queue <be_interface*> queue;
-
-  // For a special case of a deeply nested inheritance graph and one specific
-  // way of inheritance in which a node that was already visited,
-  // but is not present in
-  // the queue, gets inserted at the tail. This situation arises when a node
-  // multiply inherits from two or more interfaces in which the first parent is
-  // higher up in the tree than the second parent. In addition, if the second
-  // parent turns out to be a child of the first .
-
-  // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue <be_interface*> del_queue;
+  // Make sure the queues are empty.
+  this->insert_queue.reset ();
+  this->del_queue.reset ();
 
   // Insert ourselves in the queue.
-  if (queue.enqueue_tail (this) == -1)
+  if (insert_queue.enqueue_tail (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_interface::traverse_inheritance_graph - "
@@ -1483,19 +1598,33 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                         -1);
     }
 
+  be_code_emitter_wrapper wrapper (gen);
+
+  return this->traverse_inheritance_graph (wrapper, 
+                                           os, 
+                                           abstract_paths_only);
+}
+
+int
+be_interface::traverse_inheritance_graph (
+    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+    TAO_OutStream *os,
+    idl_bool abstract_paths_only
+  )
+{
   // Do until queue is empty.
-  while (!queue.is_empty ())
+  while (!this->insert_queue.is_empty ())
     {
-      be_interface *bi;  // element inside the queue
+      AST_Interface *intf;  // element inside the queue
 
       // Use breadth-first strategy i.e., first generate entries for ourselves,
       // followed by nodes that we immediately inherit from, and so on. In the
       // process make sure that we do not generate code for the same node more
-      // than once. Such a case may arise due to multiple inheritance forming a
-      // diamond like inheritance graph.
+      // than once. Such a case may arise due to multiple inheritance forming
+      // a diamond-like inheritance graph.
 
       // Dequeue the element at the head of the queue.
-      if (queue.dequeue_head (bi))
+      if (this->insert_queue.dequeue_head (intf))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1504,13 +1633,15 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
         }
 
       // Insert the dequeued element in the del_queue.
-      if (del_queue.enqueue_tail (bi) == -1)
+      if (this->del_queue.enqueue_tail (intf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
                              "enqueue_head failed\n"),
                             -1);
         }
+
+      be_interface *bi = be_interface::narrow_from_decl (intf);
 
       // Use the helper method to generate code for ourself using the
       // properties of the element dequeued. For the first iteration, the
@@ -1523,83 +1654,29 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                             -1);
         }
 
+      long i;
+
       // Now check if the dequeued element has any ancestors. If yes, insert
       // them inside the queue making sure that there are no duplicates.
-      for (long i = 0; i < bi->n_inherits (); i++)
+      for (i = 0; i < bi->n_inherits (); ++i)
         {
           // Retrieve the next parent from which the dequeued element inherits.
-          be_interface *parent =
-            be_interface::narrow_from_decl (bi->inherits ()[i]);
+          AST_Interface *parent = bi->inherits ()[i];
 
           if (parent == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_interface::gen_server_skeletons -"
+                                 "(%N:%l) be_interface::traverse_graph -"
                                  " bad inherited interface\n"),
                                 -1);
             }
 
-          // Now insert this node at the tail of the queue, but make sure that
-          // it doesn't already exist in the queue.
-          int found = 0;
-
-          // Initialize an iterator to search the queue for duplicates.
-          for (ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
-               !q_iter.done ();
-               (void) q_iter.advance ())
+          if (abstract_paths_only && ! parent->is_abstract ())
             {
-              // Queue element.
-              be_interface **temp;
-
-              (void) q_iter.next (temp);
-              if (!ACE_OS::strcmp (parent->full_name (),
-                                   (*temp)->full_name ()))
-                {
-                  // We exist in this queue and cannot be inserted.
-                  found = 1;
-                }
-              if (found)
-                {
-                  break;
-                }
+              continue;
             }
 
-          // Initialize an iterator to search the del_queue for duplicates.
-          for (ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (
-                   del_queue
-                 );
-               !found && !del_q_iter.done ();
-               (void) del_q_iter.advance ())
-            {
-              // Queue element.
-              be_interface **temp;
-
-              (void) del_q_iter.next (temp);
-
-              if (!ACE_OS::strcmp (parent->full_name (),
-                                   (*temp)->full_name ()))
-                {
-                  // We exist in this del_queue and cannot be inserted.
-                  found = 1;
-                }
-
-              if (found)
-                {
-                  break;
-                }
-            }
-
-          if (!found)
-            {
-              // Insert the parent in the queue.
-              if (queue.enqueue_tail (parent) == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_interface::gen_server_skeletons - "
-                                 "enqueue op failed\n"),
-                                -1);
-                }
-            }
+          (void) this->insert_non_dup (parent);
         } // end of for loop
     } // end of while queue not empty
 
@@ -1614,6 +1691,11 @@ be_interface::gen_gperf_things (const char *flat_name)
 {
   // GPERF can give Binary search, Linear search and Perfect Hash
   // methods. Generate the class defintion according to that.
+
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,
@@ -1971,16 +2053,16 @@ be_interface::gen_linear_search_instance (const char *flat_name)
       << ";\n" << be_nl;
 }
 
-
 int
 be_interface::is_a_helper (be_interface * /*derived*/,
                            be_interface *bi,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  os->indent ();
-  *os << "(!ACE_OS::strcmp ((char *)value, \"" << bi->repoID () <<
-    "\")) ||\n";
+  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+      << "(char *)value," << be_nl
+      << "\"" << bi->repoID () << "\"" << be_uidt_nl
+      << ") ||" << be_uidt_nl;
 
   return 0;
 }
@@ -1991,8 +2073,9 @@ be_interface::queryinterface_helper (be_interface *derived,
                                      TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "(type == ACE_reinterpret_cast" << be_idt_nl
-      << "(ptr_arith_t," << be_idt_nl;
+  *os << "(type == ACE_reinterpret_cast (" 
+      << be_idt << be_idt <<be_idt << be_idt << be_idt << be_idt_nl
+      << "ptr_arith_t," << be_nl;
 
   be_decl *scope =
     be_scope::narrow_from_scope (ancestor->defined_in ())->decl ();
@@ -2003,23 +2086,26 @@ be_interface::queryinterface_helper (be_interface *derived,
   // If the ancestor is in the root scope, we can use the local name.
   if (scope->node_type () == AST_Decl::NT_root)
     {
-      *os << "&" << ancestor->local_name () << "::_tao_class_id" << be_uidt
-          << "))" << be_nl;
+      *os << "&" << ancestor->local_name () << "::_tao_class_id)"
+          << be_uidt_nl;
     }
   // Or, if it's defined in a scope different than the child's, the
   // ACE_NESTED_CLASS macro won't work - we use the scoped name.
   else if (scope != derived_scope)
     {
-      *os << "&::" << ancestor->name () << "::_tao_class_id" << be_uidt
-          << "))" << be_nl;
+      *os << "&::" << ancestor->name () << "::_tao_class_id)"
+          << be_uidt_nl;
     }
   // The ACE_NESTED_CLASS macro is necessary in this case.
   else
     {
       *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", "
-          << ancestor->local_name () << ")" << "::_tao_class_id" << be_uidt
-          << "))" << be_nl;
+          << ancestor->local_name () << ")" << "::_tao_class_id)"
+          << be_uidt_nl;
     }
+
+  *os << ")" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl;
 
   if (derived == ancestor)
     {
@@ -2027,18 +2113,18 @@ be_interface::queryinterface_helper (be_interface *derived,
     }
   else
     {
-      *os << "retv = ACE_reinterpret_cast" << be_idt_nl
-          << "(" << be_idt_nl
+      *os << "retv =" << be_idt_nl
+          << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
           << "void *," << be_nl
-          << "ACE_static_cast" << be_idt_nl
-          << "(" << be_idt_nl
+          << "ACE_static_cast (" << be_idt << be_idt_nl
           << ancestor->full_name () << "_ptr," << be_nl
           << "this" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+          << ");" << be_uidt << be_uidt << be_uidt_nl;
     }
 
-  *os << "else if ";
+  *os << "}" << be_uidt_nl
+      << "else if ";
 
   return 0;
 }
@@ -2050,10 +2136,19 @@ be_interface::downcast_helper (be_interface * /* derived */,
                                be_interface *base,
                                TAO_OutStream *os)
 {
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+  // Abstract interfaces have no code generated on the skeleton side.
+  if (base->is_abstract ())
+    {
+      return 0;
+    }
+
+  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl 
+      << "                    \""
       << base->repoID () << "\") == 0)" << be_idt_nl
+      << "{" << be_idt_nl
       << "return ACE_static_cast ("
-      << base->full_skel_name () << "_ptr, this);" << be_uidt_nl;
+      << base->full_skel_name () << "_ptr, this);" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   return 0;
 }
@@ -2066,6 +2161,17 @@ be_interface::gen_skel_helper (be_interface *derived,
 {
   // If derived and ancestor are same, skip it.
   if (derived == ancestor)
+    {
+      return 0;
+    }
+
+  // If an operation or an attribute is abstract (declared in an
+  // abstract interface), we will either generate the full
+  // definition (if there are no concrete interfaces between the
+  // abstract ancestor and us) or, if there is a concrete ancestor
+  // in between, we will catch its definition elsewhere in this
+  // traversal.
+  if (ancestor->is_abstract ())
     {
       return 0;
     }
@@ -2085,10 +2191,14 @@ be_interface::gen_skel_helper (be_interface *derived,
         {
           // Get the next AST decl node
           AST_Decl *d = si.item ();
+
           if (d->node_type () == AST_Decl::NT_op)
             {
               // Start from current indentation level.
               os->indent ();
+
+              *os << "// TAO_IDL - Generated from" << be_nl
+                  << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -2241,10 +2351,12 @@ be_interface::copy_ctor_helper (be_interface *derived,
                                 be_interface *base,
                                 TAO_OutStream *os)
 {
-  if (derived == base)
-    // We are the same. Don't do anything, otherwise we will end up calling
-    // ourself.
-    return 0;
+  // We can't call ourselves in a copy constructor, and
+  // abstract interfaces don't exist on the skeleton side.
+  if (derived == base || base->is_abstract ())
+    {
+      return 0;
+    }
 
   if (base->is_nested ())
     {
@@ -2294,12 +2406,46 @@ be_interface::in_mult_inheritance_helper (be_interface *derived,
   return 0;
 }
 
+int 
+be_interface::gen_abstract_init_helper (be_interface *node,
+                                        be_interface *base,
+                                        TAO_OutStream *os)
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  *os << ",";
+
+  if (base->is_nested ())
+    {
+      UTL_Scope *parent_scope = base->defined_in ();
+      AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
+
+      *os << be_nl
+          << "ACE_NESTED_CLASS ("
+          << parent_decl->name () << ", "
+          << base->local_name () 
+          << ") (objref, _tao_collocated, servant)";
+    }
+  else
+    {
+      *os << be_nl
+          << base->name ()
+          << " (objref, _tao_collocated, servant)";
+    }
+
+  return 0;
+}
+
 void
 be_interface::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
+  this->AST_Interface::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
 }
 
 int
@@ -2338,7 +2484,13 @@ be_interface::original_interface ()
 be_interface *
 be_interface::replacement (void)
 {
-   return this->strategy_->replacement ();
+  return this->strategy_->replacement ();
+}
+
+idl_bool
+be_interface::has_mixed_parentage (void) const
+{
+  return this->has_mixed_parentage_;
 }
 
 const char *
@@ -2453,8 +2605,3 @@ be_interface::server_enclosing_scope (void)
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)
-
-TAO_IDL_Inheritance_Hierarchy_Worker::
-~TAO_IDL_Inheritance_Hierarchy_Worker ()
-{
-}

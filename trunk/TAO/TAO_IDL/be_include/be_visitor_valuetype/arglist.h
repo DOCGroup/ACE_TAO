@@ -52,7 +52,6 @@ public:
 
   int post_process (be_decl *bd);
   // set 'comma' only between arguments
-
 };
 
 #endif /* _BE_VISITOR_OBV_OPERATION_ARGLIST_H_ */

@@ -70,10 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // subtype of AST_ConcreteType. This means that we cannot have
 // arrays of AST_Interfaces???
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_array.h"
+#include "ast_expression.h"
+#include "ast_visitor.h"
+#include "utl_exprlist.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_array, "$Id$")
+ACE_RCSID (ast, 
+           ast_array, 
+           "$Id$")
 
 // Constructor(s) and destructor.
 
@@ -142,13 +147,17 @@ void
 AST_Array::dump (ACE_OSTREAM_TYPE &o)
 {
   pd_base_type->dump (o);
+
   o << " ";
+
   this->local_name ()->dump (o);
 
   for (unsigned long i = 0; i < this->pd_n_dims; i++)
     {
       o << "[";
+
       pd_dims[i]->dump (o);
+
       o << "]";
     }
 }
@@ -157,6 +166,26 @@ int
 AST_Array::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_array (this);
+}
+
+// Compute the size type of the node in question.
+int
+AST_Array::compute_size_type (void)
+{
+  AST_Type *type = this->base_type ();
+
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_array::compute_size_type - "
+                         "bad base type\n"), 
+                        -1);
+    }
+
+  // Our size type is the same as our type.
+  this->size_type (type->size_type ());
+
+  return 0;
 }
 
 // Data accessors.

@@ -17,17 +17,17 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_operation_strategy.h"
 
-ACE_RCSID(be, be_operation_strategy, "$Id$")
+ACE_RCSID (be, 
+           be_operation_strategy, 
+           "$Id$")
 
 
-  be_operation_strategy::be_operation_strategy (be_operation *node,
-                                                Strategy_Kind strategy_type)
-    : node_ (node),
-      strategy_type_ (strategy_type)
+be_operation_strategy::be_operation_strategy (be_operation *node,
+                                              Strategy_Kind strategy_type)
+  : node_ (node),
+    strategy_type_ (strategy_type)
 {
 }
 

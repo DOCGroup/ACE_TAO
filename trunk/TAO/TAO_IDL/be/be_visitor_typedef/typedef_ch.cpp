@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_typedef.h"
-
-ACE_RCSID(be_visitor_typedef, typedef_ch, "$Id$")
-
+ACE_RCSID(be_visitor_typedef, 
+          typedef_ch, 
+          "$Id$")
 
 // ******************************************************
 // Typedef visitor for client header
@@ -83,8 +78,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"
-                             ),
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -94,8 +88,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -115,9 +108,8 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"
-                             ),
-                             -1);
+                             "bad base type\n"),
+                            -1);
         }
 
       // accept on this base type, but generate code for the typedef node.
@@ -126,28 +118,23 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),
-                             -1);
+                             "failed to accept visitor\n"),
+                            -1);
         }
 
       // Generate the typecode decl for this typedef node.
-      // @@ NW: !bt->is_local () is a hack.  There should be a way to
-      // propagate bt's info up to typedef.
-      if (!node->imported ())
+      if (!node->imported () && be_global->tc_support ())
         {
-          be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_typecode_decl visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_ch::"
                                  "visit_typedef - "
-                                 "TypeCode declaration failed\n"
-                                 ),
+                                 "TypeCode declaration failed\n"),
                                 -1);
             }
         }
@@ -264,8 +251,7 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_enum - "
-                             "base class visitor failed \n"
-                             ),
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -339,8 +325,11 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
 
-  if ((node->pt () == AST_PredefinedType::PT_pseudo) ||
-      (node->pt () == AST_PredefinedType::PT_any))
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_pseudo
+      || pt == AST_PredefinedType::PT_any
+      || pt == AST_PredefinedType::PT_object)
     {
       // Typedef the _ptr and _var.
       *os << "typedef " << bt->nested_type_name (scope, "_ptr")
@@ -413,8 +402,8 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_sequence - "
-                             "base class visitor failed \n"
-                             ),  -1);
+                             "base class visitor failed \n"),  
+                            -1);
         }
     }
   else
@@ -458,8 +447,8 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_structure - "
-                             "base class visitor failed \n"
-                             ),  -1);
+                             "base class visitor failed \n"),  
+                            -1);
         }
     }
 
@@ -501,8 +490,8 @@ be_visitor_typedef_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_union - "
-                             "base class visitor failed \n"
-                             ),  -1);
+                             "base class visitor failed \n"),  
+                            -1);
         }
     }
 

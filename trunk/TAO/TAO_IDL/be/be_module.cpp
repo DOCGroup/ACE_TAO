@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_module.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_module, "$Id$")
+ACE_RCSID (be, 
+           be_module, 
+           "$Id$")
 
 be_module::be_module (void)
 {
@@ -35,14 +36,6 @@ be_module::be_module (UTL_ScopedName *n)
               n),
     UTL_Scope (AST_Decl::NT_module)
 {
-}
-
-// Compute the size type of the node in question.
-int
-be_module::compute_size_type (void)
-{
-  // Our size does not matter.
-  return 0;
 }
 
 void

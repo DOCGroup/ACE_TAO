@@ -68,19 +68,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Exceptions are a subclass of AST_Decl (they are not types!)
 // and of UTL_Scope.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_exception.h"
+#include "ast_field.h"
+#include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_exception, "$Id$")
+ACE_RCSID (ast, 
+           ast_exception, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Exception::AST_Exception (void)
 {
 }
 
-AST_Exception::AST_Exception(UTL_ScopedName *n,
-                             idl_bool local,
-                             idl_bool abstract)
+AST_Exception::AST_Exception (UTL_ScopedName *n,
+                              idl_bool local,
+                              idl_bool abstract)
   : AST_Structure (AST_Decl::NT_except,
                    n,
                    local,
@@ -190,6 +198,16 @@ AST_Exception::fe_add_field (AST_Field *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   this->fields_.enqueue_tail (t);
 

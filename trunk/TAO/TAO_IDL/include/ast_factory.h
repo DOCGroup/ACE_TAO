@@ -69,9 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Representation of OBV factory construct declaration.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "utl_list.h"
 #include "ast_decl.h"
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
@@ -107,7 +104,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Factory);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
   virtual void destroy (void);

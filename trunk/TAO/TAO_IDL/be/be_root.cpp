@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_root.h"
+#include "be_visitor.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_array.h"
 
-ACE_RCSID(be, be_root, "$Id$")
+ACE_RCSID (be, 
+           be_root, 
+           "$Id$")
 
 // Default Constructor.
 be_root::be_root (void)
@@ -52,7 +56,7 @@ be_root::fe_add_sequence (AST_Sequence *t)
       return 0;
     }
 
-  add_to_local_types(t);
+  add_to_local_types (t);
   return t;
 }
 
@@ -88,6 +92,7 @@ be_root::destroy (void)
   // Call the destroy methods of our base classes.
   be_scope::destroy ();
   be_decl::destroy ();
+  AST_Root::destroy ();
 }
 
 int

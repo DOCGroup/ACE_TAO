@@ -67,16 +67,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_ERR_UTL_ERR_HH
 #define _UTL_ERR_UTL_ERR_HH
 
-// utl_err.hh
-//
-// Defines error codes and error handling class for UTL
-// This will change as a result of internationalization
+#include "AST_Expression.h"
+#include "idl_global.h"
+#include "utl_scoped_name.h"
 
-/*
-** DEPENDENCIES: ast.hh
-**
-** USE: Included from util.hh
-*/
+class AST_Decl;
+class AST_Interface;
+class AST_Enum;
+class AST_Union;
+class AST_UnionLabel;
+class UTL_String;
 
 class TAO_IDL_FE_Export UTL_Error
 {
@@ -96,6 +96,9 @@ public:
     EIDL_ILLEGAL_VERSION,       // Bad number in #pragma version statement
     EIDL_VERSION_RESET,         // Can't reset version, even to same number
     EIDL_ID_RESET,              // Tried to set id to a different string
+    EIDL_TYPEID_RESET,          // Can't set repo id with 'typeid' twice
+    EIDL_INVALID_TYPEID,        // Can't use 'typeid' on this type.
+    EIDL_INVALID_TYPEPREFIX,    // Can't use 'typeprefix on this type
     EIDL_DISC_TYPE,             // Illegal discriminator type in union
     EIDL_LABEL_TYPE,            // Mismatch with discriminator type in union
     EIDL_ILLEGAL_ADD,           // Illegal add action
@@ -103,9 +106,14 @@ public:
     EIDL_ILLEGAL_RAISES,        // Error in "raises" clause
     EIDL_ILLEGAL_CONTEXT,       // Error in "context" clause
     EIDL_CANT_INHERIT,          // Cannot inherit from non-interface
+    EIDL_CANT_SUPPORT,          // Cannot support a non-interface
     EIDL_LOOKUP_ERROR,          // Identifier not found
     EIDL_INHERIT_FWD_ERROR,     // Cannot inherit from fwd decl interface
+    EIDL_SUPPORTS_FWD_ERROR,    // Cannot support a fwd decl interface
     EIDL_CONSTANT_EXPECTED,     // We got something else..
+    EIDL_INTERFACE_EXPECTED,    // We got something else..
+    EIDL_VALUETYPE_EXPECTED,    // We got something else..
+    EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
@@ -113,6 +121,7 @@ public:
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
+    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to integer or vice versa
     EIDL_AMBIGUOUS,             // Ambiguous name definition
     EIDL_DECL_NOT_DEFINED,      // Forward declared but never defined
     EIDL_FWD_DECL_LOOKUP,       // Tried to lookup in fwd declared intf
@@ -152,7 +161,7 @@ public:
                  AST_Decl *t3);
 
   // Report a syntax error in IDL input
-  void syntax_error(IDL_GlobalData::ParseState ps);
+  void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced indentifiers
   void redef_error (char *n,
@@ -198,16 +207,56 @@ public:
   void inheritance_error (UTL_ScopedName *n,
                           AST_Decl *d);
 
-  void abstract_inheritance_error (UTL_ScopedName *n);
+  // Report an attempt to use a forward declared interface which
+  // hasn't been defined yet in an inheritance spec
+  void supports_fwd_error  (UTL_ScopedName *n,
+                            AST_Interface *f);
+
+  // Report an attempt to inherit from something other than an interface
+  void supports_error (UTL_ScopedName *n,
+                       AST_Decl *d);
+
+  // Report an attempt to illegally inherit from an abstract type.
+  void abstract_inheritance_error (UTL_ScopedName *v,
+                                   UTL_ScopedName *i);
+
+  // Report an attempt to support more then one abstract type.
+  void abstract_support_error (UTL_ScopedName *v,
+                               UTL_ScopedName *i);
+
+  // A concrete supported interface must inherit from all concrete
+  // interfaces supported by the valuetype's ancestors, and all of
+  // those conrete interfaces' ancestors.
+  void concrete_supported_inheritance_error (UTL_ScopedName *v,
+                                             UTL_ScopedName *i);
 
   // Report an error while evaluating an expression (division by zero, etc.)
   void eval_error (AST_Expression *d);
+
+  // Report incompatible types in constant assignment
+  void incompatible_type_error (AST_Expression *d);
 
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union
   // label did not evaluate to a constant
   void constant_expected (UTL_ScopedName *n,
                           AST_Decl *d);
+
+  // Report a situation where an interface was expected but we got
+  // something else instead. This most likely is a case in a supports
+  // or inheritance list.
+  void interface_expected (AST_Decl *d);
+
+  // Report a situation where an value type was expected but we got
+  // something else instead. This most likely is a case in a primary
+  // key, emits, publishes or consumes declaration.
+  void valuetype_expected (AST_Decl *d);
+
+  // Report a situation where an abstract type was expected but we got
+  // something else instead. This is the case in an inheritance
+  // list where a concrete type appears after an abstract type, or
+  // where a valuetype inherits more than one concrete valuetype.
+  void abstract_expected (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum
@@ -227,7 +276,7 @@ public:
                   AST_Decl *d);
 
   // Report a forward declared interface which was never defined
-  void fwd_decl_not_defined (AST_Interface *d);
+  void fwd_decl_not_defined (AST_Type *d);
 
   // Report attempt to lookup in forward declared interface
   void fwd_decl_lookup (AST_Interface *d,

@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_root.h"
-
-ACE_RCSID(be_visitor_root, root_cs, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_cs, 
+           "$Id$")
 
 // ***********************************
 // Root visitor for client stubs
@@ -49,7 +44,8 @@ be_visitor_root_cs::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_cs - "
-                         "Error opening client stub file\n"), -1);
+                         "Error opening client stub file\n"), 
+                        -1);
     }
 
   // init stream

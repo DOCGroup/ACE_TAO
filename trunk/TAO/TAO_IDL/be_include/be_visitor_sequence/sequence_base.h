@@ -54,9 +54,11 @@ public:
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_structure (be_structure *node);
+  virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_exception (be_exception *node);
   virtual int visit_union (be_union *node);
+  virtual int visit_union_fwd (be_union_fwd *node);
   virtual int visit_array (be_array *node);
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);

@@ -64,12 +64,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_generator.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_enum, "$Id$")
-
-// Constructor(s) and destructor,
+ACE_RCSID (ast, 
+           ast_enum, 
+           "$Id$")
 
 AST_Enum::AST_Enum (void)
         : pd_enum_counter (0),
@@ -93,8 +98,6 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
 AST_Enum::~AST_Enum (void)
 {
 }
-
-// Public operations.
 
 // Return the member count.
 int
@@ -136,7 +139,9 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
   AST_EnumVal *item = 0;
   AST_Decl *d = 0;
 
-  for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
+  for (UTL_ScopeActiveIterator i (this, IK_decls); 
+       !i.is_done ();
+       i.next ())
     {
       d = i.item ();
       item = AST_EnumVal::narrow_from_decl (d);
@@ -186,7 +191,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
   UTL_IdList *id = 0;
   ACE_NEW_RETURN (id,
-                  UTL_IdList (last_component,
+                  UTL_IdList (last_component->copy (),
                               0),
                   0);
 
@@ -194,8 +199,6 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
   return hold;
 }
-
-// Private operations.
 
 // Compute total number of members.
 int
@@ -206,7 +209,9 @@ AST_Enum::compute_member_count (void)
   // If there are elements in this scope
   if (this->nmembers () > 0)
     {
-      for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
+      for (UTL_ScopeActiveIterator i (this, IK_decls); 
+           !i.is_done (); 
+           i.next ())
         {
           // Get the next AST decl node.
           ++this->member_count_;
@@ -216,7 +221,7 @@ AST_Enum::compute_member_count (void)
   return 0;
 }
 
-// Add an AST_EnumVal node to this scope
+// Add an AST_EnumVal node to this scope.
 AST_EnumVal *
 AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 {
@@ -231,11 +236,16 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
       t1 = idl_global->gen ()->create_enum_val (tmp,
                                                 t->name ());
 
-      t->set_name (munge_name_for_enumval (t->name (),
-                                           t->local_name ()));
+      UTL_ScopedName *sn = 
+        munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
+                                t->local_name ());
 
-      t1->set_name (munge_name_for_enumval (t1->name (),
-                                            t1->local_name ()));
+      t->set_name (sn);
+
+      sn = munge_name_for_enumval ((UTL_IdList *) t1->name ()->copy (),
+                                   t1->local_name ());
+
+      t1->set_name (sn);
     }
 
   // Already defined and cannot be redefined? Or already used?
@@ -276,7 +286,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                            t->local_name ());
 
   // Add it to enclosing scope.
-  idl_global->scopes ()->next_to_top ()->fe_add_enum_val (t1);
+  idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);
 
   return t;
 }
@@ -299,7 +309,9 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
     }
 
   o << "enum ";
+
   this->local_name ()->dump (o);
+
   o << " {\n";
 
   // Must increment the iterator explicitly inside the loop.
@@ -316,6 +328,7 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
     }
 
   idl_global->indent ()->skip_to (o);
+
   o << "}";
 }
 
@@ -328,6 +341,8 @@ AST_Enum::ast_accept (ast_visitor *visitor)
 void
 AST_Enum::destroy (void)
 {
+  this->UTL_Scope::destroy ();
+  this->AST_Decl::destroy ();
 }
 
 

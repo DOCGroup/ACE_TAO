@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, array_cs, "$Id$")
-
+ACE_RCSID (be_visitor_array, 
+           array_cs, 
+           "$Id$")
 
 // ************************************************************************
 //  visitor for array declaration in client stubs
@@ -43,7 +38,6 @@ be_visitor_array_cs::~be_visitor_array_cs (void)
 int be_visitor_array_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
   unsigned long i;
 
   // Nothing to do if we are imported or code is already generated.
@@ -55,7 +49,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {
@@ -114,23 +108,32 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   os->indent ();
 
-  *os << "void " << fname << "_forany"
-      << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-      << "{" << be_idt_nl
-      << lname << "_slice *tmp = ACE_static_cast ("
-      << lname << "_slice*, _tao_void_pointer);" << be_nl
-      << lname << "_free (tmp);" << be_uidt_nl
-      << "}\n\n";
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  if (!node->is_local ())
+    {
+      *os << "void " << fname << "_forany"
+          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+          << "{" << be_idt_nl
+          << lname << "_slice *tmp = ACE_static_cast ("
+          << lname << "_slice*, _tao_void_pointer);" << be_nl
+          << lname << "_free (tmp);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
 
   // dup method.
   *os << fname << "_slice *" << be_nl
       << fname << "_dup (const " << fname
       << "_slice *_tao_src_array)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << fname << "_slice *_tao_dup_array = " << fname
-      << "_alloc ();" << be_nl;
-  *os << "if (!_tao_dup_array) return (" << fname
-      << "_slice *)0;" << be_nl;
+  *os << fname << "_slice *_tao_dup_array =" << be_idt_nl
+      << fname << "_alloc ();" << be_uidt_nl << be_nl;
+  *os << "if (!_tao_dup_array)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return (" << fname
+      << "_slice *)0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
   *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}\n\n";
@@ -177,13 +180,17 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // copy method.
   os->indent ();
   *os << "void " << be_nl;
-  *os << fname << "_copy (" << fname << "_slice * _tao_to, "
-      << "const " << fname << "_slice *_tao_from)" << be_nl;
+  *os << fname << "_copy (" << be_idt << be_idt_nl
+      << fname << "_slice * _tao_to," << be_nl
+      << "const " << fname << "_slice *_tao_from" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// copy each individual element" << be_nl;
+  *os << "// Copy each individual element." << be_nl;
+
+  unsigned long ndims = node->n_dims ();
 
   // Generate nested loops for as many dimensions as there are.
-  for (i = 0; i < node->n_dims (); i++)
+  for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
@@ -201,7 +208,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
         {
           // Generate a loop for each dimension.
           *os << "for (CORBA::ULong i" << i << " = 0; i" << i << " < "
-              << expr->ev ()->u.ulval << "; i" << i << "++)" << be_idt_nl;
+              << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
+              << "{" << be_idt_nl;
         }
       else
         {
@@ -253,7 +261,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
       *os << "_copy (_tao_to";
 
-      for (i = 0; i < node->n_dims (); i++)
+      for (i = 0; i < ndims; ++i)
         {
           *os << "[i" << i << "]";
         }
@@ -261,7 +269,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       *os << ", ";
       *os << "_tao_from";
 
-      for (i = 0; i < node->n_dims (); i++)
+      for (i = 0; i < ndims; ++i)
         {
           *os << "[i" << i << "]";
         }
@@ -275,7 +283,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
       *os << "_tao_to";
 
-      for (i = 0; i < node->n_dims (); i++)
+      for (i = 0; i < ndims; ++i)
         {
           *os << "[i" << i << "]";
         }
@@ -283,18 +291,20 @@ int be_visitor_array_cs::visit_array (be_array *node)
       *os << " = ";
       *os << "_tao_from";
 
-      for (i = 0; i < node->n_dims (); i++)
+      for (i = 0; i < ndims; ++i)
         {
           *os << "[i" << i << "]";
         }
 
       *os << ";";
     }
-  for (i = 0; i < node->n_dims (); i++)
+
+  for (i = 0; i < ndims; ++i)
     {
-      // Decrement indentation as many times as the number of dimensions.
-      *os << be_uidt;
+      // Add closing braces as many times as the number of dimensions.
+      *os << be_uidt_nl << "}" << be_uidt;
     }
+
   *os << be_uidt_nl << "}\n\n";
 
   // If we contain an anonymous sequence,
@@ -314,6 +324,5 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
 
   node->cli_stub_gen (1);
-
   return 0;
 }

@@ -41,7 +41,6 @@ public:
 
   virtual int visit_enum (be_enum *node);
   // visit enum and generate the typecode
-
 };
 
 #endif /* _BE_VISITOR_ENUM_ENUM_CS_H_ */

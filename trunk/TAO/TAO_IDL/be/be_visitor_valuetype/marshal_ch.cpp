@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, marshal_ch, "$Id$")
+ACE_RCSID (be_visitor_valuetype, 
+           marshal_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating  declarations

@@ -4,6 +4,8 @@
 #ifndef _AST_NATIVE_H_
 #define _AST_NATIVE_H_
 
+#include "ast_type.h"
+
 // Representation of "native" IDL type added by the POA spec.
 
 class TAO_IDL_FE_Export AST_Native : public virtual AST_Type

@@ -64,20 +64,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-// utl_idlist.cc
-//
-// Implementation of a list of utl_string nodes
+// Implementation of a list of utl_string nodes.
 
 // NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
+//   inheritance, as opposed to multiple inheritance or public virtual.
 //	 It relies on a type-unsafe cast from UTL_List to subclasses, which
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "utl_idlist.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(util, utl_idlist, "$Id$")
+ACE_RCSID (util, 
+           utl_idlist, 
+           "$Id$")
 
 // Constructor
 UTL_IdList::UTL_IdList (Identifier *s,
@@ -117,14 +117,14 @@ UTL_IdList::copy (void)
 Identifier *
 UTL_IdList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
 
 // Get last item of this list.
 Identifier *
 UTL_IdList::last_component (void)
 {
-  if (this->tail ()== 0)
+  if (this->tail () == 0)
     {
       return this->head ();
     }
@@ -132,16 +132,59 @@ UTL_IdList::last_component (void)
   return ((UTL_IdList *) this->tail ())->last_component ();
 }
 
+// Get first item of this list holding a non-empty string.
+Identifier *
+UTL_IdList::first_component (void)
+{
+  if (ACE_OS::strlen (this->pd_car_data->get_string ()) > 0)
+    {
+      return this->pd_car_data;
+    }
+
+  return ((UTL_IdList *) this->tail ())->first_component ();
+}
+
+int
+UTL_IdList::compare (UTL_IdList *other)
+{
+  long this_length = this->length ();
+
+  if (this_length != other->length ())
+    {
+      return 1;
+    }
+
+  Identifier *this_id = 0;
+  Identifier *other_id = 0;
+
+  for (UTL_IdListActiveIterator this_iter (this), other_iter (other);
+       !this_iter.is_done ();
+       this_iter.next (), other_iter.next ())
+    {
+      this_id = this_iter.item ();
+      other_id = other_iter.item ();
+
+      if (ACE_OS::strcmp (this_id->get_string (),
+                          other_id->get_string ())
+            != 0)
+        {
+          return 1;
+        }
+    }
+
+  return 0;
+}
+
 // AST Dumping.
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_IdListActiveIterator i (this);
-
   long first = I_TRUE;
   long second = I_FALSE;
 
-  while (!(i.is_done ()))
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
     {
       if (!first)
         {
@@ -165,30 +208,19 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
               second = I_TRUE;
             }
         }
-
-      i.next ();
     }
 }
 
 void
 UTL_IdList::destroy (void)
 {
-  Identifier *id = 0;
-  UTL_IdListActiveIterator i (this);
-
-  while (!(i.is_done ()))
+  if (this->pd_car_data != 0)
     {
-      id = i.item ();
-
-      if (id != 0)
-        {
-          id->destroy ();
-          delete id;
-          id = 0;
-        }
-
-      i.next ();
+      delete this->pd_car_data;
+      this->pd_car_data = 0;
     }
+
+  this->UTL_List::destroy ();
 }
 
 // UTL_IdList active iterator.

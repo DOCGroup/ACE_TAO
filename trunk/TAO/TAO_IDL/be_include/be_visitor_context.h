@@ -26,6 +26,34 @@
 #ifndef TAO_BE_VISITOR_CONTEXT_H
 #define TAO_BE_VISITOR_CONTEXT_H
 
+#include "be_codegen.h"
+#include "idl_bool.h"
+
+class TAO_OutStream;
+class be_decl;
+class be_typedef;
+class be_attribute;
+class be_interface;
+class be_interface_fwd;
+class be_argument;
+class be_array;
+class be_constant;
+class be_enum;
+class be_enum_val;
+class be_exceptionl;
+class be_field;
+class be_module;
+class be_operation;
+class be_exception;
+class be_predefined_type;
+class be_root;
+class be_sequence;
+class be_string;
+class be_structure;
+class be_typedef;
+class be_union;
+class be_union_branch;
+
 class be_visitor_context
 {
 public:
@@ -106,7 +134,7 @@ public:
   idl_bool comma (void);
   // are we supposed to generate a comma?
 
-  be_interface* interface (void) const;
+  be_interface *interface (void) const;
   void interface (be_interface*);
   // In some cases we need to generate the objects of one interface as
   // members of a derived visitor (the TIE classes are a good

@@ -70,12 +70,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Typedef nodes have a base type (a subclass of AST_Type)
 // and a name (an UTL_ScopedName).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_typedef.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_typedef, "$Id$")
+#include "ace/Log_Msg.h"
 
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_typedef, 
+           "$Id$")
+
 AST_Typedef::AST_Typedef (void)
  : pd_base_type (0)
 {
@@ -137,10 +141,38 @@ AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
   this->local_name ()->dump (o);
 }
 
+// Compute the size type of the node in question.
+int
+AST_Typedef::compute_size_type (void)
+{
+  AST_Type *type = this->base_type ();
+
+  if (type == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_typedef::compute_size_type - "
+                         "bad base type\n"),
+                        -1);
+    }
+
+  // Our size type is the same as our type.
+  this->size_type (type->size_type ());
+
+  // While we're here, take care of has_constructor.
+  this->has_constructor (type->has_constructor ());
+
+  return 0;
+}
+
 int
 AST_Typedef::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_typedef (this);
+}
+
+void
+AST_Typedef::destroy (void)
+{
 }
 
 // Data accessors.

@@ -67,10 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 #define _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 
-// Representation of predefined types:
-//
-// Instances of this class are inserted into the global context by
-// the front end before the start of parsing.
+#include "ast_concrete_type.h"
+
+class ast_visitor;
 
 class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {
@@ -91,7 +90,8 @@ public:
       , PT_wchar        // Predefined type "CORBA::WChar"
       , PT_boolean      // Predefined type "boolean"
       , PT_octet        // Predefined type "octet"
-      , PT_any          // Predefined type "any"
+      , PT_any          // Predefined type "CORBA::Any"
+      , PT_object       // Predefined type "CORBA::Object"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
     };
@@ -118,6 +118,13 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Cleanup.
+  virtual void destroy (void);
+
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
 
 private:
   // Data.

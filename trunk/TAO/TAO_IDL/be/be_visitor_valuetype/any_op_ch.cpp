@@ -20,13 +20,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations.
@@ -69,7 +65,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
 
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
-      << node->name () << " *&);\n";
+      << node->name () << " *&);" << be_nl;
 
   node->cli_hdr_any_op_gen (1);
 

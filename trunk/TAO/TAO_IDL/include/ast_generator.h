@@ -67,6 +67,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_GENERATOR_AST_GENERATOR_HH
 #define _AST_GENERATOR_AST_GENERATOR_HH
 
+#include "ast_operation.h"
+#include "ast_argument.h"
+#include "ast_predefined_type.h"
+#include "ast_union_label.h"
+
+class AST_Root;
+class UTL_LabelList;
+class UTL_ExprList;
+class AST_StructureFwd;
+class AST_UnionFwd;
+class AST_ValueTypeFwd;
+class AST_Component;
+class AST_ComponentFwd;
+class AST_Home;
+
 // Defines base class for node generators.
 
 class TAO_IDL_FE_Export AST_Generator
@@ -88,36 +103,87 @@ public:
   virtual AST_Root *create_root (UTL_ScopedName *n);
 
   // Create a node representing an interface.
-  virtual AST_Interface *create_interface (UTL_ScopedName *n,
-                                           AST_Interface **ih,
-                                           long nih,
-                                           AST_Interface **ih_flat,
-                                           long nih_flat,
-                                           idl_bool local,
-                                           idl_bool abstract);
+  virtual AST_Interface *create_interface (
+      UTL_ScopedName *n,
+      AST_Interface **inherits,
+      long n_inherits,
+      AST_Interface **inherits_flat,
+      long n_inherits_flat,
+      idl_bool local,
+      idl_bool abstract
+    );
 
   // Create a node representing a forward declaration of an interface.
-  virtual AST_InterfaceFwd *create_interface_fwd (UTL_ScopedName *n,
-                                                  idl_bool local,
-                                                  idl_bool abstract);
+  virtual AST_InterfaceFwd *create_interface_fwd (
+      UTL_ScopedName *n,
+      idl_bool local,
+      idl_bool abstract
+    );
 
-  // Create a node representing an valuetype.
-  virtual AST_Interface *create_valuetype (UTL_ScopedName *n,
-                                           AST_Interface **ih,
-                                           long nih);
+  // Create a node representing a valuetype.
+  virtual AST_ValueType *create_valuetype (
+      UTL_ScopedName *n,
+      AST_Interface **inherits,
+      long n_inherits,
+      AST_ValueType *inherits_concrete,
+      AST_Interface **inherits_flat,
+      long n_inherits_flat,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface *supports_concrete,
+      idl_bool abstract,
+      idl_bool truncatable
+    );
 
-  // Create a node representing a forward declaration of an valuetype.
-  virtual AST_InterfaceFwd *create_valuetype_fwd (UTL_ScopedName *n);
+  // Create a node representing a forward declaration of a valuetype.
+  virtual AST_ValueTypeFwd *create_valuetype_fwd (
+      UTL_ScopedName *n,
+      idl_bool abstract
+    );
+
+  // Create a node representing a component.
+  virtual AST_Component *create_component (
+      UTL_ScopedName *n,
+      AST_Component *base_component,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface **supports_flat,
+      long n_supports_flat
+    );
+
+  // Create a node representing a forward declaration of a component.
+  virtual AST_ComponentFwd *create_component_fwd (
+      UTL_ScopedName *n
+    );
+
+  // Create a node representing a component home.
+  virtual AST_Home *create_home (
+      UTL_ScopedName *n,
+      AST_Home *base_home,
+      AST_Component *managed_component,
+      AST_ValueType *primary_key,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface **supports_flat,
+      long n_supports_flat
+    );
 
   // Create a node representing an exception.
-  virtual AST_Exception *create_exception (UTL_ScopedName *n,
-                                           idl_bool local,
-                                           idl_bool abstract);
+  virtual AST_Exception *create_exception (
+      UTL_ScopedName *n,
+      idl_bool local,
+      idl_bool abstract
+    );
 
   // Create a node representing a structure.
-  virtual AST_Structure *create_structure (UTL_ScopedName *n,
-                                           idl_bool local,
-                                           idl_bool abstract);
+  virtual AST_Structure *create_structure (
+      UTL_ScopedName *n,
+      idl_bool local,
+      idl_bool abstract
+    );
+
+  // Create a node representing a forward declaration of a structure.
+  virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
 
   // Create a node representing an enum.
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
@@ -125,11 +191,13 @@ public:
                                  idl_bool abstract);
 
   // Create a node representing an operation on an interface.
-  virtual AST_Operation *create_operation (AST_Type *rt,
-                                           AST_Operation::Flags fl,
-                                           UTL_ScopedName *n,
-                                           idl_bool local,
-                                           idl_bool abstract);
+  virtual AST_Operation *create_operation (
+      AST_Type *rt,
+      AST_Operation::Flags fl,
+      UTL_ScopedName *n,
+      idl_bool local,
+      idl_bool abstract
+    );
 
   // Create a node representing a field in a structure, exception or
   // union.
@@ -139,16 +207,20 @@ public:
                                      AST_Field::vis_NA);
 
   // Create a node representing an argument to an operation.
-  virtual AST_Argument *create_argument (AST_Argument::Direction d,
-                                         AST_Type *ft,
-                                         UTL_ScopedName *n);
+  virtual AST_Argument *create_argument (
+      AST_Argument::Direction d,
+      AST_Type *ft,
+      UTL_ScopedName *n
+    );
 
   // Create a node representing an attribute.
-  virtual AST_Attribute *create_attribute (idl_bool ro,
-                                           AST_Type *ft,
-                                           UTL_ScopedName *n,
-                                           idl_bool local,
-                                           idl_bool abstract);
+  virtual AST_Attribute *create_attribute (
+      idl_bool ro,
+      AST_Type *ft,
+      UTL_ScopedName *n,
+      idl_bool local,
+      idl_bool abstract
+    );
 
   // Create a node representing a union.
   virtual AST_Union *create_union (AST_ConcreteType *dt,
@@ -156,19 +228,25 @@ public:
                                    idl_bool local,
                                    idl_bool abstract);
 
+  // Create a node representing a forward declaration of a union.
+  virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
+
   // Create a node representing one branch in a union.
-  virtual AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
-                                                AST_Type *ft,
-                                                UTL_ScopedName *n);
+  virtual AST_UnionBranch *create_union_branch (
+      UTL_LabelList *ll,
+      AST_Type *ft,
+      UTL_ScopedName *n
+    );
 
   // Create a node representing a label on a union branch.
   virtual AST_UnionLabel *create_union_label (AST_UnionLabel::UnionLabel ul,
                                               AST_Expression *lv);
 
   // Create a node representing a constant
-  virtual AST_Constant *create_constant (AST_Expression::ExprType et,
-                                         AST_Expression *ev,
-                                         UTL_ScopedName *n);
+  virtual AST_Constant *create_constant (
+      AST_Expression::ExprType et,
+      AST_Expression *ev,
+      UTL_ScopedName *n);
 
   // Create various kinds of nodes representing expressions.
 
@@ -212,6 +290,7 @@ public:
   // Create a node representing a sequence type.
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
+                                         UTL_ScopedName *n,
                                          idl_bool local,
                                          idl_bool abstract);
 

@@ -19,11 +19,13 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_helper.h"
+#include "be_codegen.h"
+#include "idl_defines.h"
 
-ACE_RCSID(be, be_helper, "$Id$")
+ACE_RCSID (be, 
+           be_helper, 
+           "$Id$")
 
 static const char copyright[] =
 "// -*- C++ -*-\n"
@@ -69,7 +71,7 @@ const TAO_UNINDENT be_uidt_nl (1);
 // Methods of the TAO_OutStream class.
 
 TAO_OutStream::TAO_OutStream (void)
-  : fp_ (NULL),
+  : fp_ (0),
     indent_level_ (0)
 {
 }
@@ -122,7 +124,7 @@ TAO_OutStream::open (const char *fname,
     }
 }
 
-// set and get the stream type
+// Set and get the stream type.
 void
 TAO_OutStream::stream_type (TAO_OutStream::STREAM_TYPE st)
 {

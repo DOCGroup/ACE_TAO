@@ -67,8 +67,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 1.1
  */
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "utl_strlist.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+#include "utl_string.h"
+#include "utl_err.h"
+#include "ast_union_label.h"
+#include "ast_field.h"
+#include "ast_expression.h"
+#include "ast_argument.h"
+#include "ast_operation.h"
+#include "fe_interface_header.h"
+#include "global_extern.h"
 #include "fe_private.h"
 #include "y.tab.h"
 
@@ -117,6 +128,19 @@ static int scan_obv_token (int token)
     return IDENTIFIER;
 }
 
+static int scan_ccm_token (int token)
+{
+  if (idl_global->component_support ())
+    {
+      return token;
+    }
+  else
+    {
+      yylval.strval = ACE_OS::strdup (ace_yytext);
+      return IDENTIFIER;
+    }
+}
+
 %}
 
 /* SO we don't choke on files that use \r\n */
@@ -128,6 +152,7 @@ NL [\r?\n]
 %%
 
 any             return IDL_ANY;
+Object          return IDL_OBJECT;
 module		return IDL_MODULE;
 raises		return IDL_RAISES;
 readonly	return IDL_READONLY;
@@ -167,6 +192,23 @@ public          return scan_obv_token (IDL_PUBLIC);
 supports        return scan_obv_token (IDL_SUPPORTS);
 truncatable     return scan_obv_token (IDL_TRUNCATABLE);
 valuetype       return scan_obv_token (IDL_VALUETYPE);
+component       return scan_ccm_token (IDL_COMPONENT);
+consumes        return scan_ccm_token (IDL_CONSUMES);
+emits           return scan_ccm_token (IDL_EMITS);
+eventtype       return scan_ccm_token (IDL_EVENTTYPE);
+finder          return scan_ccm_token (IDL_FINDER);
+getraises       return scan_ccm_token (IDL_GETRAISES);
+home            return scan_ccm_token (IDL_HOME);
+import          return scan_ccm_token (IDL_IMPORT);
+multiple        return scan_ccm_token (IDL_MULTIPLE);
+primarykey      return scan_ccm_token (IDL_PRIMARYKEY);
+provides        return scan_ccm_token (IDL_PROVIDES);
+publishes       return scan_ccm_token (IDL_PUBLISHES);
+setraises       return scan_ccm_token (IDL_SETRAISES);
+typeid          return scan_ccm_token (IDL_TYPEID);
+typeprefix      return scan_ccm_token (IDL_TYPEPREFIX);
+uses            return scan_ccm_token (IDL_USES);
+manages         return scan_ccm_token (IDL_MANAGES);
 
 TRUE		return IDL_TRUETOK;
 FALSE		return IDL_FALSETOK;
@@ -235,7 +277,7 @@ oneway		return IDL_ONEWAY;
 		  return IDL_UINTEGER_LITERAL;
 	      	}
 
-\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"	{
+(\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
@@ -277,32 +319,32 @@ L"'"\\u([0-9a-fA-F]{1,4})"'"	{
 		  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
 		  return IDL_WCHAR_LITERAL;
 		}
-^#[ \t]*pragma[ \t].*{NL}	|
+^[ \t]*#[ \t]*pragma[ \t].*{NL}	|
 ^\?\?=[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_yytext);
 		}
-^#[ \t]*file[ \t].*{NL}	|
+^[ \t]*#file[ \t].*{NL}	|
 ^\?\?=[ \t]*file[ \t].*{NL}	{/* ignore file */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		|
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		|
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
+^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*{NL} |
+^[ \t]*#[ \t]*[0-9]*{NL} |
 ^\?\?=[ \t]*[0-9]*{NL} {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident[ \t].*{NL}	|
+^[ \t]*#[ \t]*ident[ \t].*{NL}	|
 ^\?\?=[ \t]*ident[ \t].*{NL}	{
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -535,7 +577,7 @@ idl_store_pragma (char *buf)
 
       if (new_prefix != 0)
         {
-          unsigned long depth = idl_global->scopes ()->depth ();
+          unsigned long depth = idl_global->scopes ().depth ();
 
           // At global scope, we always replace the prefix. For all
           // other scopes, we replace only if there is a prefix already
@@ -611,6 +653,7 @@ idl_store_pragma (char *buf)
       if (new_id != 0)
         {
           d->repoID (new_id);
+          d->typeid_set (1);
         }
     }
 }
@@ -919,7 +962,7 @@ idl_find_node (char *s)
 
   if (node != 0)
     {
-      d = idl_global->scopes ()->top_non_null ()->lookup_by_name (node,
+      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
                                                                   I_TRUE);
     }
 

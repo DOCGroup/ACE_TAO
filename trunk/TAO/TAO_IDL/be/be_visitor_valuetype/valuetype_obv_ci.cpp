@@ -22,14 +22,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype_obv_ci, valuetype_obv_ci, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_obv_ci, 
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation
@@ -50,8 +45,10 @@ int
 be_visitor_valuetype_obv_ci::visit_valuetype (be_valuetype *node)
 {
   // only visit non-abstract valuetype
-  if (node->is_abstract_valuetype ())
-    return 0;
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os; // output stream
 

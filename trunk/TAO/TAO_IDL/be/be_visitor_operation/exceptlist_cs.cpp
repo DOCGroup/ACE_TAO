@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, exceptlist_cs, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           exceptlist_cs, 
+           "$Id$")
 
 // ****************************************************************************
 // visitor to generate the exception list for operations
@@ -52,6 +47,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   if (node->exceptions ())
     {
       os->indent ();
+
       *os << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
           << "_exceptiondata [] = " << be_nl;
       *os << "{" << be_idt_nl;

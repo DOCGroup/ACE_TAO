@@ -19,13 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client header
@@ -51,6 +47,9 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the Any <<= and >>= operator declarations.
   os->indent ();
