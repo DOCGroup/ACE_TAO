@@ -1,6 +1,6 @@
 Thu Jun 15 15:27:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h (LoadBalancer):
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
 
 	  `ReplicaLocator' replaced `DSI_ForwardingProxy', and it no
 	  longer exists.
@@ -49,7 +49,7 @@ Thu Jun 15 15:27:34 2000  Ossama Othman  <ossama@uci.edu>
 	  a PortableServer::ForwardRequest exception, but things such as
 	  ServantLocators are supposed to do so.
 
-	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
 	  Updated dependencies.
 
