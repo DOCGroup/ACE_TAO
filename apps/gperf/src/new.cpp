@@ -35,7 +35,7 @@ const int ALIGNMENT = ((char *)&((struct fooalign *) 0)->d - (char *)0);
 
 void *
 operator new (size_t size)
-  ACE_THROW_SPEC (std::bad_alloc)
+  ACE_THROW_SPEC ((std::bad_alloc))
 {
   // @@ This function should probably be replaced with something from
   // ACE, e.g., some type of ACE_Memory_Allocator.
