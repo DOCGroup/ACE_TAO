@@ -101,6 +101,7 @@ public:
   void foo (CORBA::Long result,
             CORBA::Long out_l,
             CORBA::Environment&)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       if (debug)
         {
@@ -115,6 +116,7 @@ public:
 
    void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
@@ -145,6 +147,7 @@ public:
 
   void get_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_UNUSED_ARG (excep_holder);
       ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -161,7 +164,8 @@ public:
     };
 
   void set_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
-                  CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_UNUSED_ARG (excep_holder);
       ACE_UNUSED_ARG (ACE_TRY_ENV);
