@@ -20,15 +20,15 @@ endif
 
 %.tgt0:
 ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.RTCosScheduling_Client -C . $(*);
-else
-	@$(MAKE) -f Makefile.RTCosScheduling_Client -C . $(*);
-endif
-%.tgt1: %.tgt0
-ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.commonlib -C . $(*);
 else
 	@$(MAKE) -f Makefile.commonlib -C . $(*);
+endif
+%.tgt1: %.tgt0
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.RTCosScheduling_Client -C . $(*);
+else
+	@$(MAKE) -f Makefile.RTCosScheduling_Client -C . $(*);
 endif
 %.tgt2: %.tgt0 %.tgt1
 ifeq ($(KEEP_GOING),1)

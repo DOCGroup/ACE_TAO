@@ -1,3 +1,9 @@
+Sat Oct 18 09:30:40 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
+	* orbsvcs/tests/RTCosScheduling/Makefile: Fixed a build dependency
+	  problem. 
+
 Sat Oct 18 08:52:15 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/lib/Peer_T.cpp: Fixed compile error for
