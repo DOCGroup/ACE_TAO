@@ -591,12 +591,19 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
     {
       ACE_thread_t thr_id = ACE_OS::thr_self ();
   
+#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+      return (::pthread_setscheduler(thr_id,
+				     sched_params.policy (),
+				     sched_params.priority()) == -1 ? -1 : 0);
+#   else
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
                                              thr_id,
                                              sched_params.policy (),
                                              &param),
                                            result),
                          int, -1);
+#   endif  /* ACE_HAS_DCE_DRAFT4_THREADS */
+
     }
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
     {
