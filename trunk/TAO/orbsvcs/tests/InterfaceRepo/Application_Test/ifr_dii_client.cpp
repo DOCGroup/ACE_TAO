@@ -41,6 +41,14 @@ IFR_DII_Client::init (int argc,
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+
+  if (CORBA::is_nil (this->target_.in ()))
+  {
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "Unable to find interface repository in: file://iorfile\n"),
+                       -1);
+  }
+
   if (this->parse_args (argc, argv) == -1)
     {
       return -1;
@@ -58,11 +66,13 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
          {
             return -1;
          }
-       ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (-1);
     }
   else
     {
-       this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
+       if (this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER))
+          return (-1);      
+
       ACE_CHECK_RETURN (-1);
     }
 
@@ -104,11 +114,21 @@ IFR_DII_Client::parse_args (int argc,
   return 0;
 }
 
-void
+int 
 IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->target_def_ =
     this->target_->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+
+  if (CORBA::is_nil (this->target_def_.in ()))
+  {
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "Unable to find interface def\n"),
+                       -1);
+  }
+
+  return 0;
 }
 
 int
