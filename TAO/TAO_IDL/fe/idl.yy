@@ -2568,11 +2568,11 @@ yywrap()
 
 /*
  * Report an error situation discovered in a production
- *
- * This does not do anything since we report all error situations through
- * idl_global->err() operations
  */
 void
-yyerror(const char *)
+yyerror(const char *msg)
 {
+  ACE_ERROR ((LM_ERROR,
+              "%s\n",
+              msg));
 }
