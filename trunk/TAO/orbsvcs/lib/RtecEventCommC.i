@@ -235,20 +235,20 @@ RtecEventComm::Event_var::ptr (void) const
 }
 
 ACE_INLINE RtecEventComm::Event *
-RtecEventComm::EventSet::allocbuf (CORBA::ULong nelems)
+RtecEventComm::_tao__seq_EventSet::allocbuf (CORBA::ULong nelems)
 {
   return new RtecEventComm::Event[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-RtecEventComm::EventSet::freebuf (RtecEventComm::Event *seq)
+RtecEventComm::_tao__seq_EventSet::freebuf (RtecEventComm::Event *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-RtecEventComm::EventSet::EventSet (void)
+RtecEventComm::_tao__seq_EventSet::_tao__seq_EventSet (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -257,16 +257,16 @@ RtecEventComm::EventSet::EventSet (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-RtecEventComm::EventSet::EventSet(CORBA::ULong max )
+RtecEventComm::_tao__seq_EventSet::_tao__seq_EventSet(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (RtecEventComm::EventSet::allocbuf (max)),
+	  buffer_ (RtecEventComm::_tao__seq_EventSet::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-RtecEventComm::EventSet::EventSet (CORBA::ULong max, CORBA::ULong length, 
+RtecEventComm::_tao__seq_EventSet::_tao__seq_EventSet (CORBA::ULong max, CORBA::ULong length, 
 	RtecEventComm::Event *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -275,167 +275,161 @@ RtecEventComm::EventSet::EventSet (CORBA::ULong max, CORBA::ULong length,
 {}
 
 ACE_INLINE CORBA::ULong
-RtecEventComm::EventSet::maximum (void) const
+RtecEventComm::_tao__seq_EventSet::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-RtecEventComm::EventSet::length  (void) const
+RtecEventComm::_tao__seq_EventSet::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-RtecEventComm::EventSet::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE RtecEventComm::Event &
-RtecEventComm::EventSet::operator[] (CORBA::ULong index) // read/write
+RtecEventComm::_tao__seq_EventSet::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const RtecEventComm::Event &
-RtecEventComm::EventSet::operator[] (CORBA::ULong index) const // read
+RtecEventComm::_tao__seq_EventSet::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class RtecEventComm::EventSet_var
+// Inline operations for class RtecEventComm::_tao__seq_EventSet_var
 // *************************************************************
 
 ACE_INLINE
-RtecEventComm::EventSet_var::EventSet_var (void) // default constructor
+RtecEventComm::_tao__seq_EventSet_var::_tao__seq_EventSet_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-RtecEventComm::EventSet_var::EventSet_var (RtecEventComm::EventSet_ptr p)
+RtecEventComm::_tao__seq_EventSet_var::_tao__seq_EventSet_var (RtecEventComm::_tao__seq_EventSet_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-RtecEventComm::EventSet_var::EventSet_var (const RtecEventComm::EventSet_var &p) // copy constructor
+RtecEventComm::_tao__seq_EventSet_var::_tao__seq_EventSet_var (const RtecEventComm::_tao__seq_EventSet_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new RtecEventComm::EventSet(*p.ptr_);
+  	this->ptr_ = new RtecEventComm::_tao__seq_EventSet(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventComm::EventSet_var::~EventSet_var (void) // destructor
+RtecEventComm::_tao__seq_EventSet_var::~_tao__seq_EventSet_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet_var &
-RtecEventComm::EventSet_var::operator= (RtecEventComm::EventSet *p)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet_var &
+RtecEventComm::_tao__seq_EventSet_var::operator= (RtecEventComm::_tao__seq_EventSet *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE RtecEventComm::EventSet_var &
-RtecEventComm::EventSet_var::operator= (const RtecEventComm::EventSet_var &p) // deep copy
+ACE_INLINE RtecEventComm::_tao__seq_EventSet_var &
+RtecEventComm::_tao__seq_EventSet_var::operator= (const RtecEventComm::_tao__seq_EventSet_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new RtecEventComm::EventSet (*p.ptr_);
+    this->ptr_ = new RtecEventComm::_tao__seq_EventSet (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const RtecEventComm::EventSet *
-RtecEventComm::EventSet_var::operator-> (void) const
+ACE_INLINE const RtecEventComm::_tao__seq_EventSet *
+RtecEventComm::_tao__seq_EventSet_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet *
-RtecEventComm::EventSet_var::operator-> (void)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *
+RtecEventComm::_tao__seq_EventSet_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventComm::EventSet_var::operator const RtecEventComm::EventSet &() const // cast
+RtecEventComm::_tao__seq_EventSet_var::operator const RtecEventComm::_tao__seq_EventSet &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventComm::EventSet_var::operator RtecEventComm::EventSet &() // cast 
+RtecEventComm::_tao__seq_EventSet_var::operator RtecEventComm::_tao__seq_EventSet &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventComm::EventSet_var::operator RtecEventComm::EventSet &() const// cast 
+RtecEventComm::_tao__seq_EventSet_var::operator RtecEventComm::_tao__seq_EventSet &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE RtecEventComm::Event&
-RtecEventComm::EventSet_var::operator[] (CORBA::ULong index)
+RtecEventComm::_tao__seq_EventSet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const RtecEventComm::EventSet &
-RtecEventComm::EventSet_var::in (void) const
+ACE_INLINE const RtecEventComm::_tao__seq_EventSet &
+RtecEventComm::_tao__seq_EventSet_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet &
-RtecEventComm::EventSet_var::inout (void)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet &
+RtecEventComm::_tao__seq_EventSet_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE RtecEventComm::EventSet *&
-RtecEventComm::EventSet_var::out (void)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *&
+RtecEventComm::_tao__seq_EventSet_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet *
-RtecEventComm::EventSet_var::_retn (void)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *
+RtecEventComm::_tao__seq_EventSet_var::_retn (void)
 {
-  RtecEventComm::EventSet *tmp = this->ptr_;
+  RtecEventComm::_tao__seq_EventSet *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE RtecEventComm::EventSet *
-RtecEventComm::EventSet_var::ptr (void) const
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *
+RtecEventComm::_tao__seq_EventSet_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class RtecEventComm::EventSet_out
+// Inline operations for class RtecEventComm::_tao__seq_EventSet_out
 // *************************************************************
 
 ACE_INLINE
-RtecEventComm::EventSet_out::EventSet_out (RtecEventComm::EventSet *&p)
+RtecEventComm::_tao__seq_EventSet_out::_tao__seq_EventSet_out (RtecEventComm::_tao__seq_EventSet *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventComm::EventSet_out::EventSet_out (RtecEventComm::EventSet_var &p) // constructor from _var
+RtecEventComm::_tao__seq_EventSet_out::_tao__seq_EventSet_out (RtecEventComm::_tao__seq_EventSet_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -443,44 +437,44 @@ RtecEventComm::EventSet_out::EventSet_out (RtecEventComm::EventSet_var &p) // co
 }
 
 ACE_INLINE
-RtecEventComm::EventSet_out::EventSet_out (RtecEventComm::EventSet_out &p) // copy constructor
+RtecEventComm::_tao__seq_EventSet_out::_tao__seq_EventSet_out (RtecEventComm::_tao__seq_EventSet_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE RtecEventComm::EventSet_out &
-RtecEventComm::EventSet_out::operator= (RtecEventComm::EventSet_out &p)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet_out &
+RtecEventComm::_tao__seq_EventSet_out::operator= (RtecEventComm::_tao__seq_EventSet_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE RtecEventComm::EventSet_out &
-RtecEventComm::EventSet_out::operator= (RtecEventComm::EventSet *p)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet_out &
+RtecEventComm::_tao__seq_EventSet_out::operator= (RtecEventComm::_tao__seq_EventSet *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-RtecEventComm::EventSet_out::operator RtecEventComm::EventSet *&() // cast
+RtecEventComm::_tao__seq_EventSet_out::operator RtecEventComm::_tao__seq_EventSet *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet *&
-RtecEventComm::EventSet_out::ptr (void) // ptr
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *&
+RtecEventComm::_tao__seq_EventSet_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventComm::EventSet *
-RtecEventComm::EventSet_out::operator-> (void)
+ACE_INLINE RtecEventComm::_tao__seq_EventSet *
+RtecEventComm::_tao__seq_EventSet_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE RtecEventComm::Event& 
-RtecEventComm::EventSet_out::operator[] (CORBA::ULong index)
+RtecEventComm::_tao__seq_EventSet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

@@ -169,20 +169,20 @@ CosNaming::NameComponent_out::operator-> (void)
 }
 
 ACE_INLINE CosNaming::NameComponent *
-CosNaming::Name::allocbuf (CORBA::ULong nelems)
+CosNaming::_tao__seq_Name::allocbuf (CORBA::ULong nelems)
 {
   return new CosNaming::NameComponent[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-CosNaming::Name::freebuf (CosNaming::NameComponent *seq)
+CosNaming::_tao__seq_Name::freebuf (CosNaming::NameComponent *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-CosNaming::Name::Name (void)
+CosNaming::_tao__seq_Name::_tao__seq_Name (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -191,16 +191,16 @@ CosNaming::Name::Name (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-CosNaming::Name::Name(CORBA::ULong max )
+CosNaming::_tao__seq_Name::_tao__seq_Name(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (CosNaming::Name::allocbuf (max)),
+	  buffer_ (CosNaming::_tao__seq_Name::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-CosNaming::Name::Name (CORBA::ULong max, CORBA::ULong length, 
+CosNaming::_tao__seq_Name::_tao__seq_Name (CORBA::ULong max, CORBA::ULong length, 
 	CosNaming::NameComponent *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -209,167 +209,161 @@ CosNaming::Name::Name (CORBA::ULong max, CORBA::ULong length,
 {}
 
 ACE_INLINE CORBA::ULong
-CosNaming::Name::maximum (void) const
+CosNaming::_tao__seq_Name::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-CosNaming::Name::length  (void) const
+CosNaming::_tao__seq_Name::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-CosNaming::Name::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE CosNaming::NameComponent &
-CosNaming::Name::operator[] (CORBA::ULong index) // read/write
+CosNaming::_tao__seq_Name::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const CosNaming::NameComponent &
-CosNaming::Name::operator[] (CORBA::ULong index) const // read
+CosNaming::_tao__seq_Name::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class CosNaming::Name_var
+// Inline operations for class CosNaming::_tao__seq_Name_var
 // *************************************************************
 
 ACE_INLINE
-CosNaming::Name_var::Name_var (void) // default constructor
+CosNaming::_tao__seq_Name_var::_tao__seq_Name_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-CosNaming::Name_var::Name_var (CosNaming::Name_ptr p)
+CosNaming::_tao__seq_Name_var::_tao__seq_Name_var (CosNaming::_tao__seq_Name_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-CosNaming::Name_var::Name_var (const CosNaming::Name_var &p) // copy constructor
+CosNaming::_tao__seq_Name_var::_tao__seq_Name_var (const CosNaming::_tao__seq_Name_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new CosNaming::Name(*p.ptr_);
+  	this->ptr_ = new CosNaming::_tao__seq_Name(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-CosNaming::Name_var::~Name_var (void) // destructor
+CosNaming::_tao__seq_Name_var::~_tao__seq_Name_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name_var &
-CosNaming::Name_var::operator= (CosNaming::Name *p)
+ACE_INLINE CosNaming::_tao__seq_Name_var &
+CosNaming::_tao__seq_Name_var::operator= (CosNaming::_tao__seq_Name *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CosNaming::Name_var &
-CosNaming::Name_var::operator= (const CosNaming::Name_var &p) // deep copy
+ACE_INLINE CosNaming::_tao__seq_Name_var &
+CosNaming::_tao__seq_Name_var::operator= (const CosNaming::_tao__seq_Name_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CosNaming::Name (*p.ptr_);
+    this->ptr_ = new CosNaming::_tao__seq_Name (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const CosNaming::Name *
-CosNaming::Name_var::operator-> (void) const
+ACE_INLINE const CosNaming::_tao__seq_Name *
+CosNaming::_tao__seq_Name_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name *
-CosNaming::Name_var::operator-> (void)
+ACE_INLINE CosNaming::_tao__seq_Name *
+CosNaming::_tao__seq_Name_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::Name_var::operator const CosNaming::Name &() const // cast
+CosNaming::_tao__seq_Name_var::operator const CosNaming::_tao__seq_Name &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::Name_var::operator CosNaming::Name &() // cast 
+CosNaming::_tao__seq_Name_var::operator CosNaming::_tao__seq_Name &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::Name_var::operator CosNaming::Name &() const// cast 
+CosNaming::_tao__seq_Name_var::operator CosNaming::_tao__seq_Name &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CosNaming::NameComponent&
-CosNaming::Name_var::operator[] (CORBA::ULong index)
+CosNaming::_tao__seq_Name_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CosNaming::Name &
-CosNaming::Name_var::in (void) const
+ACE_INLINE const CosNaming::_tao__seq_Name &
+CosNaming::_tao__seq_Name_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name &
-CosNaming::Name_var::inout (void)
+ACE_INLINE CosNaming::_tao__seq_Name &
+CosNaming::_tao__seq_Name_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CosNaming::Name *&
-CosNaming::Name_var::out (void)
+ACE_INLINE CosNaming::_tao__seq_Name *&
+CosNaming::_tao__seq_Name_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name *
-CosNaming::Name_var::_retn (void)
+ACE_INLINE CosNaming::_tao__seq_Name *
+CosNaming::_tao__seq_Name_var::_retn (void)
 {
-  CosNaming::Name *tmp = this->ptr_;
+  CosNaming::_tao__seq_Name *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CosNaming::Name *
-CosNaming::Name_var::ptr (void) const
+ACE_INLINE CosNaming::_tao__seq_Name *
+CosNaming::_tao__seq_Name_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CosNaming::Name_out
+// Inline operations for class CosNaming::_tao__seq_Name_out
 // *************************************************************
 
 ACE_INLINE
-CosNaming::Name_out::Name_out (CosNaming::Name *&p)
+CosNaming::_tao__seq_Name_out::_tao__seq_Name_out (CosNaming::_tao__seq_Name *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CosNaming::Name_out::Name_out (CosNaming::Name_var &p) // constructor from _var
+CosNaming::_tao__seq_Name_out::_tao__seq_Name_out (CosNaming::_tao__seq_Name_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -377,44 +371,44 @@ CosNaming::Name_out::Name_out (CosNaming::Name_var &p) // constructor from _var
 }
 
 ACE_INLINE
-CosNaming::Name_out::Name_out (CosNaming::Name_out &p) // copy constructor
+CosNaming::_tao__seq_Name_out::_tao__seq_Name_out (CosNaming::_tao__seq_Name_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE CosNaming::Name_out &
-CosNaming::Name_out::operator= (CosNaming::Name_out &p)
+ACE_INLINE CosNaming::_tao__seq_Name_out &
+CosNaming::_tao__seq_Name_out::operator= (CosNaming::_tao__seq_Name_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CosNaming::Name_out &
-CosNaming::Name_out::operator= (CosNaming::Name *p)
+ACE_INLINE CosNaming::_tao__seq_Name_out &
+CosNaming::_tao__seq_Name_out::operator= (CosNaming::_tao__seq_Name *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CosNaming::Name_out::operator CosNaming::Name *&() // cast
+CosNaming::_tao__seq_Name_out::operator CosNaming::_tao__seq_Name *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name *&
-CosNaming::Name_out::ptr (void) // ptr
+ACE_INLINE CosNaming::_tao__seq_Name *&
+CosNaming::_tao__seq_Name_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::Name *
-CosNaming::Name_out::operator-> (void)
+ACE_INLINE CosNaming::_tao__seq_Name *
+CosNaming::_tao__seq_Name_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CosNaming::NameComponent& 
-CosNaming::Name_out::operator[] (CORBA::ULong index)
+CosNaming::_tao__seq_Name_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -583,20 +577,20 @@ CosNaming::Binding_out::operator-> (void)
 }
 
 ACE_INLINE CosNaming::Binding *
-CosNaming::BindingList::allocbuf (CORBA::ULong nelems)
+CosNaming::_tao__seq_BindingList::allocbuf (CORBA::ULong nelems)
 {
   return new CosNaming::Binding[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-CosNaming::BindingList::freebuf (CosNaming::Binding *seq)
+CosNaming::_tao__seq_BindingList::freebuf (CosNaming::Binding *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-CosNaming::BindingList::BindingList (void)
+CosNaming::_tao__seq_BindingList::_tao__seq_BindingList (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -605,16 +599,16 @@ CosNaming::BindingList::BindingList (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-CosNaming::BindingList::BindingList(CORBA::ULong max )
+CosNaming::_tao__seq_BindingList::_tao__seq_BindingList(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (CosNaming::BindingList::allocbuf (max)),
+	  buffer_ (CosNaming::_tao__seq_BindingList::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-CosNaming::BindingList::BindingList (CORBA::ULong max, CORBA::ULong length, 
+CosNaming::_tao__seq_BindingList::_tao__seq_BindingList (CORBA::ULong max, CORBA::ULong length, 
 	CosNaming::Binding *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -623,167 +617,161 @@ CosNaming::BindingList::BindingList (CORBA::ULong max, CORBA::ULong length,
 {}
 
 ACE_INLINE CORBA::ULong
-CosNaming::BindingList::maximum (void) const
+CosNaming::_tao__seq_BindingList::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-CosNaming::BindingList::length  (void) const
+CosNaming::_tao__seq_BindingList::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-CosNaming::BindingList::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE CosNaming::Binding &
-CosNaming::BindingList::operator[] (CORBA::ULong index) // read/write
+CosNaming::_tao__seq_BindingList::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const CosNaming::Binding &
-CosNaming::BindingList::operator[] (CORBA::ULong index) const // read
+CosNaming::_tao__seq_BindingList::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class CosNaming::BindingList_var
+// Inline operations for class CosNaming::_tao__seq_BindingList_var
 // *************************************************************
 
 ACE_INLINE
-CosNaming::BindingList_var::BindingList_var (void) // default constructor
+CosNaming::_tao__seq_BindingList_var::_tao__seq_BindingList_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-CosNaming::BindingList_var::BindingList_var (CosNaming::BindingList_ptr p)
+CosNaming::_tao__seq_BindingList_var::_tao__seq_BindingList_var (CosNaming::_tao__seq_BindingList_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-CosNaming::BindingList_var::BindingList_var (const CosNaming::BindingList_var &p) // copy constructor
+CosNaming::_tao__seq_BindingList_var::_tao__seq_BindingList_var (const CosNaming::_tao__seq_BindingList_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new CosNaming::BindingList(*p.ptr_);
+  	this->ptr_ = new CosNaming::_tao__seq_BindingList(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-CosNaming::BindingList_var::~BindingList_var (void) // destructor
+CosNaming::_tao__seq_BindingList_var::~_tao__seq_BindingList_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList_var &
-CosNaming::BindingList_var::operator= (CosNaming::BindingList *p)
+ACE_INLINE CosNaming::_tao__seq_BindingList_var &
+CosNaming::_tao__seq_BindingList_var::operator= (CosNaming::_tao__seq_BindingList *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CosNaming::BindingList_var &
-CosNaming::BindingList_var::operator= (const CosNaming::BindingList_var &p) // deep copy
+ACE_INLINE CosNaming::_tao__seq_BindingList_var &
+CosNaming::_tao__seq_BindingList_var::operator= (const CosNaming::_tao__seq_BindingList_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CosNaming::BindingList (*p.ptr_);
+    this->ptr_ = new CosNaming::_tao__seq_BindingList (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const CosNaming::BindingList *
-CosNaming::BindingList_var::operator-> (void) const
+ACE_INLINE const CosNaming::_tao__seq_BindingList *
+CosNaming::_tao__seq_BindingList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList *
-CosNaming::BindingList_var::operator-> (void)
+ACE_INLINE CosNaming::_tao__seq_BindingList *
+CosNaming::_tao__seq_BindingList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::BindingList_var::operator const CosNaming::BindingList &() const // cast
+CosNaming::_tao__seq_BindingList_var::operator const CosNaming::_tao__seq_BindingList &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::BindingList_var::operator CosNaming::BindingList &() // cast 
+CosNaming::_tao__seq_BindingList_var::operator CosNaming::_tao__seq_BindingList &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CosNaming::BindingList_var::operator CosNaming::BindingList &() const// cast 
+CosNaming::_tao__seq_BindingList_var::operator CosNaming::_tao__seq_BindingList &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CosNaming::Binding&
-CosNaming::BindingList_var::operator[] (CORBA::ULong index)
+CosNaming::_tao__seq_BindingList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CosNaming::BindingList &
-CosNaming::BindingList_var::in (void) const
+ACE_INLINE const CosNaming::_tao__seq_BindingList &
+CosNaming::_tao__seq_BindingList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList &
-CosNaming::BindingList_var::inout (void)
+ACE_INLINE CosNaming::_tao__seq_BindingList &
+CosNaming::_tao__seq_BindingList_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CosNaming::BindingList *&
-CosNaming::BindingList_var::out (void)
+ACE_INLINE CosNaming::_tao__seq_BindingList *&
+CosNaming::_tao__seq_BindingList_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList *
-CosNaming::BindingList_var::_retn (void)
+ACE_INLINE CosNaming::_tao__seq_BindingList *
+CosNaming::_tao__seq_BindingList_var::_retn (void)
 {
-  CosNaming::BindingList *tmp = this->ptr_;
+  CosNaming::_tao__seq_BindingList *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CosNaming::BindingList *
-CosNaming::BindingList_var::ptr (void) const
+ACE_INLINE CosNaming::_tao__seq_BindingList *
+CosNaming::_tao__seq_BindingList_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CosNaming::BindingList_out
+// Inline operations for class CosNaming::_tao__seq_BindingList_out
 // *************************************************************
 
 ACE_INLINE
-CosNaming::BindingList_out::BindingList_out (CosNaming::BindingList *&p)
+CosNaming::_tao__seq_BindingList_out::_tao__seq_BindingList_out (CosNaming::_tao__seq_BindingList *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CosNaming::BindingList_out::BindingList_out (CosNaming::BindingList_var &p) // constructor from _var
+CosNaming::_tao__seq_BindingList_out::_tao__seq_BindingList_out (CosNaming::_tao__seq_BindingList_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -791,44 +779,44 @@ CosNaming::BindingList_out::BindingList_out (CosNaming::BindingList_var &p) // c
 }
 
 ACE_INLINE
-CosNaming::BindingList_out::BindingList_out (CosNaming::BindingList_out &p) // copy constructor
+CosNaming::_tao__seq_BindingList_out::_tao__seq_BindingList_out (CosNaming::_tao__seq_BindingList_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE CosNaming::BindingList_out &
-CosNaming::BindingList_out::operator= (CosNaming::BindingList_out &p)
+ACE_INLINE CosNaming::_tao__seq_BindingList_out &
+CosNaming::_tao__seq_BindingList_out::operator= (CosNaming::_tao__seq_BindingList_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CosNaming::BindingList_out &
-CosNaming::BindingList_out::operator= (CosNaming::BindingList *p)
+ACE_INLINE CosNaming::_tao__seq_BindingList_out &
+CosNaming::_tao__seq_BindingList_out::operator= (CosNaming::_tao__seq_BindingList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CosNaming::BindingList_out::operator CosNaming::BindingList *&() // cast
+CosNaming::_tao__seq_BindingList_out::operator CosNaming::_tao__seq_BindingList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList *&
-CosNaming::BindingList_out::ptr (void) // ptr
+ACE_INLINE CosNaming::_tao__seq_BindingList *&
+CosNaming::_tao__seq_BindingList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CosNaming::BindingList *
-CosNaming::BindingList_out::operator-> (void)
+ACE_INLINE CosNaming::_tao__seq_BindingList *
+CosNaming::_tao__seq_BindingList_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CosNaming::Binding& 
-CosNaming::BindingList_out::operator[] (CORBA::ULong index)
+CosNaming::_tao__seq_BindingList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

@@ -35,7 +35,7 @@ POA_RtecEventComm::PushConsumer::PushConsumer (const char *obj_name)
   if (oa) oa->bind (data->profile.object_key, this); // register ourselves
 }
 
-void POA_RtecEventComm::PushConsumer::push_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PushConsumer::push_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PushConsumer_ptr 	 impl;
@@ -46,16 +46,16 @@ void POA_RtecEventComm::PushConsumer::push_skel (CORBA::ServerRequest &_tao_serv
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
-  nv_data = nvlist->add_value ("data", any_data, CORBA::ARG_IN, _tao_enviroment);
+  nv_data = nvlist->add_value ("data", any_data, CORBA::ARG_IN, _tao_environment);
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
-  impl->push(data, _tao_enviroment);
+  impl->push(data, _tao_environment);
   
 }
 
-void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PushConsumer_ptr 	 impl;
@@ -64,10 +64,10 @@ void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::Serv
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
-  impl->disconnect_push_consumer(_tao_enviroment);
+  impl->disconnect_push_consumer(_tao_environment);
   
 }
 
@@ -120,7 +120,7 @@ POA_RtecEventComm::PushSupplier::PushSupplier (const char *obj_name)
   if (oa) oa->bind (data->profile.object_key, this); // register ourselves
 }
 
-void POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PushSupplier_ptr 	 impl;
@@ -129,10 +129,10 @@ void POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel (CORBA::Serv
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PushSupplier_ptr) _tao_object_reference->get_subclass ();
-  impl->disconnect_push_supplier(_tao_enviroment);
+  impl->disconnect_push_supplier(_tao_environment);
   
 }
 
@@ -187,7 +187,7 @@ POA_RtecEventComm::PullSupplier::PullSupplier (const char *obj_name)
   if (oa) oa->bind (data->profile.object_key, this); // register ourselves
 }
 
-void POA_RtecEventComm::PullSupplier::pull_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PullSupplier::pull_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PullSupplier_ptr 	 impl;
@@ -198,16 +198,16 @@ void POA_RtecEventComm::PullSupplier::pull_skel (CORBA::ServerRequest &_tao_serv
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PullSupplier_ptr) _tao_object_reference->get_subclass ();
-  *retval = impl->pull(_tao_enviroment);
+  *retval = impl->pull(_tao_environment);
   result = new CORBA::Any (RtecEventComm::_tc_Event, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_enviroment);
+  _tao_server_request.result (result, _tao_environment);
   
 }
 
-void POA_RtecEventComm::PullSupplier::try_pull_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PullSupplier::try_pull_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PullSupplier_ptr 	 impl;
@@ -220,18 +220,18 @@ void POA_RtecEventComm::PullSupplier::try_pull_skel (CORBA::ServerRequest &_tao_
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
-  nv_has_event = nvlist->add_value ("has_event", any_has_event, CORBA::ARG_OUT, _tao_enviroment);
+  nv_has_event = nvlist->add_value ("has_event", any_has_event, CORBA::ARG_OUT, _tao_environment);
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PullSupplier_ptr) _tao_object_reference->get_subclass ();
-  *retval = impl->try_pull(has_event, _tao_enviroment);
+  *retval = impl->try_pull(has_event, _tao_environment);
   result = new CORBA::Any (RtecEventComm::_tc_Event, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_enviroment);
+  _tao_server_request.result (result, _tao_environment);
   
 }
 
-void POA_RtecEventComm::PullSupplier::disconnect_pull_supplier_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PullSupplier::disconnect_pull_supplier_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PullSupplier_ptr 	 impl;
@@ -240,10 +240,10 @@ void POA_RtecEventComm::PullSupplier::disconnect_pull_supplier_skel (CORBA::Serv
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PullSupplier_ptr) _tao_object_reference->get_subclass ();
-  impl->disconnect_pull_supplier(_tao_enviroment);
+  impl->disconnect_pull_supplier(_tao_environment);
   
 }
 
@@ -296,7 +296,7 @@ POA_RtecEventComm::PullConsumer::PullConsumer (const char *obj_name)
   if (oa) oa->bind (data->profile.object_key, this); // register ourselves
 }
 
-void POA_RtecEventComm::PullConsumer::disconnect_pull_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_enviroment)
+void POA_RtecEventComm::PullConsumer::disconnect_pull_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
 {
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventComm::PullConsumer_ptr 	 impl;
@@ -305,10 +305,10 @@ void POA_RtecEventComm::PullConsumer::disconnect_pull_consumer_skel (CORBA::Serv
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   // parse the arguments
-  _tao_server_request.params (nvlist, _tao_enviroment);
-  if (_tao_enviroment.exception ()) return;
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
   impl = (POA_RtecEventComm::PullConsumer_ptr) _tao_object_reference->get_subclass ();
-  impl->disconnect_pull_consumer(_tao_enviroment);
+  impl->disconnect_pull_consumer(_tao_environment);
   
 }
 

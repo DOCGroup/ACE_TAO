@@ -115,20 +115,20 @@ RtecScheduler::Dependency_Info_var::ptr (void) const
 }
 
 ACE_INLINE RtecScheduler::Dependency_Info *
-RtecScheduler::Dependency_Set::allocbuf (CORBA::ULong nelems)
+RtecScheduler::_tao__seq_Dependency_Set::allocbuf (CORBA::ULong nelems)
 {
   return new RtecScheduler::Dependency_Info[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-RtecScheduler::Dependency_Set::freebuf (RtecScheduler::Dependency_Info *seq)
+RtecScheduler::_tao__seq_Dependency_Set::freebuf (RtecScheduler::Dependency_Info *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-RtecScheduler::Dependency_Set::Dependency_Set (void)
+RtecScheduler::_tao__seq_Dependency_Set::_tao__seq_Dependency_Set (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -137,16 +137,16 @@ RtecScheduler::Dependency_Set::Dependency_Set (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-RtecScheduler::Dependency_Set::Dependency_Set(CORBA::ULong max )
+RtecScheduler::_tao__seq_Dependency_Set::_tao__seq_Dependency_Set(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (RtecScheduler::Dependency_Set::allocbuf (max)),
+	  buffer_ (RtecScheduler::_tao__seq_Dependency_Set::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-RtecScheduler::Dependency_Set::Dependency_Set (CORBA::ULong max, CORBA::ULong length, 
+RtecScheduler::_tao__seq_Dependency_Set::_tao__seq_Dependency_Set (CORBA::ULong max, CORBA::ULong length, 
 	RtecScheduler::Dependency_Info *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -155,167 +155,161 @@ RtecScheduler::Dependency_Set::Dependency_Set (CORBA::ULong max, CORBA::ULong le
 {}
 
 ACE_INLINE CORBA::ULong
-RtecScheduler::Dependency_Set::maximum (void) const
+RtecScheduler::_tao__seq_Dependency_Set::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-RtecScheduler::Dependency_Set::length  (void) const
+RtecScheduler::_tao__seq_Dependency_Set::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-RtecScheduler::Dependency_Set::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE RtecScheduler::Dependency_Info &
-RtecScheduler::Dependency_Set::operator[] (CORBA::ULong index) // read/write
+RtecScheduler::_tao__seq_Dependency_Set::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const RtecScheduler::Dependency_Info &
-RtecScheduler::Dependency_Set::operator[] (CORBA::ULong index) const // read
+RtecScheduler::_tao__seq_Dependency_Set::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class RtecScheduler::Dependency_Set_var
+// Inline operations for class RtecScheduler::_tao__seq_Dependency_Set_var
 // *************************************************************
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_var::Dependency_Set_var (void) // default constructor
+RtecScheduler::_tao__seq_Dependency_Set_var::_tao__seq_Dependency_Set_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_var::Dependency_Set_var (RtecScheduler::Dependency_Set_ptr p)
+RtecScheduler::_tao__seq_Dependency_Set_var::_tao__seq_Dependency_Set_var (RtecScheduler::_tao__seq_Dependency_Set_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_var::Dependency_Set_var (const RtecScheduler::Dependency_Set_var &p) // copy constructor
+RtecScheduler::_tao__seq_Dependency_Set_var::_tao__seq_Dependency_Set_var (const RtecScheduler::_tao__seq_Dependency_Set_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new RtecScheduler::Dependency_Set(*p.ptr_);
+  	this->ptr_ = new RtecScheduler::_tao__seq_Dependency_Set(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_var::~Dependency_Set_var (void) // destructor
+RtecScheduler::_tao__seq_Dependency_Set_var::~_tao__seq_Dependency_Set_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set_var &
-RtecScheduler::Dependency_Set_var::operator= (RtecScheduler::Dependency_Set *p)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set_var &
+RtecScheduler::_tao__seq_Dependency_Set_var::operator= (RtecScheduler::_tao__seq_Dependency_Set *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set_var &
-RtecScheduler::Dependency_Set_var::operator= (const RtecScheduler::Dependency_Set_var &p) // deep copy
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set_var &
+RtecScheduler::_tao__seq_Dependency_Set_var::operator= (const RtecScheduler::_tao__seq_Dependency_Set_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new RtecScheduler::Dependency_Set (*p.ptr_);
+    this->ptr_ = new RtecScheduler::_tao__seq_Dependency_Set (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const RtecScheduler::Dependency_Set *
-RtecScheduler::Dependency_Set_var::operator-> (void) const
+ACE_INLINE const RtecScheduler::_tao__seq_Dependency_Set *
+RtecScheduler::_tao__seq_Dependency_Set_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set *
-RtecScheduler::Dependency_Set_var::operator-> (void)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *
+RtecScheduler::_tao__seq_Dependency_Set_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::Dependency_Set_var::operator const RtecScheduler::Dependency_Set &() const // cast
+RtecScheduler::_tao__seq_Dependency_Set_var::operator const RtecScheduler::_tao__seq_Dependency_Set &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::Dependency_Set_var::operator RtecScheduler::Dependency_Set &() // cast 
+RtecScheduler::_tao__seq_Dependency_Set_var::operator RtecScheduler::_tao__seq_Dependency_Set &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::Dependency_Set_var::operator RtecScheduler::Dependency_Set &() const// cast 
+RtecScheduler::_tao__seq_Dependency_Set_var::operator RtecScheduler::_tao__seq_Dependency_Set &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE RtecScheduler::Dependency_Info&
-RtecScheduler::Dependency_Set_var::operator[] (CORBA::ULong index)
+RtecScheduler::_tao__seq_Dependency_Set_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const RtecScheduler::Dependency_Set &
-RtecScheduler::Dependency_Set_var::in (void) const
+ACE_INLINE const RtecScheduler::_tao__seq_Dependency_Set &
+RtecScheduler::_tao__seq_Dependency_Set_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set &
-RtecScheduler::Dependency_Set_var::inout (void)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set &
+RtecScheduler::_tao__seq_Dependency_Set_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE RtecScheduler::Dependency_Set *&
-RtecScheduler::Dependency_Set_var::out (void)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *&
+RtecScheduler::_tao__seq_Dependency_Set_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set *
-RtecScheduler::Dependency_Set_var::_retn (void)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *
+RtecScheduler::_tao__seq_Dependency_Set_var::_retn (void)
 {
-  RtecScheduler::Dependency_Set *tmp = this->ptr_;
+  RtecScheduler::_tao__seq_Dependency_Set *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set *
-RtecScheduler::Dependency_Set_var::ptr (void) const
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *
+RtecScheduler::_tao__seq_Dependency_Set_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class RtecScheduler::Dependency_Set_out
+// Inline operations for class RtecScheduler::_tao__seq_Dependency_Set_out
 // *************************************************************
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_out::Dependency_Set_out (RtecScheduler::Dependency_Set *&p)
+RtecScheduler::_tao__seq_Dependency_Set_out::_tao__seq_Dependency_Set_out (RtecScheduler::_tao__seq_Dependency_Set *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_out::Dependency_Set_out (RtecScheduler::Dependency_Set_var &p) // constructor from _var
+RtecScheduler::_tao__seq_Dependency_Set_out::_tao__seq_Dependency_Set_out (RtecScheduler::_tao__seq_Dependency_Set_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -323,44 +317,44 @@ RtecScheduler::Dependency_Set_out::Dependency_Set_out (RtecScheduler::Dependency
 }
 
 ACE_INLINE
-RtecScheduler::Dependency_Set_out::Dependency_Set_out (RtecScheduler::Dependency_Set_out &p) // copy constructor
+RtecScheduler::_tao__seq_Dependency_Set_out::_tao__seq_Dependency_Set_out (RtecScheduler::_tao__seq_Dependency_Set_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE RtecScheduler::Dependency_Set_out &
-RtecScheduler::Dependency_Set_out::operator= (RtecScheduler::Dependency_Set_out &p)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set_out &
+RtecScheduler::_tao__seq_Dependency_Set_out::operator= (RtecScheduler::_tao__seq_Dependency_Set_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set_out &
-RtecScheduler::Dependency_Set_out::operator= (RtecScheduler::Dependency_Set *p)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set_out &
+RtecScheduler::_tao__seq_Dependency_Set_out::operator= (RtecScheduler::_tao__seq_Dependency_Set *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-RtecScheduler::Dependency_Set_out::operator RtecScheduler::Dependency_Set *&() // cast
+RtecScheduler::_tao__seq_Dependency_Set_out::operator RtecScheduler::_tao__seq_Dependency_Set *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set *&
-RtecScheduler::Dependency_Set_out::ptr (void) // ptr
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *&
+RtecScheduler::_tao__seq_Dependency_Set_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::Dependency_Set *
-RtecScheduler::Dependency_Set_out::operator-> (void)
+ACE_INLINE RtecScheduler::_tao__seq_Dependency_Set *
+RtecScheduler::_tao__seq_Dependency_Set_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE RtecScheduler::Dependency_Info& 
-RtecScheduler::Dependency_Set_out::operator[] (CORBA::ULong index)
+RtecScheduler::_tao__seq_Dependency_Set_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -595,20 +589,20 @@ RtecScheduler::TASK_COUNT_MISMATCH::TASK_COUNT_MISMATCH (void)
 }
 
 ACE_INLINE RtecScheduler::RT_Info *
-RtecScheduler::RT_Info_Set::allocbuf (CORBA::ULong nelems)
+RtecScheduler::_tao__seq_RT_Info_Set::allocbuf (CORBA::ULong nelems)
 {
   return new RtecScheduler::RT_Info[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-RtecScheduler::RT_Info_Set::freebuf (RtecScheduler::RT_Info *seq)
+RtecScheduler::_tao__seq_RT_Info_Set::freebuf (RtecScheduler::RT_Info *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-RtecScheduler::RT_Info_Set::RT_Info_Set (void)
+RtecScheduler::_tao__seq_RT_Info_Set::_tao__seq_RT_Info_Set (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -617,16 +611,16 @@ RtecScheduler::RT_Info_Set::RT_Info_Set (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-RtecScheduler::RT_Info_Set::RT_Info_Set(CORBA::ULong max )
+RtecScheduler::_tao__seq_RT_Info_Set::_tao__seq_RT_Info_Set(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (RtecScheduler::RT_Info_Set::allocbuf (max)),
+	  buffer_ (RtecScheduler::_tao__seq_RT_Info_Set::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-RtecScheduler::RT_Info_Set::RT_Info_Set (CORBA::ULong max, CORBA::ULong length, 
+RtecScheduler::_tao__seq_RT_Info_Set::_tao__seq_RT_Info_Set (CORBA::ULong max, CORBA::ULong length, 
 	RtecScheduler::RT_Info *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -635,167 +629,161 @@ RtecScheduler::RT_Info_Set::RT_Info_Set (CORBA::ULong max, CORBA::ULong length,
 {}
 
 ACE_INLINE CORBA::ULong
-RtecScheduler::RT_Info_Set::maximum (void) const
+RtecScheduler::_tao__seq_RT_Info_Set::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-RtecScheduler::RT_Info_Set::length  (void) const
+RtecScheduler::_tao__seq_RT_Info_Set::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-RtecScheduler::RT_Info_Set::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE RtecScheduler::RT_Info &
-RtecScheduler::RT_Info_Set::operator[] (CORBA::ULong index) // read/write
+RtecScheduler::_tao__seq_RT_Info_Set::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const RtecScheduler::RT_Info &
-RtecScheduler::RT_Info_Set::operator[] (CORBA::ULong index) const // read
+RtecScheduler::_tao__seq_RT_Info_Set::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class RtecScheduler::RT_Info_Set_var
+// Inline operations for class RtecScheduler::_tao__seq_RT_Info_Set_var
 // *************************************************************
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_var::RT_Info_Set_var (void) // default constructor
+RtecScheduler::_tao__seq_RT_Info_Set_var::_tao__seq_RT_Info_Set_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_var::RT_Info_Set_var (RtecScheduler::RT_Info_Set_ptr p)
+RtecScheduler::_tao__seq_RT_Info_Set_var::_tao__seq_RT_Info_Set_var (RtecScheduler::_tao__seq_RT_Info_Set_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_var::RT_Info_Set_var (const RtecScheduler::RT_Info_Set_var &p) // copy constructor
+RtecScheduler::_tao__seq_RT_Info_Set_var::_tao__seq_RT_Info_Set_var (const RtecScheduler::_tao__seq_RT_Info_Set_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new RtecScheduler::RT_Info_Set(*p.ptr_);
+  	this->ptr_ = new RtecScheduler::_tao__seq_RT_Info_Set(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_var::~RT_Info_Set_var (void) // destructor
+RtecScheduler::_tao__seq_RT_Info_Set_var::~_tao__seq_RT_Info_Set_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set_var &
-RtecScheduler::RT_Info_Set_var::operator= (RtecScheduler::RT_Info_Set *p)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set_var &
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator= (RtecScheduler::_tao__seq_RT_Info_Set *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set_var &
-RtecScheduler::RT_Info_Set_var::operator= (const RtecScheduler::RT_Info_Set_var &p) // deep copy
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set_var &
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator= (const RtecScheduler::_tao__seq_RT_Info_Set_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new RtecScheduler::RT_Info_Set (*p.ptr_);
+    this->ptr_ = new RtecScheduler::_tao__seq_RT_Info_Set (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const RtecScheduler::RT_Info_Set *
-RtecScheduler::RT_Info_Set_var::operator-> (void) const
+ACE_INLINE const RtecScheduler::_tao__seq_RT_Info_Set *
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set *
-RtecScheduler::RT_Info_Set_var::operator-> (void)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::RT_Info_Set_var::operator const RtecScheduler::RT_Info_Set &() const // cast
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator const RtecScheduler::_tao__seq_RT_Info_Set &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::RT_Info_Set_var::operator RtecScheduler::RT_Info_Set &() // cast 
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator RtecScheduler::_tao__seq_RT_Info_Set &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecScheduler::RT_Info_Set_var::operator RtecScheduler::RT_Info_Set &() const// cast 
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator RtecScheduler::_tao__seq_RT_Info_Set &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE RtecScheduler::RT_Info&
-RtecScheduler::RT_Info_Set_var::operator[] (CORBA::ULong index)
+RtecScheduler::_tao__seq_RT_Info_Set_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const RtecScheduler::RT_Info_Set &
-RtecScheduler::RT_Info_Set_var::in (void) const
+ACE_INLINE const RtecScheduler::_tao__seq_RT_Info_Set &
+RtecScheduler::_tao__seq_RT_Info_Set_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set &
-RtecScheduler::RT_Info_Set_var::inout (void)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set &
+RtecScheduler::_tao__seq_RT_Info_Set_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE RtecScheduler::RT_Info_Set *&
-RtecScheduler::RT_Info_Set_var::out (void)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *&
+RtecScheduler::_tao__seq_RT_Info_Set_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set *
-RtecScheduler::RT_Info_Set_var::_retn (void)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *
+RtecScheduler::_tao__seq_RT_Info_Set_var::_retn (void)
 {
-  RtecScheduler::RT_Info_Set *tmp = this->ptr_;
+  RtecScheduler::_tao__seq_RT_Info_Set *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set *
-RtecScheduler::RT_Info_Set_var::ptr (void) const
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *
+RtecScheduler::_tao__seq_RT_Info_Set_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class RtecScheduler::RT_Info_Set_out
+// Inline operations for class RtecScheduler::_tao__seq_RT_Info_Set_out
 // *************************************************************
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_out::RT_Info_Set_out (RtecScheduler::RT_Info_Set *&p)
+RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (RtecScheduler::_tao__seq_RT_Info_Set *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_out::RT_Info_Set_out (RtecScheduler::RT_Info_Set_var &p) // constructor from _var
+RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (RtecScheduler::_tao__seq_RT_Info_Set_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -803,44 +791,44 @@ RtecScheduler::RT_Info_Set_out::RT_Info_Set_out (RtecScheduler::RT_Info_Set_var 
 }
 
 ACE_INLINE
-RtecScheduler::RT_Info_Set_out::RT_Info_Set_out (RtecScheduler::RT_Info_Set_out &p) // copy constructor
+RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (RtecScheduler::_tao__seq_RT_Info_Set_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE RtecScheduler::RT_Info_Set_out &
-RtecScheduler::RT_Info_Set_out::operator= (RtecScheduler::RT_Info_Set_out &p)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set_out &
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator= (RtecScheduler::_tao__seq_RT_Info_Set_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set_out &
-RtecScheduler::RT_Info_Set_out::operator= (RtecScheduler::RT_Info_Set *p)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set_out &
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator= (RtecScheduler::_tao__seq_RT_Info_Set *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-RtecScheduler::RT_Info_Set_out::operator RtecScheduler::RT_Info_Set *&() // cast
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator RtecScheduler::_tao__seq_RT_Info_Set *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set *&
-RtecScheduler::RT_Info_Set_out::ptr (void) // ptr
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *&
+RtecScheduler::_tao__seq_RT_Info_Set_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecScheduler::RT_Info_Set *
-RtecScheduler::RT_Info_Set_out::operator-> (void)
+ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set *
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE RtecScheduler::RT_Info& 
-RtecScheduler::RT_Info_Set_out::operator[] (CORBA::ULong index)
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

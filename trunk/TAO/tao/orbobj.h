@@ -145,6 +145,13 @@ private:
   CORBA_Object_ptr resolve_name_service (void);
   // Resolve the name service object reference.
 
+  // @@ TODO: This should go away once the NamingService is working.
+  CORBA_Object_ptr resolve_schedule_service (void);
+  // Resolve the scheduler service object reference.
+
+  CORBA_Object_ptr resolve_event_service (void);
+  // Resolve the event service object reference.
+
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
 
@@ -173,6 +180,14 @@ private:
   CORBA_Object_ptr name_service_;
   // If this is non-_nil(), then this is the object reference to our
   // configured Naming Context.
+
+  CORBA_Object_ptr schedule_service_;
+  // If this is non-_nil(), then this is the object reference to our
+  // configured RtecScheduler::Scheduler.
+
+  CORBA_Object_ptr event_service_;
+  // If this is non-_nil(), then this is the object reference to our
+  // configured Event Channel.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

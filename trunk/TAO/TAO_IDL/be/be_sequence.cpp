@@ -455,6 +455,7 @@ be_sequence::gen_client_stubs (void)
 	  *cs << "this->buffer_ = tmp;" << nl;
 	  *cs << "this->release_ = 1;\n" << nl;
 	  *cs << "this->length_ = length;\n";
+	  *cs << "this->maximum_ = length;\n";
 	  cs->decr_indent ();
 	  *cs << "}\n";
 	}

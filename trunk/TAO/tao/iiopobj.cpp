@@ -37,6 +37,16 @@ IIOP::Profile::set (const char *h,
 {
   if (this->set (h, p, addr) == -1)
     return -1;
+      
+  // Enough room as to print a <void*>
+  const int bufs = 32;
+  char buffer[bufs];
+  if (key == 0)
+    {
+      // Use <this> as the key...
+      ACE_OS::sprintf (buffer, "0x%024.24x", this);
+      key = buffer;
+    }
 
   this->object_key.length = ACE_OS::strlen (key);
   this->object_key.maximum = this->object_key.length;

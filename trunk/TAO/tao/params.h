@@ -65,6 +65,20 @@ public:
   CORBA::UShort name_service_port (void);
   // Get the port of our name service.
 
+  // @@ TODO: This shouldn't be needed, they were added until the
+  // Naming Service works correctly.
+  CORBA::String schedule_service_ior (void);
+  // Get the IOR of the 
+
+  void schedule_service_ior (CORBA::String ns);
+  // Set the IOR of our schedule service.
+
+  CORBA::String event_service_ior (void);
+  // Get the IOR of the event service
+
+  void event_service_ior (CORBA::String ns);
+  // Set the IOR of our event service.
+
 private:
   ACE_INET_Addr addr_;          
   // host + port number we are listening on
@@ -74,6 +88,12 @@ private:
 
   CORBA::UShort name_service_port_;
   // The port number of our configured Naming Service.
+
+  CORBA::String schedule_service_ior_;
+  // The IOR of our configured Scheduling Service.
+
+  CORBA::String event_service_ior_;
+  // The IOR of our configured Event Service.
 };
 
 typedef enum 
