@@ -1,20 +1,13 @@
 // $Id$
 
 #include "tao/default_server.h"
-
-#if !defined (__ACE_INLINE__)
-# include "tao/default_client.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (tao,
            default_server,
            "$Id$")
-
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),

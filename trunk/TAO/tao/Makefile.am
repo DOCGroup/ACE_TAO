@@ -831,8 +831,6 @@ nobase_include_HEADERS += \
   WStringSeqC.inl \
   Wait_Strategy.inl \
   WrongTransactionC.inl \
-  default_client.i \
-  default_server.i \
   operation_details.i \
   params.i \
   qt_resource.i \

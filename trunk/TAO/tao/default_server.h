@@ -31,7 +31,7 @@
  * This design gives substantial freedom for experimentation.
  *
  */
-class TAO_Export TAO_Default_Server_Strategy_Factory 
+class TAO_Export TAO_Default_Server_Strategy_Factory
   : public TAO_Server_Strategy_Factory
 {
 public:
@@ -81,10 +81,6 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/default_server.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
