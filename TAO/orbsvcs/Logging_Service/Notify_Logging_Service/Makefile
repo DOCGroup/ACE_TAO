@@ -94,7 +94,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -250,7 +251,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
@@ -274,10 +275,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -411,28 +411,20 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Collection.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(ACE_ROOT)/ace/Arg_Shifter.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(ACE_ROOT)/ace/Arg_Shifter.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Service.h
 
 .obj/Notify_Logging_Server.o .obj/Notify_Logging_Server.so .shobj/Notify_Logging_Server.o .shobj/Notify_Logging_Server.so: Notify_Logging_Server.cpp \
  Notify_Logging_Service.h \
@@ -466,7 +458,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -622,7 +615,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
@@ -646,10 +639,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -783,36 +775,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Collection.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Collection_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Listeners.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Framework_Component.h \
- $(ACE_ROOT)/ace/Framework_Component.inl \
- $(ACE_ROOT)/ace/Framework_Component_T.h \
- $(ACE_ROOT)/ace/Framework_Component_T.inl \
- $(ACE_ROOT)/ace/Framework_Component_T.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLog_i.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

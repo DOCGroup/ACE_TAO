@@ -19,7 +19,6 @@
 
 #include "orbsvcs/DsNotifyLogAdminS.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "orbsvcs/Notify/Notify_EventChannel_i.h"
 #include "orbsvcs/DsEventLogAdminC.h"
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/CosNotifyCommS.h"

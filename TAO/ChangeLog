@@ -1,3 +1,13 @@
+Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/examples/Log/Notify/Makefile:
+	  Updated dependencies.
+	
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
+	  Removed the include of 
+	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
+	  
 Tue Nov 12 11:15:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Connector.cpp:
