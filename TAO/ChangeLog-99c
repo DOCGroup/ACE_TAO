@@ -1,3 +1,25 @@
+Tue Aug 03 16:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Test_Skels.dsp:
+	* tests/Collocation/Coll_Test_Stubs.dsp:
+	* tests/Collocation/Coll_Tester.cpp:
+	* tests/Collocation/Collocation.dsp:
+	* tests/Collocation/Collocation.dsw:
+	* tests/Collocation/skel_export.h:
+	* tests/Collocation/stub_export.h: Rewrote the example to create a
+	  stub DLL, a skel DLL which links against the stub DLL, and made
+	  the test to use both DLLs as an example on how to do this.
+	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca> for
+	  motivating the change.
+
+	* TAO_IDL/be/be_codegen.cpp (start_server_header): We need to
+	  overwrite the macro TAO_EXPORT_MACRO so that the macro
+	  TAO_NAMESPACE_STORAGE_CLASS can be defined properly.  This is
+	  not causing any problem for the time being because there's
+	  currently no static object in skeleton files.  However, I think
+	  I should still make the change so we won't have to debug a
+	  mystery in the future.
+
 Tue Aug 03 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: replaced auto_ptr
