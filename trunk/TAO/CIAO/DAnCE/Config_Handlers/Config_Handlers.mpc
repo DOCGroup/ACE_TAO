@@ -1,12 +1,12 @@
 //$Id$
 
-project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype {
+project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype,xerces {
 
   after     += CIAO_DnC_Server
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   requires += exceptions
-  libs     += CIAO_DnC_Server xerces-c
+  libs     += CIAO_DnC_Server 
 
   Source_Files {
     Utils.cpp
