@@ -1341,7 +1341,14 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
 
   // POSIX.1 dropped the cuserid() function.
   // GNU GLIBC and other platforms correctly deprecate the cuserid()
-  // function.
+  // function.    
+
+  if (maxlen == 0)
+    {
+      // It doesn't make sense to have a zero length user ID.
+      errno = EINVAL;
+      return 0;
+    }
 
   struct passwd *pw = 0;
 
@@ -1356,15 +1363,44 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
   // Make sure the password file is closed.
   ::endpwent ();
 
-  // Extract the user name from the passwd structure.
-  if (::strlen (pw->pw_name) <= maxlen)
-    return ::strcpy (user, pw->pw_name);
+  size_t max_length = 0;
+  ACE_TCHAR *userid = 0;
+
+  if (user == 0)
+    {
+      // Not reentrant/thread-safe, but nothing else can be done if a
+      // zero pointer was passed in as the destination.
+
+#if defined (_POSIX_SOURCE)
+      static ACE_TCHAR tmp[L_cuserid];
+#else
+      static ACE_TCHAR tmp[9];  // 8 character user ID + NULL
+#endif  /* _POSIX_SOURCE */
+
+      max_length = sizeof(tmp) / sizeof(ACE_TCHAR);
+
+      userid = tmp;
+    }
   else
-    return 0;
+    {
+      max_length = maxlen;
+      userid = user;
+    }
+
+  // Extract the user name from the passwd structure.
+  if (ACE_OS_String::strlen (pw->pw_name) <= max_length)
+    {
+      return ACE_OS_String::strcpy (userid, pw->pw_name);
+    }
+  else
+    {
+      errno = ENOSPC;  // Buffer is not large enough.
+      return 0;
+    }
 #else
   // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
-  ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
+  ACE_OSCALL_RETURN (::cuserid (user), ACE_TCHAR *, 0);
 #endif /* VXWORKS */
 }
 
