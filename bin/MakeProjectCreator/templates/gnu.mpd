@@ -95,11 +95,11 @@ endif
 <%endif%>
 
 <%if(exename)%>
-OBJS   = $(addsuffix .o, $(notdir $(FILES)))
-SRC    = $(addsuffix .cpp,$(FILES))
+OBJS   = $(addsuffix .o, <%notdirfiles%>)
+SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
 <%if(sharedname)%>
-LSRC   = $(addsuffix .cpp,$(FILES))
+LSRC   = $(addsuffix .cpp, $(FILES))
 <%endif%>
 <%if(!comps)%>
 <%if(tagname)%>
