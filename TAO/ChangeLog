@@ -1,3 +1,9 @@
+Mon Jun 14 17:17:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Array_VarOut_T.inl:
+          Corrected return type of TAO_Array_Forany_T<>::nocopy so that it
+          matches its declaration
+
 Mon Jun 14 17:13:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/Schedule/Service.cpp:
