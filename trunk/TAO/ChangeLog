@@ -1,3 +1,19 @@
+Wed Jul 21 08:55:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnySeqA.cpp:
+        * tao/CharSeqA.cpp:
+        * tao/DoubleSeqA.cpp:
+        * tao/LongDoubleSeqA.cpp:
+        * tao/LongLongSeqA.cpp:
+        * tao/LongSeqA.cpp:
+        * tao/ULongLongSeqA.cpp:
+        * tao/WCharSeqA.cpp:
+        * tao/WStringSeqA.cpp:
+        
+          New files overlooked in the checkin of
+          
+          Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Jul 20 21:54:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_get_orb_idl_includes):
