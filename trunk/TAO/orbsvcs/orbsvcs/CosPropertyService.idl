@@ -14,20 +14,21 @@
 //     The property service, downloaded from ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
 // 
 // = AUTHOR
-//     Copyright : OMG  ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
+// 
 // ======================================================================================
 
 module CosPropertyService
-// = TITLE
-//     CosPropertyService : To support properties (that are typed
-//     named values dynamically associated with an object, outside
-//     of the type system.
-//
-// = DESCRIPTION
-//     The data types and interfaces to deal with property names, property values,
-//     property modes etc.
 {
+  // = TITLE
+  //     CosPropertyService : To support properties (that are typed
+  //     named values dynamically associated with an object, outside
+  //     of the type system.
+  //
+  // = DESCRIPTION
+  //     The data types and interfaces to deal with property names, property values,
+  //     property modes etc.
+
   // = Data Types.
 
   typedef string PropertyName;
@@ -134,7 +135,7 @@ module CosPropertyService
                                                  in Properties allowed_properties)
         raises (ConstraintNotSupported);     
       // The create_constrained_propertyset operation allows a client
-      // to create a new PropertySet with specific constraints. 
+      // to create a new PropertySet with specific constraints.
 
       PropertySet create_initial_propertyset (in Properties initial_properties)
         raises (MultipleExceptions);  

@@ -15,8 +15,8 @@
 //     
 // ============================================================================
 
-#if !defined (CosPropertySERVICE_I_H)
-#define	CosPropertySERVICE_I_H
+#if !defined (COSPROPERTYSERVICE_I_H)
+#define	COSPROPERTYSERVICE_I_H
 
 #include "ace/OS.h"
 #include "orbsvcs/CosPropertyServiceS.h"
@@ -30,8 +30,12 @@ class TAO_ORBSVCS_Export TAO_PropertySetFactory :  public virtual POA_CosPropert
   // = DESCRIPTION
   //     The object may be created with some predfined properties.
 public:
+  // = Initialization and termination methods.
   TAO_PropertySetFactory (void);
   // Constructor.
+
+  virtual ~TAO_PropertySetFactory (void);
+  // Destructor.
   
   virtual CosPropertyService::PropertySet_ptr 
   create_propertyset (CORBA::Environment &env); 
@@ -41,16 +45,14 @@ public:
   create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types, 
                                   const CosPropertyService::Properties &allowed_properties,
                                   CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific constraints.
+  // Allows a client to create a new TAO_PropertySet with specific
+  // constraints.
   
   virtual CosPropertyService::PropertySet_ptr 
   create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
                               CORBA::Environment &env) ;
-  // Allows a client to create a new TAO_PropertySet with specific initial
-  // properties.
-  
-  virtual ~TAO_PropertySetFactory (void);
-  // Destructor.
+  // Allows a client to create a new TAO_PropertySet with specific
+  // initial properties.
 };
 
 class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory  
@@ -61,6 +63,7 @@ class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPrope
   // = DESCRIPTION
   //     The object creation may be done with some predefined properties.
 public:
+  // = Initialization and termination methods.
   TAO_PropertySetDefFactory(void); 
   // Constructor.
 
@@ -74,14 +77,15 @@ public:
   create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types, 
                                      const CosPropertyService::PropertyDefs &allowed_property_defs, 
                                      CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific constraints.
+  // Allows a client to create a new TAO_PropertySet with specific
+  // constraints.
   
  
   virtual CosPropertyService::PropertySetDef_ptr 
   create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
                                  CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific initial
-  // properties.
+  // Allows a client to create a new TAO_PropertySet with specific
+  // initial properties.
 };
 
 class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
@@ -92,15 +96,10 @@ class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyServic
   //
   // = DESCRIPTION
   //     Uses a HashTable to manage the properties. 
-public:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> CosProperty_Hash_Map;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value> CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> CosProperty_Hash_Iterator;
-  
   friend class TAO_PropertyNamesIterator;
   friend class TAO_PropertiesIterator;
-  
+public:
+  // = Initialization and termination methods.
   TAO_PropertySet (void);
   // Default constructor. 
   
@@ -117,14 +116,16 @@ public:
                                   CORBA::Environment &env);
   // Define a sequence of properties at a time.
   
-  virtual CORBA::ULong get_number_of_properties ( CORBA::Environment &env);
-  // Get the number of properties that are currently defined in the PropertySet.
+  virtual CORBA::ULong get_number_of_properties (CORBA::Environment &env);
+  // Get the number of properties that are currently defined in the
+  // PropertySet.
   
   virtual void get_all_property_names (CORBA::ULong how_many, 
                                        CosPropertyService::PropertyNames_out property_names, 
-                                       CosPropertyService::PropertyNamesIterator_out rest,  CORBA::Environment &env);
-  // Get the names of all the properties that are currently defined
-  // in the property set.
+                                       CosPropertyService::PropertyNamesIterator_out rest,
+                                       CORBA::Environment &env);
+  // Get the names of all the properties that are currently defined in
+  // the property set.
   
   virtual CORBA::Any *get_property_value (const char *property_name,
                                           CORBA::Environment &env);
@@ -154,11 +155,23 @@ public:
   
   virtual CORBA::Boolean is_property_defined (const char *property_name,
                                               CORBA::Environment &env);
-  // Tell whether this property is defined or no. Forget about the value.
+  // Tell whether this property is defined or no. Forget about the
+  // value.
   
+  // @@ Alex, can these be put into the private part of the class,
+  // i.e., do we need them to be accessed outside of the
+  // implementation of this class?
+  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
+          CosProperty_Hash_Map;
+  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value> 
+          CosProperty_Hash_Entry;
+  typedef CosProperty_Hash_Entry * 
+          CosProperty_Hash_Entry_ptr;
+  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
+          CosProperty_Hash_Iterator;
 private:
   CosProperty_Hash_Map hash_table_;
-  // This Hash_Table is the storage for our properties. 
+  // This Hash_Table manages storage for our properties.
 };
 
 class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual TAO_PropertySet
@@ -175,6 +188,7 @@ class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual TAO_PropertySet
   //     provide more client access and control of the characteristics
   //     (metadata) of a PropertySet.       
 public:
+  // = Initialization and termination methods.
   TAO_PropertySetDef (void);
   // Constructor.
   
@@ -204,7 +218,8 @@ public:
   // PropertySet. If the property already exists, then the property
   // type is checked before the value is overwritten. The property
   // mode is also checked to be sure a new value may be written. If
-  // the property does not exist, then the property is added to the PropertySet. 
+  // the property does not exist, then the property is added to the
+  // PropertySet.
 
   virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
                                              CORBA::Environment &env);
@@ -225,7 +240,6 @@ public:
                                   CORBA::Environment &env);
   // Set the mode of a property.
   
-  
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
                                    CORBA::Environment &env);
   // Batch operation for setting the property.
@@ -244,19 +258,12 @@ class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosProp
   //     get_all_property_names operation returns an object supporting
   //     the PropertyNamesIterator interface with the additional names.
 public:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Iterator;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  
+  // = Initialization and termination methods.
   TAO_PropertyNamesIterator (TAO_PropertySet &property_set,
                              CORBA::Environment &env);
   // Constructor.
   
-  virtual ~TAO_PropertyNamesIterator ();
+  virtual ~TAO_PropertyNamesIterator (void);
   // Destructor.
 
   virtual void reset (CORBA::Environment &env);
@@ -282,6 +289,17 @@ public:
   virtual void destroy (CORBA::Environment &env);
   // Destroys the iterator.
 
+  // @@ Alex, can these be put into the private part of the class,
+  // i.e., do we need them to be accessed outside of the
+  // implementation of this class?
+  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          CosProperty_Hash_Map;
+  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          CosProperty_Hash_Iterator;
+  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
+          CosProperty_Hash_Entry;
+  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
+  
 private:
   CosProperty_Hash_Iterator iterator_;
   // The Iterator object.
@@ -302,19 +320,12 @@ class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropert
   //     operation returns an object supporting the PropertiesIterator
   //     interface with the additional properties.
 public:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Iterator;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  
+  // = Initialization and termination methods.
   TAO_PropertiesIterator (TAO_PropertySet &property_set,
                           CORBA::Environment &env);
   // Constructor.
   
-  virtual ~TAO_PropertiesIterator ();
+  virtual ~TAO_PropertiesIterator (void);
   // Destructor.
   
   virtual void reset (CORBA::Environment &env);
@@ -324,9 +335,9 @@ public:
                                    CORBA::Environment &env);
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
-  // property. A return of false signifies no more items in the iterator.
-  
- 
+  // property. A return of false signifies no more items in the
+  // iterator.
+   
   virtual CORBA::Boolean next_n (CORBA::ULong how_many,
                                  CosPropertyService::Properties_out nproperties, 
                                  CORBA::Environment &env);
@@ -339,17 +350,21 @@ public:
   virtual void destroy (CORBA::Environment &env);
   // Destroys the iterator.
 
+  // @@ Alex, can these be put into the private part of the class,
+  // i.e., do we need them to be accessed outside of the
+  // implementation of this class?
+
+  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          CosProperty_Hash_Map;
+  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          CosProperty_Hash_Iterator;
+  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
+          CosProperty_Hash_Entry;
+  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
+  
 private:
   CosProperty_Hash_Iterator iterator_;
   // The iterator object.
 };
 
-#endif /* CosPropertySERVICE_I_H */
-
-
-
-
-
-
-
-
+#endif /* COSPROPERTYSERVICE_I_H */

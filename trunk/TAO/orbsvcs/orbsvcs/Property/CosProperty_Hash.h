@@ -29,7 +29,6 @@ class TAO_ORBSVCS_Export CosProperty_Hash_Key
   //     Key for the Hash Table.
 public: 
   // = Initialization and termination methods.
-
   CosProperty_Hash_Key (void);
   // Default constructor.
   
