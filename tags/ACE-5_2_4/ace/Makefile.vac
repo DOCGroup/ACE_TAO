@@ -1,0 +1,11 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Makefile for building libACE using Visual Age C++ Incremental compiler
+#----------------------------------------------------------------------------
+
+all:
+	vacbld_r ace.icc -sev=w
+
+realclean:
+	vacbld_r ace.icc -clean

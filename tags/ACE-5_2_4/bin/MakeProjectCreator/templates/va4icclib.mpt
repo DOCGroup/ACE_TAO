@@ -1,0 +1,4 @@
+common_defines  = _WINDOWS WIN32
+type_is_static  = 1
+lib_modifier    = d
+defines         = _DEBUG
