@@ -4,13 +4,6 @@
 // Auto_Ptr.i
 
 template<class X> ACE_INLINE
-ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (X *p)
-  : p_ (p)
-{
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
-}
-
-template<class X> ACE_INLINE
 ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &rhs)
   : p_ (rhs.release ())
 {
@@ -71,13 +64,6 @@ ACE_Auto_Basic_Ptr<X>::operator *() const
     !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
              (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
 
-template<class X> ACE_INLINE
-auto_ptr<X>::auto_ptr (X *p)
-  : ACE_Auto_Basic_Ptr<X> (p)
-{
-  ACE_TRACE ("auto_ptr<X>::auto_ptr");
-}
-
 template<class X> ACE_INLINE X *
 auto_ptr<X>::operator-> () const
 {
@@ -86,13 +72,6 @@ auto_ptr<X>::operator-> () const
 }
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-
-template<class X> ACE_INLINE
-ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (X *p)
-  : p_ (p)
-{
-  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
-}
 
 template<class X> ACE_INLINE X *
 ACE_Auto_Basic_Array_Ptr<X>::get (void) const
@@ -155,13 +134,6 @@ ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) const
 {
   X *array = this->get ();
   return array[i];
-}
-
-template<class X> ACE_INLINE
-ACE_Auto_Array_Ptr<X>::ACE_Auto_Array_Ptr (X *p)
-  : ACE_Auto_Basic_Array_Ptr<X> (p)
-{
-  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
 }
 
 template<class X> ACE_INLINE X *

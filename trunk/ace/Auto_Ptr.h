@@ -34,7 +34,8 @@ class ACE_Auto_Basic_Ptr
   //     This class allows one to work on non-object (basic) types
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT ACE_Auto_Basic_Ptr (X *p = 0);
+  ACE_EXPLICIT ACE_Auto_Basic_Ptr (X *p = 0) : p_ (p) {}
+
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Ptr (void);
@@ -72,7 +73,7 @@ class auto_ptr : public ACE_Auto_Basic_Ptr <X>
   //     Implements the draft C++ standard auto_ptr abstraction.
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT auto_ptr (X *p = 0);
+  ACE_EXPLICIT auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
 
   X *operator-> () const;
 };
@@ -89,7 +90,8 @@ class ACE_Auto_Basic_Array_Ptr
   //     deallocated via "delete [] foo".
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Basic_Array_Ptr (X *p = 0);
+  ACE_EXPLICIT ACE_Auto_Basic_Array_Ptr (X *p = 0) : p_ (p) {}
+
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Array_Ptr (void);
@@ -119,7 +121,8 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
   //     abstraction.
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0);
+  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0) 
+    : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 
   X *operator-> () const;
 };
