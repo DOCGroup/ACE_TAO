@@ -60,8 +60,7 @@ public:
 
   /// This initiates a new asynchronous connect
   virtual int connect (const ACE_INET_Addr &remote_sap,
-                       const ACE_INET_Addr &local_sap =
-                                   ACE_INET_Addr ((u_short)0),
+                       const ACE_INET_Addr &local_sap,
                        int reuse_addr = 1,
                        const void *act = 0);
 

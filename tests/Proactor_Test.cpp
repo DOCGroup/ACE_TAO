@@ -1066,7 +1066,7 @@ Connector::start (const ACE_INET_Addr& addr, int num)
 
   for (; rc < num;  rc++)
     {
-      if (this->connect (addr) != 0)
+      if (this->connect (addr, ACE_INET_Addr ((u_short)0)) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p\n"),
