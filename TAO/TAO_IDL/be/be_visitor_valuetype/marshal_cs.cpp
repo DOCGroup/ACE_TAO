@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           marshal_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           marshal_cs,
            "$Id$")
 
 be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
@@ -57,8 +57,8 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "strm";
     }
-    
-  *os << ")" << be_nl
+
+  *os << ") const" << be_nl
       << "{" << be_idt_nl;
 
   if (inh)
@@ -93,11 +93,11 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << "return (" << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
-  this->gen_fields (node, 
+  this->gen_fields (node,
                     *this->ctx_);
 
-  *os << be_uidt_nl 
-      << ");" << be_uidt << be_uidt_nl 
+  *os << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
@@ -108,14 +108,14 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   this->class_name (node, os);
 
   *os << "::_tao_unmarshal_state (TAO_InputCDR &";
-  
+
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
   if (inh != 0 || node->data_members_count () > 0)
     {
       *os << "strm";
     }
-    
+
   *os << ")" << be_nl
       << "{" << be_idt_nl;
 
@@ -129,7 +129,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
           *os << "::_tao_unmarshal_state (strm))" << be_idt_nl
               << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
+              << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
       else // only can access base class via virtual function
@@ -138,7 +138,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
               <<       inh->flat_name ()
               << " (strm))" << be_idt_nl
               << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
+              << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
     }
@@ -149,11 +149,11 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << "return (" << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
-  this->gen_fields (node, 
+  this->gen_fields (node,
                     *this->ctx_);
 
-  *os << be_uidt_nl 
-      << ");" << be_uidt << be_uidt_nl 
+  *os << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}";
 
   return 0;
@@ -171,7 +171,7 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
 {
   if (node->opt_accessor ())
     {
-      be_decl *scope = 
+      be_decl *scope =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       *os << "ACE_NESTED_CLASS ("
@@ -204,7 +204,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), 
+                             "bad node in this scope\n"),
                             -1);
         }
 
@@ -227,7 +227,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_valuetype_marshal_cs::"
                                  "visit_valuetype - "
-                                 "codegen for scope failed\n"), 
+                                 "codegen for scope failed\n"),
                                 -1);
             }
         }
@@ -235,7 +235,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
 
   if (n_processed == 0)
     {
-      *os << "1";
+      *os << "true";
     }
 
   return 0;

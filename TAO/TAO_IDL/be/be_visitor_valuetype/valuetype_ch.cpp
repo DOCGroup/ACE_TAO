@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ch,
            "$Id$")
 
 // ******************************************************
@@ -57,7 +57,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Now the valuetype definition itself.
   os->gen_ifdef_macro (node->flat_name ());
-  
+
   if (node->node_type () == AST_Decl::NT_eventtype)
     {
       *os << be_nl << be_nl
@@ -124,12 +124,12 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   **    changes required for this (n the *C.h file) are:
   **      2.1) Generate the raise_method as non-abstract and provide a
   **           definition in place
-  **      2.2) Generate a new constructor that takes in a 
+  **      2.2) Generate a new constructor that takes in a
                CORBA::Exception*
-  **      2.3) Make the destructor public (instead of protected) 
+  **      2.3) Make the destructor public (instead of protected)
   **      2.4) Generate a private CORBA::Exception* field.
-  **      2.5) Generate the tao_marshal and tao_unmarshal methods as 
-  **           non-abstarct. 
+  **      2.5) Generate the tao_marshal and tao_unmarshal methods as
+  **           non-abstarct.
   **      2.6) Generate the right throw spec for the AMH ExceptionHolders
   ************************************************************************/
 
@@ -168,8 +168,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       *os << "public virtual CORBA::ValueBase";
     }
-    
-  // Generate the supported interfaces.  
+
+  // Generate the supported interfaces.
   for (i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
@@ -178,10 +178,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate the body.
-  *os << be_uidt << be_uidt_nl 
+  *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "typedef " << node->local_name () << "_var _var_type;" 
+      << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl << be_nl;
 
   if (is_an_amh_exception_holder)
@@ -190,7 +190,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << node->local_name () << " (CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl << be_nl
-          << "virtual ~" << node->local_name () << " (void);" 
+          << "virtual ~" << node->local_name () << " (void);"
           << be_nl << be_nl;
     }
 
@@ -246,7 +246,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-  // (in addition to CORBA::ValueBase) we have to add these 
+  // (in addition to CORBA::ValueBase) we have to add these
   // to avoid ambiguity.
   if (node->n_supports () > 0)
     {
@@ -264,7 +264,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   if (!is_an_amh_exception_holder)
     {
-      *os << "virtual ~" << node->local_name () << " (void);" 
+      *os << "virtual ~" << node->local_name () << " (void);"
           << be_nl << be_nl;
     }
 
@@ -272,7 +272,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
       *os << "virtual CORBA::Boolean "
-          << "_tao_marshal_v (TAO_OutputCDR &);" << be_nl;
+          << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
       *os << "virtual CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
     }
@@ -280,7 +280,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (is_an_amh_exception_holder)
     {
       *os << "virtual CORBA::Boolean "
-          << "_tao_marshal_v (TAO_OutputCDR &) {return 1;}" << be_nl;
+          << "_tao_marshal_v (TAO_OutputCDR &) const {return 1;}" << be_nl;
       *os << "virtual CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &) {return 1;}" << be_nl;
     }
@@ -295,7 +295,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << be_nl
       << "void operator= (const " << node->local_name () << " &);"
       << be_nl;
-  
+
   /*********************************************************/
   // 2.4
   if (is_an_amh_exception_holder)
@@ -312,7 +312,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     {
       *os << be_uidt_nl << "protected:" << be_idt_nl;
       *os << "CORBA::Boolean "
-          << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
+          << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
           << "CORBA::Boolean "
           << "_tao_unmarshal_state (TAO_InputCDR &);"
           << be_uidt_nl << be_nl;
@@ -329,27 +329,27 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           if (is_an_amh_exception_holder)
             {
               *os << "virtual CORBA::Boolean" << be_nl
-                  << "_tao_marshal__" << node->flat_name () 
-                  << " (TAO_OutputCDR &) {return 1;}"
+                  << "_tao_marshal__" << node->flat_name ()
+                  << " (TAO_OutputCDR &) const {return 1;}"
                   << be_nl << be_nl;
               *os << "virtual CORBA::Boolean" << be_nl
-                  << "_tao_unmarshal__" << node->flat_name () 
+                  << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &) {return 1;}";
-            }          
+            }
           else
-            {            
+            {
               *os << "virtual CORBA::Boolean" << be_nl
-                  << "_tao_marshal__" << node->flat_name () 
-                  << " (TAO_OutputCDR &) = 0;"
+                  << "_tao_marshal__" << node->flat_name ()
+                  << " (TAO_OutputCDR &) const = 0;"
                   << be_nl << be_nl;
               *os << "virtual CORBA::Boolean" << be_nl
-                  << "_tao_unmarshal__" << node->flat_name () 
+                  << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &) = 0;";
             }
         }
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "};";
 
   os->gen_endif ();
@@ -363,7 +363,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ch::"
                          "visit_valuetype - "
-                         "failed to generate _init construct.\n"),  
+                         "failed to generate _init construct.\n"),
                         -1);
     }
 
@@ -497,7 +497,7 @@ be_visitor_valuetype_ch::begin_private (void)
   *os << be_uidt_nl << be_nl << "protected:" << be_idt;
 }
 
-int 
+int
 be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             be_interface *base,
                                             TAO_OutStream *os)

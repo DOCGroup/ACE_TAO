@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_obv_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_obv_ch,
            "$Id$")
 
 // ******************************************************
@@ -160,15 +160,15 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << node->local_name () << " (void);";
 
           *os << be_nl << "virtual ~";
-      
+
           if (! node->is_nested ())
             {
               *os << "OBV_";
             }
-        
+
           *os << node->local_name () << " (void);";
         }
-       
+
 
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
@@ -181,7 +181,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-      // (in addition to CORBA::ValueBase) we have to add these 
+      // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
@@ -206,12 +206,12 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << node->local_name () << " (void);";
 
           *os << be_nl << "virtual ~";
-      
+
           if (! node->is_nested ())
             {
               *os << "OBV_";
             }
-        
+
           *os << node->local_name () << " (void);";
         }
 
@@ -221,15 +221,15 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
           *os << "virtual CORBA::Boolean" << be_nl
-              << "_tao_marshal__" << node->flat_name () 
-              << " (TAO_OutputCDR &);" << be_nl << be_nl;
+              << "_tao_marshal__" << node->flat_name ()
+              << " (TAO_OutputCDR &) const;" << be_nl << be_nl;
 
           *os << "virtual CORBA::Boolean" << be_nl
-              << "_tao_unmarshal__" << node->flat_name () 
+              << "_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &);" << be_nl << be_nl;
 
           *os << "CORBA::Boolean "
-              << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
+              << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
               << "CORBA::Boolean "
               << "_tao_unmarshal_state (TAO_InputCDR &);"
               << be_uidt_nl << be_nl;

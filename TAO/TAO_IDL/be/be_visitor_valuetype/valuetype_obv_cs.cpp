@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_obv_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_obv_cs,
            "$Id$")
 
 // ******************************************************
@@ -66,7 +66,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   *os << node->local_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-  
+
   *os << node->full_obv_skel_name () << "::~";
 
   if (! node->is_nested ())
@@ -85,9 +85,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl << "CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm)" << be_nl
+          <<    " (TAO_OutputCDR &strm) const" << be_nl
           << "{" << be_idt_nl
-          << "return _tao_marshal_state (strm);" << be_uidt_nl 
+          << "return _tao_marshal_state (strm);" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "CORBA::Boolean" << be_nl
@@ -95,7 +95,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_unmarshal__" << node->flat_name ()
           << " (TAO_InputCDR &strm)" << be_nl
           << "{" << be_idt_nl
-          << "return _tao_unmarshal_state (strm);" << be_uidt_nl 
+          << "return _tao_unmarshal_state (strm);" << be_uidt_nl
           << "}";
 
       if (this->visit_scope (node) == -1)
@@ -103,17 +103,17 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_obv_cs::"
                              "visit_valuetype - "
-                             "visit_scope failed\n"), 
+                             "visit_scope failed\n"),
                             -1);
         }
 
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-      // (in addition to CORBA::ValueBase) we have to add these 
+      // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
           *os << be_nl << be_nl << "void" << be_nl
-              << node->full_obv_skel_name () 
+              << node->full_obv_skel_name ()
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
               << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_add_ref ();"
@@ -121,7 +121,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << "}" << be_nl;
 
           *os << be_nl << "void" << be_nl
-              << node->full_obv_skel_name () 
+              << node->full_obv_skel_name ()
               << "::_remove_ref (void)" << be_nl
               << "{" << be_idt_nl
               << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_remove_ref ();"
@@ -154,6 +154,6 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
                          "visit_field failed\n"
                          ), -1);
     }
- 
+
   return 0;
 }
