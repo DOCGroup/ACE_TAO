@@ -303,7 +303,7 @@ be_interface_fwd::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (" << name () << "::_duplicate (p))" << nl;
+  *ci << "\t: ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -340,7 +340,7 @@ be_interface_fwd::gen_var_impl (void)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << name () << "::_duplicate (p);\n";
+  *ci << "this->ptr_ = " << name () << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
