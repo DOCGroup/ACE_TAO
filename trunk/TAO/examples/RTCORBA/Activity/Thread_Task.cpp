@@ -7,6 +7,7 @@
 
 #include "Activity.h"
 #include "Task_Stats.h"
+#include "ace/Barrier.h"
 
 Thread_Task::Thread_Task (void)
 {

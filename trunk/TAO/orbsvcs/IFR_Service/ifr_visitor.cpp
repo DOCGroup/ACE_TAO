@@ -2,6 +2,9 @@
 // $Id$
 
 #include "ifr_visitor.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID (IFR_Service, 
            ifr_visitor, 

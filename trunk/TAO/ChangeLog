@@ -1,3 +1,42 @@
+Tue Aug 19 18:49:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/PluggableUDP/tests/Performance/UDP_i.h:
+        * examples/RTCORBA/Activity/Activity.h:
+        * examples/Simple/bank/AccountManager_i.h:
+          Added #include Null_Mutex.h
+
+        * examples/RTCORBA/Activity/Thread_Task.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+          Added #include Barrier.h.
+
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+          Added #include Lock_Adapter_T.h, Synch_Traits.h, and Null_Mutex.h.
+
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+          Added #include Synch_Traits.h and forward declaration of ACE_Barrier.
+
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+          Added #include Reactor.h.
+
+        * orbsvcs/tests/IOR_MCast/ior_mcast_client_i.h:
+          Added #include SString.h:
+
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+          Added #include Event.h.
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+          Removed CRC.cpp.
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+          Added testC.cpp to server project.
+
+        * tests/ICMG_Any_Bug/Hello.mpc:
+          Changed the client project to inherit from both ifr_client and
+          dynamicinterface to pick up the correct link libraries.
+
 Tue Aug 19 13:44:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
