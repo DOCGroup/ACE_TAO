@@ -18,12 +18,7 @@ Mon Jun 21 14:15:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
 	  Fixed close() method, thanks to J. Russell Noseworthy
-	  <rnosewor@objectsciences.com> for pointing this 
-
-Mon Jun 21 12:27:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (forward_query):
-	  Removed the extra argument for _is_equivalent.
+	  <rnosewor@objectsciences.com> for pointing this
 
 Mon Jun 21 12:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
