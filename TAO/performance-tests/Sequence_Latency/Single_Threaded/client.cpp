@@ -17,16 +17,6 @@ int sz = 512;
 int do_dump_history = 0;
 int do_shutdown = 1;
 
-enum
-  {
-    OCTET = 0,
-    LONG,
-    SHORT,
-    CHAR,
-    LONG_LONG,
-    DOUBLE
-  };
-
 const char *data_type = "octet";
 
 int
