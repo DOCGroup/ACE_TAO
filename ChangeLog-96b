@@ -1,3 +1,72 @@
+Tue Oct 29 00:02:44 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* examples/Threads/test_task_four.cpp: This is a new test
+	  program to test the new interfaces.  Thanks to Hamutal Yanay
+	  & Ari Erev for this.
+
+	* tests/test_config.h: Added a call to the new ACE_OS::mkdir()
+ 	  wrapper to create the log directory if one doesn't already
+ 	  exist.  This should solve some nasty problems with NT reported
+ 	  by Tilo Christ <christ@swl.fh-heilbronn.de>.
+
+	* ace/OS.h: Added a new macro ACE_DEFAULT_DIR_PERMS and changed
+ 	  the spelling of the existing ACE_DEFAULT_PERMS to
+ 	  ACE_DEFAULT_FILE_PERMS, which is more accurate.
+
+Mon Oct 28 21:35:12 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/OS.h: Added a wrapper for the mkdir() system call.  We need
+ 	  it for some of the tests.
+
+	* ace/Task: Changed the name of ACE_Task_Exit<>::set_this() to
+ 	  ACE_Task_Exit<>::set_task().  Thanks to Hamutal Yanay & Ari Erev
+ 	  for suggesting this.
+
+	* ace/{Task,Thread_Manager}: Integrated Hamutal Yanay & Ari Erev's
+	  (Ari_Erev@comverse.com) enhancements to add ACE_Task support to
+ 	  the ACE_Thread_Manager.  This allows the ACE_Thread_Manager to
+	  know about ACE_Tasks directly, rather than knowing
+	  indirectly via their lower-level thread IDs.  The changes
+	  are described below:
+
+	   - Added a parameter to the activate() method. It is used to
+ 	     pass an ACE_Task* to spawn_n().
+
+	   - Modified suspend() and resume() to call
+ 	     thrMgr->suspend_task() and thrMgr->resume_task() instead of
+ 	     thrMgr->suspend_grp() and thrMgr->resume_grp().
+
+	   - Added an ACE_Task * parameter to spawn_n().
+
+	   - Added an ACE_Task * parameter to append_thr().
+
+	   - append_thr() uses the ACE_Task * input parameter to
+ 	     initialize the thread descriptor.
+
+	   - Added the following methods:
+	       apply_task()
+	       suspend_task()
+	       resume_task()
+	       kill_task()
+	       resume_task()
+	       cancel_task()
+	       find_task()
+
+	       num_tasks_in_group()
+	       num_threads_in_tasks()
+
+	       task_list()
+	       thread_list()
+	       hthread_list()
+
+	       set_grp() Like the current set_grp() but gets an ACE_Task *
+	                 as input. 
+	       get_grp() Like the current set_grp() but outputs an
+	                 ACE_Task *. 
+
+	       wait_task() 
+	       wait_group()
+
 Sun Oct 27 11:25:00 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: modified the ACE_OSCALL_RETURN macro so that we'll

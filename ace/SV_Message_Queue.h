@@ -38,10 +38,10 @@ public:
   ACE_SV_Message_Queue (void);
   ACE_SV_Message_Queue (key_t external_id, 
 			int create = ACE_SV_Message_Queue::ACE_OPEN,
-			int perms = ACE_DEFAULT_PERMS);
+			int perms = ACE_DEFAULT_FILE_PERMS);
   int open (key_t external_id, 
 	    int create = ACE_SV_Message_Queue::ACE_OPEN,
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
    // Open a message queue using the <external_id>.
 
   ~ACE_SV_Message_Queue (void);

@@ -37,7 +37,7 @@ public:
   ACE_Shared_Memory_MM (char file_name[], 
 			int len = -1, 
 			int flags = O_RDWR | O_CREAT,
-			int mode = ACE_DEFAULT_PERMS, 
+			int mode = ACE_DEFAULT_FILE_PERMS, 
 			int prot = PROT_RDWR, 
 			int share = MAP_SHARED, 
 			char *addr = 0, off_t pos = 0);
@@ -52,7 +52,7 @@ public:
   int open (char file_name[], 
 	    int len = -1, 
 	    int flags = O_RDWR | O_CREAT, 
-	    int mode = ACE_DEFAULT_PERMS, 
+	    int mode = ACE_DEFAULT_FILE_PERMS, 
 	    int prot = PROT_RDWR, 
 	    int share = MAP_SHARED, 
 	    char *addr = 0, 

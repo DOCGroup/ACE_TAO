@@ -42,7 +42,7 @@ public:
   ACE_Mem_Map (LPCTSTR filename,
 	       int len = -1, 
 	       int flags = O_RDWR | O_CREAT, 
-	       int mode = ACE_DEFAULT_PERMS, 
+	       int mode = ACE_DEFAULT_FILE_PERMS, 
 	       int prot = PROT_RDWR, 
 	       int share = MAP_PRIVATE, 
 	       void *addr = 0, 
@@ -68,7 +68,7 @@ public:
   int map (LPCTSTR filename,
 	   int len = -1, 
 	   int flags = O_RDWR | O_CREAT, 
-	   int mode = ACE_DEFAULT_PERMS, 
+	   int mode = ACE_DEFAULT_FILE_PERMS, 
 	   int prot = PROT_RDWR, 
 	   int share = MAP_PRIVATE, 
 	   void *addr = 0, 
@@ -80,7 +80,7 @@ public:
 
   int open (LPCTSTR filename,
 	    int flags = O_RDWR | O_CREAT, 
-	    int mode = ACE_DEFAULT_PERMS);
+	    int mode = ACE_DEFAULT_FILE_PERMS);
   // Open the file without mapping it.
 
   int close (void);

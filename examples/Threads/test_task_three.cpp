@@ -1,7 +1,7 @@
-// Exercise more tests for the ACE Tasks.  This also shows off some
 // $Id$
 
-// interesting uses of the ACE Log_Msg's ability to print to ostreams.
+// Exercise more tests for the ACE Tasks.  This also shows off some
+// Interesting uses of the ACE Log_Msg's ability to print to ostreams.
 // BTW, make sure that you set the out_stream in *every* thread that
 // you want to have write to the output file, i.e.:
 //

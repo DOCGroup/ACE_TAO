@@ -37,14 +37,14 @@ public:
   ACE_Shared_Memory_SV (key_t id,
 			int length, 
 			int create = ACE_Shared_Memory_SV::ACE_OPEN,
-			int perms = ACE_DEFAULT_PERMS, 
+			int perms = ACE_DEFAULT_FILE_PERMS, 
 			void *addr = 0, 
 			int flags = 0);
 
   int open (key_t id,
 	    int length, 
 	    int create = ACE_Shared_Memory_SV::ACE_OPEN, 
-	    int perms = ACE_DEFAULT_PERMS, 
+	    int perms = ACE_DEFAULT_FILE_PERMS, 
 	    void *addr = 0, 
 	    int flags = 0);
 

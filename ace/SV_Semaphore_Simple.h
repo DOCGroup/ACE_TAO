@@ -39,25 +39,25 @@ public:
 			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
 			   int initial_value = 1,
 			   int nsems = 1, 
-			   int perms = ACE_DEFAULT_PERMS);
+			   int perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Simple (const char *name, 
 			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 			   int initial_value = 1, 
 			   int nsems = 1, 
-			   int perms = ACE_DEFAULT_PERMS);
+			   int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Simple (void);
 
   int open (const char *name, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
 	    int nsems = 1, 
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
 
   int open (key_t key, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
 	    int nsems = 1, 
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create one or more SV_Semaphores.  We return 0 if all is
   // OK, else -1.
  

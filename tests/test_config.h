@@ -21,13 +21,11 @@
 #define ACE_TEMP_FILE_NAME "C:\\temp\\ace_temp_file"
 #define ACE_LOG_DIRECTORY "C:\\temp\\log\\"
 #define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\"#X
-
 #else
 #define ACE_DEFAULT_TEST_FILE "/tmp/ace_test_file"
 #define ACE_TEMP_FILE_NAME "/tmp/ace_temp_file"
 #define ACE_LOG_DIRECTORY "log/"
 #define MAKE_PIPE_NAME(X) X
-
 #endif /* ACE_WIN32 */
 
 const int ACE_NS_MAX_ENTRIES = 2000;
@@ -49,17 +47,20 @@ public:
       delete this->output_file_;
     }
 
-  void set_output (char *filename)
+  int set_output (char *filename)
     {
       char temp[BUFSIZ];
+      // Ignore the error value since the directory may already exist.
+      ACE_OS::mkdir (ACE_LOG_DIRECTORY);
       ACE_OS::sprintf (temp, "%s%s%s", 
 		       ACE_LOG_DIRECTORY, 
 		       ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
 		       ".log");
-      this->output_file_ = new ofstream (temp);
+
+      ACE_NEW_RETURN (this->output_file_, ofstream (temp), -1);
       
       ACE_Log_Msg::instance()->msg_ostream (this->output_file_);
-      ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
+      ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
       ACE_Log_Msg::instance()->set_flags (ACE_Log_Msg::OSTREAM);
     }
 
@@ -80,7 +81,8 @@ private:
 static ACE_Test_Output ace_file_stream;
 
 #define ACE_START_TEST \
-  ace_file_stream.set_output (argv[0]); \
+  if (ace_file_stream.set_output (argv[0]) == -1) \
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
   ACE_DEBUG ((LM_DEBUG, "starting %s test at %T\n", argv[0]));
 
 #define ACE_END_TEST \

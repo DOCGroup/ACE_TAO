@@ -92,7 +92,10 @@
 #define ACE_NAME_SERVER_MAP "Name Server Map"
 
 // Default file permissions.
-#define ACE_DEFAULT_PERMS 0666
+#define ACE_DEFAULT_FILE_PERMS 0666
+
+// Default directory permissions.
+#define ACE_DEFAULT_DIR_PERMS 0777
 
 // Default size of the ACE Reactor.
 #define ACE_DEFAULT_REACTOR_SIZE FD_SETSIZE
@@ -2020,7 +2023,8 @@ public:
 
   // = A set of wrappers for directory operations.
   static int chdir (const char *path);
-  static int mkfifo (const char *file, mode_t mode);
+  static int mkdir (const char *path, mode_t mode = ACE_DEFAULT_DIR_PERMS);
+  static int mkfifo (const char *file, mode_t mode = ACE_DEFAULT_FILE_PERMS);
   static char *mktemp (char *t);
   static char *getcwd (char *, size_t);
   static mode_t umask (mode_t cmask);
