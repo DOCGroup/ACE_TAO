@@ -1,3 +1,5 @@
+<!-- $Id$ -->
+
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
   <head>
@@ -17,7 +19,7 @@
 	<b>symptom</b>
 </td>
 <td align=left valign=top>
-	ACE_Task::getq() returns the error 
+	ACE_Task::getq() returns the error
 	<b>resource temporarily unavailable</b>
 </td>
 </tr>
@@ -55,7 +57,7 @@
 </td>
 <td align=left valign=top>
 	When you activate()d your Task, you specified
-	THR_DETACHED, which causes wait() to be unable to perform what you 
+	THR_DETACHED, which causes wait() to be unable to perform what you
 	want it to.
 </td>
 </tr>
@@ -86,7 +88,7 @@
 </td>
 <td align=left valign=top>
 	You are not guaranteed to have a valid <b>this</b> pointer
-	until the constructor has exited.  Threads spawned from 
+	until the constructor has exited.  Threads spawned from
 	a constructor are free to run
 	immediately, and may attempt to use an invalid <b>this</b> pointer.
 
@@ -109,7 +111,7 @@
 	<b>symptom</b>
 </td>
 <td align=left valign=top>
-	Compiler issues warnings/erros regarding using too few template 
+	Compiler issues warnings/erros regarding using too few template
 	arguments, such as "'ACE_Svc_Handler' : too few template arguments".
 </td>
 </tr>
@@ -139,8 +141,8 @@
 	<b>symptom</b>
 </td>
 <td align=left valign=top>
-	Unable to compare ACE_thread_t variables (such as ACE_Thread::self()) using 
-	operator==().
+	Unable to compare ACE_thread_t variables (such as ACE_Thread::self())
+        using operator== ().
 </td>
 </tr>
 <tr>
@@ -228,7 +230,7 @@ int MyHandler::handle_close (ACE_HANDLE handle,
                              ACE_Reactor_Mask close_mask)
 {
     ...
-    my_reactor_->remove_handler( this,
+    my_reactor_-&gt;remove_handler( this,
                                 ACE_Event_Handler::READ_MASK |
                                 ACE_Event_Handler::DONT_CALL );
     ...
