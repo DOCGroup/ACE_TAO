@@ -964,15 +964,15 @@ be_interface::gen_operation_table (void)
         // Temp file name.
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
-                        char [ACE_OS::strlen (ACE_DEFAULT_TEMP_FILE) +
+                        char [ACE_OS::strlen (idl_global->temp_dir ()) +
                              ACE_OS::strlen (this->flatname ()) +
-                             ACE_OS::strlen (".gperf") + 2],
+                             ACE_OS::strlen (".gperf") + 1],
                         -1);
         ACE_OS::sprintf (temp_file,
-                         "%s_%s.gperf",
-                         ACE_DEFAULT_TEMP_FILE,
+                         "%s%s.gperf",
+                         idl_global->temp_dir (),
                          this->flatname ());
-
+        
         // Save this file name with the codegen singleton.
         cg->gperf_input_filename (temp_file);
 
