@@ -1,10 +1,5 @@
 Fri Oct 17 00:05:55 1997    <irfan@TWOSTEP>
 
-	* ace/Malloc.cpp (dump): 
-	* tests/Future_Test.cpp (main): 
-	* tests/Reactors_Test.cpp (handle_input): 
-	* example/Threads/{future1.cpp future2.cpp manual_event.cpp task_two.cpp tss2.cpp}:
-	
 	* ace/OS: Added ACE_Export to declarations to:
  	  ace_mutex_lock_cleanup_adapter, ftruncate, ace_thread_adapter
 	
@@ -27,6 +22,14 @@ Fri Oct 17 00:05:55 1997    <irfan@TWOSTEP>
  	  user-defined operators and the built-in operators. Since we have
  	  removed the automagic type conversion, we can go back to writing
  	  foo == 5.
+
+	* ACE: Atomic Op related minor changes:
+
+	  ace/Malloc.cpp (dump): 
+	  tests/Future_Test.cpp (main): 
+	  tests/Reactors_Test.cpp (handle_input): 
+	  example/Threads/{future1.cpp future2.cpp manual_event.cpp task_two.cpp tss2.cpp}:
+	  examples/Reactor/Misc/test_reactors.cpp: 
 
 	* tests/Notify_Performance_Test.cpp: 
 	* tests/Reactor_Performance_Test.cpp: 
