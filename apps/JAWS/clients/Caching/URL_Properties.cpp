@@ -17,16 +17,16 @@
 char ACE_URL_Offer::NULL_STRING = '\0';
 
 template <class T>
-size_t ace_array_bsize (T &x)
+size_t ace_array_bsize (const T &x)
 {
   size_t sum = sizeof (ACE_UINT32);
-  for (int i = 0; i < x.size (); i++)
+  for (size_t i = 0; i < x.size (); i++)
     sum += x[i].bsize ();
   return sum;
 }
 
 template <class T>
-void ace_array_encode (void *buf, T &x)
+void ace_array_encode (void *buf, const T &x)
 {
   size_t len = 0;
   for (size_t i = 0; i < x.size (); i++)
@@ -104,6 +104,11 @@ ACE_URL_Property::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_URL_Offer::~ACE_URL_Offer (void)
+{
+  delete this->url_;
+}
+
 size_t
 ACE_URL_Offer::bsize (void) const
 {
@@ -159,7 +164,7 @@ ACE_URL_Offer::dump (void) const
     }
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
-  for (int i = 0; i < this->prop_.size (); i++)
+  for (size_t i = 0; i < this->prop_.size (); i++)
     this->prop_[i].dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
