@@ -25,10 +25,10 @@
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_STHREADS)
-#include /**/ <sys/rtpriocntl.h>
-#include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_STHREADS */
+#if defined (ACE_HAS_PRIOCNTL)
+# include /**/ <sys/rtpriocntl.h>
+# include /**/ <sys/tspriocntl.h>
+#endif /* ACE_HAS_PRIOCNTL */
 
 ACE_RCSID(ace, Sched_Params, "$Id$")
 
@@ -36,11 +36,11 @@ int
 ACE_Sched_Params::priority_min (const Policy policy,
                                 const int scope)
 {
-#if defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PRIOCNTL)
   ACE_UNUSED_ARG (scope);
 
-  // Assume that ACE_SCHED_OTHER indicates Solaris TS class, and that
-  // other policies indicate Solaris RT class.
+  // Assume that ACE_SCHED_OTHER indicates TS class, and that other
+  // policies indicate RT class.
 
   if (policy == ACE_SCHED_OTHER)
     {
@@ -114,18 +114,18 @@ ACE_Sched_Params::priority_min (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PRIOCNTL */
 }
 
 int
 ACE_Sched_Params::priority_max (const Policy policy,
                                 const int scope)
 {
-#if defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PRIOCNTL)
   ACE_UNUSED_ARG (scope);
 
-  // Assume that ACE_SCHED_OTHER indicates Solaris TS class, and that
-  // other policies indicate Solaris RT class.
+  // Assume that ACE_SCHED_OTHER indicates TS class, and that other
+  // policies indicate RT class.
 
   // Get the priority class ID and attributes.
   pcinfo_t pcinfo;
@@ -194,7 +194,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PRIOCNTL */
 }
 
 int
