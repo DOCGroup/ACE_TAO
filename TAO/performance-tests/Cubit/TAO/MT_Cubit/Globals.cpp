@@ -123,7 +123,7 @@ MT_Priority::get_high_priority (void)
   ACE_Sched_Priority high_priority;
 
 #if defined (VXWORKS)
-  high_priority = default_priority;
+  high_priority = GLOBALS::instance ()->default_priority;
 #elif defined (ACE_WIN32)
   high_priority =
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
