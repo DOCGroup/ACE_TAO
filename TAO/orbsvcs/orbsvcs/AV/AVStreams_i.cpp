@@ -217,7 +217,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
         }
 
       // Request b_party to create the endpoint and vdev
-      
+
       if (!CORBA::is_nil (b_party))
         {
           this->sep_b_ =
@@ -276,7 +276,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
       if (!CORBA::is_nil (a_party) && !CORBA::is_nil (b_party))
         {
           // Tell the 2 VDev's about one another
@@ -472,7 +472,7 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
 // TAO_MCastConfigIf
 // ----------------------------------------------------------------------
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_MCastConfigIf::set_peer (CORBA::Object_ptr peer,
                              AVStreams::streamQoS & the_qos,
                              const AVStreams::flowSpec & the_spec,
@@ -481,26 +481,26 @@ TAO_MCastConfigIf::set_peer (CORBA::Object_ptr peer,
   return 0;
 }
 
-void 
+void
 TAO_MCastConfigIf::configure (const CosPropertyService::Property & a_configuration,
                               CORBA::Environment &ACE_TRY_ENV)
 {
 }
 
-void 
+void
 TAO_MCastConfigIf::set_initial_configuration (const CosPropertyService::Properties & initial,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
 }
 
-void 
+void
 TAO_MCastConfigIf::set_format (const char * flowName,
                                const char * format_name,
                                CORBA::Environment &ACE_TRY_ENV)
 {
 }
 
-void 
+void
 TAO_MCastConfigIf::set_dev_params (const char * flowName,
                                    const CosPropertyService::Properties & new_params,
                                    CORBA::Environment &ACE_TRY_ENV)
@@ -564,7 +564,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  return 1;
+  ACE_NOTREACHED (return 1;)
 }
 
 
@@ -751,7 +751,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
         TAO_ORB_Core_instance ()->orb ()->string_to_object
         (media_ctrl_ior,ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       result = this->set_media_ctrl (media_ctrl_obj,ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
