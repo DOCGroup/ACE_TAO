@@ -1,3 +1,12 @@
+Mon Jul 24 20:21:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU
+	* include/makeinclude/rules.local.GNU
+	* include/makeinclude/rules.lib.GNU
+	  Added support for make split=1 which will use the split-cpp script
+	  when compiling. This should be considered an extremely beta,
+	  use-at-your-own-risk feature for the time being.
+
 Mon Jul 24 20:13:59 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* bin/split-cpp:
