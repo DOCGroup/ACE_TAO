@@ -84,8 +84,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
           *os << node->exprtype_to_string ();
         }
 
-      *os << " " << node->local_name () << " = "
-          << node->constant_value ();
+      *os << " " << node->local_name ();
     }
   // We are nested inside an interface or a valuetype.
   else 
@@ -127,8 +126,9 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       *os << " " << node->local_name ();
     }
 
-  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
-      && be_global->gen_inline_constants ())
+  if (!node->is_nested ()
+      || (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+          && be_global->gen_inline_constants ()))
     {
       *os << " = " << node->constant_value ();
     }
