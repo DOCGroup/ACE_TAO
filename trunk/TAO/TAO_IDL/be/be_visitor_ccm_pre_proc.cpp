@@ -1468,20 +1468,19 @@ be_visitor_ccm_pre_proc::create_uses_multiple_struct (
     AST_Component::port_description *pd
   )
 {
-  ACE_CString name (pd->id->get_string (),
-                    0,
-                    0);
-  name += "Connection";
-  Identifier id (name.fast_rep ());
-  UTL_ScopedName sn (&id,
-                              0);
+  UTL_ScopedName *full_name = 
+    this->create_scoped_name (0,
+                              pd->id->get_string (),
+                              "Connection",
+                              node);
   ACE_NEW_RETURN (this->connection_,
-                  be_structure (&sn,
+                  be_structure (0,
                                 0,
                                 0),
                   -1);
   this->connection_->set_defined_in (node);
   this->connection_->set_imported (node->imported ());
+  this->connection_->set_name (full_name);
 
   Identifier o_id ("objref");
   UTL_ScopedName o_sn (&o_id,
@@ -1554,22 +1553,21 @@ be_visitor_ccm_pre_proc::create_uses_multiple_sequence (
       -1
     );
 
-  ACE_CString base_name (pd->id->get_string (),
-                         0,
-                         0);
-  base_name += "Connections";
-  Identifier id (base_name.fast_rep ());
-  UTL_ScopedName sn (&id,
-                     0);
+  UTL_ScopedName *sn = 
+    this->create_scoped_name (0,
+                              pd->id->get_string (),
+                              "Connections",
+                              node);
   AST_Typedef *td = 0;
   ACE_NEW_RETURN (td,
                   be_typedef (this->connections_,
-                              &sn,
+                              0,
                               0,
                               0),
                   -1);
   td->set_defined_in (node);
   td->set_imported (node->imported ());
+  td->set_name (sn);
 
   if (node->be_add_typedef (td) == 0)
     {

@@ -915,7 +915,7 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
           return 0;
         }
     }
-
+ACE_DEBUG ((LM_DEBUG, "ast_interface::fe_add_typedef\n"));
   // Add it to scope.
   this->add_to_scope (t);
 
