@@ -1,3 +1,12 @@
+Wed Feb 26 00:38:50 2002 UTC  Don Hinton <dhinton@ieee.org>
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor.cpp:
+	* ace/Select_Reactor_T.cpp:
+
+	  Removed ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION since
+	  it isn't used.
+
 Tue Feb 26 22:54:50 2002 UTC  Don Hinton <dhinton@ieee.org>
 	
 	* ace/Synch.i (ACE_Noop_Token::queueing_strategy):
