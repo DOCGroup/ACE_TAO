@@ -95,6 +95,7 @@ CONTROLLED_FILES = \
         FAQ \
         Makefile \
         Makefile.am \
+        NEWS \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
@@ -132,7 +133,6 @@ CONTROLLED_FILES = \
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
         ACE_wrappers/ACE-INSTALL \
-        ACE_wrappers/NEWS \
         ACE_wrappers/man
 
 ALL_RELEASE_FILES = \
@@ -157,7 +157,7 @@ CHECK =
 GENERATE_MAN_PAGES = $(ACE_ROOT)/bin/generate_man_pages
 
 #### The release target creates the ACE (only) kit.
-release: ACE-INSTALL NEWS
+release: ACE-INSTALL
 	@$(GENERATE_MAN_PAGES)
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
@@ -181,6 +181,3 @@ releaseall: release
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
-
-NEWS: VERSION
-	@cp VERSION NEWS
