@@ -1,3 +1,38 @@
+Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Process.{h,cpp} (env_argv): added "const" to char * type in
+	  return type, for argument compatibility in call to ACE_OS::execve ().
+
+	* ace/Process.cpp (spawn): removed unreachable return statement at
+	  end of function.
+
+	Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
+	reporting the above two problems.
+
+	* ace/{IOStream*,Makefile}: Split out templates into
+	  ace/IOStream_T.{h,cpp} files.  This way, automatic template
+	  instantiation systems that require templates to be in separate
+	  files, such as on Irix 6.2, will be able to build IOStream_Test
+	  and the ACE_IOStream examples without warnings.  (The
+	  ACE_IOSTREAM_BUILDING_TEMPLATE macro that did this only worked
+	  if ACE_TEMPLATES_REQUIRE_SOURCE was defined.  It's no longer
+	  needed with the separate template files.)
+
+	* tests/IOStream_Test.cpp,
+	  examples/IOStream/client/iostream_client.cpp,
+	  examples/IOStream/server/iostream_server.cpp:
+	  swapped ACE_Streambuf and ACE_Streambuf_T class names so that
+	  the template class has the "_T".  And renamed ACE_IOStream_T
+	  for consistency.
+
+	* ace/{IOStream.*,README},
+	  tests/IOStream_Test.cpp,
+	  examples/IOStream/client/iostream_client.cpp,
+	  examples/IOStream/server/iostream_server.cpp:
+	  Added ACE_LACKS_ACE_IOSTREAM protection
+	  so that these can easily be built on platforms that have
+	  trouble with ACE_IOStream.
+
 Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
