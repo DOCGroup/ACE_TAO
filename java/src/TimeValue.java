@@ -95,7 +95,7 @@ public class TimeValue
    * Get current time.
    *@return the current system time
    */
-  public static TimeValue gettimeofday ()
+  public static TimeValue getTimeOfDay ()
   {
     return new TimeValue (System.currentTimeMillis ());
   }
