@@ -22,7 +22,7 @@ ACE_RCSID(Default_Servant, File_i, "$Id$")
 FileImpl::System::System (PortableServer::POA_ptr poa)
  : poa_ (PortableServer::POA::_duplicate (poa)),
    // Create the Default Descriptor Servant
-    fd_servant_ (poa)
+   fd_servant_ (poa)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   // set the default servant of the POA
@@ -54,13 +54,7 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      //CORBA::Exception exception = File::IOError (errno);
       ACE_THROW_RETURN (File::IOError (), 0);
-
-      /*      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        exception);
-                        ACE_CHECK_RETURN (0);*/
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -111,20 +105,57 @@ FileImpl::Descriptor::_default_POA (CORBA::Environment &)
 ACE_HANDLE
 FileImpl::Descriptor::fd (CORBA::Environment &ACE_TRY_ENV)
 {
+  //
+  // One way of getting our id.
+  //
+
   // Get a reference to myself
   File::Descriptor_var me = this->_this (ACE_TRY_ENV);
-
   ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
   // Get the ObjectId from the reference
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var oid1 =
     this->poa_->reference_to_id (me.in (), ACE_TRY_ENV);
-
   ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
-    // Convert the ObjectId to a string
+  //
+  // Another way of getting our id.
+  //
+
+  PortableServer::ObjectId_var oid2 =
+    this->poa_->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+
+  //
+  // Yet another way of getting our id.
+  //
+
+  int argc = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+
+  // Get the POA Current object reference
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("POACurrent",
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+
+  // Narrow the object reference to a POA Current reference
+  PortableServer::Current_var poa_current =
+    PortableServer::Current::_narrow (obj.in (),
+                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+
+  PortableServer::ObjectId_var oid3 =
+    poa_current->get_object_id (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+
+  ACE_ASSERT (oid1.in () == oid2.in ());
+  ACE_ASSERT (oid2.in () == oid3.in ());
+
+  // Convert the ObjectId to a string
   CORBA::String_var s =
-    PortableServer::ObjectId_to_string (oid.in ());
+    PortableServer::ObjectId_to_string (oid1.in ());
 
   // Get the ACE_HANDLE from the string
   return (ACE_HANDLE) ::atol (s.in ());

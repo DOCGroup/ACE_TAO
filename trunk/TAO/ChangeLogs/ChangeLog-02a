@@ -363,6 +363,24 @@ Sat Apr 15 14:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/Makefile.CosNotification:
           Fix problems with DU/CXX builds.
 
+Fri Apr 14 21:40:49 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (servant_to_id_i): The following functionality was
+	  missing from the POA since it was added recently to the spec: If
+	  the POA has the USE_DEFAULT_SERVANT policy, the servant
+	  specified is the default servant, and the operation is being
+	  invoked in he context of executin a request on the default
+	  servant, then the ObjectId associated with the current
+	  invocation is returned.
+
+	  Thanks to Steve Totten <totten_s@ociweb.com> for noticing this
+	  and providing a patch for the missing implementation.
+
+	* examples/POA/Default_Servant/File_i.cpp: Added two additional
+	  ways of accessing our object id.  This will act as a test for
+	  the new implementation for servant_to_id() and for access to the
+	  POA Current.
+
 Fri Apr 14 18:21:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
