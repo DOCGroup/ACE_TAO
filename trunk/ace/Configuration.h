@@ -210,17 +210,17 @@ public:
   // subsections are created.  Returns 0 on success, non zero on error
   // The path consists of sections separated by the backslash '\'
 
-  int export (const ASYS_TCHAR* filename);
+  int _export (const ASYS_TCHAR* filename);
   // exports the configuration database to filename.  if <filename> is 
   // alredy present, it is overwritten
 
-  int import (const ASYS_TCHAR* filename);
+  int _import (const ASYS_TCHAR* filename);
   // imports the configuration database from filename.  Any existing data
   // is not removed.
 
 
 protected:
-  ACE_Configuration ();
+  ACE_Configuration (void);
   // Default ctor
   
   ACE_Section_Key_Internal* get_internal_key (
