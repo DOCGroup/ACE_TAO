@@ -218,7 +218,10 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           return -1;
         }
       else
-        return 1;
+        // 1 indicates a "short-circuit" return.  This handles the
+        // rather bizarre semantics of checking all the interfaces on
+        // NT.
+        return 1; 
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
@@ -304,7 +307,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                  ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol,
-								 protocolinfo) == 0)
+                                 protocolinfo) == 0)
               ++nr_subscribed;
           }
 
@@ -316,7 +319,10 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           return -1;
         }
       else
-        return 1;
+        // 1 indicates a "short-circuit" return.  This handles the
+        // rather bizarre semantics of checking all the interfaces on
+        // NT.
+        return 1; 
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
@@ -356,7 +362,9 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                     protocol_family,
                                     protocol,
                                     reuse_addr);
-  // Check for the "short-circuit" return value of 1 (for NT).
+  // Check for the "short-circuit" return value of 1 (for NT).  This
+  // handles the rather bizarre semantics of checking all the
+  // interfaces on NT.
   if (result != 0)
     return result;
 
