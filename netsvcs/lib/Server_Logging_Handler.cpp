@@ -11,15 +11,6 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1>
 COUNTER ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::request_count_ = (COUNTER) 0;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-int 
-ACE_Server_Logging_Acceptor::make_svc_handler (SERVER_LOGGING_HANDLER *&handler)
-{
-  ACE_NEW_RETURN (handler, SERVER_LOGGING_HANDLER (ACE_Service_Config::thr_mgr (),
-						   &this->lock_),
-						   -1);
-  return 0;
-}
-
 int
 ACE_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
 {
@@ -91,10 +82,7 @@ ACE_Server_Logging_Acceptor::init (int argc,
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1>
 ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::ACE_Server_Logging_Handler 
-  (ACE_Thread_Manager *,
-   ACE_SYNCH_MUTEX_T *lock)
-    : lock_ (*lock)
-    
+  (ACE_Thread_Manager *)
 {
   this->host_name_[0] = '\0'; // Initialize to a known state.
 }
@@ -144,7 +132,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
 	  {
 	    // Serialize output, if necessary (i.e., if we are running
 	    // in separate threads).
-	    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+	    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, *this->lock_, -1));
 
 	    lp.print (this->host_name_, 0, stderr);
 	  }
@@ -201,25 +189,15 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_inpu
   return this->handle_logging_record () > 0 ? 0 : -1;
 }
 
-class ACE_Thr_Server_Logging_Acceptor : public ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>
-  // = TITLE
-  //     This class implements the ACE multi-threaded logging service.
-  //
-  // = DESCRIPTION
-  //     This class contains the service-specific methods that can't
-  //     easily be factored into the <ACE_Strategy_Acceptor>.
+int 
+ACE_Thr_Server_Logging_Acceptor::make_svc_handler (ACE_Thr_Server_Logging_Handler *&handler)
 {
-public:
-  virtual int init (int argc, char *argv[]);
-  // Dynamic linking hook.
-
-  int parse_args (int argc, char *argv[]);
-  // Parse svc.conf arguments.
-
-private:
-  ACE_Schedule_All_Threaded_Strategy<ACE_Thr_Server_Logging_Handler> scheduling_strategy_;
-  // The scheduling strategy is designed for multi-threaded services.
-};
+  ACE_NEW_RETURN (handler, 
+		  ACE_Thr_Server_Logging_Handler (ACE_Service_Config::thr_mgr (),
+						  &this->lock_),
+		  -1);
+  return 0;
+}
 
 int
 ACE_Thr_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
@@ -296,12 +274,6 @@ ACE_Thr_Server_Logging_Acceptor::init (int argc,
 ACE_SVC_FACTORY_DEFINE (ACE_Server_Logging_Acceptor)
 ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 
-// No-op...
-
-ACE_Thr_Server_Logging_Handler::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *)
-{
-}
-
 // Override definition in the ACE_Svc_Handler class (spawn a new
 // thread if we're configured with ACE_HAS_THREADS!).
 
@@ -330,6 +302,13 @@ ACE_Thr_Server_Logging_Handler::open (void *)
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);    
   return 0;
+}
+
+ACE_Thr_Server_Logging_Handler::ACE_Thr_Server_Logging_Handler
+   (ACE_Thread_Manager *, 
+    ACE_SYNCH_MUTEX *lock)
+{
+  this->lock_ = lock;
 }
 
 // Process remote logging records. 

@@ -3,7 +3,7 @@
 #include "JAWS/server/HTTP_Helpers.h"
 
 // = Static initialization.
-ACE_Thread_Mutex HTTP_Status_Code::lock_;
+ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
 const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 
