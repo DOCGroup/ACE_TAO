@@ -11,6 +11,15 @@ Wed Mar 18 07:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/typecode.cpp (private_equal): wrapped a break with
           ACE_NOTREACHED.
 
+        * tao/corbacom.h: changed CORBA_Boolean to u_char.  Thanks
+          to Seth and Carlos for pointing out that this will conform
+          to the standard.
+
+        * tao/cdr.i: removed operator <</>> for CORBA::Boolean _with_
+          ACE_HAS_BOOL.  No ACE platform currently #defines ACE_HAS_BOOL,
+          and this will prevent divergence of TAO code if any do in the
+          future.
+
 Wed Mar 18 02:08:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/client.cpp (~Param_Test_Client): Removed
