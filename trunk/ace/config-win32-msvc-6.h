@@ -52,7 +52,8 @@
 # define ACE_HAS_TYPENAME_KEYWORD
 # define ACE_HAS_USING_KEYWORD
 
-
+// No support for member templates.
+#define ACE_LACKS_MEMBER_TEMPLATES
 
 #define ACE_HAS_ITOA
 
@@ -139,6 +140,7 @@
 
 // While digging the MSVC 4.0 include files, I found how to disable
 // MSVC warnings: --Amos Shapira
+
 
 // "C4355: 'this' : used in base member initializer list"
 # pragma warning(disable:4355) /* disable C4514 warning */
