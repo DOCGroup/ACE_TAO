@@ -10,10 +10,6 @@
 // the modules knowing about IIOP.  In the future, a looser coupling
 // between OA initialiszation and protocol components is desired.
 
-#include <assert.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "orb.h"
 #include "boa.h"
 

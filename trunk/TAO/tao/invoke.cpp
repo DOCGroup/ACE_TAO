@@ -28,11 +28,6 @@
 // generate better code, which in some cases may be very hard to
 // unwind.
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-
 #include "orb.h"
 #include "cdr.h"
 #include "giop.h"

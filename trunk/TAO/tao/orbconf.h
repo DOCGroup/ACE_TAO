@@ -18,8 +18,8 @@
 // Owen Rees (rtor), Guangxing Li (gxl) and Mike Beasley (mdrb).
 //
 
-#ifndef	_ORB_CONFIG_HH
-#define	_ORB_CONFIG_HH
+#if !defined (TAO_ORB_CONFIG_H)
+#define	TAO_ORB_CONFIG_H
 
 #include "ace/OS.h"
 
@@ -28,7 +28,7 @@
 //
 #if	defined (__WIN32__)
 #	define _WIN32
-#endif	// BC++ convention
+#endif	/* BC++ convention */
 
 /* Define if you have the <widec.h> header file.  */
 #if !defined(linux) && !defined(_WIN32) && !defined(VXWORKS)
@@ -105,14 +105,14 @@
 #if	!defined (_WINSOCKAPI_)
 	// Winsock added nonstandard APIs
 #	define	closesocket(s)		close(s)
-#endif	// _WINSOCKAPI_
+#endif	/* _WINSOCKAPI_ */
 #endif
 
 #ifdef	minor
 	// namespace pollution that's common on older UNIXes,
     // XXX this can't go here, "autoconf" wants to own #undef
 /* #	undef	minor */
-#endif	// minor
+#endif	/* minor */
 
 //
 // For Win16, near/far pointers reflect same/other segment addressing.
@@ -173,10 +173,4 @@ typedef	unsigned long pid_t;
 #	define SELECT_INT_STAR
 #endif
 
-#if !defined(ACE_INVALID_HANDLE)
-#  if !defined(HAVE_STRDUP)
-#    define strdup(s) strcpy ((char *)malloc (strlen (s) + 1), s)
-#  endif
-#endif
-
-#endif	// _ORB_CONFIG_HH
+#endif	/* TAO_ORB_CONFIG_H */

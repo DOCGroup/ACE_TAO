@@ -66,10 +66,6 @@
 // only the data being fed to the interpreter must be protected
 // against concurrency.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-
 #include	"orb.h"
 #include	"cdr.h"
 

@@ -8,13 +8,7 @@
 // It's suitable only for a simple performance test just now ...
 
 
-#include	<string.h>
-#include	<unistd.h>
-
-#include	<sys/types.h>
-#include	<sys/time.h>
-
-#include	<orb.h>
+#include	"orb.h"
 
 #if defined(HAVE_WIDEC_H)
 #  include	<widec.h>

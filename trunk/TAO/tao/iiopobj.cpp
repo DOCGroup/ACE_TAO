@@ -8,15 +8,10 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<orb.h>
-
+#include "orb.h"
 #include	<initguid.h>
-#include	<string.h>
 
-#include	<stub.h>
-
+#include	"stub.h"
 #include	"iiopobj.h"
 
 #if !defined(__ACE_INLINE__)

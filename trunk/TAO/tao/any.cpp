@@ -32,10 +32,6 @@
 // COM NOTE: Yes, this is a utility data type whose implementation is
 // fully exposed.  Factories for these are not normally used in C++.
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-
 #include "orb.h"
 #include "cdr.h"
 
@@ -325,7 +321,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 			  (CORBA_TypeCode::VisitRoutine) deep_copy, 
 			  0, 
 			  env);
-#endif // replaced by our optimizations
+#endif /* replaced by our optimizations */
 
   (void) DEEP_COPY(_type, src._value, _value, env);
 }

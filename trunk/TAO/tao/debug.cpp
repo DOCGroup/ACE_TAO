@@ -11,31 +11,13 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
-
+#include	"orb.h"
 #include "debug.h"
 
-#include <ctype.h>
-#include <stdio.h>
-#include <stdarg.h>
-
-#if 0
-#if	unix
-#include <sys/types.h>
-
-#elif	defined (_WIN32)
-#	include	<windows.h>
-
-#endif
-#endif
-
-#ifndef	_POSIX_THREADS		// _POSIX_THREAD_SAFE_FUNCTIONS implied
+#if !defined (ACE_HAS_PTHREADS)		// _POSIX_THREAD_SAFE_FUNCTIONS implied
 #define	flockfile(f)
 #define funlockfile(f)
-#endif	// _POSIX_THREADS
+#endif /* ACE_HAS_PTHREADS */
 
 u_int ACE_Svc_Export TAO_debug_level	= 0;
 char * ACE_Svc_Export TAO_debug_filter	= "l";
@@ -59,7 +41,7 @@ static pid_t my_pid;
 
 #if defined (unix) || defined (VXWORKS)
 
-#ifdef	_POSIX_THREADS
+#if defined (ACE_HAS_PTHREADS)
 //
 // Use POSIX initialization support to initialize just once.
 //
@@ -81,7 +63,8 @@ emit_prefix (FILE *stream)
   ACE_OS::fprintf (stream, "p%ld t%ld:  ", (long) my_pid, (long) self);
 }
 
-#else	// !defined (_POSIX_THREADS)
+// !defined (ACE_HAS_PTHREADS)
+#else	
 
 // Without threads, guard initialization so it can be repeated,
 // and don't emit the thread ID in the messages.
@@ -96,8 +79,8 @@ setup (void)
     }
 }
 
-#define	emit_prefix (stream) fprintf (stream, "p%ld:  ", (long) my_pid)
-#endif	// !_POSIX_THREADS
+#define	emit_prefix(stream) fprintf (stream, "p%ld:  ", (long) my_pid)
+#endif	/* !ACE_HAS_PTHREADS */
 
 #elif	defined (_WIN32)
 
@@ -118,8 +101,7 @@ setup (void)
 #else
 
 #	error "unknown OS platform"
-#endif	// OS-specific initialization
-
+#endif /* OS-specific initialization */
 
 void ACE_Svc_Export
 dmsg_filter (const char *_FAR categories,
@@ -337,4 +319,4 @@ dmsg_opaque_full (char *_FAR label,
 #endif
 }
 
-#endif	// DEBUG && HAVE_VPRINTF
+#endif /* DEBUG && HAVE_VPRINTF */

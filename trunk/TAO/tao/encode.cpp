@@ -20,10 +20,6 @@
 // 
 // ============================================================================
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-
 #include        "orb.h"
 #include	"cdr.h"
 #include        "giop.h"

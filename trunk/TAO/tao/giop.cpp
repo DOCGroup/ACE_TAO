@@ -40,20 +40,11 @@
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
 
-#include <assert.h>
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "orb.h"
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Stream.h"
-
-#include "orb.h"
-
 #include "orbobj.h"
 #include "factories.h"
-
 #include "cdr.h"
 #include "giop.h"
 
@@ -161,7 +152,7 @@ GIOP::send_message (CDR &stream,
       //      dmsg_filter (6, "wrote %d bytes to connection %d",
       //	   writelen, connection);
       dmsg_filter (6, "wrote %d bytes", writelen);
-#endif	// DEBUG
+#endif	/* DEBUG */
 
       assert ((writelen >= 0 
 	       && ((size_t)writelen) <= buflen) || writelen == -1);
@@ -660,7 +651,7 @@ GIOP::Invocation::start (CORBA_Environment &env)
       dexc (env, "invoke, lookup client endpoint");
       return;
     }
-#endif    
+#endif /* USE_OLD_CODE */
 
   // POLICY DECISION: If the client expects most agents to forward,
   // then it could try to make sure that it's been forwarded at least
@@ -1203,7 +1194,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	    // NOTE: describe any service context, and how many bytes
 	    // of non-header data were sent.
 	  }
-#endif	// DEBUG
+#endif /* DEBUG */
 
 	// Verify that we're to dispatch the request within this
 	// particular process.

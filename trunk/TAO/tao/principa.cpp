@@ -5,11 +5,7 @@
 // ORB:		Principal identifier pseudo-objref
 //
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
-
+#include	"orb.h"
 #include	<initguid.h>
 
 void

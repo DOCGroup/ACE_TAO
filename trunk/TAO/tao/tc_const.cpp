@@ -14,10 +14,7 @@
 // THREADING NOTE:  no issues, these are immutable constants
 //
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
+#include	"orb.h"
 
 // Null and void
 

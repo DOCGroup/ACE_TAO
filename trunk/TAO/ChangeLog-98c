@@ -1,3 +1,33 @@
+Sat Jul  5 12:39:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tao: All throughout TAO I removed the direct use of system
+ 	include files in lieu of using ace/OS.h.
+
+	* tao/{orbobj,typecode}.cpp: orb.h must be included before others
+ 	include files. Previous includes prevent correct use of ACE config
+ 	flags, therefore, I removed them.  Thanks to Auturo Montes
+ 	<mitosys@colomsat.net.co> for reporting this.
+
+        * tao/{debug,roa}.cpp: changed _POSIX_THREADS to ACE_HAS_PTHREADS.
+  	Thanks to Auturo Montes <mitosys@colomsat.net.co> for reporting
+ 	this.
+
+	* tao/decode.cpp (decode): The casting (CORBA_ULong) kind is
+ 	unnessary and wrong so I removed it.  Thanks to Auturo Montes
+ 	<mitosys@colomsat.net.co> for reporting this.
+
+	* tao/debug.cpp (emit_prefix): Changed line 99 from
+
+	#define emit_prefix (stream) ...
+
+	to
+
+	#define emit_prefix(stream) ...
+
+	The blank character prevent after macro name (emit_prefix) prevent
+ 	correct definition.  Thanks to Auturo Montes
+ 	<mitosys@colomsat.net.co> for reporting this.
+
 Fri Jul  4 00:18:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/roa.h: Removed derogatory COMments ;-).  Thanks to Anton van

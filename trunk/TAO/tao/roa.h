@@ -72,10 +72,10 @@ public:
   // SHOULD PROBABLY MOVE TO BOA!
 
   // @@ Please make sure that all macros start with TAO_ ...
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
   CORBA_OctetSeq *get_target_key (CORBA_Environment &env);
   CORBA_Principal_ptr get_client_principal (CORBA_Environment &env);
-#endif /* RAO_NEED_REQ_KEY */
+#endif /* ROA_NEEDSS_REQ_KEY */
 
   virtual int handle_message (TAO_Dispatch_Context &context,
                               CORBA_Environment &env);
@@ -152,7 +152,7 @@ private:
   ACE_Thread_Mutex com_lock_;	
   // Locks critical sections in COM-related code (was tcpoa_lock).
 
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
   ACE_thread_key_t req_key_;	
   // Key into TSS for a thread's request header
 #endif

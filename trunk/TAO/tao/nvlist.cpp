@@ -4,11 +4,6 @@
 //
 // Implementation of Named Value List
 
-#include	<assert.h>
-#if !defined (VXWORKS)
-#include	<memory.h>
-#endif
-
 #include	"orb.h"
 #include        <initguid.h>
 
