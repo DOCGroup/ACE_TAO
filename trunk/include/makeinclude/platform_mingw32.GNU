@@ -50,4 +50,8 @@ wfmo = 1
 # for the details why to do this.
 LDFLAGS += -Wl,--enable-auto-import
 
+PWD=$(subst \,/,$(shell pwd))
+
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
+
+PRELIB:=
