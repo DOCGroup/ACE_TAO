@@ -52,4 +52,5 @@ private:
 
 };
 
+#include "ace/post.h"
 #endif /**/
