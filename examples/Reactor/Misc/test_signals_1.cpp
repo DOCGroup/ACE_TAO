@@ -98,12 +98,10 @@ main (int, char *argv[])
 
   // Make sure to remove my_handler before exiting main() since
   // otherwise weird things can happen...
-  if (ACE_Reactor::instance ()->remove_handler
-      (&my_handler,
-       ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
+  if (ACE_Reactor::instance ()->cancel_timer (&my_handler) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "%p\n",
-                       "remove_handler"),
+                       "cancel_timer"),
                       -1);
   return 0;
 }
