@@ -24,8 +24,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
-#include "ace/Object_Manager.h"
-#include "ace/Managed_Object.h"
+
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+# include "ace/Object_Manager.h"
+#endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 # include "ace/streams.h"
@@ -193,11 +195,11 @@ ACE_Log_Msg::instance (void)
 
   if (key_created_ == 0)
     {
-      ACE_Thread_Mutex *lock =
-        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-          (ACE_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK);
-
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
+      ACE_thread_mutex_t *lock =
+        ACE_reinterpret_cast (ACE_thread_mutex_t *,
+          ACE_OS_Object_Manager::preallocated_object[
+          ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+      ACE_OS::thread_mutex_lock (lock);
 
       if (key_created_ == 0)
         {
@@ -209,12 +211,15 @@ ACE_Log_Msg::instance (void)
             if (ACE_Thread::keycreate (&log_msg_tss_key_,
                                        &ACE_TSS_cleanup) != 0)
               {
+                ACE_OS::thread_mutex_unlock (lock);
                 return 0; // Major problems, this should *never* happen!
               }
           }
 
           key_created_ = 1;
         }
+
+      ACE_OS::thread_mutex_unlock (lock);
     }
 
   ACE_Log_Msg *tss_log_msg = 0;
@@ -335,8 +340,8 @@ void
 ACE_Log_Msg::close (void)
 {
   // Please note that this will be called by a statement that is
-  // harded coded into the ACE_Object_Manager's shutdown sequence,
-  // in its destructor.
+  // harded coded into the ACE_Object_Manager's shutdown sequence, in
+  // its destructor.
 
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }

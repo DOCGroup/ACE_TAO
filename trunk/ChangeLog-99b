@@ -1,23 +1,30 @@
+Wed Aug 18 19:08:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Object_Manager.{h,cpp},Log_Msg.cpp:
+          moved ACE_LOG_MSG_INSTANCE_LOCK from ACE_Object_Manager
+          to ACE_OS_Object_Manager, so that Log_Msg.cpp needn't
+          depend on Object_Manager for it.
+
 Wed Aug 18 18:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/SOCK_Send_Recv_Test.cpp:
-	  Fixed typo.
+        * tests/SOCK_Send_Recv_Test.cpp:
+          Fixed typo.
 
 Wed Aug 18 17:58:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* THANKS: 
-	* ace/README: 
-	* ace/config-irix6.x-common.h:
-	  Added new macro (ACE_HAS_BROKEN_DGRAM_SENDV) to handle platforms 
-	  where using sendmsg with exactly IOV_MAX elements in the iovec
-	  fails (normally the number of elements can be up to and
-	  including IOV_MAX).  Thanks to Tobin Bergen-Hill
-	  <tbhill@dctd.saic.com> for tracking this down.
+        * THANKS:
+        * ace/README:
+        * ace/config-irix6.x-common.h:
+          Added new macro (ACE_HAS_BROKEN_DGRAM_SENDV) to handle platforms
+          where using sendmsg with exactly IOV_MAX elements in the iovec
+          fails (normally the number of elements can be up to and
+          including IOV_MAX).  Thanks to Tobin Bergen-Hill
+          <tbhill@dctd.saic.com> for tracking this down.
 
 Wed Aug 18 16:08:46 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/SOCK_Send_Recv_Test.cpp: Reformatted this test so
-	  that it conforms to ACE programming guidelines.
+        * tests/SOCK_Send_Recv_Test.cpp: Reformatted this test so
+          that it conforms to ACE programming guidelines.
 
 Wed Aug 18 13:49:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
