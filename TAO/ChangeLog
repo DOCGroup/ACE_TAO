@@ -1,3 +1,12 @@
+Tue Jun 10 10:05:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp (visit_node):
+
+          Added fix to visitor logic for CDR input that was overlooked
+          when I added the same fix for CDR output in
+
+          Sun Jun  8 13:39:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Jun 10 09:33:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs\orbsvcs\IFRService\ComponentDef_i.cpp:
