@@ -1,17 +1,25 @@
+Fri Sep 25 23:19:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Sched_Params.cpp: use both ACE_HAS_STHREADS and
+          ACE_HAS_PRIOCNTL.  With just ACE_HAS_PRIOCNTL, the
+          min/max priority values weren't right on DU 4.0.  With
+          this change, we're back to the strict POSIX interface
+          on DU 4.0, and SunOS if ACE_HAS_STHREADS is not #defined.
+
 Fri Sep 25 21:58:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (set_handle_limit): Added appropriate return value.
 
 Fri Sep 25 22:10:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Map_Manager.cpp: 
+	* ace/Map_Manager.cpp:
 	  Map_Manager::close() did not reset the capacity or current size
 	  of the map.
 
 Fri Sep 25 18:24:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Proactor.{h,cpp}: Had to allow the definition of 
-	  POSIX_COMPLETION_STRATEGY for the do-nothing constructor on 
+	* ace/Proactor.{h,cpp}: Had to allow the definition of
+	  POSIX_COMPLETION_STRATEGY for the do-nothing constructor on
 	  NT.
 
 Fri Sep 25 18:07:19 EDT 1998   James CE Johnson  <jcej@lads.com>
