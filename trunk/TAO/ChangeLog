@@ -1,3 +1,10 @@
+Sun Aug 04 09:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html: Updated the release notes. Looks
+	  like it was woefully out-of-date! Included some of the latest
+	  concerns and plans in it. Need to make a pass again before the
+	  beta goes out of the door.
+
 Sun Aug  4 15:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation.h:
