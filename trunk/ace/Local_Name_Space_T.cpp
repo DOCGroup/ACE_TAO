@@ -833,9 +833,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+
   // This should really be a const cast
   ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *fake_this = 
     (ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *) this;
+  ACE_UNUSED_ARG (fake_this);
+
   ACE_SEH_TRY 
     {
       this->dump_i ();

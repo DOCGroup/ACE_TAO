@@ -126,13 +126,13 @@ ACE_Data_Block::size (size_t length)
 			    (char *) this->allocator_strategy_->malloc (length), 
 			    -1);
 
+      ACE_OS::memcpy (buf, this->base_, this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
 	this->allocator_strategy_->free ((void *) this->base_);
       else
 	// We now assume ownership.
 	ACE_CLR_BITS (this->flags_, ACE_Message_Block::DONT_DELETE);
 
-      ACE_OS::memcpy (buf, this->base_, this->cur_size_);
       this->max_size_ = length;
       this->cur_size_ = length;
       this->base_ = buf;
