@@ -1,3 +1,16 @@
+Tue Jan  4 17:55:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+	* Release:
+	* configure.ac:
+
+	  Updated for removal of tao-config.in and tao-config.1.in.
+
+	* tao-config.in:
+	* tao-config.1.in:
+
+	  Removed.
+
 Tue Jan  4 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Connection_Handler.{h,cpp,i}:
