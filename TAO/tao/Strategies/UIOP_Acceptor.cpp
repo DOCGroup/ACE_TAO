@@ -128,7 +128,12 @@ TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
       return -1;
     }
 
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+  // Do not add any tagged components to the profile if configured
+  // by the user not to do so, or if an UIOP 1.0 endpoint is being
+  // created (IIOP 1.0 did not support tagged components, so we follow
+  // the same convention for UIOP).
+  if (this->orb_core_->orb_params ()->std_profile_components () == 0
+      || (this->version_.major == 1 && this->version_.minor == 0))
     return 0;
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);

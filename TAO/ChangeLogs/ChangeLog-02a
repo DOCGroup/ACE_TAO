@@ -1,3 +1,21 @@
+Tue Jul 24 11:12:25 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.cpp (create_shared_profile,
+	  create_new_profile):
+	* tao/Strategies/DIOP_Acceptor.cpp
+	  (create_shared_profile, create_new_profile):
+	* tao/Strategies/SHMIOP_Acceptor.cpp (create_profile):
+	* tao/Strategies/UIOP_Acceptor.cpp (create_profile):
+
+	  Do not add any tagged components to the profile if an IIOP 1.0
+	  endpoint/profile is being created.  Tagged components were
+	  introduced in IIOP 1.1.  The same convention is adopted for the
+	  other pluggable protocols distributed with TAO (UIOP, SHMIOP,
+	  and DIOP).  SSLIOP already does this check since it requires
+	  tagged components in order to convey security association
+	  information to the client.  These changes address
+	  interoperability issues.
+
 Tue Jul 24 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Client_Task.cpp (validate_connection): Some
