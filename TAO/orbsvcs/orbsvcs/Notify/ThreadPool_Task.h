@@ -49,6 +49,9 @@ public:
   /// Call the base class init
   virtual int init (int argc, char **argv);
 
+  /// Call the base class init 
+  virtual void init (TAO_NS_AdminProperties&);
+
   virtual int close (u_long flags);
 
   /// Activate the threadpool
