@@ -89,7 +89,7 @@ public:
   // Override CORBA servant virtual methods
   virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
-  virtual void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   ///////////////////////////
