@@ -18,7 +18,9 @@ PACE_INLINE
 pace_passwd *
 pace_getpwuid (pace_uid_t uid)
 {
-  return getpwuid (uid);
+  pace_passwd * retval = (pace_passwd*)0;
+  PACE_UNUSED_ARG (uid);
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_SD_UOF */
 
@@ -31,16 +33,12 @@ pace_getpwuid_r (pace_uid_t uid,
                  pace_size_t bufsize,
                  pace_passwd ** result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return getpwuid_r (uid, pwd, buffer, bufsize, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
   PACE_UNUSED_ARG (uid);
   PACE_UNUSED_ARG (pwd);
   PACE_UNUSED_ARG (buffer);
   PACE_UNUSED_ARG (bufsize);
   PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */
 
@@ -49,7 +47,9 @@ PACE_INLINE
 pace_passwd *
 pace_getpwnam (const char * name)
 {
-  return getpwnam (name);
+  pace_passwd * retval = (pace_passwd*)0;
+  PACE_UNUSED_ARG (name);
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_SD_UOF */
 
@@ -62,15 +62,11 @@ pace_getpwnam_r (const char * name,
                  pace_size_t bufsize,
                  pace_passwd ** result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return getpwnam_r (name, pwd, buffer, bufsize, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
   PACE_UNUSED_ARG (name);
   PACE_UNUSED_ARG (pwd);
   PACE_UNUSED_ARG (buffer);
   PACE_UNUSED_ARG (bufsize);
   PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */
