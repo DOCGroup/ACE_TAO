@@ -88,7 +88,7 @@ deinstall.local:
 	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.so=$(INSLIB)/%*.so)
 
 
-#### To disable installs, just remove write permission from $WRAPPER_ROOT/ace.
+#### To disable installs, just remove write permission from $ACE_ROOT/ace.
 #### Or, add "INSTALL=" to your "make" invocation.
 
 $(INSBIN)/%$(VAR) \
@@ -147,9 +147,9 @@ endif
 depend.local: $(MAKEFILE)
 	@$(RM) -f $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
-	$(WRAPPER_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
+	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
 	@cat $(MAKEFILE) | \
-		sed -e "s;$(WRAPPER_ROOT);\$$(WRAPPER_ROOT);g" \
+		sed -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
 		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 		    -e "/:$$/d" \
 		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .shobj/\1.so:;" \

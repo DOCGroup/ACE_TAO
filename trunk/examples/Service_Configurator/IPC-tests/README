@@ -1,5 +1,5 @@
 This file describes how to invoke the Reactor client/server tests in
-the $WRAPPER_ROOT/tests/Reactor/{client,server} directories.
+the $ACE_ROOT/tests/Reactor/{client,server} directories.
 
 These tests exercise all of the IPC_SAP communication mechanisms, the
 Reactor event demultiplexor, and the Service Configurator dynamic
@@ -10,7 +10,7 @@ ics.uci.edu in the ftp/gnu/C++_wrappers_doc.tar.Za[a-c] files.
 
 The key to running the Reactor client/server tests is to understand
 the purpose of the svc.conf file located in the
-$WRAPPER_ROOT/tests/Reactor/server directory.  This file contains a
+$ACE_ROOT/tests/Reactor/server directory.  This file contains a
 list of services that may be dynamically configured into a the address
 space of a network daemon process.  If you look at the example
 svc.conf file included in the Reactor tests you'll see that most of

@@ -15,10 +15,10 @@
 #### This is kind of messy so that it can support multiple
 #### targets.  You'll need to set CPU to a supported CPU
 #### using one of these methods (unless your CPU is a PowerPC 604):
-#### 1) create a $WRAPPER_ROOT/include/makeinclude/platform_macros.GNU
+#### 1) create a $ACE_ROOT/include/makeinclude/platform_macros.GNU
 ####    that contains something like:
 ####  CPU = I80486
-####  include $(WRAPPER_ROOT)/include/makeinclude/platform_vxworks5.2_g++.GNU
+####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.2_g++.GNU
 #### 2) modify the code below to set CPU, or
 #### 3) set CPU on the command line, e.g., "make CPU=I80486"
 ifeq ($(CPU),)
@@ -45,7 +45,7 @@ BIN_DIR		= $(HOST_DIR)/bin
 
 CC		= cc$(TOOLENV)
 CXX		= g++$(TOOLENV)
-CFLAGS		+= -DVXWORKS -D_REENTRANT -I. -I$(WRAPPER_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+CFLAGS		+= -DVXWORKS -D_REENTRANT -I. -I$(ACE_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
@@ -59,7 +59,7 @@ PIC		=
 AR		= ar$(TOOLENV)
 ARFLAGS		= rv
 RANLIB		= /bin/true
-PRELINK		= nm$(TOOLENV) .obj/$@.o $(WRAPPER_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
+PRELINK		= nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)

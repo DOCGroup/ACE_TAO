@@ -34,12 +34,12 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
 LDFLAGS    += -L../../../proto/lib

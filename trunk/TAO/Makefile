@@ -26,20 +26,20 @@ CLONE	= Makefile \
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.nested.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.nolocal.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
 # For the following to work you need to compile the
-# $(WRAPPER_ROOT)/bin/clone.cpp file and install it in your ~/bin
+# $(ACE_ROOT)/bin/clone.cpp file and install it in your ~/bin
 # directory (or some place similar).
 
 clone:
 	@for dir in $(CLONE) ;\
 	do \
-		(clone -s $(WRAPPER_ROOT)/$$dir $$dir) \
+		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
 
 RELEASE_FILES = TAO/ChangeLog \

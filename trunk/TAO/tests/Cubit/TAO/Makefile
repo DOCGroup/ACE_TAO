@@ -34,18 +34,18 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include $(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
 #LDFLAGS    += -L../../../proto/lib
 #CPPFLAGS   += -I../../../proto/include -DUSE_ACE_EVENT_HANDLING -DDEBUG
 ifndef TAO_ROOT
-TAO_ROOT = $(WRAPPER_ROOT)/TAO
+TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat

@@ -1,6 +1,6 @@
 -*- mode: outline; outline-regexp: "	*\\[" -*-
 
-This file groups each file in $WRAPPER_ROOT/ace into its appropriate
+This file groups each file in $ACE_ROOT/ace into its appropriate
 class category.
 
 [ACE]

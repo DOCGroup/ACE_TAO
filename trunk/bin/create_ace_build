@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #
 # Creates an ACE build tree in directory "build/<build name>" below the current
 # directory, which must be an ACE "top level" directory (such as
-# $WRAPPER_ROOT).  The build tree directory structure mirrors that of the ACE
+# $ACE_ROOT).  The build tree directory structure mirrors that of the ACE
 # top level directory structure, except that instead of containing any plain
 # files, it contains only symlinks to the files in the ACE top level structure.
 #
@@ -70,7 +70,7 @@ $build = "build/$build";
 #### check that we're in an ACE "top level" directory
 ####
 ( -d 'ace' && -d 'examples' && -d 'netsvcs' )  ||
-    die "$0:  must be in an ACE top level (WRAPPER_ROOT) directory!\n";
+    die "$0:  must be in an ACE top level (ACE_ROOT) directory!\n";
 
 ####
 #### Create build directories, if needed.

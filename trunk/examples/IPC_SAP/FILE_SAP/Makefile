@@ -20,12 +20,12 @@ BUILD = $(VBIN)
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Local targets
@@ -38,30 +38,30 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/client.o .shobj/client.so: client.cpp \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/OS.i \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/FILE_Addr.h \
- $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/Addr.i \
- $(WRAPPER_ROOT)/ace/FILE_Addr.i \
- $(WRAPPER_ROOT)/ace/SString.h \
- $(WRAPPER_ROOT)/ace/SString.i \
- $(WRAPPER_ROOT)/ace/FILE_Connector.h \
- $(WRAPPER_ROOT)/ace/FILE_IO.h \
- $(WRAPPER_ROOT)/ace/FILE.h \
- $(WRAPPER_ROOT)/ace/IO_SAP.h \
- $(WRAPPER_ROOT)/ace/IO_SAP.i \
- $(WRAPPER_ROOT)/ace/FILE.i \
- $(WRAPPER_ROOT)/ace/FILE_IO.i \
- $(WRAPPER_ROOT)/ace/FILE_Connector.i
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/FILE_Addr.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/FILE_Addr.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/FILE_Connector.h \
+ $(ACE_ROOT)/ace/FILE_IO.h \
+ $(ACE_ROOT)/ace/FILE.h \
+ $(ACE_ROOT)/ace/IO_SAP.h \
+ $(ACE_ROOT)/ace/IO_SAP.i \
+ $(ACE_ROOT)/ace/FILE.i \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ $(ACE_ROOT)/ace/FILE_Connector.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

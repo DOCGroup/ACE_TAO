@@ -16,8 +16,8 @@ Please let me know if you have any questions or comments.
 1. SIGHUP
 
 > 1) Where the heck does the HUP signal get registered for the 
-> $WRAPPER_ROOT/tests/Service_Configurator/server stuff? I looked there and
-> in $WRAPPER_ROOT/libsrc/Service_Configurator. No luck. I guess I am
+> $ACE_ROOT/tests/Service_Configurator/server stuff? I looked there and
+> in $ACE_ROOT/libsrc/Service_Configurator. No luck. I guess I am
 > just blind from reading.
 
 	Take a look in ./libsrc/Service_Configurator/Service_Config.h.
@@ -167,7 +167,7 @@ OS/Compiler defines in <sys/signal.h>
 > Can anyone tell me a way to turn off the creation of the shared libraries
 > in the ACE build.
 
-You can simply comment out the LIB target in the $WRAPPER_ROOT/ace/Makefile
+You can simply comment out the LIB target in the $ACE_ROOT/ace/Makefile
 or change the BUILD target from
 
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA)
@@ -915,7 +915,7 @@ directory.
 
 23. 
 
-> When I try to compile $WRAPPER_ROOT/src/Message_Queue.C on a Solaris
+> When I try to compile $ACE_ROOT/src/Message_Queue.C on a Solaris
 > 5.3 system using SUNPro CC 4.0, the compiler aborts with a Signal 10
 > (Bus Error).  Our copy of CC 4.0 is over a year old and I do not
 > know if any patches or upgrades exist for it.  If they do, then we
@@ -1058,7 +1058,7 @@ make things work, but it seems to do the job for my system.
 in rules.lib.GNU...
 
 $(VLIB): $(VOBJS)
-    - CC -pts -pth -ptb -ptv -I$(WRAPPER_ROOT)/include $(VOBJS)
+    - CC -pts -pth -ptb -ptv -I$(ACE_ROOT)/include $(VOBJS)
     $(AR) $(ARFLAGS) $@ $? ./ptrepository/*.o
     -$(RANLIB) $@
     -chmod a+r $@
@@ -1244,10 +1244,10 @@ more elegantly!
 I think you can solve this problem as follows:
 
 % cd ACE_WRAPPERS
-% setenv WRAPPER_ROOT $cwd
+% setenv ACE_ROOT $cwd
 % cd HP-UXA.09.05-g1
 % make -f ../Makefile clone
-% setenv WRAPPER_ROOT $cwd
+% setenv ACE_ROOT $cwd
 % make
 
 That should build the links correctly since they'll point to the
@@ -1652,7 +1652,7 @@ this:
 There are a number of places to find more information on this sort of
 design:
 
-	1. $WRAPPER_ROOT/apps/Gateway/Gateway/Channel.cpp --
+	1. $ACE_ROOT/apps/Gateway/Gateway/Channel.cpp --
 	   This Gateway application example shows the C++ code.
 
 	2. http://www.cs.wustl.edu/~schmidt/TAPOS-95.ps.gz --
@@ -1857,7 +1857,7 @@ How this signal is handled depends on several factors:
 
 For examples of how this works, please check out
 
-$WRAPPER_ROOT/examples/Reactor/Misc/test_signals.cpp
+$ACE_ROOT/examples/Reactor/Misc/test_signals.cpp
 
 This contains a long comment that explains precisely how everything
 works!

@@ -44,14 +44,14 @@
 #	VAR		Variant identifier suffix
 #	VDIR		Directory for object code
 #	VSHDIR		Directory for shared object code
-#	WRAPPER_ROOT	Pathname for the root of the build tree
+#	ACE_ROOT	Pathname for the root of the build tree
 #
 #----------------------------------------------------------------------------
 #	Platform-dependent macro definitions
 #       (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
-include $(WRAPPER_ROOT)/include/makeinclude/platform_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 #----------------------------------------------------------------------------
 #	Platform-independent macro definitions
@@ -60,12 +60,12 @@ include $(WRAPPER_ROOT)/include/makeinclude/platform_macros.GNU
 CPPFLAGS	+= $(DEFFLAGS) $(INCLDIRS)
 IDL		= idl
 IDLFLAGS	= -s S.cpp -c C.cpp
-INCLDIRS	+= -I. -I$(WRAPPER_ROOT)
-INSBIN		= $(WRAPPER_ROOT)/bin
-INSINC		= $(WRAPPER_ROOT)/ace
-INSLIB		= $(WRAPPER_ROOT)/ace
-INSMAN		= $(WRAPPER_ROOT)/man
-LDFLAGS		+= -L$(WRAPPER_ROOT)/ace -L./
+INCLDIRS	+= -I. -I$(ACE_ROOT)
+INSBIN		= $(ACE_ROOT)/bin
+INSINC		= $(ACE_ROOT)/ace
+INSLIB		= $(ACE_ROOT)/ace
+INSMAN		= $(ACE_ROOT)/man
+LDFLAGS		+= -L$(ACE_ROOT)/ace -L./
 LEX		= flex
 OCFLAGS		+= -O
 OCCFLAGS	+= -O
@@ -82,7 +82,7 @@ ifdef MVSLIB
   # Special for MVS in order to build .x files
   VLDLIBS :=$(VLDLIBS:$(VSHDIR)%.so=$(VDIR)%.o)
   ifeq ($(findstring .x,$(MVSLIB)),.x)
-    VLDLIBS :=$(VLDLIBS:-l%=$(WRAPPER_ROOT)/ace/lib%.x) $(MVSLIB)
+    VLDLIBS :=$(VLDLIBS:-l%=$(ACE_ROOT)/ace/lib%.x) $(MVSLIB)
   else
     LDLIBS :=$(VLDLIBS) $(MVSLIB)
   endif
