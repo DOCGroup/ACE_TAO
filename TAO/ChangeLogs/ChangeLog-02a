@@ -1,17 +1,24 @@
+Fri Jun 09 15:18:50 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp
+          (visit_valuetype):
+          removed extraneous ; after closing } for the exception holder
+          ctor and dtor.
+
 Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Encodable.h
+        * tao/Encodable.h
         * tao/PolicyC.h
         * tao/Policy_Factory.h
-        
+
           Coding style and comments rewiew plus code review
           comments for Marina.
-          
-        * tao/Policy_Factory.i        
-            
-          Added ACE_UNUSED_ARG to fix warning when TAO_HAS_RT_CORBA 
+
+        * tao/Policy_Factory.i
+
+          Added ACE_UNUSED_ARG to fix warning when TAO_HAS_RT_CORBA
           is not enabled.
-          
+
           Coding style and comments rewiew plus code review
           comments for Marina.
 
@@ -20,10 +27,10 @@ Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/Profile.cpp
 
           Fixed memory management problem related to <policy_list_>.
-          
+
           Coding style and comments rewiew plus code review
           comments for Marina.
-          
+
         * tao/RTCORBAC.h
 
           Coding style and comments rewiew.
@@ -32,19 +39,19 @@ Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/Policy_Factory.i
 
           Renamed class <Policy_Factory> to <TAO_Policy_Factory>.
-	  
-	  Updated factory method to create <TAO_ClientProtocolPolicy>
-	  instead of <TAO_ServerProtocolPolicy>.
-	
+
+          Updated factory method to create <TAO_ClientProtocolPolicy>
+          instead of <TAO_ServerProtocolPolicy>.
+
         * tao/RT_Policy_i.cpp
         * tao/RT_Policy_i.h
 
           Renamed class <TAO_Proto_Properties_Factory> to
           <TAO_Protocol_Properties_Factory>.
-	  
-	  Changed <TAO_ClientProtocolPolicy> to be client exposed
-	  instead of <TAO_ServerProtocolPolicy>.
-	
+
+          Changed <TAO_ClientProtocolPolicy> to be client exposed
+          instead of <TAO_ServerProtocolPolicy>.
+
           Coding style and comments rewiew.
 
 Fri Jun  9 09:45:03 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -101,9 +108,9 @@ Fri Jun  9 09:03:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jun 09 10:55:33 2000  David L. Levine  <levine@cs.wustl.edu>
 
-        * be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp
-          (visit_operation): removed extraneous ; after closing } for
-          the function.
+        * TAO_IDL/be/be_visitor_operation/
+            ami_handler_reply_stub_operation_cs.cpp (visit_operation):
+          removed extraneous ; after closing } for the function.
 
 Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
