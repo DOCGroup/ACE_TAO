@@ -193,11 +193,18 @@ TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
   this->obj_ = 0;  // cannot delete this as we do not own it
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Iterator<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<char const*, CORBA_Object_ptr>;
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#endif
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Iterator<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Manager<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Entry<char const*, CORBA_Object_ptr>;
+#pragma instantiate ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

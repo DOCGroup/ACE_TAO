@@ -1,3 +1,20 @@
+Wed Aug  6 13:56:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/{connect,factories,giop,iiopobj,marshal,objtable,
+ 	optable,orbobj,roa}.cpp: Changed explicit template instantiations
+ 	to use the new ACE enabling macro as well as adding the #pragma
+ 	instantiate to placate Edison Design Group compilers.
+
+	* tao/cdr.h: Changed default for CDR CTOR marshal factory to
+ 	reflect the new name of the default marshal factory variable.
+
+	* tao/orbobj.cpp (CORBA_ORB_init): Inserted call to
+ 	TAO_Marshal::initialize().
+
+	* tao/marshal.*: Added TAO_Marshal class to scope static
+ 	initialization methods for the marshalling engine.
+  	TAO_DEFAULT_MARSHAL_FACTORY has moved inside of this.
+
 Sun Aug  3 13:12:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO: Continued to improve the formatting of these
