@@ -123,12 +123,12 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> " << fname  << "_forany "
-          << "(ACE_static_cast (" << fname << "_slice *, "
+          << "(ACE_const_cast (" << fname << "_slice *, "
           << "_tao_aggregate." << f->local_name () << ")))";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << " << fname << "_forany "
-          << "(ACE_static_cast (" << fname << "_slice *, "
+          << "(ACE_const_cast (" << fname << "_slice *, "
           << "_tao_aggregate." << f->local_name () << ")))";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:

@@ -53,14 +53,34 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // generate the CDR << and >> operator declarations
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator<< (TAO_OutputCDR &, const "; 
+  // @@ TODO: this should be done in the node, it is absurd to repeat
+  // this code all over the visitors!!!!
   if (!this->ctx_->tdef ())
-    *os << "_";
-  *os << node->name () << "_forany &); // " << be_nl;
+    {
+      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
+      be_decl* parent = scope->decl ();
+      *os << parent->fullname ()
+          << "::_" << node->local_name ()
+          << "_forany &);" << be_nl;
+    }
+  else
+    {
+      *os << node->name () << "_forany &);" << be_nl;
+    }
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator>> (TAO_InputCDR &, ";
   if (!this->ctx_->tdef ())
-    *os << "_";
-  *os << node->name () << "_forany &);\n";
+    {
+      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
+      be_decl* parent = scope->decl ();
+      *os << parent->fullname ()
+          << "::_" << node->local_name ()
+          << "_forany &);" << be_nl;
+    }
+  else
+    {
+      *os << node->name () << "_forany &);" << be_nl;
+    }
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;
