@@ -3,6 +3,9 @@ Wed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.{i,cpp} (inet_ntoa): use VxWorks' native inet_ntoa.  It's
           not documented but it works.
 
+        * include/makeinclude/rules.local.GNU: removed extra "fi" in
+          install operation.
+
 Tue Nov 11 23:44:17 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.45, released Tue Nov 11 23:44:17 1997.
@@ -14,7 +17,7 @@ Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  whether ACE works.  Thanks to Chuck Gehr and Steve Coy for this
  	  suggestion.
 
-        * tests/UNIXclerk.conf: Changed "merengue" to "localhost." 
+        * tests/UNIXclerk.conf: Changed "merengue" to "localhost."
           Thanks to Steve Coy for this suggestion.
 
         * ace/config-lynxos.h (getopt): Missing 't' from const => see
