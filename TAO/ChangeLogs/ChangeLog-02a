@@ -1,3 +1,10 @@
+Tue Apr 17 22:33:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Thread_Pool/server.cpp (main): Changed FALSE to 0.
+
+	* tests/RTCORBA/Thread_Pool/Makefile (BIN_UNCHECKED): Targets
+	  should be labeled as BIN_UNCHECKED rather than BIN.
+
 Tue Apr 17 22:09:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/TypeCode_Creation/TypeCode_Creation.dsp:
