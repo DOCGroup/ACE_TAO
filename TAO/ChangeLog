@@ -2,7 +2,7 @@ Mon Jul 19 13:21:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
         * TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
-        
+
           - Added code generation for attributes. This closes
             [BUGID:1880].
           - Added code generation for oneway operations, since if
@@ -21,7 +21,7 @@ Mon Jul 19 11:08:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/fe_extern.cpp:
         * TAO_IDL/fe/fe_init.cpp:
         * TAO_IDL/include/fe_extern.h:
-        
+
           Moved calls to ACE_Utils::UUID_GENERATOR::instance ()
           (which returns a template singleton instantiation)
           from the TAO_IDL executable to the front end library.

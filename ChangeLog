@@ -1,6 +1,6 @@
 Mon Jul 19 17:40:15 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/WFMO_Reactor.cpp (bind_i): 
+	* ace/WFMO_Reactor.cpp (bind_i):
 
 	  Adam Rymarczuk noted that crashes occurred while adding handles
 	  to the Reactor when the pending additions exceeded what the
@@ -14,8 +14,8 @@ Mon Jul 19 17:40:15 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  The solution to fix the out-of-bounds write is to add the check:
 
 		this->handles_to_be_added_ < this->max_size_
-	 
-	  to the bind_i() method.  
+
+	  to the bind_i() method.
 
 	  Thanks to Adam Rymarczuk <adam.rymarczuk@suntradingllc.com> for
 	  reporting this problem.  This closes bug 1878.
