@@ -68,6 +68,13 @@
 // Compiler supports template specialization.
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Preprocessor needs some help with data types
+#  if defined (__LP64__)
+#    define ACE_SIZEOF_LONG 8
+#  else
+#    define ACE_SIZEOF_LONG 4
+#  endif
+
 #endif /* __cplusplus < 199707L */
 
 // Compiler supports the ssize_t typedef.
