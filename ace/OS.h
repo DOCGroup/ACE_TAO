@@ -3943,6 +3943,12 @@ private:
   static void print_error_message (u_int line_number, const ACE_TCHAR *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  friend int ACE_OS::netdb_acquire (void);
+  friend int ACE_OS::netdb_release (void);
+# endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
+  friend ssize_t ACE_OS::pread(int, void*, unsigned int, long long int);
+  friend ssize_t ACE_OS::pwrite(int, const void*, unsigned int, long long int);
   friend time_t ACE_OS::mktime(tm*);
   friend int ACE_OS::atexit(void (*)());
   friend class ACE_Object_Manager;
