@@ -26,6 +26,17 @@ Fri Aug 25 16:59:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  creating dependencies. That seem to break on every alternate
 	  platform.
 
+Fri Aug 25 16:51:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+	  Modified and added some macros.
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	  Added a pair of braces enclosing a for loop to satisy Win32.
 
 Fri Aug 25 15:47:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -40,6 +51,7 @@ Fri Aug 25 11:20:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* orbsvcs/tests/Interoperable_Naming/Makefile:
 	  Modified the order in which the files are compiled.
 
+>>>>>>> 1.1308
 Thu Aug 24 21:03:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:

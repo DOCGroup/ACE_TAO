@@ -86,9 +86,12 @@ TAO_Naming_Service::parse_args (int argc,
 
           // Remove the option '-t' from argv []
           // to avoid any confusion that might result.
-          for (i = count_argv; i != argc; ++i)
-            argv [i] = argv [i+2];
-
+          {
+            // Added unneeded '{ & }' just to satisfy Win32
+            for (i = count_argv; i != argc; ++i)
+              argv [i] = argv [i+2];
+          }
+          
           // Decrement the value of this->argc_ to reflect the removal
           // of '-t' option.
           argc = argc-2;
