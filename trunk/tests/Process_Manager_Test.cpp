@@ -116,7 +116,7 @@ main (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (secs ? secs : 1);
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P) about to exit with code %d\n"),
+                    ACE_TEXT ("%T: pid %P about to exit with code %d\n"),
                     secs));
       return secs;
     }
