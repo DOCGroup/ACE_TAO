@@ -1,3 +1,9 @@
+Mon Nov 26 16:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release: The distribution will be available in bzip2
+	  compressed format too. Made modifications to the release scripts
+	  to put out the beta in bzip2 compressed format. 
+
 Sat Nov 24 10:23:00 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Unbounded_Set.h (class ACE_Unbounded_Set): Moved the
