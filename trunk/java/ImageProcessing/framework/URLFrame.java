@@ -55,8 +55,7 @@ class URLFrame extends Frame
 	  }
 	if (e.target == this.saveButton_)
 	  {
-	    this.parent_.saveFile (this.openURLText_.getText ());
-	    this.dispose ();
+	    this.saveFile ();
 	  }
 	else if (e.target == this.clearButton_)
 	  {
@@ -76,7 +75,10 @@ class URLFrame extends Frame
   {
     if (key == 10)
       {
-	this.getURL ();
+	if (this.open_)
+	  this.getURL ();
+	else
+	  this.saveFile ();
 	return true;
       }
     else
@@ -85,8 +87,9 @@ class URLFrame extends Frame
 
   private void getURL ()
   {
-    this.dispose ();
+    this.hide ();
     String url = this.openURLText_.getText ();
+    this.dispose ();
 
     // The following is only for debugging
     if (url.compareTo ("ru") == 0)
@@ -116,6 +119,15 @@ class URLFrame extends Frame
 	  }		
       }
   }
+
+  private void saveFile ()
+  {
+    String url = this.openURLText_.getText ();
+    this.hide ();
+    this.dispose ();
+    this.parent_.saveFile (url);
+  }
+
 
   // Create the Open URL Frame and also the buttons which appear in
   // it

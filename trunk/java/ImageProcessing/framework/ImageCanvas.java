@@ -19,8 +19,6 @@ class ImageCanvas extends Canvas
 	this.tracker_.addImage(image, 0);
 	try { this.tracker_.waitForID(0); } catch(InterruptedException excp) {}
 
-	if (this.tracker_.isErrorAny ())
-	  System.out.println ("Error");
 	// Check if the image was actually loaded. Note that we have
 	// to wait for the potential image to finish loading before we
 	// know if it is a valid image.
