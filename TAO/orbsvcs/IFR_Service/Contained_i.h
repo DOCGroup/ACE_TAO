@@ -10,7 +10,7 @@
 //    Contained_i.h
 //
 // = DESCRIPTION
-//    IR_Contained servant class.
+//    Contained servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -20,7 +20,7 @@
 #ifndef TAO_CONTAINED_I_H
 #define TAO_CONTAINED_I_H
 
-#include "Container_i.h"
+#include "IRObject_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -141,13 +141,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Container_ptr defined_in (
+  virtual CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_Container_ptr defined_in_i (
+  CORBA_Container_ptr defined_in_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -165,26 +165,26 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Repository_ptr containing_repository (
+  virtual CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_Repository_ptr containing_repository_i (
+  CORBA_Repository_ptr containing_repository_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual.
 
-  virtual IR_Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -192,7 +192,7 @@ public:
   // Pure virtual.
 
   virtual void move (
-      IR_Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       const char *new_name,
       const char *new_version,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -202,7 +202,7 @@ public:
 
 protected:
   void move_i (
-      IR_Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       const char *new_name,
       const char *new_version,
       CORBA::Boolean cleanup,
@@ -231,7 +231,7 @@ private:
   // Recursively update the scoped name of our contents.
 
   void move_pre_process (
-      IR_Container_ptr container,
+      CORBA_Container_ptr container,
       const char *contained_path,
       const char *name,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -244,7 +244,7 @@ private:
   // unmangles the names.
 
   void move_contents (
-      IR_Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

@@ -10,7 +10,7 @@
 //    PrimitiveDef_i.h
 //
 // = DESCRIPTION
-//    IR_PrimitiveDef servant class.
+//    PrimitiveDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -49,7 +49,7 @@ public:
   virtual ~TAO_PrimitiveDef_i (void);
   // Destructor.
 
-  virtual IR_DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -84,13 +84,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_PrimitiveKind kind (
+  virtual CORBA::PrimitiveKind kind (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_PrimitiveKind kind_i (
+  CORBA::PrimitiveKind kind_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

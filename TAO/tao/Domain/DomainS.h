@@ -350,7 +350,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
   virtual void make_domain_manager (
-      IR_InterfaceDef *object_type,
+      CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()

@@ -3,7 +3,6 @@
 #
 
 MAKEFILES = \
-	TypeCodeFactory_DLL.bor \
 	IFR_Service.bor \
 	TAO_IFR_BE_DLL.bor \
 	tao_ifr.bor

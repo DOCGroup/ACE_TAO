@@ -33,7 +33,7 @@ TAO_EventDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
   // TODO
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_EventDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42,7 +42,7 @@ TAO_EventDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_EventDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -70,7 +70,7 @@ TAO_EventDef_i::is_a_i (const char * /* event_id */,
   return 0;
 }
 
-IR_ValueDef_ptr 
+CORBA_ValueDef_ptr 
 TAO_EventDef_i::event (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -79,7 +79,7 @@ TAO_EventDef_i::event (CORBA::Environment &ACE_TRY_ENV)
   return this->event_i (ACE_TRY_ENV);
 }
 
-IR_ValueDef_ptr 
+CORBA_ValueDef_ptr 
 TAO_EventDef_i::event_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -18,7 +18,6 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
-#include "tao/IFR_Client/ifrfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -97,7 +96,7 @@ protected:
   TAO_Repository_i *repo_impl_;
   // The IFR implementation instance.
 
-  IR_Repository_ptr repository_;
+  CORBA_Repository_ptr repository_;
   // The Interface Repository object reference.
 
   CORBA::String_var ifr_ior_;

@@ -1,22 +1,16 @@
 $Id$
 
 
-TypeCodeFactory
+Interface Repository -------
 
-The TypeCodeFactory is built as a DLL and is loaded
-into the ORB dynamically. Applications can get the
-object reference with
-'orb->resolve_initial_references ("TypeCodeFactory");'
+Required libraries (in addition to ACE and TAO):
+        ACE_ROOT/TAO/tao/IFR_CLient/TAO_IFR_CLient.(lib-ext)     
+        ACE_ROOT/TAO/tao/TypeCodeFactory/TAO_TypeCodeFactory.(lib-ext)       
+        ACE_ROOT/TAO/tao/PortableServer/TAO_PortableServer.(lib-ext)    
+        ACE_ROOT/TAO/tao/IORTable/TAO_IORTable.(lib-ext)    
+        ACE_ROOT/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils.(lib-ext)    
 
-The makefile for this library is Makefile.TypeCodeFactory.
-
-
-Interface Repository
-
-Requires TAO library built with the same condition as
-given above for TypeCodeFactory. Also requires TypeCodeFactory 
-(this directory) and TAO_Svc_Utils (found in TAO/orbsvcs/orbsvcs)
-libraries. Executable name is IFR_Service.
+Executable name is IFR_Service.
 
 Command line options are:
 
@@ -45,10 +39,24 @@ Command line options are:
 		The default filename is "if_repo.ior".
 
 Test code for the Interface Repository can be found in
-TAO/orbsvcs/tests/InterfaceRepo.
+ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo.
 
-More information about the Interface Repository can be found in 
-TAO/docs/releasenotes/index.html.
+
+
+tao_ifr ------
+
+This is the executable that administers the IFR. Calling
+tao_ifr <IDL filename> will add the contents of the IDL
+file to the repository. Calling tao_ifr -r <IDL filename>
+will remove the contents of the IDL file from the repository.
+tao_ifr requires all the libraries that are required by
+the IFR service, plus the IFR_Service executable itself.
+Test code for tao_ifr can be found in
+ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/Application_Test.
+
+
+More information about the Interface Repository and tao_ifr can 
+be found in ACE_ROOT/TAO/docs/releasenotes/index.html.
 
 
 - Jeff Parsons <parsons@cs.wustl.edu>

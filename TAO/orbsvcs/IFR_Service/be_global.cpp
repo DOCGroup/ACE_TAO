@@ -57,19 +57,19 @@ BE_GlobalData::orb (CORBA::ORB_ptr orb)
   this->orb_ = orb;
 }
 
-IR_Repository_ptr 
+CORBA_Repository_ptr 
 BE_GlobalData::repository (void) const
 {
   return this->repository_.in ();
 }
 
 void 
-BE_GlobalData::repository (IR_Repository_ptr repo)
+BE_GlobalData::repository (CORBA_Repository_ptr repo)
 {
   this->repository_ = repo;
 }
 
-ACE_Unbounded_Stack<IR_Container_ptr> &
+ACE_Unbounded_Stack<CORBA_Container_ptr> &
 BE_GlobalData::ifr_scopes (void)
 {
   return this->ifr_scopes_;
@@ -101,12 +101,12 @@ BE_GlobalData::enable_locking (idl_bool value)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Unbounded_Stack<IR_Container_ptr>;
-template class ACE_Node<IR_Container_ptr>;
+template class ACE_Unbounded_Stack<CORBA_Container_ptr>;
+template class ACE_Node<CORBA_Container_ptr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Unbounded_Stack<IR_Container_ptr>
-#pragma instantiate ACE_Node<IR_Container_ptr>
+#pragma instantiate ACE_Unbounded_Stack<CORBA_Container_ptr>
+#pragma instantiate ACE_Node<CORBA_Container_ptr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

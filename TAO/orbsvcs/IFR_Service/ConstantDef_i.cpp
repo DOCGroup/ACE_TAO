@@ -22,14 +22,14 @@ TAO_ConstantDef_i::~TAO_ConstantDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_ConstantDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Constant;
+  return CORBA::dk_Constant;
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_ConstantDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -38,22 +38,22 @@ TAO_ConstantDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR_Contained::Description *desc_ptr = 0;
+  CORBA_Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    IR_Contained::Description,
+                    CORBA_Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  IR_Contained::Description_var retval = desc_ptr;
+  CORBA_Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  IR_ConstantDescription cd;
+  CORBA_ConstantDescription cd;
 
   cd.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -119,16 +119,16 @@ TAO_ConstantDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
   return impl->type_i (ACE_TRY_ENV);
 }
 
-IR_IDLType_ptr 
+CORBA_IDLType_ptr 
 TAO_ConstantDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
 
   return this->type_def_i (ACE_TRY_ENV);
 }
 
-IR_IDLType_ptr 
+CORBA_IDLType_ptr 
 TAO_ConstantDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -148,21 +148,21 @@ TAO_ConstantDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
                                              "def_kind",
                                              kind);
 
-  IR_DefinitionKind def_kind =
-    ACE_static_cast (IR_DefinitionKind, kind);
+  CORBA::DefinitionKind def_kind =
+    ACE_static_cast (CORBA::DefinitionKind, kind);
 
   CORBA::Object_var obj = 
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     type_path.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
-  return IR_IDLType::_narrow (obj.in (),
+  return CORBA_IDLType::_narrow (obj.in (),
                                ACE_TRY_ENV);
 }
 
 void 
-TAO_ConstantDef_i::type_def (IR_IDLType_ptr type_def,
+TAO_ConstantDef_i::type_def (CORBA_IDLType_ptr type_def,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -173,7 +173,7 @@ TAO_ConstantDef_i::type_def (IR_IDLType_ptr type_def,
 }
 
 void 
-TAO_ConstantDef_i::type_def_i (IR_IDLType_ptr type_def,
+TAO_ConstantDef_i::type_def_i (CORBA_IDLType_ptr type_def,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

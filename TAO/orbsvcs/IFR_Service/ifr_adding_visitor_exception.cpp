@@ -83,7 +83,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
         CORBA::TypeCode::_duplicate (CORBA::_tc_null);
 
       this->members_[i].type_def = 
-        IR_IDLType::_duplicate (this->ir_current_.in ());
+        CORBA_IDLType::_duplicate (this->ir_current_.in ());
     }
 
   return 0;
@@ -96,7 +96,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
   ACE_TRY
     {
       // Is this union already in the respository?
-      IR_Contained_var prev_def = 
+      CORBA_Contained_var prev_def = 
         be_global->repository ()->lookup_id (node->repoID (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -112,10 +112,10 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
             {
               // Get the result of the visit.
               this->ir_current_ =
-                IR_IDLType::_duplicate (visitor.ir_current ());
+                CORBA_IDLType::_duplicate (visitor.ir_current ());
 
-              IR_Contained_ptr tmp = 
-                IR_Contained::_narrow (visitor.ir_current (),
+              CORBA_Contained_ptr tmp = 
+                CORBA_Contained::_narrow (visitor.ir_current (),
                                        ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
@@ -133,7 +133,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
           // There is already an entry in the repository, so just update
           // the current IR object holder.
           this->ir_current_ =
-            IR_IDLType::_narrow (prev_def.in (),
+            CORBA_IDLType::_narrow (prev_def.in (),
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -178,15 +178,15 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      IR_Contained_var prev_def =
+      CORBA_Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
-          IR_ExceptionDef_var except_def =
-            IR_ExceptionDef::_narrow (prev_def.in (),
+          CORBA_ExceptionDef_var except_def =
+            CORBA_ExceptionDef::_narrow (prev_def.in (),
                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -224,7 +224,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           );
         }
 
-      IR_Container_ptr current_scope = IR_Container::_nil ();
+      CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
 
       if (be_global->ifr_scopes ().top (current_scope) != 0)
         {
@@ -238,7 +238,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           );
         }
 
-      IR_ExceptionDef_var new_def = 
+      CORBA_ExceptionDef_var new_def = 
         current_scope->create_exception (node->repoID (),
                                          node->local_name ()->get_string (),
                                          this->gen_version (node),
@@ -251,10 +251,10 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
       if (size > 0)
         {
-          IR_Contained_var traveller;
+          CORBA_Contained_var traveller;
 
-          IR_Container_var new_container =
-            IR_Container::_narrow (new_def.in (),
+          CORBA_Container_var new_container =
+            CORBA_Container::_narrow (new_def.in (),
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -297,7 +297,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
   ACE_TRY
     {
       // Is this enum already in the respository?
-      IR_Contained_var prev_def =
+      CORBA_Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -308,7 +308,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           CORBA::ULong member_count = ACE_static_cast (CORBA::ULong, 
                                                        node->member_count ());
 
-          IR_EnumMemberSeq members (member_count);
+          CORBA_EnumMemberSeq members (member_count);
           members.length (member_count);
 
           UTL_ScopedName *member_name = 0;
@@ -334,8 +334,8 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
                                         );
           ACE_TRY_CHECK;
 
-          IR_Contained_ptr tmp = 
-            IR_Contained::_narrow (this->ir_current_.in (),
+          CORBA_Contained_ptr tmp = 
+            CORBA_Contained::_narrow (this->ir_current_.in (),
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -346,7 +346,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           // There is already an entry in the repository, so just update
           // the current IR object holder.
           this->ir_current_ = 
-            IR_IDLType::_narrow (prev_def.in (),
+            CORBA_IDLType::_narrow (prev_def.in (),
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -392,7 +392,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
   ACE_TRY
     {
       // Is this union already in the respository?
-      IR_Contained_var prev_def = 
+      CORBA_Contained_var prev_def = 
         be_global->repository ()->lookup_id (node->repoID (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -408,10 +408,10 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
             {
               // Get the result of the visit.
               this->ir_current_ =
-                IR_IDLType::_duplicate (visitor.ir_current ());
+                CORBA_IDLType::_duplicate (visitor.ir_current ());
 
-              IR_Contained_ptr tmp = 
-                IR_Contained::_narrow (visitor.ir_current (),
+              CORBA_Contained_ptr tmp = 
+                CORBA_Contained::_narrow (visitor.ir_current (),
                                        ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
@@ -429,7 +429,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
           // There is already an entry in the repository, so just update
           // the current IR object holder.
           this->ir_current_ =
-            IR_IDLType::_narrow (prev_def.in (),
+            CORBA_IDLType::_narrow (prev_def.in (),
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -468,7 +468,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
   return 0;
 }
 
-IR_IDLType_ptr 
+CORBA_IDLType_ptr 
 ifr_adding_visitor_exception::ir_current (void) const
 {
   return this->ir_current_.in ();
@@ -476,16 +476,16 @@ ifr_adding_visitor_exception::ir_current (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Unbounded_Queue<IR_Contained_ptr>;
-template class ACE_Unbounded_Queue_Iterator<IR_Contained_ptr>;
-template class ACE_Node<IR_Contained_ptr>;
+template class ACE_Unbounded_Queue<CORBA_Contained_ptr>;
+template class ACE_Unbounded_Queue_Iterator<CORBA_Contained_ptr>;
+template class ACE_Node<CORBA_Contained_ptr>;
 template class ACE_Write_Guard<ACE_Lock>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Unbounded_Queue<IR_Contained_ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<IR_Contained_ptr>
-#pragma instantiate ACE_Node<IR_Contained_ptr>
+#pragma instantiate ACE_Unbounded_Queue<CORBA_Contained_ptr>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA_Contained_ptr>
+#pragma instantiate ACE_Node<CORBA_Contained_ptr>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -783,6 +783,8 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << "#include \"tao/TAO_Server_Request.h\"\n"
     << "#include \"tao/ORB_Core.h\"\n"
     << "#include \"tao/Stub.h\"\n"
+    << "#include \"tao/IFR_Client_Adapter.h\"\n"
+    << "#include \"ace/Dynamic_Service.h\"\n"
     << "\n";
 
   // Include the RequestInfo_Util utility header.  Used by the

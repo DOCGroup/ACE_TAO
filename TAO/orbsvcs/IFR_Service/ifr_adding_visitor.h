@@ -111,8 +111,8 @@ public:
   // Visit a native.
 
 protected:
-  IR_PrimitiveKind expr_type_to_pkind (AST_Expression::ExprType et);
-  IR_PrimitiveKind predefined_type_to_pkind (AST_PredefinedType *node);
+  CORBA::PrimitiveKind expr_type_to_pkind (AST_Expression::ExprType et);
+  CORBA::PrimitiveKind predefined_type_to_pkind (AST_PredefinedType *node);
   // Conversion functions.
 
   void load_any (AST_Expression::AST_ExprValue *ev,
@@ -133,7 +133,7 @@ protected:
   // the same type, it may be an error. This warning lets the user
   // decide.
 
-  IR_IDLType_var ir_current_;
+  CORBA_IDLType_var ir_current_;
   // Holder for the IR object most recently created or looked up by
   // the visitor. This makes it accessible by visitor methods that
   // need the result of a call to another visitor method that

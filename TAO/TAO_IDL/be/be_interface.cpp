@@ -1152,6 +1152,12 @@ be_interface::gen_operation_table (void)
             << "::_non_existent_skel\n";
         this->skel_count_++;
 
+        os->indent ();
+        *os << "_interface, &"
+            << this->full_skel_name ()
+            << "::_interface_skel\n";
+        this->skel_count_++;
+
         // Input to the gperf is ready. Run gperf and get things
         // done. This method also unlinks the temp file that we used
         // for the gperf.

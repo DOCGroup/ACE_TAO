@@ -2,7 +2,6 @@
 // $Id$
 
 #include "IRObject_i.h"
-#include "Repository_i.h"
 
 ACE_RCSID(IFR_Service, IRObject_i, "$Id$")
 

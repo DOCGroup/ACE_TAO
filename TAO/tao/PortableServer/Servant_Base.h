@@ -60,6 +60,11 @@ public:
                                           TAO_default_environment ());
   // Default <_non_existent>: always returns false.
 
+  virtual CORBA_InterfaceDef_ptr _get_interface (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 

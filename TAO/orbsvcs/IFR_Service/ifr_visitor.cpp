@@ -31,8 +31,8 @@ ifr_visitor::ifr_visitor (void)
             ));
         }
 
-      IR_Repository_var repo = IR_Repository::_narrow (object.in (),
-                                                       ACE_TRY_ENV);
+      CORBA_Repository_var repo = CORBA_Repository::_narrow (object.in (),
+                                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (repo.in ()))

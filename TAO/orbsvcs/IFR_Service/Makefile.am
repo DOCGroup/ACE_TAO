@@ -39,10 +39,13 @@ IFR_Service_SOURCES = \
 	FixedDef_i.cpp \
 	HomeDef_i.cpp \
 	IDLType_i.cpp \
+	IFR_BaseS.cpp \
+	IFR_BasicS.cpp \
+	IFR_ComponentsS.cpp \
+	IFR_ExtendedS.cpp \
 	IFR_Server.cpp \
 	IFR_Service.cpp \
 	InterfaceDef_i.cpp \
-	InterfaceS.cpp \
 	IRObject_i.cpp \
 	ModuleDef_i.cpp \
 	NativeDef_i.cpp \
@@ -87,9 +90,12 @@ noinst_HEADERS = \
 	FixedDef_i.h \
 	HomeDef_i.h \
 	IDLType_i.h \
+	IFR_BaseS.h \
+	IFR_BasicS.h \
+	IFR_ComponentsS.h \
+	IFR_ExtendedS.h \
 	IFR_Service.h \
 	InterfaceDef_i.h \
-	InterfaceS.h \
 	InterfaceS_T.h \
 	IRObject_i.h \
 	ModuleDef_i.h \

@@ -10,7 +10,7 @@
 //    Container_i.h
 //
 // = DESCRIPTION
-//    IR_Container servant class.
+//    Container servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -66,58 +66,58 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Contained_ptr lookup (
+  virtual CORBA_Contained_ptr lookup (
       const char *search_name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_Contained_ptr lookup_i (
+  CORBA_Contained_ptr lookup_i (
       const char *search_name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ContainedSeq *contents (
-      IR_DefinitionKind limit_type,
+  virtual CORBA_ContainedSeq *contents (
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ContainedSeq *contents_i (
-      IR_DefinitionKind limit_type,
+  CORBA_ContainedSeq *contents_i (
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ContainedSeq *lookup_name (
-      const char *search_name,
-      CORBA::Long levels_to_search,
-      IR_DefinitionKind limit_type,
-      CORBA::Boolean exclude_inherited,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR_ContainedSeq *lookup_name_i (
+  virtual CORBA_ContainedSeq *lookup_name (
       const char *search_name,
       CORBA::Long levels_to_search,
-      IR_DefinitionKind limit_type,
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Container::DescriptionSeq *describe_contents (
-      IR_DefinitionKind limit_type,
+  CORBA_ContainedSeq *lookup_name_i (
+      const char *search_name,
+      CORBA::Long levels_to_search,
+      CORBA::DefinitionKind limit_type,
+      CORBA::Boolean exclude_inherited,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA_Container::DescriptionSeq *describe_contents (
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -125,8 +125,8 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_Container::DescriptionSeq *describe_contents_i (
-      IR_DefinitionKind limit_type,
+  CORBA_Container::DescriptionSeq *describe_contents_i (
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -134,7 +134,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ModuleDef_ptr create_module (
+  virtual CORBA_ModuleDef_ptr create_module (
       const char *id,
       const char *name,
       const char *version,
@@ -143,7 +143,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ModuleDef_ptr create_module_i (
+  CORBA_ModuleDef_ptr create_module_i (
       const char *id,
       const char *name,
       const char *version,
@@ -152,207 +152,203 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ConstantDef_ptr create_constant (
+  virtual CORBA_ConstantDef_ptr create_constant (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       const CORBA::Any & value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ConstantDef_ptr create_constant_i (
+  CORBA_ConstantDef_ptr create_constant_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       const CORBA::Any & value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_StructDef_ptr create_struct (
+  virtual CORBA_StructDef_ptr create_struct (
       const char *id,
       const char *name,
       const char *version,
-      const IR_StructMemberSeq &members,
+      const CORBA_StructMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_StructDef_ptr create_struct_i (
+  CORBA_StructDef_ptr create_struct_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR_StructMemberSeq &members,
+      const CORBA_StructMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_UnionDef_ptr create_union (
+  virtual CORBA_UnionDef_ptr create_union (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr discriminator_type,
-      const IR_UnionMemberSeq &members,
+      CORBA_IDLType_ptr discriminator_type,
+      const CORBA_UnionMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_UnionDef_ptr create_union_i (
+  CORBA_UnionDef_ptr create_union_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr discriminator_type,
-      const IR_UnionMemberSeq &members,
+      CORBA_IDLType_ptr discriminator_type,
+      const CORBA_UnionMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_EnumDef_ptr create_enum (
+  virtual CORBA_EnumDef_ptr create_enum (
       const char *id,
       const char *name,
       const char *version,
-      const IR_EnumMemberSeq &members,
+      const CORBA_EnumMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_EnumDef_ptr create_enum_i (
+  CORBA_EnumDef_ptr create_enum_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR_EnumMemberSeq &members,
+      const CORBA_EnumMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_AliasDef_ptr create_alias (
+  virtual CORBA_AliasDef_ptr create_alias (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr original_type,
+      CORBA_IDLType_ptr original_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_AliasDef_ptr create_alias_i (
+  CORBA_AliasDef_ptr create_alias_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr original_type,
+      CORBA_IDLType_ptr original_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_InterfaceDef_ptr create_interface (
+  virtual CORBA_InterfaceDef_ptr create_interface (
       const char *id,
       const char *name,
       const char *version,
-      const IR_InterfaceDefSeq &base_interfaces,
-      CORBA::Boolean is_abstract,
-      CORBA::Boolean is_local,
+      const CORBA_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_InterfaceDef_ptr create_interface_i (
+  CORBA_InterfaceDef_ptr create_interface_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR_InterfaceDefSeq &base_interfaces,
-      CORBA::Boolean is_abstract,
-      CORBA::Boolean is_local,
+      const CORBA_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ValueDef_ptr create_value (
+  virtual CORBA_ValueDef_ptr create_value (
       const char *id,
       const char *name,
       const char *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
-      IR_ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const IR_ValueDefSeq &abstract_base_values,
-      const IR_InterfaceDefSeq & supported_interfaces,
-      const IR_InitializerSeq &initializers,
+      const CORBA_ValueDefSeq &abstract_base_values,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
+      const CORBA_InitializerSeq &initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ValueDef_ptr create_value_i (
+  CORBA_ValueDef_ptr create_value_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
-      IR_ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const IR_ValueDefSeq &abstract_base_values,
-      const IR_InterfaceDefSeq & supported_interfaces,
-      const IR_InitializerSeq &initializers,
+      const CORBA_ValueDefSeq &abstract_base_values,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
+      const CORBA_InitializerSeq &initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ValueBoxDef_ptr create_value_box (
+  virtual CORBA_ValueBoxDef_ptr create_value_box (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ValueBoxDef_ptr create_value_box_i (
+  CORBA_ValueBoxDef_ptr create_value_box_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_ExceptionDef_ptr create_exception (
+  virtual CORBA_ExceptionDef_ptr create_exception (
       const char *id,
       const char *name,
       const char *version,
-      const IR_StructMemberSeq &members,
+      const CORBA_StructMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ExceptionDef_ptr create_exception_i (
+  CORBA_ExceptionDef_ptr create_exception_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR_StructMemberSeq &members,
+      const CORBA_StructMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_NativeDef_ptr create_native (
+  virtual CORBA_NativeDef_ptr create_native (
       const char *id,
       const char *name,
       const char *version,
@@ -361,10 +357,50 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_NativeDef_ptr create_native_i (
+  CORBA_NativeDef_ptr create_native_i (
       const char *id,
       const char *name,
       const char *version,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
+      const char *id,
+      const char *name,
+      const char *version,
+      const CORBA_AbstractInterfaceDefSeq &base_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA_AbstractInterfaceDef_ptr create_abstract_interface_i (
+      const char *id,
+      const char *name,
+      const char *version,
+      const CORBA_AbstractInterfaceDefSeq &base_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA_LocalInterfaceDef_ptr create_local_interface (
+      const char *id,
+      const char *name,
+      const char *version,
+      const CORBA_InterfaceDefSeq &base_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA_LocalInterfaceDef_ptr create_local_interface_i (
+      const char *id,
+      const char *name,
+      const char *version,
+      const CORBA_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -404,20 +440,19 @@ protected:
       const char *name,
       const char *version,
       const char *sub_section,
-      IR_DefinitionKind def_kind
+      CORBA::DefinitionKind def_kind
     );
   // Code common to all the create_* methods.
 
-protected:
   void lookup_attr (
-      ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       const char *search_name,
       CORBA::Boolean exclude_inherited
     );
 
   void lookup_op (
-      ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       const char *search_name,
       CORBA::Boolean exclude_inherited
@@ -425,11 +460,11 @@ protected:
 
 private:
   void lookup_name_recursive (
-      ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       const char *search_name,
       CORBA::Long levels_to_search,
-      IR_DefinitionKind limit_type,
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -444,7 +479,7 @@ private:
   // Checks for global existence of the repo id.
 
   CORBA::Boolean valid_container (
-      const IR_DefinitionKind op_kind,
+      const CORBA::DefinitionKind op_kind,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
