@@ -113,8 +113,9 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first byte...
-      const CORBA::Octet* ptr =
-        ACE_reinterpret_cast(const CORBA::Octet*,buffer);
+      const CORBA::Octet *ptr =
+        ACE_reinterpret_cast (const CORBA::Octet *,
+                              buffer);
       this->byte_order_ = *ptr;
 
       ACE_NEW (this->non_aligned_buffer_,
@@ -124,7 +125,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                                       CDR::MAX_ALIGNMENT);
 
       (void) ACE_OS::memcpy (start, buffer, this->length_);
-
       this->buffer_ = start;
     }
   else
@@ -132,8 +132,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // We are a child. We do not allocate a new buffer, but share it
       // with our parent. We know that our parent's buffer was
       // properly aligned.
-      const CORBA::Octet* ptr =
-        ACE_reinterpret_cast(const CORBA::Octet*,buffer);
+      const CORBA::Octet *ptr =
+        ACE_reinterpret_cast (const CORBA::Octet *, buffer);
       this->byte_order_ = *ptr;
 
       this->buffer_ = buffer;
@@ -1203,9 +1203,9 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
   switch (this->kind_)
     {
       // These are all complex typecodes, which have as their second
-      // parameter (number one) a name string encoded
-      // per CDR rules.  That means we can just return a pointer to
-      // that string directly!
+      // parameter (number one) a name string encoded per CDR rules.
+      // That means we can just return a pointer to that string
+      // directly!
 
     case CORBA::tk_objref:
     case CORBA::tk_struct:
@@ -1214,8 +1214,9 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
     case CORBA::tk_alias:
     case CORBA::tk_except:
       {
-        // setup an encapsulation
-        TAO_InputCDR stream (this->buffer_+4, this->length_-4,
+        // setup an encapsulation.
+        TAO_InputCDR stream (this->buffer_ + 4, 
+                             this->length_ - 4,
                              this->byte_order_);
 
         // skip the typecode ID
@@ -1234,7 +1235,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
             return (CORBA::String)0;
           }
       }
-    // No other typecodes ever have type IDs
+    // No other typecodes ever have type IDs.
     default:
       env.exception (new CORBA::TypeCode::BadKind ());
       return (CORBA::String)0;

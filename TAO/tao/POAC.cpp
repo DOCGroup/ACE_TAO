@@ -53,7 +53,6 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
   12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
-
   0,
 #endif
 };
