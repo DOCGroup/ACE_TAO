@@ -238,6 +238,8 @@ LOG->autoflush ();
 #  print LOG $key, " = ", $value, "\n";
 #}
 
+print LOG "#################### CVS\n";
+
 chdir($CHECKOUT)
     || mydie "Cannot chdir to $CHECKOUT";
 
@@ -297,6 +299,8 @@ chdir('build/' . $BUILD)
     || mydie "cannot chdir to $BUILD";
 
 @failures = ();
+
+print LOG "#################### Compiler\n";
 
 if ($pre_realclean) {
   foreach $i (@BUILD_LIST) {
@@ -367,6 +371,8 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: make for $i finished at ", $date, "\n";
     print LOG "$CMD: =============================================\n\n";
 }
+
+print LOG "#################### Tests\n";
 
 if ($dont_run == 0) {
   @LIST = @RUN_LIST;
@@ -448,6 +454,8 @@ if ($post_realclean) {
 if ($#failures >= 0) {
   report_errors @failures;
 }
+
+print LOG "#################### End\n";
 
 close(LOG)
     || mydie "cannot close LOGFILE";

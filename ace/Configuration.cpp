@@ -282,7 +282,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
             case BINARY:
               {
                 // not supported yet - maybe use BASE64 codeing?
-                if(get_binary_value(section, 
+                if(get_binary_value(section,
                                     name.fast_rep(),
                                     binary_data,
                                     binary_length))
@@ -860,11 +860,11 @@ int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_
   unsigned char buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
   DWORD type;
-  if (ACE_TEXT_RegQueryValueEx (base_key, 
-                                name, 
-                                NULL, 
-                                &type, 
-                                (BYTE*)&buffer, 
+  if (ACE_TEXT_RegQueryValueEx (base_key,
+                                name,
+                                NULL,
+                                &type,
+                                (BYTE*)&buffer,
                                 &buffer_length) != ERROR_SUCCESS)
     return -1;
 
@@ -882,7 +882,7 @@ int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_
   default:
     return -1; // unknown type
   }
- 
+
   return 0;
 }
 
@@ -1041,19 +1041,12 @@ ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const A
 void
 ACE_Configuration_Value_IntId::free (ACE_Allocator* allocator)
 {
-  switch (type_)
+  if (this->type_ == ACE_Configuration::STRING
+      || this->type_ == ACE_Configuration::BINARY)
     {
-    case ACE_Configuration::STRING:
-    case ACE_Configuration::BINARY:
-
       allocator->free ((void *) (data_));
-      break;
-
-    case ACE_Configuration::INTEGER:
-    case ACE_Configuration::INVALID:
-      // Do nothing
-      break;
     }
+  // Do nothing in other cases...
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1765,7 +1758,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
         }
       return 0;
     }
-  
+
   return 0;
 }
 
@@ -1967,7 +1960,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
   return 0;
 }
 
-int 
+int
 ACE_Configuration_Heap::find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type_out)
@@ -1985,7 +1978,7 @@ ACE_Configuration_Heap::find_value(const ACE_Configuration_Section_Key& key,
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
     return -1;    // section does not exist
-  
+
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
@@ -2031,5 +2024,3 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
   return 0;
 }
-
-

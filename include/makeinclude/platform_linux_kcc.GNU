@@ -35,6 +35,7 @@ LD      = $(CC)
 # library.  Passing the option directly to the linker fixes the
 # warning.
 LIBS    += -Wl,-ldl
+MATHLIB = -lm
 
 ifeq (,$(exceptions))
   exceptions=0
