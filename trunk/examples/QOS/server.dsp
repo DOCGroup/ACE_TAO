@@ -86,11 +86,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\QOS_Event_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Read_Handler.cpp
+SOURCE=.\Receiver_QOS_Event_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -102,19 +98,11 @@ SOURCE=.\server.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\QOS_Event_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\QosEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Read_Handler.h
+SOURCE=.\Receiver_QOS_Event_Handler.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
