@@ -60,6 +60,9 @@ public:
   virtual idl_bool last_node (be_decl *bd);
   // Is bd the last node in the scope
 
+  idl_bool last_inout_or_out_node (be_decl *bd);
+  // Is bd the last inout or out in the scope
+
 protected:
   int elem_number_;
 };

@@ -243,3 +243,29 @@ be_visitor_scope::last_node (be_decl *bd)
   // I am the last one
   return 1;
 }
+
+idl_bool
+be_visitor_scope::last_inout_or_out_node (be_decl *bd)
+{
+  // Return true if we are the last inout or out argument
+  be_decl *next = 0;
+  this->next_elem (this->ctx_->node (),
+                   next);
+  while (next)
+    {
+      be_argument *arg = be_argument::narrow_from_decl (next);
+
+      if (arg->direction () == AST_Argument::dir_INOUT
+          || arg->direction () == AST_Argument::dir_OUT)
+          // not the last
+          return 0;
+
+      be_decl *next_next = 0;
+      this->next_elem (next, next_next);
+
+      next = next_next;
+    }
+  // I am the last one
+  return 1;
+}
+

@@ -168,6 +168,9 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_ss::gen_invoke (be_visi
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS);
+  if (this->has_param_type (node, AST_Argument::dir_INOUT)
+      || this->has_param_type (node, AST_Argument::dir_OUT))
+    ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -197,4 +200,33 @@ be_visitor_operation_ami_handler_thru_poa_collocated_ss::void_return_type (be_ty
     return 1;
   else
     return 0;
+}
+
+int
+be_visitor_operation_ami_handler_thru_poa_collocated_ss::has_param_type (be_operation *node,
+                                      AST_Argument::Direction dir)
+{
+  // proceed if the number of members in our scope is greater than 0
+  if (node->nmembers () > 0)
+    {
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+		      UTL_ScopeActiveIterator (node,
+					       UTL_Scope::IK_decls),
+		      0);
+      // continue until each element is visited
+      while (!si->is_done ())
+	{
+	  be_argument *bd = be_argument::narrow_from_decl (si->item ());
+          if (bd && (bd->direction () == dir))
+            return 1;
+
+	  si->next ();
+	} // end of while loop
+      delete si;
+    } // end of if
+
+  // not of the type we are looking for
+  return 0;
 }

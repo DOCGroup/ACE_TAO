@@ -53,6 +53,9 @@ public:
 
   virtual int void_return_type (be_type *bt);
   // is my return type void?
+
+  virtual int has_param_type (be_operation *, AST_Argument::Direction);
+  // does any of the argument node have the specified direct
 };
 
 #endif /* _BE_VISITOR_OPERATION_AMI_HANDLER_THRU_POA_COLLOCATED_SS_H_ */

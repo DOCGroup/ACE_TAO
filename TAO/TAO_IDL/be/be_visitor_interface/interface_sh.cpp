@@ -208,7 +208,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // generate the collocated class
   if (idl_global->gen_thru_poa_collocation ())
     {
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SH)
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
         ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SH);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
@@ -229,7 +229,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (idl_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SH)
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
         ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_SH);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
@@ -252,7 +252,10 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       // generate the TIE class.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH);
+      else
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -277,7 +280,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
       //  = Generate the Servant Skeleton code.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SH);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {

@@ -48,6 +48,9 @@ public:
                 UTL_StrList *p);
   // constructor
 
+  int void_return_type ();
+  // Returns 1 if the operation has a void return type.
+
   virtual int argument_count (void);
   // return the count of members
 

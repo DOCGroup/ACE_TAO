@@ -87,11 +87,11 @@ public:
     TAO_ATTRIBUTE_IH,                        // in implementation header
     TAO_ATTRIBUTE_SS,                        // in server skeletons
     TAO_ATTRIBUTE_IS,                        // in implementation skeletons
-    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH, // in server header for collocated
-    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS,             // in server skeletons for
+    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH,    // in server header for collocated
+    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS,    // in server skeletons for
                                              // collocated
-    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH, // in server header for collocated
-    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,             // in server skeletons for
+    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH,      // in server header for collocated
+    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,      // in server skeletons for
                                              // collocated
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
@@ -286,87 +286,76 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
     // Emitting code for AMI.
-    TAO_OPERATION_AMI_CH,                  // AMI stub generation.
-    TAO_OPERATION_AMI_CS,                  // AMI stub generation.
-    TAO_OPERATION_AMI_ARGLIST_CH,             // AMI stubs in client header
-    TAO_OPERATION_AMI_ARGLIST_CS,             // AMI stubs in client cpp.
-    TAO_OPERATION_ARG_AMI,                 // AMI stub.
-    TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
-    TAO_ARGUMENT_AMI_ARGLIST_CH,              // Arg list in AMI stub.
-    TAO_ARGUMENT_AMI_ARGLIST_CS,              // Arg list in AMI stub.
-    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.
-    TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
-
-    TAO_AMI_HANDLER_SERVANT_SH,            // POA_AMI_*_Handler.
-    TAO_AMI_HANDLER_SERVANT_SS,            // POA_AMI_*_Handler.
-
-    TAO_AMI_HANDLER_STUB_CH,               // AMI_*_Handler class visitor.
-
-    TAO_AMI_HANDLER_STUB_CS,               // AMI_*_Handler class visitor.
-
-    TAO_AMI_HANDLER_SERVANT_OPERATION_SS,
-    TAO_AMI_HANDLER_SERVANT_OPERATION_SH,  // Operation in POA_AMI_*_Handler.
-    TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in AMI_*_Handler.
-    TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
-    TAO_AMI_HANDLER_OPERATION_ARGLIST_CS,
-    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH,
-    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS,
-    TAO_ARGUMENT_ARGLIST_AMI_HANDLER,
-    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,
-
-    TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
-
-    TAO_AMI_HANDLER_STUB_OPERATION_CS,
-
-    TAO_AMI_HANDLER_TYPECODE_DEFN,           // Typecode definition for AMI Handler class.
-
+    TAO_AMI_OPERATION_CH,                  // AMI stub generation.
+    TAO_AMI_OPERATION_CS,                  // AMI stub generation.
+    TAO_AMI_OPERATION_ARGLIST_CH,             // AMI stubs in client header
+    TAO_AMI_OPERATION_ARGLIST_CS,             // AMI stubs in client cpp.
     TAO_AMI_OPERATION_ARG_INVOKE_CS,         // Invoke arguments for AMI's sendc method.
 
+    TAO_AMI_ARGUMENT,                      // Argument in AMI stub.
+    TAO_AMI_ARGUMENT_ARGLIST_CH,              // Arg list in AMI stub.
+    TAO_AMI_ARGUMENT_ARGLIST_CS,              // Arg list in AMI stub.
     TAO_AMI_ARGUMENT_INVOKE_CS,
 
+    // Code generation for the AMI Reply Handler
+
+    TAO_AMI_HANDLER_INTERFACE_FWD_CH,        // FWD decl for AMI handler.
+    TAO_AMI_HANDLER_INTERFACE_FWD_CI,        // FWD decl for AMI handler.
+    TAO_AMI_HANDLER_INTERFACE_SH,            // POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_INTERFACE_SS,            // POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_INTERFACE_CH,            // AMI_*_Handler class visitor.
+    TAO_AMI_HANDLER_INTERFACE_CS,            // AMI_*_Handler class visitor.
+    TAO_AMI_HANDLER_INTERFACE_TIE_SH,
     TAO_AMI_HANDLER_SKELETON_CS,
 
-    TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS,        // Result argument declaration.
-
-    TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,           // Argument declartion.
-
     TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SH,
-
     TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SS,
-
     TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_SH,
-
     TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_SS,
 
+    TAO_AMI_HANDLER_OPERATION_CH,     // Operation in AMI_*_Handler.
+    TAO_AMI_HANDLER_OPERATION_CS,
+    TAO_AMI_HANDLER_OPERATION_SS,
+    TAO_AMI_HANDLER_OPERATION_SH,  // Operation in POA_AMI_*_Handler.
     TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH,
-
     TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS,
-
     TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH,
-
     TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SS,
-
-    TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,             // State derived out of the above
-
     TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS, // Argument list for the upcall
+    TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,              // Argument declartion.
+    TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,            // Argument list for the upcall
+    TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS,           // Marshalling the inout and out arguments
+    TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS,         // Demarshalling the inout and out arguments
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS,           // Result argument declaration.
+    TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS,        // Marshalling the return value
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS,      // Demarshalling the return value
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CS,
+    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,
+    TAO_AMI_HANDLER_OPERATION_TIE_SH,
 
-    TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_CS,   // State derived out of the above
+    TAO_AMI_HANDLER_ATTRIBUTE_CH,
+    TAO_AMI_HANDLER_ATTRIBUTE_CS,
+    TAO_AMI_HANDLER_ATTRIBUTE_SH,
+    TAO_AMI_HANDLER_ATTRIBUTE_SS,
+    TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH,
+    TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS,
+    TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH,
+    TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS,
+    TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH,
 
-    TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,         // Argument list for the upcall
-                                                     // (only out and inout arguments)
-    TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,              // State derived out of the above
+    TAO_AMI_HANDLER_ARGUMENT_ARGLIST,
+    TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CH,
+    TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CS,
 
-    TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS,     // Marshalling the return value
-
-    TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS,   // Demarshalling the return value
-
-    TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS,        // Marshalling the inout and out arguments
-
+    TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,
+    TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_CS,
+    TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,
     TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS,             // State derived out of the above
-
-    TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS,      // Demarshalling the inout and out arguments
-
     TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS,           // State derived out of the above
+
+    TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
+    TAO_AMI_HANDLER_TYPECODE_DEFN,           // Typecode definition for AMI Handler class.
 
     // Emitting code for root.
     TAO_ROOT_CH,
@@ -500,6 +489,9 @@ public:
     TAO_TC_DEFN_SCOPE_LEN, // scope size computation
 
     TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
+
+    // means the upcall has arguments.
+    TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS,
 
     // means we are not generating the assignment operator
     TAO_UNION_COPY_CONSTRUCTOR,
