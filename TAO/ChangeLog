@@ -1,3 +1,9 @@
+Thu Jul 24 11:36:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosTrading.idl: Thanks to Sebastien Lalonde
+	  <SLalonde@interstarinc.com> for reporting that the IDL is not
+	  spec compatible. The IDL should now be spec compliant. 
+
 Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Exception.h:
