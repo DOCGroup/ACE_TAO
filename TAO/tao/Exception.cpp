@@ -606,6 +606,11 @@ CORBA_ExceptionList::remove (CORBA::ULong index, CORBA::Environment &env)
   env.clear ();
 }
 
+#if !defined (ACE_NDEBUG)
+TAO_DONT_CATCH::TAO_DONT_CATCH ()
+{}
+#endif /* ! ACE_NDEBUG */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
