@@ -1,5 +1,5 @@
-project(*Consumer):  orbsvcsexe, ftrteventclient {
-  exename   = consumer
+project(FTRTEC_Consumer):  orbsvcsexe, ftrteventclient {
+  exename   = ftrtec_consumer
   specific(gnuace) {
    lit_libs += TAO_Strategies
   }
@@ -14,12 +14,42 @@ project(*Consumer):  orbsvcsexe, ftrteventclient {
   }
 }
 
-project(*Supplier):  orbsvcsexe, ftrteventclient {
-  exename   = supplier
+project(FTRTEC_Supplier):  orbsvcsexe, ftrteventclient {
+  exename   = ftrtec_supplier
 
    specific(gnuace) {
    lit_libs += TAO_Strategies
   }
+  Source_Files {
+    supplier.cpp
+    FtRtEvent_Test.cpp
+    PushSupplier.cpp
+  }
+
+  Header_Files {
+    PushSupplier.h
+  }
+}
+
+project(RTEC_Consumer):  orbsvcsexe, ftrtevent  {
+  exename   = rtec_consumer
+  macros   += NO_FTRTEC
+
+  Source_Files {
+    consumer.cpp
+    FtRtEvent_Test.cpp
+    PushConsumer.cpp
+  }
+
+  Header_Files {
+    PushConsumer.h
+  }
+}
+
+project(RTEC_Supplier):  orbsvcsexe, ftrtevent {
+  exename   = rtec_supplier
+  macros   += NO_FTRTEC
+
   Source_Files {
     supplier.cpp
     FtRtEvent_Test.cpp

@@ -7,11 +7,13 @@
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
 
+#ifndef NO_FTRTEC
 /// include this file to statically linked with FT ORB
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#endif
 
 ACE_RCSID (FtRtEvent,
            FtRtEvent_Test,
@@ -49,7 +51,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         CORBA::Object_var obj = orb_->string_to_object(get_opt.opt_arg ()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN(0);
-        channel_ = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
+        channel_ = RtecEventChannelAdmin::EventChannel::_narrow(obj.in()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN(0);
       }
@@ -72,7 +74,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         ACE_LIB_TEXT("Usage: %s ")
         ACE_LIB_TEXT("-d debuglevel\n")
         ACE_LIB_TEXT("-f event_frequency  in HZ (default 1 HZ)\n")
-        ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
+        ACE_LIB_TEXT("-i rt_eventchannel_ior\n")
         ACE_LIB_TEXT("-k number_of_events\n")
         ACE_LIB_TEXT("-n       do not use gateway\n")
         ACE_LIB_TEXT("\n"),
@@ -86,7 +88,9 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 RtecEventChannelAdmin::EventChannel_ptr
 FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
 {
-  FtRtecEventChannelAdmin::EventChannel_var channel;
+#ifndef NO_FTRTEC
+  FtRtecEventChannelAdmin::EventChannel_var channel = 
+    FtRtecEventChannelAdmin::EventChannel::_narrow(channel_.in());
   if (CORBA::is_nil(channel.in()))
   {
     /// Find the FTRTEC from the Naming Service
@@ -116,6 +120,9 @@ FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
     return gateway_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
   }
   return channel._retn();
+#else
+  return RtecEventChannelAdmin::EventChannel::_duplicate(channel_.in());
+#endif
 }
 
 
