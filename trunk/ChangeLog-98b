@@ -1,58 +1,63 @@
+Tue Aug 11 12:29:03 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * os-patches/linux-patches.html: the gas patch on alphas
+          isn't necessary with binutils-2.9.1.
+
 Tue Aug 11 12:23:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ARGV.{h,cpp}: Made a series of changes to make the file CE
-	  friendly.
+        * ace/ARGV.{h,cpp}: Made a series of changes to make the file CE
+          friendly.
 
-	* ace/Message_Queue_T.cpp: Adjusted the indentation.
+        * ace/Message_Queue_T.cpp: Adjusted the indentation.
 
 Tue Aug 11 02:06:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (dispatch_handles): Because dispatch_index
- 	  is absolute, nCount should be set to
- 	  (max_handlep1 - dispatch_index) instead of (nCount -
- 	  dispatch_index). Thanks to "Alberto Villarica"
- 	  <Alberto.Villarica.rav@nt.com> for pointing this out.
+        * ace/WFMO_Reactor.cpp (dispatch_handles): Because dispatch_index
+          is absolute, nCount should be set to
+          (max_handlep1 - dispatch_index) instead of (nCount -
+          dispatch_index). Thanks to "Alberto Villarica"
+          <Alberto.Villarica.rav@nt.com> for pointing this out.
 
 Mon Aug 10 20:12:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Log_Msg.cpp: On HP-UX 10.x, display thread's readable number
-	  rather than an int represenation of a pointer.
+        * ace/Log_Msg.cpp: On HP-UX 10.x, display thread's readable number
+          rather than an int represenation of a pointer.
 
-	* tests/test_config.h (ACE_Test_Output): When destroying
-	  ACE_Test_Output, make sure to remove all traces of it from
-	  ACE_Log_Msg instance.
+        * tests/test_config.h (ACE_Test_Output): When destroying
+          ACE_Test_Output, make sure to remove all traces of it from
+          ACE_Log_Msg instance.
 
-	* tests/Dynamic_Priority_Test.cpp: Don't try to set process-wide
-	  scheduling if it's not supported on the platform.
+        * tests/Dynamic_Priority_Test.cpp: Don't try to set process-wide
+          scheduling if it's not supported on the platform.
 
-	* tests/Thread_Manager_Test.cpp: Don't do a kill on pthreads draft
-	  4 platforms.  This is a NOP for now - it will make a difference when
-	  I check in more threads-related changes later.
+        * tests/Thread_Manager_Test.cpp: Don't do a kill on pthreads draft
+          4 platforms.  This is a NOP for now - it will make a difference when
+          I check in more threads-related changes later.
 
 Mon Aug 10 10:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Added the ACE-subsets.html file to the ACE directory so that
-	  we can all modify it.
+        * Added the ACE-subsets.html file to the ACE directory so that
+          we can all modify it.
 
 Mon Aug 10 10:29:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (shm_open): There's no need to mess with the security
-	  attribute here.
+        * ace/OS.i (shm_open): There's no need to mess with the security
+          attribute here.
 
 Mon Aug 10 01:09:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{h,i}: Added a new function
-	  "default_win32_security_attributes" to return the defualt
-	  security setting of kernel objects.  By default, this function
-	  is a no-op.  You must define
-	  ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES for this function
-	  to return a SECURITY_ATTRIBUTES object that has no access
-	  restriction.
+        * ace/OS.{h,i}: Added a new function
+          "default_win32_security_attributes" to return the defualt
+          security setting of kernel objects.  By default, this function
+          is a no-op.  You must define
+          ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES for this function
+          to return a SECURITY_ATTRIBUTES object that has no access
+          restriction.
 
-	  Modified all functions that use Win32 kernel objects to invoke
-	  this new function to get the appropriate security attributes.
-	  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
-	  suggesting this.
+          Modified all functions that use Win32 kernel objects to invoke
+          this new function to get the appropriate security attributes.
+          Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
+          suggesting this.
 
 
 Sun Aug 09 23:26:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -61,8 +66,8 @@ Sun Aug 09 23:26:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Aug  9 23:08:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Checked in a bunch of files/directories that I'd neglected
-	  to check in before.
+        * Checked in a bunch of files/directories that I'd neglected
+          to check in before.
 
 Sun Aug 09 23:02:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -70,863 +75,863 @@ Sun Aug 09 23:02:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Aug  9 15:04:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* netsvcs/clients/Tokens/manual/manual.cpp: Changed all instances
-	  of "#if (ACE_WIN32)" to "#if defined (ACE_WIN32)"
+        * netsvcs/clients/Tokens/manual/manual.cpp: Changed all instances
+          of "#if (ACE_WIN32)" to "#if defined (ACE_WIN32)"
 
-	* netsvcs/netsvcs.dsw: Added this workspace which contains all the
-	  netsvcs projects.
+        * netsvcs/netsvcs.dsw: Added this workspace which contains all the
+          netsvcs projects.
 
-	* netsvcs/clients/Tokens/collection/collection.dsp:
-	* netsvcs/clients/Tokens/collection/collection.dsw:
-	* netsvcs/clients/Tokens/deadlock/deadlock.dsp:
-	* netsvcs/clients/Tokens/deadlock/deadlock.dsw:
-	* netsvcs/clients/Tokens/invariant/invariant.dsp:
-	* netsvcs/clients/Tokens/invariant/invariant.dsw:
-	* netsvcs/clients/Tokens/manual/manual.dsp:
-	* netsvcs/clients/Tokens/manual/manual.dsw:
-	* netsvcs/clients/Tokens/mutex/mutex.dsp:
-	* netsvcs/clients/Tokens/mutex/mutex.dsw:
-	* netsvcs/clients/Tokens/rw_lock/rw_lock.dsp:
-	* netsvcs/clients/Tokens/rw_lock/rw_lock.dsw:
-	  Added these MSVC projects and workspaces.  Thanks to Jeff
-	  Hellzen <JHellzen@hwdcsaws.cahwnet.gov> for submitting these.
+        * netsvcs/clients/Tokens/collection/collection.dsp:
+        * netsvcs/clients/Tokens/collection/collection.dsw:
+        * netsvcs/clients/Tokens/deadlock/deadlock.dsp:
+        * netsvcs/clients/Tokens/deadlock/deadlock.dsw:
+        * netsvcs/clients/Tokens/invariant/invariant.dsp:
+        * netsvcs/clients/Tokens/invariant/invariant.dsw:
+        * netsvcs/clients/Tokens/manual/manual.dsp:
+        * netsvcs/clients/Tokens/manual/manual.dsw:
+        * netsvcs/clients/Tokens/mutex/mutex.dsp:
+        * netsvcs/clients/Tokens/mutex/mutex.dsw:
+        * netsvcs/clients/Tokens/rw_lock/rw_lock.dsp:
+        * netsvcs/clients/Tokens/rw_lock/rw_lock.dsw:
+          Added these MSVC projects and workspaces.  Thanks to Jeff
+          Hellzen <JHellzen@hwdcsaws.cahwnet.gov> for submitting these.
 
-	* netsvcs/clients/Logger/direct_logging.dsp:
-	* netsvcs/clients/Logger/indirect_logging.dsp:
-	* netsvcs/clients/Naming/Client/Client_Test.dsp:
-	* netsvcs/clients/Naming/Client/main.dsp:
-	* netsvcs/lib/netsvcs.dsp:
-	* netsvcs/servers/servers.dsp:
-	  Mainly just updated all of these and made sure that they worked.
+        * netsvcs/clients/Logger/direct_logging.dsp:
+        * netsvcs/clients/Logger/indirect_logging.dsp:
+        * netsvcs/clients/Naming/Client/Client_Test.dsp:
+        * netsvcs/clients/Naming/Client/main.dsp:
+        * netsvcs/lib/netsvcs.dsp:
+        * netsvcs/servers/servers.dsp:
+          Mainly just updated all of these and made sure that they worked.
 
 Sun Aug  9 09:17:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (connect_svc_handler): Changed the call to
- 	  this->CONNECT_STRATEGIES::connect_svc_handler() to avoid compile
- 	  problems with GCC on LynxOS.  Thanks to Sergio for reporting
- 	  this.
+        * ace/Strategies_T.cpp (connect_svc_handler): Changed the call to
+          this->CONNECT_STRATEGIES::connect_svc_handler() to avoid compile
+          problems with GCC on LynxOS.  Thanks to Sergio for reporting
+          this.
 
 Sat Aug  8 09:37:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp:
-	  Reverted the operator== optimization, it turns out that the
-	  definition of struct in_addr is not portable after all. Maybe
-	  there is a set of macros to make it portable?
+        * ace/INET_Addr.cpp:
+          Reverted the operator== optimization, it turns out that the
+          definition of struct in_addr is not portable after all. Maybe
+          there is a set of macros to make it portable?
 
-	* ace/ACE.h:
-	* ace/ACE.cpp:
-	  Returning <const char* const> is unnecesary; and gives no more
-	  guarantees that <const char*>, plus it gives warnings in
-	  IRIX/MIPSPro compilers.
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+          Returning <const char* const> is unnecesary; and gives no more
+          guarantees that <const char*>, plus it gives warnings in
+          IRIX/MIPSPro compilers.
 
-	* ace/Synch.cpp:
-	  Removed explicit instantiations of ACE_Guard<ACE_Null_Mutex>,
-	  the class is specialized so no instantiation is necessary. Same
-	  thing for ACE_Write_Guard and ACE_Read_Guard.
+        * ace/Synch.cpp:
+          Removed explicit instantiations of ACE_Guard<ACE_Null_Mutex>,
+          the class is specialized so no instantiation is necessary. Same
+          thing for ACE_Write_Guard and ACE_Read_Guard.
 
 Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h:
-	  Updated the new ACE_CC_NAME macros (and friends) so they work
-	  with egcs (and hopefully g++).
+        * ace/config-sunos5.5.h:
+          Updated the new ACE_CC_NAME macros (and friends) so they work
+          with egcs (and hopefully g++).
 
-	* tests/MT_SOCK_Test.cpp:
-	  Removed double comma in function call.
+        * tests/MT_SOCK_Test.cpp:
+          Removed double comma in function call.
 
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp:
-	  Compare the fields of in_addr instead of calling memcmp.
+        * ace/INET_Addr.cpp:
+          Compare the fields of in_addr instead of calling memcmp.
 
-	* ace/Message_Block.cpp:
-	* ace/Message_Block.h:
-	* ace/Message_Block.i:
-	  The Message_Block can receive an allocator for the data block,
-	  so instead of creating them on the heap they can be allocated
-	  from a TSS allocator or other memory pool. By default we use
-	  ACE_New_Allocator.
+        * ace/Message_Block.cpp:
+        * ace/Message_Block.h:
+        * ace/Message_Block.i:
+          The Message_Block can receive an allocator for the data block,
+          so instead of creating them on the heap they can be allocated
+          from a TSS allocator or other memory pool. By default we use
+          ACE_New_Allocator.
 
-	* apps/gperf/Makefile:
-	  The Id was wrong.
+        * apps/gperf/Makefile:
+          The Id was wrong.
 
-	* bin/auto_compile:
-	  Added gperf to the default list of directories.
+        * bin/auto_compile:
+          Added gperf to the default list of directories.
 
 Fri Aug  7 13:58:58 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* bin/envinfo.cpp:
-	Added this program, which will print the version information for
-	ACE, the OS and C++ compiler. The idea is to use this when posting
-	to the ACE mailing list.
+        * bin/envinfo.cpp:
+        Added this program, which will print the version information for
+        ACE, the OS and C++ compiler. The idea is to use this when posting
+        to the ACE mailing list.
 
-	* ace/ACE.h:
-	* ace/ACE.cpp:
-	Added static methods to retrieve compiler information (name, major
-	version, minro version, beta version).
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+        Added static methods to retrieve compiler information (name, major
+        version, minro version, beta version).
 
-	* ace/config-sunos5.5.h:
-	Defined the compiler information macros for this platform.
+        * ace/config-sunos5.5.h:
+        Defined the compiler information macros for this platform.
 
-	* bin/Makefile:
-	Modified the Makefile to support multiple binaries in the
-	directory (according to tests/Makefile).
+        * bin/Makefile:
+        Modified the Makefile to support multiple binaries in the
+        directory (according to tests/Makefile).
 
-	* bin/clone.cpp:
-	Added RCS Id.
+        * bin/clone.cpp:
+        Added RCS Id.
 
 Fri Aug  7 12:46:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Activation_Queue.h: Updated the documentation to indicate
- 	  the need for absolute rather than relative time values.  Thanks
- 	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
- 	  this.
+        * ace/Activation_Queue.h: Updated the documentation to indicate
+          the need for absolute rather than relative time values.  Thanks
+          to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
+          this.
 
 Fri Aug 07 02:06:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Added a new test to
- 	  make sure the water mark stuff works.  It still needs to be
- 	  clean up to compile with g++.
+        * tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Added a new test to
+          make sure the water mark stuff works.  It still needs to be
+          clean up to compile with g++.
 
 Fri Aug 07 01:00:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.i (operator==): Added a method to compare a
- 	  ACE_Hash_Recyclable and a ACE_Recyclable. Also inlined a shit
- 	  load of small methods.
+        * ace/Strategies_T.i (operator==): Added a method to compare a
+          ACE_Hash_Recyclable and a ACE_Recyclable. Also inlined a shit
+          load of small methods.
 
-	* ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
- 	  connected to the correct address or is busy, we will not use it.
-  	  Therefore we need to set it to zero.
+        * ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
+          connected to the correct address or is busy, we will not use it.
+          Therefore we need to set it to zero.
 
-	* ace/Synch: Added template specializations for
- 	  ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
- 	  ACE_Read_Guard<ACE_Null_Mutex>.
+        * ace/Synch: Added template specializations for
+          ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
+          ACE_Read_Guard<ACE_Null_Mutex>.
 
 Thu Aug 06 14:59:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Thread_Manager.cpp: Updated all uses of cancel_thr for the
- 	  various apply*() methods so that they pass along the
- 	  async_cancel flag.
+          various apply*() methods so that they pass along the
+          async_cancel flag.
 
-	* ace/Thread_Manager.cpp: Added a new ARG to the ACE_EXECUTE_OP
- 	  macro.  Believe it or not, this change actually reduced the
- 	  amount of special-case code because we can now treat kill_thr()
- 	  just like the other *_thr() methods.  Irfan was amazed ;-).
+        * ace/Thread_Manager.cpp: Added a new ARG to the ACE_EXECUTE_OP
+          macro.  Believe it or not, this change actually reduced the
+          amount of special-case code because we can now treat kill_thr()
+          just like the other *_thr() methods.  Irfan was amazed ;-).
 
-	* ace/Thread_Manager: Added a new flag called "async_cancel" to
- 	  all the Thread Manager cancel*() methods.  This flag is disabled
- 	  by default (hence, there are no changes to the ACE Thread
- 	  Manager semantics).  If it is enabled, however, it will attempt
- 	  to perform an asychronous thread cancellation on the
- 	  corresponding thread id(s).
+        * ace/Thread_Manager: Added a new flag called "async_cancel" to
+          all the Thread Manager cancel*() methods.  This flag is disabled
+          by default (hence, there are no changes to the ACE Thread
+          Manager semantics).  If it is enabled, however, it will attempt
+          to perform an asychronous thread cancellation on the
+          corresponding thread id(s).
 
 Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Priority_Task_Test.cpp: Enhanced this test so that it runs
- 	  correctly on platforms where you must be root to muck around
- 	  with thread priorities.  Thanks to John Mulhern
- 	  <9107@mn3.lawson.lawson.com> for reporting this.
+        * tests/Priority_Task_Test.cpp: Enhanced this test so that it runs
+          correctly on platforms where you must be root to muck around
+          with thread priorities.  Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for reporting this.
 
-	* tests/MT_SOCK_Test.cpp: Reformatted the code to make it more
- 	  readable and also to remove a C-style cast.
+        * tests/MT_SOCK_Test.cpp: Reformatted the code to make it more
+          readable and also to remove a C-style cast.
 
-	* ace/Message_Queue_T.h: Improved the documentation of the low
- 	  water mark and high water marks.  Thanks to Umar for encouraging
- 	  this.
+        * ace/Message_Queue_T.h: Improved the documentation of the low
+          water mark and high water marks.  Thanks to Umar for encouraging
+          this.
 
 Thu Aug  6 20:41:44 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
+        * ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
           <dobridge@persimmon.com> (thanks!).
 
 Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
- 	  connected to the correct address or is busy, we will not use it.
-  	  Therefore we need to set it to zero.
+        * ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
+          connected to the correct address or is busy, we will not use it.
+          Therefore we need to set it to zero.
 
-	* ace/Synch: Added template specializations for
- 	  ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
- 	  ACE_Read_Guard<ACE_Null_Mutex>.
+        * ace/Synch: Added template specializations for
+          ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
+          ACE_Read_Guard<ACE_Null_Mutex>.
 
 Thu Aug  6 14:30:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++-nothreads.h:
-	  Use template specializations instead of pragmas if the compiler
-	  is 7.2 or better.
+        * ace/config-irix6.x-sgic++-nothreads.h:
+          Use template specializations instead of pragmas if the compiler
+          is 7.2 or better.
 
-	* ace/config-irix6.x-sgic++.h:
-	  The <sched.h> is not necessary in IRIX 6.4
+        * ace/config-irix6.x-sgic++.h:
+          The <sched.h> is not necessary in IRIX 6.4
 
 Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Message_Queue_T.cpp: Make sure to check if the cur_bytes_ is
- 	  <= to the low_water_mark before signaling threads trying to
- 	  enqueue a Message_Block.
+          <= to the low_water_mark before signaling threads trying to
+          enqueue a Message_Block.
 
-	* ace/Message_Queue_T.cpp: Fixed a bunch of code to use the
+        * ace/Message_Queue_T.cpp: Fixed a bunch of code to use the
           ACE_NEW_RETURN macro to ensure that errno is set correctly.
 
-	* ace/Message_Queue.h: Changed the DEFAULT_LWM to be the same as
- 	  the DEFAULT_HWM since that's the "Right Way"[TM] to handle
- 	  this...  Thanks to Umar Syyid <usyyid@hns.com> for helping to
- 	  track this down.
+        * ace/Message_Queue.h: Changed the DEFAULT_LWM to be the same as
+          the DEFAULT_HWM since that's the "Right Way"[TM] to handle
+          this...  Thanks to Umar Syyid <usyyid@hns.com> for helping to
+          track this down.
 
-	* ace/Message_Queue_T.i (is_empty_i): Removed the low water mark
-	  logic entirely because this isn't the right place to put it.
-	  Also reverted back to using && rather than || since we need
-	  to handle "0-sized" messages.
+        * ace/Message_Queue_T.i (is_empty_i): Removed the low water mark
+          logic entirely because this isn't the right place to put it.
+          Also reverted back to using && rather than || since we need
+          to handle "0-sized" messages.
 
 Thu Aug  6 09:41:22 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/ARGV.{h,cpp} : Added a new
-	ACE_ARGV(ASYS_TCHAR *first_argv,ASYS_TCHAR *second_argv,int)
-	which creates a new ARGV which is the concatenation of the 2 argvs.
+        * ace/ARGV.{h,cpp} : Added a new
+        ACE_ARGV(ASYS_TCHAR *first_argv,ASYS_TCHAR *second_argv,int)
+        which creates a new ARGV which is the concatenation of the 2 argvs.
 
-	Also added a new private method argv_to_string
-	which converts an argv to a string.
+        Also added a new private method argv_to_string
+        which converts an argv to a string.
 
 Thu Aug  6 08:56:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Module.h: Pointed out that ACE_Module should't be subclassed
- 	  -- ACE_Task should be subclasses.  Thanks to Barney Dalton
- 	  <barneyd@cyllene.uwa.edu.au> for pointing this out.
+        * ace/Module.h: Pointed out that ACE_Module should't be subclassed
+          -- ACE_Task should be subclasses.  Thanks to Barney Dalton
+          <barneyd@cyllene.uwa.edu.au> for pointing this out.
 
 Wed Aug 05 23:57:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Reactor.cpp (end_event_loop): Changed the code so that *all*
- 	  threads are woken up.  Thanks to Olivier Lau
- 	  <olivier_lau@srtelecom.com> for pointing this bug out.
+        * ace/Reactor.cpp (end_event_loop): Changed the code so that *all*
+          threads are woken up.  Thanks to Olivier Lau
+          <olivier_lau@srtelecom.com> for pointing this bug out.
 
-	* examples/Reactor/ReactorEx/test_multithreading.cpp (main):
- 	  Changed Reactor->close() to Reactor::end_event_loop().
+        * examples/Reactor/ReactorEx/test_multithreading.cpp (main):
+          Changed Reactor->close() to Reactor::end_event_loop().
 
 Wed Aug  5 23:12:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Changed
-	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
+        * include/makeinclude/wrapper_macros.GNU: Changed
+          PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
 
-	  to
+          to
 
-	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
+          PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
-	  Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for this.
+          Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for this.
 
 Wed Aug 05 14:53:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (connect_svc_handler): When using this
- 	  method, the user was required to pass us a zero for the
- 	  svc_handler. We would either find them a non-busy one, or will
- 	  create a new one.
+        * ace/Strategies_T.cpp (connect_svc_handler): When using this
+          method, the user was required to pass us a zero for the
+          svc_handler. We would either find them a non-busy one, or will
+          create a new one.
 
-	  Unfortunately, the svc_handler lookup was taking too long.
-  	  Therefore, the following change was made to the
- 	  connect_svc_handler algorithm: the user is now allowed to pass
- 	  in the svc_handler that they used last as a "hint".  The
- 	  algorithm first checks to see if the "hint" svc_handler is
- 	  connected to the correct address and is recyclable.  If it is,
- 	  then it recycles the "hint" svc_handler and gives it back to the
- 	  user.  This should improve the lookups in most cases.
+          Unfortunately, the svc_handler lookup was taking too long.
+          Therefore, the following change was made to the
+          connect_svc_handler algorithm: the user is now allowed to pass
+          in the svc_handler that they used last as a "hint".  The
+          algorithm first checks to see if the "hint" svc_handler is
+          connected to the correct address and is recyclable.  If it is,
+          then it recycles the "hint" svc_handler and gives it back to the
+          user.  This should improve the lookups in most cases.
 
-	* ace/Svc_Handler.cpp (recycling_act): Added accessor to get the
- 	  <recycling_act_>.
+        * ace/Svc_Handler.cpp (recycling_act): Added accessor to get the
+          <recycling_act_>.
 
-	* tests/Conn_Test.cpp (idle): Added method so that we can tell
- 	  when a Svc_Handler is being set to idle.  Also changed the test
- 	  so that it can use the new "hint" mechanism in the cached
- 	  connector.
+        * tests/Conn_Test.cpp (idle): Added method so that we can tell
+          when a Svc_Handler is being set to idle.  Also changed the test
+          so that it can use the new "hint" mechanism in the cached
+          connector.
 
 Wed Aug  5 16:12:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Replaced usage of ACE_OS::thr_* with
-	  ACE_Thread::*.  Thanks to Arturo Montes
-	  <mitosys@colomsat.net.co> for sending the patches.
+        * ace/Log_Msg.cpp: Replaced usage of ACE_OS::thr_* with
+          ACE_Thread::*.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for sending the patches.
 
 Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Manager: Cleaned up the documentation and formatting
- 	  a bit.
+        * ace/Service_Manager: Cleaned up the documentation and formatting
+          a bit.
 
-	* ace/Message_Queue_T.i: Changed the computation of is_empty_i()
-	  so that it's
+        * ace/Message_Queue_T.i: Changed the computation of is_empty_i()
+          so that it's
 
-	  return this->cur_bytes_ <= this->low_water_mark_ || this->cur_count_ <= 0;
+          return this->cur_bytes_ <= this->low_water_mark_ || this->cur_count_ <= 0;
 
-	  i.e., we use an || rather than a &&.  Thanks to Umar for
- 	  reporting this.
+          i.e., we use an || rather than a &&.  Thanks to Umar for
+          reporting this.
 
-	* ace/Message_Queue_T.i: Changed the computation of is_empty_i() so
- 	  that it doesn't consider the queue to be empty unless the
- 	  cur_bytes_ <= the low_water_mark_ (which defaults to 0 so that
- 	  no existing code is affected).  This change makes it possible
- 	  for producer/consumer threading applications to avoid the "silly
- 	  window syndrome."  Thanks to Umar Syyid <usyyid@hns.com> for
- 	  suggesting this.
+        * ace/Message_Queue_T.i: Changed the computation of is_empty_i() so
+          that it doesn't consider the queue to be empty unless the
+          cur_bytes_ <= the low_water_mark_ (which defaults to 0 so that
+          no existing code is affected).  This change makes it possible
+          for producer/consumer threading applications to avoid the "silly
+          window syndrome."  Thanks to Umar Syyid <usyyid@hns.com> for
+          suggesting this.
 
 Wed Aug 05 00:10:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (strnstr (both Unicode and Multibyte versions)):
-	* ace/SString.cpp (strstr):
-	  Fixed "off by one error" in searching algorithm.  Thanks to
- 	  Byron Harris <harris_b@ociweb.com> for pointing this out.
+        * ace/OS.i (strnstr (both Unicode and Multibyte versions)):
+        * ace/SString.cpp (strstr):
+          Fixed "off by one error" in searching algorithm.  Thanks to
+          Byron Harris <harris_b@ociweb.com> for pointing this out.
 
-	* tests/SString_Test.cpp (main): Added new test cases.
+        * tests/SString_Test.cpp (main): Added new test cases.
 
 Tue Aug  4 21:56:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/TSS_Test.cpp:
-	* examples/Thread/thread_specific.cpp: Replaced ACE_OS::thr_* with
-	  ACE_Thread::*.  Thanks to Arturo Montes
-	  <mitosys@colomsat.net.co> for sending the patches.
+        * tests/TSS_Test.cpp:
+        * examples/Thread/thread_specific.cpp: Replaced ACE_OS::thr_* with
+          ACE_Thread::*.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for sending the patches.
 
 Tue Aug  4 18:44:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html:
-	Updated the file to recommend the creation of config.h as a
-	regular file that includes the appropriate platform config file,
-	instead of setting it to be a symlink. This is more flexible and
-	allows the user to redefine some of the ACE configuration
-	parameters.
+        * ACE-INSTALL.html:
+        Updated the file to recommend the creation of config.h as a
+        regular file that includes the appropriate platform config file,
+        instead of setting it to be a symlink. This is more flexible and
+        allows the user to redefine some of the ACE configuration
+        parameters.
 
-	* ace/config-linux-common.h:
-	As an example of the above, now the user can #define
-	ACE_HAS_IP_MULTICAST in his config.h file to 0, and he won't be
-	using multicast under linux. This is clearer than having to edit
-	the config-linux-common.h file, which will now respect the user's
-	settings (if any)..
+        * ace/config-linux-common.h:
+        As an example of the above, now the user can #define
+        ACE_HAS_IP_MULTICAST in his config.h file to 0, and he won't be
+        using multicast under linux. This is clearer than having to edit
+        the config-linux-common.h file, which will now respect the user's
+        settings (if any)..
 
 Tue Aug  4 17:39:12 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE_Library.{mak mdp}: Added TP_Reactor.cpp to the project.
+        * ace/ACE_Library.{mak mdp}: Added TP_Reactor.cpp to the project.
 
-	* tests/Aio_Platform_Test.cpp: Don't try to sysconf() for the AIO
-	  values if there's no chance of AIO on the system (_POSIX_ASYNC_IO
-	  not defined at compile time).
+        * tests/Aio_Platform_Test.cpp: Don't try to sysconf() for the AIO
+          values if there's no chance of AIO on the system (_POSIX_ASYNC_IO
+          not defined at compile time).
 
-	* examples/OS/Process/Process.dsp: Link against ace.lib for Release,
-	  aced.lib for Debug (these were reversed).
+        * examples/OS/Process/Process.dsp: Link against ace.lib for Release,
+          aced.lib for Debug (these were reversed).
 
 Tue Aug  4 12:09:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Clarified the fact that the ACE_DEFAULT_MUITCAST_ADDR
- 	  must be within the range for host group addresses: 224.0.0.0 to
- 	  239.255.255.255.  Thanks to Christa Schwanninger
- 	  <christa.schwanninger@mchp.siemens.de> for reporting this.
+        * ace/OS.h: Clarified the fact that the ACE_DEFAULT_MUITCAST_ADDR
+          must be within the range for host group addresses: 224.0.0.0 to
+          239.255.255.255.  Thanks to Christa Schwanninger
+          <christa.schwanninger@mchp.siemens.de> for reporting this.
 
 Tue Aug 04 11:01:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/GenExportH.BAT: Moved from TAO/TAO_IDL/.
+        * bin/GenExportH.BAT: Moved from TAO/TAO_IDL/.
 
-	* ace/Token.{h,cpp} (signal_all_threads): Added this method which
-	  changes the return values of all acquire method to 2.  The last
-	  thread waiting for the token will reset the signal state
-	  (therefore, there's NO cancel_signal_all_threads method.)
-	  (shared_acquire): Return 2 if the token is signaled after
-	  acquiring the token successfully.
-	  (release):  If the token is signaled and there's no other thread
-	  waiting to acquire the token, reset the signal state.
+        * ace/Token.{h,cpp} (signal_all_threads): Added this method which
+          changes the return values of all acquire method to 2.  The last
+          thread waiting for the token will reset the signal state
+          (therefore, there's NO cancel_signal_all_threads method.)
+          (shared_acquire): Return 2 if the token is signaled after
+          acquiring the token successfully.
+          (release):  If the token is signaled and there's no other thread
+          waiting to acquire the token, reset the signal state.
 
-	* ace/TP_Reactor.{h,i,cpp} (wakeup_all_threads): Added
-	  implementation for this virtual function.  It "signals" the
-	  token threads are waiting on and wake them up by notifying the
-	  reactor.
-	  (handle_events): Check to see if the reactor token is signaled
-	  after acquiring it.  If the the token is signaled, it will not
-	  proceed to handle events (by calling select) but instead return
-	  successfully.  This allow the thread the chance to check if it's
-	  time to shut down the event loop.
+        * ace/TP_Reactor.{h,i,cpp} (wakeup_all_threads): Added
+          implementation for this virtual function.  It "signals" the
+          token threads are waiting on and wake them up by notifying the
+          reactor.
+          (handle_events): Check to see if the reactor token is signaled
+          after acquiring it.  If the the token is signaled, it will not
+          proceed to handle events (by calling select) but instead return
+          successfully.  This allow the thread the chance to check if it's
+          time to shut down the event loop.
 
 Mon Aug  3 17:53:48 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* performance-tests/Makefile:
-	* performance-tests/Misc/basic_func.cpp:
-	* performance-tests/Misc/basic_perf.cpp:
-	* performance-tests/Misc/childbirth_time.cpp:
-	* performance-tests/Misc/context_switch_time.cpp:
-	* performance-tests/Misc/preempt.cpp:
-	* performance-tests/Misc/test_mutex.cpp:
-	* performance-tests/Misc/test_naming.cpp:
-	* performance-tests/Misc/test_singleton.cpp:
-	* performance-tests/Synch-Benchmarks/Benchmark_Base.cpp:
-	* performance-tests/Synch-Benchmarks/Benchmark_Performance.cpp:
-	* performance-tests/Synch-Benchmarks/Options.cpp:
-	* performance-tests/Synch-Benchmarks/Performance_Test.cpp:
-	* performance-tests/Synch-Benchmarks/condb_test.cpp:
-	* performance-tests/Synch-Benchmarks/conds_test.cpp:
-	* performance-tests/Synch-Benchmarks/context_test.cpp:
-	* performance-tests/Synch-Benchmarks/memory_test.cpp:
-	* performance-tests/Synch-Benchmarks/mutex_test.cpp:
-	* performance-tests/Synch-Benchmarks/pipe_proc_test.cpp:
-	* performance-tests/Synch-Benchmarks/pipe_thr_test.cpp:
-	* performance-tests/Synch-Benchmarks/recursive_lock_test.cpp:
-	* performance-tests/Synch-Benchmarks/rwrd_test.cpp:
-	* performance-tests/Synch-Benchmarks/rwwr_test.cpp:
-	* performance-tests/Synch-Benchmarks/sema_test.cpp:
-	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
-	* performance-tests/Synch-Benchmarks/sysvsema_test.cpp:
-	* performance-tests/Synch-Benchmarks/token_test.cpp:
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
-	* performance-tests/TTCP/C/new-ttcp.cpp:
-	* performance-tests/TTCP/ORBeline/ttcp_i.cpp:
-	* performance-tests/TTCP/Orbix/ttcpC.cpp:
-	* performance-tests/TTCP/Orbix/ttcpS.cpp:
-	* performance-tests/TTCP/Orbix/ttcp_i.cpp:
-	* performance-tests/UDP/udp_test.cpp:
-	Added ACE_RCSID to these files.
+        * performance-tests/Makefile:
+        * performance-tests/Misc/basic_func.cpp:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_mutex.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/Misc/test_singleton.cpp:
+        * performance-tests/Synch-Benchmarks/Benchmark_Base.cpp:
+        * performance-tests/Synch-Benchmarks/Benchmark_Performance.cpp:
+        * performance-tests/Synch-Benchmarks/Options.cpp:
+        * performance-tests/Synch-Benchmarks/Performance_Test.cpp:
+        * performance-tests/Synch-Benchmarks/condb_test.cpp:
+        * performance-tests/Synch-Benchmarks/conds_test.cpp:
+        * performance-tests/Synch-Benchmarks/context_test.cpp:
+        * performance-tests/Synch-Benchmarks/memory_test.cpp:
+        * performance-tests/Synch-Benchmarks/mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/pipe_proc_test.cpp:
+        * performance-tests/Synch-Benchmarks/pipe_thr_test.cpp:
+        * performance-tests/Synch-Benchmarks/recursive_lock_test.cpp:
+        * performance-tests/Synch-Benchmarks/rwrd_test.cpp:
+        * performance-tests/Synch-Benchmarks/rwwr_test.cpp:
+        * performance-tests/Synch-Benchmarks/sema_test.cpp:
+        * performance-tests/Synch-Benchmarks/synch_driver.cpp:
+        * performance-tests/Synch-Benchmarks/sysvsema_test.cpp:
+        * performance-tests/Synch-Benchmarks/token_test.cpp:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * performance-tests/TTCP/ORBeline/ttcp_i.cpp:
+        * performance-tests/TTCP/Orbix/ttcpC.cpp:
+        * performance-tests/TTCP/Orbix/ttcpS.cpp:
+        * performance-tests/TTCP/Orbix/ttcp_i.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        Added ACE_RCSID to these files.
 
 Sun Aug  2 19:43:04 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Reactor_Performance_Test.cpp:  Made a change suggested by
-	  Irfan to allow this test to work in Windows 95.
+        * tests/Reactor_Performance_Test.cpp:  Made a change suggested by
+          Irfan to allow this test to work in Windows 95.
 
 Sat Aug  1 20:35:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace:
-	  include/makeinclude:
-	  Added new config/platform files for SCO.  These files enable the
-	  following:
+        * ace:
+          include/makeinclude:
+          Added new config/platform files for SCO.  These files enable the
+          following:
 
-	  - TAO_IDL work newly in SCO OpenServer.
-	  - Fixed a compilation problem with EventService in TAO.
-	  - Fixed a problem with ACE and TAO shared libraries.
-	  - Some test with TSS_Emulation and recent changes in Thread_Manager.
+          - TAO_IDL work newly in SCO OpenServer.
+          - Fixed a compilation problem with EventService in TAO.
+          - Fixed a problem with ACE and TAO shared libraries.
+          - Some test with TSS_Emulation and recent changes in Thread_Manager.
 
-	  Thanks to Arturo for these changes.
+          Thanks to Arturo for these changes.
 
 Sat Aug 01 13:34:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (flock_wrlock): LockFileEx() and UnLockFileEx() are not
- 	  implemented on Win32.  Therefore, the flock methods were changed
- 	  to use the non-Ex versions on Win95.  Thanks to XuYifeng
- 	  <xuyf@pop.zg169.net> for pointing this out.
+        * ace/OS.i (flock_wrlock): LockFileEx() and UnLockFileEx() are not
+          implemented on Win32.  Therefore, the flock methods were changed
+          to use the non-Ex versions on Win95.  Thanks to XuYifeng
+          <xuyf@pop.zg169.net> for pointing this out.
 
-	  While making the changes, I found that there were a couple bugs
- 	  in the code: (a) the <whence> parameter was being ignored and
- 	  (b) the adjustment for <len> == 0 was incorrect.  I think I have
- 	  fixed both of these also in ACE_OS::adjust_flock_params().
+          While making the changes, I found that there were a couple bugs
+          in the code: (a) the <whence> parameter was being ignored and
+          (b) the adjustment for <len> == 0 was incorrect.  I think I have
+          fixed both of these also in ACE_OS::adjust_flock_params().
 
-	  One last thing: I changed flock_unlock() to use UnLockFile()
- 	  instead of UnLockFileEx(). UnLockFileEx() is also not supported
- 	  on Win95.  Hopefully, it is ok to lock with LockFileEx() and
- 	  unlock with UnLockFile() instead of UnLockFileEx().
+          One last thing: I changed flock_unlock() to use UnLockFile()
+          instead of UnLockFileEx(). UnLockFileEx() is also not supported
+          on Win95.  Hopefully, it is ok to lock with LockFileEx() and
+          unlock with UnLockFile() instead of UnLockFileEx().
 
-	* ace/OS.cpp (pread): Changed bytes_written to bytes_read.
+        * ace/OS.cpp (pread): Changed bytes_written to bytes_read.
 
 Fri Jul 31 23:47:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  We now run several on-button tests in TAO, though it is still
-	  hard to detect any errors.
+        * bin/auto_compile:
+          We now run several on-button tests in TAO, though it is still
+          hard to detect any errors.
 
 Fri Jul 31 21:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp (open): Changed the code to ignore the
- 	  return value from ACE::set_handle_limit().  Thanks to Zheng Han
- 	  <zhan@glenvan.glenayre.com> for reporting this and to Arturo for
- 	  suggesting the fix.
+        * ace/Select_Reactor.cpp (open): Changed the code to ignore the
+          return value from ACE::set_handle_limit().  Thanks to Zheng Han
+          <zhan@glenvan.glenayre.com> for reporting this and to Arturo for
+          suggesting the fix.
 
-	* ace/ARGV.cpp: Enhanced the implemenation of string_to_array() so
- 	  that it should always work correctly even if there are a large
- 	  number of bytes in the original buf string.
+        * ace/ARGV.cpp: Enhanced the implemenation of string_to_array() so
+          that it should always work correctly even if there are a large
+          number of bytes in the original buf string.
 
-	* ace/ARGV.cpp: Renamed string_to_array() to string_to_argv(),
- 	  which is more intuitive.
+        * ace/ARGV.cpp: Renamed string_to_array() to string_to_argv(),
+          which is more intuitive.
 
-	* ace/OS.h: Added a new macro called ACE_DEFAULT_ARGV_BUFSIZ,
- 	  which is used as the default size of all the "argv" contents in
- 	  ACE_ARGV.  This defaults to 4 kbytes.
+        * ace/OS.h: Added a new macro called ACE_DEFAULT_ARGV_BUFSIZ,
+          which is used as the default size of all the "argv" contents in
+          ACE_ARGV.  This defaults to 4 kbytes.
 
 Fri Jul 31 19:55:10 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* netsvcs/clients/Logger/direct_logging.cpp:
-	* netsvcs/clients/Logger/indirect_logging.cpp:
-	* netsvcs/clients/Naming/Client/Client_Test.cpp:
-	* netsvcs/clients/Naming/Client/main.cpp:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
-	* netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
-	* netsvcs/clients/Naming/Dump_Restore/main.cpp:
-	* netsvcs/clients/Tokens/collection/collection.cpp:
-	* netsvcs/clients/Tokens/collection/rw_locks.cpp:
-	* netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
-	* netsvcs/clients/Tokens/invariant/invariant.cpp:
-	* netsvcs/clients/Tokens/manual/manual.cpp:
-	* netsvcs/clients/Tokens/mutex/test_mutex.cpp:
-	* netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
-	* netsvcs/lib/Base_Optimizer.cpp:
-	* netsvcs/lib/Client_Logging_Handler.cpp:
-	* netsvcs/lib/Log_Message_Receiver.cpp:
-	* netsvcs/lib/Logging_Strategy.cpp:
-	* netsvcs/lib/Name_Handler.cpp:
-	* netsvcs/lib/Server_Logging_Handler.cpp:
-	* netsvcs/lib/Server_Logging_Handler_T.cpp:
-	* netsvcs/lib/TS_Clerk_Handler.cpp:
-	* netsvcs/lib/TS_Server_Handler.cpp:
-	* netsvcs/lib/Token_Handler.cpp:
-	* netsvcs/servers/main.cpp:
-	Added ACE_RCSID to these files.
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/main.cpp:
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+        * netsvcs/lib/Base_Optimizer.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+        * netsvcs/lib/Logging_Strategy.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
+        * netsvcs/servers/main.cpp:
+        Added ACE_RCSID to these files.
 
 Fri Jul 31 19:15:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.cpp (pwrite and pread): There were many bugs in these two
- 	  methods.
+        * ace/OS.cpp (pwrite and pread): There were many bugs in these two
+          methods.
 
-	  - It was assumed that it is ok to call WriteFile/ReadFile with
- 	    an OVERLAPPED structure.  This is not true on Windows95.
-  	    Therefore, code had to be added to make sure that on
- 	    Windows95, WriteFile and ReadFile were called without an
- 	    OVERLAPPED struct.
+          - It was assumed that it is ok to call WriteFile/ReadFile with
+            an OVERLAPPED structure.  This is not true on Windows95.
+            Therefore, code had to be added to make sure that on
+            Windows95, WriteFile and ReadFile were called without an
+            OVERLAPPED struct.
 
-	  - We were assuming that if we used the OVERLAPPED struct, the
- 	    file pointer would not move.  It turns out that the OVERLAPPED
- 	    struct has nothing with whether the file pointer moves or not.
-  	    It has to do with whether the file was opened with
- 	    FILE_FLAG_OVERLAPPED or not.  Since it is not possible to
- 	    figure whether the file handle we got was opened with this
- 	    flag or not, we have to program defensively and reset the file
- 	    pointer in any case.
+          - We were assuming that if we used the OVERLAPPED struct, the
+            file pointer would not move.  It turns out that the OVERLAPPED
+            struct has nothing with whether the file pointer moves or not.
+            It has to do with whether the file was opened with
+            FILE_FLAG_OVERLAPPED or not.  Since it is not possible to
+            figure whether the file handle we got was opened with this
+            flag or not, we have to program defensively and reset the file
+            pointer in any case.
 
-	  - Also the !ACE_HAS_P_READ_WRITE implementation was not
- 	    restoring the file pointer to its original position.  This was
-	    also fixed.
+          - Also the !ACE_HAS_P_READ_WRITE implementation was not
+            restoring the file pointer to its original position.  This was
+            also fixed.
 
 Fri Jul 31 18:33:39 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
-	* apps/Gateway/Gateway/Config_Files.cpp:
-	* apps/Gateway/Gateway/Connection_Handler.cpp:
-	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
-	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
-	* apps/Gateway/Gateway/Event_Channel.cpp:
-	* apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp:
-	* apps/Gateway/Gateway/File_Parser.cpp:
-	* apps/Gateway/Gateway/Gateway.cpp:
-	* apps/Gateway/Gateway/Options.cpp:
-	* apps/Gateway/Gateway/gatewayd.cpp:
-	* apps/Gateway/Peer/Options.cpp:
-	* apps/Gateway/Peer/Peer.cpp:
-	* apps/Gateway/Peer/peerd.cpp:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp:
-	* apps/Orbix-Examples/Logger/Logger.cpp:
-	* apps/Orbix-Examples/Logger/client.cpp:
-	* apps/Orbix-Examples/Logger/loggerS.cpp:
-	* apps/Orbix-Examples/Logger/logger_i.cpp:
-	* apps/Orbix-Examples/Logger/server.cpp:
-	Added ACE_RCSID to these files.
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+        * apps/Gateway/Gateway/Config_Files.cpp:
+        * apps/Gateway/Gateway/Connection_Handler.cpp:
+        * apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
+        * apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp:
+        * apps/Gateway/Gateway/File_Parser.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * apps/Gateway/Peer/Options.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+        * apps/Gateway/Peer/peerd.cpp:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp:
+        * apps/Orbix-Examples/Logger/Logger.cpp:
+        * apps/Orbix-Examples/Logger/client.cpp:
+        * apps/Orbix-Examples/Logger/loggerS.cpp:
+        * apps/Orbix-Examples/Logger/logger_i.cpp:
+        * apps/Orbix-Examples/Logger/server.cpp:
+        Added ACE_RCSID to these files.
 
 Fri Jul 31 17:50:01 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp:
-	Added ACE_RCSID to this file, and all the .cpp files in examples,
-	listed below.
+        * ace/TP_Reactor.cpp:
+        Added ACE_RCSID to this file, and all the .cpp files in examples,
+        listed below.
 
-	* examples/ASX/CCM_App/CCM_App.cpp:
-	* examples/ASX/CCM_App/SC_Client.cpp:
-	* examples/ASX/CCM_App/SC_Server.cpp:
-	* examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
-	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
-	* examples/ASX/Event_Server/Event_Server/Options.cpp:
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
-	* examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	* examples/ASX/Message_Queue/bounded_buffer.cpp:
-	* examples/ASX/Message_Queue/buffer_stream.cpp:
-	* examples/ASX/Message_Queue/priority_buffer.cpp:
-	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
-	* examples/ASX/UPIPE_Event_Server/Options.cpp:
-	* examples/ASX/UPIPE_Event_Server/Peer_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
-	* examples/CORBA/Test_i.cpp:
-	* examples/CORBA/client.cpp:
-	* examples/CORBA/server.cpp:
-	* examples/Connection/blocking/SPIPE-acceptor.cpp:
-	* examples/Connection/blocking/SPIPE-connector.cpp:
-	* examples/Connection/blocking/test_spipe_acceptor.cpp:
-	* examples/Connection/blocking/test_spipe_connector.cpp:
-	* examples/Connection/misc/Connection_Handler.cpp:
-	* examples/Connection/misc/test_upipe.cpp:
-	* examples/Connection/non_blocking/CPP-acceptor.cpp:
-	* examples/Connection/non_blocking/CPP-connector.cpp:
-	* examples/Connection/non_blocking/test_lsock_acceptor.cpp:
-	* examples/Connection/non_blocking/test_lsock_connector.cpp:
-	* examples/Connection/non_blocking/test_sock_acceptor.cpp:
-	* examples/Connection/non_blocking/test_sock_connector.cpp:
-	* examples/Connection/non_blocking/test_spipe_acceptor.cpp:
-	* examples/Connection/non_blocking/test_spipe_connector.cpp:
-	* examples/Connection/non_blocking/test_tli_acceptor.cpp:
-	* examples/Connection/non_blocking/test_tli_connector.cpp:
-	* examples/IOStream/client/iostream_client.cpp:
-	* examples/IOStream/server/iostream_server.cpp:
-	* examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
-	* examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
-	* examples/IPC_SAP/FILE_SAP/client.cpp:
-	* examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/client.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/server.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
-	* examples/IPC_SAP/TLI_SAP/db-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/db-server.cpp:
-	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
-	* examples/IPC_SAP/UPIPE_SAP/ex1.cpp:
-	* examples/IPC_SAP/UPIPE_SAP/ex2.cpp:
-	* examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
-	* examples/Log_Msg/test_log_msg.cpp:
-	* examples/Logger/Acceptor-server/server_loggerd.cpp:
-	* examples/Logger/client/logging_app.cpp:
-	* examples/Logger/simple-server/Logging_Acceptor.cpp:
-	* examples/Logger/simple-server/Logging_Handler.cpp:
-	* examples/Logger/simple-server/server_loggerd.cpp:
-	* examples/Map_Manager/test_hash_map_manager.cpp:
-	* examples/Mem_Map/IO-tests/IO_Test.cpp:
-	* examples/Mem_Map/IO-tests/test_io.cpp:
-	* examples/Mem_Map/file-reverse/file-reverse.cpp:
-	* examples/Misc/test_XtReactor1.cpp:
-	* examples/Misc/test_XtReactor2.cpp:
-	* examples/Misc/test_dump.cpp:
-	* examples/Misc/test_get_opt.cpp:
-	* examples/Misc/test_profile_timer.cpp:
-	* examples/Misc/test_read_buffer.cpp:
-	* examples/Misc/test_set.cpp:
-	* examples/Misc/test_sstring.cpp:
-	* examples/Misc/test_trace.cpp:
-	* examples/Naming/test_multiple_contexts.cpp:
-	* examples/Naming/test_non_existent.cpp:
-	* examples/Naming/test_open.cpp:
-	* examples/Naming/test_writers.cpp:
-	* examples/OS/Process/imore.cpp:
-	* examples/OS/Process/process.cpp:
-	* examples/Reactor/Dgram/CODgram.cpp:
-	* examples/Reactor/Dgram/Dgram.cpp:
-	* examples/Reactor/FIFO/client.cpp:
-	* examples/Reactor/FIFO/server.cpp:
-	* examples/Reactor/Misc/notification.cpp:
-	* examples/Reactor/Misc/pingpong.cpp:
-	* examples/Reactor/Misc/test_demuxing.cpp:
-	* examples/Reactor/Misc/test_event_handler_t.cpp:
-	* examples/Reactor/Misc/test_reactors.cpp:
-	* examples/Reactor/Misc/test_signals_1.cpp:
-	* examples/Reactor/Misc/test_signals_2.cpp:
-	* examples/Reactor/Misc/test_time_value.cpp:
-	* examples/Reactor/Misc/test_timer_queue.cpp:
-	* examples/Reactor/Multicast/Log_Wrapper.cpp:
-	* examples/Reactor/Multicast/client.cpp:
-	* examples/Reactor/Multicast/server.cpp:
-	* examples/Reactor/Ntalker/ntalker.cpp:
-	* examples/Reactor/Proactor/test_multiple_loops.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-	* examples/Reactor/Proactor/test_proactor_with_aio.cpp:
-	* examples/Reactor/Proactor/test_timeout.cpp:
-	* examples/Reactor/ReactorEx/test_abandoned.cpp:
-	* examples/Reactor/ReactorEx/test_apc.cpp:
-	* examples/Reactor/ReactorEx/test_console_input.cpp:
-	* examples/Reactor/ReactorEx/test_directory_changes.cpp:
-	* examples/Reactor/ReactorEx/test_exceptions.cpp:
-	* examples/Reactor/ReactorEx/test_multithreading.cpp:
-	* examples/Reactor/ReactorEx/test_network_events.cpp:
-	* examples/Reactor/ReactorEx/test_prerun_state_changes.cpp:
-	* examples/Reactor/ReactorEx/test_registration.cpp:
-	* examples/Reactor/ReactorEx/test_registry_changes.cpp:
-	* examples/Reactor/ReactorEx/test_removals.cpp:
-	* examples/Reactor/ReactorEx/test_talker.cpp:
-	* examples/Reactor/ReactorEx/test_timeouts.cpp:
-	* examples/Reactor/ReactorEx/test_window_messages.cpp:
-	* examples/Registry/test_registry_iterator.cpp:
-	* examples/Registry/test_registry_update.cpp:
-	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.cpp:
-	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
-	* examples/Service_Configurator/Misc/Timer_Service.cpp:
-	* examples/Service_Configurator/Misc/main.cpp:
-	* examples/Shared_Malloc/Malloc.cpp:
-	* examples/Shared_Malloc/Options.cpp:
-	* examples/Shared_Malloc/test_malloc.cpp:
-	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
-	* examples/Shared_Malloc/test_persistence.cpp:
-	* examples/Shared_Memory/test_MM.cpp:
-	* examples/Shared_Memory/test_SV.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
-	* examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
-	* examples/Threads/auto_event.cpp:
-	* examples/Threads/barrier1.cpp:
-	* examples/Threads/barrier2.cpp:
-	* examples/Threads/cancel.cpp:
-	* examples/Threads/future1.cpp:
-	* examples/Threads/future2.cpp:
-	* examples/Threads/manual_event.cpp:
-	* examples/Threads/process_manager.cpp:
-	* examples/Threads/process_mutex.cpp:
-	* examples/Threads/process_semaphore.cpp:
-	* examples/Threads/reader_writer.cpp:
-	* examples/Threads/recursive_mutex.cpp:
-	* examples/Threads/task_five.cpp:
-	* examples/Threads/task_four.cpp:
-	* examples/Threads/task_one.cpp:
-	* examples/Threads/task_three.cpp:
-	* examples/Threads/task_two.cpp:
-	* examples/Threads/thread_manager.cpp:
-	* examples/Threads/thread_pool.cpp:
-	* examples/Threads/thread_specific.cpp:
-	* examples/Threads/token.cpp:
-	* examples/Threads/tss1.cpp:
-	* examples/Threads/tss2.cpp:
-	* examples/Threads/wfmo.cpp:
-	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/Driver.cpp:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/main_async.cpp:
-	* examples/Timer_Queue/main_reactor.cpp:
-	* examples/Timer_Queue/main_thread.cpp:
+        * examples/ASX/CCM_App/CCM_App.cpp:
+        * examples/ASX/CCM_App/SC_Client.cpp:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/ASX/Message_Queue/priority_buffer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/CORBA/Test_i.cpp:
+        * examples/CORBA/client.cpp:
+        * examples/CORBA/server.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/Connection/blocking/test_spipe_acceptor.cpp:
+        * examples/Connection/blocking/test_spipe_connector.cpp:
+        * examples/Connection/misc/Connection_Handler.cpp:
+        * examples/Connection/misc/test_upipe.cpp:
+        * examples/Connection/non_blocking/CPP-acceptor.cpp:
+        * examples/Connection/non_blocking/CPP-connector.cpp:
+        * examples/Connection/non_blocking/test_lsock_acceptor.cpp:
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+        * examples/Connection/non_blocking/test_sock_acceptor.cpp:
+        * examples/Connection/non_blocking/test_sock_connector.cpp:
+        * examples/Connection/non_blocking/test_spipe_acceptor.cpp:
+        * examples/Connection/non_blocking/test_spipe_connector.cpp:
+        * examples/Connection/non_blocking/test_tli_acceptor.cpp:
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+        * examples/IOStream/client/iostream_client.cpp:
+        * examples/IOStream/server/iostream_server.cpp:
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/client.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex2.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
+        * examples/Log_Msg/test_log_msg.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Logger/simple-server/Logging_Acceptor.cpp:
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+        * examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+        * examples/Misc/test_dump.cpp:
+        * examples/Misc/test_get_opt.cpp:
+        * examples/Misc/test_profile_timer.cpp:
+        * examples/Misc/test_read_buffer.cpp:
+        * examples/Misc/test_set.cpp:
+        * examples/Misc/test_sstring.cpp:
+        * examples/Misc/test_trace.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_open.cpp:
+        * examples/Naming/test_writers.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/Dgram/Dgram.cpp:
+        * examples/Reactor/FIFO/client.cpp:
+        * examples/Reactor/FIFO/server.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/test_event_handler_t.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Reactor/Misc/test_signals_2.cpp:
+        * examples/Reactor/Misc/test_time_value.cpp:
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Reactor/Ntalker/ntalker.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor_with_aio.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/ReactorEx/test_abandoned.cpp:
+        * examples/Reactor/ReactorEx/test_apc.cpp:
+        * examples/Reactor/ReactorEx/test_console_input.cpp:
+        * examples/Reactor/ReactorEx/test_directory_changes.cpp:
+        * examples/Reactor/ReactorEx/test_exceptions.cpp:
+        * examples/Reactor/ReactorEx/test_multithreading.cpp:
+        * examples/Reactor/ReactorEx/test_network_events.cpp:
+        * examples/Reactor/ReactorEx/test_prerun_state_changes.cpp:
+        * examples/Reactor/ReactorEx/test_registration.cpp:
+        * examples/Reactor/ReactorEx/test_registry_changes.cpp:
+        * examples/Reactor/ReactorEx/test_removals.cpp:
+        * examples/Reactor/ReactorEx/test_talker.cpp:
+        * examples/Reactor/ReactorEx/test_timeouts.cpp:
+        * examples/Reactor/ReactorEx/test_window_messages.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * examples/Registry/test_registry_update.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.cpp:
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/Shared_Malloc/Malloc.cpp:
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Shared_Memory/test_MM.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/barrier1.cpp:
+        * examples/Threads/barrier2.cpp:
+        * examples/Threads/cancel.cpp:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
+        * examples/Threads/manual_event.cpp:
+        * examples/Threads/process_manager.cpp:
+        * examples/Threads/process_mutex.cpp:
+        * examples/Threads/process_semaphore.cpp:
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/recursive_mutex.cpp:
+        * examples/Threads/task_five.cpp:
+        * examples/Threads/task_four.cpp:
+        * examples/Threads/task_one.cpp:
+        * examples/Threads/task_three.cpp:
+        * examples/Threads/task_two.cpp:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/thread_pool.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/Threads/token.cpp:
+        * examples/Threads/tss1.cpp:
+        * examples/Threads/tss2.cpp:
+        * examples/Threads/wfmo.cpp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Driver.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
 
 Fri Jul 31 12:07:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/XtReactor.cpp (XtWaitForMultipleEvents): The first select()
- 	  is made with the correct width.  In XtAppProcessEvent(), the
- 	  descriptor set may change, so the underlying handle_max may also
- 	  have changed. The second select() is made with an incorrect
- 	  value for the width.  The solution is to reinitialize width
- 	  before calling select() again. Thanks to J-M Strauss
- 	  <strauss@limeil.cea.fr> for suggesting this change.
+        * ace/XtReactor.cpp (XtWaitForMultipleEvents): The first select()
+          is made with the correct width.  In XtAppProcessEvent(), the
+          descriptor set may change, so the underlying handle_max may also
+          have changed. The second select() is made with an incorrect
+          value for the width.  The solution is to reinitialize width
+          before calling select() again. Thanks to J-M Strauss
+          <strauss@limeil.cea.fr> for suggesting this change.
 
 Fri Jul 31 11:18:24 1998  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Removed the direction to set global include/library
-	  paths in MSVC 4.2.
+        * ACE-INSTALL.html: Removed the direction to set global include/library
+          paths in MSVC 4.2.
 
 Fri Jul 31 08:23:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Misc/test_XtReactor[12].cpp: Updated these files so
- 	  they will work correctly with the "new" Reactor structure.  Boy,
- 	  it's been a long time since anyone actually tried to use this
- 	  stuff... ;-) Thanks to J-M Strauss <strauss@limeil.cea.fr> for
- 	  reporting this.
+        * examples/Misc/test_XtReactor[12].cpp: Updated these files so
+          they will work correctly with the "new" Reactor structure.  Boy,
+          it's been a long time since anyone actually tried to use this
+          stuff... ;-) Thanks to J-M Strauss <strauss@limeil.cea.fr> for
+          reporting this.
 
 Thu Jul 30 21:25:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Svc_Conf_y.cpp: This file didn't get patched with our
-	  routine patch.  Applied $ACE_ROOT/Svc_Conf_y.cpp.diff manually.
-	  This change eliminates some warnings from g++.
+        * ace/Svc_Conf_y.cpp: This file didn't get patched with our
+          routine patch.  Applied $ACE_ROOT/Svc_Conf_y.cpp.diff manually.
+          This change eliminates some warnings from g++.
 
 Thu Jul 30 19:03:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.h: Changed the type
- 	  to class Thread_Timer_Queue_Test_Driver from
- 	  Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task,
- 	  Input_Task::ACTION> to work around a bug with MSVC++.  Thanks to
- 	  Gonzo for pointing this out.
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h: Changed the type
+          to class Thread_Timer_Queue_Test_Driver from
+          Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task,
+          Input_Task::ACTION> to work around a bug with MSVC++.  Thanks to
+          Gonzo for pointing this out.
 
-	* examples/Connection/blocking/SPIPE-{connector,acceptor}.cpp:
- 	  Added #include "ace/Proactor.h".  Thanks to Gonzo for reporting
- 	  this.
+        * examples/Connection/blocking/SPIPE-{connector,acceptor}.cpp:
+          Added #include "ace/Proactor.h".  Thanks to Gonzo for reporting
+          this.
 
 Thu Jul 30 17:54:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/test_config.h: Added /**/ between #include and <condefs.h>
-	  to avoid MSVC warnings.
+        * tests/test_config.h: Added /**/ between #include and <condefs.h>
+          to avoid MSVC warnings.
 
-	* tests/WinCE/ce_tests.dsw: Renamed project
-	  Message_Queue_Notifications_Test to MsgQueue_Notifications_Test.
+        * tests/WinCE/ce_tests.dsw: Renamed project
+          Message_Queue_Notifications_Test to MsgQueue_Notifications_Test.
 
-	* tests/WinCE/Reactor_Performance_Test.dsp: This project file was
-	  somehow missing.
+        * tests/WinCE/Reactor_Performance_Test.dsp: This project file was
+          somehow missing.
 
-	* tests/TSS_Test.cpp:
-	* tests/Reader_Writer_Test.cpp:
-	* tests/Message_Queue_Test.cpp: Added numerous ASYS_TEXT macros to
-	  make sure we use the right strings on CE.
+        * tests/TSS_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Message_Queue_Test.cpp: Added numerous ASYS_TEXT macros to
+          make sure we use the right strings on CE.
 
 Thu Jul 30 14:56:59 1998  Gonzalo A. Diethelm  <gonzo@cs.wustl.edu>
 
-	* ace/ACE.h:
-	* ace/ACE.cpp:
-	* ace/Event_Handler.h:
-	* ace/Event_Handler.cpp:
-	Moved the following static functions:
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+        * ace/Event_Handler.h:
+        * ace/Event_Handler.cpp:
+        Moved the following static functions:
 
-	  register_stdin_handler
-	  remove_stdin_handler
-	  read_adapter
+          register_stdin_handler
+          remove_stdin_handler
+          read_adapter
 
-	from class ACE to class ACE_Event_Handler. That breaks a
-	dependency from ACE to higher-level classes.
+        from class ACE to class ACE_Event_Handler. That breaks a
+        dependency from ACE to higher-level classes.
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
-	* netsvcs/clients/Naming/Client/Client_Test.cpp:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/Async_Timer_Queue_Test.dsp:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp:
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.dsp:
-	* examples/Reactor/Ntalker/ntalker.cpp:
-	* examples/Reactor/Misc/test_demuxing.cpp:
-	* examples/Reactor/Misc/notification.cpp:
-	* examples/Connection/blocking/SPIPE-connector.cpp:
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* apps/Gateway/Peer/Peer.cpp:
-	* apps/Gateway/Gateway/Gateway.cpp:
-	All these were modified by the above change.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.dsp:
+        * examples/Reactor/Ntalker/ntalker.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        All these were modified by the above change.
 
-	* ace/OS.h:
-	* ace/OS.i:
-	Added a strnew function that works as strdup but uses new instead
-	of malloc to allocate memory.
+        * ace/OS.h:
+        * ace/OS.i:
+        Added a strnew function that works as strdup but uses new instead
+        of malloc to allocate memory.
 
 Thu Jul 30 16:54:20 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -934,36 +939,36 @@ Thu Jul 30 16:54:20 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jul 30 13:01:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.h (ACE_Task_Base): Changed the spelling of
-	  ACE_Task_Exit to ACE_Thread_Exit, which is correct.
-	  Thanks to Daniel Winder <Daniel.Winder@cern.ch> for
-	  reporting this.
+        * ace/Task.h (ACE_Task_Base): Changed the spelling of
+          ACE_Task_Exit to ACE_Thread_Exit, which is correct.
+          Thanks to Daniel Winder <Daniel.Winder@cern.ch> for
+          reporting this.
 
 Thu Jul 30 08:43:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.(mdp mak): Made include and library paths relative.
+        * tests/tests.(mdp mak): Made include and library paths relative.
 
 Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
-	  Changed to cast away constness of the pointer to once_.
+        * ace/Synch_T.cpp (ts_init): Casted away constness of key_.
+          Changed to cast away constness of the pointer to once_.
 
 Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/TP_Reactor.i (notify_handle): Added an ASYS_TEXT where it
- 	  was missing.  Thanks to Dieter Quehl for reporting this.
+        * ace/TP_Reactor.i (notify_handle): Added an ASYS_TEXT where it
+          was missing.  Thanks to Dieter Quehl for reporting this.
 
-	* ace/Synch_T.cpp: It wasn't possible to call ts_object() to set
- 	  an initial zero pointer value.  The solution is to give
- 	  ts_object() the same ability to initialize the key as ts_get().
-  	  I also factored out some common code into a new method called
- 	  ts_init().  Thanks to Bob McWhirter <bob@netwrench.com> for
- 	  reporting this.
+        * ace/Synch_T.cpp: It wasn't possible to call ts_object() to set
+          an initial zero pointer value.  The solution is to give
+          ts_object() the same ability to initialize the key as ts_get().
+          I also factored out some common code into a new method called
+          ts_init().  Thanks to Bob McWhirter <bob@netwrench.com> for
+          reporting this.
 
 Wed Jul 29 23:58:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Reactor/Ntalker: Added a README file and made some
- 	  stylistic changes to the ntalker.cpp example.
+        * examples/Reactor/Ntalker: Added a README file and made some
+          stylistic changes to the ntalker.cpp example.
 
 Wed Jul 29 18:38:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -971,43 +976,43 @@ Wed Jul 29 18:38:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jul 29 17:46:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task_T.h: Updated documentation to explain that
- 	  ACE_Time_Values are ABSOLUTE rather than relative.  Thanks to
- 	  James Johnson for reporting this.
+        * ace/Task_T.h: Updated documentation to explain that
+          ACE_Time_Values are ABSOLUTE rather than relative.  Thanks to
+          James Johnson for reporting this.
 
 Wed Jul 29 16:05:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/Process_Unix.pm:
-	  Use SIGTERM instead of SIGHUP to kill a process, it is the Right
-	  Thing and SIGHUP will not work in some cases because it is usual
-	  to catch this signal.
+        * bin/Process_Unix.pm:
+          Use SIGTERM instead of SIGHUP to kill a process, it is the Right
+          Thing and SIGHUP will not work in some cases because it is usual
+          to catch this signal.
 
 Wed Jul 29 14:04:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.cpp (open): Added
- 	  <number_of_initial_accepts> as an extra parameter to
- 	  open(). <number_of_initial_accepts> is the number of
- 	  asynchronous accepts that are started at the end of <open>.  If
- 	  <number_of_initial_accepts> is -1, then
- 	  <number_of_initial_accepts> is set to <backlog> and hence
- 	  <backlog> number of asynchronous accepts are started.
+        * ace/Asynch_Acceptor.cpp (open): Added
+          <number_of_initial_accepts> as an extra parameter to
+          open(). <number_of_initial_accepts> is the number of
+          asynchronous accepts that are started at the end of <open>.  If
+          <number_of_initial_accepts> is -1, then
+          <number_of_initial_accepts> is set to <backlog> and hence
+          <backlog> number of asynchronous accepts are started.
 
-	  (get_handle): New method to get the underlying handle.
+          (get_handle): New method to get the underlying handle.
 
-	  (set_handle): New method to set the underlying listen handle. It
- 	  is the user's responsibility to make sure that the old listen
- 	  handle has been appropriately closed and the all outstanding
- 	  asynchronous operations have either completed or have been
- 	  canceled on the old listen handle.
+          (set_handle): New method to set the underlying listen handle. It
+          is the user's responsibility to make sure that the old listen
+          handle has been appropriately closed and the all outstanding
+          asynchronous operations have either completed or have been
+          canceled on the old listen handle.
 
 Wed Jul 29 12:49:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Makefile (FILES): Added TP_Reactor to the build list.
-	  Updated dependency.
+        * ace/Makefile (FILES): Added TP_Reactor to the build list.
+          Updated dependency.
 
-	* ace/TP_Reactor.{h,i} (handle_events,notify_handler): Added two
-	  dummy methods to avoid warnings from SunCC.  Thanks to Carlos
-	  for noticing this.
+        * ace/TP_Reactor.{h,i} (handle_events,notify_handler): Added two
+          dummy methods to avoid warnings from SunCC.  Thanks to Carlos
+          for noticing this.
 
 Wed Jul 29 09:41:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
