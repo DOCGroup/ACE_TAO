@@ -9,9 +9,9 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
 /* Author: Daeron Meyer */
 
-void	UICreate();
-void	UIEnd();
-Window	MonitorWindow();
+void    UICreate();
+void    UIEnd();
+Window  MonitorWindow();
 void    UISetwin(Window);
 void    UIMinsize(int, int);
 void    UISetFrame();

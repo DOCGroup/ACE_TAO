@@ -23,7 +23,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-#if !defined (_CC_NAMING_SERVICE_H_)
+#ifndef _CC_NAMING_SERVICE_H_
 #define _CC_NAMING_SERVICE_H_
 
 class CC_naming_service
@@ -77,7 +77,7 @@ private:
 
   TAO_Naming_Client my_name_client_;
   // Name service wrapper class
-  
+
   CosConcurrencyControl::LockSetFactory_var factory_;
   // factory pointer for the lock set.
 

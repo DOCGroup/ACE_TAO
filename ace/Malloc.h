@@ -18,11 +18,12 @@
 #define ACE_MALLOC_H
 
 #include "ace/ACE.h"
-#include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Malloc_Base.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"

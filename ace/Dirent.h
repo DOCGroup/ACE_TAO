@@ -10,7 +10,7 @@
 //    Dirent.h
 //
 // = DESCRIPTION
-//    Define a portable directory-entry manipulation interface.    
+//    Define a portable directory-entry manipulation interface.
 //
 // = AUTHOR
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
@@ -23,7 +23,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Dirent

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_NOTIFIER_SERVER_H)
+#ifndef _NOTIFIER_SERVER_H
 #define _NOTIFIER_SERVER_H
 
 #include "Event_Comm_i.h"

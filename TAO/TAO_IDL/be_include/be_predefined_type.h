@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_PREDEFINED_TYPE_H)
+#ifndef _BE_PREDEFINED_TYPE_H
 #define _BE_PREDEFINED_TYPE_H
 
 // be_classes.hh
@@ -40,7 +40,7 @@ public:
   // default constructor
 
   be_predefined_type (AST_PredefinedType::PredefinedType t,
-		      UTL_ScopedName *n,
+                      UTL_ScopedName *n,
                       UTL_StrList *p);
   // constructor
 

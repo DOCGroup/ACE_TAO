@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PM_SERVER_H)
+#ifndef _PM_SERVER_H
 #define _PM_SERVER_H
 
 #include "Protocol_Manager.h"
@@ -22,7 +22,7 @@
 class PM_Server : public Protocol_Manager
 {
   // = TITLE
-  //   Handle the server's lookup table abstraction. 
+  //   Handle the server's lookup table abstraction.
 
 public:
   PM_Server (void);

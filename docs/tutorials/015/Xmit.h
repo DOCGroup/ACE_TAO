@@ -21,14 +21,14 @@ public:
      // We must be given a valid peer when constructed.  Without that
      // we don't know who to send data to.
     Xmit( ACE_SOCK_Stream & _peer );
-    
+
     ~Xmit(void);
 
-     // As you know, close() will be called in a couple of ways by the 
+     // As you know, close() will be called in a couple of ways by the
      // ACE framework.  We use that opportunity to terminate the
      // connection to the peer.
     int close(u_long flags);
-    
+
 protected:
 
     ACE_SOCK_Stream & peer(void)

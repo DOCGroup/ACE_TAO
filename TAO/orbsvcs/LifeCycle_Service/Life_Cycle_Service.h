@@ -14,10 +14,15 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/TAO.h"
 #include "Life_Cycle_Service_i.h"
 
-#if !defined (LIFE_CYCLE_SERVICE_H)
+#ifndef LIFE_CYCLE_SERVICE_H
 #define IFE_CYCLE_SERVICE_H
 
 class Life_Cycle_Service_Server
@@ -48,7 +53,7 @@ private:
   // instance of the ORB Manager
 
   Life_Cycle_Service_i *life_Cycle_Service_i_ptr_;
-  // Instance of the creation service 
+  // Instance of the creation service
 
   CosNaming::NamingContext_var namingContext_var_;
   // reference to the naming service

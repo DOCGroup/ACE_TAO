@@ -4,16 +4,16 @@
 //
 // = LIBRARY
 //    CORBA Marshal Tao Benchmark
-// 
+//
 // = FILENAME
 //    tao_marshal_server.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined(_TAO_MARSHAL_SERVER_H_)
+#ifndef _TAO_MARSHAL_SERVER_H_
 #define _TAO_MARSHAL_SERVER_H_
 
 // benchmark library includes
@@ -37,7 +37,7 @@ public:
   // destructor
 
   virtual int run (CORBA_Marshal_Proxy::OPTIONS &options,
-		   CORBA_Marshal_Proxy::RESULTS &results);
+                   CORBA_Marshal_Proxy::RESULTS &results);
   // do the actual work
 private:
   CORBA_ORB_ptr orb_;

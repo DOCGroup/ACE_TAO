@@ -21,10 +21,15 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#if !defined (HASH_TABLE_H)
+#ifndef HASH_TABLE_H
 #define HASH_TABLE_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Options.h"
 #include "List_Node.h"
 
@@ -32,11 +37,11 @@ USA.  */
 // @@ This class should be replaced by something in ACE, e.g.,
 // ACE_Hash_Map_Manager.  Perhaps we should implement a new
 // ACE_Hash_Map that uses double hashing, however!
-class Hash_Table 
+class Hash_Table
 {
   // = TITLE
   //   Hash table used to check for duplicate keyword entries.
-  // 
+  //
   // = DESCRIPTION
   //   This implementation uses "double hashing."
 public:
@@ -48,12 +53,12 @@ public:
 
 private:
   List_Node **table_;
-  // Vector of pointers to linked lists of List_Node's. 
+  // Vector of pointers to linked lists of List_Node's.
 
   size_t size_;
-  // Size of the vector. 
+  // Size of the vector.
 
-  int collisions_; 
+  int collisions_;
   // Find out how well our double hashing is working!
 };
 

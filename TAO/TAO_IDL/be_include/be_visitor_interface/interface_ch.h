@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_INTERFACE_CH_H_)
+#ifndef _BE_INTERFACE_INTERFACE_CH_H_
 #define _BE_INTERFACE_INTERFACE_CH_H_
 
 // we need derived interface visitors for the client and server header files. For

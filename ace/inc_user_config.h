@@ -10,7 +10,7 @@
 #include "ace/config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // By default, DO include RCS Id strings in object code.

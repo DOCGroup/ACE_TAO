@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_RT_TASK_H)
+#ifndef ACE_RT_TASK_H
 #define ACE_RT_TASK_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/RtecSchedulerC.h"
 
 class TAO_ORBSVCS_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -77,13 +77,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: included from ast.hh
 */
 
-class	AST_UnionLabel
+class   AST_UnionLabel
 {
 public:
   // Define kind of label
   enum UnionLabel {
-        UL_default		// Label is "default"
-      , UL_label		// Regular label
+        UL_default              // Label is "default"
+      , UL_label                // Regular label
   };
 
   // Operations
@@ -98,12 +98,12 @@ public:
   AST_Expression *label_val();
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  UnionLabel			pd_label_kind;	// Label kind
-  AST_Expression		*pd_label_val;	// Label expression
+  UnionLabel                    pd_label_kind;  // Label kind
+  AST_Expression                *pd_label_val;  // Label expression
 
 };
 

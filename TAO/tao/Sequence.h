@@ -59,8 +59,8 @@ public:
   // shrink and then delete could result in a memory leak.
 
   virtual void _downcast (void *target,
-			  CORBA_Object *src,
-			  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Object *src,
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Used for sequences of objects to downcast a recently demarshalled
   // object reference into the right type.
 
@@ -249,13 +249,13 @@ public:
 
   const char *in (void) const;
   // for in parameter.
-  
+
   char *&inout (void);
   // for inout parameter.
-  
+
   char *&out (void);
   // for out parameter.
-  
+
   char *_retn (void);
   // for string of return type.
 
@@ -413,9 +413,9 @@ public:
   TAO_Unbounded_Sequence (void);
   TAO_Unbounded_Sequence (CORBA::ULong max);
   TAO_Unbounded_Sequence (CORBA::ULong max,
-			  CORBA::ULong length,
-			  CORBA::Octet *data,
-			  CORBA::Boolean release = 0);
+                          CORBA::ULong length,
+                          CORBA::Octet *data,
+                          CORBA::Boolean release = 0);
   ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
@@ -464,7 +464,7 @@ public:
   // release the copy.
 
   TAO_Unbounded_Sequence (CORBA::ULong length,
-			  const ACE_Message_Block* mb);
+                          const ACE_Message_Block* mb);
   // Create a sequence of octets from a single message block (i.e. it
   // ignores any chaining in the meesage block).
 

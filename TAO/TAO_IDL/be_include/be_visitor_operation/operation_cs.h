@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_OPERATION_OPERATION_CS_H_)
+#ifndef _BE_VISITOR_OPERATION_OPERATION_CS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_CS_H_
 
 // ************************************************************
@@ -59,7 +59,7 @@ public:
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
 
-  virtual int gen_raise_exception (be_type *, 
+  virtual int gen_raise_exception (be_type *,
                                    const char * excep,
                                    const char * status);
   // helper that generates code for raising an exception

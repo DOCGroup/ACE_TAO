@@ -5,24 +5,29 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
-//    Logging_Acceptor.h 
+//    Logging_Acceptor.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (_CLIENT_ACCEPTOR_H)
+#ifndef _CLIENT_ACCEPTOR_H
 #define _CLIENT_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 
 class Logging_Acceptor : public ACE_Event_Handler
   // = TITLE
-  //     Handle connection requests from remote client clients. 
+  //     Handle connection requests from remote client clients.
   //
   // = DESCRIPTION
   //     Accepts client connection requests, creates Logging_Handler's
@@ -41,7 +46,7 @@ private:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
-  ACE_SOCK_Acceptor peer_acceptor_;     
+  ACE_SOCK_Acceptor peer_acceptor_;
   // Passive connection acceptor factory.
 };
 

@@ -1,10 +1,14 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_DATA_BLOCK_H)
+#ifndef JAWS_DATA_BLOCK_H
 #define JAWS_DATA_BLOCK_H
 
 #include "ace/Message_Block.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"

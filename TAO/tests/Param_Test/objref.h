@@ -9,14 +9,14 @@
 //    objref.h
 //
 // = DESCRIPTION
-//     Tests object references 
+//     Tests object references
 //
 // = AUTHORS
 //      Aniruddha Gokhale
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_OBJREF_H)
+#ifndef PARAM_TEST_OBJREF_H
 #define PARAM_TEST_OBJREF_H
 
 #include "param_testCli.h"
@@ -79,7 +79,7 @@ private:
 
   // Need these for DII.
   // SII requests that involve aliased objref types can rely on
-  // their stubs and skeletons to convert to CORBA::Object so the 
+  // their stubs and skeletons to convert to CORBA::Object so the
   // ORB can deal with it. DII requests cannot convert for every
   // possible aliased objref type, so we must convert ourselves
   // before invoking the DII request, and use the interface's

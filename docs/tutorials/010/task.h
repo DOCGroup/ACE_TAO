@@ -6,6 +6,10 @@
 
 #include "ace/Task.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /*
   Like the thread-pool server tutorial, we'll derive from ACE_Task<>.
   Our goal here is to show off the ACE_Message_Queue and the best way
@@ -17,7 +21,7 @@ class Task : public ACE_Task < ACE_MT_SYNCH >
 public:
 
   typedef ACE_Task < ACE_MT_SYNCH > inherited;
-    
+
     /*
       The constructor/destructor are simple but take care of some
       necessary housekeeping.

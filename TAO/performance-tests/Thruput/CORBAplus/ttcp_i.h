@@ -3,17 +3,17 @@
 // ============================================================================
 //
 // = TAO tests
-//    Throughput measurement using the TTCP benchmark adapted to work using 
+//    Throughput measurement using the TTCP benchmark adapted to work using
 //    CORBAplus PowerBroker from Expersoft
 // = FILENAME
-//   ttcp_i.h 
+//   ttcp_i.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (TTCP_I_H)
+#ifndef TTCP_I_H
 #define TTCP_I_H
 
 #include <pbroker/corba/lifecycl/actvtr.h>
@@ -23,6 +23,11 @@
 #include "pbroker/corba/environ.h"
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ttcp_s.h"
 
 class ttcp_sequence_i: public ttcp_sequence_base_impl
@@ -33,12 +38,12 @@ public:
 
   ttcp_sequence_i(const char *obj_name);
 
-  ttcp_sequence_i (void) 
+  ttcp_sequence_i (void)
     { ttcp_sequence_i ("keyone");}
-  
-  ttcp_sequence_i (const CORBA_ReferenceData & refData) 
+
+  ttcp_sequence_i (const CORBA_ReferenceData & refData)
     { ttcp_sequence_i ("keyone");}
-  
+
   virtual void sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq);
   virtual void sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq);
   virtual void sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq);

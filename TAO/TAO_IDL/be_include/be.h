@@ -77,6 +77,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // ACE includes
 
 #include        "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include        "ace/OS.h"
 #include        "ace/Singleton.h"
 #include        "ace/Synch.h"
@@ -90,29 +95,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "be_decl.h"             // class BE_Decl
 #include        "be_scope.h"            // class BE_Scope
-#include	"be_generator.h"	// BE generator class
+#include        "be_generator.h"        // BE generator class
 #include        "be_type.h"
-#include	"be_predefined_type.h"  // class BE_PredefinedType
-#include	"be_module.h"		// class BE_Module
-#include	"be_interface.h"	// class BE_Interface
-#include	"be_interface_fwd.h"	// class BE_InterfaceFwd
-#include	"be_structure.h"	// class BE_Structure
-#include	"be_exception.h"	// class BE_Exception
+#include        "be_predefined_type.h"  // class BE_PredefinedType
+#include        "be_module.h"           // class BE_Module
+#include        "be_interface.h"        // class BE_Interface
+#include        "be_interface_fwd.h"    // class BE_InterfaceFwd
+#include        "be_structure.h"        // class BE_Structure
+#include        "be_exception.h"        // class BE_Exception
 #include        "be_expression.h"       // class BE_Expr_val
-#include	"be_enum.h"		// class BE_Enum
-#include	"be_operation.h"	// class BE_Operation
-#include	"be_field.h"		// class BE_Field
-#include	"be_argument.h"	        // class BE_Argument
-#include	"be_attribute.h"	// class BE_Attribute
-#include	"be_union.h"		// class BE_Union
-#include	"be_union_branch.h"	// class BE_UnionBranch
-#include	"be_union_label.h"	// class BE_UnionLabel
-#include	"be_constant.h"	        // class BE_Constant
-#include	"be_enum_val.h"	        // class BE_EnumVal
-#include	"be_array.h"		// class BE_Array
-#include	"be_sequence.h"	        // class BE_Sequence
-#include	"be_string.h"		// class BE_String
-#include	"be_typedef.h"	        // class BE_Typedef
+#include        "be_enum.h"             // class BE_Enum
+#include        "be_operation.h"        // class BE_Operation
+#include        "be_field.h"            // class BE_Field
+#include        "be_argument.h"         // class BE_Argument
+#include        "be_attribute.h"        // class BE_Attribute
+#include        "be_union.h"            // class BE_Union
+#include        "be_union_branch.h"     // class BE_UnionBranch
+#include        "be_union_label.h"      // class BE_UnionLabel
+#include        "be_constant.h"         // class BE_Constant
+#include        "be_enum_val.h"         // class BE_EnumVal
+#include        "be_array.h"            // class BE_Array
+#include        "be_sequence.h"         // class BE_Sequence
+#include        "be_string.h"           // class BE_String
+#include        "be_typedef.h"          // class BE_Typedef
 #include        "be_root.h"             // class BE_Root
 #include        "be_native.h"           // class BE_Native
 
@@ -120,7 +125,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_codegen.h"          // code generator
 #include        "be_stream_factory.h"   // output stream factory
 
-#include 	"be_visitor.h"          // abstract visitor
+#include        "be_visitor.h"          // abstract visitor
 #include        "be_visitor_factory.h"  // visitor factory
 #include        "be_visitor_context.h"  // visitor context
 

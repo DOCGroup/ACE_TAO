@@ -2,22 +2,22 @@
 // $Id$
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
- * 
- * Permission to use, copy, modify, distribute, and sell this software and its 
- * documentation for any purpose is hereby granted without fee, provided that 
- * the above copyright notice appear in all copies and that both that 
- * copyright notice and this permission notice appear in supporting 
- * documentation, and that the name of O.G.I. not be used in advertising or 
- * publicity pertaining to distribution of the software without specific, 
- * written prior permission.  O.G.I. makes no representations about the 
- * suitability of this software for any purpose.  It is provided "as is" 
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the name of O.G.I. not be used in advertising or
+ * publicity pertaining to distribution of the software without specific,
+ * written prior permission.  O.G.I. makes no representations about the
+ * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
- * 
- * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
- * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
- * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY 
- * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN 
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+ *
+ * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author: Shanwei Cen
@@ -25,24 +25,29 @@
  *         email: scen@cse.ogi.edu
  */
 
-#if !defined (MPEG_GLOBAL_H)
+#ifndef MPEG_GLOBAL_H
 #define MPEG_GLOBAL_H
 
 #include "ace/SOCK_CODgram.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Global symbols, these need to become enums eventually.
 
 #define SESSION_NUM     4
-#define CONN_INET	1
-#define CONN_UNIX	2
-#define CONN_ATM	3
+#define CONN_INET       1
+#define CONN_UNIX       2
+#define CONN_ATM        3
 
-#define SERVER_FDTABLE_SIZE	50
-#define CLIENT_FDTABLE_SIZE	10
+#define SERVER_FDTABLE_SIZE     50
+#define CLIENT_FDTABLE_SIZE     10
 
-#define STATE_PENDING	1
-#define STATE_CONTROL	2
-#define STATE_DATA	3
-#define STATE_SINGLE	4
+#define STATE_PENDING   1
+#define STATE_CONTROL   2
+#define STATE_DATA      3
+#define STATE_SINGLE    4
 
 #define min(a, b) ((a) > (b) ? (b) : (a))
 #define max(a, b) ((a) > (b) ? (a) : (b))
@@ -63,49 +68,49 @@
 
 // Global definitions
 #define nextByte  {int val; fileptr ++; \
-		   if ((val = getc(VIDEO_SINGLETON::instance ()->fp)) == EOF) \
-		   {\
-		     perror("Crossed EOF or error while scanning"); \
-		     return 1; \
-		   } nb = val;}
+                   if ((val = getc(VIDEO_SINGLETON::instance ()->fp)) == EOF) \
+                   {\
+                     perror("Crossed EOF or error while scanning"); \
+                     return 1; \
+                   } nb = val;}
 
 #define computePicSize \
-	if (inpic) \
-	{ \
-	  if (pictype == 'I') \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxI = max(VIDEO_SINGLETON::instance ()->maxI, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minI = min(VIDEO_SINGLETON::instance ()->minI, (int)(fileptr - picptr - 4)); \
-	  } \
-	  else if (pictype == 'P') \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxP = max(VIDEO_SINGLETON::instance ()->maxP, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minP = min(VIDEO_SINGLETON::instance ()->minP, (int)(fileptr - picptr - 4)); \
-	  } \
-	  else \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxB = max(VIDEO_SINGLETON::instance ()->maxB, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minB = min(VIDEO_SINGLETON::instance ()->minB, (int)(fileptr - picptr - 4)); \
-	  } \
-	  VIDEO_SINGLETON::instance ()->frameTable[ftptr].type = pictype; \
-	  VIDEO_SINGLETON::instance ()->frameTable[ftptr++].size = (int)(fileptr - picptr - 4); \
-	  inpic = 0; \
-	}
+        if (inpic) \
+        { \
+          if (pictype == 'I') \
+          { \
+            VIDEO_SINGLETON::instance ()->maxI = max(VIDEO_SINGLETON::instance ()->maxI, (int)(fileptr - picptr - 4)); \
+            VIDEO_SINGLETON::instance ()->minI = min(VIDEO_SINGLETON::instance ()->minI, (int)(fileptr - picptr - 4)); \
+          } \
+          else if (pictype == 'P') \
+          { \
+            VIDEO_SINGLETON::instance ()->maxP = max(VIDEO_SINGLETON::instance ()->maxP, (int)(fileptr - picptr - 4)); \
+            VIDEO_SINGLETON::instance ()->minP = min(VIDEO_SINGLETON::instance ()->minP, (int)(fileptr - picptr - 4)); \
+          } \
+          else \
+          { \
+            VIDEO_SINGLETON::instance ()->maxB = max(VIDEO_SINGLETON::instance ()->maxB, (int)(fileptr - picptr - 4)); \
+            VIDEO_SINGLETON::instance ()->minB = min(VIDEO_SINGLETON::instance ()->minB, (int)(fileptr - picptr - 4)); \
+          } \
+          VIDEO_SINGLETON::instance ()->frameTable[ftptr].type = pictype; \
+          VIDEO_SINGLETON::instance ()->frameTable[ftptr++].size = (int)(fileptr - picptr - 4); \
+          inpic = 0; \
+        }
 
 
 #define FileRead(position, buf, size) \
-	{ \
-	  if (fseek(VIDEO_SINGLETON::instance ()->fp, (position), 0) == -1) \
-	  { \
-	    perror("VS error on fseek VideoFile"); \
-	    return (-1); \
-	  } \
-	  while (fread((buf), (size), 1, VIDEO_SINGLETON::instance ()->fp) == 0) \
-	  { if (errno == EINTR) { errno = 0; continue;}\
+        { \
+          if (fseek(VIDEO_SINGLETON::instance ()->fp, (position), 0) == -1) \
+          { \
+            perror("VS error on fseek VideoFile"); \
+            return (-1); \
+          } \
+          while (fread((buf), (size), 1, VIDEO_SINGLETON::instance ()->fp) == 0) \
+          { if (errno == EINTR) { errno = 0; continue;}\
              perror("VS error on fread VideoFile"); \
              return (-1); \
-	  } \
-	}
+          } \
+        }
 
 #define CheckFrameRange(pnextFrame) \
 { if ((pnextFrame) < 0 || (pnextFrame) >= VIDEO_SINGLETON::instance ()->numF) \
@@ -121,7 +126,7 @@
 #include "include/common.h"
 #include "mpeg_shared/routine.h"
 #include "mpeg_shared/fileio.h"
-#include "mpeg_shared/com.h"   
+#include "mpeg_shared/com.h"
 #include "mpeg_shared/sendpt.h"
 #include "mpeg_server/server_proto.h"
 #include "mpeg_server/Video_Server.h"
@@ -205,7 +210,7 @@ public:
 
   int fileSize;
   int maxS;
-  int maxG;  
+  int maxG;
   int maxI;
   int maxP;
   int maxB;
@@ -252,7 +257,7 @@ public:
     char type;
     unsigned short size;
   } * frameTable;
- 
+
   int preGroup;
   int preHeader;
   int preFrame;
@@ -266,10 +271,10 @@ public:
   // globals functions
   int CmdRead (char *buf, int psize);
   int CmdWrite (char *buf, int size);
-  int SendPacket (int shtag, 
-                  int gop, 
-                  int frame, 
-                  int timeToUse, 
+  int SendPacket (int shtag,
+                  int gop,
+                  int frame,
+                  int timeToUse,
                   int first_time = 0);
   int FBread (char *buf, int size);
   int PLAYliveVideo (PLAYpara * para);
@@ -358,7 +363,7 @@ public:
     int addSamples;
     unsigned nextTime;
     int upp;  /* micro-seconds per packet */
-    int delta_sps ; 
+    int delta_sps ;
     // The members previously in PLAY audio.
 
     int bytes_sent ;
@@ -389,6 +394,6 @@ public:
 
 typedef ACE_Singleton <Audio_Global,ACE_SYNCH_MUTEX> AUDIO_GLOBAL;
 
-  
+
 #endif /* define MPEG_GLOBAL_H */
 

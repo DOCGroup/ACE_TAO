@@ -1,32 +1,36 @@
 /* $Id$ */
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
- * 
- * Permission to use, copy, modify, distribute, and sell this software and its 
- * documentation for any purpose is hereby granted without fee, provided that 
- * the above copyright notice appear in all copies and that both that 
- * copyright notice and this permission notice appear in supporting 
- * documentation, and that the name of O.G.I. not be used in advertising or 
- * publicity pertaining to distribution of the software without specific, 
- * written prior permission.  O.G.I. makes no representations about the 
- * suitability of this software for any purpose.  It is provided "as is" 
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the name of O.G.I. not be used in advertising or
+ * publicity pertaining to distribution of the software without specific,
+ * written prior permission.  O.G.I. makes no representations about the
+ * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
- * 
- * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
- * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
- * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY 
- * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN 
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+ *
+ * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author: Shanwei Cen
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
-#if !defined (_MPEG_COMMON_H)
+#ifndef _MPEG_COMMON_H
 #define _MPEG_COMMON_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 extern int gethostname (char*, size_t);
 
@@ -45,19 +49,19 @@ extern int gethostname (char*, size_t);
 
 /*
 #define LOG_DIR "/home/shanweic/log/"
-#define DEVELOPER_UID	8640
+#define DEVELOPER_UID   8640
 */
 
 /* %% this is where the logging is done.." */
 #define LOG_DIR "./"
-#define DEVELOPER_UID	1735
+#define DEVELOPER_UID   1735
 
-#define SFprintf	if ((!getuid()) || getuid() == DEVELOPER_UID) fprintf
-#define Fprintf		if (shared->config.verbose) fprintf
+#define SFprintf        if ((!getuid()) || getuid() == DEVELOPER_UID) fprintf
+#define Fprintf         if (shared->config.verbose) fprintf
 
-#define VCR_TCP_PORT 	7101
-#define VCR_UNIX_PORT 	"/tmp/vcr_unix_port01"
-#define VCR_ATM_PORT	"3005"
+#define VCR_TCP_PORT    7101
+#define VCR_UNIX_PORT   "/tmp/vcr_unix_port01"
+#define VCR_ATM_PORT    "3005"
 
 #define SPEEDUP_INV_SCALE 5  /* VS fast starts at 5/(5-1) normal speed */
 
@@ -71,15 +75,15 @@ extern int gethostname (char*, size_t);
 
 #define VD_BUF_SIZE (1024 * 1024)  /* Size of client VD buffer */
 
-#define PATH_SIZE 	256
-#define PATTERN_SIZE 	100
-#define MAX_FRAMES 	54000  /* half hour video at 30FPS */
+#define PATH_SIZE       256
+#define PATTERN_SIZE    100
+#define MAX_FRAMES      54000  /* half hour video at 30FPS */
 #define MAX_VDQUEUE_SIZE 20
-#define MAX_FB_PACKETS	20  /* max number of feedback packet info collected. */
-#define POSITION_RANGE 	100
-#define MSGGAP_MIN 	-10  /* these are used for recording stat of
-				msgs received by VB */
-#define MSGGAP_MAX	50
+#define MAX_FB_PACKETS  20  /* max number of feedback packet info collected. */
+#define POSITION_RANGE  100
+#define MSGGAP_MIN      -10  /* these are used for recording stat of
+                                msgs received by VB */
+#define MSGGAP_MAX      50
 
 #define INET_SOCKET_BUFFER_SIZE 1400
 
@@ -94,14 +98,14 @@ extern int gethostname (char*, size_t);
 
 /* Video and audio compression format */
 
-#define VIDEO_MPEG1	0
-#define VIDEO_MPEG2	1
-#define VIDEO_JPEG	3
-#define VIDEO_SIF	4
+#define VIDEO_MPEG1     0
+#define VIDEO_MPEG2     1
+#define VIDEO_JPEG      3
+#define VIDEO_SIF       4
 
-#define AUDIO_RAW	10
-#define AUDIO_MPEG1	11
-#define AUDIO_MPEG2	12
+#define AUDIO_RAW       10
+#define AUDIO_MPEG1     11
+#define AUDIO_MPEG2     12
 
 
 /* system configuration default values */
@@ -130,10 +134,10 @@ extern int gethostname (char*, size_t);
 
 typedef struct
 {
-  int	encodeType;
-  int	channels;
-  int	samplesPerSecond;
-  int	bytesPerSample;
+  int   encodeType;
+  int   channels;
+  int   samplesPerSecond;
+  int   bytesPerSample;
 } AudioParameter;
 
 /* client processes shared data structure definition */
@@ -145,14 +149,14 @@ typedef struct
   char * VBbufAddr, * VDbufAddr;
   int pixelValid;
   unsigned char pixel[256];  /* for transfering pixel value from VP to VD */
-  
+
   /* command and status   */
   int cmd;
   int cmdsn;
   int cmdBusy;
 
   int loopBack;
-  
+
   int framesPerSecond;   /* Frames per second */
   int usecPerFrame;    /* micro-seconds per frame, actual video speed */
   int samplesPerSecond;   /* Samples per second */
@@ -170,7 +174,7 @@ typedef struct
   int live;  /* non-zero if any of the video/audio streams are live source */
   int videoFormat;
   int audioFormat;
-  
+
   /*  video channel parameters  */
   int totalFrames;
   int totalGroups;
@@ -186,21 +190,21 @@ typedef struct
   char pattern[PATTERN_SIZE];
   int IframeGap;
   int VStimeAdvance;
-  
+
   int lastIframeDecoded;
   int sendPatternGops;
   char sendPattern[PATTERN_SIZE];
   float frameRateLimit;
   int framesDropped;
   int qosRecomputes;
-  
+
   /*  video channel status  */
   int currentGroup;
   int currentFrame;
   int currentDisplay;
   int nextFrame;
   int nextGroup;
-  
+
   /* audio channel parameters  */
   int totalSamples;
   AudioParameter audioPara;
@@ -214,87 +218,87 @@ typedef struct
   int currentUPF;
   int rtplay;           /* realtime tag, -- VD needs to drop frames when needed */
   int collectStat;  /* to indicate if statistics should be collected or not */
-  int VBheadFrame;	/* ID of last frame put to VBbuffer by VB */
+  int VBheadFrame;      /* ID of last frame put to VBbuffer by VB */
   int needHeader;   /* VD requests resending of systerm Header */
   int playRoundTripDelay; /* play round trip time (from issuing play/FF/FB
-			     command to first Decoded frame showup in
-			     VD buffer) estimated by CTR start_timer() */
-  int audioMaxPktSize;	/* 0 -- reliable byte stream,
-			   >0 - non-discard mode packet stream,
-			   <0 - discard mode packet stream */
+                             command to first Decoded frame showup in
+                             VD buffer) estimated by CTR start_timer() */
+  int audioMaxPktSize;  /* 0 -- reliable byte stream,
+                           >0 - non-discard mode packet stream,
+                           <0 - discard mode packet stream */
   int videoMaxPktSize;
 
   /* System configuration parameters */
   struct
   {
-    int rt;		/* play as fast as possible without dropping frames,
-			   and audio turned off when this tag is set to 0 (zero)
-				   */
-    int maxFPS;		/* maximum PLAY frames-per-second, this play speed is used
-			   during playback when speed scale is set to 100 */
+    int rt;             /* play as fast as possible without dropping frames,
+                           and audio turned off when this tag is set to 0 (zero)
+                                   */
+    int maxFPS;         /* maximum PLAY frames-per-second, this play speed is used
+                           during playback when speed scale is set to 100 */
     int maxSPS;         /* similar to maxFPS, used when audio is played without
-			   corresponding video
-			   */
-    int ffFPS;		/* play speed when Fast forward */
-    int fbFPS;		/* play speed when fast rewind */
+                           corresponding video
+                           */
+    int ffFPS;          /* play speed when Fast forward */
+    int fbFPS;          /* play speed when fast rewind */
     int feedBackDelay;  /* msec, delay of feedback when AB, VB received first
-			   packet, 0 (zero) default to adaptive */
+                           packet, 0 (zero) default to adaptive */
     int audioMask; /* mask for audio output device */
     AudioParameter audioPara; /* default audio parameter by system */
     int audioTimerDuration; /* for audio-only case, miliseconds */
     int audioBufferedIntervals; /* for audio-only case,
-				   audioTimerDuration * audioBufferedIntervals
-				   milliseconds of audio samples will be buffered
-				   in AF buffer
-				   */
+                                   audioTimerDuration * audioBufferedIntervals
+                                   milliseconds of audio samples will be buffered
+                                   in AF buffer
+                                   */
     int framesPerAudioPlay;   /* for audio-video case, each time, samples corresponding
-				 to this number of video frames will be played */
+                                 to this number of video frames will be played */
     int audioForward;    /* forward value for audio channel, in AFTime unit
-			    (number of samples), audio channel is played ahead of video
-			    by this number of samples. This is introduce to compensate
-			    the dely to AF in audio channel, and usually should be less
-			    than 1 (one) second, but greater than zero.
-			  */
+                            (number of samples), audio channel is played ahead of video
+                            by this number of samples. This is introduce to compensate
+                            the dely to AF in audio channel, and usually should be less
+                            than 1 (one) second, but greater than zero.
+                          */
     int VStimeAdvance;  /* target VB buffer level to be mentained (micro-seconds). This
-			   is sent in INIT message to VS, to decide how many frames to
-			   be maintained in VB buffer
-			  */
+                           is sent in INIT message to VS, to decide how many frames to
+                           be maintained in VB buffer
+                          */
     float frameRateLimit; /* playback frame rate limit (frames per second) */
     int collectStat;    /* tag to collect statistics to file 'stat.n' when set */
     int collectFrameInfo; /* collect MPEG frame info to file 'stat.n' when set*/
     int syncEffective;  /* tag to make sync mechanism effective when set */
     int qosEffective;   /* tag to make QoS control effective when set */
-    int audioOffset; 	/* offset added to audio channel 'nextSample' when play().
-			   usually audio and video are not recorded strictly
-			   synchronized. This parameter is to compensate it. The
-			   value can be any integer value.
-			 */
+    int audioOffset;    /* offset added to audio channel 'nextSample' when play().
+                           usually audio and video are not recorded strictly
+                           synchronized. This parameter is to compensate it. The
+                           value can be any integer value.
+                         */
     int filterPara;     /* 1/R of Median, nsamples of Mean and Average */
-    int maxSPframes;	/* max number of frame in a sendPattern */
-    int audioConn;	/* tag for connection oriented audio data channel */
-    int videoConn;	/* tag for connection oriented video data channel */
+    int maxSPframes;    /* max number of frame in a sendPattern */
+    int audioConn;      /* tag for connection oriented audio data channel */
+    int videoConn;      /* tag for connection oriented video data channel */
     int verbose;
   } config;
 
 #ifdef STAT
   struct
   {
-    unsigned VBmaxBytes;    	/* max fill level (bytes) in VB */
-    unsigned VBdroppedFrames;	/* accumulative total number of frames dropped by VB
-				   because VB buffer full */
-    unsigned VBemptyTimes;	/* number of time VD fail to get a frame from VB
-				   immediately */
+    unsigned VBmaxBytes;        /* max fill level (bytes) in VB */
+    unsigned VBdroppedFrames;   /* accumulative total number of frames dropped by VB
+                                   because VB buffer full */
+    unsigned VBemptyTimes;      /* number of time VD fail to get a frame from VB
+                                   immediately */
     unsigned VDnoRef;            /* # of frames without reference */
     unsigned VDagainstSendPattern; /* # of frames against send pattern */
     unsigned VDtooLateI;         /* # of I frames dropped 'cause too late */
     unsigned VDtooLateP;         /* # of P frames dropped 'cause too late */
     unsigned VDtooLateB;         /* # of B frames dropped 'cause too late */
-    unsigned VDlastFrameDecoded;	/* ID of last frame decoded by VD */
+    unsigned VDlastFrameDecoded;        /* ID of last frame decoded by VD */
     unsigned CTRdropLate;
     unsigned CTRdropOutOrder;
     unsigned CTRdispOnTime;
     unsigned CTRdispLate;
-    unsigned fbPacketNumber;	/* # packets sent by feedback mechanism */
+    unsigned fbPacketNumber;    /* # packets sent by feedback mechanism */
     struct {
       int frameId;
       int addUsecPerFrame;
@@ -303,14 +307,14 @@ typedef struct
       int framesDropped;
       float frameRateLimit;
       int advance;
-    } fbPackets[MAX_FB_PACKETS]; 	/* recording FB packet contents */
+    } fbPackets[MAX_FB_PACKETS];        /* recording FB packet contents */
     unsigned VDqueue[MAX_VDQUEUE_SIZE]; /* record number of frames with VD queue
-					   length of index number */
+                                           length of index number */
     int  VBmsgGaps[MSGGAP_MAX + 1 - MSGGAP_MIN]; /* # of ind-sized gaps between msgs */
     char VBframesReceived[(MAX_FRAMES + 7)/8];  /* bit array for frames received by VB */
-    char VDframesDecoded[(MAX_FRAMES + 7)/8];	/* bit array for frames decoded by VD */
-    char VPframesDisplayed[(MAX_FRAMES + 7)/8];	/* bit array for frames displayed by VP */
-    short VBfillLevel[MAX_FRAMES];	/* VB buffer fill level (frames) recorded by CTR */
+    char VDframesDecoded[(MAX_FRAMES + 7)/8];   /* bit array for frames decoded by VD */
+    char VPframesDisplayed[(MAX_FRAMES + 7)/8]; /* bit array for frames displayed by VP */
+    short VBfillLevel[MAX_FRAMES];      /* VB buffer fill level (frames) recorded by CTR */
   } stat;
 #endif
 } SharedData;
@@ -320,30 +324,30 @@ typedef struct
 /* GUI to CTR, (and also CTR to VS and/or AS) */
 
 #define CmdINIT 0    /* followed by: videoHost, videoPath, audioHost, audioPath
-			each item is passed as a string (without 0), led with length(int) */
-#define CmdINITaudio	1   /* for CTR-AS */
-#define CmdINITvideo	2   /* for CTR-VS */
+                        each item is passed as a string (without 0), led with length(int) */
+#define CmdINITaudio    1   /* for CTR-AS */
+#define CmdINITvideo    2   /* for CTR-VS */
 #define CmdSTOP 3
-#define CmdFF	4
-#define CmdFB	5
+#define CmdFF   4
+#define CmdFB   5
 #define CmdSTEP 6
-#define CmdPLAY	7
-#define CmdREF	20		/* this is for sending REFerence frame by VS
-				   for CmdSTEP and CmdPLAY */
-#define CmdPOSITION	8         /* followed by position */
-#define CmdPOSITIONrelease	9 /* followed by position */
-#define CmdVOLUME	10	  /* followed by position */
-#define CmdBALANCE	11	  /* followed by position */
-#define CmdSPEED	12	  /* followed by position */
-#define CmdLOOPenable	13
-#define CmdLOOPdisable	14
-#define CmdSTATstream	23   /* reply with { | type(byte) | size(int) }+ | */
-#define CmdSTATsent	24   /* reply with { | byte }+ | */
-#define CmdCLOSE	18
-#define CmdFAIL		19   /* followed by a string */
+#define CmdPLAY 7
+#define CmdREF  20              /* this is for sending REFerence frame by VS
+                                   for CmdSTEP and CmdPLAY */
+#define CmdPOSITION     8         /* followed by position */
+#define CmdPOSITIONrelease      9 /* followed by position */
+#define CmdVOLUME       10        /* followed by position */
+#define CmdBALANCE      11        /* followed by position */
+#define CmdSPEED        12        /* followed by position */
+#define CmdLOOPenable   13
+#define CmdLOOPdisable  14
+#define CmdSTATstream   23   /* reply with { | type(byte) | size(int) }+ | */
+#define CmdSTATsent     24   /* reply with { | byte }+ | */
+#define CmdCLOSE        18
+#define CmdFAIL         19   /* followed by a string */
 
-#define CmdDONE		15	/* CTR to GUI:
-				   replay for accptance and execution of Above Cmd */
+#define CmdDONE         15      /* CTR to GUI:
+                                   replay for accptance and execution of Above Cmd */
 
 #define CmdVPinitScreen 30    /* CTR to VP(GUI), audio-only screen clearning */
 #define CmdVPdisplayFrame 31  /* CTR to VP(GUI) to display the single frame in buffer */
@@ -375,7 +379,7 @@ typedef struct
 {
   int live;
   int format;
-  
+
   int totalHeaders;
   int totalFrames;
   int totalGroups;
@@ -508,7 +512,7 @@ typedef struct
 {
   int live;
   int format;
-  
+
   AudioParameter para;
   int totalSamples;
 } INITaudioReply;
@@ -575,7 +579,7 @@ typedef struct
 
 typedef struct {
   int sh, gop, frame, display, future, past;
-  int refcount;				 /* reference count    */
+  int refcount;                          /* reference count    */
   unsigned char * data;                  /* data buffer for image */
 } FrameBlock;
 

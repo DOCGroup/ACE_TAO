@@ -22,11 +22,16 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerC.h"
 
-class Logger_Client 
+class Logger_Client
 {
   // = TITLE
   //    Defines a class that encapsulates behaviour of the Logger
@@ -60,28 +65,28 @@ private:
 
    void show_record (Logger::Log_Record &newrec);
   // Shows contents of the record (for debugging purposes)
-  
+
   CORBA::Object_var
   resolve_name (CosNaming::Name &name, char* namestring,
-		CosNaming::NamingContext_var context,
-		CORBA::Environment &env); 
+                CosNaming::NamingContext_var context,
+                CORBA::Environment &env);
   // Take the Name, give it the proper string name, and
-  // resolve it  
+  // resolve it
   int
   nesting_test (CosNaming::Name &name, char* namestring,
-		CosNaming::NamingContext_var context,
-		CORBA::Environment &env);
+                CosNaming::NamingContext_var context,
+                CORBA::Environment &env);
   // Test the nesting context
-    
+
   int argc_;
   // # of arguments on the command line.
-  
+
   char **argv_;
   // arguments from command line.
-  
+
   int test_nesting_;
   // Test nested naming context or not.
-  
+
   CORBA::ORB_var orb_;
   // Keep a pointer to the orb, to avoid accidental deletes.
 

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_INTERFACE_FWD_H)
+#ifndef BE_INTERFACE_FWD_H
 #define BE_INTERFACE_FWD_H
 
 /*

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMC_USR_H)
+#ifndef _PMC_USR_H
 #define _PMC_USR_H
 
 #include "PM_Client.h"

@@ -5,32 +5,33 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Timer_Heap_T.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TIMER_HEAP_T_H
 #define ACE_TIMER_HEAP_T_H
 
 #include "ace/Timer_Queue_T.h"
-#include "ace/Free_List.h"
-#include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Free_List.h"
+#include "ace/Containers.h"
 
 // Forward declaration
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_T;
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> 
+class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>
 {
   // = TITLE
   //     Iterates over an <ACE_Timer_Heap_T>.
@@ -38,7 +39,7 @@ class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTO
   // = DESCRIPTION
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it doesn't transverse
-  //     in the order of timeout values.  
+  //     in the order of timeout values.
 public:
   ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor.
@@ -69,7 +70,7 @@ protected:
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
 {
-  // = TITLE 
+  // = TITLE
   //      Provides a very fast and predictable timer implementation.
   //
   // = DESCRIPTION
@@ -89,8 +90,8 @@ public:
 
   // = Initialization and termination methods.
   ACE_Timer_Heap_T (size_t size,
-		    int preallocated = 0,
-		    FUNCTOR *upcall_functor = 0,
+                    int preallocated = 0,
+                    FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // The Constructor creates a heap with <size> elements.  If
   // <preallocated> is non-0 then we'll pre-allocate all the memory
@@ -115,10 +116,10 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
   // Returns the time of the earlier node in the Timer_Queue.
 
-  virtual long schedule (const TYPE &type, 
-			 const void *act, 
-			 const ACE_Time_Value &delay,
-			 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (const TYPE &type,
+                         const void *act,
+                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
@@ -133,14 +134,14 @@ public:
   // valid <timer_id>).
 
   virtual int cancel (const TYPE &type,
-		      int dont_call_handle_close = 1);
+                      int dont_call_handle_close = 1);
   // Cancel all timer associated with <type>.  If <dont_call> is 0
   // then the <functor> will be invoked.  Returns number of timers
   // cancelled.
 
-  virtual int cancel (long timer_id, 
-		      const void **act = 0,
-		      int dont_call_handle_close = 1);
+  virtual int cancel (long timer_id,
+                      const void **act = 0,
+                      int dont_call_handle_close = 1);
   // Cancel the single timer that matches the <timer_id> value (which
   // was returned from the <schedule> method).  If act is non-NULL
   // then it will be set to point to the ``magic cookie'' argument
@@ -184,17 +185,17 @@ private:
 
   void grow_heap (void);
   // Doubles the size of the heap and the corresponding timer_ids array.
-  // If preallocation is used, will also double the size of the 
+  // If preallocation is used, will also double the size of the
   // preallocated array of ACE_Timer_Nodes.
 
-  void reheap_up (ACE_Timer_Node_T<TYPE> *new_node, 
-		  size_t index,
-		  size_t parent);
+  void reheap_up (ACE_Timer_Node_T<TYPE> *new_node,
+                  size_t index,
+                  size_t parent);
   // Restore the heap property, starting at <index>.
 
-  void reheap_down (ACE_Timer_Node_T<TYPE> *moved_node, 
-		    size_t index, 
-		    size_t child);
+  void reheap_down (ACE_Timer_Node_T<TYPE> *moved_node,
+                    size_t index,
+                    size_t child);
   // Restore the heap property, starting at <index>.
 
   void copy (int index, ACE_Timer_Node_T<TYPE> *moved_node);
@@ -218,7 +219,7 @@ private:
 
   size_t cur_size_;
   // Current size of the heap.
-  
+
   HEAP_ITERATOR *iterator_;
   // Iterator used to expire timers.
 
@@ -245,7 +246,7 @@ private:
   ACE_Timer_Node_T<TYPE> *preallocated_nodes_;
   // If this is non-0, then we preallocate <max_size_> number of
   // <ACE_Timer_Node> objects in order to reduce dynamic allocation
-  // costs.  In auto-growing implementation, this points to the 
+  // costs.  In auto-growing implementation, this points to the
   // last array of nodes allocated.
 
   ACE_Timer_Node_T<TYPE> *preallocated_nodes_freelist_;

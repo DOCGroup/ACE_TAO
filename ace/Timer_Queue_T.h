@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Timer_Queue_T.h
 //
 // = AUTHOR
 //    Doug Schmidt, Irfan Pyarali, and Darrell Brunsch
-// 
+//
 // ============================================================================
 
 #ifndef ACE_TIMER_QUEUE_T_H
@@ -21,7 +21,7 @@
 #include "ace/Free_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class TYPE>
@@ -36,28 +36,28 @@ public:
   ~ACE_Timer_Node_T (void);
   // Dtor.
 
-  void set (const TYPE &type, 
-            const void *a, 
-            const ACE_Time_Value &t, 
-            const ACE_Time_Value &i, 
-            ACE_Timer_Node_T<TYPE> *n, 
+  void set (const TYPE &type,
+            const void *a,
+            const ACE_Time_Value &t,
+            const ACE_Time_Value &i,
+            ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
-  // singly linked list 
+  // singly linked list
 
-  void set (const TYPE &type, 
-            const void *a, 
-            const ACE_Time_Value &t, 
-            const ACE_Time_Value &i, 
+  void set (const TYPE &type,
+            const void *a,
+            const ACE_Time_Value &t,
+            const ACE_Time_Value &i,
             ACE_Timer_Node_T<TYPE> *p,
-            ACE_Timer_Node_T<TYPE> *n, 
+            ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
   // doubly linked list version
 
-  // = Accessors 
-  
+  // = Accessors
+
   TYPE &get_type (void);
   // Get the type.
-  
+
   void set_type (TYPE &type);
   // Set the type.
 
@@ -90,7 +90,7 @@ public:
 
   void set_next (ACE_Timer_Node_T<TYPE> *next);
   // set the next pointer.
-  
+
   long get_timer_id (void);
   // get the timer_id.
 
@@ -103,13 +103,13 @@ public:
 private:
   TYPE type_;
   // Type of object stored in the Queue
-  
+
   const void *act_;
   // Asynchronous completion token associated with the timer.
-  
+
   ACE_Time_Value timer_value_;
   // Time until the timer expires.
-  
+
   ACE_Time_Value interval_;
   // If this is a periodic timer this holds the time until the next
   // timeout.
@@ -119,7 +119,7 @@ private:
 
   ACE_Timer_Node_T<TYPE> *next_;
   // Pointer to next timer.
-  
+
   long timer_id_;
   // Id of this timer (used to cancel timers before they expire).
 };
@@ -159,19 +159,19 @@ public:
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_T
 {
-  // = TITLE 
+  // = TITLE
   //      Provides an interface to timers.
   //
   // = DESCRIPTION
   //      This is an abstract base class that provides hook for
   //      implementing specialized policies such as <ACE_Timer_List>
   //      and <ACE_Timer_Heap>.
-public: 
+public:
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> ITERATOR;
   // Type of Iterator.
 
   // = Initialization and termination methods.
-  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0, 
+  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
                      ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // Default constructor. <upcall_functor> is the instance of the
   // FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
@@ -188,10 +188,10 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
   // Returns the time of the earlier node in the Timer_Queue.
 
-  virtual long schedule (const TYPE &type, 
-			 const void *act, 
-			 const ACE_Time_Value &delay,
-			 const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+  virtual long schedule (const TYPE &type,
+                         const void *act,
+                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
@@ -206,15 +206,15 @@ public:
   // valid <timer_id>).
 
   virtual int cancel (const TYPE &type,
-		      int dont_call_handle_close = 1) = 0;
+                      int dont_call_handle_close = 1) = 0;
   // Cancel all timer associated with <type>.  If
   // <dont_call_handle_close> is 0 then the <functor> will be invoked,
   // which typically invokes the <handle_close> hook.  Returns number
   // of timers cancelled.
 
-  virtual int cancel (long timer_id, 
-		      const void **act = 0,
-		      int dont_call_handle_close = 1) = 0;
+  virtual int cancel (long timer_id,
+                      const void **act = 0,
+                      int dont_call_handle_close = 1) = 0;
   // Cancel the single timer that matches the <timer_id> value (which
   // was returned from the <schedule> method).  If act is non-NULL
   // then it will be set to point to the ``magic cookie'' argument
@@ -248,7 +248,7 @@ public:
   // no pending timers or if all pending timers are longer than max.
 
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
-					     ACE_Time_Value *the_timeout);
+                                             ACE_Time_Value *the_timeout);
   // Determine the next event to timeout.  Returns <max> if there are
   // no pending timers or if all pending timers are longer than max.
   // <the_timeout> should be a pointer to storage for the timeout value,
@@ -258,7 +258,7 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
   const ACE_Time_Value &timer_skew (void) const;
 
-  ACE_LOCK &mutex (void); 
+  ACE_LOCK &mutex (void);
   // Synchronization variable used by the queue
 
   FUNCTOR &upcall_functor (void);
@@ -282,8 +282,8 @@ public:
 
 protected:
   virtual void upcall (TYPE &type,
-		       const void *act,
-		       const ACE_Time_Value &cur_time);
+                       const void *act,
+                       const ACE_Time_Value &cur_time);
   // This method will call the <functor> with the <type>, <act> and
   // <time>
 
@@ -316,7 +316,7 @@ protected:
   // Flag to delete only if the class created the <free_list_>
 
 private:
-  
+
   ACE_Time_Value timeout_;
   // Returned by <calculate_timeout>.
 
@@ -331,18 +331,18 @@ private:
 template <class ACE_LOCK>
 class ACE_Event_Handler_Handle_Timeout_Upcall
 {
-  // = TITLE 
+  // = TITLE
   //      Functor for Timer_Queues.
   //
   // = DESCRIPTION
   //      This class implements the functor required by the Timer
   //      Queue to call <handle_timeout> on ACE_Event_Handlers.
 public:
-  typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+  typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
+                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
                             ACE_LOCK>
           TIMER_QUEUE;
-  
+
   // = Initialization and termination methods.
   ACE_Event_Handler_Handle_Timeout_Upcall (void);
   // Constructor.
@@ -351,13 +351,13 @@ public:
   // Destructor.
 
   int timeout (TIMER_QUEUE &timer_queue,
-	       ACE_Event_Handler *handler,
-	       const void *arg,
-	       const ACE_Time_Value &cur_time);
+               ACE_Event_Handler *handler,
+               const void *arg,
+               const ACE_Time_Value &cur_time);
   // This method is called when the timer expires
-  
+
   int cancellation (TIMER_QUEUE &timer_queue,
-		    ACE_Event_Handler *handler);
+                    ACE_Event_Handler *handler);
   // This method is called when the timer is canceled
 
   int deletion (TIMER_QUEUE &timer_queue,

@@ -5,16 +5,16 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    Config_Files.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (_CONFIG_FILES)
+#ifndef _CONFIG_FILES
 #define _CONFIG_FILES
 
 #include "File_Parser.h"
@@ -42,7 +42,7 @@ public:
 
   ACE_INT32 max_retry_timeout_;
   // Maximum amount of time to wait for reconnecting.
-  
+
   u_short local_port_;
   // Our local port number.
 
@@ -80,10 +80,10 @@ public:
   ACE_INT32 consumers_[MAX_CONSUMERS];
   // Connection ids for consumers that will be routed information
   // containing this <connection_id_>
-  
+
   ACE_INT32 total_consumers_;
   // Total number of these consumers.
-};  
+};
 
 class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
   // = TITLE

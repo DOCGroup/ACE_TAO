@@ -13,7 +13,7 @@
 //
 //=============================================================================
 
-#if !defined (MYFOOSERVANT_H)
+#ifndef MYFOOSERVANT_H
 #define MYFOOSERVANT_H
 
 #include "FooS.h"
@@ -23,7 +23,7 @@ class GENERIC_SERVANT_Export MyFooServant : public POA_Foo
 public:
   // constructor - takes a POA and a value parameter
   MyFooServant (CORBA::ORB_ptr orb,
-		PortableServer::POA_ptr poa,
+                PortableServer::POA_ptr poa,
                 CORBA::Long value);
 
   // Destructor

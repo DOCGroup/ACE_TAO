@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_OPERATION_RETTYPE_VARDECL_SS_H_)
+#ifndef _BE_VISITOR_OPERATION_RETTYPE_VARDECL_SS_H_
 #define _BE_VISITOR_OPERATION_RETTYPE_VARDECL_SS_H_
 
 // ************************************************************
@@ -79,10 +79,10 @@ public:
 // ************************************************************
 // Operation visitor for return type variable declaration in the server
 // skeleton using compiled marshaling. This one overrides 2 methods of the base
-// class 
+// class
 // ************************************************************
 
-class be_compiled_visitor_operation_rettype_vardecl_ss : 
+class be_compiled_visitor_operation_rettype_vardecl_ss :
   public be_visitor_operation_rettype_vardecl_ss
 {
   //

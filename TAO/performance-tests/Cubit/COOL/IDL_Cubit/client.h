@@ -20,6 +20,11 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "cubit.H"
 
 class Cubit_Client
@@ -45,8 +50,8 @@ public:
   // Initialize the client communication endpoint with server.
 
   void print_exception (const char * str,
-			const CORBA_Environment &env=Cubit_Client::env_);
-			
+                        const CORBA_Environment &env=Cubit_Client::env_);
+
 private:
   int func (u_int i);
   // simple function that returns the substraction of 117 from the parameter.

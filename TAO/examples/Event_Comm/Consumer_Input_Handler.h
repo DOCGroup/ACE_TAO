@@ -14,10 +14,14 @@
 //
 // ============================================================================
 
-#if !defined (CONSUMER_INPUT_HANDLER_H)
+#ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
 class Consumer_Handler;
@@ -38,13 +42,13 @@ public:
   ~Consumer_Input_Handler (void);
 
   int initialize (Consumer_Handler *,
-			  ACE_HANDLE h = 0);
+                          ACE_HANDLE h = 0);
 
   virtual int handle_input (ACE_HANDLE);
   // Dispatch the callback when events occur.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
   int consumer_initiated_shutdown (void);

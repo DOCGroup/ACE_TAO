@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Parse_Node.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_PARSE_NODE_H
@@ -20,7 +20,7 @@
 #include "ace/Service_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Parse_Node
@@ -92,7 +92,7 @@ class ACE_Export ACE_Remove_Node : public ACE_Parse_Node
 public:
   ACE_Remove_Node (const char *name);
   ~ACE_Remove_Node (void);
-  
+
   virtual void apply (void);
 
   void dump (void) const;
@@ -273,7 +273,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   // = TITLE
   //     Keeps track of the symbol name for a function that is not
   //     linked in from a DLL, but is statically linked with the
-  //     application. 
+  //     application.
 public:
   ACE_Static_Function_Node (const char *func_name);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0);

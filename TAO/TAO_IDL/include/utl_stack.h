@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -78,9 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 // Forward declaration of active iterator for UTL_ScopeStack
-class	UTL_ScopeStackActiveIterator;
+class   UTL_ScopeStackActiveIterator;
 
-class	UTL_ScopeStack
+class   UTL_ScopeStack
 {
 public:
   // Operations
@@ -90,41 +90,41 @@ public:
   virtual ~UTL_ScopeStack();
 
   // Return top element
-  virtual UTL_Scope		*top();
+  virtual UTL_Scope             *top();
 
   // Pop top element
-  virtual void			pop();
+  virtual void                  pop();
 
   // Clear entire stack
-  virtual void			clear();
+  virtual void                  clear();
 
   // Push an element on the stack and return stack
-  virtual UTL_ScopeStack	*push(UTL_Scope *el);
+  virtual UTL_ScopeStack        *push(UTL_Scope *el);
 
   // How deep is the stack now?
-  virtual unsigned long		depth();
+  virtual unsigned long         depth();
 
   // Return bottom element
-  virtual UTL_Scope		*bottom();
+  virtual UTL_Scope             *bottom();
 
   // Return (top - 1) element
-  virtual UTL_Scope		*next_to_top();
+  virtual UTL_Scope             *next_to_top();
 
   // return topmost non-NULL element
-  virtual UTL_Scope		*top_non_null();
+  virtual UTL_Scope             *top_non_null();
 
 private:
   // Data
-  UTL_Scope			**pd_stack_data;	// Store scopes stack
-  unsigned long			pd_stack_data_nalloced;	// How many allocated?
-  unsigned long			pd_stack_top;		// How many used?
+  UTL_Scope                     **pd_stack_data;        // Store scopes stack
+  unsigned long                 pd_stack_data_nalloced; // How many allocated?
+  unsigned long                 pd_stack_top;           // How many used?
 
   // Friend active iterator class for UTL_ScopeStack
-  friend class			UTL_ScopeStackActiveIterator;
+  friend class                  UTL_ScopeStackActiveIterator;
 };
 
 // Active iterator for UTL_ScopeStack
-class	UTL_ScopeStackActiveIterator
+class   UTL_ScopeStackActiveIterator
 {
 public:
   // Operations
@@ -133,18 +133,18 @@ public:
   UTL_ScopeStackActiveIterator(UTL_ScopeStack *s);
 
   // Advance to next element
-  virtual void			next();
+  virtual void                  next();
 
   // Get current item
-  virtual UTL_Scope		*item();
+  virtual UTL_Scope             *item();
 
   // Is the iteration finished?
-  virtual long			is_done();
+  virtual long                  is_done();
 
 private:
   // Data
-  UTL_ScopeStack		*source;	// On what to iterate?
-  long				il;		// Where are we in iteration?
+  UTL_ScopeStack                *source;        // On what to iterate?
+  long                          il;             // Where are we in iteration?
 };
 
 #endif           // _UTL_STACK_UTL_STACK_HH

@@ -6,7 +6,7 @@
 //    FactoryFinder.h
 //
 // = DESCRIPTION
-//    Server for the Quoter Factory Finder 
+//    Server for the Quoter Factory Finder
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
@@ -14,10 +14,15 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/TAO.h"
 #include "Factory_Finder_i.h"
 
-#if !defined (QUOTER_FACTORY_FINDER_H)
+#ifndef QUOTER_FACTORY_FINDER_H
 #define QUOTER_FACTORY_FINDER_H
 
 class Quoter_Factory_Finder_Server
@@ -36,7 +41,7 @@ public:
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb
 
   u_int parse_args (void);
   // parse the passed parameters
@@ -47,7 +52,7 @@ private:
 
   Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_;
   // instance of the Quoter Factory Finder
-  
+
   CosNaming::NamingContext_var quoterNamingContext_var_;
   // reference to the Quoter naming context
 

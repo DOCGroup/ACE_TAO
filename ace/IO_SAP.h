@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    IO_SAP.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_IO_SAP_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_IO_SAP
@@ -31,16 +31,16 @@ class ACE_Export ACE_IO_SAP
 public:
   enum
   {
-    INVALID_HANDLE = -1 // Be consistent with Winsock 
+    INVALID_HANDLE = -1 // Be consistent with Winsock
   };
 
   ~ACE_IO_SAP (void);
   // Default dtor.
 
   int control (int cmd, void *) const;
-  // Interface for ioctl. 
+  // Interface for ioctl.
 
-  // = Common I/O handle options related to files. 
+  // = Common I/O handle options related to files.
 
   int enable (int value) const;
   // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
@@ -53,10 +53,10 @@ public:
   // which is passed as the <value>.
 
   ACE_HANDLE get_handle (void) const;
-  // Get the underlying handle. 
+  // Get the underlying handle.
 
   void set_handle (ACE_HANDLE handle);
-  // Set the underlying handle. 
+  // Set the underlying handle.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -66,14 +66,14 @@ public:
 
 protected:
   ACE_IO_SAP (void);
-  // Ensure that ACE_IO_SAP is an abstract base class. 
+  // Ensure that ACE_IO_SAP is an abstract base class.
 
 private:
   ACE_HANDLE handle_;
-  // Underlying I/O handle. 
+  // Underlying I/O handle.
 
   static pid_t pid_;
-  // Cache the process ID. 
+  // Cache the process ID.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

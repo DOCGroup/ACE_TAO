@@ -17,10 +17,14 @@
 //
 // ============================================================================
 
-#if !defined (SUPPLIER_INPUT_HANDLER_H)
+#ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
 class Notifier_Handler;
@@ -49,7 +53,7 @@ public:
   // Frame input events and notify <Consumers>.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
 protected:

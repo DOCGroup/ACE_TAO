@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    ARGV.h
 //
 // = AUTHOR
 //    Doug Schmidt, Everett Anderson
-// 
+//
 // ============================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
 
 #include "ace/ACE.h"
-#include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Containers.h"
 
 class ACE_Export ACE_ARGV
 {
@@ -62,7 +63,7 @@ public:
 
   // = Accessor arguments.
   const ASYS_TCHAR *operator[] (size_t index);
-  // Returns the <index>th string in the ARGV array.  
+  // Returns the <index>th string in the ARGV array.
 
   ASYS_TCHAR **argv (void);
   // Returns the <argv> array.  Caller should not delete this memory
@@ -71,7 +72,7 @@ public:
   // saved to the queue.
 
   size_t argc (void) const;
-  // Returns <argc>. 
+  // Returns <argc>.
 
   const ASYS_TCHAR *buf (void);
   // Returns the <buf>.  Caller should not delete this memory since
@@ -90,13 +91,13 @@ public:
   // What state is this ACE_ARGV in?
 
   // These are the states possible via the different constructors.
-  enum States 
+  enum States
   {
-    TO_STRING = 1,    
+    TO_STRING = 1,
     // ACE_ARGV converts buf[] to ASYS_TCHAR *argv[]
-    TO_PTR_ARRAY = 2, 
+    TO_PTR_ARRAY = 2,
     // ACE_ARGV converts ASYS_TCHAR *argv[] to buf[]
-    ITERATIVE = 3    
+    ITERATIVE = 3
     // Builds buf[] or ASYS_TCHAR *argv[] iteratively with add()
   };
 
@@ -109,7 +110,7 @@ private:
   // Converts buf_ into the ASYS_TCHAR *argv[] format.
 
   int argv_to_string (ASYS_TCHAR **argv, ASYS_TCHAR *&buf);
-  // Returns the string created from argv in buf and 
+  // Returns the string created from argv in buf and
   // returns the number of arguments.
 
   int substitute_env_args_;
@@ -119,10 +120,10 @@ private:
   // Current state marker.
 
   size_t argc_;
-  // Number of arguments in the ARGV array. 
+  // Number of arguments in the ARGV array.
 
   ASYS_TCHAR **argv_;
-  // The array of string arguments. 
+  // The array of string arguments.
 
   ASYS_TCHAR *buf_;
   // Buffer containing the <argv> contents.

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * log.h: Records transactions, reports errors to administrators, etc.
- * 
+ *
  * Rob McCool
  */
 
@@ -43,7 +43,7 @@
  * will be reported.
  */
 
-int log_error(int degree, char *func, Session *sn, Request *rq, 
+int log_error(int degree, char *func, Session *sn, Request *rq,
               char *fmt, ...);
 
 #endif

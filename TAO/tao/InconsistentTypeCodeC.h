@@ -30,7 +30,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */

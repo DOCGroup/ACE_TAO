@@ -26,10 +26,14 @@
 //
 // ============================================================================
 
-#if !defined (_BPR_DRIVERS_T_H_)
+#ifndef _BPR_DRIVERS_T_H_
 #define _BPR_DRIVERS_T_H_
 
 #include "ace/Functor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declarations.
 class Input_Device_Wrapper_Base;

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SINGLE_LOOKUP_H)
+#ifndef _SINGLE_LOOKUP_H
 #define _SINGLE_LOOKUP_H
 
 #include "Options.h"

@@ -56,7 +56,7 @@ private:
   // object with the POA.
 
   int send_market_status (const char *stock_name,
-			  long value);
+                          long value);
   // Sends the stock name and its value.
 
   int argc_;

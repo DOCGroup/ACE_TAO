@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_ATTRIBUTE_H)
+#ifndef TAO_BE_VISITOR_ATTRIBUTE_H
 #define TAO_BE_VISITOR_ATTRIBUTE_H
 
 #include "be_visitor.h"

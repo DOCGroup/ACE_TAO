@@ -18,11 +18,12 @@
 #define ACE_READ_BUFFER_H
 
 #include "ace/ACE.h"
-#include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Malloc.h"
 
 class ACE_Export ACE_Read_Buffer
 {

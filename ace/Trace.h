@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Trace.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TRACE_H
@@ -48,10 +48,10 @@ public:
   // Enable the tracing facility.
 
   static void stop_tracing (void);
-  // Disable the tracing facility. 
+  // Disable the tracing facility.
 
   static void set_nesting_indent (int indent);
-  // Change the nesting indentation level. 
+  // Change the nesting indentation level.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -66,12 +66,12 @@ private:
 
   static int nesting_indent_;
   // Keeps track of how far to indent per trace call.
-  
+
   static int enable_tracing_;
   // Is tracing enabled?
 
   // Default values.
-  enum 
+  enum
   {
     DEFAULT_INDENT  = 3,
     DEFAULT_TRACING = 1

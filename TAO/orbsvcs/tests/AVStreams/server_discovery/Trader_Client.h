@@ -1,6 +1,6 @@
 // ========================================================================
 // $Id$
-// 
+//
 // = FILENAME
 //    Trader_Client.h
 //
@@ -32,23 +32,23 @@ public:
 
   int num_movies (void) const
     { return this->movie_info_.length (); }
-  
+
   const char* name (void) const
     { return this->movie_info_[this->index_].name_.in (); }
 
   const char* description (void) const
     { return this->movie_info_[this->index_].description_.in (); }
-  
+
   const char* filename (void) const
     { return this->movie_info_[this->index_].filename_.in (); }
-  
+
   const char* category (void) const
     { return this->movie_info_[this->index_].category_.in (); }
 
 private:
-  
+
   int index_;
-    
+
   TAO_VR::Movie_Info movie_info_;
 };
 
@@ -61,7 +61,7 @@ public:
 
   ~Trader_Client (void);
   // Destory all that was dynamically allocated.
-  
+
   void init (int argc, char** argv);
   // Call once, prior to query_trader.
 
@@ -71,22 +71,22 @@ public:
   void load_movie (const char* server_name, const char* movie_name);
   // Instruct the A/V client to begin an A/V stream with the
   // designated host.
-  
+
   void get_servers (int& length, char**& server_names);
   // Return the list of server names whose offers were obtained from
   // the Trader.
-  
+
   Movie_Iterator* get_movie_info (const char* server_name);
   // Fill in the sequence with movie information for all movies
   // offered by the specified server.
-  
+
   float evaluate_performance_property (const char* server_name,
                                        const char* property_name);
   // Evaluate the specified property with respect to the offer from
   // the specified server.
 
   static Trader_Client* instance (void);
-  
+
 protected:
 
   Trader_Client (void);
@@ -96,16 +96,16 @@ protected:
 private:
 
   static Trader_Client* instance_;
-  
+
   void create_hash_table_entry (CosTrading::Offer& offer);
 
   TAO_VR::Movie_Info* fetch_movie_array (const char* server_name);
-  
+
   typedef
   ACE_Hash_Map_Manager <TAO_String_Hash_Key, CosTrading::Property, ACE_Null_Mutex>
   Property_Map;
-  // Second-tier map --- maps property names to their values. 
-  
+  // Second-tier map --- maps property names to their values.
+
   typedef
   ACE_Hash_Map_Manager <TAO_String_Hash_Key, Property_Map*, ACE_Null_Mutex>
   Server_Map;
@@ -113,10 +113,10 @@ private:
 
   TAO_ORB_Manager orb_manager_;
   // Standard orb stuff.
-  
+
   CosTrading::Lookup_var lookup_;
   // A reference to the trader, what else?
-  
+
   Server_Map map_;
   // The two-tiered map of server names to a map of property names to
   // values.

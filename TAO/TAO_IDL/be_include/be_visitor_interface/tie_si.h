@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_TIE_SI_H_)
+#ifndef _BE_INTERFACE_TIE_SI_H_
 #define _BE_INTERFACE_TIE_SI_H_
 
 class be_visitor_interface_tie_si : public be_visitor_interface
@@ -44,8 +44,8 @@ public:
   // set the right context and make a visitor
 
   static int method_helper (be_interface *,
-			    be_interface *,
-			    TAO_OutStream *os);
+                            be_interface *,
+                            TAO_OutStream *os);
   // helper method to generate method declaration in the TIE classes.
 };
 

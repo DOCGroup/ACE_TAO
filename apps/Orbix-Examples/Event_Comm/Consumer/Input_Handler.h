@@ -5,19 +5,23 @@
 //
 // = LIBRARY
 //    EventComm
-// 
+//
 // = FILENAME
 //    Input_Handler.h
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (_INPUT_HANDLER_H)
+#ifndef _INPUT_HANDLER_H
 #define _INPUT_HANDLER_
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 // Forward declaration.
@@ -34,12 +38,12 @@ class Input_Handler : public ACE_Service_Object
 public:
   Input_Handler (Notification_Receiver_Handler *,
                  ACE_HANDLE h = 0);
-  
+
   virtual int handle_input (ACE_HANDLE);
   // Dispatch the callback when events occur.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE, 
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
   int consumer_initiated_shutdown (void);
@@ -55,7 +59,7 @@ private:
   virtual ACE_HANDLE get_handle (void) const;
 
   ACE_HANDLE handle_;
-  // ACE_HANDLE where the input comes from. 
+  // ACE_HANDLE where the input comes from.
 
   Notification_Receiver_Handler *receiver_handler_;
   // Pointer to the <Notification_Receiver_Handler> that receives

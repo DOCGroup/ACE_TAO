@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    INET_Addr.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_INET_ADDR_H
 #define ACE_INET_ADDR_H
 
 #include "ace/ACE.h"
-#include "ace/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Addr.h"
 
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
@@ -35,13 +36,13 @@ public:
 
   ACE_INET_Addr (const ACE_INET_Addr &);
   // Copy constructor.
- 
+
   ACE_INET_Addr (const sockaddr_in *, int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
   ACE_INET_Addr (u_short port_number, const ASYS_TCHAR host_name[]);
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
-  // <host_name>. 
+  // <host_name>.
 
   ACE_INET_Addr (const ASYS_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
@@ -72,16 +73,16 @@ public:
   int set (const ACE_INET_Addr &);
   // Initializes from another <ACE_INET_Addr>.
 
-  int set (u_short port_number, const ASYS_TCHAR host_name[], 
-	   int encode = 1);
+  int set (u_short port_number, const ASYS_TCHAR host_name[],
+           int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and the
   // remote <host_name>.  If <encode> is enabled then <port_number> is
   // converted into network byte order, otherwise it is assumed to be
   // in network byte order already and are passed straight through.
 
-  int set (u_short port_number, 
-	   ACE_UINT32 ip_addr = INADDR_ANY, 
-	   int encode = 1);
+  int set (u_short port_number,
+           ACE_UINT32 ip_addr = INADDR_ANY,
+           int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and an
   // Internet <ip_addr>.  If <encode> is enabled then <port_number>
   // and <ip_addr> are converted into network byte order, otherwise
@@ -145,7 +146,7 @@ public:
   // is non-reentrant since it returns a pointer to a static data
   // area).
 
-  const	char *get_host_addr (void) const;
+  const char *get_host_addr (void) const;
   // Return the "dotted decimal" Internet address.
 
   ACE_UINT32 get_ip_address (void) const;
@@ -160,7 +161,7 @@ public:
   // Compare two addresses for inequality.
 
   virtual u_long hash (void) const;
-  // Computes and returns hash value.  
+  // Computes and returns hash value.
 
   void dump (void) const;
   // Dump the state of an object.

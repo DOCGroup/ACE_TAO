@@ -19,10 +19,15 @@
 //
 // ============================================================================
 
-#if !defined (_DRIVER_H_)
+#ifndef _DRIVER_H_
 #define _DRIVER_H_
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 

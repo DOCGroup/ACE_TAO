@@ -7,14 +7,14 @@
 //    NodeVisitor.h
 //
 // = AUTHOR
-//    Michael Kircher 
+//    Michael Kircher
 //
 // = DESCRIPTION
 //    This file descibes the Visitor used by the any evaluator.
 //
 // ============================================================================
 
-#if !defined (NODE_VISITOR_H)
+#ifndef NODE_VISITOR_H
 #define NODE_VISITOR_H
 
 class StructNode;
@@ -30,7 +30,7 @@ public:
   virtual void visitStructNode (StructNode *structNode) = 0;
   virtual void visitDoubleNode (DoubleNode *doubleNode) = 0;
   virtual void visitLongNode (LongNode *longNode) = 0;
-  virtual void visitULongNode (ULongNode *uLongNode) = 0;  
+  virtual void visitULongNode (ULongNode *uLongNode) = 0;
   virtual void visitStringNode (StringNode *stringNode) = 0;
 protected:
   NodeVisitor () {}

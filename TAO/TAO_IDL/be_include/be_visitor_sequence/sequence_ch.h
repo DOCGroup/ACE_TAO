@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_)
+#ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_
 
 class be_visitor_sequence_ch : public be_visitor_decl
@@ -57,10 +57,10 @@ public:
   // generate a instance of the bounded object sequence
 
   virtual int gen_bounded_str_sequence (be_sequence *node);
-  // generate a instance of the bounded string sequence 
+  // generate a instance of the bounded string sequence
 
   virtual int instantiate_sequence (be_sequence *node);
-  // determine which sequence to instantiate 
+  // determine which sequence to instantiate
 
   virtual int gen_object_manager (be_sequence *node);
   // generate a instance of the object manager

@@ -18,15 +18,16 @@
 #define ACE_STRATEGIES_T_H
 
 #include "ace/Strategies.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Hash_Map_Manager.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
@@ -109,9 +110,9 @@ class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 public:
   // = Initialization and termination methods.
   ACE_Singleton_Strategy (SVC_HANDLER * = 0,
-			  ACE_Thread_Manager * = 0);
+                          ACE_Thread_Manager * = 0);
   int open (SVC_HANDLER *,
-	    ACE_Thread_Manager * = 0);
+            ACE_Thread_Manager * = 0);
   virtual ~ACE_Singleton_Strategy (void);
 
   // = Factory method.
@@ -143,18 +144,18 @@ public:
   // "Do-nothing" constructor.
 
   ACE_DLL_Strategy (const char dll_name[],
-		    const char factory_function[],
-		    const char svc_name[],
-		    ACE_Service_Repository *,
-		    ACE_Thread_Manager * = 0);
+                    const char factory_function[],
+                    const char svc_name[],
+                    ACE_Service_Repository *,
+                    ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
   // information contained in the <svc_dll_info> string.
 
   int open (const char dll_name[],
-	    const char factory_function[],
-	    const char svc_name[],
-	    ACE_Service_Repository *,
-	    ACE_Thread_Manager * = 0);
+            const char factory_function[],
+            const char svc_name[],
+            ACE_Service_Repository *,
+            ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
   // information contained in the <svc_dll_info> string.
 
@@ -206,7 +207,7 @@ public:
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  The default behavior of this method is to activate the
   // SVC_HANDLER by calling its open() method (which allows the
@@ -243,13 +244,13 @@ public:
   // "Do-nothing constructor"
 
   ACE_Reactive_Strategy (ACE_Reactor *reactor,
-			 ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
-			 int flags = 0);
+                         ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
+                         int flags = 0);
   // Initialize the strategy.
 
   virtual int open (ACE_Reactor *reactor,
-		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
-		    int flags = 0);
+                    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
+                    int flags = 0);
   // Initialize the strategy.
 
   virtual ~ACE_Reactive_Strategy (void);
@@ -257,7 +258,7 @@ public:
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
   // Activate the <svc_handler> by registering it with the <Reactor>
   // and then calling it's <open> hook.
 
@@ -297,14 +298,14 @@ public:
   // "Do-nothing constructor"
 
   ACE_Thread_Strategy (ACE_Thread_Manager *tm,
-		       long thr_flags,
-		       size_t n_threads = 1,
+                       long thr_flags,
+                       size_t n_threads = 1,
                        int flags = 0);
   // Initialize the strategy.
 
   virtual int open (ACE_Thread_Manager *tm,
-		    long thr_flags,
-		    size_t n_threads = 1,
+                    long thr_flags,
+                    size_t n_threads = 1,
                     int flags = 0);
   // Initialize the strategy.
 
@@ -312,7 +313,7 @@ public:
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  This method activates the SVC_HANDLER by first calling
   // its open() method and then calling its activate() method to turn
@@ -354,14 +355,14 @@ public:
   // = Intialization and termination methods.
 
   ACE_Process_Strategy (size_t n_processes = 1,
-			ACE_Event_Handler *acceptor = 0,
-			ACE_Reactor * = 0,
+                        ACE_Event_Handler *acceptor = 0,
+                        ACE_Reactor * = 0,
                         int flags = 0);
   // Initialize the strategy.
 
   virtual int open (size_t n_processes = 1,
-		    ACE_Event_Handler *acceptor = 0,
-		    ACE_Reactor * = 0,
+                    ACE_Event_Handler *acceptor = 0,
+                    ACE_Reactor * = 0,
                     int flag = 0);
   // Initialize the strategy.
 
@@ -369,7 +370,7 @@ public:
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  This method activates the SVC_HANDLER by first forking
   // and then calling the open() method of the SVC_HANDLER in the
@@ -414,12 +415,12 @@ public:
   // Default constructor.
 
   ACE_Accept_Strategy (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		       int restart = 0,
+                       int restart = 0,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Initialize the <peer_acceptor_> with <local_addr>.
 
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		    int restart = 0);
+                    int restart = 0);
   // Initialize the <peer_acceptor_> with <local_addr>.
 
   virtual ACE_HANDLE get_handle (void) const;
@@ -471,12 +472,12 @@ public:
 
   // = Factory method.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
-				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-				   ACE_Time_Value *timeout,
-				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-				   int reuse_addr,
-				   int flags,
-				   int perms);
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
   // The default behavior delegates to the <connect> method of the
   // <PEER_CONNECTOR::connect>.
 
@@ -619,7 +620,7 @@ class ACE_NOOP_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLE
 public:
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
   // This is a no-op.
 };
 
@@ -757,12 +758,12 @@ public:
   // Template method for preparing the svc_handler for recycling.
 
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
-				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-				   ACE_Time_Value *timeout,
-				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-				   int reuse_addr,
-				   int flags,
-				   int perms);
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
   // Checks to see if there is already a <SVC_HANDLER> in the cache
   // connected to the <remote_addr>.  If so, we return this pointer.
   // Otherwise we establish the connection, put it into the cache, and

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Event_Handler.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_EVENT_HANDLER_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
@@ -30,7 +30,7 @@ class ACE_Thread_Manager;
 
 typedef u_long ACE_Reactor_Mask;
 
-class ACE_Export ACE_Event_Handler 
+class ACE_Export ACE_Event_Handler
 {
   // = TITLE
   //     Provides an abstract interface for handling various types of
@@ -41,7 +41,7 @@ class ACE_Export ACE_Event_Handler
   //       handle an exception raised on an I/O descriptor, handle a
   //       timer's expiration, or handle a signal.
 public:
-  enum 
+  enum
   {
     LO_PRIORITY = 0,
     HI_PRIORITY = 10,
@@ -60,16 +60,16 @@ public:
     TIMER_MASK = (1 << 5),
     QOS_MASK = (1 << 6),
     GROUP_QOS_MASK = (1 << 7),
-    ALL_EVENTS_MASK = READ_MASK | 
-                      WRITE_MASK | 
-                      EXCEPT_MASK | 
-                      ACCEPT_MASK | 
-                      CONNECT_MASK | 
-                      TIMER_MASK | 
-                      QOS_MASK | 
+    ALL_EVENTS_MASK = READ_MASK |
+                      WRITE_MASK |
+                      EXCEPT_MASK |
+                      ACCEPT_MASK |
+                      CONNECT_MASK |
+                      TIMER_MASK |
+                      QOS_MASK |
                       GROUP_QOS_MASK,
-    RWE_MASK = READ_MASK | 
-               WRITE_MASK | 
+    RWE_MASK = READ_MASK |
+               WRITE_MASK |
                EXCEPT_MASK,
     DONT_CALL = (1 << 9)
   };
@@ -82,7 +82,7 @@ public:
   virtual void set_handle (ACE_HANDLE);
   // Set the I/O handle.
 
-  // = Get/set priority 
+  // = Get/set priority
 
   // Priorities run from MIN_PRIORITY (which is the "lowest priority")
   // to MAX_PRIORITY (which is the "highest priority").
@@ -102,11 +102,11 @@ public:
   // Called when execption events occur (e.g., SIGURG).
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg = 0);
+                              const void *arg = 0);
   // Called when timer expires.
 
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   // Called when object is removed from the ACE_Reactor
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -151,7 +151,7 @@ protected:
   int priority_;
   // Priority of this Event_Handler.
 
-  // = Pointers to the various event demultiplexors.  
+  // = Pointers to the various event demultiplexors.
   ACE_Reactor *reactor_;
 };
 
@@ -164,15 +164,15 @@ public:
   ACE_Notification_Buffer (void);
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
-			   ACE_Reactor_Mask mask);
+                           ACE_Reactor_Mask mask);
 
   ~ACE_Notification_Buffer (void);
   // Default dtor.
 
   ACE_Event_Handler *eh_;
-  // Pointer to the Event_Handler that will be dispatched 
+  // Pointer to the Event_Handler that will be dispatched
   // by the main event loop.
-  
+
   ACE_Reactor_Mask mask_;
   // Mask that indicates which method to call.
 };

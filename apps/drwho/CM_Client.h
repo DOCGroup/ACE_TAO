@@ -11,14 +11,14 @@
 //
 // = DESCRIPTION
 //    Provides a virtual communcations layer for the client in the
-//    drwho program. 
+//    drwho program.
 //
 // = AUTHOR
 //    Douglas C. Schmidt
 //
 // ============================================================================
 
-#if !defined (_CM_CLIENT_H)
+#ifndef _CM_CLIENT_H
 #define _CM_CLIENT_H
 
 #include "Comm_Manager.h"

@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (HTTP_POLICY_H)
+#ifndef HTTP_POLICY_H
 #define HTTP_POLICY_H
 
 #include "JAWS/Concurrency.h"

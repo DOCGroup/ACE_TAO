@@ -5,25 +5,26 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    LSOCK_Connector.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_CONNECTOR_H
 #define ACE_LOCAL_SOCK_CONNECTOR_H
 
 #include "ace/SOCK_Connector.h"
-#include "ace/LSOCK_Stream.h"
-#include "ace/UNIX_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/LSOCK_Stream.h"
+#include "ace/UNIX_Addr.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -37,15 +38,15 @@ public:
   ACE_LSOCK_Connector (void);
   // Default constructor.
 
-  ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream, 
-		       const ACE_UNIX_Addr &remote_sap, 
-		       ACE_Time_Value *timeout = 0,
-		       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-		       int reuse_addr = 0,
-		       int flags = 0,
-		       int perms = 0,
-		       int protocol_family = PF_UNIX,
-		       int protocol = 0);
+  ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
+                       const ACE_UNIX_Addr &remote_sap,
+                       ACE_Time_Value *timeout = 0,
+                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                       int reuse_addr = 0,
+                       int flags = 0,
+                       int perms = 0,
+                       int protocol_family = PF_UNIX,
+                       int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -60,15 +61,15 @@ public:
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
-  int connect (ACE_LSOCK_Stream &new_stream, 
-	       const ACE_UNIX_Addr &remote_sap, 
-	       ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-	       int reuse_addr = 0,
-	       int flags = 0,
-	       int perms = 0,
-	       int protcol_family = PF_UNIX,
-	       int protocol = 0);
+  int connect (ACE_LSOCK_Stream &new_stream,
+               const ACE_UNIX_Addr &remote_sap,
+               ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               int reuse_addr = 0,
+               int flags = 0,
+               int perms = 0,
+               int protcol_family = PF_UNIX,
+               int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.

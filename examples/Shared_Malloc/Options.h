@@ -1,10 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (_OPTIONS)
+#ifndef _OPTIONS
 #define _OPTIONS
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class Options
   // = TITLE

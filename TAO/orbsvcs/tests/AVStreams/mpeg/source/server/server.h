@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    server
-// 
+//
 // = FILENAME
 //    server.h
 //
@@ -15,13 +15,18 @@
 // = AUTHORS
 //    Sumedh Mungee (sumedh@cs.wustl.edu)
 //    Nagarajan Surendran (naga@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (TAO_AV_SERVER_H)
+#ifndef TAO_AV_SERVER_H
 #define TAO_AV_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
@@ -29,11 +34,11 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/Select_Reactor.h"
 
-#include "include/common.h"         
-#include "mpeg_server/server_proto.h"   
-#include "mpeg_shared/fileio.h"         
-#include "mpeg_shared/routine.h"        
-#include "mpeg_shared/com.h"            
+#include "include/common.h"
+#include "mpeg_server/server_proto.h"
+#include "mpeg_shared/fileio.h"
+#include "mpeg_shared/routine.h"
+#include "mpeg_shared/com.h"
 #include "mpeg_server/Video_Control_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
@@ -54,12 +59,12 @@ public:
   Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy_);
   // Default constructor
 
-    virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
+    virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester,
+                                                     AVStreams::VDev_out the_vdev,
+                                                     AVStreams::streamQoS &the_qos,
+                                                     CORBA::Boolean_out met_qos,
+                                                     char *&named_vdev,
+                                                     const AVStreams::flowSpec &the_spec,
                                                      CORBA::Environment &env);
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
@@ -69,7 +74,7 @@ private:
   // Number of active connections
 };
 
-class AV_Server_Sig_Handler 
+class AV_Server_Sig_Handler
   : public virtual ACE_Event_Handler
 {
 public:
@@ -81,7 +86,7 @@ public:
   // this will register this sig_handler
   // with the reactor for SIGCHLD,SIGTERM,SIGINT
 
-  virtual int shutdown (ACE_HANDLE, 
+  virtual int shutdown (ACE_HANDLE,
                         ACE_Reactor_Mask);
 
   virtual int handle_input (ACE_HANDLE);
@@ -111,14 +116,14 @@ private:
   ACE_Sig_Set sig_set;
 
   TAO_Naming_Client my_name_client_;
-  // Name_Client used for unregistering the audio and video 
-  
+  // Name_Client used for unregistering the audio and video
+
 };
 
 class AV_Server
 {
   // = TITLE
-  //   Defines a class that abstracts the functionality of a 
+  //   Defines a class that abstracts the functionality of a
   //   video and audio server.
   //
   // = DESCRIPTION

@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_FIELD_CS_H_)
+#ifndef _BE_VISITOR_FIELD_CS_H_
 #define _BE_VISITOR_FIELD_CS_H_
 
 class be_visitor_field_cs : public be_visitor_decl

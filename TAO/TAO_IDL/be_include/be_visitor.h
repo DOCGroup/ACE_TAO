@@ -22,7 +22,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_H)
+#ifndef TAO_BE_VISITOR_H
 #define TAO_BE_VISITOR_H
 
 class be_decl;

@@ -25,12 +25,17 @@
 //
 // ============================================================================
 
-#if !defined (_THREAD_BOUNDED_PACKET_RELAY_H_)
+#ifndef _THREAD_BOUNDED_PACKET_RELAY_H_
 #define _THREAD_BOUNDED_PACKET_RELAY_H_
 
 #define ACE_HAS_DEFERRED_TIMER_COMMANDS
 
 #include "ace/Functor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
@@ -39,14 +44,14 @@
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
 typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-	Upcall;
+        Upcall;
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-			 Upcall,
-			 ACE_Null_Mutex>
-	Timer_Heap;
+                         Upcall,
+                         ACE_Null_Mutex>
+        Timer_Heap;
 typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-				  Upcall,
-				  ACE_Null_Mutex>
+                                  Upcall,
+                                  ACE_Null_Mutex>
         Timer_Heap_Iterator;
 typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;
@@ -171,7 +176,7 @@ public:
 
   User_Input_Task (Bounded_Packet_Relay *relay,
                    Thread_Timer_Queue *queue,
-	           Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
+                   Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
   // Constructor.
 
   ~User_Input_Task (void);
@@ -300,7 +305,7 @@ public:
   // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-			      const void *arg);
+                              const void *arg);
   // Call back hook.
 
   virtual int cancelled (void);
@@ -344,7 +349,7 @@ public:
   // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-			      const void *arg);
+                              const void *arg);
   // Call back hook.
 
   virtual int cancelled (void);

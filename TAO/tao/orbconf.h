@@ -25,6 +25,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (TAO_REACTOR)
 #define TAO_REACTOR ACE_Select_Reactor
 #endif /* TAO_REACTOR */

@@ -18,13 +18,14 @@
 #define ACE_NAME_SPACE_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
@@ -35,8 +36,8 @@ class ACE_Export ACE_Name_Binding
 public:
   // = Initialization and termination.
   ACE_Name_Binding (const ACE_WString &n,
-		    const ACE_WString &v,
-		    const char *t);
+                    const ACE_WString &v,
+                    const char *t);
   // Main constructor that initializes all the fields.
 
   ACE_Name_Binding (void);
@@ -74,11 +75,11 @@ class ACE_Export ACE_Name_Space
 {
   // = TITLE
   //     Abstract base class that provides an abstract interface to
-  //	 the database without exposing any implemenation details.
+  //     the database without exposing any implemenation details.
   //
   // = DESCRIPTION
   //     Manages a Naming Service Name Space. Provides the basic
-  //	 methods -- bind, unbind, rebind, find, and listnames.
+  //     methods -- bind, unbind, rebind, find, and listnames.
 public:
 
   virtual ~ACE_Name_Space (void);
@@ -86,14 +87,14 @@ public:
   // called.
 
   virtual int bind (const ACE_WString &name_in,
-		    const ACE_WString &value_in,
-		    const char *type_in = "") = 0;
+                    const ACE_WString &value_in,
+                    const char *type_in = "") = 0;
   // Bind a new name to a naming context (Wide character strings).
 
 
   virtual int rebind (const ACE_WString &name_in,
-		      const ACE_WString &value_in,
-		      const char *type_in = "") = 0;
+                      const ACE_WString &value_in,
+                      const char *type_in = "") = 0;
   // Overwrite the value or type of an existing name in a
   // ACE_Name_Space or bind a new name to the context, if it didn't
   // exist yet. (Wide charcter strings interface).
@@ -103,40 +104,40 @@ public:
   // Interface).
 
   virtual int resolve (const ACE_WString &name_in,
-		       ACE_WString &value_out,
-		       char *&type_out) = 0;
+                       ACE_WString &value_out,
+                       char *&type_out) = 0;
   // Get value and type of a given name binding (Wide chars).  The
   // caller is responsible for deleting both <value_out> and <type_out>!
 
   virtual int list_names (ACE_WSTRING_SET &set_out,
-			  const ACE_WString &pattern_in) = 0;
+                          const ACE_WString &pattern_in) = 0;
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string.
 
   virtual int list_values (ACE_WSTRING_SET &set_out,
-			   const ACE_WString &pattern_in) = 0;
+                           const ACE_WString &pattern_in) = 0;
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string.
 
   virtual int list_types (ACE_WSTRING_SET &set_out,
-			  const ACE_WString &pattern_in) = 0;
+                          const ACE_WString &pattern_in) = 0;
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string.
 
   virtual int list_name_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern) = 0;
+                                 const ACE_WString &pattern) = 0;
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_value_entries (ACE_BINDING_SET &set,
-				  const ACE_WString &pattern) = 0;
+                                  const ACE_WString &pattern) = 0;
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_type_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern) = 0;
+                                 const ACE_WString &pattern) = 0;
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.

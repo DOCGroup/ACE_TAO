@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -74,32 +74,32 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_concrete_type.hh, utl_scoped_name.hh, utl_strlist.hh,
-**		 ast_decl.hh
+**               ast_decl.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_PredefinedType : public virtual AST_ConcreteType
+class   AST_PredefinedType : public virtual AST_ConcreteType
 {
 public:
   // Enum for all the different predefined types
   enum PredefinedType {
-        PT_long		// Predefined type "long"
-      , PT_ulong	// Predefined type "unsigned long"
-      , PT_longlong	// Predefined type "long long"
-      , PT_ulonglong	// Predefined type "unsigned long long"
-      , PT_short	// Predefined type "short"
-      , PT_ushort	// Predefined type "unsigned short"
-      , PT_float	// Predefined type "float"
-      , PT_double	// Predefined type "double"
-      , PT_longdouble	// Predefined type "long double"
-      , PT_char		// Predefined type "char"
-      , PT_wchar	// Predefined type "wchar_t"
-      , PT_boolean	// Predefined type "boolean"
-      , PT_octet	// Predefined type "octet"
-      , PT_any		// Predefined type "any"
-      , PT_void		// Predefined type "void"
-      , PT_pseudo	// Predefined type for pseudo objects
+        PT_long         // Predefined type "long"
+      , PT_ulong        // Predefined type "unsigned long"
+      , PT_longlong     // Predefined type "long long"
+      , PT_ulonglong    // Predefined type "unsigned long long"
+      , PT_short        // Predefined type "short"
+      , PT_ushort       // Predefined type "unsigned short"
+      , PT_float        // Predefined type "float"
+      , PT_double       // Predefined type "double"
+      , PT_longdouble   // Predefined type "long double"
+      , PT_char         // Predefined type "char"
+      , PT_wchar        // Predefined type "wchar_t"
+      , PT_boolean      // Predefined type "boolean"
+      , PT_octet        // Predefined type "octet"
+      , PT_any          // Predefined type "any"
+      , PT_void         // Predefined type "void"
+      , PT_pseudo       // Predefined type for pseudo objects
   };
 
   // Operations
@@ -110,18 +110,18 @@ public:
   virtual ~AST_PredefinedType() {}
 
   // Data Accessors
-  PredefinedType	pt();
+  PredefinedType        pt();
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping
-  virtual void		dump(ostream &o);
+  virtual void          dump(ostream &o);
 
 private:
   // Data
-  const PredefinedType	pd_pt;		// The specific predefined type
-};  
+  const PredefinedType  pd_pt;          // The specific predefined type
+};
 
 #endif           // _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH

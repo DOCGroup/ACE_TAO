@@ -18,12 +18,17 @@
 //
 // ===========================================================
 
-#if !defined (CLIENT_I_H)
+#ifndef CLIENT_I_H
 #define CLIENT_I_H
 
 #include "Receiver_i.h"
 #include "BroadcasterC.h"
 #include "ace/Read_Buffer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/TAO.h"
 
 class Client_i : public ACE_Event_Handler

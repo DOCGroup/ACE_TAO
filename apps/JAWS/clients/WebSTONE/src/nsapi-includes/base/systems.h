@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,8 +13,8 @@
 
 /*
  * systems.h: Lists of defines for systems
- * 
- * This sets what general flavor the system is (UNIX, etc.), 
+ *
+ * This sets what general flavor the system is (UNIX, etc.),
  * and defines what extra functions your particular system needs.
  */
 
@@ -209,12 +209,12 @@ typedef void* PASSWD;
 
 /* The stat call under NT doesn't define these macros */
 #define S_ISDIR(mode)   ((mode&S_IFMT) == S_IFDIR)
-#define S_ISREG(mode)   ((mode&S_IFMT) == S_IFREG)                             
+#define S_ISREG(mode)   ((mode&S_IFMT) == S_IFREG)
 
 #define strcasecmp util_strcasecmp
 #define strncasecmp util_strncasecmp
 int util_strcasecmp(const char *s1, const char *s2);
 int util_strncasecmp(const char *s1, const char *s2, int n);
-#endif	/* Windows NT */
+#endif  /* Windows NT */
 
 #endif

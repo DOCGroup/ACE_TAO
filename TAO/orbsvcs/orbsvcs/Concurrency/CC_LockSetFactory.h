@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (_CC_LOCKSETFACTORY_H)
+#ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H
 
 // #include "tao/corba.h"

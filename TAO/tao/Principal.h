@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    principal.h
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #ifndef TAO_PRINCIPAL_H

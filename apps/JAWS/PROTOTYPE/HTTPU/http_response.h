@@ -4,10 +4,15 @@
 // One is the kind you have to read in from the HTTP server.
 // The other is the kind you issue to the HTTP client.
 
-#if !defined (HTTPU_HTTP_RESPONSE_HPP)
+#ifndef HTTPU_HTTP_RESPONSE_HPP
 #define HTTPU_HTTP_RESPONSE_HPP
 
 #include "ace/Message_Block.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "JAWS/Parse_Headers.h"
 
 #include "HTTPU/http_export.h"

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_OPERATION_RETTYPE_PRE_INVOKE_CS_H_)
+#ifndef _BE_VISITOR_OPERATION_RETTYPE_PRE_INVOKE_CS_H_
 #define _BE_VISITOR_OPERATION_RETTYPE_PRE_INVOKE_CS_H_
 
 // ************************************************************

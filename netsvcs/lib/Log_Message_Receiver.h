@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (LOG_MESSAGE_RECEIVER_H)
+#ifndef LOG_MESSAGE_RECEIVER_H
 #define LOG_MESSAGE_RECEIVER_H
 
 #include "ace/Log_Record.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 
 // ==========================================================================//

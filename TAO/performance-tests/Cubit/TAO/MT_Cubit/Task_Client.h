@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (TASK_CLIENT_H)
+#ifndef TASK_CLIENT_H
 #define TASK_CLIENT_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"

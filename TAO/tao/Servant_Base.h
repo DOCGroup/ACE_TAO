@@ -52,7 +52,7 @@ protected:
   // Copy constructor, protected so no instances can be created.
 
   virtual CORBA::Boolean _is_a (const char* logical_type_id,
-				CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Local implementation of the CORBA::Object::_is_a method.
 
   virtual void _dispatch (CORBA::ServerRequest &request,

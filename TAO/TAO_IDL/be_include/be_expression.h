@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_expression.h
 //
@@ -14,18 +14,18 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (BE_EXPRESSION_H)
+#ifndef BE_EXPRESSION_H
 #define BE_EXPRESSION_H
 
 /*
  * BE_Expression
  */
-class be_expression : public virtual AST_Expression 
+class be_expression : public virtual AST_Expression
 {
 public:
   // Operations

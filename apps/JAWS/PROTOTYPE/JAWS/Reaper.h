@@ -1,10 +1,15 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_REAPER_H)
+#ifndef JAWS_REAPER_H
 #define JAWS_REAPER_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/Task.h"
 

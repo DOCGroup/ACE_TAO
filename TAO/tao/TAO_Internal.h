@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    TAO_Internal.h
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Chris Cleeland
-// 
+//
 // ============================================================================
 
 #ifndef TAO_INTERNAL_H
@@ -49,7 +49,7 @@ protected:
   // of loading services found in a file, then you should change the
   // code in here in order to get service entries into the service
   // repository.
-  
+
 private:
   TAO_Internal (void);
   // Private CTOR prevents this class from being instantiated.

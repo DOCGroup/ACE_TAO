@@ -3,14 +3,14 @@
 
 
 // ttcp_i.C
-// 
+//
 
-#if !defined (TTCP_I_H)
+#ifndef TTCP_I_H
 #define TTCP_I_H
 
 #include "ttcp.hh"
 
-class ttcp_sequence_i 
+class ttcp_sequence_i
   : virtual public ttcp_sequenceBOAImpl
 {
 public:
@@ -25,7 +25,7 @@ private:
 
 // DEF_TIE_ttcp_sequence (ttcp_sequence_i);
 
-class ttcp_string_i 
+class ttcp_string_i
   : virtual public ttcp_stringBOAImpl
 {
 public:

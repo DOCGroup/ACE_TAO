@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_ARGUMENT_ARGLIST_H_)
+#ifndef _BE_VISITOR_ARGUMENT_ARGLIST_H_
 #define _BE_VISITOR_ARGUMENT_ARGLIST_H_
 
 class be_visitor_args_arglist : public be_visitor_args

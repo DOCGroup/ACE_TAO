@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -72,8 +72,8 @@ void session_free(Session *sn);
 #define session_dns(sn) session_dns_lookup(sn, 0)
 
 /*
- * session_maxdns looks up a hostname from an IP address, and then verifies 
- * that the host is really who they claim to be. 
+ * session_maxdns looks up a hostname from an IP address, and then verifies
+ * that the host is really who they claim to be.
  */
 
 #define session_maxdns(sn) session_dns_lookup(sn, 1)

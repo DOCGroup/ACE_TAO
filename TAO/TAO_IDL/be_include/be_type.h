@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_TYPE_H)
+#ifndef BE_TYPE_H
 #define BE_TYPE_H
 
 class TAO_OutStream;

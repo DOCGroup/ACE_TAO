@@ -35,6 +35,10 @@
 // String
 #include "ace/SString.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Map
 #include "ace/Hash_Map_Manager.h"
 
@@ -66,7 +70,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::ThreadPolicyValue value_;
@@ -90,7 +94,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::LifespanPolicyValue value_;
@@ -114,7 +118,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
@@ -138,7 +142,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
@@ -162,7 +166,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
@@ -186,7 +190,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
@@ -210,7 +214,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
@@ -240,7 +244,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
   PortableServer::SynchronizationPolicyValue value_;
@@ -328,11 +332,11 @@ public:
   TAO_Creation_Time (void);
 
   virtual void creation_time (const void *creation_time);
-  
+
   virtual const void *creation_time (void) const;
-  
+
   static int creation_time_length (void);
-  
+
   int operator== (const TAO_Creation_Time &rhs) const;
 
   int operator!= (const TAO_Creation_Time &rhs) const;
@@ -342,7 +346,7 @@ public:
   int operator!= (const TAO_Temporary_Creation_Time &rhs) const;
 
 protected:
-  
+
   enum
   {
     SEC_FIELD = 0,
@@ -362,13 +366,13 @@ public:
   TAO_Temporary_Creation_Time (void);
 
   virtual void creation_time (const void *creation_time);
-  
+
   int operator== (const TAO_Creation_Time &rhs) const;
 
   int operator!= (const TAO_Creation_Time &rhs) const;
 
 protected:
-  
+
   void *time_stamp_;
 };
 
@@ -482,7 +486,7 @@ public:
                                CORBA::Object_ptr forward_to,
                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  // Utility functions for the other 
+  // Utility functions for the other
   static void encode_sequence_to_string (CORBA::String &str,
                                          const TAO_Unbounded_Sequence<CORBA::Octet> &seq);
   static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
@@ -494,7 +498,7 @@ public:
 
   static PortableServer::ObjectId *string_to_ObjectId (const char *id);
 
-  static PortableServer::ObjectId *string_to_ObjectId (const char *string, 
+  static PortableServer::ObjectId *string_to_ObjectId (const char *string,
                                                        int size);
 
   static PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
@@ -654,12 +658,12 @@ protected:
                          TAO_Temporary_Creation_Time &poa_creation_time);
 
   virtual int rfind (const TAO_ObjectKey &key,
-                     char c, 
+                     char c,
                      int pos = TAO_POA::String::npos) const;
 
   // Should really be protected, but some compilers complain
 public:
-  enum LOCATION_RESULT 
+  enum LOCATION_RESULT
   {
     FOUND,
     DEFAULT_SERVANT,
@@ -709,7 +713,7 @@ protected:
   static char persistent_key_char (void);
 
   static char transient_key_char (void);
-  
+
   static CORBA::ULong persistent_key_type_length (void);
 
   virtual CORBA::Boolean system_id (void);
@@ -719,7 +723,7 @@ protected:
   static char system_id_key_char (void);
 
   static char user_id_key_char (void);
-  
+
   static CORBA::ULong system_id_key_type_length (void);
 
   virtual void create_internal_lock (void);
@@ -748,7 +752,7 @@ protected:
 
   PortableServer::Servant default_servant_;
 
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
           CHILDREN;
 
   CHILDREN children_;

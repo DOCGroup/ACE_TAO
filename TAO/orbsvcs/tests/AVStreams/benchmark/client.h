@@ -4,10 +4,15 @@
 // NOTE: If you encounter trouble resolving the Naming Service, try
 // running the Naming Service and the server in the same window. [MJB]
 
-#if !defined (TAO_AV_BENCH_CLIENT_H)
+#ifndef TAO_AV_BENCH_CLIENT_H
 #define TAO_AV_BENCH_CLIENT_H
 
 #include "ace/Reactor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
 #include "tao/TAO.h"
@@ -43,26 +48,26 @@ public:
 
   virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec);
   // called after connecting
-  
-  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
-			    CORBA::Environment &env) ;
+
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env) ;
 
   virtual int handle_stop (const AVStreams::flowSpec &the_spec,
-			   CORBA::Environment &env) ;
-  
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
-			      CORBA::Environment &env);
-  
+                           CORBA::Environment &env) ;
+
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,
+                              CORBA::Environment &env);
+
 };
 
 class ttcp_Client_StreamEndPoint;
 
-class ttcp_Acceptor 
+class ttcp_Acceptor
   :public virtual ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
 {
 public:
   ttcp_Acceptor (ttcp_Client_StreamEndPoint *endpoint);
-  
+
   virtual int make_svc_handler (ttcp_Client_StreamEndPoint *&sh);
 private:
   ttcp_Client_StreamEndPoint *endpoint_;
@@ -88,15 +93,15 @@ public:
 private:
   ttcp_Acceptor acceptor_;
   // The Acceptor.
-  
+
   Client *client_;
 };
-class ttcp_Endpoint_Reactive_Strategy_A 
-  : public TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
+class ttcp_Endpoint_Reactive_Strategy_A
+  : public TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 {
 public:
   ttcp_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
-				     Client *client_ptr);
+                                     Client *client_ptr);
   // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
 
   virtual int make_stream_endpoint (ttcp_Client_StreamEndPoint *& endpoint);
@@ -127,7 +132,7 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   TAO_Naming_Client my_name_client_;
-  
+
   //  ttcp_Endpoint_Reactive_Strategy_A reactive_strategy_;
 
   TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
@@ -137,7 +142,7 @@ private:
   TAO_MMDevice client_mmdevice_;
 
   TAO_StreamCtrl streamctrl_;
-  // Video stream controller 
+  // Video stream controller
 
   int argc_;
 

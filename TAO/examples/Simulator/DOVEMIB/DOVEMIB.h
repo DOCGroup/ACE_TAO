@@ -1,6 +1,6 @@
 // $Id$
 // ============================================================================
-// 
+//
 // = FILENAME
 //    DOVEMIB.h
 //
@@ -9,7 +9,7 @@
 //
 // ============================================================================
 
-#if !defined (DOVE_MIB_H)
+#ifndef DOVE_MIB_H
 #define DOVE_MIB_H
 
 //#include "ace/SString.h"
@@ -29,7 +29,7 @@ public:
   MIB_Consumer (void);
 
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
-		     const char *my_name);
+                     const char *my_name);
   // Uses the name server to obtain a reference to the <supplier_name>
   // and registers with channel to receive notifications from the
   // supplier.  Also registers to receive shutdown messages from the
@@ -41,7 +41,7 @@ public:
 
   // = (not protected to allow short-circuiting) protected:
   virtual void push (const RtecEventComm::EventSet &events,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // If the <events>[0] is a notification, prints out the data from
   // the supplier.  If its a shutdown message, the consumer
   // disconnects from the channel.

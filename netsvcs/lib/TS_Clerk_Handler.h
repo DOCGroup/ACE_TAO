@@ -5,25 +5,30 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    TS_Clerk_Handler.h
 //
 // = AUTHOR
-//    Prashant Jain 
-// 
+//    Prashant Jain
+//
 // ============================================================================
 
-#if !defined (ACE_TS_CLERK_HANDLER_H)
+#ifndef ACE_TS_CLERK_HANDLER_H
 #define ACE_TS_CLERK_HANDLER_H
 
 #include "ace/Connector.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Connector.h"
 #include "ace/Malloc.h"
 #include "ace/Time_Request_Reply.h"
 
 // A simple struct containing delta time and a sequence number
-struct ACE_Time_Info 
+struct ACE_Time_Info
 {
   long delta_time_;
   ACE_UINT32 sequence_num_;
@@ -39,7 +44,7 @@ class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STRE
   //    the updates to the Clerk Processor
   //
   // = DESCRIPTION
-  //   	The Clerk Processor uses send_request() to send a request for
+  //    The Clerk Processor uses send_request() to send a request for
   //    time update to a server. The Clerk Handler internally computes
   //    the round trip delay for the reply to come back. Once it gets
   //    the reply back from the server (handle_input), it adjusts the
@@ -48,7 +53,7 @@ class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STRE
 {
 public:
   ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = 0,
-			ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
+                        ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
   // Default constructor.
 
   // = Set/get the current state
@@ -58,7 +63,7 @@ public:
     CONNECTING,    // During connection establishment.
     ESTABLISHED,   // Connection is established and active.
     DISCONNECTING, // In the process of disconnecting.
-    FAILED	   // Connection has failed.
+    FAILED         // Connection has failed.
   };
 
   // = Set/get the current state.
@@ -81,14 +86,14 @@ public:
   // Return the handle of the message_fifo_;
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Called when object is removed from the ACE_Reactor
-  
+
   virtual int handle_input (ACE_HANDLE);
   // Receive time update from a server.
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
+                              const void *arg);
   // Restart connection asynchronously when timeout occurs.
 
   void remote_addr (ACE_INET_Addr &addr);
@@ -104,7 +109,7 @@ protected:
   // Handle SIGPIPE.
 
   static void stderr_output (int = 0);
-  
+
   enum
     {
       MAX_RETRY_TIMEOUT = 300 // 5 minutes is the maximum timeout.
@@ -136,7 +141,7 @@ private:
 
   ACE_UINT32 cur_sequence_num_;
   // Next sequence number of time request (waiting for this update from
-  // the server). 
+  // the server).
 
   ACE_Time_Info time_info_;
   // Record of current delta time and current sequence number
@@ -147,7 +152,7 @@ class ACE_TS_Clerk_Processor : public ACE_Connector <ACE_TS_Clerk_Handler, ACE_S
   //    This class manages all the connections to the servers along
   //    with querying them periodically for time updates.
   // = DESCRIPTION
-  //   	The Clerk Processor creates connections to all the servers and
+  //    The Clerk Processor creates connections to all the servers and
   //    creates an ACE_TS_Clerk_Handler for each connection to handle
   //    the requests and replies. It periodically sends a request for
   //    time update through each of the handlers and uses the replies for
@@ -158,7 +163,7 @@ public:
   // Default constructor
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
+                              const void *arg);
   // Query servers for time periodically (timeout value)
 
   int initiate_connection (ACE_TS_Clerk_Handler *, ACE_Synch_Options &);
@@ -178,7 +183,7 @@ protected:
   // = Scheduling hooks.
   virtual int suspend (void);
   virtual int resume (void);
-  
+
 private:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
@@ -195,8 +200,8 @@ private:
   // Allocator (used for reading/writing system time from/to shared memory)
 
   typedef ACE_Unbounded_Set <ACE_TS_Clerk_Handler *> HANDLER_SET;
-  typedef ACE_Unbounded_Set_Iterator <ACE_TS_Clerk_Handler *> HANDLER_SET_ITERATOR;  
-  HANDLER_SET handler_set_;  
+  typedef ACE_Unbounded_Set_Iterator <ACE_TS_Clerk_Handler *> HANDLER_SET_ITERATOR;
+  HANDLER_SET handler_set_;
   // Set of TS_Clerk_Handlers and iterator over the set.
 
   struct System_Time
@@ -218,7 +223,7 @@ private:
   // Pool name for backing store
 
   int blocking_semantics_;
-  // Do a blocking/non-blocking connect 
+  // Do a blocking/non-blocking connect
 
   ACE_UINT32 cur_sequence_num_;
   // Sequence number of next expected update from servers

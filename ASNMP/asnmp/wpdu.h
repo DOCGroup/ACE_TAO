@@ -21,6 +21,11 @@
 // ============================================================================
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "asnmp/asn1.h"
 #include "asnmp/pdu.h"
 #include "asnmp/target.h"
@@ -29,29 +34,29 @@
 // PDU / Target -> iovec buffer
 // iovec buffer -> PDU / Target
 struct snmp_pdu;
-class ACE_Export wpdu 
+class ACE_Export wpdu
   // = TITLE
-  //      Implement an Adapter pattern between CMU SNMP and HP SNMP++ 
-  // 
+  //      Implement an Adapter pattern between CMU SNMP and HP SNMP++
+  //
 {
 public:
 
   wpdu(const Pdu& pdu, const UdpTarget& target);
   // construct CMU data from HP SNMP++ objects
   wpdu(const iovec& buffer);
-  // construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes 
+  // construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes
   wpdu(); // same as using iovec?
 
   ~wpdu();
 
-  int valid() const;		
+  int valid() const;
   // constructor completed ok? rc = 1 else 0
 
-  const iovec& get_buffer() const; 
+  const iovec& get_buffer() const;
   // return raw data stream via CMU code
 
   int get_pdu(Pdu& pdu, snmp_version& version);
-  // return HP SNMP++ pdu 
+  // return HP SNMP++ pdu
 
   const unsigned char *get_community() const;
   // return community strptr
@@ -64,14 +69,14 @@ private:
   static void copy_iovec(iovec& dest, const iovec& src);
   int set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const;
 
-  iovec iovec_;			
+  iovec iovec_;
   // raw format
 
-  int valid_flag_;		
+  int valid_flag_;
   // object construction state
 
-  snmp_version version_;	
-  // snmp version 
+  snmp_version version_;
+  // snmp version
 
   unsigned char community_name[MAX_COMM_STR_LEN];
   unsigned long comm_len; // = MAX_COMM_STR_LEN;

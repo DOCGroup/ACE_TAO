@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    UNIX_Addr.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_UNIX_ADDR_H
@@ -20,7 +20,7 @@
 #include "ace/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
@@ -28,7 +28,7 @@
 class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 {
   // = TITLE
-  //    Defines the ``UNIX domain address family'' address format. 
+  //    Defines the ``UNIX domain address family'' address format.
 public:
   // = Initialization methods.
   ACE_UNIX_Addr (void);
@@ -70,7 +70,7 @@ public:
   int  operator != (const ACE_UNIX_Addr &SAP) const;
   // Compare two addresses for inequality.
 
-  const char *get_path_name (void) const; 
+  const char *get_path_name (void) const;
   // Return the path name of the underlying rendezvous point.
 
   void dump (void) const;

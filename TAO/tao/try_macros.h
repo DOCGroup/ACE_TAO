@@ -120,7 +120,7 @@ TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \
 do {
 
-// This serves a similar purpose as the macro above, 
+// This serves a similar purpose as the macro above,
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY_EX(LABEL) \
 do { \

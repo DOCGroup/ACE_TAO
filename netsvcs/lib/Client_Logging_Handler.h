@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Client_Logging_Handler.h 
+//    Client_Logging_Handler.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (ACE_CLIENT_LOGGER_H)
+#ifndef ACE_CLIENT_LOGGER_H
 #define ACE_CLIENT_LOGGER_H
 
 #include "ace/SPIPE_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
@@ -36,7 +41,7 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING
   // = TITLE
   //    This client logging daemon is a mediator that receives logging
   //    records from local applications processes and forwards them to
-  //    the server logging daemon running on another host. 
+  //    the server logging daemon running on another host.
   //
   // = DESCRIPTION
   //     The default implementation uses an <ACE_SPIPE_Stream> to
@@ -63,8 +68,8 @@ public:
 
 private:
   virtual int handle_signal (int signum,
-			     siginfo_t *,
-			     ucontext_t *);
+                             siginfo_t *,
+                             ucontext_t *);
   // Handle SIGPIPE.
 
   virtual int handle_input (ACE_HANDLE);
@@ -78,7 +83,7 @@ private:
 
   virtual int handle_output (ACE_HANDLE);
   // Called back when it's ok to send.
-  
+
   int send (ACE_Log_Record &log_record);
   // Send the <log_record> to the logging server.
 

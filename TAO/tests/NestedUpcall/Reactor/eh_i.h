@@ -1,7 +1,7 @@
 // -*- c++ -*-
 // $Id$
 
-#if !defined (EVENTHANDLER_I_H)
+#ifndef EVENTHANDLER_I_H
 #  define EVENTHANDLER_I_H
 
 #include "ReactorS.h"

@@ -21,28 +21,32 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#if !defined (VECTORS_H)
+#ifndef VECTORS_H
 #define VECTORS_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_GPERF)
 
 class Vectors
 {
-  // = TITLE 
+  // = TITLE
   //   Static class data members that are shared between several
-  //   classes via inheritance.  
+  //   classes via inheritance.
 public:
-  enum 
+  enum
   {
     ALPHA_SIZE = 128
   };
 
-  static int occurrences[ALPHA_SIZE]; 
+  static int occurrences[ALPHA_SIZE];
   // Counts occurrences of each key set character.
 
-  static int asso_values[ALPHA_SIZE]; 
+  static int asso_values[ALPHA_SIZE];
   // Value associated with each character.
 };
 

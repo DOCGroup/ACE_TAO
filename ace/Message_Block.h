@@ -16,14 +16,14 @@
 
 #include "ace/ACE.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #ifndef ACE_MESSAGE_BLOCK_H
 #define ACE_MESSAGE_BLOCK_H
 
 #include "ace/Malloc.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
 class ACE_Data_Block;
@@ -122,7 +122,7 @@ public:
                      u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-		     ACE_Allocator *data_block_allocator = 0);
+                     ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -153,7 +153,7 @@ public:
             u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-	    ACE_Allocator *data_block_allocator = 0);
+            ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -352,7 +352,7 @@ private:
                      const ACE_Time_Value & execution_time,
                      const ACE_Time_Value & deadline_time,
                      ACE_Data_Block *db,
-		     ACE_Allocator *data_block_allocator);
+                     ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   int release_i (ACE_Lock *lock);
@@ -370,7 +370,7 @@ private:
               const ACE_Time_Value & execution_time,
               const ACE_Time_Value & deadline_time,
               ACE_Data_Block *db,
-	      ACE_Allocator *data_block_allocator);
+              ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   size_t rd_ptr_;
@@ -430,7 +430,7 @@ public:
                   ACE_Allocator *allocator_strategy,
                   ACE_Lock *locking_strategy,
                   ACE_Message_Block::Message_Flags flags,
-		  ACE_Allocator *data_block_allocator);
+                  ACE_Allocator *data_block_allocator);
   // Initialize.
 
   virtual ~ACE_Data_Block (void);
@@ -669,13 +669,13 @@ class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Stra
   //     Deadline based message priority strategy.
   //
   // = DESCRIPTION
-  //     Assigns dynamic message priority according to time to deadline.  The 
-  //     message priority is divided into high and low order bit fields.  The 
-  //     high order bit field is used for dynamic message priority, which is 
-  //     updated whenever the convert_priority (...) method is called.  The 
-  //     low order bit field is used for static message priority and is left 
-  //     unchanged.  The partitioning of the priority value into high and low 
-  //     order bit fields is done according to the arguments passed to the 
+  //     Assigns dynamic message priority according to time to deadline.  The
+  //     message priority is divided into high and low order bit fields.  The
+  //     high order bit field is used for dynamic message priority, which is
+  //     updated whenever the convert_priority (...) method is called.  The
+  //     low order bit field is used for static message priority and is left
+  //     unchanged.  The partitioning of the priority value into high and low
+  //     order bit fields is done according to the arguments passed to the
   //     strategy object's constructor.
   //
 public:
@@ -702,16 +702,16 @@ class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strate
   //     Laxity based message priority strategy.
   //
   // = DESCRIPTION
-  //     Assigns dynamic message priority according to laxity (time to 
-  //     deadline minus worst case execution time).  The message priority is 
+  //     Assigns dynamic message priority according to laxity (time to
+  //     deadline minus worst case execution time).  The message priority is
   //     divided into high and low order bit fields.  The high order
-  //     bit field is used for dynamic message priority, which is 
-  //     updated whenever the convert_priority (...) method is called.  The 
-  //     low order bit field is used for static message priority and is left 
-  //     unchanged.  The partitioning of the priority value into high and low 
-  //     order bit fields is done according to the arguments passed to the 
+  //     bit field is used for dynamic message priority, which is
+  //     updated whenever the convert_priority (...) method is called.  The
+  //     low order bit field is used for static message priority and is left
+  //     unchanged.  The partitioning of the priority value into high and low
+  //     order bit fields is done according to the arguments passed to the
   //     strategy object's constructor.
-  //  
+  //
 public:
   ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
                                u_long static_bit_field_shift = 10,           // 10 low order bits

@@ -79,70 +79,70 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Class for global data representation:
 
-class	IDL_GlobalData;			// Global data is stored in an
-					// instance of this
+class   IDL_GlobalData;                 // Global data is stored in an
+                                        // instance of this
 
 // Classes for utility of the IDL compiler:
 
-class	UTL_ScopeStack;			// Stack of scopes
-class	UTL_Scope;			// A definition scope (mixin)
+class   UTL_ScopeStack;                 // Stack of scopes
+class   UTL_Scope;                      // A definition scope (mixin)
 
-class	UTL_LongList;			// List of longs
-class	UTL_StrList;			// List of strings
-class	UTL_StrlistActiveIterator;	// Active iterator for list of strings
-class	UTL_IdList;			// List of identifiers
-class	UTL_IdListActiveIterator;	// Active iterator for list of id's
-class	UTL_ExceptList;			// List of exceptions
-class	UTL_NameList;			// List of scoped names
-class	UTL_ExprList;			// List of expressions
-class	UTL_InterfList;			// List of interfaces
-class	UTL_LabelList;			// List of union branch labels
-class	UTL_DeclList;			// List of declarators
-class	UTL_String;			// String class
-class	UTL_Identifier;			// Identifier class
+class   UTL_LongList;                   // List of longs
+class   UTL_StrList;                    // List of strings
+class   UTL_StrlistActiveIterator;      // Active iterator for list of strings
+class   UTL_IdList;                     // List of identifiers
+class   UTL_IdListActiveIterator;       // Active iterator for list of id's
+class   UTL_ExceptList;                 // List of exceptions
+class   UTL_NameList;                   // List of scoped names
+class   UTL_ExprList;                   // List of expressions
+class   UTL_InterfList;                 // List of interfaces
+class   UTL_LabelList;                  // List of union branch labels
+class   UTL_DeclList;                   // List of declarators
+class   UTL_String;                     // String class
+class   UTL_Identifier;                 // Identifier class
 
-class	UTL_Error;			// Error class
-class	UTL_Indenter;			// Indenter class
+class   UTL_Error;                      // Error class
+class   UTL_Indenter;                   // Indenter class
 
 // Classes for utility of the FE. These classes are used only
 // by the FE but their forward declaration is needed because lists
 // of them are constructed by classes in UTL
 
-class	FE_InterfaceHeader;		// Interface header
-class	FE_Declarator;			// Declarator
+class   FE_InterfaceHeader;             // Interface header
+class   FE_Declarator;                  // Declarator
 
 // Generator class for the AST
 
-class	AST_Generator;			// Generate nodes of various types
+class   AST_Generator;                  // Generate nodes of various types
 
 // Classes for AST:
 
-class	AST_Decl;			// The rock bottom base class
+class   AST_Decl;                       // The rock bottom base class
 
-class	AST_PredefinedType;		// A predefined type
-class	AST_Type;			// An IDL type
-class	AST_ConcreteType;		// An IDL concrete type
-class	AST_Module;			// A module
-class	AST_Root;			// The root of an AST (a module)
-class	AST_Interface;			// An interface
-class	AST_InterfaceFwd;		// A forward interface decl
-class	AST_Constant;			// A constant declaration
-class	AST_Expression;			// Value of an expression
-class	AST_Exception;			// An exception declaration
-class	AST_Attribute;			// An attribute declaration
-class	AST_Operation;			// An operation declaration
-class	AST_Argument;			// An argument to an operation
-class	AST_Union;			// A union declaration
-class	AST_UnionBranch;		// A branch in a union
-class	AST_UnionLabel;			// A union branch label
-class	AST_Structure;			// A structure declaration
-class	AST_Field;			// A field in a structure or union
-class	AST_Enum;			// An enum declaration
-class	AST_EnumVal;			// An enumerator in an enum
-class	AST_Sequence;			// A sequence declaration
-class	AST_String;			// A string declaration
-class	AST_Array;			// An array declaration
-class	AST_Typedef;			// A typedef declaration
+class   AST_PredefinedType;             // A predefined type
+class   AST_Type;                       // An IDL type
+class   AST_ConcreteType;               // An IDL concrete type
+class   AST_Module;                     // A module
+class   AST_Root;                       // The root of an AST (a module)
+class   AST_Interface;                  // An interface
+class   AST_InterfaceFwd;               // A forward interface decl
+class   AST_Constant;                   // A constant declaration
+class   AST_Expression;                 // Value of an expression
+class   AST_Exception;                  // An exception declaration
+class   AST_Attribute;                  // An attribute declaration
+class   AST_Operation;                  // An operation declaration
+class   AST_Argument;                   // An argument to an operation
+class   AST_Union;                      // A union declaration
+class   AST_UnionBranch;                // A branch in a union
+class   AST_UnionLabel;                 // A union branch label
+class   AST_Structure;                  // A structure declaration
+class   AST_Field;                      // A field in a structure or union
+class   AST_Enum;                       // An enum declaration
+class   AST_EnumVal;                    // An enumerator in an enum
+class   AST_Sequence;                   // A sequence declaration
+class   AST_String;                     // A string declaration
+class   AST_Array;                      // An array declaration
+class   AST_Typedef;                    // A typedef declaration
 class   AST_Native;                     // A native declaration
 
 #endif           // _IDL_FWD_IDL_FWD_HH

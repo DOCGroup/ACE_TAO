@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SV_Semaphore_Simple.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SV_Semaphore_Simple
@@ -30,41 +30,41 @@ class ACE_Export ACE_SV_Semaphore_Simple
   //     no race conditions for initialization (i.e., the order of
   //     process startup must be well defined).
 public:
-  enum 
+  enum
   {
-    ACE_CREATE = IPC_CREAT, 
+    ACE_CREATE = IPC_CREAT,
     ACE_EXCL = IPC_EXCL,
     ACE_OPEN = 0
   };
 
   // = Initialization and termination methods.
   ACE_SV_Semaphore_Simple (void);
-  ACE_SV_Semaphore_Simple (key_t key, 
-			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
-			   int initial_value = 1,
-			   u_short nsems = 1, 
-			   int perms = ACE_DEFAULT_FILE_PERMS);
-  ACE_SV_Semaphore_Simple (const char *name, 
-			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
-			   int initial_value = 1, 
-			   u_short nsems = 1, 
-			   int perms = ACE_DEFAULT_FILE_PERMS);
+  ACE_SV_Semaphore_Simple (key_t key,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int initial_value = 1,
+                           u_short nsems = 1,
+                           int perms = ACE_DEFAULT_FILE_PERMS);
+  ACE_SV_Semaphore_Simple (const char *name,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int initial_value = 1,
+                           u_short nsems = 1,
+                           int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Simple (void);
 
-  int open (const char *name, 
-	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
-	    int initial_value = 1, 
-	    u_short nsems = 1, 
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (const char *name,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int initial_value = 1,
+            u_short nsems = 1,
+            int perms = ACE_DEFAULT_FILE_PERMS);
 
-  int open (key_t key, 
-	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
-	    int initial_value = 1, 
-	    u_short nsems = 1, 
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (key_t key,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int initial_value = 1,
+            u_short nsems = 1,
+            int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create one or more SV_Semaphores.  We return 0 if all is
   // OK, else -1.
- 
+
   int close (void);
   // Close a ACE_SV_Semaphore, marking it as invalid for subsequent
   // operations...
@@ -104,7 +104,7 @@ public:
   // = Semaphore operation methods.
   int op (int val, u_short semnum = 0, int flags = SEM_UNDO) const;
   // General ACE_SV_Semaphore operation. Increment or decrement by a
-  // specific amount (positive or negative; amount can`t be zero). 
+  // specific amount (positive or negative; amount can`t be zero).
 
   int op (sembuf op_vec[], u_short nsems) const;
   // General ACE_SV_Semaphore operation on an array of SV_Semaphores.

@@ -11,19 +11,24 @@
 //
 // = DESCRIPTION
 //      This class tests the facilities to connect to the naming
-//      service	and to resolve the name for the concurrency service client.
+//      service and to resolve the name for the concurrency service client.
 //
 // = AUTHORS
 //      Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//	Torben Worm <tworm@cs.wustl.edu>
+//      Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-class CosNaming_Client 
+class CosNaming_Client
 {
   // = TITLE
   //    Defines a class that encapsulates behaviour of the CosNaming
@@ -64,7 +69,7 @@ private:
 
   TAO_Naming_Client my_name_client_;
   // And our Naming Client!
-  
+
   int list_contents_;
   // Iterate through the naming service and list the contents.
 

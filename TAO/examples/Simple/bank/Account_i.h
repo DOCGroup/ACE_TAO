@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#if !defined (ACCOUNT_I_H)
-#define	ACCOUNT_I_H
+#ifndef ACCOUNT_I_H
+#define ACCOUNT_I_H
 
 #include "BankS.h"
 
@@ -49,15 +49,15 @@ public:
   // Get the name of the <Account> holder.
 
   virtual void name (const char *name,
-		     CORBA::Environment &env);
+                     CORBA::Environment &env);
   // Set the name of the <Account> holder.
 
   virtual void deposit (CORBA::Float,
-			CORBA::Environment &env);
+                        CORBA::Environment &env);
   // Deposit money in the account.
 
   virtual void withdraw (CORBA::Float,
-			 CORBA::Environment &env);
+                         CORBA::Environment &env);
   // Withdraw money in the account.
 
   void orb (CORBA::ORB_ptr o);

@@ -17,7 +17,7 @@
 //
 // ===========================================================
 
-#if !defined (CONSUMER_I_H)
+#ifndef CONSUMER_I_H
 #define CONSUMER_I_H
 #include "ConsumerS.h"
 #include "ConsumerC.h"
@@ -40,7 +40,7 @@ public:
   // Destructor.
 
   void push (const Callback_Quoter::Info & data,
-	     CORBA_Environment& TAO_TRY_ENV);
+             CORBA_Environment& TAO_TRY_ENV);
   // Gets the stock information from the Notifier.
 
   virtual void shutdown (CORBA::Environment &TAO_TRY_ENV);

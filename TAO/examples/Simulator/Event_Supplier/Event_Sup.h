@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#if !defined (EVENT_SUP_H)
+#ifndef EVENT_SUP_H
 #define EVENT_SUP_H
 
 //#include <ctype.h>

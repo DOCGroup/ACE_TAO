@@ -13,7 +13,7 @@
 
 extern int count_file_list(const char *);
 
-extern void parse_file_list (char *, page_list_t *, 
-				 long int *, long int *);
+extern void parse_file_list (char *, page_list_t *,
+                                 long int *, long int *);
 
 #endif /* !__PARSE_FILE_LIST_H__ */

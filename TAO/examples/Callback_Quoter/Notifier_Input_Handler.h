@@ -16,7 +16,7 @@
 //
 // ===========================================================
 
-#if !defined (SUPPLIER_INPUT_HANDLER_H)
+#ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H
 
 #include "Notifier_i.h"
@@ -40,8 +40,8 @@ public:
   // Destructor.
 
   int init (int argc,
-	    char *argv[],
-	    CORBA::Environment &env);
+            char *argv[],
+            CORBA::Environment &env);
   // Initialize the Notifier who plays the role of the server here.
 
   int run (CORBA::Environment &env);

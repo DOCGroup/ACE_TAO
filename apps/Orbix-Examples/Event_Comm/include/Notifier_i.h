@@ -6,22 +6,27 @@
 //
 // = LIBRARY
 //    EventComm
-// 
+//
 // = FILENAME
 //    Notifier_i.h
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    Class interface for the implementation of the <Notifier>
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (_Notifier_i_H)
+#ifndef _Notifier_i_H
 #define _Notifier_i_H
 
 #include "ace/Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/SString.h"
 #include "Event_Comm.hh"
@@ -38,7 +43,7 @@ class Notifier_i
   // = DESCRIPTION
 {
 public:
-  enum 
+  enum
   {
     DEFAULT_SIZE = 1024 // Default max number of Event_Comm::Notification_Receivers.
   };
@@ -47,27 +52,27 @@ public:
   // Initialize a Notifier_i object with the specified size hint.
 
   void send_disconnect (const char *reason,
-			CORBA::Environment &IT_env);
+                        CORBA::Environment &IT_env);
   // Disconnect all the receivers, giving them the <reason>.
 
   void send_notification (const Event_Comm::Notification &notification,
-			  CORBA::Environment &IT_env);
+                          CORBA::Environment &IT_env);
   // Send the <Notification> to all the consumers who
   // have subscribed and who match the filtering criteria.
 
   void subscribe (Event_Comm::Notification_Receiver *notification_receiver,
-		  const char *filtering_criteria,
-		  CORBA::Environment &IT_env);
-  // Subscribe the <Notification_Receiver> to receive events that 
+                  const char *filtering_criteria,
+                  CORBA::Environment &IT_env);
+  // Subscribe the <Notification_Receiver> to receive events that
   // match <filtering_criteria> applied by the <Notifier>.
 
   void unsubscribe (Event_Comm::Notification_Receiver *notification_receiver,
-		    const char *filtering_criteria,
-		    CORBA::Environment &IT_env);
+                    const char *filtering_criteria,
+                    CORBA::Environment &IT_env);
   // Unsubscribe the <Notification_Receiver>.
 
 private:
-  // The following implementation should be replaced 
+  // The following implementation should be replaced
   // by a standard container class from STL...
 
   typedef ACE_Map_Manager <ACE_SString, Notification_Receiver_Entry *, ACE_Null_Mutex> MAP_MANAGER;

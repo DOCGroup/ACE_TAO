@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SERVER_LOGGING_HANDLER_T_H)
+#ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/TLI_Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"

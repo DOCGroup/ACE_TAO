@@ -3,10 +3,15 @@
 
 // Signal router.
 
-#if !defined (_EVENT_ANALYZER_H)
-#define _EVENT_ANALYZER_H     
+#ifndef _EVENT_ANALYZER_H
+#define _EVENT_ANALYZER_H
 
 #include "ace/Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Module.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"

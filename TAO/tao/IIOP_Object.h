@@ -149,19 +149,19 @@ class TAO_Export IIOP_Object : public STUB_Object
   //   specific to objrefs with IIOP::Profile.
 public:
   virtual void do_static_call (CORBA_Environment &env,
-			       const TAO_Call_Data *info,
-			       void** args);
+                               const TAO_Call_Data *info,
+                               void** args);
   // SII-based "Stub interpreter" for static stubs.  IDL compiler just
   // dumps a read-only description of the call into "calldata" and do
   // varargs calls to this routine, which does all the work.
 
   virtual void do_dynamic_call (const char *opname,
-				CORBA::Boolean is_roundtrip,
-				CORBA::NVList_ptr args,
-				CORBA::NamedValue_ptr result,
-				CORBA::Flags flags,
-				CORBA::ExceptionList &exceptions,
-				CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA::Boolean is_roundtrip,
+                                CORBA::NVList_ptr args,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::Flags flags,
+                                CORBA::ExceptionList &exceptions,
+                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // DII-based invocation analogue of the <do_static_call> above.
   // Differs in how the vararg calling convention is implemented --
   // DII doesn't use the normal call stack with its implicit typing,
@@ -185,7 +185,7 @@ public:
   // IIOP engine does not need to worry about such issues since it
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
-  
+
   // = Construction
   IIOP_Object (char *repository_id);
   // Construct from a repository (type) ID.
@@ -243,15 +243,15 @@ public:
 
 protected:
   void put_params (CORBA_Environment &env,
-		   const TAO_Call_Data *info,
-		   TAO_GIOP_Invocation &call,
-		   void** args);
+                   const TAO_Call_Data *info,
+                   TAO_GIOP_Invocation &call,
+                   void** args);
   // Helper method to factor out common code in static oneway
   // vs. twoway invocations.
 
   void put_params (TAO_GIOP_Invocation &call,
-		   CORBA::NVList_ptr args,
-		   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                   CORBA::NVList_ptr args,
+                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 
@@ -261,7 +261,7 @@ protected:
 
   ACE_Lock* fwd_profile_lock_ptr_;
   // Mutex to protect access to the forwarding profile
-  
+
   size_t fwd_profile_success_;
   // Have we successfully talked to the forward profile yet?
 

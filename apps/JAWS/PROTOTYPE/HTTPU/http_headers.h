@@ -3,10 +3,15 @@
 // by James Hu
 // Borrowed from HTTP_Headers.*, which appears to be irrelevent now anyway.
 
-#if !defined (HTTPU_HTTP_HEADERS_H)
+#ifndef HTTPU_HTTP_HEADERS_H
 #define HTTPU_HTTP_HEADERS_H
 
 #include "ace/RB_Tree.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Singleton.h"
 
 #include "JAWS/Parse_Headers.h"

@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_UNION_BRANCH_H)
+#ifndef TAO_BE_VISITOR_UNION_BRANCH_H
 #define TAO_BE_VISITOR_UNION_BRANCH_H
 
 #include "be_visitor_decl.h"

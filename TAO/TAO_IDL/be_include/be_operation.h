@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_OPERATION_H)
+#ifndef BE_OPERATION_H
 #define BE_OPERATION_H
 
 class be_argument;

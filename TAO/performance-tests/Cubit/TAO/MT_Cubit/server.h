@@ -11,11 +11,11 @@
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee,Sergio Flores-Gaitan and Nagarajan
-//    Surendran. 
+//    Surendran.
 //
 // ============================================================================
 
-#if !defined (SERVER_H)
+#ifndef SERVER_H
 #define SERVER_H
 
 // ACE includes.
@@ -28,6 +28,11 @@
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/ARGV.h"
@@ -50,7 +55,7 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
-class Server  
+class Server
 {
   // = TITLE
   //     A multithreaded cubit server class.
@@ -132,7 +137,7 @@ private:
 
   MT_Priority priority_;
   // Priority helper object.
-  
+
   ACE_Thread_Manager servant_manager_;
   // Thread manager for the servant threads.
 };

@@ -18,11 +18,12 @@
 #define ACE_SHARED_MALLOC_MM_H
 
 #include "ace/Shared_Memory.h"
-#include "ace/Mem_Map.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Mem_Map.h"
 
 class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {

@@ -5,15 +5,20 @@
 #define TASK_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "mld.h"
 
 /*
-   This is much like the Task we've used in the past for implementing a  thread 
-   pool.  This time, however, I've made the Task an element in a  singly-linked 
+   This is much like the Task we've used in the past for implementing a  thread
+   pool.  This time, however, I've made the Task an element in a  singly-linked
    list.  As the svc() method finishes the process() on a  unit of work, it
    will enqueue that unit of work to the next_ Task if  there is one.  If the
    Task does not have a next_ Task, it will invoke the unit of work object's
-   fini() method after invoking process(). 
+   fini() method after invoking process().
  */
 class Task : public ACE_Task < ACE_MT_SYNCH >
 {

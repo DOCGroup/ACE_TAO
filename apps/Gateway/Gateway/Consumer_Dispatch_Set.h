@@ -5,19 +5,23 @@
 //
 // = LIBRARY
 //    apps
-// 
+//
 // = FILENAME
 //    Consumer_Dispatch_Set.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (CONSUMER_DISPATCH_SET)
+#ifndef CONSUMER_DISPATCH_SET
 #define CONSUMER_DISPATCH_SET
 
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward reference.
 class Connection_Handler;

@@ -4,10 +4,15 @@
 // The interface between one or more consumers and an Event Server
 // ACE_Stream.
 
-#if !defined (_CONSUMER_ROUTER_H)
+#ifndef _CONSUMER_ROUTER_H
 #define _CONSUMER_ROUTER_H
 
 #include "ace/Thread_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Addr.h"
 #include "ace/Svc_Handler.h"
@@ -21,7 +26,7 @@ typedef ACE_HANDLE CONSUMER_KEY;
 
 typedef Peer_Router<Consumer_Handler, CONSUMER_KEY> CONSUMER_ROUTER;
 
-class Consumer_Handler 
+class Consumer_Handler
   : public Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>
 {
 public:

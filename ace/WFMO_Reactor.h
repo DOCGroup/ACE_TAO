@@ -18,15 +18,16 @@
 #define ACE_WFMO_REACTOR_H
 
 #include "ace/Signal.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Timer_Queue.h"
 #include "ace/Event_Handler.h"
 #include "ace/Synch.h"
 #include "ace/Reactor_Impl.h"
 #include "ace/Message_Queue.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decl.
 class ACE_WFMO_Reactor;
@@ -102,10 +103,10 @@ public:
     // Reset the state of the structure
 
     void set (int io_entry,
-	      ACE_Event_Handler *event_handler,
-	      ACE_HANDLE io_handle,
-	      long network_events,
-	      int delete_event,
+              ACE_Event_Handler *event_handler,
+              ACE_HANDLE io_handle,
+              long network_events,
+              int delete_event,
               int delete_entry,
               ACE_Reactor_Mask close_masks);
     // Set the structure to these new values
@@ -135,17 +136,17 @@ public:
     // Reset the state of the structure
 
     void set (int io_entry,
-	      ACE_Event_Handler *event_handler,
-	      ACE_HANDLE io_handle,
-	      long network_events,
-	      int delete_event,
-	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
+              ACE_Event_Handler *event_handler,
+              ACE_HANDLE io_handle,
+              long network_events,
+              int delete_event,
+              int delete_entry = 0,
+              ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
               int suspend_entry = 0);
     // Set the structure to these new values
 
     void set (Common_Info &common_info,
-	      int suspend_entry = 0);
+              int suspend_entry = 0);
     // Set the structure to these new values
 
     void dump (ACE_HANDLE event_handle) const;
@@ -173,19 +174,19 @@ public:
     // Reset the state of the structure
 
     void set (ACE_HANDLE event_handle,
-	      int io_entry,
-	      ACE_Event_Handler *event_handler,
-	      ACE_HANDLE io_handle,
-	      long network_events,
-	      int delete_event,
+              int io_entry,
+              ACE_Event_Handler *event_handler,
+              ACE_HANDLE io_handle,
+              long network_events,
+              int delete_event,
               int delete_entry = 0,
               ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
               int suspend_entry = 0);
     // Set the structure to these new values
 
     void set (ACE_HANDLE event_handle,
-	      Common_Info &common_info,
-	      int suspend_entry = 0);
+              Common_Info &common_info,
+              int suspend_entry = 0);
     // Set the structure to these new values
 
     void dump (void) const;
@@ -213,19 +214,19 @@ public:
     // Reset the state of the structure
 
     void set (ACE_HANDLE event_handle,
-	      int io_entry,
-	      ACE_Event_Handler *event_handler,
-	      ACE_HANDLE io_handle,
-	      long network_events,
-	      int delete_event,
-	      int delete_entry = 0,
-	      ACE_Reactor_Mask close_masks = 0,
-	      int resume_entry = 0);
+              int io_entry,
+              ACE_Event_Handler *event_handler,
+              ACE_HANDLE io_handle,
+              long network_events,
+              int delete_event,
+              int delete_entry = 0,
+              ACE_Reactor_Mask close_masks = 0,
+              int resume_entry = 0);
     // Set the structure to these new values
 
     void set (ACE_HANDLE event_handle,
-	      Common_Info &common_info,
-	      int resume_entry = 0);
+              Common_Info &common_info,
+              int resume_entry = 0);
     // Set the structure to these new values
 
     void dump (void) const;
@@ -251,11 +252,11 @@ public:
   // the simple event entry.
 
   int bind_i (int io_entry,
-	      ACE_Event_Handler *event_handler,
-	      long network_events,
-	      ACE_HANDLE io_handle,
-	      ACE_HANDLE event_handle,
-	      int delete_event);
+              ACE_Event_Handler *event_handler,
+              long network_events,
+              ACE_HANDLE io_handle,
+              ACE_HANDLE event_handle,
+              int delete_event);
   // Insert I/O <Event_Handler> entry into the system. This method
   // assumes that the lock are head *before* this method is invoked.
 
@@ -295,26 +296,26 @@ public:
   // Check to see if <index> has been scheduled for deletion
 
   int add_network_events_i (ACE_Reactor_Mask mask,
-			    ACE_HANDLE io_handle,
-			    long &new_mask,
-			    ACE_HANDLE &event_handle,
-			    int &delete_event);
+                            ACE_HANDLE io_handle,
+                            long &new_mask,
+                            ACE_HANDLE &event_handle,
+                            int &delete_event);
   // This method is used to calculate the network mask after a
   // register request to <WFMO_Reactor>. Note that because the
   // <Event_Handler> may already be in the handler repository, we may
   // have to find the old event and the old network events
 
   void remove_network_events_i (long &existing_masks,
-				ACE_Reactor_Mask to_be_removed_masks);
+                                ACE_Reactor_Mask to_be_removed_masks);
   // This method is used to change the network mask left (if any)
   // after a remove request to <WFMO_Reactor>
 
   int suspend_handler_i (ACE_HANDLE handle,
-			 int &changes_required);
+                         int &changes_required);
   // Temporarily suspend entry
 
   int resume_handler_i (ACE_HANDLE handle,
-			int &changes_required);
+                        int &changes_required);
   // Resume suspended entry
 
   int make_changes_in_current_infos (void);
@@ -328,11 +329,11 @@ public:
   // current_suspended_info_ from to_be_added_info_
 
   int remove_handler_i (size_t index,
-			ACE_Reactor_Mask mask);
+                        ACE_Reactor_Mask mask);
   // Removes the <ACE_Event_Handler> at <index> from the table.
 
   int remove_suspended_handler_i (size_t index,
-				  ACE_Reactor_Mask mask);
+                                  ACE_Reactor_Mask mask);
   // Removes the <ACE_Event_Handler> at <index> from the table.
 
   int remove_to_be_added_handler_i (size_t index,
@@ -522,22 +523,22 @@ public:
   // = Initialization and termination methods.
 
   ACE_WFMO_Reactor (ACE_Sig_Handler * = 0,
-		    ACE_Timer_Queue * = 0);
+                    ACE_Timer_Queue * = 0);
   // Initialize <ACE_WFMO_Reactor> with the default size.
 
   ACE_WFMO_Reactor (size_t size,
-		    int unused = 0,
-		    ACE_Sig_Handler * = 0,
-		    ACE_Timer_Queue * = 0);
+                    int unused = 0,
+                    ACE_Sig_Handler * = 0,
+                    ACE_Timer_Queue * = 0);
   // Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
   // not exceed <ACE_WFMO_Reactor::DEFAULT_SIZE>. Two slots will be
   // added to the <size> parameter which will store handles used for
   // internal management purposes.
 
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
-		    int restart = 0,
-		    ACE_Sig_Handler * = 0,
-		    ACE_Timer_Queue * = 0,
+                    int restart = 0,
+                    ACE_Sig_Handler * = 0,
+                    ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
                     ACE_Reactor_Notify * = 0);
   // Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
@@ -600,7 +601,7 @@ public:
   // = Register and remove Handlers.
 
   virtual int register_handler (ACE_Event_Handler *event_handler,
-				ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
+                                ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
   // Register an <ACE_Event_Handler> <event_handler>.  Since no Event
   // Mask is passed through this interface, it is assumed that the
   // <handle> being passed in is an event handle and when the event
@@ -610,9 +611,9 @@ public:
   // <event_handler> to extract the underlying event handle.
 
   virtual int register_handler (ACE_HANDLE event_handle,
-				ACE_HANDLE io_handle,
-				ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask);
+                                ACE_HANDLE io_handle,
+                                ACE_Event_Handler *event_handler,
+                                ACE_Reactor_Mask mask);
   // Register an <ACE_Event_Handler> <event_handle>.  <mask> specifies
   // the network events that the <event_handler> is interested in.  If
   // <io_handle> == <ACE_INVALID_HANDLE> the <ACE_WFMO_Reactor> will
@@ -624,42 +625,42 @@ public:
   // the <Event_Handler>
 
   virtual int register_handler (ACE_HANDLE io_handle,
-				ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask);
+                                ACE_Event_Handler *event_handler,
+                                ACE_Reactor_Mask mask);
   // This is a simple version of the above <register_handler> method
   // where the I/O handle is passed in and the event handle will
   // always be created by <WFMO_Reactor>
 
   virtual int register_handler (ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask);
+                                ACE_Reactor_Mask mask);
   // This is a simple version of the above <register_handler> method
   // where the I/O handle will always come from <get_handle> on the
   // <Event_Handler> and the event handle will always be created by
   // <WFMO_Reactor>
 
   virtual int register_handler (const ACE_Handle_Set &handles,
-				ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask);
+                                ACE_Event_Handler *event_handler,
+                                ACE_Reactor_Mask mask);
   // Register <event_handler> with all the <handles> in the
   // <Handle_Set>.
 
   virtual int register_handler (int signum,
-				ACE_Event_Handler *new_sh,
-				ACE_Sig_Action *new_disp = 0,
-				ACE_Event_Handler **old_sh = 0,
-				ACE_Sig_Action *old_disp = 0);
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0,
+                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Sig_Action *old_disp = 0);
   // Register <new_sh> to handle the signal <signum> using the
   // <new_disp>.  Returns the <old_sh> that was previously registered
   // (if any), along with the <old_disp> of the signal handler.
 
   virtual int register_handler (const ACE_Sig_Set &sigset,
-				ACE_Event_Handler *new_sh,
-				ACE_Sig_Action *new_disp = 0);
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0);
   // Registers <new_sh> to handle a set of signals <sigset> using the
   // <new_disp>.
 
   virtual int remove_handler (ACE_Event_Handler *event_handler,
-			      ACE_Reactor_Mask mask);
+                              ACE_Reactor_Mask mask);
   // Removes <event_handler> from the <ACE_WFMO_Reactor>.  Note that
   // the <ACE_WFMO_Reactor> will call the <get_handle> method of
   // <event_handler> to extract the underlying handle.  If <mask> ==
@@ -668,7 +669,7 @@ public:
   // either be the <event_handle> or the <io_handle>
 
   virtual int remove_handler (ACE_HANDLE handle,
-			      ACE_Reactor_Mask mask);
+                              ACE_Reactor_Mask mask);
   // Removes <handle> from the <ACE_WFMO_Reactor>.  If <mask> ==
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
   // the <event_handler> is not invoked. Note that the <handle> can
@@ -682,15 +683,15 @@ public:
   // <WFMO_Reactor>
 
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
-			      ACE_Reactor_Mask);
+                              ACE_Reactor_Mask);
   // Removes all the <mask> bindings for handles in the <handle_set>
   // bind of <Event_Handler>.  If there are no more bindings for any
   // of these handles then they are removed from WFMO_Reactor.
 
   virtual int remove_handler (int signum,
-			      ACE_Sig_Action *new_disp,
-			      ACE_Sig_Action *old_disp = 0,
-			      int sigkey = -1);
+                              ACE_Sig_Action *new_disp,
+                              ACE_Sig_Action *old_disp = 0,
+                              int sigkey = -1);
   // Remove the ACE_Event_Handler currently associated with <signum>.
   // <sigkey> is ignored in this implementation since there is only
   // one instance of a signal handler.  Install the new disposition
@@ -737,9 +738,9 @@ public:
   // Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
-			       const void *arg,
-			       const ACE_Time_Value &delta,
-			       const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                               const void *arg,
+                               const ACE_Time_Value &delta,
+                               const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
   // of time.  If it expires then <arg> is passed in as the value to
   // the <event_handler>'s <handle_timeout> callback method.  If
@@ -755,13 +756,13 @@ public:
   // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
-			    int dont_call_handle_close = 1);
+                            int dont_call_handle_close = 1);
   // Cancel all Event_Handlers that match the address of
   // <event_handler>.  Returns number of handler's cancelled.
 
   virtual int cancel_timer (long timer_id,
-			    const void **arg = 0,
-			    int dont_call_handle_close = 1);
+                            const void **arg = 0,
+                            int dont_call_handle_close = 1);
   // Cancel the single Event_Handler that matches the <timer_id> value
   // (which was returned from the schedule method).  If arg is
   // non-NULL then it will be set to point to the ``magic cookie''
@@ -773,31 +774,31 @@ public:
   // = High-level Event_Handler scheduling operations
 
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
-			       ACE_Reactor_Mask masks_to_be_added);
+                               ACE_Reactor_Mask masks_to_be_added);
   // Add <masks_to_be_added> to the <event_handler>'s entry in
   // WFMO_Reactor.  <event_handler> must already have been registered
   // with WFMO_Reactor.
 
   virtual int schedule_wakeup (ACE_HANDLE handle,
-			       ACE_Reactor_Mask masks_to_be_added);
+                               ACE_Reactor_Mask masks_to_be_added);
   // Add <masks_to_be_added> to the <handle>'s entry in WFMO_Reactor.
   // The Event_Handler associated with <handle> must already have been
   // registered with WFMO_Reactor.
 
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
-			     ACE_Reactor_Mask mask);
+                             ACE_Reactor_Mask mask);
   // This method is identical to the <remove_handler> method.
 
   virtual int cancel_wakeup (ACE_HANDLE handle,
-			     ACE_Reactor_Mask mask);
+                             ACE_Reactor_Mask mask);
   // This method is identical to the <remove_handler> method.
 
 
   // = Notification methods.
 
   virtual int notify (ACE_Event_Handler * = 0,
-		      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-		      ACE_Time_Value * = 0);
+                      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+                      ACE_Time_Value * = 0);
   // Wakeup one <ACE_WFMO_Reactor> thread if it is currently blocked
   // in <WaitForMultipleObjects>.  The <ACE_Time_Value> indicates how
   // long to blocking trying to notify the <WFMO_Reactor>.  If
@@ -824,12 +825,12 @@ public:
   // <ACE_Message_Queue::dequeue> loop.
 
   virtual int handler (ACE_HANDLE handle,
-		       ACE_Reactor_Mask mask,
-		       ACE_Event_Handler **event_handler = 0);
+                       ACE_Reactor_Mask mask,
+                       ACE_Event_Handler **event_handler = 0);
   // Not implemented
 
   virtual int handler (int signum,
-		       ACE_Event_Handler ** = 0);
+                       ACE_Event_Handler ** = 0);
   // Check to see if <signum> is associated with a valid Event_Handler
   // bound to a signal.  Return the <event_handler> associated with
   // this <handler> if <event_handler> != 0.
@@ -866,25 +867,25 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   virtual int mask_ops (ACE_Event_Handler *event_handler,
-			ACE_Reactor_Mask mask,
-			int ops);
+                        ACE_Reactor_Mask mask,
+                        int ops);
   // Not implemented
 
   virtual int mask_ops (ACE_HANDLE handle,
-			ACE_Reactor_Mask mask,
-			int ops);
+                        ACE_Reactor_Mask mask,
+                        int ops);
   // Not implemented
 
   // = Low-level ready_set mask manipulation methods.
 
   virtual int ready_ops (ACE_Event_Handler *event_handler,
-			 ACE_Reactor_Mask mask,
-			 int ops);
+                         ACE_Reactor_Mask mask,
+                         int ops);
   // Not implemented
 
   virtual int ready_ops (ACE_HANDLE handle,
-			 ACE_Reactor_Mask,
-			 int ops);
+                         ACE_Reactor_Mask,
+                         int ops);
   // Not implemented
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -895,24 +896,24 @@ public:
 
 protected:
   virtual int schedule_wakeup_i (ACE_HANDLE handle,
-				 ACE_Reactor_Mask masks_to_be_added);
+                                 ACE_Reactor_Mask masks_to_be_added);
   // Scheduling workhorse
 
   virtual int register_handler_i (ACE_HANDLE event_handle,
-				  ACE_HANDLE io_handle,
-				  ACE_Event_Handler *event_handler,
-				  ACE_Reactor_Mask mask);
+                                  ACE_HANDLE io_handle,
+                                  ACE_Event_Handler *event_handler,
+                                  ACE_Reactor_Mask mask);
   // Registration workhorse
 
   virtual int event_handling (ACE_Time_Value *max_wait_time = 0,
-			      int alertable = 0);
+                              int alertable = 0);
   // Event handling workhorse
 
   virtual ACE_thread_t owner_i (void);
   // Return the ID of the "owner" thread. Does not do any locking.
 
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
-			  int alertable);
+                          int alertable);
   // Check to see if it is ok to enter ::WaitForMultipleObjects().
 
   virtual int wait_for_multiple_events (int timeout,
@@ -944,12 +945,12 @@ protected:
   // handler was removed.
 
   virtual int simple_dispatch_handler (int index,
-				       ACE_HANDLE event_handle);
+                                       ACE_HANDLE event_handle);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
   virtual int complex_dispatch_handler (int index,
-					ACE_HANDLE event_handle);
+                                        ACE_HANDLE event_handle);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
@@ -1087,12 +1088,12 @@ typedef struct _WSANETWORKEVENTS
 } WSANETWORKEVENTS, FAR * LPWSANETWORKEVENTS;
 
 int WSAEventSelect (SOCKET s,
-		    WSAEVENT hEventObject,
-		    long lNetworkEvents);
+                    WSAEVENT hEventObject,
+                    long lNetworkEvents);
 
 int WSAEnumNetworkEvents (SOCKET s,
-			  WSAEVENT hEventObject,
-			  LPWSANETWORKEVENTS lpNetworkEvents);
+                          WSAEVENT hEventObject,
+                          LPWSANETWORKEVENTS lpNetworkEvents);
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
 

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PROTOCOL_RECORD_H)
+#ifndef _PROTOCOL_RECORD_H
 #define _PROTOCOL_RECORD_H
 
 #include "Drwho_Node.h"
@@ -22,7 +22,7 @@
 class Protocol_Record
 {
   // = TITLE
-  //   Stores information about a single friend's status. 
+  //   Stores information about a single friend's status.
 
 public:
   Protocol_Record (void);

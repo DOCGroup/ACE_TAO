@@ -5,21 +5,17 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Dynamic_Service.h
 //
 // = AUTHOR
-//    Prashant Jain, Doug Schmidt 
-// 
+//    Prashant Jain, Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class SERVICE>
 class ACE_Dynamic_Service
@@ -30,7 +26,7 @@ class ACE_Dynamic_Service
   //
   // = DESCRIPTION
   //     Uses "name" for lookup in the ACE service repository. Obtains
-  //	 the object and returns it as the appropriate type.
+  //     the object and returns it as the appropriate type.
 public:
   static SERVICE *instance (const char *name);
   // Return instance using <name> to search the Service_Repository.
@@ -40,11 +36,11 @@ public:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Dynamic_Service.cpp"
+# include "ace/Dynamic_Service.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Dynamic_Service.cpp")
+# pragma implementation ("Dynamic_Service.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_DYNAMIC_SERVICE_H */

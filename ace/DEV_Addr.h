@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    DEV_Addr.h
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #ifndef ACE_DEV_ADDR_H
 #define ACE_DEV_ADDR_H
 
 #include "ace/Addr.h"
-#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE.h"
 
 class ACE_Export ACE_DEV_Addr : public ACE_Addr
 {
   // = TITLE
-  //    Defines device address family address format. 
+  //    Defines device address family address format.
 public:
   // = Initialization methods.
   ACE_DEV_Addr (void);
@@ -43,29 +44,29 @@ public:
   // Create a ACE_DEV_Addr from a device name.
 
   void set (LPCTSTR devname);
-  // Create a ACE_Addr from a ACE_DEV pathname. 
+  // Create a ACE_Addr from a ACE_DEV pathname.
 
   ACE_DEV_Addr &operator= (const ACE_DEV_Addr &);
   // Assignment operator.
 
   virtual void *get_addr (void) const;
-  // Return a pointer to the address. 
+  // Return a pointer to the address.
 
 #if defined (UNICODE)
   virtual int addr_to_string (wchar_t *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 #endif /* UNICODE */
 
   virtual int addr_to_string (char *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 
   int operator == (const ACE_DEV_Addr &SAP) const;
-  // Compare two addresses for equality. 
+  // Compare two addresses for equality.
 
   int operator != (const ACE_DEV_Addr &SAP) const;
-  // Compare two addresses for inequality. 
+  // Compare two addresses for inequality.
 
-  LPCTSTR get_path_name (void) const; 
+  LPCTSTR get_path_name (void) const;
   // Return the path name used for the rendezvous point.
 
   void dump (void) const;

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //     ace
-// 
+//
 // = FILENAME
 //     CLASSIX/Group.h
 //
 // = AUTHOR(S)
 //     Nokia Telecommunications
-// 
+//
 // ============================================================================
 
 #ifndef ACE_CLASSIX_GROUP_H
@@ -19,26 +19,31 @@
 
 /* ------------------------------------------------------------------------- */
 #include "ace/CLASSIX/CLASSIX_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/CLASSIX/CLASSIX_Port.h"
 
 class ACE_CLASSIX_Group : public ACE_CLASSIX_Addr
     // = TITLE
     //   Wrapper over Chorus's Group concept.
-    //   
+    //
     // = DESCRIPTION
     //   Provides interface to insert and remove ports in the group which is
     //   created based on a given KnCap. This"<KnCap> is the unique
     //   identifier of the group.
-    //   
+    //
     // = NOTE
     //   Chorus does not provide facility to remove a group from the system,
     //   nor explicitly create a group.
     //   As such, the wrapper allows users to freely change from one group
     //   to the other within the same <ACE_CLASSIX_Group> instance.
-    //   
+    //
     // = SEE ALSO
     //   <ACE_CLASSIX_Group_Stamp>, <ACE_CLASSIX_Group_Dynamic>
-    //   
+    //
 {
  public:
     // = INITIALIZATION
@@ -46,7 +51,7 @@ class ACE_CLASSIX_Group : public ACE_CLASSIX_Addr
     // Sets up the group wrapper using the supplied group id.
     ACE_CLASSIX_Group(const KnCap&);
     // Sets up the group wrapper using the supplied KnCap
-	
+
     // = ACCESS
     int is_configured(void) const;
     // Returns 1, if it contains valid group id; 0, otherwise.
@@ -90,8 +95,8 @@ class ACE_CLASSIX_Group : public ACE_CLASSIX_Addr
 
     struct group_addr
     {
-	int              config_; // 1, if the following fields are valid
-	KnCap            group_;
+        int              config_; // 1, if the following fields are valid
+        KnCap            group_;
     };
     group_addr        addr_;
 

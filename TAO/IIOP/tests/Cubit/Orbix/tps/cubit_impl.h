@@ -7,6 +7,10 @@
 #include "cubit.h"
 #include "ace/Task.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #ifdef Cubit_USE_BOA
 class Cubit_Impl : public virtual CubitBOAImpl {
 #else

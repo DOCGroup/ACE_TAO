@@ -23,7 +23,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Sched_Params
@@ -172,7 +172,7 @@ class ACE_Export ACE_Sched_Priority_Iterator
 {
 public:
   ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
-			       int scope = ACE_SCOPE_THREAD);
+                               int scope = ACE_SCOPE_THREAD);
   // Initialize the iterator, the arguments define the scheduling
   // policy and scope for the priorities (see ACE_Sched_Param).
 

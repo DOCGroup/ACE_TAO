@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_INTERFACE_H)
+#ifndef TAO_BE_INTERFACE_H
 #define TAO_BE_INTERFACE_H
 
 class TAO_OutStream;
@@ -130,8 +130,8 @@ public:
   // is_a method
 
   static int downcast_helper (be_interface *,
-			      be_interface *,
-			      TAO_OutStream *os);
+                              be_interface *,
+                              TAO_OutStream *os);
   // helper method passed to the template method that generates code for the
   // downcast.
 
@@ -154,8 +154,8 @@ public:
   // base classes.
 
   static int copy_ctor_helper (be_interface *,
-			       be_interface *,
-			       TAO_OutStream *os);
+                               be_interface *,
+                               TAO_OutStream *os);
   // helper method passed to the template method to invoke ctors of all the
   // base classes.
 
@@ -172,7 +172,7 @@ public:
   // generate the operation table including entries for inherited interfaces
 
   static const char *relative_name (const char* our_name,
-				    const char *other_class_name);
+                                    const char *other_class_name);
   // relative name for collocated class.
 
   int gen_optable_entries (be_interface *);
@@ -189,16 +189,16 @@ private:
   int gen_gperf_things (void);
   // Run GPERF and get the correct lookup and other operations
   // depending on which strategy we are using. Returns 0 on sucess, -1
-  // on error. 
+  // on error.
 
   void gen_perfect_hash_class_definition (void);
   // Outputs the class definition for the perfect hashing. This class
   // will inherit from the TAO_Perfect_Hash_OpTable.
-  
+
   void gen_binary_search_class_definition (void);
   // Outputs the class definition for the binary search . This class
   // will inherit from the TAO_Binary_Search_OpTable.
-  
+
   void gen_linear_search_class_definition (void);
   // Outputs the class defintion for the linear search. This class
   // will inherit from the TAO_Linear_Search.
@@ -209,12 +209,12 @@ private:
 
   void gen_perfect_hash_instance (void);
   // Create an instance of this perfect hash table.
-  
+
   void gen_binary_search_instance (void);
-  // Create an instance of the binary search optable. 
-  
+  // Create an instance of the binary search optable.
+
   void gen_linear_search_instance (void);
-  // Create an instance of the linear search optable. 
+  // Create an instance of the linear search optable.
 
   char *full_skel_name_;
   // Fully scoped skeleton name.

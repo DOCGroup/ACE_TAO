@@ -23,27 +23,27 @@
   Hewlett-Packard Company
 
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  Permission to use, copy, modify, distribute and/or sell this software 
-  and/or its documentation is hereby granted without fee. User agrees 
-  to display the above copyright notice and this license notice in all 
-  copies of the software and any documentation of the software. User 
-  agrees to assume all liability for the use of the software; Hewlett-Packard 
-  makes no representations about the suitability of this software for any 
-  purpose. It is provided "AS-IS without warranty of any kind,either express 
-  or implied. User hereby grants a royalty-free license to any and all 
-  derivatives based upon this software code base. 
+  Permission to use, copy, modify, distribute and/or sell this software
+  and/or its documentation is hereby granted without fee. User agrees
+  to display the above copyright notice and this license notice in all
+  copies of the software and any documentation of the software. User
+  agrees to assume all liability for the use of the software; Hewlett-Packard
+  makes no representations about the suitability of this software for any
+  purpose. It is provided "AS-IS without warranty of any kind,either express
+  or implied. User hereby grants a royalty-free license to any and all
+  derivatives based upon this software code base.
 =====================================================================*/
 
 // TODO: this needs to be moved into the CLASS and modifyable at runtime
 // TODO: define an iterator object to traverse the vbs in a pdu
 
 #define MAX_VBS 25
-#include "asnmp/vb.h"	      // include Vb class definition
+#include "asnmp/vb.h"         // include Vb class definition
 
-class ACE_Export Pdu 
+class ACE_Export Pdu
   // = TITLE
   //      Protocol Data Unit (PDU) concrete class. An abstraction of the
-  //      data packet used to by two SNMP sessions to communicate. 
+  //      data packet used to by two SNMP sessions to communicate.
 {
 public:
   Pdu( void);
@@ -87,7 +87,7 @@ public:
   // return the error status
 
   char *agent_error_reason();
-  // return the complete error info from this pdu 
+  // return the complete error info from this pdu
 
   friend void set_error_status( Pdu *pdu, const int status);
   // set the error status
@@ -126,7 +126,7 @@ public:
   // delete a Vb anywhere within the Pdu
 
   void delete_all_vbs();
-  // delete_all vbs in pdu 
+  // delete_all vbs in pdu
 
   void set_notify_timestamp( const TimeTicks & timestamp);
   // set notify timestamp
@@ -151,51 +151,51 @@ public:
 
 
   protected:
-    Vb *vbs_[MAX_VBS];	         
+    Vb *vbs_[MAX_VBS];
     // pointer to array of Vbs
 
-    int vb_count_;		 
+    int vb_count_;
     // count of Vbs
 
-    int error_status_;		 
+    int error_status_;
     // SMI error status
 
-    int error_index_;		 
+    int error_index_;
     // SMI error index
 
-    int validity_;		 
-    // valid boolean status of object construction 
-    unsigned long request_id_;	 
+    int validity_;
+    // valid boolean status of object construction
+    unsigned long request_id_;
     // SMI request id
 
-    unsigned short pdu_type_;	 
+    unsigned short pdu_type_;
     // derived at run time based on request type
 
-    TimeTicks notify_timestamp_; 
+    TimeTicks notify_timestamp_;
     // a timestamp associated with an infor
     // for notify Pdu objects only
     // traps & notifies
 
-    Oid notify_id_;               
-    // an id 
+    Oid notify_id_;
+    // an id
 
     Oid notify_enterprise_;
-    
+
    private:
-   char *output_;                 
+   char *output_;
    // buffer for to_string()
 };
 
 
-class VbIter 
+class VbIter
   // = TITLE
-  //      Utility class to iterate once through a PDU varbind list 
+  //      Utility class to iterate once through a PDU varbind list
 {
    public:
    VbIter(Pdu& pdu);
    // default constructor
 
-   int next(Vb& vb);  
+   int next(Vb& vb);
    // returns 1 if ok, else 0 if none left
 
   private:
@@ -206,7 +206,7 @@ class VbIter
    // current object in list
 
    Pdu *pdu_;
-   // ptr to pdu being interated over 
+   // ptr to pdu being interated over
 };
 
 #endif //PDU_CLS_

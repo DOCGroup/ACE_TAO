@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    objtable.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #ifndef TAO_OBJTABLE_H
@@ -69,12 +69,12 @@ class TAO_Export TAO_Object_Table_Impl
   //   Servants.
   //
   // = DESCRIPTION
-  //   
+  //
   // = NOTES
   //   Iterators may return free entries, whose "int_id" (the servant)
   //   is 0.
 public:
-  enum 
+  enum
   {
     // Default table size
     DEFAULT_TABLE_SIZE = TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE
@@ -83,14 +83,14 @@ public:
   virtual ~TAO_Object_Table_Impl (void);
   // Destructor.
 
-  virtual int bind (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant servant) = 0;
+  virtual int bind (const PortableServer::ObjectId &id,
+                    PortableServer::Servant servant) = 0;
   // Associate <{id}> with <{servant}>, returning 0 if object is
   // registered successfully, 1 if it's already registered, and -1 if
   // a failure occurs during registration.
 
   virtual int unbind (const PortableServer::ObjectId &id,
-		      PortableServer::Servant &servant) = 0;
+                      PortableServer::Servant &servant) = 0;
   // Remote any association among <id> and <servant>.
   // Returns 0 if the operation was succesful, <-1> otherwise.
 
@@ -98,12 +98,12 @@ public:
   virtual TAO_Object_Table_Iterator_Impl *end () const = 0;
   // Iterator interface
 
-  virtual int find (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant &servant) = 0;
+  virtual int find (const PortableServer::ObjectId &id,
+                    PortableServer::Servant &servant) = 0;
   // Find object associated with <{id}>.
   // If the ObjectId is found it sets <{servant}> and returns a
   // non-negative integer.  If not found, <{servant}> is unchanged and
-  // the value <-1> is returned. 
+  // the value <-1> is returned.
 
   virtual int find (const PortableServer::Servant servant);
   // Returns 0 if <servant> is in the table, <-1> otherwise.
@@ -117,12 +117,12 @@ public:
   // search on the iterator) makes sense, since the operation is not
   // time critical.
   virtual int find (const PortableServer::Servant servant,
-		    PortableServer::ObjectId_out id);
+                    PortableServer::ObjectId_out id);
   // Find the <id> for <servant>.
   // Returns <-1> if <servant> is not found or if more than one <id>
   // is associated with <servant>, returns <0> otherwise.
 
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env) = 0;
   // Create an object id
 
@@ -155,9 +155,9 @@ public:
   // Increase the current position.
 
   friend int operator==(const TAO_Object_Table_Iterator &l,
-			const TAO_Object_Table_Iterator &r);
+                        const TAO_Object_Table_Iterator &r);
   friend int operator!=(const TAO_Object_Table_Iterator &l,
-			const TAO_Object_Table_Iterator &r);
+                        const TAO_Object_Table_Iterator &r);
   // Compare two iterators.
 
 protected:
@@ -170,33 +170,33 @@ class TAO_Export TAO_Object_Table
   //     to pointers to CORBA objects.
 {
 public:
-  TAO_Object_Table (TAO_Object_Table_Impl *impl, 
+  TAO_Object_Table (TAO_Object_Table_Impl *impl,
                     int delete_impl = 0);
   // Constructor: Must pass valid <impl>
 
   TAO_Object_Table (int user_id_policy);
   // Constructor: System creates table based on <user_id_policy>
-  
+
   virtual ~TAO_Object_Table (void);
   // Destructor.
 
-  int bind (const PortableServer::ObjectId &id, 
-	    PortableServer::Servant servant);
+  int bind (const PortableServer::ObjectId &id,
+            PortableServer::Servant servant);
   // Associate <{id}> with <{servant}>, returning 0 if object is
   // registered successfully, 1 if it's already registered, and -1 if
   // a failure occurs during registration.
 
   int unbind (const PortableServer::ObjectId &id,
-	      PortableServer::Servant &servant);
+              PortableServer::Servant &servant);
   // Remote any association among <id> and <servant>.
   // Returns 0 if the operation was succesful, <-1> otherwise.
 
-  int find (const PortableServer::ObjectId &id, 
-	    PortableServer::Servant &servant);
+  int find (const PortableServer::ObjectId &id,
+            PortableServer::Servant &servant);
   // Find object associated with <{id}>.
   // If the ObjectId is found it sets <{servant}> and returns a
   // non-negative integer.  If not found, <{servant}> is unchanged and
-  // the value <-1> is returned. 
+  // the value <-1> is returned.
 
   int find (const PortableServer::Servant servant);
   // Returns 0 if <servant> is in the table, <-1> otherwise.
@@ -210,12 +210,12 @@ public:
   // search on the iterator) makes sense, since the operation is not
   // time critical.
   int find (const PortableServer::Servant servant,
-	    PortableServer::ObjectId_out id);
+            PortableServer::ObjectId_out id);
   // Find the <id> for <servant>.
   // Returns <-1> if <servant> is not found or if more than one <id>
   // is associated with <servant>, returns <0> otherwise.
 
-  PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+  PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                               CORBA::Environment &env);
   // Create an object id
 
@@ -266,21 +266,21 @@ class TAO_Export TAO_Dynamic_Hash_ObjTable : public TAO_Object_Table_Impl
 public:
   TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
   // constructor. If size is 0, some default is used.
-  
+
   virtual ~TAO_Dynamic_Hash_ObjTable (void);
 
   // Implement TAO_Dynamic_Hash_ObjTable....
   virtual int find (const PortableServer::Servant servant);
   virtual int find (const PortableServer::ObjectId &id);
   virtual int find (const PortableServer::Servant servant,
-		    PortableServer::ObjectId_out id);
-  virtual int find (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant servant);
+                    PortableServer::ObjectId_out id);
+  virtual int find (const PortableServer::ObjectId &id,
+                    PortableServer::Servant &servant);
+  virtual int bind (const PortableServer::ObjectId &id,
+                    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
-		      PortableServer::Servant &servant);
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                      PortableServer::Servant &servant);
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env);
   virtual CORBA::ULong system_id_size (void) const;
   virtual TAO_Object_Table_Iterator_Impl *begin (void) const;
@@ -289,11 +289,11 @@ public:
   // Dynamic Hashing scheme using template specialization for char*
   typedef ACE_Hash_Map_Manager<PortableServer::ObjectId,
                                PortableServer::Servant,
-                               ACE_SYNCH_NULL_MUTEX> 
+                               ACE_SYNCH_NULL_MUTEX>
           Hash_Map;
   typedef ACE_Hash_Map_Iterator<PortableServer::ObjectId,
                                 PortableServer::Servant,
-                                ACE_SYNCH_NULL_MUTEX> 
+                                ACE_SYNCH_NULL_MUTEX>
           Iterator;
 
 protected:
@@ -360,14 +360,14 @@ class TAO_Export TAO_Linear_ObjTable : public TAO_Object_Table_Impl
   //   for the lookups.
   //
 public:
-  
-  enum 
+
+  enum
   {
     // Grow table exponentially up to 64K
-    MAX_EXPONENTIAL = 65536, 
+    MAX_EXPONENTIAL = 65536,
 
     // Afterwards grow in chunks of 32K
-    LINEAR_INCREASE = 32768  
+    LINEAR_INCREASE = 32768
   };
 
   TAO_Linear_ObjTable (CORBA::ULong size);
@@ -376,14 +376,14 @@ public:
   virtual int find (const PortableServer::Servant servant);
   virtual int find (const PortableServer::ObjectId &id);
   virtual int find (const PortableServer::Servant servant,
-		    PortableServer::ObjectId_out id);
-  virtual int find (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant servant);
+                    PortableServer::ObjectId_out id);
+  virtual int find (const PortableServer::ObjectId &id,
+                    PortableServer::Servant &servant);
+  virtual int bind (const PortableServer::ObjectId &id,
+                    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
-		      PortableServer::Servant &servant);
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                      PortableServer::Servant &servant);
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env);
   virtual CORBA::ULong system_id_size (void) const;
   virtual TAO_Object_Table_Iterator_Impl *begin () const;
@@ -426,15 +426,15 @@ public:
   virtual int find (const PortableServer::Servant servant);
   virtual int find (const PortableServer::ObjectId &id);
   virtual int find (const PortableServer::Servant servant,
-		    PortableServer::ObjectId_out id);
-  virtual int find (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id, 
-		    PortableServer::Servant servant);
+                    PortableServer::ObjectId_out id);
+  virtual int find (const PortableServer::ObjectId &id,
+                    PortableServer::Servant &servant);
+  virtual int bind (const PortableServer::ObjectId &id,
+                    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
-		      PortableServer::Servant &servant);
+                      PortableServer::Servant &servant);
   virtual CORBA::ULong system_id_size (void) const;
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env);
 
 protected:

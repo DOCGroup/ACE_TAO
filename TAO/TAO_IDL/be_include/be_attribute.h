@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_ATTRIBUTE_H)
+#ifndef BE_ATTRIBUTE_H
 #define BE_ATTRIBUTE_H
 
 /*

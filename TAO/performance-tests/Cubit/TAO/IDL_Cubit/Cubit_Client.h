@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_CUBIT_CLIENT_H)
+#ifndef _CUBIT_CLIENT_H
 #define _CUBIT_CLIENT_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Profile_Timer.h"
 #include "tao/corba.h"
 #include "cubitC.h"

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -88,22 +88,22 @@ class UTL_Indenter
 public:
   // Operations
 
-  UTL_Indenter();		// constructor
+  UTL_Indenter();               // constructor
   // Constructor(s)
 
   virtual ~UTL_Indenter() {}
   // destructor
 
-  void reset();			
+  void reset();
   // Reset indentation level to 0
 
-  void increase();		
+  void increase();
   // Increase indentation level
 
-  void decrease();		
+  void decrease();
   // Decrease indentation level
 
-  void skip_to (ostream &o);	
+  void skip_to (ostream &o);
   // Skip to indentation level stop
 
   void skip_to (FILE *fp);
@@ -111,7 +111,7 @@ public:
 
 private:
   // Data
-  long				pd_indent_level;	// How far to indent
+  long                          pd_indent_level;        // How far to indent
 };
 
 #endif           // _UTL_INDENTER_UTL_INDENTER_HH

@@ -14,12 +14,12 @@
 //
 // ============================================================================
 
-#if !defined (_MULTICAST_MANAGER_H)
+#ifndef _MULTICAST_MANAGER_H
 #define _MULTICAST_MANAGER_H
 
 #include "global.h"
 
-class Host_Elem 
+class Host_Elem
 {
 public:
   const char *host_name;
@@ -30,7 +30,7 @@ public:
   Host_Elem (const char *h_name, Host_Elem *n);
 };
 
-class Multicast_Manager 
+class Multicast_Manager
 {
   // = TITLE
   //   This file handles all the operations upon host machines names

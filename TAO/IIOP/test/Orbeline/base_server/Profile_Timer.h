@@ -3,7 +3,7 @@
 
 /* An interval timer class using C++. */
 
-#if !defined (ACE_PROFILE_TIMER_H)
+#ifndef ACE_PROFILE_TIMER_H
 #define ACE_PROFILE_TIMER_H
 
 #include <sys/types.h>
@@ -38,21 +38,21 @@ private:
   prusage_t begin_usage_;
   prusage_t end_usage_;
   prusage_t last_usage_;
-  int	    proc_fd_;
+  int       proc_fd_;
 };
 
 /* Start timing */
 
-inline int 
-Profile_Timer::start (void) 
+inline int
+Profile_Timer::start (void)
 {
   return ::ioctl (this->proc_fd_, PIOCUSAGE, &this->begin_usage_);
 }
 
 /* Stop timing */
 
-inline int 
-Profile_Timer::stop (void) 
+inline int
+Profile_Timer::stop (void)
 {
   this->last_usage_ = this->end_usage_;
   return ::ioctl (this->proc_fd_, PIOCUSAGE, &this->end_usage_);

@@ -1,16 +1,20 @@
 // $Id$
 
-#if !defined (ORBIX_MARSHAL_IMPL_H)
+#ifndef ORBIX_MARSHAL_IMPL_H
 #define ORBIX_MARSHAL_IMPL_H
 
 // to include DSI related files
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "marshal.h"
 
 
-class Marshal_SSI_Impl 
+class Marshal_SSI_Impl
   : public virtual MarshalBOAImpl
 {
   // =TITLE
@@ -25,73 +29,73 @@ public:
   // destructor
 
   virtual void test_short (CORBA::Short s1,
-			   CORBA::Short& s2,
-			   CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                           CORBA::Short& s2,
+                           CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test short
-	
+
   virtual void test_long (CORBA::Long l1,
-			  CORBA::Long& l2,
-			  CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                          CORBA::Long& l2,
+                          CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test long
-	
+
   virtual void test_octet (CORBA::Octet o1,
-			   CORBA::Octet& o2,
-			   CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                           CORBA::Octet& o2,
+                           CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test octet
-	
+
   virtual void test_char (CORBA::Char c1,
-			  CORBA::Char& c2,
-			  CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                          CORBA::Char& c2,
+                          CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test char
-	
+
   virtual void test_double (CORBA::Double d1,
-			    CORBA::Double& d2,
-			    CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                            CORBA::Double& d2,
+                            CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test double
-	
+
   virtual void test_struct (const Marshal::Marshal_Struct& ms1,
-			    Marshal::Marshal_Struct& ms2,
-			    CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                            Marshal::Marshal_Struct& ms2,
+                            CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test struct
-	
+
   virtual void test_union (const Marshal::Marshal_Union& u1,
-			   Marshal::Marshal_Union& u2,
-			   CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                           Marshal::Marshal_Union& u2,
+                           CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test union
-	
+
   virtual void test_any (const CORBA::Any& a1,
-			 CORBA::Any *& a2,
-			 CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                         CORBA::Any *& a2,
+                         CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test any
-	
+
   /*
   virtual void test_sequence (const Marshal::ShortSeq& s1,
-			     const Marshal::LongSeq& l1,
-			     const Marshal::OctetSeq& o1,
-			     const Marshal::CharSeq& c1,
-			     const Marshal::DoubleSeq& d1,
-			     const Marshal::StructSeq& S1,
-			     const Marshal::UnionSeq& U1,
-			     const Marshal::AnySeq& a1,
-			     Marshal::ShortSeq *& s2,
-			     Marshal::LongSeq *& l2,
-			     Marshal::OctetSeq *& o2,
-			     Marshal::CharSeq *& c2,
-			     Marshal::DoubleSeq *& d2,
-			     Marshal::StructSeq *& S2,
-			     Marshal::UnionSeq *& U2,
-			     Marshal::AnySeq *& a2);
-			     */
+                             const Marshal::LongSeq& l1,
+                             const Marshal::OctetSeq& o1,
+                             const Marshal::CharSeq& c1,
+                             const Marshal::DoubleSeq& d1,
+                             const Marshal::StructSeq& S1,
+                             const Marshal::UnionSeq& U1,
+                             const Marshal::AnySeq& a1,
+                             Marshal::ShortSeq *& s2,
+                             Marshal::LongSeq *& l2,
+                             Marshal::OctetSeq *& o2,
+                             Marshal::CharSeq *& c2,
+                             Marshal::DoubleSeq *& d2,
+                             Marshal::StructSeq *& S2,
+                             Marshal::UnionSeq *& U2,
+                             Marshal::AnySeq *& a2);
+                             */
   virtual void test_sequence (const Marshal::AnySeq& a1,
-			      Marshal::AnySeq *& a2,
-			      CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                              Marshal::AnySeq *& a2,
+                              CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test sequence
 
   virtual void test_recursive (const Marshal::Marshal_Recursive& mr1,
-			       Marshal::Marshal_Recursive *& mr2,
-			       CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                               Marshal::Marshal_Recursive *& mr2,
+                               CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
   // test struct
-	
+
 };
 
 class Marshal_DSI_Impl : public CORBA::DynamicImplementation
@@ -109,50 +113,50 @@ public:
 
 private:
   virtual void invoke (CORBA::ServerRequest& req, CORBA::Environment_ptr,
-		       CORBA::Environment&IT_env =
-		       CORBA::IT_chooseDefaultEnv()); 
+                       CORBA::Environment&IT_env =
+                       CORBA::IT_chooseDefaultEnv());
   // This method is a must
 
   void test_short (CORBA::Short s1,
-		   CORBA::Short& s2);
+                   CORBA::Short& s2);
   // test short
-	
+
   void test_long (CORBA::Long l1,
-		  CORBA::Long& l2);
+                  CORBA::Long& l2);
   // test long
-	
+
   void test_octet (CORBA::Octet o1,
-		   CORBA::Octet& o2);
+                   CORBA::Octet& o2);
   // test octet
-	
+
   void test_char (CORBA::Char c1,
-		  CORBA::Char& c2);
+                  CORBA::Char& c2);
   // test char
-	
+
   void test_double (CORBA::Double d1,
-		    CORBA::Double& d2);
+                    CORBA::Double& d2);
   // test double
-	
+
   void test_struct (const Marshal::Marshal_Struct& ms1,
-		    Marshal::Marshal_Struct& ms2);
+                    Marshal::Marshal_Struct& ms2);
   // test struct
-	
+
   void test_union (const Marshal::Marshal_Union& u1,
-		   Marshal::Marshal_Union& u2);
+                   Marshal::Marshal_Union& u2);
   // test union
-	
+
   void test_any (const CORBA::Any& a1,
-		 CORBA::Any *& a2);
+                 CORBA::Any *& a2);
   // test any
-	
+
   void test_sequence (const Marshal::AnySeq& a1,
-		      Marshal::AnySeq *& a2);
+                      Marshal::AnySeq *& a2);
   // test sequence
 
   void test_recursive (const Marshal::Marshal_Recursive& mr1,
-		       Marshal::Marshal_Recursive *& mr2);
+                       Marshal::Marshal_Recursive *& mr2);
   // test struct
-	
+
 private:
   //= helper functions - they behave as if they were skeletons
   void test_short_skel (CORBA::ServerRequest& req);

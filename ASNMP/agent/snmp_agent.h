@@ -13,7 +13,7 @@
 //    snmp_agent.h
 //
 // = AUTHOR
-//    Michael R. MacFaden (mrm@cisco.com) 
+//    Michael R. MacFaden (mrm@cisco.com)
 //
 // ============================================================================
 
@@ -24,7 +24,7 @@ class snmp_agent {
   //   An SNMP v1 agent class
   //
   // = DESCRIPTION
-  //   Contructs agents that are capable of processing SNMPv1 requests 
+  //   Contructs agents that are capable of processing SNMPv1 requests
   //   over the MIB II System group
 
   public:

@@ -5,30 +5,31 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SPIPE.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SPIPE_H
 #define ACE_SPIPE_H
 
 #include "ace/IPC_SAP.h"
-#include "ace/SPIPE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/SPIPE_Addr.h"
 
 class ACE_Export ACE_SPIPE : public ACE_IPC_SAP
 {
   // = TITLE
   //     Defines the member functions for the base class of the
-  //     ACE_SPIPE abstraction. 
+  //     ACE_SPIPE abstraction.
 public:
   int close (void);
   // Close down the STREAM pipe without removing the rendezvous point.
@@ -53,7 +54,7 @@ public:
 
 protected:
   ACE_SPIPE (void);
-  // Ensure that this class is an abstract base class 
+  // Ensure that this class is an abstract base class
 
   ACE_SPIPE_Addr local_addr_;
   // Our local address.

@@ -10,10 +10,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_GPlot_File_H)
+#ifndef ACE_GPlot_File_H
 #define ACE_GPlot_File_H
 
 #include "ace/Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 
 class TAO_ORBSVCS_Export ACE_GPlot_File
@@ -25,7 +30,7 @@ class TAO_ORBSVCS_Export ACE_GPlot_File
 //      entry   value
 //      entry   value
 //      entry   value
-//	  ...
+//        ...
 //    They represent x,y pairs to be graphed by GPlot.  entry's are
 //    type long.  value's are type long or float.
 {

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //$Id$
 
-#if !defined (_AUDIO_SERVER_H)
+#ifndef _AUDIO_SERVER_H
 #define _AUDIO_SERVER_H
 
 #include <sys/types.h>
@@ -28,13 +28,18 @@
 #include "server_proto.h"
 
 #include "ace/SOCK_CODgram.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "tao/TAO.h"
 #include "mpeg_shared/Audio_ControlS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Globals.h"
 
-class Audio_Sig_Handler 
+class Audio_Sig_Handler
   : public virtual ACE_Event_Handler
 {
   // = TITLE
@@ -49,7 +54,7 @@ public:
   // this will register this sig_handler
   // with the reactor for SIGALRM
 
-  virtual int shutdown (ACE_HANDLE, 
+  virtual int shutdown (ACE_HANDLE,
                         ACE_Reactor_Mask);
 
   virtual int handle_input (ACE_HANDLE);
@@ -68,7 +73,7 @@ class Audio_Data_Handler : public virtual ACE_Event_Handler
 public:
   Audio_Data_Handler (ACE_HANDLE data_fd,
                       Audio_Global *audio_global);
-                      
+
   // Constructor
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -96,17 +101,17 @@ public:
   virtual int handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env) ;
   // Application needs to define this
-  
-  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,
                              CORBA::Environment &env) ;
   // Application needs to define this
 
-  
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,
                                CORBA::Environment &env) ;
   // Application needs to define this
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
                                                       CORBA::Environment &env) ;
 
 private:

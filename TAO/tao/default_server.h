@@ -123,7 +123,7 @@ protected:
   TAO_Object_Table_Impl *create_user_id_policy_object_table (void);
   TAO_Object_Table_Impl *create_system_id_policy_object_table (void);
   TAO_Object_Table_Impl *create_object_table_i (TAO_Demux_Strategy table_type);
-  
+
   u_long thread_flags_;
   // Default thread flags passed to thr_create().
 

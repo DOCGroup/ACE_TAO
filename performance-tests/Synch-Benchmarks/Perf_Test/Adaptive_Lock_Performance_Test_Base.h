@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (ACE_ADAPTIVE_LOCK_PERFORMANCE_TEST_BASE_H)
+#ifndef ACE_ADAPTIVE_LOCK_PERFORMANCE_TEST_BASE_H
 #define ACE_ADAPTIVE_LOCK_PERFORMANCE_TEST_BASE_H
 #include "Benchmark_Performance.h"
 

@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_UNION_DISCRIMINANT_CI_H_)
+#ifndef _BE_VISITOR_UNION_DISCRIMINANT_CI_H_
 #define _BE_VISITOR_UNION_DISCRIMINANT_CI_H_
 
 class be_visitor_union_discriminant_ci : public be_visitor_decl

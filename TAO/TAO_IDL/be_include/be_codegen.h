@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_CODEGEN_H)
+#ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
 
 #define NAMEBUFSIZE 1024
@@ -313,7 +313,7 @@ public:
     TAO_CDR_INPUT,
     TAO_CDR_OUTPUT,
     TAO_CDR_SCOPE,
-    
+
     TAO_SUB_STATE_UNKNOWN
   };
 

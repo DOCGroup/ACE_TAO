@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_DECL_H)
+#ifndef TAO_BE_VISITOR_DECL_H
 #define TAO_BE_VISITOR_DECL_H
 
 #include "be_visitor.h"

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,15 +73,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 //
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
+//       For portability reasons we have decided to provide both this and
+//       an implementation of the list classes in terms of templates. If
+//       your compiler supports templates, please use the files in the
+//       include/utl_tmpl and util/utl_tmpl directories instead of the
+//       files by the same names in the include and util directories.
 
 /*
 ** DEPENDENCIES: utl_list.hh, ast_exception.hh
@@ -89,7 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class	UTL_ExceptList : public UTL_List
+class   UTL_ExceptList : public UTL_List
 {
 public:
   // Operations
@@ -98,15 +98,15 @@ public:
   UTL_ExceptList(AST_Exception *s, UTL_ExceptList *cdr);
 
   // Get list item
-  AST_Exception		*head();
+  AST_Exception         *head();
 
 private:
   // Data
-  AST_Exception		*pd_car_data;	// Item of this list
+  AST_Exception         *pd_car_data;   // Item of this list
 };
 
 // Active iterator for UTL_ExceptList
-class	UTL_ExceptlistActiveIterator : public UTL_ListActiveIterator
+class   UTL_ExceptlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   // Operations
@@ -115,7 +115,7 @@ public:
   UTL_ExceptlistActiveIterator(UTL_ExceptList *s);
 
   // Get current item
-  AST_Exception		*item();
+  AST_Exception         *item();
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

@@ -5,34 +5,35 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    TTY_IO.h
 //
 // = DESCRIPTION
 //
 // = AUTHOR
-//    Douglas C. Schmidt 
-// 
+//    Douglas C. Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/DEV_Addr.h"
 #include "ace/DEV_Connector.h"
 #include "ace/DEV_IO.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
 {
   // = TITLE
   //     Class definitions for platform specific TTY features.
-  //   
+  //
   // = DESCRIPTION
   //     This class represents an example interface for a specific
   //     device (a serial line) It extends the capability of the
@@ -43,7 +44,7 @@ class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
 public:
   enum Control_Mode
   {
-    SETPARAMS,	// Set control parameters.
+    SETPARAMS,  // Set control parameters.
     GETPARAMS   // Get control parameters.
   };
 

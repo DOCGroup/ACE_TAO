@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    NT_Service.h
 //
 // = AUTHOR
 //    Steve Huston
-// 
+//
 // ============================================================================
 
 #ifndef ACE_NT_SERVICE_H
@@ -20,7 +20,7 @@
 #include "ace/inc_user_config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0

@@ -3,6 +3,10 @@
 
 #include "ace/Service_Config.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class Timer_Service_1 : public ACE_Service_Object
 {
   // = TITLE
@@ -11,16 +15,16 @@ class Timer_Service_1 : public ACE_Service_Object
 public:
   virtual int init (int argc, char *argv[]);
   // Initialization hook.
-  
+
   virtual int handle_timeout (const ACE_Time_Value &,
-			      const void *);
+                              const void *);
   // Timeout hook.
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // Close hook.
 
 private:
-  enum 
+  enum
   {
     TIMEOUT = 4, // Wait 4 seconds between timeouts
     MAX_TIMEOUTS = 10 // Don't timeout for more than 10 times.

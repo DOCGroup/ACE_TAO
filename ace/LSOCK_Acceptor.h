@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    LSOCK_Aceeptor.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_ACCEPTOR_H
 #define ACE_LOCAL_SOCK_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Stream.h"
 
@@ -36,24 +41,24 @@ public:
   ACE_LSOCK_Acceptor (void);
   // Default constructor.
 
-  ACE_LSOCK_Acceptor (const ACE_Addr &local_sap, 
-		      int reuse_addr = 0, 
-		      int protocol_family = PF_UNIX, 
-		      int backlog = 5, 
-		      int protocol = 0);
+  ACE_LSOCK_Acceptor (const ACE_Addr &local_sap,
+                      int reuse_addr = 0,
+                      int protocol_family = PF_UNIX,
+                      int backlog = 5,
+                      int protocol = 0);
   // Initiate a passive mode socket.
 
-  int open (const ACE_Addr &local_sap, 
-	    int reuse_addr = 0, 
-	    int protocol_family = PF_UNIX, 
-	    int backlog = 5, 
-	    int protocol = 0);
+  int open (const ACE_Addr &local_sap,
+            int reuse_addr = 0,
+            int protocol_family = PF_UNIX,
+            int backlog = 5,
+            int protocol = 0);
   // Initiate a passive mode socket.
 
-  int accept (ACE_LSOCK_Stream &new_ipc_sap, 
-	      ACE_Addr * = 0, 
-	      ACE_Time_Value *timeout = 0, 
-	      int restart = 1,
+  int accept (ACE_LSOCK_Stream &new_ipc_sap,
+              ACE_Addr * = 0,
+              ACE_Time_Value *timeout = 0,
+              int restart = 1,
               int reset_new_handle = 0) const;
   // Accept a new data transfer connection.
 

@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_NAME_HANDLER_H)
+#ifndef ACE_NAME_HANDLER_H
 #define ACE_NAME_HANDLER_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * http.h: Deals with HTTP-related issues
- * 
+ *
  * Rob McCool
  */
 
@@ -78,7 +78,7 @@ int http_parse_request(char *t, Request *rq, Session *sn);
 /*
  * Scans HTTP headers from the given netbuf, and places them in headers.
  * If netbuf is NULL, the session's inbuf is used.
- * 
+ *
  * Folded lines are joined and the linefeed removed (but not the whitespace).
  * If there are any repeat headers they are joined and the two field bodies
  * separated by a comma and space.
@@ -106,7 +106,7 @@ int http_start_response(Session *sn, Request *rq);
 
 /*
  * http_hdrs2env takes the entries from the given pblock and converts them
- * to an environment. 
+ * to an environment.
  *
  * Each name entry will be made uppercase, prefixed with HTTP_ and any
  * occurrence of - will be converted to _.
@@ -133,7 +133,7 @@ int http_set_finfo(Session *sn, Request *rq, struct stat *finfo);
 
 
 /*
- * Takes the given pblock and prints headers into the given buffer at 
+ * Takes the given pblock and prints headers into the given buffer at
  * position pos. Returns the buffer, reallocated if needed. Modifies pos.
  */
 
@@ -155,10 +155,10 @@ void http_finish_request(Session *sn, Request *rq);
 void http_handle_session(Session *sn);
 
 /*
- * http_uri2url takes the give URI prefix and URI suffix and creates a 
+ * http_uri2url takes the give URI prefix and URI suffix and creates a
  * newly-allocated full URL from them of the form
  * http://(server):(port)(prefix)(suffix)
- * 
+ *
  * If you want either prefix or suffix to be skipped, use "" instead of NULL.
  */
 

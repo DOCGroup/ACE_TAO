@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_)
+#ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 
 class be_visitor_sequence_base : public be_visitor_decl

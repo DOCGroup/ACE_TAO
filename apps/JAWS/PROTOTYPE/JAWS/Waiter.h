@@ -1,10 +1,14 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_WAITER_H)
+#ifndef JAWS_WAITER_H
 #define JAWS_WAITER_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "JAWS/Assoc_Array.h"
 #include "JAWS/Export.h"

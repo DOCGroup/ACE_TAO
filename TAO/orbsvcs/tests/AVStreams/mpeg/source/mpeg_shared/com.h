@@ -1,22 +1,22 @@
 /* $Id$ */
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
- * 
- * Permission to use, copy, modify, distribute, and sell this software and its 
- * documentation for any purpose is hereby granted without fee, provided that 
- * the above copyright notice appear in all copies and that both that 
- * copyright notice and this permission notice appear in supporting 
- * documentation, and that the name of O.G.I. not be used in advertising or 
- * publicity pertaining to distribution of the software without specific, 
- * written prior permission.  O.G.I. makes no representations about the 
- * suitability of this software for any purpose.  It is provided "as is" 
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the name of O.G.I. not be used in advertising or
+ * publicity pertaining to distribution of the software without specific,
+ * written prior permission.  O.G.I. makes no representations about the
+ * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
- * 
- * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
- * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
- * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY 
- * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN 
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+ *
+ * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author: Shanwei Cen
@@ -26,32 +26,32 @@
 /*
 Some assumptions about the streams created in this file:
 
-	PACKET STREAM:
-	
-		* send(), recv() may not work, we can only use
-		  read()/write().
-		
-		* write(): either send the whole packet, or send nothing
+        PACKET STREAM:
 
-		* read(): read() will read the minimun of the
-		  requested number of bytes and current packet size.
-		  read() can read part of a packet, but it
-		  will not read cross packet boundaris
+                * send(), recv() may not work, we can only use
+                  read()/write().
 
-	    There are two modes: non-discard and dicard. If a packets is
-	          not read all its bytes, the remaining bytes will be
-		  or not be discarded.
+                * write(): either send the whole packet, or send nothing
 
-		  This is indicated by if (*max_pkt_size) is positive
-		  (non-discard) or negative (discard)
+                * read(): read() will read the minimun of the
+                  requested number of bytes and current packet size.
+                  read() can read part of a packet, but it
+                  will not read cross packet boundaris
 
-	BYTE_STREAM: reliable
+            There are two modes: non-discard and dicard. If a packets is
+                  not read all its bytes, the remaining bytes will be
+                  or not be discarded.
 
-		* write(): might write only part of requested bytes
-		  each time. (this is the case in SunOS4)
+                  This is indicated by if (*max_pkt_size) is positive
+                  (non-discard) or negative (discard)
 
-		* read(): might read less than requested bytes.
-		  (this is the case in SunOS4).
+        BYTE_STREAM: reliable
+
+                * write(): might write only part of requested bytes
+                  each time. (this is the case in SunOS4)
+
+                * read(): might read less than requested bytes.
+                  (this is the case in SunOS4).
 */
 
 /* returns: -1 -- failed,  0 -- successful */
@@ -64,7 +64,7 @@ void ComCloseClient(void);
    "" -- UNIX socket, reliable byte stream
    [INET:]real_address -- INET sockets, reliable control byte stream, and
                           *max_pkt_size == 0 : reliable data byte stream, or
-			                != 0 : unreliable packet stream;
+                                        != 0 : unreliable packet stream;
    ATM:real_address -- ATM sockets, both data and control are
                        unreliable packet streams;
    DATM:real_address -- INET/UNIX control reliable byte stream
@@ -73,14 +73,14 @@ void ComCloseClient(void);
    returns: -1 -- failed,  0 -- successful
             *ctr_fd  -- control connection file descriptor
             *data_fd  -- data connection file descriptor
-	    *max_pkt_size -- == 0 : reliable BYTE_STREAM
-	                     > 0  : unreliable non-discard PACKET STREAM
-			            with given maximum packet size (bytes);
-			     < 0  : unreliable discard PACKET STREAM
-			            with given maximum packet size (bytes);
+            *max_pkt_size -- == 0 : reliable BYTE_STREAM
+                             > 0  : unreliable non-discard PACKET STREAM
+                                    with given maximum packet size (bytes);
+                             < 0  : unreliable discard PACKET STREAM
+                                    with given maximum packet size (bytes);
 
           It is suggested that if a BYTE_STREAM is not known to be discarded,
-	  than it is safer to indicate it as discard.
+          than it is safer to indicate it as discard.
    */
 int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size);
 int VideoComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size);

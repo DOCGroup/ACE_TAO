@@ -1,7 +1,7 @@
 // -*- c++ -*-
 // $Id$
 
-#if !defined (REACTOR_I_H)
+#ifndef REACTOR_I_H
 #  define REACTOR_I_H
 
 #include "ReactorS.h"

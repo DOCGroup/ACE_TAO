@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMS_FLO_H)
+#ifndef _PMS_FLO_H
 #define _PMS_FLO_H
 
 #include "PM_Server.h"
@@ -22,7 +22,7 @@
 class PMS_Flo : public PM_Server
 {
   // = TITLE
-  //   Provides the server's lookup table abstraction for `flo' users... 
+  //   Provides the server's lookup table abstraction for `flo' users...
 
 public:
   PMS_Flo (void);
