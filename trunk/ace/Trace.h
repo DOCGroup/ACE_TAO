@@ -40,6 +40,9 @@ public:
   // as the function is exited.
 
   // = Control the tracing level.
+  static int  is_tracing(void);
+  // Determine if tracing is enabled (return == 1) or not (== 0)
+
   static void start_tracing (void);
   // Enable the tracing facility.
 
