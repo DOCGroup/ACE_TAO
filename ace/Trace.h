@@ -14,8 +14,11 @@
 //
 // ============================================================================
 
+
 #ifndef ACE_TRACE_H
 #define ACE_TRACE_H
+
+#include "ace/OS.h"
 
 class ACE_Export ACE_Trace
 {

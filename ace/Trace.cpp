@@ -13,7 +13,6 @@ ACE_RCSID(ace, Trace, "$Id$")
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
-#include "ace/Log_Msg.h"
 #include "ace/Trace.h"
 
 #if !defined (__ACE_INLINE__)
