@@ -5984,4 +5984,37 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 #endif /* ACE_HAS_AIO_CALLS */
 
+  // Wrapping around wait status <wstat> macros for Win.
+#if defined (ACE_WIN32)
+  // Evaluates to a non-zero value if status was returned for a child
+  // process that terminated normally.
+  // 0 means status wasn't returned.
+#define WIFEXITED(stat) 0
+
+  // If the  value  of  WIFEXITED(stat)  is non-zero,  this macro
+  // evaluates to the exit  code  that  the  child process exit(3C),
+  // or the value that the  child process returned from main.
+  // Peaceful exit code is 0.
+#define WEXITSTATUS(stat) 0
+
+  // Evaluates  to  a  non-zero  value   if status  was  returned for
+  // a child process  that  terminated  due   to   the receipt of a
+  // signal.  
+  // 0 means status wasnt returned.
+#define WIFSIGNALED(stat) 0 
+                 
+  // If the value of  WIFSIGNALED(stat)  is non-zero,  this macro
+  // evaluates to the number of the signal that  caused  the
+  // termination of the child process.  
+#define WTERMSIG(stat) 0 
+                 
+#define WIFSTOPPED(stat) 0
+                 
+#define WSTOPSIG(stat) 0
+
+#define WIFCONTINUED(stat) 0
+
+#define WCOREDUMP(stat) 0
+#endif /* ACE_WIN32 */
+
 #endif  /* ACE_OS_H */
