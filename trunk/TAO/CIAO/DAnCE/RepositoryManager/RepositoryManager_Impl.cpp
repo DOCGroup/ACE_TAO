@@ -3,8 +3,8 @@
 
 #include "RepositoryManager_Impl.h"
 #include "Repository_Manager_conf.h"
-#include "Config_Handlers/TPD_Handler.h"
-#include "Config_Handlers/DnC_Dump.h"
+#include "Old_Config_Handlers/TPD_Handler.h"
+#include "Old_Config_Handlers/DnC_Dump.h"
 
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl
    (CORBA::ORB_ptr orb,

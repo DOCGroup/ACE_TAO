@@ -24,18 +24,18 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 #include "tao/Exception.h"
-#include "CIAO/DAnCE/Config_Handlers/XercesString.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/XercesString.h"
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/parsers/AbstractDOMParser.hpp>
-#include "CIAO/DAnCE/Config_Handlers/Config_Handler_export.h"
-#include "CIAO/DAnCE/Config_Handlers/Domain_Handler.h"
-#include "CIAO/DAnCE/Config_Handlers/PC_Handler.h"
-#include "CIAO/DAnCE/Config_Handlers/Plan_Handler.h"
-#include "CIAO/DAnCE/Config_Handlers/CompImplDesc_Handler.h"
-#include "CIAO/DAnCE/Config_Handlers/DnC_Dump.h"
-#include "CIAO/DAnCE/Config_Handlers/Utils.h"
-#include "CIAO/DAnCE/Config_Handlers/Config_Error_Handler.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/Config_Handler_export.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/Domain_Handler.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/PC_Handler.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/Plan_Handler.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/CompImplDesc_Handler.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/DnC_Dump.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/Utils.h"
+#include "CIAO/DAnCE/Old_Config_Handlers/Config_Error_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;

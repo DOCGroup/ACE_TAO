@@ -1,3 +1,10 @@
+Sat Mar 19 17:29:50 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+
+          Fixed compiler errors.
+
 Sat Mar 19 16:57:41 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Old_Config_Handlers/Any_Handler.cpp:
