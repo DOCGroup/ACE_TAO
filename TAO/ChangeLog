@@ -1,3 +1,29 @@
+Mon May 12 16:15:27 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * examples/AMH/Sink_Server/client.bor:
+        * examples/AMH/Sink_Server/mt_server.bor:
+        * examples/AMH/Sink_Server/st_server.bor:
+        * examples/Buffered_AMI/client.bor:
+        * examples/Buffered_AMI/server.bor:
+        * examples/Buffered_Oneways/Buffered_Oneways_client.bor:
+        * examples/Buffered_Oneways/Buffered_Oneways_server.bor:
+        * orbsvcs/CosEvent_Service/Makefile.bor:
+        * orbsvcs/Event_Service/Makefile.bor:
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.bor:
+        * orbsvcs/LoadBalancer/LoadManager.bor:
+        * orbsvcs/LoadBalancer/LoadMonitor.bor:
+        * orbsvcs/Naming_Service/Naming_Service.bor:
+        * orbsvcs/Naming_Service/NT_Naming_Service.bor:
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+        * orbsvcs/Time_Service/Time_Service_Server.bor:
+        * orbsvcs/Time_Service/Time_Service_Clerk.bor:
+        * orbsvcs/Trading_Service/Makefile.bor:
+
+          And yet more fixes for static builds linking. More to come.
+
 Sun May 11 22:48:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/LoadBalancer/Makefile.LoadManager:
