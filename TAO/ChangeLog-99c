@@ -1,3 +1,10 @@
+Tue Jul 13 21:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* utils/Makefile (DIRS):
+
+	  Removed `nslist' from the list of directories since there is no
+	  such directory.
+
 Tue Jul 13 21:43:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
