@@ -1,3 +1,35 @@
+Sat Jun  2 15:44:27 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (is_equivalent):
+
+	  If the dynamic_cast to a "TAO_SSLIOP_Endpoint *" returns zero,
+	  then assume that the two endpoints are not equivalent.  This
+	  also fixes potential segmentation fault.
+
+	  (hash):
+
+	  Improved the computed hash value by adding the SSL port to it.
+	  Previously, the same hash value as the non-SSL enabled IIOP
+	  endpoint was used.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send_i):
+
+	  Reverted the change described in ChangeLog entry
+	  Wed Feb 14 10:02:44 2001  Carlos O'Ryan  <coryan@uci.edu> from
+	  the bug 132 branch (see ChangeLog entry
+	  Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>).  The
+	  change incorrectly passed an iovec array to the
+	  ACE_SSL_SOCK_Stream::send() method.  That method accepts a
+	  "void *" parameter to a buffer, not an iovec array.  This fixes,
+	  or at least improves, the problem where the SSLIOP connection
+	  was repeatedly shutdown on every other invocation.  Basically, a
+	  malformed GIOP message was repeatedly sent to the target.
+
+	  This should be considered a temporary fix.  The real fix must
+	  avoid iovec vectors altogether since it is not possible to
+	  maintain proper iovec non-blocking send semantics with SSL.
+	  Instead, a single buffer must be sent.
+
 Sat Jun  2 17:24:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAnyFactory.cpp:
