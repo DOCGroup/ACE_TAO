@@ -17,7 +17,14 @@
      seem to be a good choice.
 
   [ARGV]
-     Is kind of falky.  I use it to pass in command line arguments.  
+     Is kind of falky.  I use it to pass in command line arguments.
+
+  [CE Toolkit]
+     Using CE toolkit for C++ is simply a pain in the ass.  It takes
+     around 30 seconds to start up a debug session and 5+ seconds to
+     single step thru a statement.  It only allows remote debugging
+     using the serial link but not the network.  (BTW, currently, CE
+     only support NE2000 compatible PCMCIA ethernet card.)  
 
 [Hints on writing portable code using ACE]
 
