@@ -1,3 +1,14 @@
+Fri Jun 15 21:14:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tao/RTCORBA/Makefile:
+
+          Updated dependencies as they seem to have gone out of sync.
+
+        * tao/RTPortableServer/Makefile:
+
+          Added missing library to the link line. It caused the link to fail
+          on Tru64.
+
 Fri Jun 15 20:55:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * tests/Crashed_Callback/Crashed_Callback.cpp (crash_now_please):
@@ -51,7 +62,7 @@ Fri Jun 15 15:10:40 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * tao/RTPortableServer/Makefile:
 
           Fixed a bug which caused the static versions of the libraries
-          when static wasn't specified.
+          to be built even when static wasn't specified.
 
 Fri Jun 15 11:20:22 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
