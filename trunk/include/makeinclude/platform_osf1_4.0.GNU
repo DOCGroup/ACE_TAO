@@ -14,16 +14,21 @@ CXX             = $(CC)
 CFLAGS          += -pthread
 
 ifndef CXX_VERSION
-  CXX_VERSION     := $(shell $(CXX) -V)
+  CXX_VERSION := $(shell $(CXX) -V)
 endif # CXX_VERSION
 
+#### 6.1-029 and later support msg 1136.  We disable it by default.
 ifeq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
-  PRE6_2 = 1
+  CXX_HAS_MSG_1136 = 0
 else
 ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
-  PRE6_2 = 1
+  ifeq (6.1-029,$(findstring 6.1-029,$(CXX_VERSION)))
+    CXX_HAS_MSG_1136 = 1
+  else  # 6.1, but not -029
+    CXX_HAS_MSG_1136 = 0
+  endif # 6.1, but not -029
 else  # 6.2 or later
-  PRE6_2 = 0
+  CXX_HAS_MSG_1136 = 1
 endif # 6.2 or later
 endif # 6.0
 
@@ -43,11 +48,11 @@ endif # 6.0
 # 1136: conversion to integral type of smaller size could lose data
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number
-  ifeq (1,$(PRE6_2))
+  ifeq (0,$(CXX_HAS_MSG_1136))
     WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839
-  else  # 6.2 or later
+  else  # CXX_HAS_MSG_1136
     WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839,1136
-  endif # 6.2 or later
+  endif # CXX_HAS_MSG_1136
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
