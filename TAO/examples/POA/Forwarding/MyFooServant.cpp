@@ -77,7 +77,7 @@ MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
           ACE_THROW (Foo::Cannot_Forward ());
         }
       
-      void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
+      void *ptr = servant->_downcast ("IDL:omg.org/PortableServer/POA:1.0");
       POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
       TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
       
