@@ -1257,7 +1257,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-		::SetEvent (cv->waiters_done_);
+		ACE_OS::event_signal (cv->waiters_done_);
 	      ACE_OS::mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1342,7 +1342,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-		::SetEvent (cv->waiters_done_);
+		ACE_OS::event_signal (cv->waiters_done_);
 	      ACE_OS::mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1453,7 +1453,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-		::SetEvent (cv->waiters_done_);
+		ACE_OS::event_signal (cv->waiters_done_);
 	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1516,7 +1516,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-		::SetEvent (cv->waiters_done_);
+		ACE_OS::event_signal (cv->waiters_done_);
 	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
 	    }
 	}

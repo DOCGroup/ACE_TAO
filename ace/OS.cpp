@@ -649,7 +649,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
       sparam.sched_priority = priority > PRIORITY_MAX ? PRIORITY_MAX : priority;
-#elif defined(ACE_HAS_IRIX62_THREADS)
+#elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
       sparam.sched_priority = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
 #elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
       sparam.prio = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
