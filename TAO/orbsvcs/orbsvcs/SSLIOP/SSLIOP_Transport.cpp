@@ -502,8 +502,9 @@ TAO_SSLIOP_Client_Transport::send_request_header (
 void
 TAO_SSLIOP_Client_Transport::close_connection (void)
 {
-  this->handler_->purge_entry ();
   this->service_handler ()->handle_close ();
+
+  this->handler_->purge_entry ();
 }
 
 // *********************************************************************
@@ -536,6 +537,6 @@ TAO_SSLIOP_Server_Transport::service_handler (void)
 void
 TAO_SSLIOP_Server_Transport::close_connection (void)
 {
-  this->handler_->purge_entry ();
   this->service_handler ()->handle_close ();
+  this->handler_->purge_entry ();
 }

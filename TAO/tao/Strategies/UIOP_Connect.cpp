@@ -485,8 +485,16 @@ TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
       this->reactor ()->cancel_timer (this);
     }
 
-  // Now do the decerment of the ref count
-  this->decr_ref_count ();
+  if (this->is_registered ())
+    {
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->is_registered (0);
+
+      // Now do the decrement of the ref count
+      this->decr_ref_count ();
+    }
 
   return 0;
 }

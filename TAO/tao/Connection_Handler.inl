@@ -11,12 +11,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (void)
 {
 }
 
-ACE_INLINE
-TAO_Connection_Handler::~TAO_Connection_Handler (void)
-{
-}
-
-
 ACE_INLINE TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Connection_Handler::cache_map_entry (void)
 {
@@ -47,7 +41,7 @@ TAO_Connection_Handler::decr_ref_count (void)
       // vanishes, the entry that we have is invalid. So, do this
       // check before we access the internals of the
       // <cache_map_entry_>
-      if (cache_map_entry_)
+      if (this->cache_map_entry_)
         {
 
           // Now mark the Ext_Id for us as closed
