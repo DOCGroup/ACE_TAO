@@ -8,6 +8,8 @@ project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
     Object1_i.cpp
     server.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(RTCosScheduling_Client): rtcosscheduling, rt_client, orbsvcsexe {
@@ -19,6 +21,8 @@ project(RTCosScheduling_Client): rtcosscheduling, rt_client, orbsvcsexe {
   comps = 
   Source_Files {
     client.cpp
+  }
+  IDL_Files {
   }
 }
 
