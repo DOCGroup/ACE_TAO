@@ -1,7 +1,13 @@
+Tue Feb 22 21:20:22 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Stack.cpp:
+	* protocols/ace/RMCast/Stack.h: Moved implementation of functions
+	from .h to .cpp. This should get rid of warnings in VC7.1 build.
+
 Mon Feb 21 18:18:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Added a check for the need to add _NO_BITFIELDS to
-	  compile macros. This is needed to prevent compile errors on 
+	  compile macros. This is needed to prevent compile errors on
 	  Visual Age C++ on AIX. Without it, the check for need to alter
 	  TCP header file includes gets the wrong answer, then the build
 	  tries the wrong thing. This gets around having to know the
