@@ -94,14 +94,17 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\TreeBaseC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\TreeControllerC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\TreeNodeC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

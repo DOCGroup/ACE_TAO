@@ -94,6 +94,7 @@ SOURCE=.\anyop.cpp
 # Begin Source File
 
 SOURCE=.\param_testC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
