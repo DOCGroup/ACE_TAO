@@ -1,3 +1,8 @@
+Sun Oct 25 00:15:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (process_directives): We should use
+	  ASYS_WIDE_STRING to convert a <char *> to a UNICODE string.
+
 Sat Oct 24 18:39:11 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (get_ip_interfaces, get_handle): Add _AIX to the list
