@@ -1,3 +1,11 @@
+Wed Jun 20 09:19:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+
+          Added RT_ORB_Loader to the service configurator files.  Thanks
+          to Craig Rodrigues for pointing this out.
+
 Wed Jun 20 07:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a warning in Win32
