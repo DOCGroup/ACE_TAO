@@ -1635,7 +1635,7 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
-  CORBA::Short priority;
+  CORBA::Short priority = TAO_INVALID_PRIORITY;
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
                                                                 priority,
                                                                 ACE_TRY_ENV);

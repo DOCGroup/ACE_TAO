@@ -1,9 +1,15 @@
+Tue Jun 06 23:25:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (servant_to_reference): Made sure that <priority> is
+	  initialized to TAO_INVALID_POLICY since in the case of implicit
+	  activation, this variable will be read.
+
 Tue Jun  6 21:27:11 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (fini):
 
           Changed a ACE_TRY_NEW_ENV to ACE_TRY, since fini has an
-          ACE_TRY_ENV argument already.  
+          ACE_TRY_ENV argument already.
 
 Tue Jun 06 22:20:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
