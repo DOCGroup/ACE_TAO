@@ -24,6 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\Addr.obj \
 	$(OBJDIR)\Arg_Shifter.obj \
 	$(OBJDIR)\ARGV.obj \
+	$(OBJDIR)\Argv_Type_Converter.obj \
 	$(OBJDIR)\Asynch_IO.obj \
 	$(OBJDIR)\Asynch_IO_Impl.obj \
 	$(OBJDIR)\ATM_Acceptor.obj \

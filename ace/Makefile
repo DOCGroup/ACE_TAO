@@ -30,6 +30,7 @@ UTILS_FILES = \
   Active_Map_Manager \
   Arg_Shifter \
   ARGV \
+  Argv_Type_Converter \
   Capabilities \
   Containers \
   Configuration \
