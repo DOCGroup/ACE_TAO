@@ -110,7 +110,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   if (idl_global->opt_tc () ||
       node->in_recursion ())
     {
-      if ((qnode = this->queue_insert (this->tc_queue_, node, this->tc_offset_)) == 0)
+      if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typecode_defn::"
