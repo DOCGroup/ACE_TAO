@@ -418,7 +418,7 @@ ACE_Filecache_Object::init (void)
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (void)
-  : tempname_ (0), mmap_ (0), handle_ (0), stat_ (), size_ (0),
+  : tempname_ (0), mmap_ (), handle_ (0), stat_ (), size_ (0),
     action_ (0), error_ (0), stale_ (0), sa_ (),
     junklock_ (), lock_ (junklock_)
 {
@@ -429,7 +429,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
-  : tempname_ (0), mmap_ (0), handle_ (0), stat_ (), size_ (0),
+  : tempname_ (0), mmap_ (), handle_ (0), stat_ (), size_ (0),
     action_ (0), error_ (0), stale_ (0), sa_ (sa), junklock_ (),
     lock_ (lock_)
 {
@@ -717,4 +717,3 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Filecache_Objec
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
