@@ -28,8 +28,10 @@ class ACE_Export ACE_Process_Options
 //    and exec).
 {
 public:
+  enum { DEFAULT_CL_OPTIONS_BUF_LEN = 1024 };
+
   ACE_Process_Options (int inherit_environment = 1,
-		       int cl_options_buf_len=1024);
+		       int cl_options_buf_len=DEFAULT_CL_OPTIONS_BUF_LEN);
   // If <inherit_environment> == 1, the new process will inherit the
   // environment of the current process.  <cl_options_buf_len> is the
   // max strlen for command-line arguments.
@@ -106,9 +108,9 @@ public:
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
-  BOOL new_console (void) const;
+  int new_console (void) const;
   // Get.
-  void new_console (BOOL);
+  void new_console (int);
   // Set.
 
   STARTUPINFO *startup_info (void);
@@ -127,15 +129,16 @@ public:
   // If this is called, a non-null thread attributes is sent to
   // CreateProcess.
 
-  BOOL handle_inheritence (void);
+  int handle_inheritence (void);
   // Default is TRUE.
-  void handle_inheritence (BOOL);
+  void handle_inheritence (int);
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
 
-  ACE_HANDLE std_in (void);
-  ACE_HANDLE std_out (void);
-  ACE_HANDLE std_err (void);
+  // = Accessors for the standard handles.
+  ACE_HANDLE get_stdin (void);
+  ACE_HANDLE get_stdout (void);
+  ACE_HANDLE get_stderr (void);
 
 #endif /* ACE_WIN32 */
 
@@ -151,14 +154,14 @@ protected:
     MAX_ENVIRONMENT_ARGS = 128
   };
 
+  int inherit_environment_;
+  // Whether the child process inherits the current process
+  // environment.
+
 #if defined (ACE_WIN32)
   void inherit_environment (void);
   // Helper function to grab win32 environment and stick it in
   // environment_buf_ using this->setenv_i.
-
-  int inherit_environment_;
-  // Whether the child process inherits the current process
-  // environment.
 
   int environment_inherited_;
   // Ensures once only call to inherit environment.
@@ -409,24 +412,51 @@ private:
   int index_;
 
   struct Preserve_Entry
+    // = TITLE
+    //    Preserve Entry
+    // = DESCRIPTION
+    //    Defines a set of characters that designate an area that
+    //    should not be parsed, but should be treated as a complete
+    //    token.  For instance, in: (this is a preserve region), start
+    //    would be a left paren -(- and stop would be a right paren
+    //    -)-.  The strip determines whether the designators should be
+    //    removed from the token.
   {
     char start_;
+    // E.g., "(".
     char stop_;
+    // E.g., ")".
     int strip_;
+    // Whether the designators should be removed from the token.
   };
 
   Preserve_Entry preserves_[MAX_PRESERVES];
+  // The application can specify MAX_PRESERVES preserve designators. 
+
   int preserves_index_;
+  // Pointer to the next free spot in preserves_.
 
   struct Delimiter_Entry
+    // = TITLE
+    //    Delimiter Entry
+    // = DESCRIPTION
+    //    Describes a delimiter for the tokenizer.
   {
     char delimiter_;
+    // Most commonly a space ' '.
     char replacement_;
+    // What occurrences of delimiter_ should be replaced with.
     int replace_;
+    // Whether replacement_ should be used.  This should be replaced
+    // with a technique that sets replacement_ = delimiter by
+    // default.  I'll do that next iteration.
   };
 
   Delimiter_Entry delimiters_[MAX_DELIMITERS];
+  // The tokenizer allows MAX_DELIMITERS number of delimiters.
+
   int delimiter_index_;
+  // Pointer to the next free space in delimiters_.
 };
 
 #if defined (__ACE_INLINE__)

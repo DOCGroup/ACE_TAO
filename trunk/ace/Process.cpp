@@ -233,6 +233,55 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
     // CreateProcess failed.
     return -1;
 #else /* ACE_WIN32 */
+  // Fork the new process.
+  this->child_id_ = ACE_OS::fork (options.path ());
+
+  switch (this->child_id_)
+    {
+    case -1:
+      // Error.
+      return -1;
+    case 0:
+      // Child process.
+      {
+	if (options.get_stdin () != ACE_INVALID_HANDLE
+	    && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
+	  return -1;
+	else if (options.get_stdout () != ACE_INVALID_HANDLE
+		 && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
+	  return -1;
+	else if (options.get_stderr () != ACE_INVALID_HANDLE
+		 && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
+	  return -1;
+
+	// If we must, set the working directory for the child process.
+	if (options.working_directory () != 0)
+	  ::chdir (options.working_directory ());
+
+	// Child process executes the command.
+	int result;
+      
+	if (options.env_argv () == 0)
+	  // Not sure if options.path () will work.
+	  result = ACE_OS::execvp (options.path (), 
+				   options.cl_options_argv ()); // command-line args
+	else
+	  result = ACE_OS::execve (options.path (),
+				   options.cl_options_argv (), // command-line args
+				   options.env_argv ()); // environment variables
+
+	if (result == -1)
+	  // If the execv fails, this child needs to exit.
+	  ACE_OS::exit (errno);
+
+	return 0;
+      }
+
+    default:
+      // Server process.  The fork succeeded.
+      return this->child_id_;
+    }
+
   return 0;
 #endif /* ACE_WIN32 */
 }
@@ -253,6 +302,7 @@ ACE_ProcessEx::wait (const ACE_Time_Value &tv)
 #if defined (ACE_WIN32)
   return ::WaitForSingleObject (process_info_.hProcess, tv.msec ());
 #else /* ACE_WIN32 */
+  ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -489,15 +539,15 @@ ACE_Process::ACE_Process (char *argv[],
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
-  : 
-#if defined (ACE_WIN32)
+  : cl_options_ (0),
     inherit_environment_ (ie),
-    environment_inherited_ (0),
+#if defined (ACE_WIN32)
     handle_inheritence_ (TRUE),
     new_console_ (FALSE),
     set_handles_called_ (0),
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
+    environment_inherited_ (0),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
@@ -505,13 +555,9 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* ACE_WIN32 */
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-    cl_options_buf_ (0),
-    cl_options_ (0)
+    cl_options_buf_ (0)
 {
   ACE_NEW (cl_options_, char[cobl]);
-
-  if (cl_options_ == 0)
-    ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_Process_Options::ACE_Process_Options"));
   cl_options_[0] = '\0';
 
   working_directory_[0] = '\0';
