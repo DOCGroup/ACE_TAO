@@ -1,19 +1,20 @@
-<<<<<<< ChangeLog
 Mon May 11 12:31:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.h: Made ACE_LD_SEARCH_PATH, ACE_LD_SEARCH_PATH_SEPARATOR_STR,
-	  ACE_DLL_PREFIX, ACE_DLL_SUFFIX settable via config.h.
+        * ace/OS.h: Made ACE_LD_SEARCH_PATH, ACE_LD_SEARCH_PATH_SEPARATOR_STR,
+          ACE_DLL_PREFIX, ACE_DLL_SUFFIX settable via config.h.
 
-	* ace/config-hpux-10.x.h:
-	  ace/config-hpux11.h: Set ACE_LD_SEARCH_PATH, ACE_DLL_SUFFIX.
-	  Thanks to Kirill Rybaltchenko and David Levine for identifying
-	  this problem.
+        * ace/config-hpux-10.x.h:
+          ace/config-hpux11.h: Set ACE_LD_SEARCH_PATH, ACE_DLL_SUFFIX.
+          Thanks to Kirill Rybaltchenko and David Levine for identifying
+          this problem.
 
 Mon May 11 12:27:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: instead of
           using GNU ranlib386 after using GHS ax for i386 targets, just
           use GNU ar386.
+
+        * ace/gethrtime.cpp: added some comments about GHS asm support.
 
 Mon May 11 05:14:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
