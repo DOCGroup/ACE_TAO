@@ -1,3 +1,14 @@
+Sat Oct 11 11:14:42 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/SOCK_Connector.cpp: It appears that connect() can set the
+ 	  ETIMEDOUT errno if the connection times out (whatever that
+ 	  means).  Therefore, I need to check for that errno, rather than
+ 	  ETIME after calling connect().
+
+	* tests/SOCK_Connector_Test.cpp: Added a check for ETIMEDOUT
+	  since this appears to be set by some platforms (e.g., 
+	  SGI).
+
 Sat Oct 11 02:52:10 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.14, released Sat Oct 11 02:52:10 1997.
