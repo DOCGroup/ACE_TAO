@@ -1,3 +1,18 @@
+Mon Jun 14 11:50:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueFactory_Map.cpp:
+          To make things easier to maintenance use the new
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
+          whether we need to explicit instantiate static template members.
+          This macro is set for the GNU compiler for AIX, HPUX and VxWorks.
+
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * performance-tests/CCubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/CCubit/TAO/IDL_Cubit/server.cpp:
+        * performance-tests/CRTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/CRTCorba/Thread_Pool/client.cpp:
+          Added needed includes
+
 Mon Jun 14 10:53:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/mfc/server.cpp:

@@ -7,6 +7,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/RTCORBA.h"

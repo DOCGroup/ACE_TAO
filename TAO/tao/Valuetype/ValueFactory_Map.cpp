@@ -122,7 +122,7 @@ template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA::ValueFactoryBase *>
 #pragma instantiate TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
 
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
