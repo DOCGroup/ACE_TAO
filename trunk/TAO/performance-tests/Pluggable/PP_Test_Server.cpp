@@ -100,16 +100,10 @@ PP_Test_Server::init (int argc,
 int
 PP_Test_Server::run (CORBA::Environment& ACE_TRY_ENV)
 {
-  int result = this->orb_manager_.run (ACE_TRY_ENV);
-
-  ACE_CHECK_RETURN (-1);
-
   if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "PP_Test_Server::run"),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "PP_Test_Server::run"),
+                      -1);
   return 0;
 }
 
