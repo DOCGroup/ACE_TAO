@@ -1,3 +1,13 @@
+Tue Aug 14 14:19:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Memory_Pool.i (ACE_Local_Memory_Pool dtor): Call release()
+          here to free up the blocks allocated by the pool, else they're
+          stranded and can't be freed.
+
+        * ace/Memory_Pool.cpp (ACE_Local_Memory_Pool::release): After
+          freeing up the blocks, reset the allocated_chunks_ set to be
+          sure they are also freed, and the chunks can't be freed again.
+
 Tue Aug 14 14:19:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Applied the patches sent by Tibor Kiss
