@@ -504,7 +504,7 @@ Keith Brown <kalbrown@ix.netcom.com>
 Barry Hoggard <hoggard@cfx.com>
 Peter J. Mason <peterm@fl.net.au>
 Jerry D. De Master <jdemaste@ipdinc.com>
-Greg Gallant <greg.gallant@jhuapl.edu>
+Greg Gallant <gcg@intercap.com>
 wym <wym@dekang.com>
 Karel Zuiderveld <kzuiderveld@vitalimages.com>
 Mike Goldman <whig@by.net>
@@ -869,6 +869,8 @@ Hugh Arnold <harnold@itginc.com>
 Hessel Idzenga <idzenga@lucent.com>
 Mark C. Barnes <marcus@muse3d.com>
 Suresh Kannan <kannan@uav.ae.gatech.edu>
+Alex Scholte <Alex.Scholte@getronics.com>
+Greg Jansen <plaidriver@msn.com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
@@ -889,3 +891,4 @@ improvements, suggestions, and or comments, I'd like to hear about it.
 
                 Douglas C. Schmidt
                 schmidt@cs.wustl.edu
+
