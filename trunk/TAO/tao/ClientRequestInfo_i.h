@@ -30,6 +30,7 @@
 #include "PortableInterceptorC.h"
 #include "StringSeqC.h"
 #include "Service_Context.h"
+#include "PICurrent.h"
 
 class TAO_GIOP_Invocation;
 
@@ -242,6 +243,10 @@ protected:
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;
+
+  /// The "Request Scope Current" (RSC) object, as required by
+  /// Portable Interceptors.
+  TAO_PICurrent_Impl rs_pi_current_;
 
 };
 
