@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs/ETCL
-//
-// = FILENAME
-//    ETCL_Interpreter.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu> based on previous work by
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    ETCL_Interpreter.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> based on previous work by
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ETCL_INTERPRETER_H
 #define TAO_ETCL_INTERPRETER_H
@@ -30,32 +27,35 @@
 
 class TAO_ETCL_Constraint;
 
+/**
+ * @class TAO_ETCL_Interpreter
+ *
+ * @brief TAO_ETCL_Interpreter is the superclass for all ETCL interpreters.
+ * Its build tree method invokes the yacc parser to parse a constraint
+ * or preference string.
+ */
 class TAO_ETCL_Export TAO_ETCL_Interpreter
 {
-  // = TITLE
-  //      TAO_ETCL_Interpreter is the superclass for all ETCL interpreters.
-  //      Its build tree method invokes the yacc parser to parse a constraint
-  //      or preference string.
 protected:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_ETCL_Interpreter (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_ETCL_Interpreter (void);
-  // Destructor.
 
+  /// Using the Yacc generated parser, construct an expression tree
+  /// representing <constraints> from the tokens returned by it.
   int build_tree (const char* constraints);
-  // Using the Yacc generated parser, construct an expression tree
-  // representing <constraints> from the tokens returned by it.
 
   static int is_empty_string (const char* str);
 
+  /// The root of the expression tree, not equal to null if build_tree
+  /// successfully builds a tree from the constraints.
   TAO_ETCL_Constraint* root_;
-  // The root of the expression tree, not equal to null if build_tree
-  // successfully builds a tree from the constraints.
 private:
+  /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
-  // This mutex protects the <build_tree> method from reentrance.
 };
 
 
@@ -68,29 +68,32 @@ extern int yylex (void);
 #undef YY_INPUT
 #define YY_INPUT(b, r, ms) (r = TAO_Lex_String_Input::copy_into(b, ms))
 
+/**
+ * @class TAO_Lex_String_Input
+ *
+ * @brief Have Lex read from a string and not from stdin. Essentially,
+ * the interpreter needs to call yylex() until EOF, and call
+ * TAO_Lex_String_Input::reset() with the new string, prior to
+ * calling yyparse.
+ */
 class TAO_Lex_String_Input
 {
-  // = TITLE
-  //   Have Lex read from a string and not from stdin. Essentially,
-  //   the interpreter needs to call yylex() until EOF, and call
-  //   TAO_Lex_String_Input::reset() with the new string, prior to
-  //   calling yyparse.
 public:
+  /// Reset the lex input.
   static void reset (char* input_string);
-  // Reset the lex input.
 
+  /// Method lex will call to read from the input string.
   static int copy_into (char* buf, int max_size);
-  // Method lex will call to read from the input string.
 
 private:
 
+  /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;
   static char* end_;
-  // Pointers to keep track of the input string.
 };
 
-// The union used by lex and bison to build the Abstract Syntax Tree.
+/// The union used by lex and bison to build the Abstract Syntax Tree.
 typedef union
 {
   TAO_ETCL_Constraint* constraint;

@@ -1,19 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/ETCL
-//
-// = FILENAME
-//    ECTL_Constraint_Visitor
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ECTL_Constraint_Visitor
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ETCL_CONSTRAINT_VISITOR_H
 #define TAO_ETCL_CONSTRAINT_VISITOR_H
@@ -44,8 +40,8 @@ class TAO_ETCL_Preference;
 class TAO_ETCL_Export TAO_ETCL_Constraint_Visitor
 {
 public:
+  /// Destructor
   virtual ~TAO_ETCL_Constraint_Visitor (void);
-  // Destructor
 
   virtual int visit_literal (TAO_ETCL_Literal_Constraint *) = 0;
   virtual int visit_identifier (TAO_ETCL_Identifier *) = 0;
