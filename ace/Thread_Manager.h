@@ -585,15 +585,18 @@ public:
   int testresume (ACE_thread_t t_id);
   // True if <t_id> is active (i.e., resumed), else false.
 
-  // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
+  // = Send signals to one or more threads without blocking.
   int kill_all (int signum);
-  // Send signum to all stopped threads
+  // Send <signum> to all stopped threads.  Not supported on platforms
+  // that do not have advanced signal support, such as Win32.
   int kill (ACE_thread_t,
             int signum);
-  // Kill a single thread.
+  // Send the <signum> to a single thread.  Not supported on platforms
+  // that do not have advanced signal support, such as Win32.
   int kill_grp (int grp_id,
                 int signum);
-  // Kill a group of threads.
+  // Send <signum> to a group of threads, not supported on platforms
+  // that do not have advanced signal support, such as Win32.
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   int cancel_all (int async_cancel = 0);
