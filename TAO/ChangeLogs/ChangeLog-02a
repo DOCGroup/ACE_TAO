@@ -1,3 +1,16 @@
+Tue Apr 24 10:03:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Priority_Mapping_Manager.h:
+        * tao/Priority_Mapping_Manager.i:
+
+          Added the extra methods described in the entry below
+          to TAO_Priority_Mapping_Manager_var.
+
+        * tao/CurrentC.cpp:
+
+          Added include of Sequence_T.h, required for compilation
+          by egcs.
+
 Tue Apr 24 08:28:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
