@@ -308,7 +308,7 @@ static void
 remove_files (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n-> removing existent files...\n")));
+              ACE_TEXT ("-> removing existent files...\n")));
 
   int error = 0;
   int test;
@@ -453,6 +453,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
 #if !defined (ACE_HAS_STATIC_LIBS) && \
   (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
    defined (__hpux))
+
   // Platform support DLLs, and not configured to link statically
   ACE_TCHAR arg_str[250];
   ACE_OS::sprintf (arg_str,
