@@ -1,3 +1,30 @@
+Wed Dec 24 13:33:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+
+	* tao/IIOP_EndpointsA.cpp:
+	* tao/IIOP_EndpointsA.h:
+	* tao/IIOP_EndpointsC.cpp:
+	* tao/IIOP_EndpointsC.h:
+	* tao/IOP_IORA.cpp:
+	* tao/IOP_IORA.h:
+	* tao/IOP_IORC.cpp:
+	* tao/IOP_IORC.h:
+
+	  More painful code hacking. Maintenance is harder, but we don't
+	  have a choice right away. Moved all the typecodes from *C.* to
+	  *A.* files. 
+	
+	* tao/IIOP_Endpoints.pidl:	
+	* tao/IOP_IOR.pidl:	
+	* tao/Policy.pidl:
+
+	  Updated documentation.
+	
+	* tao/diffs/IIOP_Endpoints.diff:
+	* tao/diffs/IOP_IOR.diff:
+
+	  Updated diff files.
+
 Wed Dec 24 12:54:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CONV_FRAME.pidl:
