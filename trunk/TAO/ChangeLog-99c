@@ -1,3 +1,10 @@
+Thu Jun 24 20:02:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  The IDL compiler was not generating exception safe code in a
+	  couple of places.
+
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html (pseudo-object): Added a todo item
