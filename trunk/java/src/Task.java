@@ -221,6 +221,14 @@ public abstract class Task implements Runnable, EventHandler
 
   // = Message queue manipulation methods.
 
+
+  /*
+   * Dump debug information.
+   */
+  public void dump ()
+  {
+  }
+
   /**
    * Insert message into the message queue.
    *@param mb Message Block to insert into the Message Queue
@@ -280,26 +288,48 @@ public abstract class Task implements Runnable, EventHandler
   // = ACE_Task utility routines to identify names et al.
 
   /**
-   * Get the name of the enclosing Module. (NOT YET IMPLEMENTED)
+   * Get the name of the enclosing Module.
    *@return the name of the enclosing Module if there's one associated
    * with the Task, else null.
    */
   protected String name ()
     {
-      // Needs to be implemented once Module class has been implemeted
-      return null;
+      if (this.mod_ == null)
+	return null;
+      else
+	return this.mod_.name ();
     }
 
   /**
-   * Get the Task's sibling. (NOT YET IMPLEMENTED)
+   * Get the Task's sibling.
   *@return the Task's sibling if there's one associated with the
   * Task's Module, else null.
   */
   protected Task sibling ()
     {
-      // Needs to be implemented once Module class has been implemeted
-      return null;      
+      if (this.mod_ == null)
+	return null;
+      else
+	return this.mod_.sibling (this);
     }
+
+  /**
+   * Set the Task's module.
+  *@param mod the Task's Module.
+  */
+  protected void module (Module mod)
+  {
+    this.mod_ = mod;
+  }
+
+  /**
+   * Get the Task's module.
+  *@return the Task's Module if there is one, else null.
+  */
+  protected Module module ()
+  {
+    return this.mod_;
+  }
 
   /**
    * Check if queue is a reader.
@@ -354,6 +384,20 @@ public abstract class Task implements Runnable, EventHandler
 	return -1;
     }
 
+
+  /**
+   * Manipulate watermarks.
+   *@param cmd IOCntlCmd
+   *@param size watermark
+   */
+  protected void waterMarks (int cmd, int size)
+  {
+    if (cmd == IOCntlCmds.SET_LWM)
+      this.msgQueue_.lowWaterMark (size);
+    else /* cmd == IOCntlMsg.SET_HWM */
+      this.msgQueue_.highWaterMark (size);
+  }
+
   private ThreadManager thrMgr_ = null;
   // Thread_Manager that manages all the spawned threads
 
@@ -366,4 +410,6 @@ public abstract class Task implements Runnable, EventHandler
   private Task next_;
   // Adjacent ACE_Task.
 
+  private Module mod_;
+  // Back-pointer to the enclosing module.
 }
