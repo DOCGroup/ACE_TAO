@@ -1,3 +1,16 @@
+Tue Jun 12 17:46:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosNotifyComm.idl:
+        * orbsvcs/orbsvcs/CosNotifyFilter.idl:
+
+          Moved the preprocessor macro #pragma prefix "omg.org"
+          to come after the includes of other IDL files, so it
+          wouldn't be nullified by the #pragma prefix "" that
+          comes at the end of each IDL file. Thanks to
+          Rob Andzik <andzik@rtlogic.com> for reporting the
+          fact that the generated repo ids were incorrect.
+
 Tue Jun 12 17:42:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/drv_args_ifr.cpp:
