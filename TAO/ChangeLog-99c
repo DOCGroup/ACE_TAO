@@ -1,3 +1,11 @@
+Thu Apr 29 19:21:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (find_servant_i): We are grabbing the
+	  lock in this function when we had already grabbed it in
+	  find_servant().  This causes a deadlock when the lock are
+	  non-recursive (i.e., on all non-NT platforms).  Thanks to Marina
+	  for helping with this.
+
 Thu Apr 29 19:28:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.{h,i,cpp}:
@@ -6,16 +14,16 @@ Thu Apr 29 19:28:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Since this involved adding an env_ member to Request,
 	  I modified Objects's _create_request and _request
 	  methods to pass along their environment args to the
-	  Request constructors, whicn were also modified to 
+	  Request constructors, whicn were also modified to
 	  accept them and initialize env_. This won't change the
 	  signature or the functionality of any existing code.
 
 Thu Apr 29 19:16:04 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
 	  Fixed a Vxworks warning for ACE_NOTREACHED in the connect
 	  function.Thanks to Irfan for pointing this out.
-	
+
 Thu Apr 29 18:35:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.{h,cpp}:
