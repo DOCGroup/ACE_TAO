@@ -118,10 +118,12 @@ TAO_IOR_Manipulation_impl::merge_iors (
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
   // Create the CORBA level proxy
-  CORBA::Object_var new_obj;
-  ACE_NEW_THROW_EX (new_obj.inout (),
+  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
+  ACE_NEW_THROW_EX (temp_obj,
                     CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
+
+  CORBA::Object_var new_obj = temp_obj;
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -224,10 +226,12 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
   // Create the CORBA level proxy
-  CORBA::Object_var new_obj = CORBA::Object::_nil ();
-  ACE_NEW_THROW_EX (new_obj.inout (),
+  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
+  ACE_NEW_THROW_EX (temp_obj,
                     CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
+
+  CORBA::Object_var new_obj = temp_obj;
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
