@@ -8,7 +8,7 @@
 #include <string>
 // #include <iostream> //@@ tmp
 
-#include <XSCRT/Elements.hpp>
+#include "XSCRT/Elements.hpp"
 
 namespace XMLSchema
 {
@@ -364,7 +364,7 @@ namespace XMLSchema
       NCName<C>::container (c);
 
       register_id ();
-    }    
+    }
 
   private:
     using NCName<C>::empty;
@@ -492,7 +492,7 @@ namespace XMLSchema
 //
 //
 
-#include <XSCRT/Traversal.hpp>
+#include "XSCRT/Traversal.hpp"
 
 namespace XMLSchema
 {
@@ -547,7 +547,7 @@ namespace XMLSchema
 //
 //
 
-#include <XSCRT/ExtendedTypeInfo.hpp>
+#include "XSCRT/ExtendedTypeInfo.hpp"
 
 namespace XMLSchema
 {
@@ -558,7 +558,7 @@ namespace XMLSchema
   };
 }
 
-#include <XSCRT/XMLSchema.ipp>
-#include <XSCRT/XMLSchema.tpp>
+#include "XSCRT/XMLSchema.ipp"
+#include "XSCRT/XMLSchema.tpp"
 
 #endif  // XSCRT_XMLSCHEMA_HPP

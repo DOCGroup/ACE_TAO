@@ -14,8 +14,8 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include "XSCRT/XMLSchema.hpp"
+#include "XSCRT/Parser.hpp"
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -31,7 +31,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -42,7 +42,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -53,7 +53,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // basePackage
-      // 
+      //
       public:
       bool basePackage_p () const;
       ::CIAO::Config_Handlers::ComponentPackageDescription const& basePackage () const;
@@ -64,7 +64,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > basePackage_;
 
       // reference
-      // 
+      //
       public:
       bool reference_p () const;
       ::CIAO::Config_Handlers::ComponentPackageReference const& reference () const;
@@ -75,7 +75,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > reference_;
 
       // selectRequirement
-      // 
+      //
       public:
       bool selectRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& selectRequirement () const;
@@ -86,7 +86,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
 
       // configProperty
-      // 
+      //
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -97,7 +97,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;
