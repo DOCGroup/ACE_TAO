@@ -1,3 +1,14 @@
+Fri Aug 15 15:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/JAWS2/JAWS/Parse_Headers.cpp:
+          Modified the ACCESSOR macro to only concatenate the x, or member
+          variable, token.  This resolves a problem with the gcc 3.3
+          proprocessor.  Thanks to Tim Hawes <thawes@althusius.net> for
+          reporting the problem and Carlos O'Ryan for supplying the fix.
+
+        * THANKS:
+          Added Tim Hawes <thawes@althusius.net> to the hall of fame.
+
 Fri Aug 15 09:07:09 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.{h,i}: Changed "advice" to "map_advice" to avoid a 
