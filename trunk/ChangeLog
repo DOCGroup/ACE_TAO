@@ -1,3 +1,11 @@
+Tue Aug 24 10:10:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-all.h: Moved #include "ace/OS_main.h" down to the bottom
+	  of the file, lest it invoke a circular dependency.
+
+	* ace/OS_NS_stdlib.inl: Added #include "ace/config-all.h" to get
+	  ACE_TRACE.
+
 Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile.am (AUTOMAKE_OPTIONS):
