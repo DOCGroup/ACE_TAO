@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
 #include "tao/CDR.h"
+#include "tao/Wait_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Connect.i"
@@ -821,7 +822,9 @@ TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager
 {
   // @@ Alex: Allocate this on-demand and use the orb_core to create
   // the strategies.
-  iiop_transport_ = new TAO_IIOP_Client_Transport(this);
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  iiop_transport_ = new TAO_IIOP_Client_Transport (this,
+                                                   orb_core);
 }
 
 // @@ Need to get rid of the Transport Objects!
@@ -880,8 +883,8 @@ TAO_Client_Connection_Handler::open (void *)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
-  // For now, we just return success
-  return 0;
+  // Register the handler with the Reactor if necessary. 
+  return this->transport ()->wait_strategy ()->register_handler (this);
 }
 
 int
@@ -986,6 +989,7 @@ TAO_Client_Connection_Handler::close (u_long)
 
 // ****************************************************************
 
+#if 0
 TAO_RW_Client_Connection_Handler::TAO_RW_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_Client_Connection_Handler (t)
 {
@@ -1031,9 +1035,11 @@ TAO_RW_Client_Connection_Handler::resume_handler (ACE_Reactor *)
   // Since we don't suspend, we don't have to resume.
   return 0;
 }
+#endif /* 0 */
 
 // ****************************************************************
 
+#if 0
 TAO_ST_Client_Connection_Handler::TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_Client_Connection_Handler (t)
 {
@@ -1051,14 +1057,14 @@ TAO_ST_Client_Connection_Handler::open (void *something)
   if (result != 0)
     return result;
 
-  // Now we must register ourselves with the reactor for input events
+  // Now we must register ourselves with the reactor for input events 
   // which will detect GIOP Reply messages and EOF conditions.
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
   return r->register_handler (this,
                               ACE_Event_Handler::READ_MASK);
 }
 
-// @@ this seems odd that the connection handler would call methods in the
+// @@ This seems odd that the connection handler would call methods in the
 //    GIOP object.  Some of this mothod's functionality should be moved
 //    to GIOP. fredk
 int
@@ -1172,6 +1178,7 @@ TAO_ST_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 {
   return reactor->resume_handler (this);
 }
+#endif /* 0 */
 
 // ****************************************************************
 

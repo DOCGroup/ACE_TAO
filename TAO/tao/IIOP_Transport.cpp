@@ -6,7 +6,9 @@
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Request_Mux_Strategy.h"
+#include "tao/Wait_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
+#include "tao/ORB_Core.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -43,9 +45,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler,
-                                        TAO_Request_Mux_Strategy *rms,
-                                        TAO_Wait_Strategy *ws)
-  : TAO_Transport (rms, ws),
+                                        TAO_ORB_Core *orb_core)
+  : TAO_Transport (orb_core),
     handler_(handler),
     tag_(TAO_IOP_TAG_INTERNET_IOP)
 {
@@ -56,18 +57,17 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 }
 
 TAO_IIOP_Server_Transport::TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler)
-  : TAO_IIOP_Transport(handler),
+  : TAO_IIOP_Transport(handler,
+                       TAO_ORB_Core_instance ()),
     server_handler_ (0)
 {
   server_handler_ = handler;
 }
 
 TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
-                                                      TAO_Request_Mux_Strategy *rms,
-                                                      TAO_Wait_Strategy *ws)
+                                                      TAO_ORB_Core *orb_core)
   :  TAO_IIOP_Transport (handler,
-                         rms,
-                         ws),
+                         orb_core),
      client_handler_ (0)
 {
   client_handler_ = handler;
@@ -126,7 +126,8 @@ TAO_IIOP_Transport::_nil (void)
 void
 TAO_IIOP_Transport::resume_connection (ACE_Reactor *reactor)
 {
-  this->handler_->resume_handler (reactor);
+  this->ws_->resume_handler (reactor);
+  // this->handler_->resume_handler (reactor);
 }
 
 void
@@ -144,11 +145,11 @@ TAO_IIOP_Transport::handle (void)
 int
 TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
-                                         int twoway)
+                                         int /* twoway */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
-
-  return this->client_handler_->send_request (orb_core, stream, twoway);
+  
+  return TAO_GIOP::send_request (this, stream, orb_core);
 }
 
 // int
@@ -215,6 +216,10 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
     case TAO_GIOP::MessageError:
       // Handle errors like these.
       // @@ this->reply_handler_->error ();
+      return 1;
+
+    case TAO_GIOP::Fragment:
+      // Handle this.
       return 1;
 
     case TAO_GIOP::Request:
@@ -300,6 +305,27 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   return 1;
 }
 
+int
+TAO_IIOP_Client_Transport::register_handler (void)
+{
+  ACE_Reactor *r = this->orb_core ()->reactor ();
+  return r->register_handler (this->client_handler (),
+                              ACE_Event_Handler::READ_MASK);
+}
+
+int
+TAO_IIOP_Client_Transport::suspend_handler (void)
+{
+  return this->orb_core ()->reactor ()->suspend_handler
+    (this->client_handler ()); 
+}
+
+int
+TAO_IIOP_Client_Transport::resume_handler (void)
+{
+  return this->orb_core ()->reactor ()->resume_handler
+    (this->client_handler ()); 
+}
 
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)

@@ -23,6 +23,8 @@
 
 class ACE_Lock;
 class TAO_Client_Connection_Handler;
+class TAO_Request_Mux_Strategy;
+class TAO_Wait_Strategy;
 
 class TAO_Client_Strategy_Factory : public ACE_Service_Object
   // = TITLE
@@ -48,7 +50,13 @@ public:
   //    implementation.
 
   virtual ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
-  // Create the correct client connection creation strategy
+  // Create the correct client connection creation strategy.
+  
+  virtual TAO_Request_Mux_Strategy *create_request_mux_strategy (void);
+  // Create the correct client request muxing strategy.
+
+  virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
+  // Create the correct client wait_for_reply strategy.
 };
 
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

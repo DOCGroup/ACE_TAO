@@ -23,3 +23,19 @@ TAO_Client_Strategy_Factory::create_client_creation_strategy (void)
 {
   return 0;
 }
+
+// Create the correct client request muxing strategy.
+TAO_Request_Mux_Strategy *
+TAO_Client_Strategy_Factory::create_request_mux_strategy (void)
+{
+  return 0;
+}
+
+
+// Create the correct client wait_for_reply strategy.
+
+TAO_Wait_Strategy *
+TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transport)
+{
+  return 0;
+}

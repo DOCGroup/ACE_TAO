@@ -170,7 +170,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     {
       // Get the current profile.
       this->profile_ = this->stub_->profile_in_use ();
-
+      
       // Get the transport object.
 
       if (this->transport_ != 0)
@@ -188,8 +188,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // @@ Alex: we must check this, it seems that it would be cleaner if 
   //    the Transport's ORB_Core was initialized way in advance...
+  
+  // @@ Done (Alex).
+
   // Init the transport object with the orb core resource.
-  this->transport_->orb_core (this->orb_core_);
+  // this->transport_->orb_core (this->orb_core_);
 
   // Init the input message states in the transport object.
   // This is necessary for the round trip call only. But it is ok to

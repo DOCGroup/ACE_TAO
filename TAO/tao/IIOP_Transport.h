@@ -39,8 +39,7 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //   @@ Fred, please fill in here.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
-                      TAO_Request_Mux_Strategy *rms = 0,
-                      TAO_Wait_Strategy *ws = 0);
+                      TAO_ORB_Core *orb_core);
   // Base object's creator method. 
 
   ~TAO_IIOP_Transport (void);
@@ -55,7 +54,7 @@ public:
   void resume_connection (ACE_Reactor *reactor);
   // Calls the reactors resume_handler on behalf of the corresponding
   // connection handler.
-
+  
   int idle (void);
   // Idles the corresponding connection handler.
 
@@ -125,8 +124,7 @@ class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
   //   @@ Fred, please fill in here.
 public:
   TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
-                             TAO_Request_Mux_Strategy *rms = 0,
-                             TAO_Wait_Strategy *ws = 0);
+                             TAO_ORB_Core *orb_core);
   // Constructor.  Note, TAO_IIOP_Handler_Base is the base class for
   // both TAO_Client_Connection_Handler and
   // TAO_Server_Connection_Handler.
@@ -150,6 +148,18 @@ public:
   // the connection. Returns 1 when the full reply is read and
   // handled. If <block> is 1, then reply is read in a blocking
   // manner. 
+  
+  virtual int register_handler (void);
+  // Register the handler with the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy. 
+
+  virtual int suspend_handler (void);
+  // Suspend the handler from the reactor. This will be called by the 
+  // Wait Strategy if Reactor is used  for that strategy. 
+
+  virtual int resume_handler (void);
+  // Resume the handler from the reactor. This will be called by the 
+  // Wait Strategy if Reactor is used  for that strategy. 
 
 private:
   TAO_Client_Connection_Handler *client_handler_;
