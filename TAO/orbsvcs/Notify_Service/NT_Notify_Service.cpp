@@ -129,13 +129,12 @@ TAO_NT_Notify_Service::svc (void)
 {
   TAO_Notify_Service_Driver notify_service;
 
-  if (notify_service.init (argc_,
-                           argv_) == -1)
-    return -1;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      if (notify_service.init (argc_, argv_ ACE_ENV_ARG_PARAMETER) == -1)
+        return -1;
+
       report_status (SERVICE_RUNNING);
       notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
