@@ -1,3 +1,8 @@
+Thu Feb  3 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ciao/NodeApplication_Impl.h:
+          Added include of ace/SString.h to fix compile errors with CBuilderX
+
 Thu Feb  3 10:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Segment_Timer/Segment_Timer.mpc:
