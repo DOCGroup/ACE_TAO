@@ -132,6 +132,13 @@ TAO_SYSTEM_EXCEPTION_LIST
 class CORBA_WrongTransaction;
 typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
 
+class CORBA_ConstructionPolicy;
+class CORBA_ConstructionPolicy_var;
+class CORBA_ConstructionPolicy_out;
+typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
+
+#endif /* ! TAO_HAS_MINIMUM_CORBA */
+
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -145,7 +152,6 @@ class CORBA_NamedValue;
 class CORBA_NamedValue_var;
 class CORBA_NamedValue_out;
 typedef class CORBA_NamedValue *CORBA_NamedValue_ptr;
-
 
 class CORBA_NVList;
 class CORBA_NVList_var;
@@ -161,13 +167,6 @@ class CORBA_ContextList;
 class CORBA_ContextList_var;
 class CORBA_ContextList_out;
 typedef class CORBA_ContextList *CORBA_ContextList_ptr;
-
-class CORBA_ConstructionPolicy;
-class CORBA_ConstructionPolicy_var;
-class CORBA_ConstructionPolicy_out;
-typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
-
-#endif /* ! TAO_HAS_MINIMUM_CORBA */
 
 class CORBA_ORB;
 class CORBA_ORB_var;
@@ -542,8 +541,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_SystemException SystemException;
   typedef CORBA_UserException  UserException;
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   typedef CORBA_Request Request;
   typedef Request *Request_ptr;
   typedef CORBA_Request_var Request_var;
@@ -568,8 +565,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ContextList *ContextList_ptr;
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef CORBA_Object Object;
   typedef CORBA_Object *Object_ptr;
@@ -676,16 +671,11 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Request_ptr);
   TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
   TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Context_ptr);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = all the CORBA release methods.
   TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
@@ -693,16 +683,11 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   TAO_NAMESPACE_STORAGE_CLASS void release (Request_ptr);
   TAO_NAMESPACE_STORAGE_CLASS void release (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
   TAO_NAMESPACE_STORAGE_CLASS void release (Context_ptr);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   enum TCKind
   {
@@ -793,9 +778,8 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Bounds;
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_NamedValue;
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
   enum
   {
     // = Flags for NVList add methods

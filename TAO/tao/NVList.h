@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "ace/Containers_T.h"
 #include "tao/Any.h"
 
@@ -391,8 +389,6 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/NVList.i"
 #endif /* __ACE_INLINE__ */
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "ace/post.h"
 #endif /* TAO_NVLIST_H */

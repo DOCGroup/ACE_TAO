@@ -4,8 +4,6 @@
 
 ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "Request.h"
 #include "Server_Request.h"
 #include "tao/Invocation.h"
@@ -158,4 +156,3 @@ ACE_STATIC_SVC_DEFINE (
 
 ACE_FACTORY_DEFINE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "ace/Service_Object.h"
 
 class TAO_GIOP_Twoway_Invocation;
@@ -83,6 +81,5 @@ public:
                                       CORBA_Environment &);
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_H */

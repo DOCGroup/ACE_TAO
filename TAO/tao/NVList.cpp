@@ -4,8 +4,6 @@
 
 #include "tao/NVList.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -466,4 +464,3 @@ template class auto_ptr<TAO_InputCDR>;
 #pragma instantiate auto_ptr<TAO_InputCDR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

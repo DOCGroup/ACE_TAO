@@ -4,11 +4,13 @@
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
+ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry)
   :  relative_expiry_ (relative_expiry)
@@ -162,6 +164,7 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
     }
 }
 
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 // ****************************************************************
 
@@ -288,10 +291,3 @@ TAO_Sync_Scope_Policy::destroy (CORBA_Environment &)
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
-////////////////////////////////////////////////////////////////////////////////
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,9 +1,6 @@
 // @(#) $Id$
 
 #include "tao/Dynamic_Adapter.h"
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, Dynamic_Adapter, "$Id$")
@@ -146,5 +143,4 @@ template class ACE_Dynamic_Service<TAO_Dynamic_Adapter>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 

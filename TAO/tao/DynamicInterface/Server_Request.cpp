@@ -6,8 +6,6 @@
 
 ACE_RCSID(DynamicInterface, Server_Request, "$Id$")
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Marshal.h"
@@ -206,6 +204,4 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 
   this->orb_server_request_.tao_send_reply ();
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 

@@ -5,8 +5,6 @@
 
 ACE_RCSID(DynamicInterface, DII_Reply_Dispatcher, "$Id$")
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "Request.h"
 #include "tao/Pluggable.h"
 #include "tao/Environment.h"
@@ -110,4 +108,3 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
   ACE_ENDTRY;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
