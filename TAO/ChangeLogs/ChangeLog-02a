@@ -118,6 +118,7 @@ Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/RTCORBAC.h:
 	* tao/RTCORBAC.cpp:
+
 	  Changed RTCORBA::ProtocolProperties to inherit from
 	  TAO_Encodable.  Implemented <ProtocolProperties::_tao_encode>
 	  and <ProtocolProperties::_tao_encode>.
@@ -362,7 +363,7 @@ Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/Policy_Factory.h
 	* tao/Policy_Factory.i
 
-        - Added ifdefs to protect RT-Corba related stuff.
+          Added ifdefs to protect RT-Corba related stuff.
 
 	* tao/Profile.i
 
@@ -408,15 +409,15 @@ Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
 	* tao/ORB_Core.h
 	* tao/ORB_Core.cpp
 
-        Modified the signature of the method
-        <TAO_ORB_Core::create_stub_object>
-        to receive the PolicyList from the POA.
+	  Modified the signature of the method
+	  <TAO_ORB_Core::create_stub_object>
+	  to receive the PolicyList from the POA.
 
 	* tao/Servant_Base.cpp
 
-        Changed these methods to support policies propagation.
-         <TAO_ServantBase::_create_stub>
-         <TAO_DynamicImplementation::_create_stub>
+	  Changed these methods to support policies propagation.
+	  <TAO_ServantBase::_create_stub>
+	  <TAO_DynamicImplementation::_create_stub>
 
 	* tao/GIOP_Server_Request.i
 	* tao/GIOP_Server_Request.cpp
@@ -424,8 +425,8 @@ Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
           Changed <objref> method to support client exposed policies.
 	  Also moved this method from GIOP_Server_Request.i to
 	  GIOP_Server_Request.cpp.
-        Added #include "tao/POA.h" in GIOP_Server_Request.cpp for
-        supporting method invocation on POA.
+	  Added #include "tao/POA.h" in GIOP_Server_Request.cpp for
+	  supporting method invocation on POA.
 
 	* tao/Profile.h
 	* tao/Profile.cpp
