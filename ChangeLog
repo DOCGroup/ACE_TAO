@@ -1,3 +1,10 @@
+Fri May  3 07:21:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Dev_Poll_Reactor_Test.cpp:
+
+	  Uncommented ACE_START/END_TEST macros and removed extraneous
+	  debugging statements.
+
 Fri May  3 08:00:55 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/tutorials/012/work.h:
