@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 // ============================================================================
 /**
  *  @file test_config.h
@@ -84,22 +83,12 @@ const size_t ACE_MAX_THREADS = 4;
 
 #define ACE_CLOSE_TEST_LOG ace_file_stream::instance()->close ()
 
-#if !defined (ACE_WIN32)
-#define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
-  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  ace_file_stream::instance()->close (); \
-  if (ace_file_stream::instance()->set_output (program, 1) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
-#else /* ACE_WIN32 */
 #define ACE_APPEND_LOG(NAME) \
   const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
-#endif /* ACE_WIN32 */
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
