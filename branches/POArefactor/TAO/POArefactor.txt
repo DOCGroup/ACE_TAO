@@ -1,5 +1,20 @@
 Wed Sep 22 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PortableServer/*_Value.{h,cpp}:
+          Renamed these files, zapped all underscores so that filenames match
+          the IDL files they belong to. Classes will be renamed soon
+
+        * tao/PortableServer/POA_*.{h,cpp}:
+          Removed POA prefix and underscores to match IDL files
+
+        * tao/PortableServer/Loadable_*.{h,cpp}:
+          Renamed to *Factory.{h,cpp}, classes will be renamed soon
+
+        * tao/PortableServer/POA_Policy.{h,cpp}:
+          Renamed to PolicyFactory.{h,cpp}
+
+Wed Sep 22 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/PortableServer/Thread_Strategy.{h,cpp}:
           New file, contains some classes for the idea to implement the
           policy behaviour in strategies. Just a checkin to share ideas.
