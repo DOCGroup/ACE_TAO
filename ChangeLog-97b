@@ -74,6 +74,9 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: use "complex" ACE_UNUSED_ARG for DEC_CXX.
 
+	* ace/Reactor.i (implementation): moved definition to top of
+	  file to prevent use before definition.
+
 Tue Oct 14 03:13:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.17, released Tue Oct 14 03:13:38 1997.
