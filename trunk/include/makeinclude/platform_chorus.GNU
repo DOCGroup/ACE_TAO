@@ -26,9 +26,12 @@ endif #CLX_CDSHOST
 ifndef CLASSIXDIR
         CLASSIXDIR=$(MERGEDIR)
 endif #CLASSIXDIR
+ifndef CPU
+        CPU=powerpc
+endif
 
-XROOT = $(CLX_CDSPATH)/powerpc/$(CLX_CDSHOST)/$(CLX_CDSVERSION)
-XDIR = $(XROOT)/powerpc-elf
+XROOT = $(CLX_CDSPATH)/$(CPU)/$(CLX_CDSHOST)/$(CLX_CDSVERSION)
+XDIR = $(XROOT)/$(CPU)-elf
 CC = $(XDIR)/bin/gcc -B$(XROOT)/lib/gcc-lib/
 
 #
@@ -51,14 +54,17 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -nostdinc                            \
                    -pipe                                \
                    -fno-rtti                            \
-                   -mstrict-align                       \
                    -fwritable-strings                   \
                    -fsigned-char                        \
                    "-msoft-float"                       \
-                   -mno-sdata 				\
                    -D_POSIX_THREADS                     \
                    -D_POSIX_THREAD_SAFE_FUNCTIONS	\
                    "-DNO_FPU_SUPPORT"
+
+ifeq ($(CPU),powerpc)
+CCFLAGS         += -mstrict-align                       \
+                   -mno-sdata
+endif
 
 ifeq ($(exceptions),1)
 else  # ! exceptions
