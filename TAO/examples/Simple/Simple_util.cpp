@@ -24,7 +24,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int 
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:n");
   int c = 0;
   
   while ((c = get_opts ()) != -1)
@@ -40,12 +40,17 @@ Server<Servant>::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
+
+      case 'n': //Use naming service
+        this->naming_ = 1;
+        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-o] <ior_output_file>"
+                           " [-n] "
                            "\n",
                            argv_ [0]),
                           -1);
@@ -58,9 +63,9 @@ Server<Servant>::parse_args (void)
 // Initialize the server.
 template <class Servant> int 
 Server<Servant>::init (const char *servant_name, 
-                           int argc, 
-                           char *argv[], 
-                           CORBA::Environment &ACE_TRY_ENV)
+                       int argc, 
+                       char *argv[], 
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -87,10 +92,19 @@ Server<Servant>::init (const char *servant_name,
 
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
-  
-  // Save name in case we use TAO Naming Service.
-  name = servant_name;	
 
+  if (this->naming_ == 1)
+    {
+
+      // Save name in case we use TAO Naming Service.
+      name = servant_name;	
+      
+      // Call naming service 
+      if (this->register_name () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "\n Naming Service\n"),-1);
+      return 0;
+    }
   // Activate the servant in its own child POA.
 
   // Make sure that you check for failures here via the ACE_TRY
@@ -137,10 +151,11 @@ Server<Servant>::run (CORBA::Environment &env)
   return 0;
 }
 
-template <class Servant> void 
+template <class Servant> int 
 Server<Servant>::register_name (void)
 {
-  namingClient.init (orb_manager_.orb());
+  this->namingServer.init (this->orb_manager_.orb(),
+                           this->orb_manager_.child_poa ());
   // create the name for the naming service
   
   CosNaming::Name bindName;
@@ -153,22 +168,23 @@ Server<Servant>::register_name (void)
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      namingClient->rebind (bindName,
-                          object.in(),       
-                          ACE_TRY_ENV);
+      namingServer->rebind (bindName,
+                            object.in(),       
+                            ACE_TRY_ENV);
       ACE_TRY_CHECK;  
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Unable to bind %s \n",
-                  name));
-      
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Unable to bind %s \n",
+                         name),
+                        -1);
+                         
       ACE_TRY_ENV.clear ();
     }
   ACE_ENDTRY;
 
-
+  return 0;
 }
 
 // Constructor.
@@ -215,7 +231,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 template <class InterfaceObj, class Var> int 
 Client<InterfaceObj, Var>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "df:nk:x");
   int c = 0;
   int result = 0;
 
@@ -227,6 +243,9 @@ Client<InterfaceObj, Var>::parse_args (void)
         break;
       case 'k':  // ior provide on command line
         this->ior_ = ACE_OS::strdup (get_opts.optarg);
+        break;
+      case 'n': // Use naming service
+        this->naming_ = 1;
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
@@ -252,7 +271,9 @@ Client<InterfaceObj, Var>::~Client (void)
 }
 
 template <class InterfaceObj, class Var> int 
-Client<InterfaceObj, Var>::init (int argc, char **argv)
+Client<InterfaceObj, Var>::init (const char *name,
+                                 int argc, 
+                                 char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -272,27 +293,38 @@ Client<InterfaceObj, Var>::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
       
-      if (this->ior_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no ior specified\n",
-                           this->argv_[0]),
-                          -1);
 
+
+      if(this->ior_ != 0)
+        {
+          CORBA::Object_var server_object =
+            this->orb_->string_to_object (this->ior_, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
       
-      CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->ior_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       
-      
-      if (CORBA::is_nil (server_object.in ()))
+          if (CORBA::is_nil (server_object.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid ior <%s>\n",
+                               this->ior_),
+                              -1);      
+          this->server_ = InterfaceObj::_narrow (server_object.in (),
+                                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      else if (this->naming_ == 1)
+        { 
+          // No IOR specified. Use the Naming Service
+          ACE_DEBUG((LM_DEBUG,
+                     "Using the Naming Service \n"));
+          this->name_ = ACE_const_cast (char *, name);
+          this->obtain_initial_references (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid ior <%s>\n",
-                           this->ior_),
+                           "no ior or naming options  specified\n"),
                           -1);
-      
-      this->server_ = InterfaceObj::_narrow (server_object.in (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        
       
     }
   ACE_CATCHANY
@@ -304,6 +336,42 @@ Client<InterfaceObj, Var>::init (int argc, char **argv)
   
   
   return 0;
+}
+
+
+template <class InterfaceObj, class Var> int 
+Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
+{
+  
+  ACE_TRY
+    {
+      // Initialize the naming services.
+      if (namingClient.init (orb_.in ()) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
+
+      CosNaming::Name server_name (1);
+      server_name.length (1);
+      server_name[0].id =
+      CORBA::string_dup (this->name_);
+
+      CORBA::Object_var obj =
+        namingClient->resolve (server_name,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      this->server_ = InterfaceObj::_narrow (obj.in (),
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("Bank::obtain_initial_references");
+      return -1;
+    }
+  ACE_ENDTRY;
 }
 
 template <class InterfaceObj, class Var> int 

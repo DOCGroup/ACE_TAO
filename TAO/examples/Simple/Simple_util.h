@@ -52,7 +52,7 @@ public:
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
-  void register_name (void);
+  int register_name (void);
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
@@ -73,11 +73,14 @@ protected:
   // The ORB manager - a helper class for accessing the POA and
   // registering objects.
 
-  TAO_Naming_Client namingClient;
+  TAO_Naming_Server namingServer;
   // helper class for getting access to Naming Service.
 
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
+
+  int naming_;
+  // Flag to indicate whether naming service could be used
 
   int argc_;
   // Number of command line arguments.
@@ -105,7 +108,7 @@ public:
   ~Client (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (const char *name,int argc, char *argv[]);
   // Initialize the client communication endpoint with server.
 
   InterfaceObj *operator-> () { return server_.in ();};
@@ -117,6 +120,9 @@ public:
   void shutdown (int);
   // Fills in the shutdwon flag.
 
+  int obtain_initial_references (CORBA::Environment &);
+  // Initialize naming service
+
 protected:
   int read_ior (char *filename);
   // Function to read the server IOR from a file.
@@ -124,6 +130,9 @@ protected:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
+  TAO_Naming_Client namingClient;
+  // helper class for getting access to Naming Service.
+  
   int argc_;
   // # of arguments on the command line.
 
@@ -133,11 +142,17 @@ protected:
   char *ior_;
   // IOR of the obj ref of the server.
 
+  char *name_;
+  // Name to be usred for the naming service
+
   CORBA::Environment env_;
   // Environment variable.
 
   Var server_;
   // Server object
+
+  int naming_;
+  // Flag to use the naming service
 
   int shutdown_;
   // Flag for shutting down the server
