@@ -6190,8 +6190,6 @@ ACE_OS_Object_Manager_Internal_Exit_Hook ()
     ACE_OS_Object_Manager::instance ()->fini ();
 }
 
-u_int ACE_OS_Object_Manager::init_fini_count_ = 0;
-
 ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
 
 void *ACE_OS_Object_Manager::preallocated_object[
@@ -6243,8 +6241,6 @@ ACE_OS_Object_Manager::instance (void)
 int
 ACE_OS_Object_Manager::init (void)
 {
-  ++init_fini_count_;
-
   if (starting_up_i ())
     {
       // First, indicate that the ACE_OS_Object_Manager instance is being
@@ -6301,15 +6297,6 @@ ACE_OS_Object_Manager::init (void)
 int
 ACE_OS_Object_Manager::fini (void)
 {
-  if (init_fini_count_ > 0)
-    {
-      if (--init_fini_count_ > 0)
-        // Wait for remaining fini () calls.
-        return 1;
-    }
-  else
-    return -1;
-
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.

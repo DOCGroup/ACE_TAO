@@ -38,8 +38,6 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
-u_int ACE_Object_Manager::init_fini_count_ = 0;
-
 // Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
@@ -169,8 +167,6 @@ ACE_Object_Manager::shutting_down (void)
 int
 ACE_Object_Manager::init (void)
 {
-  ++init_fini_count_;
-
   if (starting_up_i ())
     {
       // First, indicate that the ACE_Object_Manager instance is being
@@ -562,15 +558,6 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 int
 ACE_Object_Manager::fini (void)
 {
-  if (init_fini_count_ > 0)
-    {
-      if (--init_fini_count_ > 0)
-        // Wait for remaining fini () calls.
-        return 1;
-    }
-  else
-    return -1;
-
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.

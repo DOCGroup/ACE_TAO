@@ -14,6 +14,9 @@
 
 ACE_RCSID(ace, ACE, "$Id$")
 
+// Static data members.
+u_int ACE::init_fini_count_ = 0;
+
 // Keeps track of whether we're in some global debug mode.
 char ACE::debug_ = 0;
 
@@ -30,14 +33,14 @@ size_t ACE::allocation_granularity_ = 0;
 // If on Win32 and using non-static Object Manager, compile in a DllMain
 // which will init the ACE library upon loading and tear it down on unloading.
 #if defined (ACE_WIN32) && defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && (0)
-BOOL APIENTRY DllMain(HANDLE hModule, 
-                      DWORD  ul_reason_for_call, 
+BOOL APIENTRY DllMain(HANDLE hModule,
+                      DWORD  ul_reason_for_call,
                       LPVOID lpReserved)
 {
   switch( ul_reason_for_call )
     {
     case DLL_PROCESS_ATTACH:
-      ACE::init();
+      ACE::init ();
       break;
 
     case DLL_THREAD_ATTACH:
@@ -45,7 +48,7 @@ BOOL APIENTRY DllMain(HANDLE hModule,
       break;
 
     case DLL_PROCESS_DETACH:
-      ACE::fini();
+      ACE::fini ();
       break;
     }
 
@@ -57,13 +60,32 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 int
 ACE::init (void)
 {
+  // Don't use ACE_TRACE, because Object_Manager might not have been
+  // instantiated yet.
+  // ACE_TRACE ("ACE::init");
+
+  ++init_fini_count_;
+
   return ACE_Object_Manager::instance ()->init ();
 }
 
 int
 ACE::fini (void)
 {
-  return ACE_Object_Manager::instance ()->fini ();
+  ACE_TRACE ("ACE::fini");
+
+  if (init_fini_count_ > 0)
+    {
+      if (--init_fini_count_ == 0)
+        return ACE_Object_Manager::instance ()->fini ();
+      else
+        // Wait for remaining fini () calls.
+        return 1;
+    }
+  else
+    // More ACE::fini () calls than ACE::init () calls.  Bad
+    // application!
+    return -1;
 }
 
 u_int

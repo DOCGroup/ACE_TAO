@@ -358,11 +358,6 @@ public:
   ~ACE_Object_Manager (void);
 
 private:
-  static u_int init_fini_count_;
-  // Counter to match init ()/fini () calls.  init () must increment
-  // it; fini () must decrement it.  fini () then does nothing until
-  // it reaches 0.
-
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 
