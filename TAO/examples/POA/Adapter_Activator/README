@@ -25,9 +25,9 @@ This will produce three output files: output_1, output_2, and output_3
 Run the client as follows:
 
 % cd $TAO_ROOT/examples/POA/Generic_Servant
-% ./client -f ../Explicit_Activation/output_1
-% ./client -f ../Explicit_Activation/output_2
-% ./client -f ../Explicit_Activation/output_3
+% ./client -f ../Adapter_Activator/output_1
+% ./client -f ../Adapter_Activator/output_2
+% ./client -f ../Adapter_Activator/output_3
 ________________________________________
 
 Or

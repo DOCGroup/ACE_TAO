@@ -1,3 +1,14 @@
+Tue Apr 10 11:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/POA/Adapter_Activator/makefile.bor
+        * examples/POA/Generic_Servant/makefile.bor
+        * examples/POA/Explicit_Activation/makefile.bor
+        * examples/POA/makefile.bor
+          Created BCB makefiles
+
+        * examples/POA/Adapter_Activator/readme
+          Directory name to start client was not correct
+
 Tue Apr 10 02:19:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
