@@ -1,7 +1,7 @@
 # $Id$
 #
 # Platform macros for building on AIX 4.x with g++.  This has been tested on
-# AIX 4.3 with egcs 1.1.2.
+# AIX 4.3 with egcs 1.1.2 and gcc 2.95.2.
 #
 # Original contributed by Ian Wright <I.Wright@elsevier.co.uk>. Updated for
 # AIX 4 and egcs by Steve Huston <shuston@riverace.com>.
@@ -19,6 +19,16 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq (,$(exceptions))
+  exceptions = 0
+endif
+
+ifeq (0,$(threads))
+  CFLAGS  += -DACE_MT_SAFE=0
+endif
+ifeq (1,$(threads))
+  CFLAGS  += -mthreads
+endif
  
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
@@ -28,9 +38,6 @@ AIX_MINOR_VERS := $(shell uname -r)
 CC             = gcc
 CXX            = g++
 CFLAGS         += -W -Wall -pipe -mcpu=common -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_MINOR_VERS=$(AIX_MINOR_VERS)
-ifeq ($(threads),1)
-CFLAGS         += -mthreads
-endif
 CCFLAGS        += $(CFLAGS) -fno-implicit-templates
 DCFLAGS        += -g
 DLD             = $(CXX)
