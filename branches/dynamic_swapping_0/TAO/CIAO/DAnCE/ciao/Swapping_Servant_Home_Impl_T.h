@@ -85,7 +85,7 @@ namespace CIAO
     // CIAO-specific operations.
 
     COMP *
-    _ciao_activate_component (COMP_EXEC *exe
+    _ciao_activate_component (::Components::EnterpriseComponent_ptr ec
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

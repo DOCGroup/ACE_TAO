@@ -153,13 +153,13 @@ namespace CIAO
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-
+/*
     COMP_EXEC_VAR _ciao_comp =
       COMP_EXEC::_narrow (_ciao_ec.in ()
                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
-
-    return this->_ciao_activate_component (_ciao_comp.in ()
+*/
+    return this->_ciao_activate_component (_ciao_ec.in ()
                                            ACE_ENV_ARG_PARAMETER);
   }
 
@@ -182,7 +182,7 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::_ciao_activate_component (
-      COMP_EXEC *exe
+      ::Components::EnterpriseComponent_ptr ec
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -207,11 +207,17 @@ namespace CIAO
         Container::Component
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
+/*
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (this->executor_.in (), home, this->container_);
+*/
+
+    Dynamic_Component_Servant_Base *svt =
+      new Dynamic_Component_Servant
+       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
+          (ec, home, this->container_);
 
     this->container_->update_servant_map (oid, svt);
 

@@ -44,6 +44,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CosPersistentState.idl
     CCM_Container.idl
     CCM_Container_Ex.idl
+    SwapExec.idl
   }
 
   Source_Files {
@@ -54,6 +55,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_BaseS.cpp
     CCM_EventS.cpp
     CCM_ComponentS.cpp
+    SwapExecC.cpp
     Cookies.cpp
   }
 
