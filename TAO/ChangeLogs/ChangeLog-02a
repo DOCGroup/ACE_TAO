@@ -1,3 +1,13 @@
+Wed Nov 01 09:58:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/Object_Adapter.h (prepare_for_upcall): Added
+	  back the default value for ACE_TRY_ENV.  I thought that this was
+	  library code and should not have a default.  Actually, this code
+	  is also called from the Through POA stubs and therefore requires
+	  the default so that it can be called from code that uses native
+	  exceptions and not the simulated exceptions.  Thanks to Carlos
+	  for pointing this out.
+
 Wed Nov  1 08:14:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynamicInterface/Context.cpp:

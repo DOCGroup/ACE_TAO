@@ -614,7 +614,7 @@ public:
     int prepare_for_upcall (const TAO_ObjectKey &key,
                             const char *operation,
                             CORBA::Object_out forward_to,
-                            CORBA::Environment &ACE_TRY_ENV);
+                            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
     // Locate POA and servant.
 
     TAO_POA &poa (void) const;
