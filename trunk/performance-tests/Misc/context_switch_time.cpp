@@ -662,6 +662,12 @@ main (int argc, char *argv [])
 {
   ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  "context_switch_time");
 
+#if defined (ACE_HAS_PENTIUM)
+  // Just to verify that ACE_High_Res_Timer::calibrate () correctly
+  // determines the clock speed.
+  ACE_DEBUG ((LM_DEBUG, "calibrate: %u\n", ACE_High_Res_Timer::calibrate ()));
+#endif /* ACE_HAS_PENTIUM */
+
   // Disable LM_DEBUG.
   ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
                                            LM_DEBUG);
@@ -752,6 +758,7 @@ main (int argc, char *argv [])
             }
         }
 
+#if !defined (VXWORKS)
       // Then Yield test.
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
@@ -768,13 +775,16 @@ main (int argc, char *argv [])
                   (ACE_UINT32)
                     (yield_test.elapsed_time () % (num_iterations * 2u)) *
                       1000u / num_iterations / 2u));
+#endif /* ! VXWORKS */
     }
 
-  ACE_OS::printf ("context_switch_test:\n");
+  ACE_OS::printf ("context_switch_test: ");
   context_switch_test_stats.print_summary (3, num_iterations * 2u);
 
-  ACE_OS::printf ("\nyield_test:\n");
+#if !defined (VXWORKS)
+  ACE_OS::printf ("\nyield_test: ");
   yield_test_stats.print_summary (3, num_iterations * 2u);
+#endif /* ! VXWORKS */
 
   return 0;
 }
