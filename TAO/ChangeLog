@@ -1,12 +1,18 @@
+Mon Jul 15 10:16:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* utils/catior/catior.cpp:
+	  Print out unknown profiles, so at least we get some output out
+	  of them.
+
 Sat Jul 13 23:46:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Stack_Recursion/Client_Task.cpp: 
+	* tests/Stack_Recursion/Client_Task.cpp:
 	* tests/Stack_Recursion/Client_Task.h: Fixed compile errors in
 	  builds where exceptions are turned off.
 
 Sat Jul 13 15:26:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Utils/RIR_Narrow.cpp (narrow): 
+	* tao/Utils/RIR_Narrow.cpp (narrow):
 	* tao/Utils/RIR_Narrow.h: Fixed some more fuzz errors.
 
 Sat Jul 13 15:19:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -20,18 +26,18 @@ Sat Jul 13 15:14:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Nested_Upcall_Crash/server.dsp:
 	* tests/Nested_Upcall_Crash/scavenger.dsp: Fixed the dsp files to
 	  include the right files. This should prevent link errors in the
-	  Win32 builds. 
+	  Win32 builds.
 
 Sat Jul 13 14:57:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.dsp:
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/server.dsp: Fixed
 	  the path to strategies library. Shuld fix link errors with Win32
-	  builds. 
+	  builds.
 
 Sat Jul 13 14:26:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Persistent_ID/server.cpp (method): 
+	* tests/POA/Persistent_ID/server.cpp (method):
 	* tao/Utils/RIR_Narrow.cpp: Fixed fuzz errors.
 
 Sat Jul 13 13:22:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -40,25 +46,25 @@ Sat Jul 13 13:22:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Stack_Recursion/Makefile.bor:
 	* tests/Stack_Recursion/server.bor:
 	* tests/Stack_Recursion/client.bor: Makefiles for different
-	  platforms.  
+	  platforms.
 
 	* tests/Stack_Recursion/run_test.pl: The core files should be
 	  cleaned up when program exits, else the test could fill up the
-	  file system and prevent other tests from running. 
+	  file system and prevent other tests from running.
 
 	* tests/Makefile:
-	* tests/Makefile.bor: Added the new test to the daily builds. 
+	* tests/Makefile.bor: Added the new test to the daily builds.
 
 Sat Jul 13 09:26:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/client.cpp:
 	* tests/Stack_Recursion/Client_Task.h:
-	* tests/Stack_Recursion/Client_Task.cpp (svc): 
+	* tests/Stack_Recursion/Client_Task.cpp (svc):
 	* tests/Stack_Recursion/Sender.cpp:
 	* tests/Stack_Recursion/Sender.h:
 	* tests/Stack_Recursion/server.cpp:
 	* tests/Stack_Recursion/Server_Task.h:
-	* tests/Stack_Recursion/Server_Task.cpp: 
+	* tests/Stack_Recursion/Server_Task.cpp:
 	* tests/Stack_Recursion/Test.idl:
 	* tests/Stack_Recursion/run_test.pl: A stress test for [BUG
 	  1125], the infamous stack recursion problem.
