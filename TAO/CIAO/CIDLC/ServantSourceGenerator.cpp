@@ -790,11 +790,11 @@ namespace
            << STRS[EXCP_SNGL] << endl
            << "{"
            << u.scoped_name () << "Connections *tmp_retv;"
-           << "ACE_NEW_RETURN (" << endl
+           << "ACE_NEW_THROW_EX (" << endl
            << "tmp_retv," << endl
            << u.scoped_name () << "Connections (this->ciao_uses_"
            << u.name () << "_.current_size ())," << endl
-           << "0);" << endl << endl
+           << "CORBA::NO_MEMORY ());" << endl << endl
            << u.scoped_name () << "Connections_var retv"
            << " = tmp_retv ;" << endl
            << "retv->length (this->ciao_uses_" << u.name ()
@@ -828,7 +828,7 @@ namespace
         os << "ACE_NEW_RETURN (" << endl
            << "retv[i].ck," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
-           << "0);" << endl
+           << "CORBA::NO_MEMORY ());" << endl
            << "++i;" << endl
            << "}";
 
