@@ -1,3 +1,11 @@
+Wed Jul 23 09:04:06 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tao/Exception.h
+        * tao/Exception.cpp
+
+          Modified these two files based on the new C++ Language Mapping
+          Specification (version 1.1) published on June 2003.
+
 Wed Jul 23 10:37:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
