@@ -841,6 +841,25 @@ SOURCE=.\DynUnion_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Encodable.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2001,6 +2020,25 @@ SOURCE=.\POAManager.cpp
 # Begin Source File
 
 SOURCE=.\POAS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3317,6 +3355,10 @@ SOURCE=.\DynUnion_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Encodable.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.h
 # End Source File
 # Begin Source File
@@ -3546,6 +3588,10 @@ SOURCE=.\POAManager.h
 # Begin Source File
 
 SOURCE=.\poaS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Factory.h
 # End Source File
 # Begin Source File
 
@@ -4030,6 +4076,10 @@ SOURCE=.\POAManager.i
 # Begin Source File
 
 SOURCE=.\poaS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Factory.i
 # End Source File
 # Begin Source File
 

@@ -140,6 +140,7 @@ ORB_CORE_FILES = \
   corbafwd \
   PolicyC \
   PolicyS \
+  Encodable \
   DomainC \
   DomainS \
   TimeBaseC \
