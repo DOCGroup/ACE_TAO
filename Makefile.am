@@ -102,7 +102,7 @@ noinst_DATA = ACE.ifnames
 
 ACE.ifnames: ChangeLog acconfig.h
 if MAINTAINER_MODE
-        rm -f $@
+	rm -f $@
 	ifnames $(top_srcdir)/ace/*.{h,i,cpp} | sed -e 's/ .*//g' \
            > $(top_srcdir)/$@
 else
