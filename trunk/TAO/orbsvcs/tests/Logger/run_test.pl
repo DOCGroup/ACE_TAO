@@ -52,6 +52,10 @@ if ($CL->TimedWait (60) == -1) {
 }
 
 # Kill the service
-$SV->Kill (); $SV->TimedWait (1);
+$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
+  print STDERR "ERROR: couldn't shutdown the service nicely\n";
+  $status = 1;
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 exit $status;
