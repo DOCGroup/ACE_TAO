@@ -1,5 +1,9 @@
 Wed Feb 23 18:58:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch.i (lock): Make sure that ACE_File_Lock::set_handle()
+	  sets this->removed_ = 0.  Thanks to Sanwoo Jin
+ 	  <swjinjin@sei.co.kr> for reporting this.
+
 	* tests/FlReactor_Test.cpp (main): Minor reformatting.
 
 	* ace/config-win32-borland.h: When you define _DEBUG the orbsvcs
@@ -13,7 +17,7 @@ Wed Feb 23 18:58:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ACE_File_Lock::remove() that controls whether the lockfile is
  	  removed when the filelock is destroyed.  By default, this is
  	  "enabled" so the existing semantics don't change.  Thanks to
- 	  Sangwoo Jin <swjinjin@sei.co.kr> for suggesting this.
+ 	  Sanwoo Jin <swjinjin@sei.co.kr> for suggesting this.
 
 Wed Feb 23 16:54:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -99,7 +103,7 @@ Tue Feb 22 17:42:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Synch.cpp: Reset the ACE_File_Lock::remove_ data member to
           0 in the open() method so that it can be reused.  Thanks to
-          Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+          Sanwoo Jin <swjinjin@sei.co.kr> for reporting this.
 
 Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -423,7 +427,7 @@ Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Service_Config.cpp (close_singletons): Don't bother calling
           ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
-          these's no support for AIO calls.  Thanks to Sangwoo Jin
+          these's no support for AIO calls.  Thanks to Sanwoo Jin
           <swjinjin@sei.co.kr> for reporting this.
 
 Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
