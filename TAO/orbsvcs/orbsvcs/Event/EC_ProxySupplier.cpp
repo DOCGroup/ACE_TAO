@@ -37,7 +37,7 @@ void
 TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer* consumer,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_Scheduling_Strategy *s = 
+  TAO_EC_Scheduling_Strategy *s =
     this->event_channel_->scheduling_strategy ();
 
   s->add_proxy_supplier_dependencies (this,
@@ -66,6 +66,8 @@ TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushSupplier*,
 void
 TAO_EC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Save the consumer we where connected to, we need to send a
+  // disconnect message to it.
   RtecEventComm::PushConsumer_var consumer;
 
   {
@@ -85,9 +87,19 @@ TAO_EC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
-  consumer->disconnect_push_consumer (ACE_TRY_ENV);
-
   this->_decr_refcnt ();
+
+  ACE_TRY
+    {
+      consumer->disconnect_push_consumer (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions, we must isolate other clients from
+      // problems on this one.
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -216,6 +228,8 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  RtecEventComm::PushConsumer_var consumer;
+
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
@@ -226,6 +240,8 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
     if (this->is_connected_i () == 0)
       ACE_THROW (CORBA::BAD_INV_ORDER ());
 
+    consumer = this->consumer_._retn ();
+
     this->cleanup_i ();
   }
 
@@ -234,6 +250,22 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
 
   // Notify the event channel....
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->event_channel_->disconnect_callbacks ())
+    {
+      ACE_TRY
+        {
+          consumer->disconnect_push_consumer (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions, we must isolate other clients from
+          // problems on this one.
+        }
+      ACE_ENDTRY;
+    }
 
   this->_decr_refcnt ();
 }

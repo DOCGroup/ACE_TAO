@@ -74,8 +74,16 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
-print STDERR "\n\nWildcard tests\n";
+print STDERR "\n\nNegation tests\n";
 $T = Process::Create ($prefix . "Negation".$EXE_EXT);
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
+print STDERR "\n\nDisconnect callbacks test\n";
+$T = Process::Create ($prefix . "Disconnect".$EXE_EXT);
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;

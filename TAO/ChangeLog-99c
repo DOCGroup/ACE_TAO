@@ -1,3 +1,32 @@
+Wed Nov 24 19:14:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Tom Ziomek <tomz@cc.comm.mot.com> raises the issue as to whether 
+	  the event channel should invoke the disconnect_push_XXXX()
+	  callback when the user calls disconnect_push_YYYY() on the
+	  proxy.  It seems like the tide is for performing the callback
+	  all the time, not only when the event channel is going down, but 
+	  it is not clear if that is the case and we could break backwards 
+	  compatibility if we do that change.
+	  Instead we added a flag to the EC to control its behavior, like
+	  the supplier and consumer reconnections.
+
+	* orbsvcs/orbsvcs/Event/EC_Defaults.h:
+	  Made it easier to override the default configuration for the
+	  event channel.
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Basic/Disconnect.h:
+	* orbsvcs/tests/Event/Basic/Disconnect.cpp:
+	  Added a new test for the disconnect callback feature.
+
 Tue Nov 23 00:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         
         * tests/Smart_Proxies/client.cpp:
