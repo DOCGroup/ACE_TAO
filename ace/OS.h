@@ -310,9 +310,9 @@ typedef int key_t;
 #   if !defined (ENOMEM)
 #     define ENOMEM       12       /* Not enough core                       */
 #   endif /* ENOMEM */
-#   if !defined (EACCESS)
-#     define EACCESS      13       /* Permission denied                     */
-#   endif /* EACCESS */
+#   if !defined (EACCES)
+#     define EACCES      13       /* Permission denied                     */
+#   endif /* EACCES */
 #   if !defined (EFAULT)
 #     define EFAULT       14       /* Bad access                            */
 #   endif /* EFAULT */
