@@ -50,13 +50,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -146,7 +139,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, CORBA::TCKind);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "Typecode_typesC.inl"
