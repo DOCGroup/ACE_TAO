@@ -1,3 +1,8 @@
+Mon Nov 22 20:15:47 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+          s/'/"/ on #include statement
+
 Mon Nov 22 16:37:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/ast/ast_decl.cpp:
