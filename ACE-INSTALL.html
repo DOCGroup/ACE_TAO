@@ -565,7 +565,7 @@ global.features</a> file.
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
       Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
-      by default in ACE for VxWorks, because it probably depends on
+      by default in ACE for VxWorks, because it depends on your 
       kernel configuration.  To enable it, add
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
       <code>ace/config.h</code>.</p><p>
@@ -609,7 +609,7 @@ global.features</a> file.
 
       Please note that ACE uses one of the spare fields in the Wind
       River task control block, spare4, for thread- specific storage.
-      This field is specified in only one place, in ace/OS.i, so it
+      This field is specified in only one place, in ace/OS_NS_Thread.inl, so it
       can easily be changed to one of the other spare fields, if
       necessary.</p><p>
 
@@ -1911,7 +1911,7 @@ spa ace_main, "arg1" [, ...]
 
 All arguments must be quoted, even numbers.<p>
 
-The ACE <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/tests/">tests</a> write their output files in a
+The ACE tests write their output files in a
 directory named <code>log/</code>, below the current
 (<code>tests</code>) directory.  If you don't have NFS included in
 your VxWorks kernel, you can use these steps, provided by
