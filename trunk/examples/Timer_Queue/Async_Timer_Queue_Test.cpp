@@ -4,12 +4,12 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    Async_Timer_Queue_Test.cpp
 //
 // = DESCRIPTION
-//      This test exercises the <ACE_Asynch_Timer_Queue_Adapter> 
+//      This test exercises the <ACE_Asynch_Timer_Queue_Adapter>
 //      using an <ACE_Timer_Heap>.
 //
 // = AUTHORS
@@ -24,7 +24,7 @@
 #include "Async_Timer_Queue_Test.h"
 
 // Hook method that is called to handle the expiration of a timer.
-int 
+int
 Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *arg)
 {
@@ -104,13 +104,13 @@ Async_Timer_Queue::schedule (u_int microsecs)
 
   // Schedule the timer to run in the future.
   long tid = this->tq_.schedule
-    (eh, 
+    (eh,
      0, // Note that our "magic cookie" ACT is always NULL.
      ACE_OS::gettimeofday () + tv);
 
   if (tid == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
-}	
+}
 
 // Cancel a timer.
 
@@ -148,7 +148,7 @@ int
 Async_Timer_Queue::cancel_timer (void *argument)
 {
   u_long id = *(int *)argument;
-    
+
   // Cancel a timer.
   Async_Timer_Queue::instance ()->cancel (id);
 
@@ -183,7 +183,7 @@ Async_Timer_Queue::shutdown_timer (void *argument)
 
 // Handler for the SIGINT and SIGQUIT signals.
 
-static void 
+static void
 signal_handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
@@ -235,35 +235,35 @@ Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver (void)
 
 // displays the menu of options.
 
-int 
+int
 Async_Timer_Queue_Test_Driver::display_menu (void)
-{ 
+{
   // The menu of options provided to the user.
-  static char menu[] = 
+  static char menu[] =
     "****\n"
     "1) schedule timer <usecs> \n"
     "2) cancel timer <timer_id>\n"
     "^C list timers\n"
     "^\\ exit program\n";
 
-  ACE_DEBUG ((LM_DEBUG, "%s", menu)); 
+  ACE_DEBUG ((LM_DEBUG, "%s", menu));
 
-  return 0; 
+  return 0;
 }
 
 // Initializes the test driver.
 
-int 
+int
 Async_Timer_Queue_Test_Driver::init (void)
 {
   typedef Command<Async_Timer_Queue, Async_Timer_Queue::ACTION> COMMAND;
 
   // Initialize <Command> objects with their corresponding <Input_Task> methods.
-  ACE_NEW_RETURN (schedule_cmd_, 
+  ACE_NEW_RETURN (schedule_cmd_,
 		  COMMAND (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::schedule_timer),
 		  -1);
-  
+
   ACE_NEW_RETURN (cancel_cmd_,
 		  COMMAND (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::cancel_timer),
@@ -282,12 +282,14 @@ Async_Timer_Queue_Test_Driver::init (void)
   register_signal_handlers ();
 
   return 0;
-} 
-    
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
 template class Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>;
-template class Timer_Queue_Test_Driver<Async_Timer_Queue *,
-                                       Async_Timer_Queue,
-                                       Async_Timer_Queue::ACTION>;
+template class Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
+#pragma instantiate Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>
+#pragma instantiate Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
