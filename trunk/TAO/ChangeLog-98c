@@ -1,3 +1,9 @@
+Mon Dec 21 17:05:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO/TAO-INSTALL.html: Updated the installation notes to indicate
+ 	  that all of TAO should be built.  Thanks to Brian Wallis
+ 	  <Brian.Wallis@sr.com.au> for reporting this.
+
 Mon Dec 21 17:05:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Marshal.i (deep_free):
