@@ -1,3 +1,14 @@
+Mon Jun  2 12:42:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/External/Utility/Documentation/Build.html:
+
+          New file containing build information for the CIDL compiler.
+
+        * CIDLC/README:
+
+          Updated file to point to the new file above and other
+          documentation files in that same directory.
+
 Mon Jun  2 02:00:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BasicSP.dsw:
