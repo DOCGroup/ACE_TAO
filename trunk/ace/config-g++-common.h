@@ -28,6 +28,7 @@
 # endif /* __GNUC__ >= 2.90 */
 
 # if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
+#   define ACE_HAS_USING_KEYWORD
     // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
     // used with older versions.
 #   define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR

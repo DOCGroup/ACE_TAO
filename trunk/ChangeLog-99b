@@ -1,3 +1,8 @@
+Sun Mar 21 16:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/config-g++-common.h (ACE_HAS_USING_KEYWORD):
+	  Define ACE_HAS_USING_KEYWORD for egcs 1.1.x.
+
 Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Timeprobe_Test.cpp: don't test ACE_Singleton
