@@ -11682,7 +11682,7 @@ ACE_OS::sigsuspend (const sigset_t *sigset)
   if (sigset == 0)
     {
       sigset = &s;
-      ACE_OS::sigemptyset (sigset);
+      ACE_OS::sigemptyset (&s);
     }
   ACE_OSCALL_RETURN (::sigsuspend (sigset), int, -1);
 #else
