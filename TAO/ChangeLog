@@ -1,6 +1,11 @@
+Tue Feb 24 17:46:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/TAO-tutorials.html:
+          Fixed broken link
+
 Mon Feb 23 19:08:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl:
 
 	  Added the missing inline file.
 
