@@ -77,6 +77,8 @@ Thu Jun 24 15:47:32 1999  Steve Huston  <shuston@riverace.com>
         * tests/UPIPE_SAP_Test.dsp:
           Added "PharLap ETS Debug" configurations.
 
+        * ACE-INSTALL.html: Added some info about the PharLap TNT ETS port.
+
 Thu Jun 24 14:10:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/libsize.pl: use appropriate size command for all of
