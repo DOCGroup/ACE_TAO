@@ -1,7 +1,8 @@
-Mon Jul 05 11:30:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jul 05 12:14:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i: Wchat_t version of strenvdup should only be available
 	  on Win32.  Thanks to Bala, Carlos, and David for noticing this.
+	  (strspn): Ditto to this function.
 
 Mon Jul 05 09:58:07 1999  David L. Levine  <levine@cs.wustl.edu>
 

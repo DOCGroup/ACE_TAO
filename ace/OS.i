@@ -10391,7 +10391,7 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 ACE_INLINE size_t
 ACE_OS::strspn (const wchar_t *s, const wchar_t *t)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && defined (ACE_HAS_UNICODE)
   ACE_TRACE ("ACE_OS::strspn");
   return ::wcsspn (s, t);
 #else
