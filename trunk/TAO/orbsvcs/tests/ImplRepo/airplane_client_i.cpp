@@ -44,9 +44,8 @@ Airplane_Client_i::read_ior (char *filename)
 int
 Airplane_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
   int c;
-  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -57,21 +56,16 @@ Airplane_Client_i::parse_args (void)
       case 'n':  // loop count
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
-        if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
-                            -1);
-            break;
+      case 'k':  // ior provide on command line
+        this->server_key_ = ACE_OS::strdup (get_opts.optarg);
+        break;  
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-f server-obj-ref-key-file]"
+                           " [-k server-obj-key]"
                            "\n",
                            this->argv_ [0]),
                           -1);
