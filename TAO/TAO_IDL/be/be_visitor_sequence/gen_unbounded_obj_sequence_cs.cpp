@@ -92,20 +92,20 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **tmp = 0;" << be_nl
       << "tmp = " << class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **old = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "if (!this->release_)" << be_idt_nl
       << "tmp[i] = ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "::_duplicate (old[i]);" << be_uidt_nl
       << "else" << be_idt_nl
       << "tmp[i] = old[i];" << be_uidt_nl << be_uidt_nl
@@ -122,15 +122,15 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (tmp[i]);" << be_nl
       << "tmp[i] = ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_nl
       << class_name << "::freebuf (tmp);" << be_nl
@@ -149,16 +149,16 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "void" << be_nl
       << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (tmp[i]);" << be_nl
       << "tmp[i] = ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl;
@@ -172,30 +172,30 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       // Pseudo objects do not require this methods.
       *os << "void " << be_nl
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
-	  << "void* target," << be_nl
-	  << "CORBA_Object *src," << be_nl
-	  << "CORBA_Environment &ACE_TRY_ENV"
-	  << be_uidt_nl
-	  << ")" << be_uidt_nl
-	  << "{" << be_idt_nl;
-      pt->accept (visitor);
+	        << "void* target," << be_nl
+	        << "CORBA_Object *src," << be_nl
+	        << "CORBA_Environment &ACE_TRY_ENV"
+	        << be_uidt_nl
+	        << ")" << be_uidt_nl
+	        << "{" << be_idt_nl;
+      bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << "**, target);" << be_nl
-	  << "*tmp = ";
-      pt->accept (visitor);
+	        << "*tmp = ";
+      bt->accept (visitor);
       *os << "::_narrow (src, ACE_TRY_ENV);" << be_uidt_nl
-	  << "}\n" << be_nl;
+	        << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
-	  << "{" << be_idt_nl;
-      pt->accept (visitor);
+	        << "{" << be_idt_nl;
+      bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << "**, src);" << be_nl
-	  << "return *tmp;" << be_uidt_nl
-	  << "}" << be_nl;
+	        << "return *tmp;" << be_uidt_nl
+	        << "}" << be_nl;
     }
 
   os->gen_endif (); // endif macro

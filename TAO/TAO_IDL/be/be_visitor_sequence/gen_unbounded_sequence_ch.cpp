@@ -107,7 +107,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
-  if (pt->accept (visitor) == -1)
+  if (bt->accept (visitor) == -1)
   {
      ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_sequence_ch::"
@@ -129,22 +129,22 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // Accessors
   *os << "// = Accessors." << be_nl;
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os <<" &operator[] (CORBA::ULong i);" << be_nl;
 
   // operator[]
   *os << "const ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " &operator[] (CORBA::ULong i) const;" << be_nl;
 
   // Static operations
   *os << "// = Static operations." << be_nl
       << "static ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " *allocbuf (CORBA::ULong size);" << be_nl;
 
   *os << "static void freebuf (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " *buffer);" << be_nl;
 
   // allocate_buffer
@@ -156,18 +156,18 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl
       << be_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os << " *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
   *os << "const ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " *get_buffer (void) const;" << be_nl;
 
   // replace
   *os << "void replace (CORBA::ULong max," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" *data," << be_nl
       << "CORBA::Boolean release);" << be_uidt << be_uidt_nl;
 

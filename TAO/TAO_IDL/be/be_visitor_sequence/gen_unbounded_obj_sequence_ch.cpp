@@ -87,7 +87,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // constructor
   *os << class_name << " (CORBA::ULong maximum," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os <<"* *value," << be_nl
       << "CORBA::Boolean release = 0);" << be_uidt_nl;
 
@@ -117,18 +117,18 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "TAO_Object_Manager<";
     }
 
-  *os << pt->name () << ","
-      << pt->name () << "_var>"
+  *os << bt->name () << ","
+      << bt->name () << "_var>"
       << " operator[] (CORBA::ULong index) const;" << be_nl;
 
   // allocbuf
   *os << "static ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **allocbuf (CORBA::ULong nelems);" << be_nl;
 
   // freebuf
   *os << "static void freebuf (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **buffer);" << be_nl;
 
   // allocate_buffer
@@ -139,12 +139,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os << "* *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
   *os << "const ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "* *get_buffer (void) const;" << be_nl;
 
   // shrink_buffer

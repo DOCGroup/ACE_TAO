@@ -18,10 +18,7 @@
 //
 // ============================================================================
 
-//#include      "idl.h"
-//#include      "idl_extern.h"
-#include        "be.h"
-
+#include "be.h"
 #include "be_visitor_sequence.h"
 
 ACE_RCSID(be_visitor_sequence, gen_bounded_sequence_cs, "$Id$")
@@ -120,9 +117,9 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" *tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " *, this->buffer_);" << be_nl
       << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
