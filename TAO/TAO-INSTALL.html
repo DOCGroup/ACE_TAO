@@ -61,20 +61,26 @@ undefined and most likely unpredictable and erroneous results. <P>
 <HR><P>
 <H3>On Windows NT</H3>
 
+Before compiling TAO_IDL on NT, you must set the environment variable
+CPP_PATH to where CL.exe is installed on your machine.  E.g. on our
+    machines, we set it to "C:/Program Files/DevStudio/VC/bin".  Yours
+    may vary.  Notice that if you forget to set this variable, you
+    must rebuild TAO_IDL after setting it.
+
 <H4>Visual C++ 5.0</H4>
 
-<P>It works best if TAO is placed in ACE_wrappers so TAO ends up in 
-ACE_wrappers\TAO because the Visual C++ 5.0 Project files are set up to work 
+<P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
+ACE_wrappers\TAO because the Visual C++ 5.0 Project files are set up to work
 in this configuration. If you move it, then make sure you change the project
 file to look for the include and library files in the correct place.</P>
 
 <OL>
-  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or ace-vc50.dsw, 
+  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or ace-vc50.dsw,
        whichever is in your copy of ACE). <BR><BR>
 
   <LI> Load the workspace tao\TAO.dsw and build the TAO library. <BR><BR>
 
-  <LI> To build the Cubit test, load the workspace tests\Cubit\TAO\test.dsw 
+  <LI> To build the Cubit test, load the workspace tests\Cubit\TAO\test.dsw
        and build both client and server. <BR><BR>
 </OL>
 
@@ -83,7 +89,7 @@ file to look for the include and library files in the correct place.</P>
 <OL>
   <LI> In Tools|Options, go to the Directories page and make sure that include
        files paths includes ACE_wrappers\ and the root directory of TAO (which
-       can be ACE_wrappers\TAO if installed there).  The library files paths 
+       can be ACE_wrappers\TAO if installed there).  The library files paths
        should include ACE_wrappers\ace. <P>
 
   <LI> Load the project file tao\TAO.mdp and build the TAO library. <P>
@@ -96,5 +102,5 @@ file to look for the include and library files in the correct place.</P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
-</BODY> 
+</BODY>
 </HTML>
