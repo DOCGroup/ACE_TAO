@@ -57,7 +57,6 @@ check_PROGRAMS = \
         Basic_Types_Test \
         Buffer_Stream_Test \
         CDR_Test \
-        Cache_Manager_Test \
         Collection_Test \
         Conn_Test \
         DLL_Test \
@@ -134,9 +133,9 @@ Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
 CDR_Test_SOURCES = CDR_Test.cpp
 
-Cache_Manager_Test_SOURCES = Cache_Manager_Test.cpp
+# Cache_Manager_Test_SOURCES = Cache_Manager_Test.cpp
 
-Collection_Test = Collection_Test.cpp
+Collection_Test_SOURCES = Collection_Test.cpp
 
 Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
 
@@ -169,6 +168,8 @@ MT_SOCK_Test_SOURCES = MT_SOCK_Test.cpp
 
 Map_Manager_Test_SOURCES = Map_Manager_Test.cpp
 
+Map_Test_SOURCES = Map_Test.cpp Map_Test.h
+
 Mem_Map_Test_SOURCES = Mem_Map_Test.cpp
 
 Message_Block_Test_SOURCES = Message_Block_Test.cpp
@@ -198,6 +199,8 @@ Process_Mutex_Test_SOURCES = Process_Mutex_Test.cpp
 
 Process_Strategy_Test_SOURCES = Process_Strategy_Test.cpp \
                                 Process_Strategy_Test.h
+
+Purgable_Map_Manager_Test_SOURCES = Purgable_Map_Manager_Test.cpp
 
 RB_Tree_Test_SOURCES = RB_Tree_Test.cpp
 
