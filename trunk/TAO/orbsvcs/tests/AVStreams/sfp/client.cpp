@@ -25,7 +25,7 @@ class frame_handler: public ACE_Event_Handler
 
   // Called when timer expires.  
   int handle_timeout (const ACE_Time_Value &/* tv */,
-                      const void *arg = 0)
+                      const void */* arg */)
     {
       //       ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
        if (fragment)
