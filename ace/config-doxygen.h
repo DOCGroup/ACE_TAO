@@ -91,4 +91,7 @@
 /// Generate ACE XTI ATM class documentation
 #define ACE_HAS_XTI_ATM
 
+/// Generate ACE_Dev_Poll_Reactor documentation
+#define ACE_HAS_EVENT_POLL
+
 #endif /* ACE_CONFIG_DOXYGEN_H */

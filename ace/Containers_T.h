@@ -94,9 +94,9 @@ public:
 
   /// Assignment operator
   /**
-   * Perform a deep copy operation using the Bounded_Stack parameter.  If the capacity
-   * of the lhs isn't sufficient for the rhs, then the underlying data structure will
-   * be reallocated to accomadate the larger number of elements.
+   * Perform a deep copy operation using the Bounded_Stack parameter.  If the
+   * capacity of the lhs isn't sufficient for the rhs, then the underlying data
+   * structure will be reallocated to accomadate the larger number of elements.
    */
   void operator= (const ACE_Bounded_Stack<T> &s);
 
@@ -457,14 +457,14 @@ public:
    */
   int insert (const T &new_item);
 
-  /// Remove <item> from the Stack.  Returns 0 if it removes the item,
+  /// Remove @a item from the Stack.  Returns 0 if it removes the item,
   /// -1 if it can't find the item, and -1 if a failure occurs.
   /**
    * Linear remove operation.
    */
   int remove (const T &item);
 
-  /// Finds if <item> occurs the set.  Returns 0 if finds, else -1.
+  /// Finds if @a item occurs the set.  Returns 0 if finds, else -1.
   /**
    * Linear find operation.
    */
@@ -514,7 +514,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Stack.
+  /// Pass back the @a next_item that hasn't been seen in the Stack.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
@@ -963,16 +963,17 @@ protected:
 
   ///Constant time insert a new item into the list structure.
   /**
-   * Insert a <new_element> into the list.  It will be added before
-   * or after <old_item>.  Default is to insert the new item *after*
+   * Insert a @a new_item into the list.  It will be added before
+   * or after @a old_item.  Default is to insert the new item *after*
    * <head_>.  Return 0 if succeed, -1 if error occured.
    */
   int insert_element (T *new_item,
                       int before = 0,
                       T *old_item = 0);
+
   ///Constant time delete an item from the list structure.
   /**
-   * Remove an <item> from the list.  Return 0 if succeed, -1 otherwise.
+   * Remove @a item from the list.  Return 0 if succeed, -1 otherwise.
    * Notice that this function checks if item is <head_> and either its
    * <next_> or <prev_> is NULL.  The function resets item's <next_> and
    * <prev_> to 0 to prevent clobbering the double-linked list if a user
@@ -1121,10 +1122,12 @@ public:
    */
   T *next (void) const;
 
-  /// Removes the current item (i.e., <next>) from the list.
-  /// Note that DLList iterators do not support <advance_and_remove>
-  /// directly (defined in its base class) and you will need to
-  /// release the element returned by it.
+  /**
+   * Removes the current item (i.e., <next>) from the list.
+   * Note that DLList iterators do not support <advance_and_remove>
+   * directly (defined in its base class) and you will need to
+   * release the element returned by it.
+   */
   int remove (void);
 
   /// Delegates to ACE_Double_Linked_List_Iterator.
@@ -1374,7 +1377,7 @@ public:
 
   ///Linear time insertion of an item unique to the set.
   /**
-   * Insert <new_item> into the set (doesn't allow duplicates).
+   * Insert @a new_item into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
@@ -1384,13 +1387,13 @@ public:
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
-   * failure occurs.  Removal doesn't reclaim memory for the <item>.
+   * failure occurs.  Removal doesn't reclaim memory for the @a item.
    */
   int remove (const T &item);
 
-  /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
+  /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
-   * Performs a linear find operation for the specified <item>.
+   * Performs a linear find operation for the specified @a item.
    */
   int find (const T &item) const;
 
@@ -1536,8 +1539,8 @@ public:
 
   /// Construct a Bounded_Set with the provided sizeB.
   /**
-   * Initialize the Bounded_Set to have a maximum size equal to the size parameter
-   * specified.
+   * Initialize the Bounded_Set to have a maximum size equal to the size
+   * parameter specified.
    */
   ACE_Bounded_Set (size_t size);
 
@@ -1566,13 +1569,15 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * A constant time check is performed to determine if the Bounded_Set is empty.
+   * A constant time check is performed to determine if the Bounded_Set is
+   * empty.
    */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
   /**
-   * Performs a constant time check to determine if the Bounded_Set is at capacity.
+   * Performs a constant time check to determine if the Bounded_Set is at
+   * capacity.
    */
   int is_full (void) const;
 
@@ -1580,7 +1585,7 @@ public:
 
   ///Inserts a new element unique to the set.
   /**
-   * Insert <new_item> into the set (doesn't allow duplicates) in linear
+   * Insert @a new_item into the set (doesn't allow duplicates) in linear
    * time.
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
@@ -1589,14 +1594,14 @@ public:
 
   ///Finds the specified element and removes it from the set.
   /**
-   * Remove first occurrence of <item> from the set.  Returns 0 if it
+   * Remove first occurrence of @a item from the set.  Returns 0 if it
    * removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.  The linear remove operation does not reclaim the
    * memory associated with the removed item.
    */
   int remove (const T &item);
 
-  /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
+  /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
    * find preforms a linear search for <item> and returns 0 on successful
    * find and -1 otherwise.
@@ -1784,7 +1789,7 @@ public:
 
   // = Classic unordered set operations.
 
-  /// Insert <new_item> into the ordered multiset.
+  /// Insert @a new_item into the ordered multiset.
   /// Returns -1 if failures occur, else 0.
   /**
    * Linear time, order preserving insert into the set beginning at the head.
@@ -1793,14 +1798,14 @@ public:
 
   ///Linear time insert beginning at the point specified by the provided iterator.
   /**
-   * Insert <new_item> into the ordered multiset, starting its search at
+   * Insert @a new_item into the ordered multiset, starting its search at
    * the node pointed to by the iterator, and if insertion was successful,
    * updates the iterator to point to the newly inserted node.
    * Returns -1 if failures occur, else 0.
    */
   int insert (const T &new_item, ITERATOR &iter);
 
-  /// Remove first occurrence of <item> from the set.  Returns 0 if
+  /// Remove first occurrence of @a item from the set.  Returns 0 if
   /// it removes the item, -1 if it can't find the item.
   /**
    * Linear time search operation which removes the item from the set if found .
@@ -1809,14 +1814,14 @@ public:
 
   ///Linear find operation.
   /**
-   * Finds first occurrence of <item> in the multiset, using the iterator's
+   * Finds first occurrence of @a item in the multiset, using the iterator's
    * current position as a hint to improve performance. If find succeeds,
    * it positions the iterator at that node and returns 0, or if it cannot
    * locate the node, it leaves the iterator alone and just returns -1.
    */
   int find (const T &item, ITERATOR &iter) const;
 
-  /// Reset the <ACE_Ordered_MultiSet> to be empty.
+  /// Reset the ACE_Ordered_MultiSet to be empty.
   /**
    * Delete the nodes inside the set.
    */
@@ -1831,7 +1836,7 @@ public:
 private:
 
   /**
-   * Insert <item>, starting its search at the position given,
+   * Insert @a item, starting its search at the position given,
    * and if successful updates the passed pointer to point to
    * the newly inserted item's node.
    */
@@ -1839,7 +1844,7 @@ private:
                    ACE_DNode<T> **new_position);
 
   /**
-   * looks for first occurance of <item> in the ordered set, using the
+   * Looks for first occurance of @a item in the ordered set, using the
    * passed starting position as a hint: if there is such an instance, it
    * updates the new_position pointer to point to this node and returns 0;
    * if there is no such node, then if there is a node before where the

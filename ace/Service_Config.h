@@ -129,7 +129,7 @@ public:
 
   /**
    * Performs an open without parsing command-line arguments.  The
-   * <logger_key> indicates where to write the logging output, which
+   * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.
    */
   ACE_Service_Config (const ACE_TCHAR program_name[],
@@ -173,7 +173,7 @@ public:
   /**
    * This is the primary entry point into the ACE_Service_Config (the
    * constructor just handles simple initializations).  It parses
-   * arguments passed in from @c argc and @c argv parameters.  The
+   * arguments passed in from @a argc and @a argv parameters.  The
    * arguments that are valid in a call to this method include:
    *
    * - '-b' Option to indicate that we should be a daemon. Note that when
@@ -197,16 +197,16 @@ public:
    *        Please observe the difference between options '-f' that looks
    *        for a list of files and here a list of services.
    *
-   * @arg logger_key   indicates where to write the logging output,
-   *                   which is typically either a STREAM pipe or a
-   *                   socket address.
-   * @arg ignore_static_svcs   if 1 then static services are not loaded,
-   *                   otherwise, they are loaded.
-   * @arg ignore_default_svc_conf_file  if non-0 then the @c svc.conf
-   *                   configuration file will be ignored.
-   * @arg ignore_debug_flag> if non-0 then the application is responsible
-   *                   for setting the @c ACE_Log_Msg::priority_mask
-   *                   appropriately.
+   * @param logger_key   Indicates where to write the logging output,
+   *                     which is typically either a STREAM pipe or a
+   *                     socket address.
+   * @param ignore_static_svcs   If 1 then static services are not loaded,
+   *                             otherwise, they are loaded.
+   * @param ignore_default_svc_conf_file  If non-0 then the @c svc.conf
+   *                                      configuration file will be ignored.
+   * @param ignore_debug_flag If non-0 then the application is responsible
+   *                          for setting the @c ACE_Log_Msg::priority_mask
+   *                          appropriately.
    *
    * @retval -1   the configuration file is not found or cannot
    *              be opened (errno is set accordingly).
