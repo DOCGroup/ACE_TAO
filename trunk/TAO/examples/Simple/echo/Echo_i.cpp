@@ -52,17 +52,17 @@ Echo_i::echo_list (const char *,
   list->length (3);
 
   // Just do something to get a list of object references.
-  (*list)[0] =
+  list[CORBA::ULong(0)] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  (*list)[1] =
+  list[CORBA::ULong(1)] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);;
   ACE_CHECK_RETURN (0);
 
-  (*list)[2] =
+  list[CORBA::ULong(2)] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);

@@ -1,131 +1,138 @@
+Mon Mar 12 11:37:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simple/echo/Echo_i.cpp:
+          Use list[CORBA::ULong(0)] instead of (*list)[0] to workaround
+          the MSVC problems with multiple conversions, the former looks
+          nicer to me.
+
 Mon Mar 12 13:33:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
 
           Moved the generation of the #ifndef guard to prevent the
- 	  inclusion of skeleton source code more than once in a build to
- 	  come after the generation of the #include statement for the
- 	  pre-compiled header file (if any). Thanks to Pedro Brando
- 	  <pbrandao@inescporto.pt> for pointing out that the previous
- 	  order of code generation could sometimes cause the C++ compiler
- 	  to think that there is an extra #endif in the file.
+          inclusion of skeleton source code more than once in a build to
+          come after the generation of the #include statement for the
+          pre-compiled header file (if any). Thanks to Pedro Brando
+          <pbrandao@inescporto.pt> for pointing out that the previous
+          order of code generation could sometimes cause the C++ compiler
+          to think that there is an extra #endif in the file.
 
 Mon Mar 12 13:20:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (message_type): Added a fix to
-	  soncolidate the outgoing message blocks before dumping the
-	  contents for debugging purposes. Thanks to Johnny Willemsen for
-	  providing this patch.
-	
-	* tao/GIOP_Message_Base.cpp: 
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Handler.inl: Added code to align the message
-	  blocks on an 8 byte boundary. This is needed for BCB as the
-	  memory allocated doesn't seem to get aligned on an 8 byte
-	  boundary. Hopefully this should fix most of the problem that
-	  folks see on BCB. Thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> and Johnny Willemsen for putting in effort
-	  to get behind what the compiler was actually doing.
+        * tao/GIOP_Message_Lite.cpp (message_type): Added a fix to
+          soncolidate the outgoing message blocks before dumping the
+          contents for debugging purposes. Thanks to Johnny Willemsen for
+          providing this patch.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Handler.inl: Added code to align the message
+          blocks on an 8 byte boundary. This is needed for BCB as the
+          memory allocated doesn't seem to get aligned on an 8 byte
+          boundary. Hopefully this should fix most of the problem that
+          folks see on BCB. Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> and Johnny Willemsen for putting in effort
+          to get behind what the compiler was actually doing.
 
 Mon Mar 12 12:39:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_i.h:
-	* examples/Simple/echo/Echo_i.h:
-	* examples/Simple/echo/Echo_i.cpp:
-	* examples/Simple/grid/Grid_i.h:
-	* examples/Persistent_Grid/Grid_i.h:
-	* examples/Simple/bank/AccountManager_i.h: Fixed warnings and
-	  errors in KCC builds.
+        * examples/Simple/time/Time_i.h:
+        * examples/Simple/echo/Echo_i.h:
+        * examples/Simple/echo/Echo_i.cpp:
+        * examples/Simple/grid/Grid_i.h:
+        * examples/Persistent_Grid/Grid_i.h:
+        * examples/Simple/bank/AccountManager_i.h: Fixed warnings and
+          errors in KCC builds.
 
 Mon Mar 12 12:14:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Mentioned Windows 2000 explicitly in the
-	  document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
-	  raising the question.
+        * TAO-INSTALL.html: Mentioned Windows 2000 explicitly in the
+          document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
+          raising the question.
 
 Mon Mar 12 11:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
 
           Removed code that was registering the connection handler with
- 	  the connection caching mechanism. We need to shortcut it, as we
- 	  use our own concept. The code was actually causing problems for
- 	  Craig Rodrigues <rodrigc@mediaone.net>, thanks for reporting.
+          the connection caching mechanism. We need to shortcut it, as we
+          use our own concept. The code was actually causing problems for
+          Craig Rodrigues <rodrigc@mediaone.net>, thanks for reporting.
 
 Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AV_Core.h (TAO_AV_Core): deactivate_servant()
-	  and get_flowname() were global.  Moved them to the TAO_AV_Core
-	  namespace.
+        * orbsvcs/orbsvcs/AV/AV_Core.h (TAO_AV_Core): deactivate_servant()
+          and get_flowname() were global.  Moved them to the TAO_AV_Core
+          namespace.
 
-	* orbsvcs/tests/AVStreams: Added the following files to enable
-	  builds on Win32:
+        * orbsvcs/tests/AVStreams: Added the following files to enable
+          builds on Win32:
 
-	  - AVStreams.dsw
-  	  - Full_Profile/Full_Profile.dsw
-	  - Full_Profile/ftp.dsp
-	  - Full_Profile/server.dsp
-	  - Latency/Latency.dsw
-	  - Latency/control.dsp
-	  - Latency/ping.dsp
-	  - Latency/pong.dsp
-	  - Multicast/Multicast.dsw
-	  - Multicast/ftp.dsp
-	  - Multicast/server.dsp
-	  - Multicast_Full_Profile/Multicast_Full_Profile.dsw
-	  - Multicast_Full_Profile/ftp.dsp
-	  - Multicast_Full_Profile/server.dsp
-	  - Pluggable/Pluggable.dsw
-	  - Pluggable/ftp.dsp
-	  - Pluggable/server.dsp
-	  - Simple/run_test.pl
+          - AVStreams.dsw
+          - Full_Profile/Full_Profile.dsw
+          - Full_Profile/ftp.dsp
+          - Full_Profile/server.dsp
+          - Latency/Latency.dsw
+          - Latency/control.dsp
+          - Latency/ping.dsp
+          - Latency/pong.dsp
+          - Multicast/Multicast.dsw
+          - Multicast/ftp.dsp
+          - Multicast/server.dsp
+          - Multicast_Full_Profile/Multicast_Full_Profile.dsw
+          - Multicast_Full_Profile/ftp.dsp
+          - Multicast_Full_Profile/server.dsp
+          - Pluggable/Pluggable.dsw
+          - Pluggable/ftp.dsp
+          - Pluggable/server.dsp
+          - Simple/run_test.pl
 
 Mon Mar 12 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Leader_Follower.cpp:
 
-	  When timeouts were specified and the connection was closed
-	  before the timer expired or the reply arrived we returned no
-	  error, thereby letting the client believe that the request was
-	  actually sucessful. This fixes the problem by returning -1 in
-	  TAO_Wait_On_Leader_Follower::wait () in such cases.  Thanks to
-	  Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this
-	  patch.
+          When timeouts were specified and the connection was closed
+          before the timer expired or the reply arrived we returned no
+          error, thereby letting the client believe that the request was
+          actually sucessful. This fixes the problem by returning -1 in
+          TAO_Wait_On_Leader_Follower::wait () in such cases.  Thanks to
+          Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this
+          patch.
 
 Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
-	  template instantiations to Null_Mutex. The declaration was
-	  Null_Mutex.
+        * examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
+          template instantiations to Null_Mutex. The declaration was
+          Null_Mutex.
 
 Sun Mar 11 11:29:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/Makefile.bor:
-	* orbsvcs/tests/Event/Makefile.bor:
-	* orbsvcs/tests/Event/lib/Makefile.bor:
-	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
-	* orbsvcs/tests/Event/Basic/BCast.bor:
-	* orbsvcs/tests/Event/Basic/Bitmask.bor:
-	* orbsvcs/tests/Event/Basic/Complex.bor:
-	* orbsvcs/tests/Event/Basic/Control.bor:
-	* orbsvcs/tests/Event/Basic/Disconnect.bor:
-	* orbsvcs/tests/Event/Basic/Gateway.bor:
-	* orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
-	* orbsvcs/tests/Event/Basic/Makefile.bor:
-	* orbsvcs/tests/Event/Basic/Negation.bor:
-	* orbsvcs/tests/Event/Basic/Observer.bor:
-	* orbsvcs/tests/Event/Basic/Random.bor:
-	* orbsvcs/tests/Event/Basic/Reconnect.bor:
-	* orbsvcs/tests/Event/Basic/Shutdown.bor:
-	* orbsvcs/tests/Event/Basic/Timeout.bor:
-	* orbsvcs/tests/Event/Basic/Wildcard.bor:
-	* orbsvcs/tests/Event/Performance/Connect.bor:
-	* orbsvcs/tests/Event/Performance/Inversion.bor:
-	* orbsvcs/tests/Event/Performance/Latency.bor:
-	* orbsvcs/tests/Event/Performance/Latency_Server.bor:
-	* orbsvcs/tests/Event/Performance/Makefile.bor:
-	* orbsvcs/tests/Event/Performance/Throughput.bor:
-	  Add Borland Makefiles for the event service regression tests.
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/Event/Makefile.bor:
+        * orbsvcs/tests/Event/lib/Makefile.bor:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
+        * orbsvcs/tests/Event/Basic/BCast.bor:
+        * orbsvcs/tests/Event/Basic/Bitmask.bor:
+        * orbsvcs/tests/Event/Basic/Complex.bor:
+        * orbsvcs/tests/Event/Basic/Control.bor:
+        * orbsvcs/tests/Event/Basic/Disconnect.bor:
+        * orbsvcs/tests/Event/Basic/Gateway.bor:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
+        * orbsvcs/tests/Event/Basic/Makefile.bor:
+        * orbsvcs/tests/Event/Basic/Negation.bor:
+        * orbsvcs/tests/Event/Basic/Observer.bor:
+        * orbsvcs/tests/Event/Basic/Random.bor:
+        * orbsvcs/tests/Event/Basic/Reconnect.bor:
+        * orbsvcs/tests/Event/Basic/Shutdown.bor:
+        * orbsvcs/tests/Event/Basic/Timeout.bor:
+        * orbsvcs/tests/Event/Basic/Wildcard.bor:
+        * orbsvcs/tests/Event/Performance/Connect.bor:
+        * orbsvcs/tests/Event/Performance/Inversion.bor:
+        * orbsvcs/tests/Event/Performance/Latency.bor:
+        * orbsvcs/tests/Event/Performance/Latency_Server.bor:
+        * orbsvcs/tests/Event/Performance/Makefile.bor:
+        * orbsvcs/tests/Event/Performance/Throughput.bor:
+          Add Borland Makefiles for the event service regression tests.
 
 Sun Mar 11 10:39:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
