@@ -75,7 +75,7 @@ Echo_Client_Request_Interceptor::send_request (
     }
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_other (
                PortableInterceptor::ClientRequestInfo_ptr
                TAO_ENV_ARG_DECL_NOT_USED
@@ -126,7 +126,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr rinfo
-    TAO_ENV_ARG_DECL_NOT_USED)
+    TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -134,6 +134,7 @@ Echo_Client_Request_Interceptor::receive_exception (
               "Echo_Client_Request_Interceptor::received_exception "
               "from \"%s\"\n",
               rinfo->operation (TAO_ENV_SINGLE_ARG_PARAMETER)));
+  ACE_CHECK;
 
   // As of now, there is no way to extract an exception from an Any in TAO.
 
@@ -298,7 +299,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED
@@ -310,7 +311,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 {
   // Do nothing
 }
-  
+
 void
 Echo_Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr
