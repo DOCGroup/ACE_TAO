@@ -7,11 +7,11 @@ Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/MT_Server/Makefile:
 	* tests/Multiple_Inheritance/Makefile:
 	* tests/Native_Exceptions/Makefile:
-	* tests//NestedUpcall/MT_Client_Test/Makefile:
-	* tests//NestedUpcall/Reactor/Makefile:
-	* tests//NestedUpcall/Triangle_Test/Makefile:
-	* tests//OctetSeq/Makefile:
-	* tests//Param_Test/Makefile:
+	* tests/NestedUpcall/MT_Client_Test/Makefile:
+	* tests/NestedUpcall/Reactor/Makefile:
+	* tests/NestedUpcall/Triangle_Test/Makefile:
+	* tests/OctetSeq/Makefile:
+	* tests/Param_Test/Makefile:
 	* examples/Callback_Quoter/Makefile:
 	* examples/Event_Comm/Makefile:
 	* examples/OBV/Typed_Events/Makefile:
