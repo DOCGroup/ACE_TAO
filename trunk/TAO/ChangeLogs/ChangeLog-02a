@@ -1,3 +1,8 @@
+Fri Jan 18 09:23:42 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Fixed custom build for .idl files for Release builds.
+
 Fri Jan 18 06:54:48 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
