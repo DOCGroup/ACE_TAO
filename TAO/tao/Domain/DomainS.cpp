@@ -417,7 +417,7 @@ POA_CORBA::_TAO_DomainManager_ThruPOA_Proxy_Impl::_TAO_DomainManager_ThruPOA_Pro
 // ThruPOA Implementation of the IDL interface methods
 
 ::CORBA::Policy_ptr POA_CORBA::_TAO_DomainManager_ThruPOA_Proxy_Impl::get_domain_policy (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::PolicyType policy_type
     ACE_ENV_ARG_DECL
   )
@@ -463,7 +463,7 @@ POA_CORBA::_TAO_DomainManager_Direct_Proxy_Impl::_TAO_DomainManager_Direct_Proxy
 {}
 
 ::CORBA::Policy_ptr POA_CORBA::_TAO_DomainManager_Direct_Proxy_Impl::get_domain_policy  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::PolicyType policy_type
     ACE_ENV_ARG_DECL
   )
@@ -646,7 +646,7 @@ void POA_CORBA::DomainManager::_interface_skel (
   )
 {
   POA_CORBA::DomainManager *_tao_impl = (POA_CORBA::DomainManager *) _tao_object_reference;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -1120,7 +1120,7 @@ POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::_TAO_ConstructionPolicy_T
 // ThruPOA Implementation of the IDL interface methods
 
 void POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::make_domain_manager (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy
     ACE_ENV_ARG_DECL
@@ -1167,7 +1167,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_TAO_ConstructionPolicy_Di
 {}
 
 void POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::make_domain_manager  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy
     ACE_ENV_ARG_DECL
@@ -1347,7 +1347,7 @@ void POA_CORBA::ConstructionPolicy::_interface_skel (
   )
 {
   POA_CORBA::ConstructionPolicy *_tao_impl = (POA_CORBA::ConstructionPolicy *) _tao_object_reference;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =
