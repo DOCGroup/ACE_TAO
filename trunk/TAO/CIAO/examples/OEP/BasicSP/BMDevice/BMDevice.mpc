@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_stub): ciao_client {
+project(BMDevice_stub): ciao_client_dnc {
   after += BasicSP_stub
   sharedname = BMDevice_stub
 
@@ -18,7 +18,7 @@ project(BMDevice_stub): ciao_client {
   }
 }
 
-project(BMDevice_svnt) : ciao_servant {
+project(BMDevice_svnt) : ciao_servant_dnc {
   after += BMDevice_stub BasicSP_stub
   sharedname  = BMDevice_svnt
   libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
@@ -42,7 +42,7 @@ project(BMDevice_svnt) : ciao_servant {
 }
 
 
-project(BMDevice_exec) : ciao_component {
+project(BMDevice_exec) : ciao_component_dnc {
   after += BMDevice_svnt
   sharedname = BMDevice_exec
   libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt
