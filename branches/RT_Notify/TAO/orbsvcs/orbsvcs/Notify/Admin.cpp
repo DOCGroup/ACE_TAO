@@ -88,10 +88,12 @@ TAO_NS_Admin::insert (TAO_NS_Proxy* proxy ACE_ENV_ARG_DECL)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>;
 template class TAO_NS_Container_T <TAO_NS_Proxy>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>
 #pragma instantiate TAO_NS_Container_T <TAO_NS_Proxy>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
