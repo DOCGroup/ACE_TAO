@@ -30,17 +30,10 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 <a name="current"><h3>Current status:</h3></a>
 
 <ul>
-  <li><p>Trying to figure out a better <em>resource</em> management
-          scheme.  <em>Resouces</em> here include ORB, POA, connections,
-          profiles.... that provide services for CORBA invocations.
-        </p>
-        <P>[STATUS]: The current version keeps very few objects
-          managed by the resource factory. Most are ORB specific. It
-          seems like the correct implementation is to make the few
-          remaining resources (such as the Reactor) a
-          per-ORB-per-thread entity.
-        </P>
+
+  <li><p>We are fully compliant with OMG 2.2 / 2.3 spec.</p>
   </li>
+
 </ul>
 
 <!-- --------------------- -->
@@ -89,17 +82,32 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 <a name="ongoing"><h3>Ongoing Work:</h3></a>
 
 <ul>
-  <li><p>ORB Core overhaul.</p>
+  <li><p>Trying to figure out a better <em>resource</em> management
+          scheme.  <em>Resouces</em> here include ORB, POA, connections,
+          profiles.... that provide services for CORBA invocations.
+        </p>
+        <P>[STATUS]: The current version keeps very few objects
+          managed by the resource factory. Most are ORB specific. It
+          seems like the correct implementation is to make the few
+          remaining resources (such as the Reactor) a
+          per-ORB-per-thread entity.
+        </P>
   </li>
 
   <li><p>Support new concurrency models, e.g., Thread-per-Request,
-      thread pool, etc..</p>
+      etc..</p>
   </li>
 
-  <li><p>Robustness improvements to connection cache so that it
-      wont crash when there are no more slots or sockets.</p>
+  <li><p>Robustness improvements to connection cache so that it will
+      purge old connections when there are no more slots or sockets
+      are available.</p>
+
+      <P>[STATUS]: The current version does go a long way to purge old
+      connections. However, all socket creation points are not
+      covered and acceptor-side sockets are not purged. </P>
+
   </li>
-      
+
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
@@ -118,22 +126,6 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
             however it might also be possible to substitute an
             allocator better-tuned to an application's specific
             usage.</p>
-        </li>
-      </ol>
-
-  <li>New features:</li>
-      <ol>
-        <li><p>Implement <code>RT-CORBA</code> spec. once it passes
-            OMG member vote.</p>
-        </li>
-
-        <li><p>Added support for CORBA Messaging Spec.</p>
-        </li>
-
-        <li><p>According to tentative CORBA 2.3a spec, once
-            ORB::shutdown has been called, operation invocations on
-            object references obtained from this ORB must throw an
-            <code>BAD_INV_ORDER</code> exception.</p>
         </li>
       </ol>
 
@@ -178,6 +170,18 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 <!-- Please make sure you append new items at the end of the list -->
 <!-- ************************************************************ -->
 <ul>
+
+  <li><p>The ORB was running into some concurrency problems if client
+      thread(s) ran before the server thread(s) got to run the event
+      loop. This problem with the internal Leader/Followers model has
+      been fixed.</p>
+  </li>
+
+  <li><p>The ORB now supports nested calls to the event loop, i.e.,
+      the event loop can be called from the servant code by calling
+      ORB::run() or ORB::perform_work().</p>
+  </li>
+
   <li><p><code>TAO_ORB_Core_instance()</code> returns the orb core
       of the default orb (the first orb created by the user).  This
       may not be the orb that the user is interested in.  The better
@@ -194,9 +198,8 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   </li>
 
   <li><p><code>ORB::perform_work</code> and
-      <code>ORB::work_pending</code> are now implemented.
-      <code>ORB::work_pending</code> may need some additional work
-      in the future (since it currently always returns true).</p>
+      <code>ORB::work_pending</code> are now implemented.  Some
+      remaining kinks in these methods have recently been fixed.</p>
   </li>
 
   <li><p>Provides dynamically linked wholesale assignment of ORB
