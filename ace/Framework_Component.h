@@ -146,7 +146,6 @@ private:
 #endif /* ACE_MT_SAFE */
 
   /// Don't allow these to be called.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository (void))
   ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository (const ACE_Framework_Repository &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository &operator= (const ACE_Framework_Repository &))
 };

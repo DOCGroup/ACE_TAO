@@ -1,5 +1,7 @@
 // Framework_Component_T.cpp
 // $Id$
+#ifndef ACE_FRAMEWORK_COMPONENT_T_CPP
+#define ACE_FRAMEWORK_COMPONENT_T_CPP
 
 #include "ace/Framework_Component_T.h"
 
@@ -22,3 +24,5 @@ ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T (void)
   ACE_TRACE ("ACE_Framework_Component_T<Concrete>::dtor");
   Concrete::close_singleton ();
 }
+
+#endif /*ACE_FRAWORK_COMPONENT_T_CPP*/
