@@ -29,7 +29,6 @@
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/CosNamingC.h"
 
 #include "notifylog_export.h"
 

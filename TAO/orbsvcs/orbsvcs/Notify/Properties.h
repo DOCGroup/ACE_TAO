@@ -136,7 +136,7 @@ protected:
 
 typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
 
-TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
+TAO_NOTIFY_SERV_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
 
 #if defined (__ACE_INLINE__)
 #include "Properties.inl"
