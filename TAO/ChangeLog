@@ -1,3 +1,15 @@
+Tue May 11 11:49:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Fixed assignment of scoped names to implied IDL constructs
+          related to 'uses multiple' that are added to the AST before
+          code generation.
+
 Tue May 10 13:36:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Remote_Invocation.cpp:
