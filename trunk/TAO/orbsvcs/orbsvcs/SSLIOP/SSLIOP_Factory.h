@@ -82,6 +82,14 @@ private:
   /// protocol.
   Security::QOP qop_;
 
+  /// The accept() timeout.
+  /**
+   * This timeout includes the overall time to complete the SSL
+   * handshake.  This includes both the TCP handshake and the SSL
+   * handshake.
+   */
+  ACE_Time_Value timeout_;
+
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)

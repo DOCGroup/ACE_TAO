@@ -24,35 +24,33 @@ ACE_RCSID (TAO_SSLIOP,
 
 template class ACE_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 template class ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 template class ACE_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Scheduling_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop)
+TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop,
+                                          const ACE_Time_Value & timeout)
   : TAO_IIOP_SSL_Acceptor (),
     ssl_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
-    handler_state_ ()
+    handler_state_ (),
+    timeout_ (timeout)
 {
   // Clear all bits in the SSLIOP::SSL association option fields.
   this->ssl_component_.target_supports = 0;
@@ -470,7 +468,8 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                   -1);
 
   ACE_NEW_RETURN (this->accept_strategy_,
-                  TAO_SSLIOP_ACCEPT_STRATEGY (this->orb_core_),
+                  TAO_SSLIOP_ACCEPT_STRATEGY (this->orb_core_,
+                                              this->timeout_),
                   -1);
 
   if (this->ssl_acceptor_.open (addr,

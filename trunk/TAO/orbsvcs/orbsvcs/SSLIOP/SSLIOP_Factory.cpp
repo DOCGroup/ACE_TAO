@@ -18,11 +18,16 @@ ACE_RCSID (TAO_SSLIOP,
 
 static const char prefix_[] = "iiop";
 
+static const long TAO_SSLIOP_ACCEPT_TIMEOUT = 10;  // Default accept
+                                                   // timeout in
+                                                   // seconds.
+
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
-     qop_ (Security::SecQOPIntegrityAndConfidentiality)
+     qop_ (Security::SecQOPIntegrityAndConfidentiality),
+     timeout_ (TAO_SSLIOP_ACCEPT_TIMEOUT)
 {
 }
 
@@ -55,7 +60,8 @@ TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_SSLIOP_Acceptor (this->qop_),
+                  TAO_SSLIOP_Acceptor (this->qop_,
+                                       this->timeout_),
                   0);
 
   return acceptor;
@@ -199,6 +205,26 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLAcceptTimeout") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              float timeout = 0;
+
+              if (sscanf (argv[curarg], "%f", &timeout) != 1
+                  || timeout < 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "ERROR: Invalid -SSLAcceptTimeout "
+                                   "value: %s.\n",
+                                   argv[curarg]),
+                                  -1);
+              else
+                this->timeout_.set (timeout);
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
                                    "-SSLDHparams") == 0)
         {
           curarg++;
@@ -249,7 +275,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                 ACE_DEBUG ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("unable to set ")
-                            ACE_TEXT ("DH parameters <%s>"),
+                            ACE_TEXT ("DH parameters <%s>\n"),
                             dhparams_path));
               return -1;
             }
@@ -260,7 +286,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("No DH parameters found in ")
                             ACE_TEXT ("certificate <%s>; either none ")
-                            ACE_TEXT ("are needed (RSA) or \"badness\"")
+                            ACE_TEXT ("are needed (RSA) or problems ")
                             ACE_TEXT ("will ensue later.\n"),
                             dhparams_path));
             }
