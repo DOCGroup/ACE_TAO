@@ -190,15 +190,15 @@ TAO_Support_Attributes_i::service_type_repos (void) const
 TAO_Import_Attributes_i::
 TAO_Import_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
-    def_search_card_ (10),
-    max_search_card_ (100),
-    def_match_card_ (10),
-    max_match_card_ (100),
-    def_return_card_ (10),
-    max_return_card_ (100),
+    def_search_card_ (200),
+    max_search_card_ (500),
+    def_match_card_ (200),
+    max_match_card_ (500),
+    def_return_card_ (200),
+    max_return_card_ (500),
     max_list_ (0),
     def_hop_count_ (5),
-    max_hop_count_ (5),
+    max_hop_count_ (10),
     def_follow_policy_ (CosTrading::if_no_local),
     max_follow_policy_ (CosTrading::always)
 {
@@ -842,17 +842,17 @@ template class ACE_Node<TAO_String_Hash_Key>;
 template class ACE_Unbounded_Set<TAO_String_Hash_Key>;
 template class ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>;
 
-//template class ACE_Hash<TAO_String_Hash_Key>;                                                                                                                               
-//template class ACE_Equal_To<TAO_String_Hash_Key>;                                                                                                                           
-//template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>;                                                                                                                
-//template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;                         
-//template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;                        
-//template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;                   
-//template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;                
-//template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>;                                                                                                
-//template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;         
-//template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;        
-//template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;   
+//template class ACE_Hash<TAO_String_Hash_Key>;
+//template class ACE_Equal_To<TAO_String_Hash_Key>;
+//template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>;
+//template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>;
+//template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+//template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 //template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer*>;
@@ -924,15 +924,15 @@ template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Offer_Data
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>
 #pragma instantiate ACE_Hash<TAO_String_Hash_Key>
 
-//#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>                                                                                                                
-//#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>                         
-//#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>                        
-//#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>                   
-//#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>                
-//#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>                                                                                                
-//#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>         
-//#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>        
-//#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>   
+//#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>
+//#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>
+//#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+//#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 //#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer*>
