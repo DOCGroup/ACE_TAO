@@ -1,3 +1,9 @@
+Tue Sep  9 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ace_dll.dsp:
+
+          Added CORBA_macros.h to the project.
+
 Mon Sep  8 07:04:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
