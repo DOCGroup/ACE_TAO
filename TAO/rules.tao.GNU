@@ -63,6 +63,9 @@ ifeq ($(minimum_corba),1)
   ifndef ami
     ami = 0
   endif # ! ami
+  ifndef interceptors
+    interceptors = 0
+  endif  # ! interceptors
   CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA=1
 else  # minimum_corba
   override minimum_corba = 0
