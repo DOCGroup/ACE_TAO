@@ -4,7 +4,7 @@ Fri Jul 10 22:25:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul 10 22:06:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * CDR.i (do_byte_swap): added explicit int return type.
+        * tao/CDR.i (do_byte_swap): added explicit int return type.
 
 Fri Jul 10 17:51:13 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
