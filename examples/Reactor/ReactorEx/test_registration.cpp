@@ -11,18 +11,18 @@
 // = DESCRIPTION
 //
 //    This test application tests a wide range of registration,
-//    suspension, resumption, and removal of events from ReactorEx.
+//    suspension, resumption, and removal of events from Reactor.
 //
-//    The application initially registers two events with ReactorEx. A
+//    The application initially registers two events with Reactor. A
 //    auxiliary thread is created to do the signaling on the
 //    events. When the first event is signaled, the event is suspended
-//    from ReactorEx. The event is then signaled again, but is "lost"
+//    from Reactor. The event is then signaled again, but is "lost"
 //    since the handler has been suspended. When the second event is
 //    signal, the first event is resumed and the second is
 //    suspended. When the first event is signaled again, both events
-//    are removed from ReactorEx.
+//    are removed from Reactor.
 //
-//    This test shows off the following features of ReactorEx:
+//    This test shows off the following features of Reactor:
 //    - Registration
 //    - Suspension
 //    - Resumption
@@ -33,11 +33,11 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 
 // Globals for this test
 int stop_test = 0;
-ACE_ReactorEx reactorEx;
+ACE_Reactor reactor;
 
 
 class Simple_Handler : public ACE_Event_Handler
@@ -72,21 +72,21 @@ Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
   if (this->handle_signal_count_ == 1)
     {
       ACE_DEBUG ((LM_DEBUG, "suspending handle = %d\n", event1_.handle ()));      
-      this->reactorEx ()->suspend_handler (event1_.handle ());
+      this->reactor ()->suspend_handler (event1_.handle ());
     }
   else if (this->handle_signal_count_ == 2)
     {
       ACE_DEBUG ((LM_DEBUG, "resuming handle = %d\n", event1_.handle ()));      
-      this->reactorEx ()->resume_handler (event1_.handle ());
+      this->reactor ()->resume_handler (event1_.handle ());
       ACE_DEBUG ((LM_DEBUG, "suspending handle = %d\n", event2_.handle ()));      
-      this->reactorEx ()->suspend_handler (event2_.handle ());
+      this->reactor ()->suspend_handler (event2_.handle ());
     }
   else if (this->handle_signal_count_ == 3)
     {
       ACE_DEBUG ((LM_DEBUG, "removing handle = %d\n", event1_.handle ()));      
-      this->reactorEx ()->remove_handler (event1_.handle ());
+      this->reactor ()->remove_handler (event1_.handle (), ACE_Event_Handler::NULL_MASK);
       ACE_DEBUG ((LM_DEBUG, "removing handle = %d\n", event2_.handle ()));      
-      this->reactorEx ()->remove_handler (event2_.handle ());
+      this->reactor ()->remove_handler (event2_.handle (), ACE_Event_Handler::NULL_MASK);
     }
   return 0;
 }
@@ -138,17 +138,17 @@ worker (void)
 int 
 main (int, char *[])
 {
-  ACE_ASSERT (reactorEx.register_handler (&simple_handler, 
-					  simple_handler.event1_.handle ()) == 0);
-  ACE_ASSERT (reactorEx.register_handler (&simple_handler, 
-					  simple_handler.event2_.handle ()) == 0);
+  ACE_ASSERT (reactor.register_handler (&simple_handler, 
+					simple_handler.event1_.handle ()) == 0);
+  ACE_ASSERT (reactor.register_handler (&simple_handler, 
+					simple_handler.event2_.handle ()) == 0);
 
   ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0) == 0);
   
   int result = 0;
   while (!stop_test && result != -1)
     {
-      result = reactorEx.handle_events ();
+      result = reactor.handle_events ();
     }
   return 0;
 };

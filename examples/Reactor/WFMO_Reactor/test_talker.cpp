@@ -13,20 +13,20 @@
 //    This test application tests a wide range of events that can be
 //    demultiplexed using various ACE utilities.  Events used include
 //    ^C events, reading from STDIN, vanilla Win32 events, thread
-//    exits, ReactorEx notifications, proactive reads, and proactive
+//    exits, Reactor notifications, proactive reads, and proactive
 //    writes.
 //    
 //    The proactive I/O events are demultiplexed by the ACE_Proactor.
 //    The thread exits, notications, and vanilla Win32 events are
-//    demultiplexed by the ACE_ReactorEx.  To enable a single thread
+//    demultiplexed by the ACE_Reactor.  To enable a single thread
 //    to run all these events, the Proactor is integrated with the
-//    ReactorEx.
+//    Reactor.
 //    
 //    The test application prototypes a simple talk program.  Two
 //    instances of the application connect.  Input from either console
 //    is displayed on the others console also.  Because of the evils
 //    of Win32 STDIN, a separate thread is used to read from STDIN.
-//    To test the Proactor and ReactorEx, I/O between the remote
+//    To test the Proactor and Reactor, I/O between the remote
 //    processes is performed proactively and interactions between the
 //    STDIN thread and the main thread are performed reactively.
 //    
@@ -36,24 +36,24 @@
 //    describes how the partipants interact in response to the
 //    multiple event types which occur.
 //    
-//    The ReactorEx test application has the following participants:
+//    The Reactor test application has the following participants:
 //    
-//    . ReactorEx -- The ReactorEx demultiplexes Win32 "waitable"
+//    . Reactor -- The Reactor demultiplexes Win32 "waitable"
 //    events using WaitForMultipleObjects.
 //    
 //    . Proactor -- The proactor initiates and demultiplexes
 //    overlapped I/O operations.  The Proactor registers with the
-//    ReactorEx so that a single-thread can demultiplex all
+//    Reactor so that a single-thread can demultiplex all
 //    application events.
 //    
 //    . STDIN_Handler -- STDIN_Handler is an Active Object which reads
 //    from STDIN and forwards the input to the Peer_Handler.  This
 //    runs in a separate thread to make the test more interesting.
 //    However, STDIN is "waitable", so in general it can be waited on
-//    by the ACE ReactorEx, thanks MicroSlush!
+//    by the ACE Reactor, thanks MicroSlush!
 //    
 //    . Peer_Handler -- The Peer_Handler connects to another instance
-//    of test_reactorEx.  It Proactively reads and writes data to the
+//    of test_reactor.  It Proactively reads and writes data to the
 //    peer.  When the STDIN_Handler gives it messages, it fowards them
 //    to the remote peer.  When it receives messages from the remote
 //    peer, it prints the output to the console.
@@ -73,35 +73,35 @@
 //      SIGINT.  This just captures the exception so that the kernel
 //      doesn't kill our process; We want to exit gracefully.  It also
 //      creates an Exit_Hook object which registers the
-//      STDIN_Handler's thread handle with the ReactorEx.  The
+//      STDIN_Handler's thread handle with the Reactor.  The
 //      Exit_Hook will get called back when the STDIN_Handler thread
 //      exits.  After registering these, it blocks reading from STDIN.
 //    
-//      Proactor -- is registered with the ReactorEx.
+//      Proactor -- is registered with the Reactor.
 //    
-//      The main thread of control waits in the ReactorEx.
+//      The main thread of control waits in the Reactor.
 //    
 //    . STDIN events -- When the STDIN_Handler thread reads from
 //    STDIN, it puts the message on Peer_Handler's message queue.  It
 //    then returns to reading from STDIN.
 //    
-//    . Message enqueue -- The ReactorEx thread wakes up and calls
+//    . Message enqueue -- The Reactor thread wakes up and calls
 //    Peer_Handler::handle_output.  The Peer_Handler then tries to
 //    dequeue a message from its message queue.  If it can, the
 //    message is Proactively sent to the remote peer.  Note that the
 //    Peer_Handler will be notified with this operation is complete.
-//    The Peer_Handler then falls back into the ReactorEx event loop.
+//    The Peer_Handler then falls back into the Reactor event loop.
 //    
 //    . Send complete event -- When a proactive send is complete, the
-//    Proactor is notified by the ReactorEx.  The Proactor, in turn,
+//    Proactor is notified by the Reactor.  The Proactor, in turn,
 //    notifies the Peer_Handler.  The Peer_Handler then checks for
 //    more messages from the message queue.  If there are any, it
 //    tries to send them.  If there are not, it returns to the
-//    ReactorEx event loop.  
+//    Reactor event loop.  
 //    
 //    . Read complete event -- When a proactive read is complete (the
 //    Peer_Handler initiated a proactive read when it connected to the
-//    remote peer), the Proactor is notified by the ReactorEx.  The
+//    remote peer), the Proactor is notified by the Reactor.  The
 //    Proactor, in turn notifies the Peer_Handler.  If the read was
 //    successful the Peer_Handler just displays the received msg to
 //    the console and reinvokes a proactive read from the network
@@ -115,7 +115,7 @@
 //    exit.
 //    
 //    . STDIN_Handler thread exits -- The Exit_Hook will get called
-//    back from the ReactorEx.  Exit_Hook::handle_signal sets a flag
+//    back from the Reactor.  Exit_Hook::handle_signal sets a flag
 //    to end the event loop and returns.  This will cause the
 //    application to exit.
 //    
@@ -132,7 +132,7 @@
 // 
 // ============================================================================
 
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/Proactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
@@ -175,19 +175,19 @@ public:
   // passed to <open>.
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // We've been removed from the ReactorEx.
+  // We've been removed from the Reactor.
 
   virtual int handle_output (ACE_HANDLE fd);
   // Called when output events should start.  Note that this is
   // automatically invoked by the
-  // <ACE_ReactorEx_Notificiation_Strategy>.
+  // <ACE_Reactor_Notificiation_Strategy>.
 
 private:
   ACE_SOCK_Stream stream_;
   // Socket that we have connected to the server.
 
-  ACE_ReactorEx_Notification_Strategy strategy_;
-  // The strategy object that the reactorEx uses to notify us when
+  ACE_Reactor_Notification_Strategy strategy_;
+  // The strategy object that the reactor uses to notify us when
   // something is added to the queue.
 
   // = Remote peer info.
@@ -231,7 +231,7 @@ private:
   // signals along with the other things).
 
   void register_thread_exit_hook (void);
-  // Helper function to register with the ReactorEx for thread exit.
+  // Helper function to register with the Reactor for thread exit.
 
   virtual int handle_signal (int index, siginfo_t *, ucontext_t *);
   // The STDIN thread has exited.  This means the user hit ^C.  We can
@@ -247,13 +247,13 @@ private:
 Peer_Handler::Peer_Handler (int argc, char *argv[])
   : host_ (0),
     port_ (ACE_DEFAULT_SERVER_PORT),
-    strategy_ (ACE_ReactorEx::instance (), 
+    strategy_ (ACE_Reactor::instance (), 
 	       this, 
 	       ACE_Event_Handler::WRITE_MASK),
     mb_ (BUFSIZ)
 {
   // This code sets up the message to notify us when a new message is
-  // added to the queue.  Actually, the queue notifies ReactorEx which
+  // added to the queue.  Actually, the queue notifies Reactor which
   // then notifies us.
   this->msg_queue ()->notification_strategy (&this->strategy_);
 
@@ -356,7 +356,7 @@ Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // If a read failed, we will assume it's because the remote peer
       // went away.  We will end the event loop.  Since we're in the
       // main thread, we don't need to do a notify.
-      ACE_ReactorEx::end_event_loop();
+      ACE_Reactor::end_event_loop();
       return;
     }
 
@@ -376,7 +376,7 @@ Peer_Handler::handle (void) const
   return this->stream_.get_handle ();
 }
 
-// We've been removed from the ReactorEx.
+// We've been removed from the Reactor.
 int 
 Peer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
@@ -461,7 +461,7 @@ STDIN_Handler::svc (void)
 	  mb->wr_ptr (read_result);
 	  // Note that this call will first enqueue mb onto the peer
 	  // handler's message queue, which will then turn around and
-	  // notify the ReactorEx via the Notification_Strategy.  This
+	  // notify the Reactor via the Notification_Strategy.  This
 	  // will subsequently signal the Peer_Handler, which will
 	  // react by calling back to its handle_output() method,
 	  // which dequeues the message and sends it to the peer
@@ -480,7 +480,7 @@ STDIN_Handler::svc (void)
   return 0;
 }
 
-// Register an exit hook with the reactorEx.  
+// Register an exit hook with the reactor.  
 
 void
 STDIN_Handler::register_thread_exit_hook (void)
@@ -490,7 +490,7 @@ STDIN_Handler::register_thread_exit_hook (void)
 
   // Register ourselves to get called back when our thread exits.
 
-  if (ACE_ReactorEx::instance ()->
+  if (ACE_Reactor::instance ()->
       register_handler (this, this->thr_handle_) == -1)
     ACE_ERROR ((LM_ERROR, "Exit_Hook Register failed.\n"));
 }
@@ -503,14 +503,14 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) STDIN thread has exited.\n"));
   ACE_ASSERT (this->thr_handle_ == si->si_handle_);
-  ACE_ReactorEx::end_event_loop();
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 
 int
 main (int argc, char *argv[])
 {
-  // Let the proactor know that it will be used with ReactorEx
+  // Let the proactor know that it will be used with Reactor
   ACE_Proactor proactor (0, 0, 1);
   ACE_Proactor::instance (&proactor);
 
@@ -532,15 +532,15 @@ main (int argc, char *argv[])
 		       "%p open failed, errno = %d.\n",
 		       "stdin_handler", errno), 0);
 
-  // Register proactor with ReactorEx so that we can demultiplex
+  // Register proactor with Reactor so that we can demultiplex
   // "waitable" events and I/O operations from a single thread.
-  if (ACE_ReactorEx::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (ACE_Proactor::instance ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
 		       argv[0]), -1);
 
   // Run main event demultiplexor.
-  ACE_ReactorEx::run_event_loop ();
+  ACE_Reactor::run_event_loop ();
 
   return 0;
 }
