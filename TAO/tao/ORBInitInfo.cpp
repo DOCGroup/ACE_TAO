@@ -314,7 +314,7 @@ TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_unchecked_narrow (
               (
                 ACE_reinterpret_cast
                   (
-                    ptr_arith_t,
+                    ptrdiff_t,
                     &TAO_ORBInitInfo::_narrow
                   )
               )
@@ -329,15 +329,15 @@ TAO_ORBInitInfo::_duplicate (TAO_ORBInitInfo_ptr obj)
   return obj;
 }
 
-void *TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
+void *TAO_ORBInitInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &TAO_ORBInitInfo::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &::PortableInterceptor::ORBInitInfo::_narrow))
     retv = ACE_reinterpret_cast
       (
@@ -348,7 +348,7 @@ void *TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

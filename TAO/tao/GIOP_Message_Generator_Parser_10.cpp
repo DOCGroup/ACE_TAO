@@ -176,10 +176,10 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   if (reply.is_dsi_ == 1)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
-      ptr_arith_t target = reply.dsi_nvlist_align_;
+      ptrdiff_t target = reply.dsi_nvlist_align_;
 
-      ptr_arith_t current =
-        ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
+      ptrdiff_t current =
+        ptrdiff_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
 
       CORBA::ULong pad = 0;
 

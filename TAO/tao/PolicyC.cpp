@@ -1606,7 +1606,7 @@ CORBA::Policy::_unchecked_narrow (
           Policy_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Policy::_tao_class_id
                 )
             )
@@ -1652,19 +1652,19 @@ CORBA::Policy::_is_a (
     }
 }
 
-void *CORBA::Policy::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::Policy::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, Policy)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1939,7 +1939,7 @@ CORBA::PolicyManager::_unchecked_narrow (
           PolicyManager_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &PolicyManager::_tao_class_id
                 )
             )
@@ -1957,19 +1957,19 @@ CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
   return obj;
 }
 
-void *CORBA::PolicyManager::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::PolicyManager::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, PolicyManager)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2161,7 +2161,7 @@ CORBA::PolicyCurrent::_unchecked_narrow (
           PolicyCurrent_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &PolicyCurrent::_tao_class_id
                 )
             )
@@ -2179,19 +2179,19 @@ CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
   return obj;
 }
 
-void *CORBA::PolicyCurrent::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::PolicyCurrent::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, PolicyCurrent)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, PolicyManager)::_tao_class_id)
             )
     {
@@ -2205,7 +2205,7 @@ void *CORBA::PolicyCurrent::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Current::_tao_class_id)
             )
     {
@@ -2219,7 +2219,7 @@ void *CORBA::PolicyCurrent::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

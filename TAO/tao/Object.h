@@ -263,7 +263,7 @@ namespace CORBA
 
     /// Downcasting this object pointer to some other derived class.
     /// This QueryInterface stuff only work for local object.
-    virtual void * _tao_QueryInterface (ptr_arith_t type);
+    virtual void * _tao_QueryInterface (ptrdiff_t type);
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
