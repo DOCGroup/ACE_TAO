@@ -19,6 +19,7 @@
 // ============================================================================
 // FUZZ: disable check_for_streams_include
 
+#include <ctype.h>
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
