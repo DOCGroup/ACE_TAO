@@ -99,13 +99,15 @@ BE_produce()
   cout << "prog_name is " << idl_global->prog_name() << endl;
 #endif
   be_root *root;   // root of the AST made up of BE nodes
-  AST_Decl *d = idl_global->root();
-  root = be_root::narrow_from_decl(d);
+  AST_Decl *d = idl_global->root ();
+  root = be_root::narrow_from_decl (d);
   if (root == NULL)
     {
       cerr << "No root" << endl;
       BE_abort();
     }
+
+  root->dump (cerr);
 
   // start the code generation process
   if (root->gen_idl2cplusplus_mapping() == -1)
