@@ -26,4 +26,10 @@ Foo_v::v_func ()
 }
 
 
+void
+Foo_d_v::v_func ()
+{
+}
+
+
 // EOF
