@@ -8,15 +8,13 @@
 //    TAO IDL
 //
 // = FILENAME
-//    gen_bounded_str_sequence_cs.cpp
+//    gen_bounded_wstr_sequence_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for Sequence in the client impl
+//    Visitor generating code for bounded wstring sequence in the client source
 //
 // = AUTHOR
-//    Michael Kircher
-//
-//    Modifications by Aniruddha Gokhale
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,11 +22,9 @@
 
 #include "be_visitor_sequence.h"
 
-ACE_RCSID(be_visitor_sequence, gen_bounded_str_sequence_cs, "$Id$")
-
 
 int
-be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
+be_visitor_sequence_cs::gen_bounded_wstr_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
@@ -92,7 +88,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl
-      << "char **tmp = ACE_reinterpret_cast (char **, this->buffer_);" << be_nl
+      << "CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);" << be_nl
       << full_class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
@@ -109,11 +105,11 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
   *os << "void" << be_nl
       << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl
-      << "char **tmp = ACE_reinterpret_cast (char **,this->buffer_);" << be_nl
+      << "CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **,this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::string_free (tmp[i]);" << be_nl
+      << "CORBA::wstring_free (tmp[i]);" << be_nl
       << "tmp[i] = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl;
