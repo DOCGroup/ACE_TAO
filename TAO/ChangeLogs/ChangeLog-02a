@@ -1,3 +1,30 @@
+Sun Jun 24 08:42:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways: Another stress test that clearly
+	  brings the problem in bug 575 to the fore.
+	
+	* tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+        * tests/Oneways_Invoking_Twoways/Sender_i.h:
+	* tests/Oneways_Invoking_Twoways/server.cpp:
+	* tests/Oneways_Invoking_Twoways/Client_Task.h
+	* tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+	* tests/Oneways_Invoking_Twoways/Receiver_i.cpp:
+	* tests/Oneways_Invoking_Twoways/Receiver_i.h:
+	* tests/Oneways_Invoking_Twoways/Server_Task.h:
+	* tests/Oneways_Invoking_Twoways/Server_Task.cpp:
+	* tests/Oneways_Invoking_Twoways/client.cpp:
+	* tests/Oneways_Invoking_Twoways/Makefile:
+	* tests/Oneways_Invoking_Twoways/Makefile.bor:
+	* tests/Oneways_Invoking_Twoways/svcconf:
+	* tests/Oneways_Invoking_Twoways/Test.idl:
+	* tests/Oneways_Invoking_Twoways/README:
+	* tests/Oneways_Invoking_Twoways/Sender_i.h:
+	* tests/Oneways_Invoking_Twoways/Sender_i.cpp:
+	* tests/Oneways_Invoking_Twoways/run_test.pl:
+	* tests/Oneways_Invoking_Twoways/run_test_svc.pl: New files for
+	  the test.
+	
+	
 Fri Jun 22 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
