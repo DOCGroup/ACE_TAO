@@ -98,7 +98,6 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
           was not invoked which resulted in a memory leaks. Thanks to
           Irfan for helping to debug this memory leak.
 
->>>>>>> 1.3696
 Wed Feb 11 11:38:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Log/RTEvent/Log_RTEvent.mpc:
