@@ -3,66 +3,549 @@
 <!-- $Id$ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Real-Time Features Documentation</title>
+<title>TAO Real-Time CORBA Features Documentation</title>
 <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
 </head>
 
 <body>
 
-<h2>Features Documentation</h2>
-This material will be available shortly.
-<!--
-<h3><br>
+<h2 align="center">Features Documentation</h2>
+
+<p>This page is not a tutorial on Real-Time CORBA, but is rather a
+supplement to the specification, covering all implementation-specific details.&nbsp; Sample code exercising RTCORBA features can be found in
+<CODE>$TAO/tests/RTCORBA/</CODE>.&nbsp; We hope to have tutorial-style examples available in
+the near future. </p>
+
+<h3>
 <a name="enabling">Enabling Real-Time CORBA features</a> </h3>
 
-<p>In order to use features from the Real-Time CORBA specification, TAO<br>
-must be compiled with both TAO_HAS_RT_CORBA and<br>
-TAO_HAS_CORBA_MESSAGING set to 1. These macros are defined in<br>
-$TAO/tao/orbconf.h By default both Real-Time CORBA and Messaging are<br>
-enabled unless Minimum CORBA support is turned on (i.e.,<br>
-TAO_HAS_MINIMUM_CORBA set to 1). </p>
+<p>In order to use features from the Real-Time CORBA 1.0 specification in TAO,
+it must be compiled with both <CODE>TAO_HAS_RT_CORBA</CODE> and <CODE>TAO_HAS_CORBA_MESSAGING</CODE> set to <CODE>1</CODE>.&nbsp; These macros are defined in
+<CODE>$TAO/tao/orbconf.h</CODE>&nbsp;&nbsp; </p>
 
-<h3><a name="deprecated">TAO::Client_Priority_Policy</a></h3>
+<p>By default, both Real-Time CORBA and Messaging are enabled in TAO unless Minimum CORBA support is turned on,
+<i>i.e.</i>, <CODE>TAO_HAS_MINIMUM_CORBA</CODE>
+ is set to <CODE>1</CODE>. </p>
 
-<p>ClientPriorityPolicy is deprecated, cannot mix with other rt<br>
-policies. compile without it. </p>
+<h3>Migrating from <a name="deprecated"><i>TAO::Client_Priority_Policy</i></a></h3>
+
+<p><i>TAO::Client_Priority_Policy</i> is a proprietary policy that was introduced
+before support for Real-Time CORBA 1.0 was available in TAO.&nbsp;
+Since standard RTCORBA policies provide equivalent functionality and more, <i>
+TAO::Client_Priority_Policy</i> is currently deprecated, and will be completely
+removed from TAO before the next minor release.&nbsp; It is disabled by default,
+but can be enabled manually, although at the expense of making the functionality
+of standard RTCORBA policies not available.&nbsp; <i>TAO::Client_Priority_Policy</i> users should migrate to
+standard RTCORBA policies and mechanisms as follows: </p>
+
+<ul>
+  <li><CODE>TAO::USE_THREAD_PRIORITY</CODE> users should switch to threadpool with lanes
+    plus <CODE>RTCORBA::CLIENT_PROPAGATED</CODE> priority model.</li>
+  <li><CODE>TAO::USE_PRIORITY_RANGE</CODE> users should switch to threadpool with
+    lanes plus <CODE>RTCORBA::CLIENT_PROPAGATED</CODE> priority model plus <i>RTCORBA::PriorityBandedConnectionPolicy</i>.</li>
+</ul>
+
+<p>See <a href="#threadpools"> Threadpools</a> and <a href="#valid_configurations">Priority
+Policies</a> sections of this document for more information on RTCORBA policies
+and mechanisms mentioned above. </p>
 
 <h3><a name="mappings">Priority Mappings </a></h3>
 
-<p>- Priority Mapping Provided by TAO (specification in service config file).<br>
-- User Defined Priority Mapping<br>
-- Setting and Getting Priority Mappings </p>
+<p>TAO provides two Priority Mappings, Direct and Linear, described below:&nbsp; </p>
 
-<p>TAO implements two Priority Mappings:<br>
-* Direct<br>
-The lowest native priority corresponds to CORBA priority 0,<br>
-next higher native priority corresponds to CORBA priority 1,<br>
-and so on. The nth native priority level corresponds to CORBA<br>
-priority n. For example, NT native priorities -15 -2 -1 0 1 2<br>
-15 are mapped to CORBA priorities 0 1 2 3 4 5 6,<br>
-correspondingly, and Solaris native priorities 0 to 59 are<br>
-mapped to CORBA priorities 0 to 59. </p>
+<dl>
+  <dt><b>Direct</b></dt>
+  <dd>Maps the first <i>n</i> CORBA priorities to the range
+of native priorities, where <i>n</i> is the number of native priorities.&nbsp; The lowest native priority
+    is mapped to CORBA priority 0, next higher native priority is mapped to CORBA priority 1,
+    and so on.&nbsp; Since
+in all the operating systems where TAO is supported the native priority set
+contains less than 32767 priorities, part of the CORBA priority range is left unused.&nbsp;
+    Consider NT Direct priority mapping as an example.&nbsp; NT native priorities -15 -2 -1 0 1 2 15 are mapped to CORBA priorities 0 1 2 3 4 5 6,
+    respectively, and the rest of the CORBA priority range is not used.</dd>
+  <dt><b>Linear</b></dt>
+  <dd>Maps each individual native priority to a contiguous range of CORBA priorities,
+so that the complete CORBA priority range is used up for the mapping.&nbsp; See <CODE>$TAO/tao/Strategies/Linear_Priority_Mapping.cpp
+</CODE>for more details.</dd>
+</dl>
 
-<p>* Linear<br>
-<br>
+<p>Priority mappings implement the rules for mapping CORBA priority range (from
+0 to 32767) into the native OS priority range and vice versa.&nbsp; However, in some operating
+systems, the the native OS priority range depends on the scheduling policy being
+used.&nbsp; That's why when specifying a priority mapping, scheduling policy must
+be specified as well.&nbsp; Below, we describe how to configure TAO to use a
+particular priority
+mapping
+and scheduling policy.&nbsp; Note, in some operating systems
+super user privileges are required for use of some of the scheduling policies.
 </p>
 
-<p>User-defined<br>
-mappings can be used as well.<br>
+<p>By default TAO uses Direct priority mapping and <CODE>SCHED_OTHER</CODE> scheduling
+policy.&nbsp; There are two ways for an application to override these settings:
+</p>
+
+<ol>
+  <li><CODE>svc.conf</CODE> file can be used to select a mapping and a scheduling policy the ORB
+will use.&nbsp; (This method does not allow the specification of user-defined
+mappings.)&nbsp; Config file should contain the following options:<br>
+    <CODE><br>
+    static Resource_Factory &quot;-ORBPriorityMapping <em>mapping_type</em>
+-ORBSchedPolicy <i> sched_policy</i>&quot;<br>
+    <br>
+    </CODE>where valid values for <i> mapping_type</i> are <CODE>linear</CODE>
+    and <CODE>direct,</CODE> and&nbsp;<em> </em>valid
+values for <i> sched_policy</i> are <CODE>SCHED_OTHER</CODE>, <CODE>SCHED_FIFO</CODE> and <CODE>SCHED_RR</CODE>.&nbsp;&nbsp;<br>
+  </li>
+  <li><i>TAO::PriorityMappingManager</i> can be used to 1) override the default priority
+mapping and scheduling policy with another ORB-defined mapping/ scheduling
+    policy combination, 2) install a user-defined priority mapping, 3) obtain a reference to the
+    priority mapping object
+used by the ORB.&nbsp; Code excerpts below demonstrate how to perform each of
+    these tasks.<br>
+    <br>
+    Obtaining Priority Mapping Manager:
+    <br>
+    &nbsp;&nbsp;&nbsp;
+    <CODE>object =&nbsp;<br>
+    </CODE>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <CODE>orb-&gt;resolve_initial_references (&quot;PriorityMappingManager&quot;,
+    ACE_TRY_ENV);<br>
+    &nbsp; ACE_TRY_CHECK;<br>
+    &nbsp; TAO::PriorityMappingManager_var mapping_manager =&nbsp;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO::PriorityMappingManager::_narrow (object.in (),
+    ACE_TRY_ENV);<br>
+    &nbsp; ACE_TRY_CHECK;<br>
+    </CODE>
 <br>
-<br>
-<a name="defaults">ORB Default Policies</a></p>
+    Overriding priority mapping/policy in effect with another ORB-defined
+    mapping/policy combination:
+    <br>
+    &nbsp;&nbsp;&nbsp;
+    <CODE>#include &quot;tao/Strategies/Linear_Priority_Mapping.h&quot;<br>
+    &nbsp; #include &quot;tao/Strategies/Direct_Priority_Mapping.h&quot;<br>
+    &nbsp; ...<br>
+    &nbsp; RTCORBA::PriorityMapping pm =&nbsp;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; new TAO_Linear_Priority_Mapping (policy);<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </CODE>or&nbsp;
+    <CODE><br>
+    &nbsp;&nbsp;&nbsp;&nbsp; new TAO_Direct_Priority_Mapping (policy);&nbsp;&nbsp;<br>
+    &nbsp; mapping_manager-&gt;mapping (pm);<br>
+    &nbsp; ...</CODE><br>
+where policy is <CODE>SCHED_OTHER, SCHED_FIFO</CODE> or <CODE>SCHED_RR.</CODE>&nbsp; Priority Mapping
+Manager takes the ownership of the priority mapping object.&nbsp; <CODE>&nbsp;<br>
+    </CODE>
+    <br>
+    Overriding the default with user-defined priority mapping:
+    <br>
+    &nbsp;&nbsp;&nbsp;
+    <CODE>My_Mapping *foo = new My_Mapping;<br>
+    &nbsp; mapping_manager-&gt;mapping (foo);</CODE>
+    <br>
+    where <i>My_Mapping</i> must inherit from <i> RTCORBA::PriorityMapping</i> (a typedef for
+    <i>
+TAO_Priority_Mapping</i> class) located in <CODE>$TAO/tao/Priority_Mapping.h<br>
+    <br>
+    </CODE>Obtaining a pointer to the priority mapping object being used by the
+    ORB:<br>
+    &nbsp;&nbsp;&nbsp; <CODE>RTCORBA::PriorityMapping *pm =<br>
+      &nbsp; mapping_manager-&gt;mapping ();</CODE>
+    <br>
+    Mapping manager retains the ownership of the priority mapping object.</li>
+</ol>
 
-<p>Root POA? </p>
+<h3>
+<a name="defaults">ORB Default Policies</a>
+</h3>
 
-<p>The spec provides </p>
+<p>Real-Time CORBA 1.0 does not specify ORB defaults for the policies it defines,
+leaving it up to implementations.&nbsp; Below is a summary TAO defaults. </p>
 
-<p>Command-line options do not work. (Also put a note into ORB options<br>
-web page.) </p>
+<table border="1" width="100%" cellpadding="7">
+  <tr>
+    <td width="31%" align="center"><b>Policy</b></td>
+    <td width="69%" align="center"><b>Default</b></td>
+  </tr>
+  <tr>
+    <td width="31%"><i>ServerProtocolPolicy</i></td>
+    <td width="69%">All loaded protocols, in the order they were
+      loaded, with their default properties.&nbsp; See <a href="#protocols"> Protocol Policies</a> section for
+      more details.</td>
+  </tr>
+  <tr>
+    <td width="31%"><i>ClientProtocolPolicy</i></td>
+    <td width="69%">None</td>
+  </tr>
+  <tr>
+    <td width="31%"><i>ThreadpoolPolicy</i></td>
+    <td width="69%">Currently none, but will be added once <a href="#threadpools"> Threadpools</a> are
+      fully supported.&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="31%"><i>PriorityModelPolicy</i></td>
+    <td width="69%">Currently none, but will be added once <a href="#threadpools"> Threadpools</a> are fully
+      supported.</td>
+  </tr>
+  <tr>
+    <td width="31%"><i>PriorityBandedConnectionPolicy</i></td>
+    <td width="69%">None</td>
+  </tr>
+  <tr>
+    <td width="31%"><i>PrivateConnectionPolicy</i></td>
+    <td width="69%">None</td>
+  </tr>
+  <tr>
+    <td width="31%">Priority Mapping</td>
+    <td width="69%">Direct mapping with <CODE>SCHED_OTHER</CODE>&nbsp;scheduling
+      policy.&nbsp; See <a href="#mappings"> Priority
+      Mappings</a> section for more details.</td>
+  </tr>
+</table>
+
+<h3><a name="threadpools">Threadpools</a></h3>
+
+<p>This feature is still in progress.&nbsp; Until it is fully supported, follow
+these steps to obtain <i>threadpool with lane</i>
+functionality in TAO:</p>
+
+<ol>
+  <li>Include <CODE>&quot;tao/Pool_Per_Endpoint.h&quot;</CODE> into the server's
+    driver, and substitute the traditional&nbsp;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; <CODE>orb-&gt;run (ACE_TRY_ENV);</CODE>&nbsp;<br>
+ with&nbsp;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+ <CODE>TAO_Pool_Per_Endpoint pool (orb.in
+(), <i>policy</i>, <i>lane_size</i>, <i>flags</i>);<br>
+ &nbsp;&nbsp; pool.run (ACE_TRY_ENV);</CODE>&nbsp;<br>
+ where <i> policy</i> is <CODE>SCHED_OTHER</CODE>, <CODE>SCHED_FIFO</CODE> or <CODE>SCHED_RR,
+    </CODE><i>lane_size</i> is the number of threads in each lane, and <i> flags</i>
+    are flags used for thread creation.&nbsp;</li>
+  <li>Specify the following in the server's <CODE>svc.conf</CODE>:&nbsp;<br>
+    <CODE>static Advanced_Resource_Factory "-ORBReactorType tp -ORBReactorRegistry per-priority"</CODE></li>
+  <li>Specify endpoint for each lane using the <CODE>-ORBendpoint</CODE> command-line
+option.&nbsp; For example, for a threadpool with three lanes with priorities 40, 50
+and 60, you would specify:<br>
+    &nbsp;<CODE>-ORBendpoint iiop:///priority=40 -ORBendpoint iiop:///priority=50
+    -ORBendpoint iiop:///priority=60</CODE></li>
+  <li>Do not use <i>RTCORBA::ThreadpoolPolicy</i></li>
+</ol>
+
+<p>For an example of following the steps above, see <CODE>$TAO/tests/RTCORBA/Server_Declared</CODE>.&nbsp; The limitation of
+this method is that the threadpool is global, <i>i.e.</i>, available to all POAs in the
+ORB.&nbsp; There is no way to create additional threadpools and associate them with
+selected POAs.&nbsp; <i>Threadpool without lanes</i> functionality is not yet
+available.</p>
+
+<p>Threadpool threads are the ones doing all the work in the ORB: no additional internal threads
+are created by the ORB for such tasks as I/O.&nbsp;&nbsp;</p>
+
+<p>More documentation will be available here once threadpools are fully supported.&nbsp;
+Also, see <a href="#valid_configurations">Priority Policies</a> section, which
+contains information on how threadpools interact with
+<i>
+PriorityBandedConnectionPolicy</i> and <i>PriorityModelPolicy</i>.</p>
+
+<h3><a name="valid_configurations">Priority Policies</a></h3>
+
+<p>The table below lists all possible configurations of policies involving priorities,
+and summarizes the semantics of each configuration.</p>
+
+<table border="1" width="100%" cellpadding="4">
+  <tr>
+    <td width="33%" align="center"><b>Configuration</b></td>
+    <td width="33%" align="center"><b>Valid values</b></td>
+    <td width="34%" align="center"><b>Semantics&nbsp;</b></td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes,<br>
+      no <i>PriorityModelPolicy</i>,<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">&nbsp;Invalid</td>
+    <td width="34%">Once threadpools are fully supported, there will be an ORB default for&nbsp;
+      <i>PriorityModelPolicy</i>,<i> i.e.</i>, this configuration will not
+      exist.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes +<br>
+      <CODE>SERVER_DECLARED</CODE> model,<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%"><i>Server_priority</i> attribute of the <i>PriorityModelPolicy</i> must be equal to the
+      priority of one of the threadpool lanes. (Same goes for priorities of all
+      the objects registered with the target POA)</td>
+    <td width="34%">Each object is serviced at its declared priority for the
+      full duration of request,<i> i.e.</i>, including I/O and demultiplexing.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes + <CODE>CLIENT_PROPAGATED</CODE> model,&nbsp;<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">Priority of the invoking client thread must be
+      equal to the priority of one of the threadpool lanes.</td>
+    <td width="34%">Each object is serviced at&nbsp; client-propagated priority
+      for the full duration of request, <i>i.e.</i>, including I/O and demultiplexing.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes +<br>
+      <i>PriorityBandedConnectionPolicy</i>,<br>
+      no <i> PriorityModelPolicy</i></td>
+    <td width="33%">Invalid</td>
+    <td width="34%">Once threadpools are fully supported, there will be an ORB default for&nbsp;
+      <i>PriorityModelPolicy</i>,<i> i.e.</i>, this configuration will not
+      exist.&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes +<br>
+      <CODE>SERVER_DECLARED</CODE> model +<br>
+      <i>
+      PriorityBandedConnectionPolicy</i></td>
+    <td width="33%"><i>Server_priority</i> attribute of the <i>PriorityModelPolicy</i> must fall into one
+      of the priority bands. (Same goes for priorities of all the objects
+      registered with the target POA).&nbsp; In addition, each of the priority bands
+      must cover at least one of the threadpool lane priorities.&nbsp;</td>
+    <td width="34%">Each object is serviced at the priority that falls into the
+      same priority band range as the object's declared priority, for the full
+      duration of request.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool with lanes +<br>
+      <CODE>CLIENT_PROPAGATED</CODE> model +<br>
+      <i>
+      PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">Priority of the invoking client thread must fall
+      into one of the priority bands.&nbsp; In addition, each of the priority
+      bands must cover at least one of the threadpool lane priorities.</td>
+    <td width="34%">Application request processing takes place at the client-propagated priority.&nbsp; I/O processing for a request takes place at the
+      priority that falls into the same priority band range as the
+      client-propagated priority.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes,<br>
+      no <i>PriorityModelPolicy</i>,<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">Invalid</td>
+    <td width="34%">Once threadpools are fully supported, there will be an ORB default for&nbsp;
+      <i>PriorityModelPolicy</i>,<i> i.e.</i>, this configuration will not
+      exist.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes +<br>
+      <CODE>SERVER_DECLARED</CODE>&nbsp; model,<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">All valid CORBA priorities.<br>
+      (Threadpools without lanes are not yet supported.)</td>
+    <td width="34%">Request I/O and demultiplexing happen at threadpool
+      priority.&nbsp; Application level processing is done at declared object
+      priority.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes + <CODE>CLIENT_PROPAGATED</CODE> model,&nbsp;<br>
+      no <i> PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">All valid CORBA
+      priorities.&nbsp;<br>
+      (Threadpools without lanes are not yet supported.)</td>
+    <td width="34%">Request I/O and demultiplexing happen at threadpool
+      priority.&nbsp; Application level processing is done at client-propagated
+      priority.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes +<br>
+      <i>PriorityBandedConnectionPolicy</i>,<br>
+      no <i> PriorityModelPolicy</i></td>
+    <td width="33%">Invalid</td>
+    <td width="34%">Once threadpools are fully supported, there will be an ORB default for&nbsp;
+      <i>PriorityModelPolicy</i>, <i>i.e.</i>, this configuration will not
+      exist.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes +<br>
+      <CODE>SERVER_DECLARED</CODE> model +<br>
+      <i>
+      PriorityBandedConnectionPolicy</i></td>
+    <td width="33%"><i>Server_priority</i>
+      attribute of the <i>PriorityModelPolicy</i> must fall into one of the priority bands.&nbsp;
+      (Same goes for priorities of all the objects registered with the target
+      POA).<br>
+      (Threadpools without lanes not yet supported.)&nbsp;&nbsp;&nbsp;</td>
+    <td width="34%">Request I/O and demultiplexing happen at threadpool
+      priority.&nbsp; Application level processing is done at server-declared object
+      priority.&nbsp; The only purpose of the <i> PriorityBandedConnectionPolicy</i> is
+      to restrict allowed server-declared&nbsp; priority values.</td>
+  </tr>
+  <tr>
+    <td width="33%">Threadpool without lanes +<br>
+      <CODE>CLIENT_PROPAGATED</CODE> model +<br>
+      <i>
+      PriorityBandedConnectionPolicy</i></td>
+    <td width="33%">Priority of the invoking client thread must fall into one of the priority
+      bands.&nbsp;&nbsp;<br>
+      (Threadpools without lanes not yet supported.)</td>
+    <td width="34%">Request I/O and demultiplexing happen at threadpool
+      priority.&nbsp; Application level processing is done at client-propagated
+      priority.&nbsp; The sole purpose of the <i> PriorityBandedConnectionPolicy</i> in
+      this configuration is to restrict allowed client-propagated priority
+      values.</td>
+  </tr>
+</table>
+
+<h3><a name="explicit_bind">Explicit Binding</a></h3>
+
+<p><CODE>Object::_validate_connection ()</CODE>  method establishes a connection, if one doesn't
+already exist, and verifies policy overrides for the <i> invoking thread/ its
+priority/ target object</i> combination.&nbsp; To establish all connections ahead of time,
+application must call <CODE>_validate_connection
+()</CODE> for <b>all</b>  <i>thread/ priority/ object</i> combinations that will
+be used.</p>
 
 <h3><a name="protocols">Protocol Policies</a></h3>
 
-<p>Configuration of protocol properties per connection</p>
--->
+<p>In addition to <i> TCPProtocolProperties</i> defined by the Real-Time CORBA
+specification, TAO provides configurable properties for each protocol it
+supports.&nbsp; Below is a summary of all protocol properties available in TAO.</p>
+
+<ul>
+  <li><b>IIOP<br>
+    </b>
+Protocol <i> ProfileId</i>: 0<br>
+Transport properties interface name: <i> RTCORBA::TCPProtocolProperties</i> (standard)<br>
+    Implementation class name: <i> TAO_TCP_Properties</i><br>
+    <table border="1" height="150" cellpadding="4">
+      <tr>
+    <td align="center" height="19"><b>Protocol Properties Attribute</b></td>
+    <td align="center" height="19"><b>Default Value</b></td>
+      </tr>
+      <tr>
+    <td height="19">long <i> send_buffer_size</i></td>
+    <td height="19" align="left"><CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE></td>
+      </tr>
+      <tr>
+    <td height="19">long <i> recv_buffer_size</i></td>
+    <td height="19" align="left"><CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE></td>
+      </tr>
+      <tr>
+    <td height="19">boolean <i> keep_alive</i> (not yet supported)</td>
+    <td height="19" align="left"><CODE>1</CODE>&nbsp;</td>
+      </tr>
+      <tr>
+    <td height="19">boolean <i> dont_route</i> (not yet supported)</td>
+    <td height="19" align="left"><CODE>0</CODE>&nbsp;</td>
+      </tr>
+      <tr>
+    <td height="19">boolean <i> no_delay</i></td>
+    <td height="19" align="left"><CODE>1</CODE></td>
+      </tr>
+    </table> <br>
+  </li>
+  <li><b> UIOP</b><br>
+Protocol <i> ProfileId</i>: 0x54414f00U<br>
+Transport properties interface name: <i> RTCORBA::UnixDomainProtocolProperties</i>
+(TAO-specific)<br>
+Implementation class name: <i> TAO_Unix_Domain_Properties</i> <br>
+<table border="1" cellpadding="4">
+  <tr>
+    <td align="center"><b>Protocol Properties Attribute</b></td>
+    <td align="center"><b>Default Value</b></td>
+  </tr>
+  <tr>
+    <td> long <i> send_buffer_size</i></td>
+    <td><CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE></td>
+  </tr>
+  <tr>
+    <td> long <i> recv_buffer_size</i></td>
+    <td><CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE></td>
+  </tr>
+</table><br>
+  </li>
+  <li><b>SHMIOP</b><br>
+Protocol <i> ProfileId</i>: 0x54414f02U<br>
+Transport properties interface name: <i> RTCORBA::SharedMemoryProtocolProperties</i>
+(TAO-specific)<br>
+Implementation class name: <i> TAO_SMEM_Properties</i><br>
+
+<table border="1" cellpadding="4">
+  <tr>
+    <td align="center"><b>Protocol Properties Attribute</b></td>
+    <td align="center"><b>Default Value</b></td>
+  </tr>
+  <tr>
+    <td> long <i> preallocate_buffer_size</i></td>
+    <td>not yet supported</td>
+  </tr>
+  <tr>
+    <td> string <i> mmap_filename</i></td>
+    <td>not yet supported</td>
+  </tr>
+  <tr>
+    <td> string <i> mmap_lockname</i></td>
+    <td>not yet supported</td>
+  </tr>
+</table>
+
+  </li>
+</ul>
+
+<br><p>Real-Time CORBA 1.0 does not define how protocol properties are
+created.&nbsp; <i>TAO_Protocol_Factory</i> class can be used to create default <i>ProtocolProperties</i>
+for a particular protocol given its <i>ProfileId</i>:<br>
+<CODE><br>
+class TAO_Protocol_Properties_Factory<br>
+{<br>
+&nbsp;public:
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;static RTCORBA::ProtocolProperties*&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; create_transport_protocol_property
+(IOP::ProfileId id);<br>
+<br>
+&nbsp;&nbsp;&nbsp;static RTCORBA::ProtocolProperties*&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; create_orb_protocol_property (IOP::ProfileId id);<br>
+};</CODE>
+</p>
+
+<p>Alternatively, concrete <i> ProtocolProperties</i> implementation classes can be
+instantiated directly as needed.&nbsp;</p>
+
+<p>The table below summarizes how protocol policies overrides affect protocol
+selection and configuration in TAO.</p>
+<table border="1" cellpadding="4">
+  <tr>
+    <td align="center"><b>Policy</b></td>
+    <td align="center"><b>ORB default</b></td>
+    <td align="center"><b>Override levels that have impact on protocol selection</b></td>
+    <td align="center"><b>Override levels that have impact on protocol configuration</b></td>
+  </tr>
+  <tr>
+    <td><i>ServerProtocolPolicy</i></td>
+    <td>All protocols loaded into the ORB, in the order they were
+      loaded.</td>
+    <td>ORB<br>
+      POA</td>
+    <td>ORB&nbsp;<br>
+      (If no protocol properties are specified at the ORB level, default protocol
+      configurations are used.)</td>
+  </tr>
+  <tr>
+    <td><i>ClientProtocolPolicy</i></td>
+    <td>None</td>
+    <td>ORB<br>
+      Current<br>
+      Object</td>
+    <td>ORB&nbsp;<br>
+      (If no protocol properties are specified at the ORB level, default protocol
+      configurations are used.)</td>
+  </tr>
+</table>
+
+<p>NOTE: <CODE>-ORBSndSock</CODE> and <CODE>-ORBRcvSock</CODE> ORB options
+have no effect when RTCORBA is enabled.</p>
+
+<p>Protocol policies do not depend on any other Real-Time CORBA features and can be used
+alone.&nbsp; In fact, we plan to make protocol policies available outside
+RTCORBA, and better integrate them with the Pluggable Protocols framework in the
+near future.</p>
+
+<hr>
+<p><i>Last Modified: </i>
+<i>
+
+ $Date$ </i></p>
 </body>
 </html>
