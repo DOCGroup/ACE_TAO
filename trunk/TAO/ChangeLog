@@ -1,3 +1,9 @@
+Sat Nov 22 20:35:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+
+	  Fixed a typo in the mpc file.
+
 Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Advanced/ch_12/client.cpp:
