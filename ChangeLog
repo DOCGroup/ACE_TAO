@@ -1,3 +1,8 @@
+Mon Oct 27 16:00:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* ACEXML/common/ZipCharStream.cpp: Silence HP aC++ warnings about
+	  an empty translation unit.
+
 Mon Oct 27 15:51:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac:
