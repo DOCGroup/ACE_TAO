@@ -278,13 +278,13 @@ namespace TAO
             // dispatching has started. This is fragile.
             if (bd.unbind_dispatcher () == 0)
               {
-                // Just a timeout, don't close the connection or
-                // anything...
+                // Just a timeout with completed_maybe, don't close
+                // the connection or  anything
                 ACE_THROW_RETURN (CORBA::TIMEOUT (
                     CORBA::SystemException::_tao_minor_code (
-                        TAO_TIMEOUT_SEND_MINOR_CODE,
+                        TAO_TIMEOUT_RECV_MINOR_CODE,
                         errno),
-                    CORBA::COMPLETED_NO),
+                    CORBA::COMPLETED_MAYBE),
                                   TAO_INVOKE_FAILURE);
               }
           }
