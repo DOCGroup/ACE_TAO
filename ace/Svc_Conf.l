@@ -90,5 +90,9 @@ yywrap (void)
 void
 yy_delete_parse_buffer (void)
 {
-  yy_delete_buffer (yy_current_buffer);
+  if (yy_current_buffer != 0) 
+    {
+      yy_delete_buffer (yy_current_buffer);
+      yy_current_buffer = 0;
+    }
 }
