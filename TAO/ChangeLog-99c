@@ -1,3 +1,9 @@
+Wed Jun  9 10:32:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Fixed a bug that
+ 	  was preventing the IDL compiler from putting files in the
+ 	  current directory.  Thanks to Byron Harris for reporting this.
+
 Tue Jun 08 21:13:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp (set): Removed the use of
