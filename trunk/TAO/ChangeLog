@@ -1,3 +1,12 @@
+Tue Dec 21 09:49:50 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+          My previous change broke the Borland build.  I have spread the
+          initialization to, hopefully, the right places to make all
+          compilers happy.
+
 Tue Dec 21 06:41:23 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
