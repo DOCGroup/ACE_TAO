@@ -1,3 +1,26 @@
+Wed Dec 30 01:17:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/DynAny_Test/basic_test.dsp: Fixed project configurations.
+
+	* tests/DynAny_Test/test_dynsequence.cpp (run_test): Don't delete
+	  <out_str1>, it is owned by the any underneath.
+
+	* tao/encode.cpp (TAO_Marshal_Any::encode): Try to reuse the cdr
+	  string in an any as long as it has one, which is almost always
+	  be the case.
+
+	* tao/DynAny_i.cpp (from_any,to_any):  The correct way of making
+	  sure if an any contains any data is to check it's cdr ptr, not
+	  it's value.
+
+	* tao/Any.cpp: Cleaned up the code and fixed many discrepencies
+	  between code and comments.  Make sure ownerships are well kept.
+	  (CORBA_Any): Always duplicates the cdr string.  <any_owns_data_>
+	  now only refers to ownership of <value_>.
+	  (CORBA_Any): (Copy ctor) Always duplicates the cdr string.  If
+	  <src> owns its data, then we borrow it.  Notice the copying any
+	  doesn't own the object.
+
 Tue Dec 29 22:53:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_tests.pl:
