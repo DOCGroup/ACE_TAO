@@ -12,16 +12,17 @@ unshift @INC, '../../../../../bin';
 require Process;
 require Uniqueid;
 
-print "Reconnect suppliers and consumers, using disconnect/connect calls\n";
+print STDERR "\n\nReconnect suppliers and consumers,",
+  " using disconnect/connect calls\n";
 system ("Reconnect -suppliers 100 -consumers 100 -d 100");
 
-print "\n\nReconnect suppliers and consumers, using connect calls\n";
+print STDERR "\n\nReconnect suppliers and consumers, using connect calls\n";
 system ("Reconnect -suppliers 100 -consumers 100 -d 100 -s -c");
 
-print "\n\nShutdown EC without clients still attached\n";
+print STDERR "\n\nShutdown EC with clients still attached\n";
 system ("Shutdown -verbose -suppliers 5 -consumers 5");
 
-print "\n\nComplex event channel test,",
+print STDERR "\n\nComplex event channel test,",
   "multiple ECs connected through gateways\n";
 system ("Observer -ORBsvcconf observer.conf"
 	." -consumer_tshift 0 -consumers 5"
