@@ -1,53 +1,64 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for tests of the miscellaneous ACE performance tests
+#       Makefile for tests of the miscellaneous ACE performance tests
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = basic_perf \
-	  childbirth_time \
-	  context_switch_time \
-	  preempt \
-	  test_mutex \
-	  test_singleton \
-	  test_naming
+BIN = basic_perf \
+      childbirth_time \
+      context_switch_time \
+      preempt \
+      test_mutex \
+      test_singleton
+#### See below for test_naming.
 
 # Only build static library for optimum run-time speed.
-LIB	= libPerf.a
+LIB     = libPerf.a
 FILES   = basic_func
-LSRC	= $(addsuffix .cpp,$(FILES))
-LOBJ	= $(addsuffix .o,$(FILES))
-LDLIBS 	= -lPerf
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(addsuffix .o,$(FILES))
+LDLIBS  = -lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 # See comment above about only building libPerf.a for max performance.
 BUILD = $(VLIB) $(VBIN)
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If ACE_COMPONENTS is set and doesn't contain Other, don't
+#### try to build test_naming.
+ifdef ACE_COMPONENTS
+  ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
+    BIN+ = test_naming
+  endif # ! Other
+else  # ! ACE_COMPONENTS
+  BIN += test_naming
+endif # ! ACE_COMPONENTS
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
 # For make depend.
 PSRC = $(addsuffix .cpp, $(BIN))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
-#----------------------------------------------------------------------------
-
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-#----------------------------------------------------------------------------
-#	Local targets
-#----------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
