@@ -22,8 +22,10 @@
 #if !defined (ACE_LOG_RECORD_H)
 #define ACE_LOG_RECORD_H
 
-// In case iostream.h is not #included before this header . . .
-class ostream;
+// In case ace/stdcpp.h is not #included before this header . . .
+#if !defined(ACE_STDCPP_H)
+  class ostream;
+#endif
 
 class ACE_Export ACE_Log_Record
 {

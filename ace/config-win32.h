@@ -3,13 +3,15 @@
 
 // The following configuration file is designed to work for Windows 95,
 // Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++ 
-// compilers 2.0, 4.0, 4.1, and 4.2. 
-// It should work with MSVC 5.0, but this has not been tested.
+// compilers 2.0, 4.0, 4.1, 4.2 and 5.0
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
 // ----------------------- user configuration defines --------------------
+
+// Define this if you want to use the standard C++ library
+//define ACE_HAS_STANDARD_CPP_LIBRARY = 1
 
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
@@ -34,6 +36,27 @@
 #if !defined (ACE_HAS_MFC)
 	#define ACE_HAS_MFC 0
 #endif
+
+// Define this if you're using MSVC 5.0 and your application relies
+// on the standard c++ library.
+//  Runtime restrictions: You must be using MSVC 5.0 and your application
+//                        must link with the standard libraries.
+#if defined (_MSC_VER) && (_MSC_VER >= 1020)
+	#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+		#define ACE_HAS_STANDARD_CPP_LIBRARY	0
+	#endif
+#else
+	#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+		#undef ACE_HAS_STANDARD_CPP_LIBRARY
+	#endif
+	#define ACE_HAS_STANDARD_CPP_LIBRARY 0
+#endif
+
+// The STL that comes with ACE uses the std namespace. Note however, it is not 
+// part of the standard C++ library
+#if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+        #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
 // Uncomment this out if you want to use STRICT type checking.
 // It is disabled by default because it will break existing application code.

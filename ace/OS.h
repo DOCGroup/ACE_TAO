@@ -958,7 +958,11 @@ struct strrecvfd {};
 #endif /* ACE_HAS_PROC_FD */
 
 #if defined (ACE_HAS_UNICODE)
-#include /**/ <wchar.h>
+#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#    include /**/ <cwchar>
+#  else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#    include /**/ <wchar.h>
+#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)
@@ -1524,19 +1528,10 @@ typedef int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
 
 #include /**/ <sys/types.h>
-#include /**/ <assert.h>
 #include /**/ <sys/stat.h>
-#include /**/ <limits.h>
-#include /**/ <stdio.h>
+
 #include "ace/stdcpp.h"
-#include /**/ <new.h>
-#include /**/ <ctype.h>
-#include /**/ <signal.h>
-#include /**/ <string.h>
-#include /**/ <stdarg.h>
 #include /**/ <fcntl.h>
-#include /**/ <errno.h>
-#include /**/ <stdlib.h>
 
 // This must come after signal.h is #included.
 #if defined (SCO)

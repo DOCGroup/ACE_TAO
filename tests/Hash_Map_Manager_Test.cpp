@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-#include <iostream.h>
-
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Synch.h"
