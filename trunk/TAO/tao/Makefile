@@ -19,6 +19,7 @@ PUB_HDRS = Align CDR GIOP IIOP_Object IIOP_ORB Connect Params \
 ORBCORE_SRCS = \
 	Any \
 	Exception \
+        Forwarding_Servant \
 	NVList \
 	Object \
 	ORB \
