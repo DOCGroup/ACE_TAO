@@ -1,3 +1,14 @@
+Tue May 29 13:08:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/Process.i (handle_inheritence):
+	* ace/Process.h:
+
+	Exposed the interface for handle_inheritence to non-win32 builds to
+	allow it to be used as part of the solution to bug 902. Since this is
+	a win32 only feature, the method will invoke the NOTSUP macro to
+	document its use, but failure is benign, returning 0. This is part 3
+	of the 3 part solution to bug 902.
+
 Mon May 28 18:43:51 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Pool_Reactor_Resume_Test.icc: Visual Age C++ config
