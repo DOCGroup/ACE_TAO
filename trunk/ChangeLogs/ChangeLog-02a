@@ -1,3 +1,14 @@
+Wed Jun 13 08:42:31 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/ace_flags.bor:
+          Added support for new RTCORBA libraries.
+
+        * include/makeinclude/build_lib.bor:
+          Suppress noisy warnings when creating a static library.
+
+        * tests/Makefile.bor:
+          Added Thread_Pool_Reactor_Resume_Test.
+
 Tue Jun 12 21:22:19 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/nightlybuilds/builds.lst:

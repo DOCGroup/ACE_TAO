@@ -5,7 +5,28 @@
 NAME = TAO_RTCORBA
 
 OBJFILES = \
-	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
+	$(OBJDIR)\Direct_Priority_Mapping.obj \
+	$(OBJDIR)\Linear_Priority_Mapping.obj \
+	$(OBJDIR)\Pool_Per_Endpoint.obj \
+	$(OBJDIR)\Priority_Mapping.obj \
+	$(OBJDIR)\Priority_Mapping_Manager.obj \
+	$(OBJDIR)\Private_Transport_Descriptor.obj \
+	$(OBJDIR)\RTCORBA.obj \
+	$(OBJDIR)\RTCORBAC.obj \
+	$(OBJDIR)\RT_Current.obj \
+	$(OBJDIR)\RT_Endpoint_Selector_Factory.obj \
+	$(OBJDIR)\RT_Endpoint_Utils.obj \
+	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
+	$(OBJDIR)\RT_Mutex.obj \
+	$(OBJDIR)\RT_ORB.obj \
+	$(OBJDIR)\RT_ORBInitializer.obj \
+	$(OBJDIR)\RT_ORB_Loader.obj \
+	$(OBJDIR)\RT_PolicyFactory.obj \
+	$(OBJDIR)\RT_Policy_i.obj \
+	$(OBJDIR)\RT_Protocols_Hooks.obj \
+	$(OBJDIR)\RT_Stub.obj \
+	$(OBJDIR)\RT_Stub_Factory.obj \
+	$(OBJDIR)\Thread_Pool.obj
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS)
@@ -17,7 +38,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS) \
 CPPDIR = .
 
 INCDIR_NAME = tao\RTCORBA
-INCLUDES = *.h *.i *.inl *_T.cpp PortableServer.pidl ImplRepo.pidl
+INCLUDES = *.h *.i *.inl *.pidl
 
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 

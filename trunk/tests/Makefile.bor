@@ -88,6 +88,7 @@ NAMES = \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
 	Thread_Pool_Reactor_Test \
+	Thread_Pool_Reactor_Resume_Test \
 	Thread_Pool_Test \
 	Time_Service_Test \
 	Time_Value_Test \

@@ -1,3 +1,13 @@
+Wed Jun 13 08:42:31 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/DynamicAny/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
+        * tao/RTCORBA/Makefile.bor:
+        * tao/RTPortableServer/Makefile.bor:
+        * tao/Strategies/Makefile.bor:
+          Updated Borland makefiles to work with new RTCORBA libraries.
+
 Tue Jun 12 22:58:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/Transport.cpp:
