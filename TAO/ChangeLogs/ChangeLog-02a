@@ -1,8 +1,15 @@
+Wed Mar 21 11:04:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (key_to_stub_i):
+
+	  A part on non RTCORBA code was using an RTCORBA acceptor filter.
+	  The problem has been fixed using the standard TAO acceptor filter.
+
 Wed Mar 21 20:44:33 2001 Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/client.cpp: 
-	  
-	  Fixed misleading error message. 
+	* tests/RTCORBA/Banded_Connections/client.cpp:
+
+	  Fixed misleading error message.
 
 Wed Mar 21 07:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
