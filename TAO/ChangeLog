@@ -1,59 +1,71 @@
+Tue Dec 30 17:46:45 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * tao/Utils/Server_Main.cpp:
+          Build errors when Exceptions=0
+
 Tue Dec 30 17:43:30 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* tao/IOP_IOR.pidl:
-	* tao/Policy.pidl:
-	* tao/Services.pidl:
-	* orbsvcs/orbsvcs/Security.idl:
+        * tao/IOP_IOR.pidl:
+        * tao/Policy.pidl:
+        * tao/Services.pidl:
+        * orbsvcs/orbsvcs/Security.idl:
 
-	  Got rid of deprecated anonymous sequence declarations.
+          Got rid of deprecated anonymous sequence declarations.
 
 Tue Dec 30 13:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
 
-	  Need to link in IOManip library. If not done, dynamic loading
-	  of this library starts failing which is bad. I almost had a
-	  scare now and I thought that our service configurator was
-	  broken.
+          Need to link in IOManip library. If not done, dynamic loading
+          of this library starts failing which is bad. I almost had a
+          scare now and I thought that our service configurator was
+          broken.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
 
-	  Added back changes that were lost during the merge on "Sun Dec
-	  21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>"
+          Added back changes that were lost during the merge on "Sun Dec
+          21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>"
 
-	* orbsvcs/tests/Miop/McastHello/Makefile:
+        * orbsvcs/tests/Miop/McastHello/Makefile:
 
-	  No need to link in the libraries as done here. The test works
-	  with dynamic libraries and should work as such. Linking in
-	  libraries only tries to mask teh errors.
+          No need to link in the libraries as done here. The test works
+          with dynamic libraries and should work as such. Linking in
+          libraries only tries to mask teh errors.
 
 Tue Dec 30 10:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
 
-	  Fixed typos in the script that prevented them from running to
-	  completion cleanly in the daily builds.
+          Fixed typos in the script that prevented them from running to
+          completion cleanly in the daily builds.
 
 Tue Dec 30 10:11:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Event/Mcast/Simple/supplier.cpp:
-	* orbsvcs/tests/Event/Mcast/Complex/supplier.cpp:
+        * orbsvcs/tests/Event/Mcast/Simple/supplier.cpp:
+        * orbsvcs/tests/Event/Mcast/Complex/supplier.cpp:
 
-	  #included ace/Log_Msg.h
+          #included ace/Log_Msg.h
 
 Tue Dec 30 10:00:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+        * examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
 
-	  Fixed typos in the mpc files.
+          Fixed typos in the mpc files.
 
 Tue Dec 30 09:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
-	* tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
 
-	  Fixed the idlflags in the mpc files.
+          Fixed the idlflags in the mpc files.
 
 Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -62,9 +74,9 @@ Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Dec 30 08:15:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/LoadBalancing/Makefile:
+        * orbsvcs/performance-tests/LoadBalancing/Makefile:
 
-	  Fixed a link error. Thanks to Don for letting me know.
+          Fixed a link error. Thanks to Don for letting me know.
 
 Tue Dec 30 14:09:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -194,168 +206,168 @@ Tue Dec 30 00:09:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Dec 29 14:43:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
-	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
-	  I cannot fathom why the following tests were prevented from
-	  compiling in minimum_corba builds. Fixed the MPC files to get
-	  them compiling.
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+          I cannot fathom why the following tests were prevented from
+          compiling in minimum_corba builds. Fixed the MPC files to get
+          them compiling.
 
 Mon Dec 29 14:36:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
-	* tests/POA/Identity/Identity.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
 
-	  For some reason these tests were prevented from compiling if
-	  minimum_corba was enabled. The constraint has been
-	  removed. There is no reason why these tests cannot compile or
-	  work with minimum_corba enabled.
+          For some reason these tests were prevented from compiling if
+          minimum_corba was enabled. The constraint has been
+          removed. There is no reason why these tests cannot compile or
+          work with minimum_corba enabled.
 
 Mon Dec 29 13:57:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
 
-	  Fixed a warning with gcc 3.1.
+          Fixed a warning with gcc 3.1.
 
 Mon Dec 29 13:21:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
 
-	  #included a files that is needed for one of our builds.
+          #included a files that is needed for one of our builds.
 
-	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
 
-	  Cosmetic fixes.
+          Cosmetic fixes.
 
 Mon Dec 29 13:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 
-	  Another one that shouldn't be built when minimum_corba is
-	  enabled.
+          Another one that shouldn't be built when minimum_corba is
+          enabled.
 
 Mon Dec 29 13:00:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1568_Regression/client.dsp:
-	* tests/Bug_1568_Regression/server.dsp:
-	* tests/Bug_1568_Regression/Bug_1568_Regression.dsw:
+        * tests/Bug_1568_Regression/client.dsp:
+        * tests/Bug_1568_Regression/server.dsp:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.dsw:
 
-	  New project and workspace files.
+          New project and workspace files.
 
 Mon Dec 29 12:55:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1670_Regression/server.dsp (BuildCmds):
-	* tests/Bug_1670_Regression/client.dsp:
-	* tests/Bug_1670_Regression/Bug_1670_Regression.dsw:
+        * tests/Bug_1670_Regression/server.dsp (BuildCmds):
+        * tests/Bug_1670_Regression/client.dsp:
+        * tests/Bug_1670_Regression/Bug_1670_Regression.dsw:
 
-	  New project and workspace files.
+          New project and workspace files.
 
 Mon Dec 29 12:46:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Latency/Single_Threaded/run_test.pl:
-	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
-	* performance-tests/Latency/Thread_Pool/run_test.pl:
+        * performance-tests/Latency/Single_Threaded/run_test.pl:
+        * performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+        * performance-tests/Latency/Thread_Pool/run_test.pl:
 
-	  Some builds freaked out due to the number of iterations that these
-	  tests run. Added hooks in the perl script through which we can
-	  control the number of iterations in the daily builds.
+          Some builds freaked out due to the number of iterations that these
+          tests run. Added hooks in the perl script through which we can
+          control the number of iterations in the daily builds.
 
 Mon Dec 29 12:06:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTPortableServer/RTPortableServerA.{h,cpp}:
+        * tao/RTPortableServer/RTPortableServerA.{h,cpp}:
 
-	  Somehow missed this in my last checkin.
+          Somehow missed this in my last checkin.
 
 Mon Dec 29 17:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Messaging/Twoway_Asynch_Invocation.{h,cpp,i}:
+        * tao/Messaging/Twoway_Asynch_Invocation.{h,cpp,i}:
 
-	  Removed these files from the repo, they are not needed.
+          Removed these files from the repo, they are not needed.
 
 Mon Dec 29 11:44:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTPortableServer/diffs/RTPortableServer.diff:
-	* tao/RTScheduling/diffs/RTScheduler.diff:
+        * tao/RTPortableServer/diffs/RTPortableServer.diff:
+        * tao/RTScheduling/diffs/RTScheduler.diff:
 
-	  New diffs into the repository.
+          New diffs into the repository.
 
-	* tao/RTPortableServer/diffs/RTPortableServerC.h.diff:
-	* tao/RTPortableServer/diffs/RTPortableServerC.cpp.diff:
-	* tao/RTPortableServer/diffs/RTPortableServerC.i.diff:
+        * tao/RTPortableServer/diffs/RTPortableServerC.h.diff:
+        * tao/RTPortableServer/diffs/RTPortableServerC.cpp.diff:
+        * tao/RTPortableServer/diffs/RTPortableServerC.i.diff:
 
-	  Consolidated all the diffs into a single file.
+          Consolidated all the diffs into a single file.
 
 Mon Dec 29 11:35:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTPortableServer/RTPortableServer.pidl:
-	* tao/RTPortableServer/RTPortableServerC.cpp:
-	* tao/RTPortableServer/RTPortableServerC.h:
-	* tao/RTPortableServer/RTPortableServerC.i:
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerC.i:
 
-	  Regenerated the code and improved comments in the pidl file.
+          Regenerated the code and improved comments in the pidl file.
 
-	* tao/RTPortableServer/RTPortableServerA.cpp:
-	* tao/RTPortableServer/RTPortableServerA.h:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTPortableServer/RTPortableServerA.h:
 
-	  Moved the Any's to a new file.
+          Moved the Any's to a new file.
 
-	* tao/RTPortableServer/Makefile.bor:
-	* tao/RTPortableServer/Makefile:
+        * tao/RTPortableServer/Makefile.bor:
+        * tao/RTPortableServer/Makefile:
 
-	  Added the new file generated for Any's into the Makefiles for
-	  our daily builds.
+          Added the new file generated for Any's into the Makefiles for
+          our daily builds.
 
-	* tao/RTScheduling/RTSchedulerC.cpp:
-	* tao/RTScheduling/RTSchedulerC.h:
-	* tao/RTScheduling/RTSchedulerC.i:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/RTScheduling/RTSchedulerC.i:
 
-	  Code regeneration here again.
+          Code regeneration here again.
 
 Mon Dec 29 11:15:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1670_Regression/Makefile:
-	* tests/Bug_1670_Regression/Makefile.bor:
-	* tests/Bug_1670_Regression/Test.idl:
-	* tests/Bug_1670_Regression/client.bor:
-	* tests/Bug_1670_Regression/client.cpp:
-	* tests/Bug_1670_Regression/run_test.pl:
-	* tests/Bug_1670_Regression/server.bor:
-	* tests/Bug_1670_Regression/server.cpp:
+        * tests/Bug_1670_Regression/Makefile:
+        * tests/Bug_1670_Regression/Makefile.bor:
+        * tests/Bug_1670_Regression/Test.idl:
+        * tests/Bug_1670_Regression/client.bor:
+        * tests/Bug_1670_Regression/client.cpp:
+        * tests/Bug_1670_Regression/run_test.pl:
+        * tests/Bug_1670_Regression/server.bor:
+        * tests/Bug_1670_Regression/server.cpp:
 
-	  Regression test for Bug 1670 which  was also fixed long
-	  back. Thanks to Carlos O'Ryan for providing this test.
+          Regression test for Bug 1670 which  was also fixed long
+          back. Thanks to Carlos O'Ryan for providing this test.
 
-	* tests/Makefile:
-	* tests/Makefile.bor:
+        * tests/Makefile:
+        * tests/Makefile.bor:
 
-	  Updates for the daily builds.
+          Updates for the daily builds.
 
 Mon Dec 29 11:02:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1568_Regression/Makefile.bor:
-	* tests/Bug_1568_Regression/client.bor:
-	* tests/Bug_1568_Regression/server.bor:
-	* tests/Makefile.bor:
+        * tests/Bug_1568_Regression/Makefile.bor:
+        * tests/Bug_1568_Regression/client.bor:
+        * tests/Bug_1568_Regression/server.bor:
+        * tests/Makefile.bor:
 
-	  Updated borland files.
+          Updated borland files.
 
 Mon Dec 29 10:52:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
-	* tests/Bug_1568_Regression/Makefile:
-	* tests/Bug_1568_Regression/Test.idl:
-	* tests/Bug_1568_Regression/client.cpp:
-	* tests/Bug_1568_Regression/run_test.pl:
-	* tests/Bug_1568_Regression/server.cpp:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * tests/Bug_1568_Regression/Makefile:
+        * tests/Bug_1568_Regression/Test.idl:
+        * tests/Bug_1568_Regression/client.cpp:
+        * tests/Bug_1568_Regression/run_test.pl:
+        * tests/Bug_1568_Regression/server.cpp:
 
-	  New regression test to the daily builds. The bug was fixed long
-	  back but the regression attached to the builds were not checked
-	  in. Thanks to Carlos O'Ryan for the test.
+          New regression test to the daily builds. The bug was fixed long
+          back but the regression attached to the builds were not checked
+          in. Thanks to Carlos O'Ryan for the test.
 
 Mon Dec 29 09:45:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Makefile:
+        * tests/Makefile:
 
-	  Added 1693_Test to the build.
+          Added 1693_Test to the build.
 
 Mon Dec 29 15:10:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -393,108 +405,108 @@ Mon Dec 29 13:32:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 28 23:24:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any_Basic_Impl.cpp:
-	* tao/Any_Basic_Impl.h:
+        * tao/Any_Basic_Impl.cpp:
+        * tao/Any_Basic_Impl.h:
 
-	  Fix for [BUGID 1693]. Thanks to Christoph Liebig
-	  <xfrog2000@yahoo.com> for reporting the problem.
+          Fix for [BUGID 1693]. Thanks to Christoph Liebig
+          <xfrog2000@yahoo.com> for reporting the problem.
 
-	  Please see
+          Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1693
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1693
 
-	  for an outline of the problem. The problem showed up because the
-	  Any_Basic_Impl::extract () didn't handle alias TCKind's
-	  right. Previously we used to do everything using the type
-	  information by which the class was parametrized. Once we opened
-	  things up, we started seeing problems with irrgular handling of
-	  TCKinds. Two overloaded methods assign_value () and
-	  demarshal_value () which take in TCKinds have been. We now use
-	  the TCKind's that were passed in while the call to extract ()
-	  was made. Since the equivalency of the typecodes have been
-	  checked already using the original value of TCKind should not be
-	  an issue.
+          for an outline of the problem. The problem showed up because the
+          Any_Basic_Impl::extract () didn't handle alias TCKind's
+          right. Previously we used to do everything using the type
+          information by which the class was parametrized. Once we opened
+          things up, we started seeing problems with irrgular handling of
+          TCKinds. Two overloaded methods assign_value () and
+          demarshal_value () which take in TCKinds have been. We now use
+          the TCKind's that were passed in while the call to extract ()
+          was made. Since the equivalency of the typecodes have been
+          checked already using the original value of TCKind should not be
+          an issue.
 
 Sun Dec 28 22:24:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Bug_1693_Test:
 
-	  A test case for BUG ID 1693. This is a much simpler test to
-	  reproduce the problem.
+          A test case for BUG ID 1693. This is a much simpler test to
+          reproduce the problem.
 
 Sun Dec 28 19:02:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
 
-	  Fixed the dsp file. It was horribly broken.
+          Fixed the dsp file. It was horribly broken.
 
 Sun Dec 28 17:30:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
 
-	  Used .in () for String_var's.
+          Used .in () for String_var's.
 
 Sun Dec 28 17:09:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
 
-	  This should not be built if minimum_corba=1. Looks like I have
-	  fixed this before!
+          This should not be built if minimum_corba=1. Looks like I have
+          fixed this before!
 
 Sun Dec 28 11:39:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
-	  More regeneration.
+          More regeneration.
 
 Sun Dec 28 11:04:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.i:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.i:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.i:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.i:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
 
-	  Regenerated code.
+          Regenerated code.
 
-	* tao/IFR_Client/diffs/IFR_Base.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_BaseC.h.diff:
-	* tao/IFR_Client/diffs/IFR_BaseC.i.diff:
-	* tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.h.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.i.diff:
-	* tao/IFR_Client/diffs/IFR_Components.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
-	* tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
+        * tao/IFR_Client/diffs/IFR_Base.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.i.diff:
+        * tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.i.diff:
+        * tao/IFR_Client/diffs/IFR_Components.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
+        * tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
 
-	  Removed all these diffs. They don't make "any" sense for the
-	  present source base.
+          Removed all these diffs. They don't make "any" sense for the
+          present source base.
 
 Sun Dec 28 10:31:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Valuetype/ValueBase.cpp:
-	* tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
 
-	  Fixed a memory leak that was associated with typecode pointer
-	  initializations.  Thanks to Roland Meub <roland.meub@gmx.de> for
-	  reporting and motivating to fix this problem.
+          Fixed a memory leak that was associated with typecode pointer
+          initializations.  Thanks to Roland Meub <roland.meub@gmx.de> for
+          reporting and motivating to fix this problem.
 
 Sun Dec 28 16:19:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

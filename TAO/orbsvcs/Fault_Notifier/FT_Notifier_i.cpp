@@ -79,11 +79,18 @@ TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
 // Implementation skeleton destructor
 TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 {
-  fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_NEW_ENV
+  {
+    fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+  ACE_CATCHALL
+  {
+  }
+  ACE_ENDTRY;
 }
 
 
-int TAO::FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
+int TAO::FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL_NOT_USED)
 {
   static unsigned long linger = 0;
   ACE_UNUSED_ARG(result);
@@ -185,7 +192,7 @@ const char * TAO::FT_FaultNotifier_i::identity () const
   return this->identity_.c_str();
 }
 
-PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->poa_.in();
 }
@@ -193,7 +200,7 @@ PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (ACE_ENV_SINGLE_AR
 
 void TAO::FT_FaultNotifier_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
 {
-  notify_channel_->destroy(ACE_ENV_SINGLE_ARG_DECL);
+  notify_channel_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ERROR ((LM_ERROR,
@@ -523,7 +530,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 
 ::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
     const char * constraint_grammar
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar))
 {
@@ -739,7 +746,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
   METHOD_RETURN(TAO::FT_FaultNotifier_i::disconnect_consumer);
 }
 
-CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;

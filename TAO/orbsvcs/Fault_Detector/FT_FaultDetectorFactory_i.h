@@ -134,7 +134,7 @@ namespace TAO
      * @param result is set to process return code if return value is non-zero.
      * @return zero to continue; nonzero to exit
      */
-    int idle(int & result);
+    int idle(int & result ACE_ENV_ARG_DECL);
 
 
     /**
