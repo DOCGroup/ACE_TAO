@@ -1,3 +1,9 @@
+Tue Dec 22 03:33:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.{h,cpp}: If you try to catch the same exception
+	  twice, VC will complain.  Added a new TAO_DONT_CATCH class for
+	  use when we want to disable catching all exceptions.
+
 Tue Dec 22 02:37:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Servant_Activator.h:
@@ -7,15 +13,15 @@ Tue Dec 22 02:37:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
 	  (activate_servant): The dll object is bound to the ObjectId of
 	  the servant.
-		
+
 	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
 	  (deactivate_servant): The dll object is removed from the servant
 	  hash map.
-		
+
 Tue Dec 22 01:12:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Defined TAO_CATCHANY as
-	  TAO_CATCH (CORBA_Exception, ex) when building DEBUG library
+	  TAO_CATCH (TAO_DONT_CATCH, ex) when building DEBUG library
 	  (when ACE_NDEBUG is _not_ defined.)  This will make un-expected
 	  exception very out-standing and let debuggers have a chance to
 	  catch these exceptions for us.
