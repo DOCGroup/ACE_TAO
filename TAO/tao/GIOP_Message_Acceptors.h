@@ -22,6 +22,7 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Accept_State.h"
+#include "tao/ORB_Core.h"
 
 class TAO_Export TAO_GIOP_Message_Acceptors:
   public TAO_GIOP_Message_Base
