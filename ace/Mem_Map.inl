@@ -117,7 +117,7 @@ ACE_Mem_Map::unmap (int len)
 
   this->close_filemapping_handle ();
 
-#if defined (__Lynx__)
+#if defined (ACE_HAS_LYNX_BROKEN_MMAP)
   int writeback_result = 0;
   if (write_enabled_)
     {
@@ -130,7 +130,7 @@ ACE_Mem_Map::unmap (int len)
                           base_addr_,
                           (int) filesize) == filesize ? 0 : -1;
     }
-#endif /* __Lynx__ */
+#endif /* ACE_HAS_LYNX_BROKEN_MMAP */
   if (this->base_addr_ != MAP_FAILED)
     {
       int result = ACE_OS::munmap (this->base_addr_,
@@ -139,11 +139,11 @@ ACE_Mem_Map::unmap (int len)
       return result;
     }
   else
-#if defined (__Lynx__)
+#if defined (ACE_HAS_LYNX_BROKEN_MMAP)
     return writeback_result;
-#else  /* ! __Lynx__ */
+#else  /* ! ACE_HAS_LYNX_BROKEN_MMAP */
     return 0;
-#endif /* ! __Lynx__ */
+#endif /* ! ACE_HAS_LYNX_BROKEN_MMAP */
 }
 
 // Unmap the region starting at <addr_>.
@@ -155,7 +155,7 @@ ACE_Mem_Map::unmap (void *addr, int len)
 
   this->close_filemapping_handle ();
 
-#if defined (__Lynx__)
+#if defined (ACE_HAS_LYNX_BROKEN_MMAP)
   int writeback_result = 0;
   if (write_enabled_)
     {
@@ -167,16 +167,16 @@ ACE_Mem_Map::unmap (void *addr, int len)
                           base_addr_,
                           (int) filesize) == filesize ? 0 : -1;
     }
-#endif /* __Lynx__ */
+#endif /* ACE_HAS_LYNX_BROKEN_MMAP */
 
-#if defined (__Lynx__)
+#if defined (ACE_HAS_LYNX_BROKEN_MMAP)
   return ACE_OS::munmap (addr,
                          len < 0 ? this->length_ : len)
     | writeback_result;;
-#else  /* ! __Lynx__ */
+#else  /* ! ACE_HAS_LYNX_BROKEN_MMAP */
   return ACE_OS::munmap (addr,
                          len < 0 ? this->length_ : len);
-#endif /* ! __Lynx__ */
+#endif /* ! ACE_HAS_LYNX_BROKEN_MMAP */
 }
 
 // Sync <len> bytes of the memory region to the backing store starting
