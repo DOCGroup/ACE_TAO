@@ -17,8 +17,8 @@ use Cwd;
 use Env qw(ACE_ROOT PATH);
 
 ################################################################################
-if (!getopts ('ac:dos:t') || $opt_h) {
-    print "auto_run_tests.pl [-a] [-c config] [-h] [-s sandbox] [-o] [-t]\n";
+if (!getopts ('a:dos:t') || $opt_h) {
+    print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
     print "\n";
@@ -29,6 +29,7 @@ if (!getopts ('ac:dos:t') || $opt_h) {
     print "    -s sandbox  Runs each program using a sandbox program\n";
     print "    -o          ORB test only\n";
     print "    -t          TAO tests (other than ORB tests) only\n";
+    print "    -Config cfg Run the tests for the <cfg> configuration\n";
     print "\n";
     print "Configs: " . $config_list->list_configs () . "\n";
     exit (1);
