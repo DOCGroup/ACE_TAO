@@ -45,7 +45,7 @@ Consumer_Handler::~Consumer_Handler (void)
   if (ACE_Event_Handler::remove_stdin_handler
       (TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-     ACE_ERROR ((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
        	       "%p\n",
        	       "remove_stdin_handler"));
 }
