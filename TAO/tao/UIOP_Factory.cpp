@@ -26,8 +26,7 @@ TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory (void)
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
-  // Check for the proper prefix in the IOR.  If the proper prefix isn't
-  // in the IOR then it is not an IOR we can use.
+  // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
 }
 
