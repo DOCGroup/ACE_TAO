@@ -62,7 +62,7 @@ int Recv::recv(ACE_Message_Block * message, ACE_Time_Value *timeout)
     }
     while( msize[b++] != 0 );
 
-    int size = atoi(msize);
+    int size = ACE_OS::atoi(msize);
 
         // Make a block big enough to contain the data we'll read
     message = new ACE_Message_Block( size );
