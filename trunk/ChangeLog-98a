@@ -1,6 +1,12 @@
+Sun Feb 15 16:32:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* netsvcs/clients/Naming/Client/svc.conf: Changed database name
+	  from "$DB" to "localname."  This was causing grief if users
+	  forgot to set this environment variable.
+
 Sun Feb 15 15:55:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Hash_T.{cpp,h}: Timer Hash wasn't keeping the earliest 
+	* ace/Timer_Hash_T.{cpp,h}: Timer Hash wasn't keeping the earliest
 	  node pointer up to date with cancels.
 
 Sat Feb 14 21:12:52 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
