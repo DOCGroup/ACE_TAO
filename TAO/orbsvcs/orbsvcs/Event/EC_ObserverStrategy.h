@@ -197,9 +197,13 @@ public:
     //   + Does it want to receive all changes?
     //
 
-    Observer_Entry (void);
-    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-                    RtecEventChannelAdmin::Observer_ptr o);
+    // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
+    // otherwise it thinks they are used as inline functions before
+    // beign used as such.... Apparently in the template code for the
+    // Hash_Map_Manager.
+    ACE_INLINE Observer_Entry (void);
+    ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+                               RtecEventChannelAdmin::Observer_ptr o);
 
     RtecEventChannelAdmin::Observer_Handle handle;
     // The handle
