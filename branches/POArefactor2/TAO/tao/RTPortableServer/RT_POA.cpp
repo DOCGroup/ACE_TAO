@@ -117,14 +117,14 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies
           priority_model->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
-        this->cached_policies ().priority_model (
+        this->cached_policies_.priority_model (
           TAO::Portable_Server::Cached_Policies::PriorityModel (rt_priority_model));
 
         RTCORBA::Priority priority =
           priority_model->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
-        this->cached_policies ().server_priority (priority);
+        this->cached_policies_.server_priority (priority);
       }
   }
 
@@ -186,8 +186,8 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
       ACE_CHECK;
 
       TAO_PriorityBandedConnectionPolicy *priority_bands_i =
-        ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                          priority_bands.in ());
+        dynamic_cast <TAO_PriorityBandedConnectionPolicy *>
+                          (priority_bands.in ());
 
       if (priority_bands_i)
         {
@@ -264,8 +264,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   ACE_CHECK_RETURN (0);
 
   TAO_ServerProtocolPolicy *server_protocol =
-    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                      server_protocol_policy.in ());
+    dynamic_cast <TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
   // Filter for server protocol.
   TAO_Server_Protocol_Acceptor_Filter filter (server_protocol->protocols_rep ());
@@ -329,8 +328,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   ACE_CHECK_RETURN (0);
 
   TAO_PriorityBandedConnectionPolicy *priority_bands_i =
-    ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                      priority_bands.in ());
+    dynamic_cast <TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
 
   return this->create_stub_object (object_key,
                                    type_id,
@@ -362,7 +360,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
   int result =
-    mprofile.set (ACE_static_cast (CORBA::ULong, profile_count));
+    mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
     error = 1;
 
