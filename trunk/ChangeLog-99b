@@ -1,3 +1,11 @@
+Mon Dec 27 12:27:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/run_tests.bat: Changed to allow _Borland 4_ users to set
+	  the PATH environment variable to include the path to the
+	  appropriate ACE dll if necessary, and it sets the PATH
+	  environment variable to the correct directory depending on the
+	  "build options".
+
 Mon Dec 27 11:29:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-cxx-common.h: on Linux, #define
