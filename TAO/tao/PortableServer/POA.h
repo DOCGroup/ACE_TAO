@@ -951,9 +951,7 @@ protected:
 
   CORBA::ULong decrement_outstanding_requests (void);
 
-  void establish_servant_lock (PortableServer::Servant servant);
-
-  void teardown_servant_lock (PortableServer::Servant servant);
+  TAO_SYNCH_RECURSIVE_MUTEX &single_threaded_lock (void) const;
 
   CORBA::Boolean waiting_destruction (void) const;
 
@@ -1032,6 +1030,8 @@ protected:
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
+
+  TAO_SYNCH_RECURSIVE_MUTEX *single_threaded_lock_;
 };
 
 

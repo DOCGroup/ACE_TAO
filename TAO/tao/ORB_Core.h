@@ -978,7 +978,7 @@ protected:
   /// Object reference to the root POA.  It will eventually be the
   /// object reference returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
-  CORBA::Object_ptr root_poa_;
+  CORBA::Object_var root_poa_;
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;

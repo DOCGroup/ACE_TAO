@@ -145,7 +145,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
-    waiting_servant_deactivation_ (0)
+    waiting_servant_deactivation_ (0),
+    single_threaded_lock_ (0)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -167,6 +168,19 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
   // Check for exception in construction of the active object map.
   ACE_CHECK;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+  // Setup lock if POA is single threaded.
+  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      ACE_NEW_THROW_EX (this->single_threaded_lock_,
+                        TAO_SYNCH_RECURSIVE_MUTEX,
+                        CORBA::NO_MEMORY ());
+
+    }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Create acceptor filter that will be used to construct ior for
   // objects registering with this POA.
@@ -216,6 +230,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 TAO_POA::~TAO_POA (void)
 {
   delete this->acceptor_filter_;
+
+  delete this->single_threaded_lock_;
 }
 
 void
@@ -273,7 +289,6 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   }
-
 
   CORBA::release (this);
 }
@@ -805,10 +820,6 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
 
       servant->_add_ref (ACE_TRY_ENV);
       ACE_CHECK;
-
-      // If we are a single threaded POA, set up the appropriate
-      // locking in the servant.
-      this->establish_servant_lock (servant);
     }
 }
 
@@ -952,10 +963,6 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   servant->_add_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  // If we are a single threaded POA, set up the appropriate locking
-  // in the servant.
-  this->establish_servant_lock (servant);
-
   return user_id._retn ();
 }
 
@@ -1053,10 +1060,6 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // invoke _remove_ref on it the same number of times.
   servant->_add_ref (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // If we are a single threaded POA, set up the appropriate locking
-  // in the servant.
-  this->establish_servant_lock (servant);
 }
 
 void
@@ -1262,14 +1265,6 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
   // First check for a non-zero servant.
   if (active_object_map_entry->servant_)
     {
-      // If we are a single threaded POA, teardown the appropriate
-      // locking in the servant.
-      //
-      // Note that teardown of the servant lock must happen before the
-      // _remove_ref() or etherealize() calls since they might end up
-      // deleting the servant.
-      //
-      this->teardown_servant_lock (active_object_map_entry->servant_);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -1617,10 +1612,6 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       servant->_add_ref (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      // If we are a single threaded POA, set up the appropriate
-      // locking in the servant.
-      this->establish_servant_lock (servant);
-
       return user_id._retn ();
     }
 
@@ -1733,10 +1724,6 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // the reference count of the Servant passed to this function.
       servant->_add_ref (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-
-      // If we are a single threaded POA, set up the appropriate
-      // locking in the servant.
-      this->establish_servant_lock (servant);
 
       return system_id._retn ();
     }
@@ -2462,10 +2449,6 @@ TAO_POA::locate_servant_i (const char *operation,
               // Increment the reference count.
               ++servant_upcall.active_object_map_entry ()->reference_count_;
 
-              // If we are a single threaded POA, set up the
-              // appropriate locking in the servant.
-              this->establish_servant_lock (servant);
-
               // Success
               return servant;
             }
@@ -2507,10 +2490,6 @@ TAO_POA::locate_servant_i (const char *operation,
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                                 0);
             }
-
-          // If we are a single threaded POA, set up the
-          // appropriate locking in the servant.
-          this->establish_servant_lock (servant);
 
           // Remember to invoke <postinvoke>
           servant_upcall.using_servant_locator ();

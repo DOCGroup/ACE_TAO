@@ -14,6 +14,7 @@ DIRS  = Destruction \
 	wait_for_completion \
 	Deactivation \
 	Non_Servant_Upcalls \
+	Single_Threaded_POA \
 	Identity
 
 # The following test hasn't been updated yet
