@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 // Default Constructor
 Options::Options ()
