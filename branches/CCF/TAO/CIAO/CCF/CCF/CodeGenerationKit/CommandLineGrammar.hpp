@@ -5,8 +5,6 @@
 #ifndef COMMAND_LINE_GRAMMAR_H
 #define COMMAND_LINE_GRAMMAR_H
 
-#include "MSVC_Pragmas.hpp"
-
 #include <vector>
 #include <string>
 
@@ -21,7 +19,9 @@ using namespace boost::spirit;
 template <typename S>
 struct string_directive : public unary<S, parser<string_directive<S> > >
 {
-  typedef string_directive self_t;
+  typedef
+  string_directive
+  self_t;
 
   string_directive (S const& a)
       : unary<S, parser<string_directive<S> > > (a)
@@ -32,9 +32,17 @@ struct string_directive : public unary<S, parser<string_directive<S> > >
   typename parser_result<self_t, ScannerT>::type
   parse(ScannerT const& scan) const
   {
-    typedef typename ScannerT::iterator_t  Iterator;
-    typedef typename ScannerT::value_t     Value;
-    typedef typename Value::const_iterator ValueIterator;
+    typedef
+    typename ScannerT::iterator_t
+    Iterator;
+    
+    typedef
+    typename ScannerT::value_t
+    Value;
+    
+    typedef
+    typename Value::const_iterator
+    ValueIterator;
 
     Iterator save = scan.first;
 
@@ -172,11 +180,21 @@ struct CLineGrammar : public grammar<CLineGrammar>
   template <typename ScannerT>
   struct definition
   {
-    typedef typename ScannerT::value_t::const_iterator SLIterator;
-    typedef scanner<SLIterator, scanner_policies <> > SLScanner;
+    typedef
+    typename ScannerT::value_t::const_iterator
+    SLIterator;
+    
+    typedef
+    scanner<SLIterator, scanner_policies <> >
+    SLScanner;
 
-    typedef rule<ScannerT> Rule;
-    typedef rule<SLScanner> SLRule;
+    typedef
+    rule<ScannerT>
+    Rule;
+    
+    typedef
+    rule<SLScanner>
+    SLRule;
 
 
     Rule r_argument;
@@ -203,11 +221,25 @@ struct CLineGrammar : public grammar<CLineGrammar>
 
     // Semantic actions
 
-    typedef SemanticAction<SLIterator, SetCommandName> CommandNameHandler;
-    typedef SetOptionName<SLIterator>                  OptionNameHandler;
-    typedef SemanticAction<SLIterator, SetOptionValue> OptionValueHandler;
-    typedef SemanticAction<SLIterator, SetArgument>    ArgumentHandler;
-    typedef SemanticAction<SLIterator, SetSeparator>   SeperatorHandler;
+    typedef
+    SemanticAction<SLIterator, SetCommandName>
+    CommandNameHandler;
+    
+    typedef
+    SetOptionName<SLIterator>
+    OptionNameHandler;
+    
+    typedef
+    SemanticAction<SLIterator, SetOptionValue>
+    OptionValueHandler;
+    
+    typedef
+    SemanticAction<SLIterator, SetArgument>
+    ArgumentHandler;
+    
+    typedef
+    SemanticAction<SLIterator, SetSeparator>
+    SeperatorHandler;
 
     /*
 

@@ -1,11 +1,10 @@
 // file      : CCF/CompilerElements/ReferenceCounting.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $id$
 // cvs-id    : $Id$
 
 #ifndef CCF_RUNTIME_REFERENCE_COUNTING_H
 #define CCF_RUNTIME_REFERENCE_COUNTING_H
-
-#include "MSVC_Pragmas.hpp"
 
 #include "Utility/ReferenceCounting/ReferenceCounting.hpp"
 
