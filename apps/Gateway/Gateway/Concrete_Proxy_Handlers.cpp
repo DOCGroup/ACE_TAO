@@ -339,14 +339,10 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
         }
 
       this->total_bytes (data_received + header_received);
-#if defined (VERBOSE)
-      ACE_DEBUG ((LM_DEBUG, "(%t) connection id = %d, supplier id = %d, len = %d, payload = %*s",
-		 event_addr.proxy_id_, event->header_.supplier_id_, event->header_.len_,
-		 event->header_.len_, event->data_));
-#else
       ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
-		 event->header_.supplier_id_, event->header_.len_, data_received + header_received));
-#endif /* VERBOSE */
+		  event->header_.supplier_id_, event->header_.len_, data_received + header_received));
+      if (this->event_channel_.options ().verbose_)
+	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
 
       // Encode before returning so that we can set things out in
       // network byte order.

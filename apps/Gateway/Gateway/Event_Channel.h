@@ -75,6 +75,9 @@ public:
 
   int acceptor_role_;
   // Enabled if we are playing the role of the Connector.
+
+  int verbose_;
+  // Enabled if we want verbose diagnostic output.
 };
 
 class ACE_Svc_Export ACE_Event_Channel : public ACE_Task<ACE_SYNCH>
