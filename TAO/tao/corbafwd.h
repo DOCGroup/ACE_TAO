@@ -238,6 +238,8 @@ class CORBA_ServiceInformation_out;
 typedef CORBA_ServiceInformation * CORBA_ServiceInformation_ptr;
 
 class CORBA_Principal;
+class CORBA_Principal_var;
+class CORBA_Principal_out;
 typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
@@ -472,6 +474,8 @@ public:
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
+  typedef CORBA_Principal_var Principal_var;
+  typedef CORBA_Principal_out Principal_out;
 
   typedef CORBA_ORB ORB;
   typedef CORBA_ORB *ORB_ptr;
