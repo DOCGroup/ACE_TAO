@@ -299,7 +299,7 @@ CORBA_TypeCode::member_type (CORBA::ULong slot
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                             0);
         }
     }
@@ -453,7 +453,7 @@ CORBA_TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
     }
   else
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         0);
     }
 
@@ -461,7 +461,7 @@ CORBA_TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
 
 CORBA::Visibility
 CORBA_TypeCode::member_visibility (CORBA::ULong slot
-                                   ACE_ENV_SINGLE_ARG_DECL) const
+                                   ACE_ENV_ARG_DECL) const
 {
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_visibility_list_known_)
@@ -472,15 +472,15 @@ CORBA_TypeCode::member_visibility (CORBA::ULong slot
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                             0);
         }
     }
   else
     {
-      CORBA::Visibility v = 
+      CORBA::Visibility v =
         this->private_member_visibility (slot
-                                         ACE_ENV_SINGLE_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::PRIVATE_MEMBER);
 
       return v;
@@ -496,7 +496,7 @@ CORBA_TypeCode::type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
     }
   else
     {
-      CORBA::ValueModifier vm = 
+      CORBA::ValueModifier vm =
         this->private_type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::VM_NONE);
 
@@ -1745,16 +1745,16 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
     case CORBA::tk_struct:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           0);
         if (this->private_state_->tc_member_count_known_)
           return this->private_state_->tc_member_count_;
 
         CORBA::ULong members;
         // setup an encapsulation
-        TAO_InputCDR stream (this->buffer_+4, 
+        TAO_InputCDR stream (this->buffer_+4,
                              this->length_-4,
                              this->byte_order_);
 
@@ -1764,7 +1764,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
             || !stream.skip_string ()       // struct name
             || !stream.read_ulong (members))
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               0);
           }
 
@@ -1775,9 +1775,9 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
     case CORBA::tk_union:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           0);
         if (this->private_state_->tc_member_count_known_)
           {
@@ -1786,7 +1786,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
 
         CORBA::ULong members;
         // setup an encapsulation
-        TAO_InputCDR stream (this->buffer_+4, 
+        TAO_InputCDR stream (this->buffer_+4,
                              this->length_-4,
                              this->byte_order_);
 
@@ -1798,7 +1798,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
             || !stream.read_ulong (members)           // default used
             || !stream.read_ulong (members))          // real member count
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               0);
           }
 
@@ -1809,9 +1809,9 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
     case CORBA::tk_value:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           0);
         if (this->private_state_->tc_member_count_known_)
           {
@@ -1820,7 +1820,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
 
         CORBA::ULong members;
         // setup an encapsulation
-        TAO_InputCDR stream (this->buffer_+4, 
+        TAO_InputCDR stream (this->buffer_+4,
                              this->length_-4,
                              this->byte_order_);
 
@@ -1834,7 +1834,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
             || !stream.skip_short ()        // ValueModifier
             || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               0);
           }
 
@@ -1850,7 +1850,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
           {
             if (!stream.read_ulong (encap_length))
               {
-                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                   0);
               }
 
@@ -1858,7 +1858,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
               {
                 if (!stream.skip_bytes (encap_length))
                   {
-                    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                       0);
                   }
               }
@@ -1867,7 +1867,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
         // Now read member count.
         if (!stream.read_ulong (members))
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               0);
           }
 
@@ -1876,7 +1876,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
         return this->private_state_->tc_member_count_;
       }
     default:
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }
 
@@ -1896,7 +1896,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
   // Build the de-encapsulating CDR stream, bypassing the stringent
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
-  TAO_InputCDR stream (this->buffer_+4, 
+  TAO_InputCDR stream (this->buffer_+4,
                        this->length_-4,
                        this->byte_order_);
   CORBA::TypeCode_var tc = 0;
@@ -1910,9 +1910,9 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           CORBA::TypeCode::_nil ());
         if (this->private_state_->tc_member_type_list_known_)
           {
@@ -1940,7 +1940,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             || !stream.skip_string ()     // typedef name
             || !stream.read_ulong (temp))  // member count
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               CORBA::TypeCode::_nil ());
           }
 
@@ -1951,7 +1951,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
           {
             if (!stream.skip_string ())  // skip the name
               {
-                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                   CORBA::TypeCode::_nil ());
               }
 
@@ -1985,9 +1985,9 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           CORBA::TypeCode::_nil ());
         if (this->private_state_->tc_member_type_list_known_)
           {
@@ -2013,13 +2013,13 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             || !stream.skip_string ()           // typedef name
             || !this->skip_typecode (stream))   // skip discriminant typecode
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               CORBA::TypeCode::_nil ());
           }
         else if (!stream.read_ulong (temp)      // default used
                  || !stream.read_ulong (temp))  // member count
           {
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               CORBA::TypeCode::_nil ());
           }
 
@@ -2043,7 +2043,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
                 || !stream.skip_string ())  // skip the name
               {
-                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                   CORBA::TypeCode::_nil ());
               }
 
@@ -2064,7 +2064,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
           }
         else
           {
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                               CORBA::TypeCode::_nil ());
           }
       }
@@ -2077,9 +2077,9 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                           guard,
-                          this->private_state_->mutex_, 
+                          this->private_state_->mutex_,
                           CORBA::TypeCode::_nil ());
 
         if (this->private_state_->tc_member_type_list_known_)
@@ -2644,7 +2644,7 @@ CORBA_TypeCode::private_length (ACE_ENV_SINGLE_ARG_DECL) const
       ACE_NOTREACHED (break);
 
     default:
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         0);
     }
   ACE_NOTREACHED (return 0);
@@ -2713,7 +2713,7 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
 {
   if (this->kind_ != CORBA::tk_value)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         CORBA::PRIVATE_MEMBER);
     }
 
@@ -2728,7 +2728,7 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
 
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 
+                    this->private_state_->mutex_,
                     0);
 
   if (this->private_state_->tc_member_visibility_list_known_)
@@ -2737,7 +2737,7 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
     }
 
   // Set up an encapsulation.
-  TAO_InputCDR stream (this->buffer_+4, 
+  TAO_InputCDR stream (this->buffer_+4,
                        this->length_-4,
                        this->byte_order_);
 
@@ -2749,7 +2749,7 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
       || !this->skip_typecode (stream)    // Concrete base typecode
       || !stream.skip_ulong ())           // Member count
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }
 
@@ -2766,7 +2766,7 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
           || !this->skip_typecode (stream)    // Member TypeCode
           || !stream.read_short (tmp))        // Read the member visibility
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                             0);
         }
 
@@ -2782,13 +2782,13 @@ CORBA_TypeCode::private_type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->kind_ != CORBA::tk_value)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         0);
     }
 
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 
+                    this->private_state_->mutex_,
                     0);
 
   if (this->private_state_->tc_type_modifier_known_)
@@ -2797,7 +2797,7 @@ CORBA_TypeCode::private_type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
     }
 
   // Set up an encapsulation.
-  TAO_InputCDR stream (this->buffer_+4, 
+  TAO_InputCDR stream (this->buffer_+4,
                        this->length_-4,
                        this->byte_order_);
 
@@ -2806,13 +2806,13 @@ CORBA_TypeCode::private_type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
   if (!stream.skip_string ()          // ID
       || !stream.skip_string ())      // Name
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }
 
   if (!stream.read_short (this->private_state_->tc_type_modifier_))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }
 
@@ -2825,13 +2825,13 @@ CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->kind_ != CORBA::tk_value)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                         0);
     }
 
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 
+                    this->private_state_->mutex_,
                     0);
 
   if (this->private_state_->tc_concrete_base_type_known_)
@@ -2840,7 +2840,7 @@ CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
     }
 
   // Set up an encapsulation.
-  TAO_InputCDR stream (this->buffer_+4, 
+  TAO_InputCDR stream (this->buffer_+4,
                        this->length_-4,
                        this->byte_order_);
 
@@ -2850,7 +2850,7 @@ CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
       || !stream.skip_string ()       // Name
       || !stream.skip_short ())       // ValueModifier
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
     }
 
