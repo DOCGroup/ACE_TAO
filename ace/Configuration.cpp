@@ -2030,3 +2030,99 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
   return 0;
 }
+
+int
+ACE_Configuration::import_config_as_strings (const ACE_TCHAR* filename)
+{
+  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
+  if (!in)
+    return -1;
+
+  ACE_TCHAR buffer[BUFSIZ];
+  ACE_Configuration_Section_Key section;
+  while (ACE_OS::fgets (buffer, BUFSIZ, in))
+    {
+      // Check for a comment and blank line
+      if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#')
+          ||
+          buffer[0] == ACE_LIB_TEXT ('\r') || buffer[0] == ACE_LIB_TEXT
+          ('\n'))
+        continue;
+
+      if (buffer[0] == ACE_LIB_TEXT ('['))
+        {
+          // We have a new section here, strip out the section name
+          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          if (!end)
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+          *end = 0;
+
+          if (expand_path (root_, buffer + 1, section, 1))
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+
+          continue;
+        }
+
+      // we have a line
+      ACE_TCHAR *name = this->skip_whitespace (buffer);
+      if (name)
+        {
+          ACE_TCHAR *end = ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
+
+          // locate equal sign after name and retrieve value
+          ACE_TCHAR *value = ACE_OS::strrchr (name, ACE_LIB_TEXT ('='));
+          if (value)
+            {
+              value++;  // jump over equal sign
+              value = this->skip_whitespace (value);
+              ACE_TCHAR *value_end;
+              if (value[0] != ACE_LIB_TEXT ('"'))
+                value_end = ACE_OS::strpbrk (value, ACE_LIB_TEXT (" \t\n\r"));
+              else
+                {
+                  // double quote delimited allows spaces and tabs in string
+                  value++;
+                  value_end = ACE_OS::strpbrk (value, ACE_LIB_TEXT ("\"\n\r"));
+                }
+              if (value_end)
+                *value_end = '\0'; // terminate value
+            }
+          else
+            value = ACE_LIB_TEXT ("");
+
+          if (end)
+            *end = '\0';     // terminate name now
+
+          if (set_string_value (section, name, value))
+            {
+              ACE_OS::fclose (in);
+              return -4;
+            }
+        }
+    }
+
+  if (ferror (in))
+    {
+      ACE_OS::fclose (in);
+      return -1;
+    }
+
+  ACE_OS::fclose (in);
+  return 0;
+}
+
+ACE_TCHAR *
+ACE_Configuration::skip_whitespace (ACE_TCHAR *src)
+{
+  ACE_TCHAR *cp = src;
+  while ((*cp != '\0') && ((*cp == ' ') ||  (*cp == '\t')))
+    cp++;
+
+  return cp;
+}
