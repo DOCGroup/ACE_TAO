@@ -262,7 +262,7 @@ public:
                       const ACE_Command_Base *act,
                       RtecScheduler::OS_Priority preemption_priority,
                       const RtecScheduler::Time& delta,
-                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
+                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero ());
   // Schedule a timer at the appropriate priority for <preemption_priority>.
   // Returns the preemption priority used on success, -1 on failure.
 
