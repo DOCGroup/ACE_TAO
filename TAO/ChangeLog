@@ -1,3 +1,17 @@
+Mon Dec  9 22:25:06 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+
+	  Added initialization for INOUT and OUT argument declarations in the
+	  skeleton body when they are of any integer or floating point type.
+	  This is a workaround for VC7, which has an internal compiler error
+	  when the corresponding IDL operation has certain non-void return
+	  types, i.e., when this return type is declared in the skeleton
+	  body just before the argument in question. The C++ compiler is
+	  evidently unable to tell that the argument variable is intialized
+	  by demarshaling later in the generated skeleton body. Thanks to
+	  Tim Pullen <tim@timpullen.co.uk> for reporting the problem.
+
 Mon Dec 09 18:11:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OBV/TC_Alignment/server.dsp:
