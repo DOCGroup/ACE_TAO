@@ -58,7 +58,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotif
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &/*event*/, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   // Later:
   // Collect events into a sequence till the QoS property
