@@ -5565,6 +5565,11 @@ public:
 # if defined (ACE_WIN32)
   // = Default Win32 Security Attributes definition.
   static LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
+
+  // = Win32 OS version determination function.
+  static const OSVERSIONINFO &get_win32_versioninfo (void);
+  // Return the win32 OSVERSIONINFO structure.
+
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
@@ -6993,6 +6998,9 @@ private:
                                                  int &hmode);
   // Translate fopen's mode char to open's mode.  This helper function
   // is here to avoid maintaining several pieces of identical code.
+
+  static OSVERSIONINFO win32_versioninfo_;
+
 # endif /* ACE_WIN32 */
 };
 
