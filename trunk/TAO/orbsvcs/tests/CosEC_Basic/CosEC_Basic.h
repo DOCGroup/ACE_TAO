@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = FILENAME
@@ -10,8 +10,10 @@
 //   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // = DESCRIPTION
-//   This is a simple test class for the Cos Event Channel.
+//   This is a simple test class for the standard Cos Event Channel.
+//
 // ============================================================================
+
 #ifndef COSECBASIC_H
 #define COSECBASIC_H
 
@@ -32,27 +34,36 @@ class CosEC_Basic
 {
   // = TITLE
   //   class CosEC_Basic
-  // = DESCRIPTION
-  //   creates a CosEC (based on the RtEC) and sends an event across.
   //
+  // = DESCRIPTION
+  //   Creates a CORBA Standard Event Channel (COSEC) implemented with
+  //   TAO's Real-time Event Channel (RtEC) and sends an event across.
 public:
   // = Initialization and termination methods.
   CosEC_Basic (void);
-  ~CosEC_Basic ();
+  // Constructor.
 
+  ~CosEC_Basic (void);
+  // Destructor.
+
+  // @@ Pradeep, please just call this "init".
   int initEC (int argc, char *argv []);
   // Starts up an ORB, a Rtec and the CosEC.
 
-  void runtest ();
-  // Connects a consumer and a supplier to the CosEC and sends 1 event across.
+  // @@ Pradeep, please just call this "run".
+  void runtest (void);
+  // Connects a consumer and a supplier to the CosEC and sends 1 event
+  // across.
 
-  void finish ();
+  // @@ Pradeep, please call this "shutdown".
+  void finish (void);
   // Closes down the Rtec and CosEC.
 
 private:
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
+  // @@ Pradeep, ALL data members should be suffixed with '_'.
   TAO_Reactive_Module_Factory module_factory;
   // The Module_Factory required by the Rtec.
 
@@ -83,4 +94,7 @@ private:
   CosECSupplier supplier;
   // The Cos Supplier that will supply the event.
 };
+
+// @@ Pradeep, please don't use // here, but use /* ... */ instead.
+// Please fix all uses of this in your code since it's not portable.
 #endif // COSECBASIC_H

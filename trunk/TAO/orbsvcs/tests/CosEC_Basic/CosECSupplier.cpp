@@ -5,10 +5,11 @@
 
 void
 CosECSupplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-            CORBA::Environment& TAO_TRY_ENV)
+                     CORBA::Environment& TAO_TRY_ENV)
 {
   // = Connect as a consumer.
-  this->supplier_admin_ = event_channel->for_suppliers (TAO_TRY_ENV);
+  this->supplier_admin_ =
+    event_channel->for_suppliers (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 }
 
@@ -47,6 +48,7 @@ CosECSupplier::disconnect (CORBA::Environment &TAO_TRY_ENV)
 
   this->consumer_proxy_->disconnect_push_consumer (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -59,6 +61,7 @@ CosECSupplier::send_event (const CORBA::Any & data,
 }
 
 void
-CosECSupplier::disconnect_push_supplier (CORBA::Environment& )
+CosECSupplier::disconnect_push_supplier (CORBA::Environment &)
 {
+  // @@ Pradeep, please fill in here...
 }

@@ -7,9 +7,13 @@ int
 main (int argc, char *argv [])
 {
   CosEC_Basic basic;
-  basic.initEC(argc, argv);
+
+  // @@ Pradeep, please make sure to check for errors somehow...
+  basic.initEC (argc, argv);
   basic.runtest ();
   basic.finish ();
+
+  // @@ Pradeep, always return an exit code from main()....
 }
 
 CosEC_Basic::CosEC_Basic (void)
@@ -20,7 +24,7 @@ CosEC_Basic::CosEC_Basic (void)
   // No-Op.
 }
 
-CosEC_Basic::~CosEC_Basic ()
+CosEC_Basic::~CosEC_Basic (void)
 {
   // No-Op.
 }
@@ -30,22 +34,22 @@ CosEC_Basic::initEC  (int argc, char *argv [])
 {
   TAO_TRY
     {
-      this->orb_ =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    "",
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA", TAO_TRY_ENV);
-
+        this->orb_->resolve_initial_references("RootPOA",
+                                               TAO_TRY_ENV);
       if (CORBA::is_nil (poa_object.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      " (%P|%t) Unable to initialize the POA.\n"));
-          return -1;
-        }
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                           -1);
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       PortableServer::POAManager_var poa_manager =
@@ -57,7 +61,8 @@ CosEC_Basic::initEC  (int argc, char *argv [])
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
+        this->orb_->object_to_string (scheduler.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -70,7 +75,8 @@ CosEC_Basic::initEC  (int argc, char *argv [])
       rtec = ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      str = this->orb_->object_to_string (rtec.in (), TAO_TRY_ENV);
+      str = this->orb_->object_to_string (rtec.in (),
+                                          TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -93,19 +99,21 @@ CosEC_Basic::initEC  (int argc, char *argv [])
 
       consumer_qos.start_disjunction_group ();
       consumer_qos.insert_source (1,
-                                  scheduler->create ("consumer", TAO_TRY_ENV));
+                                  scheduler->create ("consumer",
+                                                     TAO_TRY_ENV));
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      const RtecEventChannelAdmin::ConsumerQOS &consumerqos
-        = consumer_qos.get_ConsumerQOS ();
+      const RtecEventChannelAdmin::ConsumerQOS &consumerqos =
+        consumer_qos.get_ConsumerQOS ();
 
-      const RtecEventChannelAdmin::SupplierQOS &supplierqos
-        = supplier_qos.get_SupplierQOS ();
+      const RtecEventChannelAdmin::SupplierQOS &supplierqos =
+        supplier_qos.get_SupplierQOS ();
 
-      if (ec_i.init (consumerqos, supplierqos, local_ec, TAO_TRY_ENV) != 0)
-        {
-          return -1;
-        }
+      if (ec_i.init (consumerqos,
+                     supplierqos,
+                     local_ec,
+                     TAO_TRY_ENV) != 0)
+        return -1;
 
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
@@ -123,7 +131,7 @@ CosEC_Basic::initEC  (int argc, char *argv [])
 }
 
 void
-CosEC_Basic::finish ()
+CosEC_Basic::finish (void)
 {
   TAO_TRY
     {
@@ -131,7 +139,6 @@ CosEC_Basic::finish ()
       this->consumer.close (TAO_TRY_ENV);
 
       this->cos_ec->destroy (TAO_TRY_ENV);
-
       this->ec_impl.shutdown ();
     }
   TAO_CATCHANY
@@ -142,23 +149,28 @@ CosEC_Basic::finish ()
 }
 
 void
-CosEC_Basic::runtest ()
+CosEC_Basic::runtest (void)
 {
   TAO_TRY
     {
-      // create an Any type to pass to the Cos EC.
+      // Create an Any type to pass to the Cos EC.
       CORBA_Any cany;
-      cany <<= (CORBA::Long)50;
+      cany <<= CORBA::Long (50);
       CORBA::Any any;
       cany >>= any;
 
-      this->consumer.open (this->cos_ec, TAO_TRY_ENV);
+      // @@ Pradeep, make sure to check all the exceptions via the
+      // TAO_CHECK_ENV macros..
+      this->consumer.open (this->cos_ec,
+                           TAO_TRY_ENV);
       this->consumer.connect (TAO_TRY_ENV);
 
-      this->supplier.open (this->cos_ec, TAO_TRY_ENV);
+      this->supplier.open (this->cos_ec,
+                           TAO_TRY_ENV);
       this->supplier.connect (TAO_TRY_ENV);
 
-      this->supplier.send_event (any, TAO_TRY_ENV);
+      this->supplier.send_event (any,
+                                 TAO_TRY_ENV);
     }
  TAO_CATCHANY
     {
