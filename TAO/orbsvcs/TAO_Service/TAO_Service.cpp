@@ -30,7 +30,7 @@ extern "C" void handler (int)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

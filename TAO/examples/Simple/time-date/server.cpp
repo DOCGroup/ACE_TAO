@@ -24,9 +24,9 @@
 ACE_RCSID(Misc, main, "$Id$")
 
 int
-main (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
-  if (ACE_Service_Config::open (argc, argv) == -1 
+  if (ACE_Service_Config::open (argc, argv) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

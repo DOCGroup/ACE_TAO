@@ -4,7 +4,7 @@
 #include "tao_imr_i.h"
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_IMR_i tao_imr_i;
 
