@@ -1,3 +1,13 @@
+Fri Feb 27 11:20:30 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Change the way lines are read so line continuation (ending a line
+          in \) would work uniformly within mpb, mpc and mwc files.
+
 Fri Feb 27 08:51:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:

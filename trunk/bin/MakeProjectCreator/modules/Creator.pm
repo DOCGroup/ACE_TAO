@@ -86,35 +86,28 @@ sub new {
 }
 
 
-sub collect_line {
-  my($self)        = shift;
-  my($fh)          = shift;
-  my($lref)        = shift;
-  my($line)        = shift;
-  my($status)      = 1;
-  my($errorString) = '';
+sub preprocess_line {
+  my($self) = shift;
+  my($fh)   = shift;
+  my($line) = shift;
 
-  $$lref .= $self->strip_line($line);
-
-  if ($$lref =~ /\\$/) {
-    $$lref =~ s/\\$/ /;
+  $line = $self->strip_line($line);
+  while ($line =~ /\\$/) {
+    $line =~ s/\s*\\$/ /;
+    my($next) = $fh->getline();
+    if (defined $next) {
+      $line .= $self->strip_line($next);
+    }
   }
-  else {
-    ($status, $errorString) = $self->parse_line($fh, $$lref);
-    $$lref = '';
-  }
-
-  return $status, $errorString;
+  return $line;
 }
 
 
 sub generate_default_input {
   my($self)   = shift;
-  my($status) = 0;
-  my($error)  = '';
 
-  ($status, $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
-  ($status, $error) = $self->parse_line(undef, '}');
+  $self->parse_line(undef, "$self->{'grammar_type'} {");
+  my($status, $error) = $self->parse_line(undef, '}');
 
   if (!$status) {
     $self->error($error);
@@ -341,7 +334,7 @@ sub parse_scope {
   }
 
   while(<$fh>) {
-    my($line) = $self->strip_line($_);
+    my($line) = $self->preprocess_line($fh, $_);
 
     if ($line eq '') {
     }
@@ -878,8 +871,9 @@ sub process_duplicate_modification {
 }
 
 sub generate_recursive_input_list {
-  #my($self) = shift;
-  #my($dir)  = shift;
+  #my($self)    = shift;
+  #my($dir)     = shift;
+  #my($exclude) = shift;
   return ();
 }
 
