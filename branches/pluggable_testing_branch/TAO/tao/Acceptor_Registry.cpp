@@ -104,15 +104,6 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 {
-  // @@ Fred&Ossama: This is not the problem you have to solve right
-  //    now, but we thought about giving explicit names to each
-  //    endpoint, the user could then use those names to setup
-  //    policies in the ORB that indicate which endpoints are served
-  //    by which thread.
-  //    IMHO that is one more reason to keep a list of endpoints in
-  //    the ORB_Core, instead of a string.
-  //    BTW, that also removes the restriction of using ';' in the
-  //    addresses.  Just my two cents.
 
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
@@ -179,7 +170,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
                                          "(%P|%t) Unable to create an acceptor for %s\n",
-                                         str.get ()),
+                                         iop.c_str ()),
                                         -1);
                     }
                 }
