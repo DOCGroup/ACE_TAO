@@ -45,7 +45,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
-CONTROLLED_FILES = CIAO
+CONTROLLED_FILES = TAO/CIAO
 
 RELEASE_FILES = $(CONTROLLED_FILES)
 
