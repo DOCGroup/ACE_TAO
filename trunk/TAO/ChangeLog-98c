@@ -1,3 +1,17 @@
+Wed Oct 21 15:01:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_enum/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_exception/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+
+	  Added an extra "return 0;" after the TAO_ENDTRY; in each >>=
+	  operator. Thanks to David Levine for reporting the compiler
+	  warnings requiring a return statement.
+
 Wed Oct 21 13:09:54 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/README: 
