@@ -16,6 +16,7 @@ OBJFILES = \
 	$(OBJDIR)\ast_enum_val.obj \
 	$(OBJDIR)\ast_exception.obj \
 	$(OBJDIR)\ast_expression.obj \
+        $(OBJDIR)\ast_factory.obj \
 	$(OBJDIR)\ast_field.obj \
 	$(OBJDIR)\ast_generator.obj \
 	$(OBJDIR)\ast_interface.obj \
