@@ -10,6 +10,10 @@ Wed Mar 19 07:33:42 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing
 	  this out.
 
+	* ace/OS.i (thr_setcanceltype): added ACE_UNUSED_ARGS for STHREADS
+	  case.  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for
+	  providing this fix.
+
 Tue Mar 18 21:53:03 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Modified the
