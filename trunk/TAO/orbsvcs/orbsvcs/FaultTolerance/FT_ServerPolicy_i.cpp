@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-#include "FT_ServerPolicy_i.i"
+#include "FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FaultTolerance, FT_ServerPolicy_i, "$Id$")
