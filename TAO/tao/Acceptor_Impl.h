@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 // Forward declarations.
 class TAO_ORB_Core;

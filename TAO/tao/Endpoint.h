@@ -16,16 +16,15 @@
 
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
-#include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/pre.h"
+#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-
+#include "tao/corbafwd.h"
 
 /**
  * @class TAO_Endpoint

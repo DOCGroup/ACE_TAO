@@ -238,6 +238,12 @@ CORBA::WString_out::WString_out (CORBA::WString_var &s)
 }
 
 ACE_INLINE
+CORBA::WString_out::WString_out (TAO_WString_Manager &s)
+  : ptr_ (s.out ())
+{
+}
+
+ACE_INLINE
 CORBA::WString_out::WString_out (const CORBA::WString_out &s)
   : ptr_ (s.ptr_)
 {

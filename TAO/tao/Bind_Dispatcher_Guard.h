@@ -14,9 +14,10 @@
 
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H
+
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;

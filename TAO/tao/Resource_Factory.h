@@ -23,10 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "ace/Unbounded_Set.h"
-#include "CONV_FRAMEC.h"
 #include "ace/SString.h"
+#include "tao/CONV_FRAMEC.h"
 
 class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;

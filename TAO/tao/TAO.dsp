@@ -1052,6 +1052,10 @@ SOURCE=.\Acceptor_Filter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Acceptor_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Registry.h
 # End Source File
 # Begin Source File
@@ -1125,6 +1129,10 @@ SOURCE=.\Basic_Argument_T.h
 # Begin Source File
 
 SOURCE=.\Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
@@ -1217,6 +1225,10 @@ SOURCE=.\Connection_Handler.h
 # Begin Source File
 
 SOURCE=.\Connection_Purging_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.h
 # End Source File
 # Begin Source File
 
@@ -1648,6 +1660,10 @@ SOURCE=.\Objref_VarOut_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OBV_Constants.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -2052,6 +2068,10 @@ SOURCE=.\Acceptor_Filter.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Acceptor_Impl.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Registry.i
 # End Source File
 # Begin Source File
@@ -2153,6 +2173,10 @@ SOURCE=.\Connection_Handler.i
 # Begin Source File
 
 SOURCE=.\Connection_Purging_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.inl
 # End Source File
 # Begin Source File
 
@@ -2700,6 +2724,11 @@ SOURCE=.\tao.rc
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\Acceptor_Impl.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_Array_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -2747,6 +2776,23 @@ SOURCE=.\BD_String_Argument_T.cpp
 
 SOURCE=.\Codeset_Translator_Factory_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

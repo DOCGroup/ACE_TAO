@@ -17,8 +17,7 @@
 #define TAO_EXCEPTION_H
 
 #include "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +30,11 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* TAO_HAS_EXCEPTIONS */
 
-#include "ace/CORBA_macros.h"
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 #include <stdarg.h>
 #include <stdio.h>   /* For "FILE" typedef. */
@@ -45,6 +46,21 @@ class TAO_InputCDR;
 
 namespace CORBA
 {
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+
+  class Any;
+  typedef Any *Any_ptr;
+
+  enum CompletionStatus
+  {
+    // = Completion Status for System exceptions
+
+    COMPLETED_YES,     // successful or exceptional completion
+    COMPLETED_NO,      // didn't change any state; retry is OK
+    COMPLETED_MAYBE    // can't say what happened; retry unsafe
+  };
+
   /**
    * @class Exception
    *

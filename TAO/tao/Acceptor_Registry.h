@@ -19,7 +19,7 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/SStringfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Exception.h"
 
-#include "ace/SStringfwd.h"
+#include "tao/TAO_Export.h"
 
 // Forward declarations.
 class ACE_Addr;

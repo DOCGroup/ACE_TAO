@@ -26,15 +26,13 @@
 #define _TAO_IDL_ORIG_BOUNDSC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "tao/orbconf.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "TAO_Export.h"
-#include "Exception.h"
-#include "CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
