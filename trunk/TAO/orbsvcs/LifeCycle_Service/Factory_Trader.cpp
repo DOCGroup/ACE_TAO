@@ -170,9 +170,9 @@ Factory_Trader::query (const char* constraint)
       specifiedProps._d(CosTrading::Lookup::all);
 
       // Get some pointers for the out parameters of the call.
-      CosTrading::OfferSeq_ptr offerSeq_ptr =  0;
+      CosTrading::OfferSeq *offerSeq_ptr =  0;
       CosTrading::OfferIterator_ptr offerIterator_ptr = 0;
-      CosTrading::PolicyNameSeq_ptr policyNameSeq_ptr = 0;
+      CosTrading::PolicyNameSeq *policyNameSeq_ptr = 0;
 
       // An empty policy sequence
       CosTrading::PolicySeq policySeq;
