@@ -91,16 +91,16 @@ public:
   // Otherwise, <optind> communicates from one call to the next how
   // much of <argv> has been scanned so far.
 
+  int opterr;
+  // Callers store zero here to inhibit the error message for
+  // unrecognized options.
+  
   int argc_;
   // Holds the <argc> count.
 
   char **argv_;
   // Holds the <argv> pointer.  
 
-  int opterr;
-  // Callers store zero here to inhibit the error message for
-  // unrecognized options.
-  
   void dump (void) const;
   // Dump the state of an object.
 

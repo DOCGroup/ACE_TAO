@@ -316,7 +316,7 @@ ACE_TSS<TYPE>::ts_get (void) const
       ACE_OS::thr_win32_tls_table_lock ();		
 
       // Insure that we are serialized!
-      ACE_GUARD_RETURN (ACE_Mutex, ace_mon, (ACE_Mutex &) this->keylock_, 0);
+      ACE_GUARD_RETURN (ACE_Mutex, ace_mon_2, (ACE_Mutex &) this->keylock_, 0);
 
       int result;
 
