@@ -1,8 +1,14 @@
+Mon Jun 28 15:10:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T: Removed ACE_Hash_Addr which was no longer used
+	  in ACE and is not necessary given the new
+	  ACE_Hash_Map_Manager_Ex class.
+
 Mon Jun 28 15:00:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
 	* ace/CDR_Stream.cpp:
-	  Added new method to reset the state of a CDR stream without need 
+	  Added new method to reset the state of a CDR stream without need
 	  for any memory allocations.
 
 Mon Jun 28 12:48:35 1999  David L. Levine  <levine@cs.wustl.edu>
@@ -17,7 +23,7 @@ Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  speed up notifications for the Future Set.  Thanks to John
  	  Tucker <jtucker@infoglide.com> for this enhancement.
 
-	* tests: Integrated the Future_Set_Test into this directory and the 
+	* tests: Integrated the Future_Set_Test into this directory and the
 	  various batch files.  Thanks to John Tucker
  	  <jtucker@infoglide.com> for this test.
 
@@ -36,7 +42,7 @@ Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/OS.cpp (ACE_BEGINTHREADEX): Oops, mistyped "_beginthreadex()"
 	  as "_beingthreadex()".  I must be going through an existential
  	  phase ;-).  Thanks to Chris Gill for reporting this.
-  
+
         * ace/OS.i: Fixed a typo where last_error should have been
           lerror.  Thanks to Chris Gill for reporting this.
 
