@@ -208,7 +208,7 @@ Test_ObjRef::check_validity (void)
       env.print_exception ("retrieving description");
       return 0;
     }
-  char* in = in_desc->name;
+  const char* in = in_desc->name.in ();
 
   Coffee::Desc_var inout_desc =
     this->inout_->description (env);
@@ -217,7 +217,7 @@ Test_ObjRef::check_validity (void)
       env.print_exception ("retrieving description");
       return 0;
     }
-  char* inout = inout_desc->name;
+  const char* inout = inout_desc->name.in ();
 
   Coffee::Desc_var out_desc =
     this->out_->description (env);
@@ -226,7 +226,7 @@ Test_ObjRef::check_validity (void)
       env.print_exception ("retrieving description");
       return 0;
     }
-  char* out = out_desc->name;
+  const char* out = out_desc->name.in ();
 
   Coffee::Desc_var ret_desc =
     this->out_->description (env);
@@ -235,7 +235,7 @@ Test_ObjRef::check_validity (void)
       env.print_exception ("retrieving description");
       return 0;
     }
-  char* ret = ret_desc->name;
+  const char* ret = ret_desc->name.in ();
 
   // now compare them
   if (!ACE_OS::strcmp (in, inout) &&
@@ -291,7 +291,7 @@ Test_ObjRef::print_values (void)
       env.print_exception ("retrieving description");
       return;
     }
-  char* in = in_desc->name;
+  const char* in = in_desc->name.in ();
 
   Coffee::Desc_var inout_desc =
     this->inout_->description (env);
@@ -300,7 +300,7 @@ Test_ObjRef::print_values (void)
       env.print_exception ("retrieving description");
       return;
     }
-  char* inout = inout_desc->name;
+  const char* inout = inout_desc->name.in ();
 
   Coffee::Desc_var out_desc =
     this->out_->description (env);
@@ -309,7 +309,7 @@ Test_ObjRef::print_values (void)
       env.print_exception ("retrieving description");
       return;
     }
-  char* out = out_desc->name;
+  const char* out = out_desc->name.in ();
 
   Coffee::Desc_var ret_desc =
     this->out_->description (env);
@@ -318,7 +318,7 @@ Test_ObjRef::print_values (void)
       env.print_exception ("retrieving description");
       return;
     }
-  char* ret = ret_desc->name;
+  const char* ret = ret_desc->name.in ();
 
 
   ACE_DEBUG ((LM_DEBUG,

@@ -206,7 +206,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "ACE_ASSERT (index < this->maximum_);" << be_nl
       << "char **const tmp = ACE_reinterpret_cast (char ** ACE_CAST_CONST, this->buffer_);" << be_nl
-      << "return TAO_String_Manager (tmp + index, this->release_);" << be_uidt_nl
+      << "return TAO_SeqElem_String_Manager (tmp + index, this->release_);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

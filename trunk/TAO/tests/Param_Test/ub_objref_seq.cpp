@@ -256,13 +256,13 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
       if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
         return 0;
 
-      CORBA::String_var n1 = vs1->description (env)->name;
+      CORBA::String_var n1 = vs1->description (env)->name.in ();
       if (env.exception ())
         {
           env.print_exception ("retrieving description for vs1");
           return 0;
         }
-      CORBA::String_var n2 = vs2->description (env)->name;
+      CORBA::String_var n2 = vs2->description (env)->name.in ();
       if (env.exception ())
         {
           env.print_exception ("retrieving description for vs2");
