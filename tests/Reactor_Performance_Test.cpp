@@ -57,6 +57,9 @@ static int opt_wfmo_reactor = 0;
 // Use the Select_Reactor
 static int opt_select_reactor = 0;
 
+// Extra debug messages
+static int opt_debug = 0;
+
 int Read_Handler::waiting_ = 0;
 
 void
@@ -90,22 +93,35 @@ int
 Read_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
-
   char buf[BUFSIZ];
 
-  ssize_t result = this->peer ().recv (buf, sizeof (buf));
-
-  if (result <= 0)
+  while (1)
     {
-      if (result < 0 && errno == EWOULDBLOCK)
-        return 0;
+      ssize_t result = this->peer ().recv (buf, sizeof (buf) - 1);
 
-      if (result != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("Read_Handler::handle_input")));
-      // This will cause handle_close to get called.
-      return -1;
+      if (result > 0)
+        {
+          if (opt_debug)
+            {
+              buf[result] = 0;
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("(%t) Read_Handler::handle_input: %s\n"),
+                          buf));
+            }
+        }
+      else if (result < 0)
+        {
+          if (errno == EWOULDBLOCK)
+            return 0;
+          else
+            // This will cause handle_close to get called.
+            return -1;
+        }
+      else // result == 0
+        {
+          // This will cause handle_close to get called.
+          return -1;
+        }
     }
 
   return 0;
@@ -305,7 +321,7 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Reactor_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swc:l:"), 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -320,6 +336,9 @@ main (int argc, ASYS_TCHAR *argv[])
         break;
       case 'l':
         opt_nloops = ACE_OS::atoi (getopt.optarg);
+        break;
+      case 'd':
+        opt_debug = 1;
         break;
       }
 
