@@ -13,7 +13,7 @@ require Uniqueid;
 
 # amount of delay between running the servers
 
-$sleeptime = 3;
+$sleeptime = 10;
 
 # variables for parameters
 
