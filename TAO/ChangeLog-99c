@@ -18,6 +18,7 @@ Thu Jun  3 13:20:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Wait_Strategy.h:
 	* tao/Wait_Strategy.cpp:
 	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
 	* tao/Reply_Dispatcher.cpp:
 	* tao/Request_Mux_Strategy.h:
 	* tao/Request_Mux_Strategy.cpp:
