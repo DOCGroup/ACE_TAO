@@ -59,6 +59,9 @@ IDL_Cubit Client Options:
 -n      no. of iterations
 -t      Enable a test   (see below for a list of valid tests)
 -z      Disable a test  (see below for a list of valid tests)
+-b      Set the number of bytes to be used in the octet sequence test.
+        Currently, this flag only works if the "small_octet_seq" test
+        is enabled (by default or by using the -t option).
 
 Valid IDL_Cubit test arguments are:
 
