@@ -30,5 +30,50 @@
 # include /**/ <sys/socket.h>
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
+# if !defined (ACE_HAS_MSG) && !defined (SCO)
+struct msghdr {};
+# endif /* ACE_HAS_MSG */
+
+# if defined (ACE_HAS_BROKEN_SENDMSG)
+typedef struct msghdr ACE_SENDMSG_TYPE;
+# else
+typedef const struct msghdr ACE_SENDMSG_TYPE;
+# endif /* ACE_HAS_BROKEN_SENDMSG */
+
+# if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
+#   if !defined (msg_accrights)
+#     undef msg_control
+#     define msg_accrights msg_control
+#   endif /* ! msg_accrights */
+
+#   if !defined (msg_accrightslen)
+#     undef msg_controllen
+#     define msg_accrightslen msg_controllen
+#   endif /* ! msg_accrightslen */
+# endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
+
+#if defined (ACE_WIN32)
+
+struct msghdr
+{
+  /// Optional address
+  sockaddr * msg_name;
+
+  /// Size of address
+  int msg_namelen;
+
+  /// Scatter/gather array
+  iovec *msg_iov;
+
+  /// # elements in msg_iov
+  int msg_iovlen;
+
+  /// Access rights sent/received
+  caddr_t msg_accrights;
+
+  int msg_accrightslen;
+};
+#endif /* ACE_WIN32 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_SOCKET_H */

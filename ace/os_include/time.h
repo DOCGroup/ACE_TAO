@@ -48,5 +48,9 @@
 #   endif
 # endif /* ACE_HAS_PTHREADS_STD */
 
+#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
+extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
+#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TIME_H */
