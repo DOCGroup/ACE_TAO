@@ -93,9 +93,25 @@ TAO::TypeCode::Value<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // This call shouldn't throw since CORBA::TypeCode::equal() verified
-  // that the TCKind is the same as our's prior to invoking this
-  // method, meaning that member_count() is supported.
+  // None of these calls should throw since CORBA::TypeCode::equal()
+  // verified that the TCKind is the same as our's prior to invoking
+  // this method.
+
+  CORBA::ValueModifier const tc_type_modifier =
+    tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (tc_type_modifier != this->type_modifier_)
+    return 0;
+
+  CORBA::TypeCode_var rhs_concrete_base_type =
+    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Boolean const equal_concrete_base_types =
+    this->equal (rhs_concrete_base_type.in ()
+                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -173,13 +189,25 @@ TAO::TypeCode::Value<StringType,
   char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-
-ADD MISSING ATTRIBUTES
-
-
   if (ACE_OS::strlen (this_id) == 0
       || ACE_OS::strlen (tc_id) == 0)
     {
+      CORBA::ValueModifier const tc_type_modifier =
+        tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (tc_type_modifier != this->type_modifier_)
+        return 0;
+
+      CORBA::TypeCode_var rhs_concrete_base_type =
+        tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::Boolean const equivalent_concrete_base_types =
+        this->equivalent (rhs_concrete_base_type.in ()
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       // Perform a structural comparison, excluding the name() and
       // member_name() operations.
 
@@ -192,18 +220,28 @@ ADD MISSING ATTRIBUTES
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
-          CORBA::TypeCode_ptr const lhs = *(this->fields_[i].type);
-          CORBA::TypeCode_var const rhs =
+          CORBA::Visibility const lhs_visibility =
+            this->fields_[i].visibility;
+          CORBA::Visibility const rhs_visibility =
+            tc->member_visibility (i
+                                   ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          if (lhs_visibility != rhs_visibility)
+            return 0;
+
+          CORBA::TypeCode_ptr const lhs_tc = *(this->fields_[i].type);
+          CORBA::TypeCode_var const rhs_tc =
             tc->member_type (i
                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          CORBA::Boolean const equiv_members =
-            lhs->equivalent (rhs.in ()
-                             ACE_ENV_ARG_PARAMETER);
+          CORBA::Boolean const equiv_types =
+            lhs_tc->equivalent (rhs_tc.in ()
+                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          if (!equiv_members)
+          if (!equiv_types)
             return 0;
         }
     }
