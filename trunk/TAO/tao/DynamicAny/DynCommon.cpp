@@ -478,8 +478,6 @@ TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value,
     }
 }
 
-#if !defined (ACE_LACKS_LONGLONG_T)
-
 void
 TAO_DynCommon::insert_longlong (CORBA::LongLong value,
                                 CORBA::Environment &ACE_TRY_ENV)
@@ -546,10 +544,8 @@ TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value,
     }
 }
 
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
 void
-TAO_DynCommon::insert_longdouble (CORBA::LongDouble,
+TAO_DynCommon::insert_longdouble (CORBA::LongDouble value,
                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (( 
       CORBA::SystemException,
@@ -557,7 +553,28 @@ TAO_DynCommon::insert_longdouble (CORBA::LongDouble,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  if (this->destroyed_)
+    {
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    }
+
+  if (this->has_components_)
+    {
+      DynamicAny::DynAny_var cc = this->check_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      cc->insert_longdouble (value,
+                             ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  else
+    {
+      this->check_type (CORBA::_tc_longdouble,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+      
+      this->any_ <<= value;
+    }
 }
 
 void
@@ -1134,8 +1151,6 @@ TAO_DynCommon::get_typecode (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-#if !defined (ACE_LACKS_LONGLONG_T)
-
 CORBA::LongLong
 TAO_DynCommon::get_longlong (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
@@ -1144,27 +1159,27 @@ TAO_DynCommon::get_longlong (CORBA::Environment &ACE_TRY_ENV)
       DynamicAny::DynAny::InvalidValue
     ))
 {
+  CORBA::LongLong retval = ACE_CDR_LONGLONG_INITIALIZER;
+      
   if (this->destroyed_)
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+                        retval);
     }
 
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc = this->check_component (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (retval);
 
       return cc->get_longlong (ACE_TRY_ENV);
     }
   else
     {
-      CORBA::LongLong retval;
-      
       if ((this->any_ >>= retval) == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            0);
+                            retval);
         }
           
       return retval;
@@ -1179,34 +1194,32 @@ TAO_DynCommon::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
       DynamicAny::DynAny::InvalidValue
     ))
 {
+  CORBA::ULongLong retval;
+      
   if (this->destroyed_)
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+                        retval);
     }
 
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc = this->check_component (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (retval);
 
       return cc->get_ulonglong (ACE_TRY_ENV);
     }
   else
     {
-      CORBA::ULongLong retval;
-      
       if ((this->any_ >>= retval) == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            0);
+                            retval);
         }
           
       return retval;
     }
 }
-
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 CORBA::LongDouble
 TAO_DynCommon::get_longdouble (CORBA::Environment &ACE_TRY_ENV)
@@ -1216,10 +1229,31 @@ TAO_DynCommon::get_longdouble (CORBA::Environment &ACE_TRY_ENV)
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::LongDouble ret = ACE_CDR_LONG_DOUBLE_INITIALIZER;
-  ACE_UNUSED_ARG (ret);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
-                    ret);
+  CORBA::LongDouble retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+      
+  if (this->destroyed_)
+    {
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        retval);
+    }
+
+  if (this->has_components_)
+    {
+      DynamicAny::DynAny_var cc = this->check_component (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (retval);
+
+      return cc->get_longdouble (ACE_TRY_ENV);
+    }
+  else
+    {
+      if ((this->any_ >>= retval) == 0)
+        {
+          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
+                            retval);
+        }
+          
+      return retval;
+    }
 }
 
 CORBA::WChar

@@ -199,8 +199,6 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#if !defined (ACE_LACKS_LONGLONG_T)
-
   virtual void insert_longlong (
       CORBA::LongLong value,
       CORBA::Environment &ACE_TRY_ENV =
@@ -222,8 +220,6 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
   virtual void insert_longdouble (
       CORBA::LongDouble value,
@@ -413,8 +409,6 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#if !defined (ACE_LACKS_LONGLONG_T)
-
   virtual CORBA::LongLong get_longlong (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -434,8 +428,6 @@ public:
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
   virtual CORBA::LongDouble get_longdouble (
       CORBA::Environment &ACE_TRY_ENV =
