@@ -1,3 +1,9 @@
+Tue Jul 22 17:51:03 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\Collocation_Opportunities\Makefile: 
+
+	  Updated dependencies.
+
 Tue Jul 22 16:48:48 2003  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory.h:
