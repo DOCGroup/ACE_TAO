@@ -96,6 +96,26 @@
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
+//
+// In some environments it is useful to swap the bytes on write, for
+// instance: a fast server can be feeding a lot of slow clients that
+// happen to have the wrong byte order.
+// This macro enables the functionality to support that, but we still
+// need a way to activate it on a per-connection basis.
+//
+// #define TAO_ENABLE_SWAP_ON_WRITE
+//
+
+//
+// In some environements we never need to swap bytes when reading, for
+// instance embebbed systems (such as avionics) or homogenous
+// networks.
+// Setting this macro disables the capabilities to demarshall streams
+// in the wrong byte order.
+//
+// #define TAO_DISABLE_SWAP_ON_READ
+//
+
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 

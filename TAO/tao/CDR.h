@@ -80,7 +80,7 @@ public:
     // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "long
     // double", size as above).
 
-    DEFAULT_BUFSIZE = 248,
+    DEFAULT_BUFSIZE = 512,
     // The default buffer size.
     // @@ TODO We want to add options to the ORB to control this
     // default value, so this constant should be read as the, default

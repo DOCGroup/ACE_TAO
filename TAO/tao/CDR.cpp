@@ -243,8 +243,21 @@ TAO_OutputCDR::write_2 (const CORBA::UShort* x)
   char* buf;
   if (this->adjust (CDR::SHORT_SIZE, buf) == 0)
     {
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::UShort*,buf) = *x;
       return CORBA::B_TRUE;
+#else
+      if (!this->do_byte_swap_)
+	{
+	  *ACE_reinterpret_cast(CORBA::UShort*,buf) = *x;
+	  return CORBA::B_TRUE;
+	}
+      else
+	{
+	  CDR::swap_2 (ACE_reinterpret_cast(char*,x), buf);
+	  return CORBA::B_TRUE;
+	}
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   return CORBA::B_FALSE;
 }
@@ -255,8 +268,21 @@ TAO_OutputCDR::write_4 (const CORBA::ULong* x)
   char* buf;
   if (this->adjust (CDR::LONG_SIZE, buf) == 0)
     {
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::ULong*,buf) = *x;
       return CORBA::B_TRUE;
+#else
+      if (!this->do_byte_swap_)
+	{
+	  *ACE_reinterpret_cast(CORBA::ULong*,buf) = *x;
+	  return CORBA::B_TRUE;
+	}
+      else
+	{
+	  CDR::swap_4 (ACE_reinterpret_cast(char*,x), buf);
+	  return CORBA::B_TRUE;
+	}
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   return CORBA::B_FALSE;
 }
@@ -267,8 +293,21 @@ TAO_OutputCDR::write_8 (const CORBA::ULongLong* x)
   char* buf;
   if (this->adjust (CDR::LONGLONG_SIZE, buf) == 0)
     {
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::ULongLong*,buf) = *x;
       return CORBA::B_TRUE;
+#else
+      if (!this->do_byte_swap_)
+	{
+	  *ACE_reinterpret_cast(CORBA::ULongLong*,buf) = *x;
+	  return CORBA::B_TRUE;
+	}
+      else
+	{
+	  CDR::swap_8 (ACE_reinterpret_cast(char*,x), buf);
+	  return CORBA::B_TRUE;
+	}
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   return CORBA::B_FALSE;
 }
@@ -279,8 +318,21 @@ TAO_OutputCDR::write_16 (const CORBA::LongDouble* x)
   char* buf;
   if (this->adjust (CDR::LONGDOUBLE_SIZE, CDR::LONGDOUBLE_ALIGN, buf) == 0)
     {
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::LongDouble*,buf) = *x;
       return CORBA::B_TRUE;
+#else
+      if (!this->do_byte_swap_)
+	{
+	  *ACE_reinterpret_cast(CORBA::LongDouble*,buf) = *x;
+	  return CORBA::B_TRUE;
+	}
+      else
+	{
+	  CDR::swap_16 (ACE_reinterpret_cast(char*,x), buf);
+	  return CORBA::B_TRUE;
+	}
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   return CORBA::B_FALSE;
 }
@@ -294,8 +346,47 @@ TAO_OutputCDR::write_array (const void* x,
   char* buf;
   if (this->adjust (size * length, align, buf) == 0)
     {
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       ACE_OS::memcpy (buf, x, size*length);
       return CORBA::B_TRUE;
+#else
+      if (!this->do_byte_swap_)
+	{
+	  ACE_OS::memcpy (buf, x, size*length);
+	  return CORBA::B_TRUE;
+	}
+      else
+	{
+          // I cannot see any fast way out of this....
+          typedef void (*SWAPPER)(const char*, char*);
+          SWAPPER swapper;
+          switch (size)
+            {
+            case 2:
+              swapper = CDR::swap_2;
+              break;
+            case 4:
+              swapper = CDR::swap_4;
+              break;
+            case 8:
+              swapper = CDR::swap_8;
+              break;
+            case 16:
+              swapper = CDR::swap_16;
+              break;
+            default:
+              // TODO: print something?
+              this->good_bit_ = 0;
+              return CORBA::B_FALSE;
+            }
+          char *source = ACE_reinterpret_cast(char*,x);
+          char *end = target + size*length;
+          for (; source != end; source += size, buf += size)
+            {
+              (*swapper)(source, buf);
+            }
+	}
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   this->good_bit_ = 0;
   return CORBA::B_FALSE;
@@ -550,6 +641,7 @@ TAO_InputCDR::read_2 (CORBA::UShort* x)
   char* buf;
   if (this->adjust (CDR::SHORT_SIZE, buf) == 0)
     {
+#if !defined (TAO_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast(CORBA::UShort*,buf);
@@ -558,6 +650,9 @@ TAO_InputCDR::read_2 (CORBA::UShort* x)
         {
           CDR::swap_2 (buf, ACE_reinterpret_cast(char*,x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CORBA::UShort*,buf);
+#endif /* TAO_DISABLE_SWAP_ON_READ */
       return CORBA::B_TRUE;
     }
   return CORBA::B_FALSE;
@@ -569,6 +664,7 @@ TAO_InputCDR::read_4 (CORBA::ULong* x)
   char* buf;
   if (this->adjust (CDR::LONG_SIZE, buf) == 0)
     {
+#if !defined (TAO_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast(CORBA::ULong*,buf);
@@ -577,6 +673,9 @@ TAO_InputCDR::read_4 (CORBA::ULong* x)
         {
           CDR::swap_4 (buf, ACE_reinterpret_cast(char*,x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CORBA::ULong*,buf);
+#endif /* TAO_DISABLE_SWAP_ON_READ */
       return CORBA::B_TRUE;
     }
   return CORBA::B_FALSE;
@@ -588,6 +687,7 @@ TAO_InputCDR::read_8 (CORBA::ULongLong* x)
   char* buf;
   if (this->adjust (CDR::LONGLONG_SIZE, buf) == 0)
     {
+#if !defined (TAO_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast(CORBA::ULongLong*,buf);
@@ -596,6 +696,9 @@ TAO_InputCDR::read_8 (CORBA::ULongLong* x)
         {
           CDR::swap_8 (buf, ACE_reinterpret_cast(char*,x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CORBA::ULongLong*,buf);
+#endif /* TAO_DISABLE_SWAP_ON_READ */
       return CORBA::B_TRUE;
     }
   return CORBA::B_FALSE;
@@ -609,6 +712,7 @@ TAO_InputCDR::read_16 (CORBA::LongDouble* x)
                     CDR::LONGDOUBLE_ALIGN,
                     buf) == 0)
     {
+#if !defined (TAO_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast(CORBA::LongDouble*,buf);
@@ -617,6 +721,9 @@ TAO_InputCDR::read_16 (CORBA::LongDouble* x)
         {
           CDR::swap_16 (buf, ACE_reinterpret_cast(char*,x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CORBA::LongDouble*,buf);
+#endif /* TAO_DISABLE_SWAP_ON_READ */
       return CORBA::B_TRUE;
     }
   return CORBA::B_FALSE;
@@ -631,6 +738,7 @@ TAO_InputCDR::read_array (void* x,
   char* buf;
   if (this->adjust (size * length, align, buf) == 0)
     {
+#if !defined (TAO_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_ || size == 1)
         {
           ACE_OS::memcpy (x, buf, size*length);
@@ -666,6 +774,9 @@ TAO_InputCDR::read_array (void* x,
               (*swapper)(buf, target);
             }
         }
+#else
+      ACE_OS::memcpy (x, buf, size*length);
+#endif /* TAO_DISABLE_SWAP_ON_READ */
       return this->good_bit_;
     }
   return CORBA::B_FALSE;
