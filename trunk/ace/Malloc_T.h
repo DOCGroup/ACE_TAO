@@ -650,6 +650,30 @@ private:
   int bad_flag_;
 };
 
+/*****************************************************************************/
+
+/**
+ * @class ACE_Malloc_Lock_Adapter_T
+ *
+ * @brief Template functor adapter for lock strategies used with ACE_Malloc_T.
+ *
+ * This class acts as a factory for lock strategies that have various ctor
+ * signatures.  If the lock strategy's ctor takes an ACE_TCHAR* as the first
+ * and only required parameter, it will just work.  Otherwise use template
+ * specialization to create a version that matches the lock strategy's ctor
+ * signature.  See ACE_Process_Semaphore and ACE_Thread_Semaphore for
+ * examples.
+ * 
+ */
+template <class ACE_LOCK>
+class ACE_Malloc_Lock_Adapter_T
+{
+public:
+  ACE_LOCK * operator () (const ACE_TCHAR *name);
+};
+
+/*****************************************************************************/
+
 /**
  * @class ACE_Malloc_LIFO_Iterator_T
  *
