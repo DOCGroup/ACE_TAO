@@ -7,6 +7,12 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
           <Kirill.Rybaltchenko@cern.ch> for reporting this problem and
           verifying the fix on LynxOS, the only affected platform.
 
+        * examples/IOStream/server/iostream_server.cpp (handle_input):
+          removed unused local "addr".
+
+        * examples/Reactor/Dgram/{CODgram,Dgram}.cpp (run_test): added
+          return 0 at end so that the function always returns a value.
+
 Wed Dec 10 23:57:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
         * ACE version 4.4.4, released Wed Dec 10 23:57:00 1997.
