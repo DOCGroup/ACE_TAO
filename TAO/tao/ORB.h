@@ -212,7 +212,7 @@ public:
 
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
-  friend TAO_ORB_Core* TAO_ORB_Core_instance (void);
+  friend TAO_Export TAO_ORB_Core* TAO_ORB_Core_instance (void);
 
   class TAO_Export InvalidName : public CORBA_UserException
   {
