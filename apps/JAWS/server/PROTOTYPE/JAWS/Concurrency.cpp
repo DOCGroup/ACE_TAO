@@ -1,10 +1,8 @@
 // $Id$
 
 #include "JAWS/Concurrency.h"
-
-JAWS_Dispatcher_Singleton jaws_dispatcher;
-JAWS_Thread_Pool_Singleton jaws_thread_pool;
-JAWS_Thread_Per_Singleton jaws_thread_per;
+#include "JAWS/Pipeline.h"
+#include "JAWS/Data_Block.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 {
@@ -31,10 +29,30 @@ JAWS_Concurrency_Base::svc (void)
       // yourself with 0 threads.
 
       result = this->getq (mb);
+
+      // Use a NULL message block to indicate that the thread should shut
+      // itself down
       if (result == -1 || mb == 0)
         break;
 
-      this->put_next (mb);
+      do
+        {
+          JAWS_Data_Block *db;
+          JAWS_IO_Handler *ioh;
+          JAWS_Pipeline_Task *task;
+
+          db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
+          task = db->task ();
+
+          // Use a NULL task to make the thread recycle now
+          if (task == 0)
+            break;
+
+          result = task->put (mb);
+          if (result == -1)
+            ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
+        }
+      while (result == 0);
     }
   return 0;
 }
@@ -47,19 +65,28 @@ JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
 {
 }
 
-JAWS_Dispatcher::JAWS_Dispatcher (JAWS_Dispatch_Policy *policy)
-  : policy_(policy)
+JAWS_Dispatcher::JAWS_Dispatcher (void)
+  : policy_(0)
 {
 }
 
-JAWS_Thread_Pool_Task::JAWS_Thread_Pool_Task (long flags,
-                                              int nthreads,
-                                              int maxthreads)
-  : nthreads_ (nthreads),
-    maxthreads_ (maxthreads)
+int
+JAWS_Dispatcher::dispatch (ACE_Message_Block *mb)
 {
-  if (this->activate (flags, nthreads) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"));
+  return this->policy ()->concurrency ()->put (mb);
+}
+
+JAWS_Dispatch_Policy *
+JAWS_Dispatcher::policy (void)
+{
+  return this->policy_;
+}
+
+JAWS_Dispatch_Policy *
+JAWS_Dispatcher::policy (JAWS_Dispatch_Policy *p)
+{
+  this->policy_ = p;
+  return this->policy_;
 }
 
 int
@@ -71,12 +98,6 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
   if (this->activate (flags, nthreads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
-}
-
-JAWS_Thread_Per_Task::JAWS_Thread_Per_Task (long flags, int maxthreads)
-  : flags_ (flags),
-    maxthreads_ (maxthreads)
-{
 }
 
 int
@@ -103,11 +124,11 @@ JAWS_Thread_Per_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>;
-template class ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>;
-template class ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>;
+template class ACE_Singleton<JAWS_Dispatcher, ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<JAWS_Thread_Pool_Task, ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<JAWS_Thread_Per_Task, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>
-#pragma instantiate  ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>
-#pragma instantiate  ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>
+#pragma instantiate  ACE_Singleton<JAWS_Dispatcher, ACE_SYNCH_MUTEX>
+#pragma instantiate  ACE_Singleton<JAWS_Thread_Pool_Task, ACE_SYNCH_MUTEX>
+#pragma instantiate  ACE_Singleton<JAWS_Thread_Per_Task, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

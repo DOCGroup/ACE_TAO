@@ -42,13 +42,13 @@ public:
   JAWS_IO (void);
   virtual ~JAWS_IO (void);
   void handler (JAWS_IO_Handler *handler);
-  void acceptor (JAWS_IO_Acceptor *acceptor);
+  // void acceptor (JAWS_IO_Acceptor *acceptor);
   void handle (ACE_HANDLE h);
   ACE_HANDLE handle (void);
 
   // James, please add documentation here.
 
-  virtual void accept (ACE_SOCK_Stream &new_stream) = 0;
+  virtual void accept (ACE_INET_Addr *addr) = 0;
   // accept a passive connection
 
   virtual void read (ACE_Message_Block& mb, int size) = 0;
@@ -76,6 +76,7 @@ public:
 protected:
   ACE_HANDLE handle_;
   JAWS_IO_Handler *handler_;
+  ACE_INET_Addr *inet_addr_;
   JAWS_IO_Acceptor *acceptor_;
 };
 
@@ -91,7 +92,7 @@ public:
 
   ~JAWS_Synch_IO (void);
 
-  virtual void accept (ACE_SOCK_Stream &new_stream);
+  virtual void accept (ACE_INET_Addr *addr);
 
   void read (ACE_Message_Block& mb, int size);
 

@@ -7,12 +7,12 @@
 #include "JAWS/Pipeline.h"
 
 template <class TYPE>
-class JAWS_Pipeline_Handler : public JAWS_Pipeline_Task
+class JAWS_Pipeline_Abstract_Handler : public JAWS_Pipeline_Task
   // = TITLE
   //   Methods that are common to pipeline components
 {
 public:
-  JAWS_Pipeline_Handler (void);
+  JAWS_Pipeline_Abstract_Handler (void);
   // ACE_Task hooks
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);

@@ -4,7 +4,7 @@
 #if !defined (JAWS_CONCURRENCY_H)
 #define JAWS_CONCURRENCY_H
 
-#include "ace/Singelton.h"
+#include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
@@ -38,7 +38,8 @@ class JAWS_Dispatch_Policy
 public:
   JAWS_Dispatch_Policy (void);
   virtual ~JAWS_Dispatch_Policy (void);
-  virtual JAWS_Concurrency_Base * update (void *state = 0) = 0;
+  virtual JAWS_Concurrency_Base * concurrency (void) = 0;
+  virtual JAWS_IO * io (void) = 0;
 };
 
 class JAWS_Dispatcher
@@ -51,9 +52,11 @@ class JAWS_Dispatcher
   //     IO can find a thread to take care of it.
 {
 public:
-  JAWS_Dispatcher (JAWS_Dispatch_Policy *policy);
+  JAWS_Dispatcher (void);
 
-  int dispatch (JAWS_IO_Handler *ioh);
+  int dispatch (ACE_Message_Block *mb);
+  JAWS_Dispatch_Policy *policy (void);
+  JAWS_Dispatch_Policy *policy (JAWS_Dispatch_Policy *p);
 
 private:
   JAWS_Dispatch_Policy *policy_;
@@ -99,17 +102,13 @@ private:
   int maxthreads_;
 };
 
-typedef ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>
+typedef ACE_Singleton<JAWS_Dispatcher, ACE_SYNCH_MUTEX>
         JAWS_Dispatcher_Singleton;
 
-typedef ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>
+typedef ACE_Singleton<JAWS_Thread_Pool_Task, ACE_SYNCH_MUTEX>
         JAWS_Thread_Pool_Singleton;
 
-typedef ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>
+typedef ACE_Singleton<JAWS_Thread_Per_Task, ACE_SYNCH_MUTEX>
         JAWS_Thread_Per_Singleton;
-
-extern JAWS_Dispatcher_Singleton jaws_dispatcher;
-extern JAWS_Thread_Pool_Singleton jaws_thread_pool;
-extern JAWS_Thread_Per_Singleton jaws_thread_per;
 
 #endif /* !defined (JAWS_CONCURRENCY_H) */

@@ -222,4 +222,4 @@ public:
 };
 
 #endif /* ACE_WIN32 */
-#endif /* JAWS_IO_H */
+#endif /* JAWS_IO_HANDLER_H */

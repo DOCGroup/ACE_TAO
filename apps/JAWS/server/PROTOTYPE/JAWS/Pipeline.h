@@ -14,6 +14,9 @@ typedef ACE_Stream<ACE_NULL_SYNCH> JAWS_Pipeline_Stream;
 typedef ACE_Module<ACE_NULL_SYNCH> JAWS_Pipeline_Module;
 typedef ACE_Task<ACE_NULL_SYNCH> JAWS_Pipeline_Task;
 
+class JAWS_IO_Handler;
+class JAWS_Dispatch_Policy;
+
 class JAWS_Pipeline : public JAWS_Pipeline_Task
   // = TITLE
   //   Methods that are common to pipeline components
