@@ -61,6 +61,8 @@ TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1
+TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM
+TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM

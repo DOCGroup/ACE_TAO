@@ -1,3 +1,10 @@
+Mon Jun 23 12:46:05 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Broke out the Naming Service flat-file persistence tests and
+          added a new Redundant Naming Service test.  Both these tests
+          are disabled on mininum CORBA.
+
 Sun Jun 22 11:23:52 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* THANKS: Added our 1700th contributor to ACE+TAO.  It's amazing
