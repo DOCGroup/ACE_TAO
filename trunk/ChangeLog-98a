@@ -19,8 +19,9 @@ Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
           unused constant NO_OF_IO_HANDLERS.
 
         * ace/IOStream_T.h (ipfx,ipfx1): don't call setstate () on WIN32,
-          because MS VC++ 5.0 doesn't declare it.  Thanksk to Irfan for
-          reporting this.
+          because MS VC++ 5.0 doesn't declare it.  Thanks to Irfan for
+          reporting this.  This "fix" is temporary, maybe, until we
+          figure out the proper fix.
 
         Added Basic_Types:
         * ace/Basic_Types.*,Makefile: Basic_Types defines the
