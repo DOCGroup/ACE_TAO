@@ -3,7 +3,8 @@
 //
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+ACE_RCSID(Connect_Strategy_Test,
+          Hello, "$Id$")
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
