@@ -1,8 +1,13 @@
 Sat Jan 02 08:34:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/ASX/Event_Server/Event_Server/event_server.cpp
-          (handle_input): added ACE_UNUSED_ARG (n), to avoid compile
-          warning with ACE_NDEBUG.
+          (handle_input),
+          examples/Reactor/Misc/test_early_timeouts.cpp (main):
+          added ACE_UNUSED_ARG (n), to avoid compile warning with ACE_NDEBUG.
+
+        * performance-tests/Misc/test_naming.cpp (find): moved function
+          call w/side effect out of ACE_ASSERT.  Thanks to DU 4.0 cxx
+          for noticiing it, with ACE_NDEBUG.
 
 Fri Jan 01 18:57:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -47,7 +52,7 @@ Thu Dec 31 12:10:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/ACE.cpp:
           Use ACE_NOTREACHED in ACE::set_handle_limit(), the IRIX compiler
-          was complaining again..
+          was complaining again.
 
 Thu Dec 31 10:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
