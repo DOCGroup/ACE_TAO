@@ -201,14 +201,6 @@ ACE_Process_Manager::open (size_t size,
 #if !defined (ACE_WIN32) && !defined (ACE_PSOS)
       // Register signal handler object.
       if (reactor ()->register_handler
-          (this,
-           ACE_Event_Handler::NULL_MASK) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n%a",
-                    "register_handler",
-                    1));
-
-      if (reactor ()->register_handler
           (SIGCHLD, this) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p\n%a",

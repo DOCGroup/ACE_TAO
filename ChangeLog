@@ -1,3 +1,9 @@
+Mon Jul 17 05:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (open): Zapped a stray register_handler()
+	  call that was mistakenly left around during the recent merge.
+  	  Thanks to Darrell Brunsch for reporting this.
+
 Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/TTY_IO:  Removed the #define for ACE_BUILD_DLL, since it 
