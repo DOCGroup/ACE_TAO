@@ -1,5 +1,11 @@
 // $Id$
 
+ACE_INLINE CORBA::ULong
+TAO_Transport::tag (void) const
+{
+  return this->tag_;
+}
+
 ACE_INLINE TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
 {
@@ -19,12 +25,7 @@ TAO_Transport::wait_strategy (void) const
   return this->ws_;
 }
 
-ACE_INLINE CORBA::ULong
-TAO_Transport::tag (void) const
-{
-  return this->tag_;
-}
-
+#if 0
 ACE_INLINE long
 TAO_Transport::buffering_timer_id (void) const
 {
@@ -77,18 +78,6 @@ TAO_Transport::dequeue_head (void)
   message_block->release ();
 }
 
-ACE_INLINE int
-TAO_Transport::bidirectional_flag (void) const
-{
-  return this->bidirectional_flag_;
-}
-
-ACE_INLINE void
-TAO_Transport::bidirectional_flag (int flag)
-{
-  this->bidirectional_flag_ = flag;
-}
-
 ACE_INLINE void
 TAO_Transport::dequeue_all (void)
 {
@@ -100,15 +89,16 @@ TAO_Transport::dequeue_all (void)
     }
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
-TAO_Transport::cache_map_entry (void)
+#endif /* 0 */
+
+ACE_INLINE int
+TAO_Transport::bidirectional_flag (void) const
 {
-  return this->cache_map_entry_;
+  return this->bidirectional_flag_;
 }
-   
+
 ACE_INLINE void
-TAO_Transport::cache_map_entry (
-    TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry)
+TAO_Transport::bidirectional_flag (int flag)
 {
-  this->cache_map_entry_ = entry;
+  this->bidirectional_flag_ = flag;
 }

@@ -35,6 +35,8 @@
 
 #include "IORInfo.h"
 
+#include "Flushing_Strategy.h"
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -43,10 +45,7 @@
 # include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
-           ORB_Core,
-           "$Id$")
-
+ACE_RCSID(tao, ORB_Core, "$Id$")
 
 // ****************************************************************
 
@@ -79,7 +78,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
-    root_poa_ (),
+    root_poa_ (CORBA::Object::_nil ()),
     orb_params_ (),
     init_ref_map_ (),
     object_ref_table_ (),
@@ -156,8 +155,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    transport_cache_ (),
+    connection_cache_ (),
     bidir_giop_policy_ (0)
+  , flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -221,6 +221,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
+  delete this->flushing_strategy_;
+
   ACE_OS::free (this->orbid_);
 
   delete this->from_iso8859_;
@@ -1042,6 +1044,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // init the ORB core's pointer
   this->protocol_factories_ = trf->get_protocol_factories ();
 
+  // Initialize the flushing strategy
+  this->flushing_strategy_ = trf->create_flushing_strategy ();
+
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
   // registries!
@@ -1071,10 +1076,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             this,
             this->orb_params ()->preconnects ());
 
-  // Open the Transport Cache
-  // @@ This seems to be a nice place to configure the transport
+  // Open the Connection Cache
+  // @@ This seems to be a nice place to configure the connection
   // cache for the number of allowed entries
-  this->transport_cache_.open (this);
+  this->connection_cache_.open (this);
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1142,25 +1147,6 @@ TAO_ORB_Core::RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_
 int
 TAO_ORB_Core::fini (void)
 {
-  ACE_TRY_NEW_ENV
-    {
-      // Shutdown the ORB and block until the shutdown is complete.
-      this->shutdown (1,
-                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_CString message =
-        "Exception caught in trying to shutdown ";
-      message += this->orbid_;
-      message += "\n";
-
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           message.c_str ());
-    }
-  ACE_ENDTRY;
-
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
@@ -1204,9 +1190,9 @@ TAO_ORB_Core::fini (void)
 
   ACE_Handle_Set handle_set;
 
-  // Close the transport cache and return the handle set that needs
+  // Close the connection cache and return the handle set that needs
   // to be de-registered from the reactor.
-  this->transport_cache_.close (handle_set);
+  this->connection_cache_.close (handle_set);
 
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
@@ -1224,17 +1210,21 @@ TAO_ORB_Core::fini (void)
 
   (void) TAO_Internal::close_services ();
 
+
   delete this->reactor_registry_;
+
 
   // @@ This is not needed since the default resource factory
   //    is statically added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
     delete resource_factory_;
 
+
   // @@ This is not needed since the default client factory
   //    is statically added to the service configurator, fredk
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
+
 
   // @@ This is not needed since the default server factory
   //    is statically added to the service configurator, fredk
@@ -1431,27 +1421,6 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
 }
 
 
-void
-TAO_ORB_Core::service_context_list (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
-    CORBA::Boolean restart,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ We look at the services if they are loaded. But if more
-  // services offer this feature we may want to keep expanding the
-  // 'if' conditions with a check for whether a service returned a
-  // valid Policy object.
-  if (this->ft_service_.service_callback ())
-    {
-      this->ft_service_.service_callback ()->service_context_list (stub,
-                                                                   service_list,
-                                                                   restart,
-                                                                   ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
-
 
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
@@ -1571,14 +1540,16 @@ TAO_ORB_Core::inherit_from_parent_thread (
       tss->inherited_reactor_ = 1;
     }
 #endif /* 0 */
+  // this->connection_cache (tss_resources->connection_cache_);
+  // Inherit connection cache?
   return 0;
 }
 
 CORBA::Object_ptr
 TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!CORBA::is_nil (this->root_poa_.in ()))
-    return CORBA::Object::_duplicate (this->root_poa_.in ());
+  if (!CORBA::is_nil (this->root_poa_))
+    return CORBA::Object::_duplicate (this->root_poa_);
 
   TAO_Adapter_Factory *factory =
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
@@ -1604,12 +1575,15 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
   poa_adapter->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // @@ poa_adapter->root() is busted.  It doesn't return a
+  //    duplicate.  As such, this->root_poa_ is an Object_ptr, and is
+  //    not released by the ORB_Core.
   this->root_poa_ = poa_adapter->root ();
 
   this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return CORBA::Object::_duplicate (this->root_poa_.in ());
+  return CORBA::Object::_duplicate (this->root_poa_);
 }
 
 TAO_Adapter *
@@ -1946,8 +1920,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
+                    ACE_TEXT ("TAO (%P|%t) - calling handle_events\n")));
+
       result = r->handle_events (tv);
+
+      if (TAO_debug_level >= 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - handle_events returns %d\n"),
+                    result));
 
       if (result == -1)
         {
@@ -1979,60 +1959,41 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   return result;
 }
 
-
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->has_shutdown () == 0)
-    {
-      this->adapter_registry_.check_close (wait_for_completion,
-                                           ACE_TRY_ENV);
-      this->adapter_registry_.close (wait_for_completion,
-                                     ACE_TRY_ENV);
+  this->adapter_registry_.check_close (wait_for_completion,
+                                       ACE_TRY_ENV);
+  this->adapter_registry_.close (wait_for_completion,
+                                 ACE_TRY_ENV);
 
-      // Set the shutdown flag
-      this->has_shutdown_ = 1;
+  // Set the shutdown flag
+  this->has_shutdown_ = 1;
 
-      // Shutdown all the reactors....
-      this->reactor_registry_->shutdown_all ();
+  // Shutdown all the reactors....
+  this->reactor_registry_->shutdown_all ();
 
-      // Grab the thread manager
-      ACE_Thread_Manager *tm = this->thr_mgr ();
+  // Grab the thread manager
+  ACE_Thread_Manager *tm = this->thr_mgr ();
 
-      // Try to cancel all the threads in the ORB.
-      tm->cancel_all ();
+  // Try to cancel all the threads in the ORB.
+  tm->cancel_all ();
 
-      // If <wait_for_completion> is set, wait for all threads to exit.
-      if (wait_for_completion != 0)
-        tm->wait ();
-
-      // Invoke Interceptor::destroy() on all registered interceptors.
-      this->destroy_interceptors (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
+  // If <wait_for_completion> is set, wait for all threads to exit.
+  if (wait_for_completion != 0)
+    tm->wait ();
 }
 
 void
 TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
 {
-  //
-  // All destroy() should do is (a) call shutdown() and (b) unbind()
-  // from the ORB table.  Nothing else should really be added to this
-  // method.  Everything else should go to the shutdown() method.
-  // Remember when the ORB Core is finally removed from the ORB table,
-  // the reference count goes to zero and fini() is called.  fini()
-  // calls shutdown() and does not call destory() since destroy() will
-  // try to unbind from the ORB table again.  Additional code should
-  // not be added to destroy() since there is no guarantee that
-  // orb->destroy() will ever be called by the user.  Since TAO
-  // guarantees that shutdown() will be called, all cleanup code
-  // should go there.
-  //
-
-  // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1, ACE_TRY_ENV);
-  ACE_CHECK;
+  if (this->has_shutdown () == 0)
+    {
+      // Shutdown the ORB and block until the shutdown is complete.
+      this->shutdown (1, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
@@ -2041,6 +2002,10 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
+
+  // Invoke Interceptor::destroy() on all registered interceptors.
+  this->destroy_interceptors (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -2851,7 +2816,7 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     output_cdr_msgblock_allocator_ (0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
-    transport_cache_ (0),
+    connection_cache_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
@@ -2884,8 +2849,8 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 
-  // UNIMPLEMENTED delete this->transport_cache_;
-  this->transport_cache_ = 0;
+  // UNIMPLEMENTED delete this->connection_cache_;
+  this->connection_cache_ = 0;
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;
@@ -2975,7 +2940,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
 
   TAO_Stub *stub = object->_stubobj ();
-  if (stub->servant_orb_var ().in () != CORBA::ORB::_nil () &&
+  if (stub->servant_orb_ptr () != 0 &&
       stub->servant_orb_var ()->orb_core () != 0 &&
       object->_servant () != 0)
     {

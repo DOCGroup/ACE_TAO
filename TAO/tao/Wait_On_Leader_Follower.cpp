@@ -36,7 +36,9 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
   // Register the handler.
   // @@ We could probably move this somewhere else, and remove this
   //    function totally. (Alex).
-  this->transport_->register_handler ();
+  // @@ The handler is registered already, when the connection is
+  //    created!
+  // this->transport_->register_handler ();
 
   // Send the request.
   return this->TAO_Wait_Strategy::sending_request (orb_core,
@@ -214,8 +216,6 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                     ACE_TEXT ("TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n"),
                     this->transport_));
 
-      // If we got our reply, no need to run the event loop any
-      // further.
       while (!reply_received)
         {
           // Run the event loop.
@@ -273,12 +273,6 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
         {
           result = -1;
           errno = ETIME;
-        }
-      else if (reply_received == -1)        
-        {
-          // If the time did not expire yet, but we get a failure,
-          // e.g. the connections closed, we should still return an error.
-          result = -1;
         }
     }
   else

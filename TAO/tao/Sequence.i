@@ -38,7 +38,6 @@ ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
   : maximum_ (rhs.maximum_),
     length_ (rhs.length_),
-    buffer_ (0),
     release_ (1)
 {
 }
@@ -145,7 +144,7 @@ TAO_Bounded_Base_Sequence::length (void) const
 ACE_INLINE void
 TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 {
-  if (this->buffer_ == 0)
+  if (this->length_ == 0)
     {
       this->_allocate_buffer (this->maximum_);
       this->release_ = 1;

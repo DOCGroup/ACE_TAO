@@ -23,13 +23,13 @@
 #include "timeoutC.h"
 #include "timeout_i.h"
 
-class TimeoutClient
+class TimeoutClient 
 : public ACE_Task_Base
 {
 public:
   TimeoutClient (CORBA::ORB_ptr orb,
-                 TimeoutObj_ptr timeoutObject,
-                 AMI_TimeoutObjHandler_ptr replyHandlerObject,
+                 Timeout_ptr timeoutObject,
+                 AMI_TimeoutHandler_ptr replyHandlerObject,
                  TimeoutHandler_i *timeoutHandler_i,
                  unsigned long timeToWait);
 
@@ -44,7 +44,7 @@ private:
   virtual int svc (void );
 
   // Wrapps complex invocations logic.
-  void send (CORBA::Boolean async,
+  void send (bool async,
              unsigned long local_timeout,
              unsigned long remote_sleep);
 
@@ -61,10 +61,10 @@ private:
   CORBA::ORB_var orb_;
 
   // A CORBA object reference to the target object.
-  TimeoutObj_var timeoutObject_;
+  Timeout_var timeoutObject_;
 
   // A CORBA object reference to the reply handler
-  AMI_TimeoutObjHandler_var replyHandlerObject_;
+  AMI_TimeoutHandler_var replyHandlerObject_;
 
   // A pointer to the actual C++ reply handler implementation
   TimeoutHandler_i *timeoutHandler_i_;
@@ -75,9 +75,9 @@ private:
   // Count test local exceptions
   unsigned short local_reply_excep_counter_;
 
-  const CORBA::Boolean INVOKE_SYNCH;
+  const bool INVOKE_SYNCH;
 
-  const CORBA::Boolean INVOKE_ASYNCH;
+  const bool INVOKE_ASYNCH;
 
   unsigned int timeToWait_;
 };

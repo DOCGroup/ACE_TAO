@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-#include "tao/PortableInterceptor.pidl"
 
 module ForwardRequestTest
 {
@@ -26,16 +25,6 @@ module ForwardRequestTest
     short number ();
 
     oneway void shutdown ();
-  };
-
-  local interface ServerRequestInterceptor
-    : PortableInterceptor::ServerRequestInterceptor
-  {
-
-    /// Set the references to which requests will be forwarded.
-    void forward_references (in Object obj1,
-                             in Object obj2);
-
   };
 
 };

@@ -8,31 +8,29 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS = \
-  Simple_Naming \
-  Event_Latency \
-  EC_Multiple \
-  EC_Throughput \
-  EC_Mcast \
-  EC_Custom_Marshal \
-  EC_Basic \
-  Property \
-  Sched \
-  Sched_Conf \
-  Time \
-  Event \
-  CosEvent \
-  Concurrency \
-  FaultTolerance \
-  ImplRepo \
-  Trading \
-  AVStreams \
-  Notify \
-  Interoperable_Naming \
-  LoadBalancing \
-  ior_corbaname \
-  tests_svc_loader \
-  Security
+DIRS  = Simple_Naming \
+        Event_Latency \
+        EC_Multiple \
+        EC_Throughput \
+        EC_Mcast \
+        EC_Custom_Marshal \
+        EC_Basic \
+        Property \
+        Sched \
+        Sched_Conf \
+        Time \
+        Event \
+	CosEvent \
+	Concurrency \
+	FaultTolerance \
+	ImplRepo \
+	Trading \
+	AVStreams \
+	Notify \
+	Interoperable_Naming \
+	LoadBalancing \
+	ior_corbaname \
+	tests_svc_loader
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

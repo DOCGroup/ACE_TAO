@@ -115,7 +115,8 @@ Manager::Manager (void)
   //no-op
 }
 
-void
+
+int
 Manager::init (int argc,
                char *argv[],
                CORBA::Environment &ACE_TRY_ENV)
@@ -124,27 +125,29 @@ Manager::init (int argc,
                                 argv,
                                 0,
                                 ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA",
-                                            ACE_TRY_ENV);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
     PortableServer::POA::_narrow (obj_var.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
     root_poa_var->the_POAManager (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager_var->activate (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
+
+
 
 int
 Manager::make_merged_iors (CORBA::Environment &ACE_TRY_ENV)

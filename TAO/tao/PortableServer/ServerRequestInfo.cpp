@@ -46,8 +46,7 @@ Dynamic::ParameterList *
 TAO_ServerRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -55,8 +54,7 @@ Dynamic::ExceptionList *
 TAO_ServerRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -64,8 +62,7 @@ Dynamic::ContextList *
 TAO_ServerRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -73,8 +70,7 @@ Dynamic::RequestContext *
 TAO_ServerRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -82,8 +78,7 @@ CORBA::Any *
 TAO_ServerRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -102,8 +97,7 @@ TAO_ServerRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
   if (this->server_request_.sync_with_server ())
     return Messaging::SYNC_WITH_SERVER;
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                          CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                     -1);
 }
 #endif  /* TAO_HAS_CORBA_MESSAGING */
@@ -114,8 +108,7 @@ TAO_ServerRequestInfo::reply_status (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->reply_status_ == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                            CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                       -1);
 
   return this->reply_status_;
@@ -126,8 +119,7 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
-                                            CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
   // We don't get the forward reference from the TAO_ServerRequest
@@ -184,8 +176,7 @@ TAO_ServerRequestInfo::get_request_service_context (
         return safe_service_context._retn ();
       }
 
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
-                                      CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_PARAM (23, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -220,8 +211,7 @@ TAO_ServerRequestInfo::get_reply_service_context (
         return safe_service_context._retn ();
       }
 
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
-                                      CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_PARAM (23, CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -236,7 +226,7 @@ TAO_ServerRequestInfo::sending_exception (CORBA::Environment &ACE_TRY_ENV)
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
       && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -304,8 +294,7 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
     {
       // Convert the NoContext exception to a NO_RESOURCES exception.
 
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
-                                             CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::NO_RESOURCES (1, CORBA::COMPLETED_NO),
                         0);
     }
   ACE_ENDTRY;
@@ -325,7 +314,7 @@ TAO_ServerRequestInfo::adapter_id (CORBA::Environment &ACE_TRY_ENV)
 {
 //   if (this->adapter_id_.in () == 0)
 //     {
-//       ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
+//       ACE_THROW_RETURN (CORBA::NO_RESOURCES (1,
 //                                              CORBA::COMPLETED_NO),
 //                         0);
 //     }
@@ -378,8 +367,7 @@ TAO_ServerRequestInfo::target_is_a (const char * /* id */,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
-                                         CORBA::COMPLETED_NO), 0);
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (1, CORBA::COMPLETED_NO), 0);
 }
 
 void
@@ -407,8 +395,7 @@ TAO_ServerRequestInfo::add_reply_service_context (
               return;
             }
           else
-            ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
-                                             CORBA::COMPLETED_NO));
+            ACE_THROW (CORBA::BAD_INV_ORDER (11, CORBA::COMPLETED_NO));
         }
     }
 

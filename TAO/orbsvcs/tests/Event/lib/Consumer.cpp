@@ -111,7 +111,6 @@ EC_Consumer::push (const RtecEventComm::EventSet& events,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->consumer_push (this->cookie_, events, ACE_TRY_ENV);
-  ACE_CHECK;
 
   if (events.length () == 0)
     {
@@ -148,7 +147,6 @@ EC_Consumer::push (const RtecEventComm::EventSet& events,
 
       if (e.header.type == this->shutdown_event_type_)
         this->driver_->consumer_shutdown (this->cookie_, ACE_TRY_ENV);
-      ACE_CHECK;
     }
 }
 
@@ -157,7 +155,6 @@ EC_Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->consumer_disconnect (this->cookie_, ACE_TRY_ENV);
-  ACE_CHECK;
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

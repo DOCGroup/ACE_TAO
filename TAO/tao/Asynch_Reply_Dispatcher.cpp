@@ -32,7 +32,6 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
   if (this->transport_ != 0)
     {
       this->transport_->idle_after_reply ();
-      TAO_Transport::release (this->transport_);
     }
 }
 
@@ -66,11 +65,9 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 {
 }
 
-long
-TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (CORBA::ULong /*request_id */,
-                                                  const ACE_Time_Value & /*max_wait_time*/)
+void
+TAO_Asynch_Reply_Dispatcher_Base::timeout_handler (TAO_Asynch_Timeout_Handler *)
 {
-  return 0;
 }
 
 
@@ -87,7 +84,7 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
   :TAO_Asynch_Reply_Dispatcher_Base (orb_core),
    reply_handler_skel_ (reply_handler_skel),
    reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
-   timeout_handler_ (this, orb_core->reactor ())
+   timeout_handler_ (0)
 {
 }
 
@@ -104,7 +101,11 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 {
   // AMI Timeout Handling Begin
 
-  timeout_handler_.cancel ();
+  if (this->timeout_handler_)
+    {
+      this->timeout_handler_->cancel ();
+      delete (this->timeout_handler_);
+    }
 
   // AMI Timeout Handling End
 
@@ -181,12 +182,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // AMI Timeout Handling Begin
-
-      timeout_handler_.cancel ();
-
-      // AMI Timeout Handling End
-
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
 
@@ -216,7 +211,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
     }
   ACE_ENDTRY;
 
-  // Commit suicide.
+  // @@ Michael: Shouldn't we commit suicide? I added the delete this.
   delete this;
 }
 
@@ -264,13 +259,10 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
   delete this;
 }
 
-long
-TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
+void
+TAO_Asynch_Reply_Dispatcher::timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler)
 {
-  return this->timeout_handler_.schedule_timer (this->transport_->tms (),
-                                                request_id,
-                                                max_wait_time);
+  timeout_handler_ = timeout_handler;
 }
 
 // AMI Timeout Handling End

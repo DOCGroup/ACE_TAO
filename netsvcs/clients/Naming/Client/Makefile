@@ -17,6 +17,8 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ   = $(addsuffix .so,$(FILES))
 
+LIBS    += $(ACELIB)
+
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2    = main

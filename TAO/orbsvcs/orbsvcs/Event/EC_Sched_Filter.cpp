@@ -112,7 +112,6 @@ TAO_EC_Sched_Filter::push (const RtecEventComm::EventSet &event,
       ACE_CHECK;
 
       this->parent ()->push (event, qos_info, ACE_TRY_ENV);
-      ACE_CHECK;
     }
 }
 
@@ -127,7 +126,6 @@ TAO_EC_Sched_Filter::push_nocopy (RtecEventComm::EventSet &event,
       ACE_CHECK;
 
       this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
-      ACE_CHECK;
     }
 }
 

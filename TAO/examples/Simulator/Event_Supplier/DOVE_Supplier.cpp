@@ -70,9 +70,7 @@ DOVE_Supplier::init (void)
   {
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
-      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA",
-                                                                 ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poaObject_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -89,10 +87,7 @@ DOVE_Supplier::init (void)
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
-      TAO_ORB_Core_instance()->orb()->resolve_initial_references (
-          "NameService",
-          ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+      TAO_ORB_Core_instance()->orb()->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -419,7 +414,7 @@ DOVE_Supplier::connect_Supplier ()
     this->current_connection_params_->scheduler_var_->
       set (this->current_connection_params_->rt_info_,
            ACE_static_cast (RtecScheduler::Criticality_t,
-                            this->current_connection_params_->pod_rt_info_.criticality),
+	                    this->current_connection_params_->pod_rt_info_.criticality),
            this->current_connection_params_->pod_rt_info_.worst_case_execution_time,
            this->current_connection_params_->pod_rt_info_.typical_execution_time,
            this->current_connection_params_->pod_rt_info_.cached_execution_time,

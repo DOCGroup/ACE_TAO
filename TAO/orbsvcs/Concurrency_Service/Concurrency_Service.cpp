@@ -169,9 +169,7 @@ Concurrency_Service::run (CORBA_Environment& ACE_TRY_ENV)
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
 
-  int retval = this->orb_manager_.run (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-  if (retval == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "Concurrency_Service::run"),
                      -1);

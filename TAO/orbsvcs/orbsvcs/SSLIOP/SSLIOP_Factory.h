@@ -74,7 +74,6 @@ private:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
-ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 
 #include "ace/post.h"

@@ -314,7 +314,6 @@ RND_Driver::timer (const RtecEventComm::Event &e,
             event[0] = e;
             event[0].header.source ++;
             this->supplier_.push (event, ACE_TRY_ENV);
-            ACE_CHECK;
           }
       }
       break;
@@ -562,7 +561,7 @@ RND_Supplier::svc (void)
         {
         }
       ACE_ENDTRY;
-      if (this->verbose_
+      if (this->verbose_ 
           && i * 100 / niterations >= percent)
         {
           ACE_DEBUG ((LM_DEBUG, "Thread %t %d%%\n", percent));

@@ -14,9 +14,7 @@
 #include "SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID (ACE_SSL,
-           SSL_SOCK_Connector,
-           "$Id$")
+ACE_RCSID (ACE_SSL, SSL_SOCK_Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
@@ -101,34 +99,38 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
   if (!SSL_in_connect_init (new_stream.ssl ()))
     ::SSL_set_connect_state (new_stream.ssl ());
 
-  int status = 0;
-  do
+  int status = ::SSL_connect (new_stream.ssl ());
+  if (status <= 0)
     {
-      status = ::SSL_connect (new_stream.ssl ());
-
-      switch (::SSL_get_error (new_stream.ssl (), status))
+      if (::BIO_sock_should_retry (status))
         {
-        case SSL_ERROR_NONE:
-          // Start out with non-blocking disabled on the
-          // <new_stream>.
-          new_stream.disable (ACE_NONBLOCK);
-          return 0;
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-          break;
-        default:
+	  switch (::SSL_get_error (new_stream.ssl (), status))
+	    {
+	    case SSL_ERROR_WANT_WRITE:
+            case SSL_ERROR_WANT_READ:
+            case SSL_ERROR_WANT_X509_LOOKUP:
+	      // If blocked, try again.
+              errno = EWOULDBLOCK;
+              break;
+            default:
 #ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
+              ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
+              break;
+            }
         }
+#ifndef ACE_NDEBUG
+      else
+        ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+
+      return -1;
     }
-  while (::SSL_pending (new_stream.ssl ()));
 
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
+    // Start out with non-blocking disabled on the <new_stream>.
+    new_stream.disable (ACE_NONBLOCK);
 
-  return -1;
+  return 0;
 }
 
 int

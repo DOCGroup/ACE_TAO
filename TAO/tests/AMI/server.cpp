@@ -55,8 +55,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -111,14 +110,6 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));

@@ -1,18 +1,19 @@
+// $Id$
+
 #include "SLevel1_Test_i.h"
 
-ACE_RCSID (SecurityLevel1,
-           SLevel1_Test_i,
-           "$Id$")
+#if !defined(__ACE_INLINE__)
+#include "test_i.i"
+#endif /* __ACE_INLINE__ */
 
-SLevel1_Server_i::SLevel1_Server_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    ss_current_ ()
-{
-}
+ACE_RCSID(SecurityLevel1, SLevel1_Test_i, "$Id$")
 
-void
-SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+static int authorize_1 = 1;
+static int authorize_2 = 1;
+
+CORBA::Boolean
+SLevel1_Server_i::authorize_level1 (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   /* All the code concerned with the SecurityCurrent should be either
@@ -20,32 +21,23 @@ SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
      here. It should be in one of these places since the Current
      object is thread specific */
 
-  // Get a reference to the SecurityCurrent object.
-  if (CORBA::is_nil (this->ss_current_.in ()))
-    {
-      CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("SecurityCurrent",
-                                                ACE_TRY_ENV);
-      ACE_CHECK;
+  /// Get a reference to the SecurityCurrent object.
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("SecurityCurrent");
 
-      this->ss_current_ =
-        SecurityLevel1::Current::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+  /// Narrow it down correctly.
+  SecurityLevel1::Current_var current =
+    SecurityLevel1::Current::_narrow (obj.in ());
 
-      // Check for nil reference.
-      if (CORBA::is_nil (current.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      " (%P|%t) Unable to initialize the "
-                      "SecurityCurrent object\n"));
-
-          return;
-        }
-    }
+  /// Check for nil reference.
+  if (CORBA::is_nil (current.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to initialize the SecurityCurrent object\n"),
+                      1);
 
   Security::AttributeType desired_attribute;
 
-  /// @@ Need to check more about this variable
+  /// @@ Need to check more abt this variable
   desired_attribute.attribute_family.family_definer = 0;
 
   /// Implies Privilege Attributes
@@ -62,9 +54,7 @@ SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
 
   /// Get the desired security attributes
   Security::AttributeList_var attribute_list =
-    this->ss_current_->get_attributes (attribute_type_list,
-                                       ACE_TRY_ENV);
-  ACE_CHECK;
+    current->get_attributes (attribute_type_list);
 
   /* @@ What did we do till now ??
    *    We set attribute_type_list so that we get the values of
@@ -91,7 +81,7 @@ SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
   if (attribute_list [0].attribute_type == 2 && attribute_list
       [0].Value == "blah")
     {
-      // Say this is the valid case in which the client is authorized
+      // Say this si the valid case in which the client is authorized
       // to access server object.
       attribute_1 = 0;
     }

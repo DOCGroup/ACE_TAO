@@ -67,11 +67,9 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
-      int result = this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (result == -1)
+      if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+      ACE_TRY_CHECK;
 
       // Copy them, because parse_args expects them there.
       this->argc_ = argc;
@@ -102,7 +100,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       // Get the Naming Service object reference.
       exception_message = "While resolving the Name Service";
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb_manager_.orb()->resolve_initial_references ("NameService");
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
@@ -142,13 +140,9 @@ Quoter_Factory_Finder_Server::init (int argc,
       quoter_Factory_Finder_Name_.length (1);
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
-      exception_message = "Factory_Factory::_this";
-      CORBA::Object_var ff_obj = this->quoter_Factory_Finder_i_ptr_->_this(ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       exception_message = "While binding the Factory Finder";
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                      ff_obj.in (),
+                                      this->quoter_Factory_Finder_i_ptr_->_this(ACE_TRY_ENV),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -170,6 +164,8 @@ Quoter_Factory_Finder_Server::init (int argc,
 int
 Quoter_Factory_Finder_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Factory_Finder_Server is running\n"));
@@ -223,10 +219,7 @@ main (int argc, char *argv [])
 
   ACE_TRY_NEW_ENV
     {
-      int result = quoter_Factory_Finder_Server.init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK; 
-
-      if (result == -1)
+      if (quoter_Factory_Finder_Server.init (argc,argv,ACE_TRY_ENV) == -1)
         return 1;
       else
         {

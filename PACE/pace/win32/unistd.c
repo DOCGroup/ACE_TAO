@@ -127,20 +127,3 @@ pace_win32_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
     }
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
-
-#if (PACE_HAS_POSIX_DI_UOF)
-pace_ssize_t
-pace_win32_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
-{
-  DWORD ok_len;
-
-  if (ReadFile (fildes, buf, nbyte, &ok_len, 0))
-    {
-      return (pace_ssize_t) ok_len;
-    }
-  else
-    {
-      PACE_FAIL_RETURN (-1);
-    }
-}
-#endif /* PACE_HAS_POSIX_DI_UOF */

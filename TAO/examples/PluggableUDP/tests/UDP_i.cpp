@@ -31,7 +31,6 @@ UDP_i::invoke (const char * client_name,
                UDP_ptr udpHandler,
                CORBA::Long request_id,
                CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
@@ -91,18 +90,18 @@ UDP_i::shutdown (CORBA::Environment & )
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>;
 template class ACE_Hash_Map_Entry<CORBA::String_var, int>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Thread_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<CORBA::String_var, int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

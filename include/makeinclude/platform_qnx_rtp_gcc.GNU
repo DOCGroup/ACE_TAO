@@ -4,26 +4,14 @@
 
 ACE_HAS_GNUG_PRE_2_8 := 0
 
-#new options as suggetsed by Andy Olson 3/10/01
-#---------------/*************/---------------------------------------------
-inline = 1
-debug = 1
-optimize = 0
-exceptions = 1
+# ACE crashes when compiled with debugging symbols
+ifeq (,$(debug))
+  debug := 0
+endif # ! debug
 
-# note: I used CPPFLAGS instead of C or CC FLAGS, because the stupid QNX gcc
-# will link different start and end sections based on the setting of
-# -fexceptions, so it must be on both the compile AND link phase.
-#
-ifeq ($(exceptions),1)
-  CPPFLAGS += -fexceptions
-else
-  CPPFLAGS += -fno-exceptions
-endif # ! exceptions
- 
-CC      = gcc
-CXX     = g++
-DCFLAGS += -gstabs
+ifeq (,$(optimize))
+  optimize = 1
+endif # ! optimize
 
 #
 # This is a workaround needed only on QNX RTP.
@@ -35,6 +23,8 @@ TAO_RT_SCHED_LIBS=-lTAO_PortableServer
 TAO_FAULT_TOLERANCE_LIBS=-lTAO_IORManip
 TAO_COS_TRADING_LIBS=-lTAO_Svc_Utils
 
+CC      = gcc
+CXX     = g++
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
 CCFLAGS += $(CFLAGS) -fno-implicit-templates -fexceptions
 
@@ -43,6 +33,7 @@ CCFLAGS += $(CFLAGS) -fno-implicit-templates -fexceptions
 # if compiled with debug option enabled. We leave the option here,
 # but disable debug by default.
 #
+DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS +=
@@ -52,8 +43,8 @@ PIC     = -fPIC
 AR      = ar
 ARFLAGS = ruv
 #RANLIB  = ranlib
-SOFLAGS = $(CPPFLAGS) -shared
+SOFLAGS = -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
-
+exceptions=1

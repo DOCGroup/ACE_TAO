@@ -22,10 +22,10 @@ TAO_ORB_Core::_decr_refcnt (void)
   return 0;
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager &
-TAO_ORB_Core::transport_cache (void)
+ACE_INLINE TAO_Connection_Cache_Manager &
+TAO_ORB_Core::connection_cache (void)
 {
-  return this->transport_cache_;
+  return this->connection_cache_;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -47,6 +47,11 @@ TAO_ORB_Core::object_ref_table (void)
   return this->object_ref_table_;
 }
 
+ACE_INLINE TAO_Flushing_Strategy *
+TAO_ORB_Core::flushing_strategy (void)
+{
+  return this->flushing_strategy_;
+}
 
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
@@ -109,7 +114,26 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   return retval;
 }
 
-
+ACE_INLINE void
+TAO_ORB_Core::service_context_list (
+    TAO_Stub *&stub,
+    IOP::ServiceContextList &service_list,
+    CORBA::Boolean restart,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@ We look at the services if they are loaded. But if more
+  // services offer this feature we may want to keep expanding the
+  // 'if' conditions with a check for whether a service returned a
+  // valid Policy object.
+  if (this->ft_service_.service_callback ())
+    {
+      this->ft_service_.service_callback ()->service_context_list (stub,
+                                                                   service_list,
+                                                                   restart,
+                                                                   ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
 
 ACE_INLINE void
 TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)
@@ -438,8 +462,7 @@ TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
       // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
       // has shutdown by the time an ORB function is called.
 
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 4,
-                                       CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO));
     }
 }
 

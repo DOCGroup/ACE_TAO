@@ -195,7 +195,7 @@ SOURCE=.\Asynch_Timeout_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Transport_Property.cpp
+SOURCE=.\Base_Connection_Property.cpp
 # End Source File
 # Begin Source File
 
@@ -216,6 +216,10 @@ SOURCE=.\BiDirPolicyC.cpp
 # Begin Source File
 
 SOURCE=.\Bind_Dispatcher_Guard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -263,11 +267,11 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Cache_Manager.cpp
+SOURCE=.\Connection_Cache_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Descriptor_Interface.cpp
+SOURCE=.\Connection_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -376,6 +380,10 @@ SOURCE=.\Fault_Tolerance_Service.cpp
 # Begin Source File
 
 SOURCE=.\FILE_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -512,6 +520,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.cpp
 # End Source File
 # Begin Source File
 
@@ -659,7 +671,7 @@ SOURCE=.\Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Transport_Descriptor.cpp
+SOURCE=.\Private_Connection_Descriptor.cpp
 # End Source File
 # Begin Source File
 
@@ -672,6 +684,14 @@ SOURCE=.\Protocol_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -911,7 +931,7 @@ SOURCE=.\Asynch_Timeout_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Transport_Property.h
+SOURCE=.\Base_Connection_Property.h
 # End Source File
 # Begin Source File
 
@@ -932,6 +952,10 @@ SOURCE=.\BiDirPolicyC.h
 # Begin Source File
 
 SOURCE=.\Bind_Dispatcher_Guard.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -983,11 +1007,11 @@ SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Cache_Manager.h
+SOURCE=.\Connection_Cache_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Descriptor_Interface.h
+SOURCE=.\Connection_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -1104,6 +1128,10 @@ SOURCE=.\Fault_Tolerance_Service.h
 # Begin Source File
 
 SOURCE=.\FILE_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1260,6 +1288,14 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.inl
 # End Source File
 # Begin Source File
 
@@ -1427,7 +1463,7 @@ SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Transport_Descriptor.h
+SOURCE=.\Private_Connection_Descriptor.h
 # End Source File
 # Begin Source File
 
@@ -1440,6 +1476,18 @@ SOURCE=.\Protocol_Factory.h
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1711,7 +1759,7 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Transport_Property.inl
+SOURCE=.\Base_Connection_Property.i
 # End Source File
 # Begin Source File
 
@@ -1747,11 +1795,11 @@ SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Cache_Manager.inl
+SOURCE=.\Connection_Cache_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Descriptor_Interface.inl
+SOURCE=.\Connection_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
@@ -2103,7 +2151,7 @@ SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Transport_Descriptor.inl
+SOURCE=.\Private_Connection_Descriptor.inl
 # End Source File
 # Begin Source File
 

@@ -182,7 +182,7 @@ sub Spawn ()
             return -1;
         }
 
-        if (!$PerlACE::Process::chorus && !-x $self->Executable ()) {
+        if (!-x $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
                          "> not executable\n";
             return -1;
@@ -283,8 +283,8 @@ sub check_return_value ($)
         $dump = 1;
     }
 
-    # check for ABRT, KILL or TERM
-    if ($rc == 6 || $rc == 9 || $rc == 15) {
+    # check for KILL or TERM
+    if ($rc == 9 || $rc == 15) {
         return 0;
     }
 

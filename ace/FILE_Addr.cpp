@@ -12,7 +12,7 @@ ACE_RCSID(ace, FILE_Addr, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Addr)
 
 ACE_FILE_Addr::ACE_FILE_Addr (void)
-  : ACE_Addr (AF_FILE, sizeof this->filename_ / sizeof (ACE_TCHAR))
+  : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
   this->filename_[0] = '\0';
 }

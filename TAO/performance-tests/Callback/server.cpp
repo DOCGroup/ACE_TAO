@@ -97,7 +97,6 @@ main (int argc, char *argv [])
 
       CORBA::String_var str =
         orb->object_to_string (server.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (ior_file_name != 0)
         {
@@ -115,7 +114,6 @@ main (int argc, char *argv [])
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
 
       PortableServer::ObjectId_var id =

@@ -60,9 +60,7 @@
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
-# elif defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
-# elif !defined (__BORLANDC__)
+# elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE)
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
@@ -215,19 +213,16 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_MoveFileEx               ::MoveFileExW
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerW
 #define ACE_TEXT_OpenService              ::OpenServiceW
-#define ACE_TEXT_RegisterEventSource      ::RegisterEventSourceW
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryW
 #define ACE_TEXT_RegCreateKeyEx           ::RegCreateKeyExW
 #define ACE_TEXT_RegDeleteKey             ::RegDeleteKeyW
 #define ACE_TEXT_RegDeleteValue           ::RegDeleteValueW
 #define ACE_TEXT_RegEnumKeyEx             ::RegEnumKeyExW
 #define ACE_TEXT_RegEnumValue             ::RegEnumValueW
-#define ACE_TEXT_RegCreateKey             ::RegCreateKeyW
 #define ACE_TEXT_RegOpenKey               ::RegOpenKeyW
 #define ACE_TEXT_RegOpenKeyEx             ::RegOpenKeyExW
 #define ACE_TEXT_RegQueryValueEx          ::RegQueryValueExW
 #define ACE_TEXT_RegSetValueEx            ::RegSetValueExW
-#define ACE_TEXT_ReportEvent              ::ReportEventW
 #define ACE_TEXT_StartService             ::StartServiceW
 
 #else /* ACE_USES_WCHAR */
@@ -254,19 +249,16 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_MoveFileEx               ::MoveFileExA
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerA
 #define ACE_TEXT_OpenService              ::OpenServiceA
-#define ACE_TEXT_RegisterEventSource      ::RegisterEventSourceA
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryA
 #define ACE_TEXT_RegCreateKeyEx           ::RegCreateKeyExA
 #define ACE_TEXT_RegDeleteKey             ::RegDeleteKeyA
 #define ACE_TEXT_RegDeleteValue           ::RegDeleteValueA
 #define ACE_TEXT_RegEnumKeyEx             ::RegEnumKeyExA
 #define ACE_TEXT_RegEnumValue             ::RegEnumValueA
-#define ACE_TEXT_RegCreateKey             ::RegCreateKeyA
 #define ACE_TEXT_RegOpenKey               ::RegOpenKeyA
 #define ACE_TEXT_RegOpenKeyEx             ::RegOpenKeyExA
 #define ACE_TEXT_RegQueryValueEx          ::RegQueryValueExA
 #define ACE_TEXT_RegSetValueEx            ::RegSetValueExA
-#define ACE_TEXT_ReportEvent              ::ReportEventA
 #define ACE_TEXT_StartService             ::StartServiceA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */

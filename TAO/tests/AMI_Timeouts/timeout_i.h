@@ -25,7 +25,7 @@
 #include "timeoutS.h"
 
 class Timeout_i
-: public POA_TimeoutObj
+: public POA_Timeout
 {
 public:
   Timeout_i (CORBA::ORB_ptr orb);
@@ -45,7 +45,7 @@ private:
 };
 
 class TimeoutHandler_i
-: public POA_AMI_TimeoutObjHandler
+: public POA_AMI_TimeoutHandler
 {
 public:
   TimeoutHandler_i ();
@@ -56,7 +56,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sendTimeToWait_excep (
-      AMI_TimeoutObjExceptionHolder * excep_holder,
+      AMI_TimeoutExceptionHolder * excep_holder,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

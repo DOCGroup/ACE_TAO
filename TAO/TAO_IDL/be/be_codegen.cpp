@@ -755,6 +755,12 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
 
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_skeletons_,
+                           "_TAO_IDL_",
+                           "_CPP_");
+
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
     {
@@ -762,12 +768,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                                << be_global->pch_include ()
                                << "\"\n\n";
     }
-
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->server_skeletons_,
-                           "_TAO_IDL_",
-                           "_CPP_");
 
   // Generate the include statement for the server header.
   *this->server_skeletons_
@@ -1263,7 +1263,7 @@ TAO_CodeGen::end_server_skeletons (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
-#if !defined (linux) && !defined (__QNX__)
+#if !defined (linux)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
 #endif /* ! linux */

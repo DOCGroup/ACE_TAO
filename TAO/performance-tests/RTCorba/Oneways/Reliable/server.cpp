@@ -107,8 +107,7 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA");
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =

@@ -26,8 +26,11 @@ FILES	= Handle_L_Dgram \
 
 PSRC   	= $(addsuffix .cpp,$(BIN))
 LSRC	= $(addsuffix .cpp,$(FILES))
+ 
+LDLIBS += 
+LIBS   += $(ACELIB)
 
-BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

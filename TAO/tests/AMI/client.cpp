@@ -182,8 +182,7 @@ Handler handler;
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -249,19 +248,14 @@ main (int argc, char *argv[])
         }
 
       // ORB loop.
-
-      while (number_of_replies > 0)
+      while (orb->work_pending (ACE_TRY_ENV) && number_of_replies > 0)
         {
-          CORBA::Boolean pending =
-            orb->work_pending(ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (pending)
-            {
-              orb->perform_work(ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
+          orb->perform_work (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
+      ACE_TRY_CHECK;
 
       if (debug)
         {
@@ -276,14 +270,6 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       //client.ami_test_var_->shutdown ();
-
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

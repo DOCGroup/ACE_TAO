@@ -10,7 +10,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
-#include "tao/Base_Transport_Property.h"
+#include "tao/Base_Connection_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
 
@@ -41,8 +41,8 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // @@ Michael: For DIOP we should be able to get rid of the connection
   //             caching.
+  // @@ Frank: Not disabled yet...
 
-  /*
 
   /// Our connect creation strategy
   TAO_DIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
@@ -66,9 +66,6 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
                                      concurrency_strategy);
-
-  */
-  return 0;
 }
 
 int
@@ -95,16 +92,14 @@ TAO_DIOP_Connector::close (void)
 
   // @@ Michael: For DIOP we should be able to get rid of the connection
   //             caching.
-  /*
+  // @@ Frank: Not yet...
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
   return this->base_connector_.close ();
-  */
-  return 0;
 }
 
 int
-TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
+TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                              TAO_Transport *&transport,
                              ACE_Time_Value * /*max_wait_time*/,
                              CORBA::Environment &)
@@ -158,7 +153,6 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                                                    0 /* TAO_DIOP_Properties */),
                       -1);
 
-      svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
       svc_handler_i->addr (remote_address);
 
       svc_handler_i->open (0);
@@ -351,6 +345,7 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       num_connections = dests.size ();
       ACE_INET_Addr *remote_addrs = 0;
       TAO_DIOP_Connection_Handler **handlers = 0;
+      char *failures = 0;
 
       ACE_NEW_RETURN (remote_addrs,
                       ACE_INET_Addr[num_connections],
@@ -365,6 +360,10 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
         safe_handlers (handlers);
 
+      ACE_NEW_RETURN (failures,
+                      char[num_connections],
+                      -1);
+
       // No longer need to worry about exception safety at this point.
       remote_addrs = safe_remote_addrs.release ();
       handlers = safe_handlers.release ();
@@ -377,12 +376,7 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
 
 
       // @@ Michael
-#if 0
-      char *failures;
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
+      /*
       // Finally, try to connect.
       this->base_connector_.connect_n (num_connections,
                                        handlers,
@@ -424,7 +418,7 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
                         remote_addrs[slot].get_host_name (),
                         remote_addrs[slot].get_port_number ()));
         }
-#endif /* 0 */
+      */
 
       ACE_OS::free (preconnections);
 

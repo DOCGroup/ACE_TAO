@@ -4,16 +4,15 @@
 
 #include "SSLIOP_Current.h"
 
-ACE_RCSID (TAO_SSLIOP,
-           SSLIOP_Current,
-           "$Id$")
+ACE_RCSID (TAO_SSLIOP, SSLIOP_Current, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_SSLIOP_Current::TAO_SSLIOP_Current (const char *orb_id)
-  : tss_slot_ (0),
+TAO_SSLIOP_Current::TAO_SSLIOP_Current (size_t tss_slot,
+                                        const char *orb_id)
+  : tss_slot_ (tss_slot),
     orb_id_ (orb_id),
     orb_core_ (0),
     setup_done_ (0),

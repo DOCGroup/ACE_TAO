@@ -319,17 +319,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponent,
-                        ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponent, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponent *)_tao_any.value ();
@@ -374,17 +369,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponent,
-                        ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponent, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponent *)_tao_any.value ();
@@ -454,17 +444,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo,
-                        ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponentInfo *)_tao_any.value ();
@@ -509,17 +494,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo,
-                        ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponentInfo *)_tao_any.value ();
@@ -589,16 +569,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetConte
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetContext *)_tao_any.value ();
@@ -643,16 +619,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV)) // not equal
       {
         _tao_elem = 0;
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetContext *)_tao_any.value ();

@@ -1923,15 +1923,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
     ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_var type = _tao_any.type ();
-      CORBA::Boolean result =
-        type->equivalent (Messaging::_tc_PriorityRange, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!result)
+      if (!type->equivalent (Messaging::_tc_PriorityRange, ACE_TRY_ENV)) // not equal
         {
           return 0;
         }
-
+      ACE_TRY_CHECK;
       if (_tao_any.any_owns_data ())
       {
         _tao_elem = ACE_static_cast(
@@ -2008,15 +2004,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Routing
     ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_var type = _tao_any.type ();
-      CORBA::Boolean result =
-        type->equivalent (Messaging::_tc_RoutingTypeRange, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!result)
+      if (!type->equivalent (Messaging::_tc_RoutingTypeRange, ACE_TRY_ENV)) // not equal
         {
           return 0;
         }
-
+      ACE_TRY_CHECK;
       if (_tao_any.any_owns_data ())
       {
         _tao_elem = ACE_static_cast(
@@ -2093,15 +2085,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
     ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_var type = _tao_any.type ();
-      CORBA::Boolean result =
-        type->equivalent (Messaging::_tc_PolicyValue, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!result)
+      if (!type->equivalent (Messaging::_tc_PolicyValue, ACE_TRY_ENV)) // not equal
         {
           return 0;
         }
-
+      ACE_TRY_CHECK;
       if (_tao_any.any_owns_data ())
       {
         _tao_elem = ACE_static_cast(
@@ -2186,15 +2174,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
     ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_var type = _tao_any.type ();
-      CORBA::Boolean result =
-        type->equivalent (Messaging::_tc_PolicyValueSeq, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!result)
+      if (!type->equivalent (Messaging::_tc_PolicyValueSeq, ACE_TRY_ENV)) // not equal
         {
           return 0;
         }
-
+      ACE_TRY_CHECK;
       if (_tao_any.any_owns_data ())
       {
         _tao_elem = ACE_static_cast(
@@ -2263,15 +2247,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
     {
       _tao_elem = Messaging::ReplyHandler::_nil ();
       CORBA::TypeCode_var type = _tao_any.type ();
-      CORBA::Boolean result =
-        type->equivalent (Messaging::_tc_ReplyHandler, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!result)
+      if (!type->equivalent (Messaging::_tc_ReplyHandler, ACE_TRY_ENV)) // not equal
         {
           return 0;
         }
-
+      ACE_TRY_CHECK;
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()

@@ -108,10 +108,9 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Logging_Strategy::parse_args");
   ACE_TCHAR *temp;
 
-  // Perform data member initializations.  BTW, do *not* initialize
-  // <thread_priority_mask_> or <process_priority_mask_> here to avoid
-  // unduing the behavior in <init>, where these are set by
-  // <ACE_Log_Msg::instance>.
+  // Perform data member initializations.
+  this->thread_priority_mask_ = 0;
+  this->process_priority_mask_ = 0;
   this->flags_ = 0;
   this->wipeout_logfile_ = 0;
   this->count_ = 0;

@@ -69,33 +69,26 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
-  int status = 0;
-  do
-    {
-      status = ::SSL_write (this->ssl_,
+  int status = ::SSL_write (this->ssl_,
                             ACE_static_cast (const char*, buf),
                             n);
 
+  if (status <= 0)
+    {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_NONE:
-          return status;
-        case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
+          errno = EWOULDBLOCK;
           break;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
+          break;
         }
     }
-  while (::SSL_pending (this->ssl_));
 
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
-
-  return status;  
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -117,40 +110,32 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
         ACE_NOTSUP_RETURN (-1);
     }
 
-  int status = 0;
-  do
-    {
-      status = ::SSL_read (this->ssl_,
+  int status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char *, buf),
                            n);
 
+  if (status <= 0) 
+    {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_NONE:
-          return status;
         case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
+          errno = EWOULDBLOCK;
           break;
         case SSL_ERROR_ZERO_RETURN:
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
           //
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
+          // The peer has notified us that it is shutting down via the
+          // SSL "close_notify" message so we need to shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
-          return status;
+          break;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
+          break;
         }
     }
-  while (::SSL_pending (this->ssl_));
-
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
 
   return status;
 }
@@ -163,32 +148,24 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   // @@ FIXME: Not thread safe!
 
-  int status = 0;
-
-  do
-    {
-      status = ::SSL_write (this->ssl_,
+  int status = ::SSL_write (this->ssl_,
                             ACE_static_cast (const char *, buf),
                             n);
 
+  if (status <= 0)
+    {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_NONE:
-          return 0;
-        case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
+          errno = EWOULDBLOCK;
           break;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
+          break;
         }
     }
-  while (::SSL_pending (this->ssl_));
-
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
 
   return status;
 }
@@ -201,41 +178,32 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 
   // @@ FIXME: Not thread safe!
 
-  int status = 0;
-
-  do
-    {
-      status = ::SSL_read (this->ssl_,
+  int status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char*, buf),
                            n);
 
+  if (status <= 0)
+    {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_NONE:
-          return status;
         case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
+          errno = EWOULDBLOCK;
           break;
         case SSL_ERROR_ZERO_RETURN:
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
           //
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
+          // The peer has notified us that it is shutting down via the
+          // SSL "close_notify" message so we need to shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
-          return status;
+          break;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
+          break;
         }
     }
-  while (::SSL_pending (this->ssl_));
-
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
 
   return status;
 }
@@ -291,48 +259,21 @@ ACE_SSL_SOCK_Stream::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  if (this->ssl_ == 0 || this->get_handle () == ACE_INVALID_HANDLE)
-    return 0;  // SSL_SOCK_Stream was never opened.
+  if (this->ssl_ == 0)
+    return -1;
 
-  int status = 0;
-  do
+  // SSL_shutdown() returns 1 on successful shutdown of the SSL
+  // connection, not 0.
+  if (::SSL_shutdown (this->ssl_) != 1)
     {
-      // SSL_shutdown() returns 1 on successful shutdown of the SSL
-      // connection, not 0.
-      status = ::SSL_shutdown (this->ssl_);
-
-      switch (::SSL_get_error (this->ssl_, status))
-      {
-      case SSL_ERROR_NONE:
-      case SSL_ERROR_SYSCALL:  // Ignore this error condition.
-
-        // Don't set the handle in OpenSSL; only in the
-        // SSL_SOCK_Stream.  We do this to avoid any potential side
-        // effects.  Invoking ACE_SSL_SOCK::set_handle() bypasses the
-        // OpenSSL SSL_set_fd() call ACE_SSL_SOCK_Stream::set_handle()
-        // does.
-        this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
-
-        return this->stream_.close ();
-
-      case SSL_ERROR_WANT_READ:
-      case SSL_ERROR_WANT_WRITE:
-        break;
-
-      default:
-        ACE_Errno_Guard error (errno);   // Save/restore errno
-        (void) this->stream_.close ();
-
-        return -1;
-      }
+      // Save/restore errno
+      ACE_Errno_Guard error (errno);
+      (void) this->stream_.close ();
+  
+      return -1;
     }
-  while (::SSL_pending (this->ssl_));
 
-  // @@ Would this ever happen?
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
-
-  return -1;
+  return this->stream_.close ();
 }
 
 ASYS_INLINE ACE_SOCK_Stream &
@@ -347,3 +288,6 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
 }
+
+
+

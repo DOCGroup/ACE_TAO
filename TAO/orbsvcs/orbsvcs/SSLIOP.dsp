@@ -157,6 +157,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.cpp
 
 SOURCE=.\SSLIOPC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOPS.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -244,6 +248,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\SSLIOPC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOPS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -366,10 +374,19 @@ SOURCE=.\SSLIOP\SSLIOP_Profile.i
 
 SOURCE=.\SSLIOPC.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOPS.i
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\SSLIOPS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
 # End Group
 # End Target
 # End Project

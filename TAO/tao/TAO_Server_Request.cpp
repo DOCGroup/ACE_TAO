@@ -53,7 +53,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   : mesg_base_ (mesg_base),
     incoming_ (&input),
     outgoing_ (&output),
-    transport_(TAO_Transport::_duplicate (transport)),
+    transport_(transport),
     response_expected_ (0),
     deferred_reply_ (0),
     sync_with_server_ (0),
@@ -89,7 +89,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
-    transport_ (TAO_Transport::_duplicate (transport)),
+    transport_ (transport),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
     sync_with_server_ (0),
@@ -111,7 +111,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
 {
-  TAO_Transport::release (this->transport_);
 }
 
 CORBA::ORB_ptr

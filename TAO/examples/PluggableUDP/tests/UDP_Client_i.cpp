@@ -26,7 +26,7 @@ UDP_Client_i::~UDP_Client_i (void)
 }
 
 int
-UDP_Client_i::svc (void)
+UDP_Client_i::svc ()
 {
   ACE_CString client_name ("UDP");
 

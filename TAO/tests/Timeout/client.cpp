@@ -146,7 +146,6 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       policy_list[0]->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       policy_list[0] = CORBA::Policy::_nil ();
 
       ACE_DEBUG ((LM_DEBUG,

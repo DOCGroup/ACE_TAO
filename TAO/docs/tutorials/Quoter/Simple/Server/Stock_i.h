@@ -26,4 +26,3 @@ private:
 
 #endif /* TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_I_H */
 
-

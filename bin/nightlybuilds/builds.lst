@@ -111,8 +111,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_S
 
 [SunOS_KCC]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC4.0
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC3.4/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC3.4
 
 [SunOS_SunCC42]
 TYPE = TIMEONLY
@@ -121,8 +121,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_S
 
 [SunOS_EGCS]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_EGCS
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_EGCS/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_EGCS
 
 [Tru64_CXX]
 TYPE = TIMEONLY
@@ -131,8 +131,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?guajira.cs.wus
 
 [VxWorks_GCC]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_VXWORKS_GCC/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_VXWORKS_GCC
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_VXWORKS_GCC/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_VXWORKS_GCC
 
 [VxWorks_5.4_GCC]
 TYPE = TIMEONLY
@@ -154,11 +154,10 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
 
-# Build not running anymore
-#[SunOS_GCC272]
-#TYPE = TIMEONLY
-#LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
-#WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
+[SunOS_GCC272]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
 
 [RedHat_7.0_Full]
 TYPE = TIMEONLY
@@ -184,18 +183,3 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
-
-[QNX]
-TYPE = TIMEONLY
-LIST = http://amras.ece.uci.edu/~bugzilla/auto_compile_logs/amras_QNX/
-WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
-
-[RAPI]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/dandia.cs.wustl.edu_RAPI/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?dandia.cs.wustl.edu_RAPI
-
-[HPUX_ACC]
-TYPE = TIMEONLY
-LIST = http://prince.ociweb.com/~buildlog
-

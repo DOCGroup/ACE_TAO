@@ -111,6 +111,9 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
+  /// Return the underlying transport object
+  TAO_Transport *transport (void);
+
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
@@ -118,8 +121,11 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
 
+  /// Object termination hook.
+  virtual int close (u_long flags = 0);
+
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_handler_to_cache (void);
 
   // @@ Frank: Not needed
   /*
@@ -127,20 +133,15 @@ public:
   int process_listen_point_list (DIOP::ListenPointList &listen_list);
   */
 
-  // DIOP Additions - Begin
+  // @@ Frank: From DIOP_Connect.h
   ACE_HANDLE get_handle (void) const;
 
   const ACE_INET_Addr &addr (void);
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void);
-
-  void local_addr (const ACE_INET_Addr &addr);
-
   const ACE_SOCK_Dgram &dgram (void);
-  // DIOP Additions - End
-
+  // @@ Frank: End DIOP_Connect.h
 protected:
 
   /// = Event Handler overloads
@@ -158,24 +159,22 @@ protected:
   // @@ Frank: From DIOP_Connect.h
   virtual int handle_cleanup ();
 
-  // DIOP Additions - Begin
+  // @@ Frank: From DIOP_Connect.h
   ACE_SOCK_Dgram udp_socket_;
 
-  // This is always the remote address
   ACE_INET_Addr addr_;
-
-  // This is always the local address
-  ACE_INET_Addr local_addr_;
-
-  // DIOP Additions - End
+  // @@ Frank: From DIOP_Connect.h
 
 private:
 
-  /// Count nested upcalls on this
+  /// Transport object reference.
+  TAO_DIOP_Transport transport_;
+
+  /// Reference count.It is used to count nested upcalls on this
   /// svc_handler i.e., the connection can close during nested upcalls,
   /// you should not delete the svc_handler until the stack unwinds
   /// from the nested upcalls.
-  u_long pending_upcalls_;
+  u_long refcount_;
 
   /// TCP configuration for this connection.
   TAO_DIOP_Properties *tcp_properties_;

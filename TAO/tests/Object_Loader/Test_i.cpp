@@ -30,7 +30,6 @@ Test_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   PortableServer::POA_var poa =
     this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this, ACE_TRY_ENV);
   ACE_CHECK;

@@ -8,7 +8,6 @@
 
 ACE_RCSID (Strategies, UIOP_Transport, "$Id$")
 
-
 #include "UIOP_Connection_Handler.h"
 #include "UIOP_Profile.h"
 #include "tao/Timeprobe.h"
@@ -73,15 +72,33 @@ TAO_UIOP_Transport::event_handler (void)
   return this->connection_handler_;
 }
 
-ssize_t
-TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
-                          size_t *bytes_transferred)
+void
+TAO_UIOP_Transport::close_connection (void)
 {
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  // Now close the handler
+  this->connection_handler_->handle_close ();
+
+  // Purge the entry
+  this->connection_handler_->purge_entry ();
+}
+
+int
+TAO_UIOP_Transport::idle (void)
+{
+  return this->connection_handler_->make_idle ();
+}
+
+ssize_t
+TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
+{
+  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
+                                                            max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
@@ -139,6 +156,10 @@ TAO_UIOP_Transport::register_handler (void)
   if (r == this->connection_handler_->reactor ())
     return 0;
 
+  // About to be registered with the reactor, so bump the ref
+  // count
+  this->connection_handler_->incr_ref_count ();
+
   // Set the flag in the Connection Handler
   this->connection_handler_->is_registered (1);
 
@@ -185,7 +206,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -198,17 +219,6 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 
@@ -384,18 +394,6 @@ TAO_UIOP_Transport::process_message (void)
     }
 
   return this->messaging_object_->more_messages ();
-}
-
-void
-TAO_UIOP_Transport::transition_handler_state (void)
-{
-  connection_handler_ = 0;
-}
-
-TAO_Connection_Handler*
-TAO_UIOP_Transport::connection_handler (void) const
-{
-  return connection_handler_;
 }
 
 #endif  /* TAO_HAS_UIOP */

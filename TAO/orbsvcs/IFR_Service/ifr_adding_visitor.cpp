@@ -9,7 +9,8 @@
 
 ACE_RCSID(IFR_Service, ifr_adding_visitor, "$Id$")
 
-ifr_adding_visitor::ifr_adding_visitor (void)
+ifr_adding_visitor::ifr_adding_visitor (CORBA::Environment &ACE_TRY_ENV)
+  : ifr_visitor (ACE_TRY_ENV)
 {
 }
 
@@ -74,24 +75,12 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
 int 
 ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {  
-      this->ir_current_ = 
-      be_global->repository ()->get_primitive (
-                                    this->predefined_type_to_pkind (node),
-                                    ACE_TRY_ENV
-                                  );
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_predefined_type"));
-    
-      return -1;
-    }
-  ACE_ENDTRY;
+  this->ir_current_ = 
+    be_global->repository ()->get_primitive (
+                                  this->predefined_type_to_pkind (node),
+                                  this->env_
+                                );
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -101,112 +90,102 @@ ifr_adding_visitor::visit_module (AST_Module *node)
 {
   IR_Container_var new_def;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // If this module been opened before, it will already be in
+  // the repository.
+  IR_Contained_var prev_def = 
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      // If this module been opened before, it will already be in
-      // the repository.
-      IR_Contained_var prev_def = 
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // New module.
+      IR_Container_ptr container = IR_Container::_nil ();
 
-      if (CORBA::is_nil (prev_def.in ()))
+      if (be_global->ifr_scopes ().top (container) == 0)
         {
-          // New module.
-          IR_Container_ptr container = IR_Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (container) == 0)
-            {
-              new_def = container->create_module (
-                                       node->repoID (),
-                                       node->local_name ()->get_string (),
-                                       this->gen_version (node),
-                                       ACE_TRY_ENV
-                                     );
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
+          new_def = container->create_module (
+                                   node->repoID (),
+                                   node->local_name ()->get_string (),
+                                   this->gen_version (node),
+                                   this->env_
+                                 );
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
-          // Reopened module.
-          new_def = IR_ModuleDef::_narrow (prev_def.in (),
-                                           ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Nothing prevents this modules's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on new_def.
-          if (CORBA::is_nil (new_def.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
-                  ACE_TEXT (" module %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
-        }
-
-      if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
-        {
           ACE_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
-              ACE_TEXT (" scope push failed\n")
-            ),  
-            -1
-          );
-        }
-
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
-              ACE_TEXT (" visit_scope failed\n")
-            ),  
-            -1
-          );
-        }
-
-      IR_Container_ptr tmp = IR_Container::_nil ();
-
-      if (be_global->ifr_scopes ().pop (tmp) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
-              ACE_TEXT (" scope pop failed\n")
+              ACE_TEXT (" scope stack is empty\n")
             ),  
             -1
           );
         }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_module"));
+      // Reopened module.
+      new_def = IR_ModuleDef::_narrow (prev_def.in (),
+                                       this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
 
-      return -1;
+      // Nothing prevents this modules's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on new_def.
+      if (CORBA::is_nil (new_def.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
+              ACE_TEXT (" module %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
+
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
+          ACE_TEXT (" scope push failed\n")
+        ),  
+        -1
+      );
+    }
+
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),  
+        -1
+      );
+    }
+
+  IR_Container_ptr tmp = IR_Container::_nil ();
+
+  if (be_global->ifr_scopes ().pop (tmp) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
+          ACE_TEXT (" scope pop failed\n")
+        ),  
+        -1
+      );
+    }
 
   return 0;
 }
@@ -220,378 +199,119 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
       return this->visit_valuetype (node);
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // Is this interface already in the respository?
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  // If not, create a new entry.
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      // Is this interface already in the respository?
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong, 
+                                                node->n_inherits ());
 
-      // If not, create a new entry.
-      if (CORBA::is_nil (prev_def.in ()))
+      IR_InterfaceDefSeq bases (n_parents);
+      bases.length (n_parents);
+      IR_Contained_var result;
+
+      AST_Interface **parents = node->inherits ();
+
+      // Construct a list of the parents.
+      for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
-          CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong, 
-                                                    node->n_inherits ());
+          result = 
+            be_global->repository ()->lookup_id (parents[i]->repoID (),
+                                                 this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
 
-          IR_InterfaceDefSeq bases (n_parents);
-          bases.length (n_parents);
-          IR_Contained_var result;
+          bases[i] = IR_InterfaceDef::_narrow (result.in (),
+                                               this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
 
-          AST_Interface **parents = node->inherits ();
-
-          // Construct a list of the parents.
-          for (CORBA::ULong i = 0; i < n_parents; ++i)
-            {
-              result = 
-                be_global->repository ()->lookup_id (parents[i]->repoID (),
-                                                     ACE_TRY_ENV);
-              ACE_TRY_CHECK
-
-              bases[i] = IR_InterfaceDef::_narrow (result.in (),
-                                                   ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              if (CORBA::is_nil (bases[i].in ()))
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
-                    ),  
-                    -1
-                  );
-                }
-            }
-
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-          
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              IR_InterfaceDef_var new_def =
-                current_scope->create_interface (
-                                   node->repoID (),
-                                   node->local_name ()->get_string (),
-                                   this->gen_version (node),
-                                   bases,
-                                   ACE_static_cast (CORBA::Boolean, 
-                                                    node->is_abstract ()),
-                                   ACE_static_cast (CORBA::Boolean,
-                                                    node->is_local ()),
-                                   ACE_TRY_ENV
-                                 );
-              ACE_TRY_CHECK;
-
-              node->ifr_added_ = 1;
-
-              // Push the new IR object onto the scope stack.
-              IR_Container_var new_scope =
-                IR_Container::_narrow (new_def.in (),
-                                       ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" scope push failed\n")
-                    ),  
-                    -1
-                  );
-                }
-
-              // Visit the members, if any.
-              if (this->visit_scope (node) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" visit_scope failed\n")
-                    ),  
-                    -1
-                  );
-                }
-
-              // This spot in the AST doesn't necessarily have to be the
-              // interface definition - it could be any reference to it.
-              // The front end will already have fully defined it, so all
-              // the info in available anywhere. So it's a good idea to
-              // update the current IR object holder now. This will
-              // consume the objref pointer.
-              this->ir_current_ = 
-                IR_IDLType::_duplicate (new_def.in ());
-
-              IR_Container_ptr used_scope = IR_Container::_nil ();
-
-              // Pop the new IR object back off the scope stack.
-              if (be_global->ifr_scopes ().pop (used_scope) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" scope pop failed\n")
-                    ),  
-                    -1
-                  );
-                }
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
-        }
-      else
-        {
-          // There is already an entry in the repository. If the interface is
-          // defined and has not already been populated, we do so 
-          // now. If it is not yet defined or the full definition has already
-          // been added to the repository, we just update the current IR object 
-          // holder.
-          if (node->is_defined () && node->ifr_added_ == 0)
-            {
-              IR_InterfaceDef_var extant_def =
-                IR_InterfaceDef::_narrow (prev_def.in (),
-                                          ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              // Nothing prevents this interface's repo id from already being
-              // in the repository as another type, if it came from another
-              // IDL file whose generated code is not linked to the generated
-              // code from this IDL file. So we check here before we make a
-              // call on extant_def.
-              if (CORBA::is_nil (extant_def.in ()))
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface -")
-                      ACE_TEXT (" interface %s, in IDL file %s,  already entered")
-                      ACE_TEXT (" in repository as a different type\n"),
-                      node->full_name (),
-                      be_global->filename ()
-                    ),
-                    -1
-                  );
-                }
-              else if (node->ifr_fwd_added_ == 0)
-                {
-                  // No way to tell if this is just the definition of a forward
-                  // declaration from another file, or an error. This warning
-                  // will let the user decide, and roll back the processing of
-                  // this IDL file if necessary.
-                  this->redef_warning (node);
-
-                  return -1;
-                }
-
-              CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong, 
-                                                        node->n_inherits ());
-
-              IR_InterfaceDefSeq bases (n_parents);
-              bases.length (n_parents);
-              IR_Contained_var result;
-
-              AST_Interface **parents = node->inherits ();
-
-              // Construct a list of the parents.
-              for (CORBA::ULong i = 0; i < n_parents; ++i)
-                {
-                  result = 
-                    be_global->repository ()->lookup_id (parents[i]->repoID (),
-                                                         ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-
-                  // If one of our interface's parents is not in the repository,
-                  // that means that it has not yet been seen (even as a
-                  // forward declaration) in the IDL file, and we will have to
-                  // postpone the populating of our interface until they are all 
-                  // added.
-                  if (CORBA::is_nil (result.in ()))
-                    {
-                      this->ir_current_ =
-                        IR_IDLType::_narrow (prev_def.in (),
-                                             ACE_TRY_ENV);
-                      ACE_TRY_CHECK
-
-                      return 0;
-                    }
-
-                  bases[i] = IR_InterfaceDef::_narrow (result.in (),
-                                                       ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-
-                  if (CORBA::is_nil (bases[i].in ()))
-                    {
-                      ACE_ERROR_RETURN ((
-                          LM_ERROR,
-                          ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                          ACE_TEXT ("visit_interface -")
-                          ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
-                        ),  
-                        -1
-                      );
-                    }
-                }
-
-              extant_def->base_interfaces (bases,
-                                           ACE_TRY_ENV);
-              ACE_TRY_CHECK
-
-              extant_def->is_abstract (ACE_static_cast (CORBA::Boolean,
-                                                        node->is_abstract ()),
-                                       ACE_TRY_ENV);
-              ACE_TRY_CHECK
-
-              extant_def->is_local (ACE_static_cast (CORBA::Boolean,
-                                                     node->is_local ()),
-                                    ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              node->ifr_added_ = 1;
-
-              IR_Container_var new_scope =
-                IR_Container::_narrow (extant_def.in (),
-                                       ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              // Push the new IR object onto the scope stack.
-              if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" scope push failed\n")
-                    ),  
-                    -1
-                  );
-                }
-
-              // Visit the members, if any.
-              if (this->visit_scope (node) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" visit_scope failed\n")
-                    ),  
-                    -1
-                  );
-                }
-
-              // This spot in the AST doesn't necessarily have to be the
-              // interface definition - it could be any reference to it.
-              // The front end will already have fully defined it, so all
-              // the info is available anywhere. So it's a good idea to
-              // update the current IR object holder now.
-              this->ir_current_ = 
-                IR_IDLType::_duplicate (extant_def.in ());
-
-              IR_Container_ptr used_scope = IR_Container::_nil ();
-
-              // Pop the new IR object back off the scope stack.
-              if (be_global->ifr_scopes ().pop (used_scope) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" scope pop failed\n")
-                    ),  
-                    -1
-                  );
-                }
-            }
-          else
-            {
-              this->ir_current_ = 
-                IR_InterfaceDef::_narrow (prev_def.in (),
-                                          ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              if (CORBA::is_nil (this->ir_current_.in ()))
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface -")
-                      ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
-                    ),  
-                    -1
-                  );
-                }
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_interface"));
-
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-int 
-ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
-{
-  AST_Interface *i = node->full_definition ();
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Is this interface already in the respository?
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (i->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // If not, create an empty entry, to be populated later.
-      if (CORBA::is_nil (prev_def.in ()))
-        {
-          IR_InterfaceDefSeq bases (0);
-          bases.length (0);
-
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-          
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              this->ir_current_ =
-                current_scope->create_interface (
-                                   i->repoID (),
-                                   i->local_name ()->get_string (),
-                                   this->gen_version (i),
-                                   bases,
-                                   0,
-                                   0,
-                                   ACE_TRY_ENV
-                                 );
-              ACE_TRY_CHECK;
-
-              i->ifr_fwd_added_ = 1;
-            }
-          else
+          if (CORBA::is_nil (bases[i].in ()))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                  ACE_TEXT ("visit_interface_fwd -")
-                  ACE_TEXT (" scope stack is empty\n")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
+                ),  
+                -1
+              );
+            }
+        }
+
+      IR_Container_ptr current_scope = IR_Container::_nil ();
+          
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
+        {
+          IR_InterfaceDef_var new_def =
+            current_scope->create_interface (
+                               node->repoID (),
+                               node->local_name ()->get_string (),
+                               this->gen_version (node),
+                               bases,
+                               ACE_static_cast (CORBA::Boolean, 
+                                                node->is_abstract ()),
+                               ACE_static_cast (CORBA::Boolean,
+                                                node->is_local ()),
+                               this->env_
+                             );
+          TAO_IFR_CHECK_RETURN (-1);
+
+          node->ifr_added_ = 1;
+
+          // Push the new IR object onto the scope stack.
+          IR_Container_var new_scope =
+            IR_Container::_narrow (new_def.in (),
+                                   this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" scope push failed\n")
+                ),  
+                -1
+              );
+            }
+
+          // Visit the members, if any.
+          if (this->visit_scope (node) == -1)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" visit_scope failed\n")
+                ),  
+                -1
+              );
+            }
+
+          // This spot in the AST doesn't necessarily have to be the
+          // interface definition - it could be any reference to it.
+          // The front end will already have fully defined it, so all
+          // the info in available anywhere. So it's a good idea to
+          // update the current IR object holder now. This will
+          // consume the objref pointer.
+          this->ir_current_ = 
+            IR_IDLType::_duplicate (new_def.in ());
+
+          IR_Container_ptr used_scope = IR_Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" scope pop failed\n")
                 ),  
                 -1
               );
@@ -599,24 +319,39 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
         }
       else
         {
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
-          this->ir_current_ = 
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
+        }
+    }
+  else
+    {
+      // There is already an entry in the repository. If the interface is
+      // defined and has not already been populated, we do so 
+      // now. If it is not yet defined or the full definition has already
+      // been added to the repository, we just update the current IR object 
+      // holder.
+      if (node->is_defined () && node->ifr_added_ == 0)
+        {
+          IR_InterfaceDef_var extant_def =
             IR_InterfaceDef::_narrow (prev_def.in (),
-                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                      this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
 
           // Nothing prevents this interface's repo id from already being
           // in the repository as another type, if it came from another
           // IDL file whose generated code is not linked to the generated
           // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
+          // call on extant_def.
+          if (CORBA::is_nil (extant_def.in ()))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                  ACE_TEXT ("visit_interface_fwd -")
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface -")
                   ACE_TEXT (" interface %s, in IDL file %s,  already entered")
                   ACE_TEXT (" in repository as a different type\n"),
                   node->full_name (),
@@ -634,17 +369,234 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
               this->redef_warning (node);
 
               return -1;
-            } 
+            }
+
+          CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong, 
+                                                    node->n_inherits ());
+
+          IR_InterfaceDefSeq bases (n_parents);
+          bases.length (n_parents);
+          IR_Contained_var result;
+
+          AST_Interface **parents = node->inherits ();
+
+          // Construct a list of the parents.
+          for (CORBA::ULong i = 0; i < n_parents; ++i)
+            {
+              result = 
+                be_global->repository ()->lookup_id (parents[i]->repoID (),
+                                                     this->env_);
+              TAO_IFR_CHECK_RETURN (-1);
+
+              // If one of our interface's parents is not in the repository,
+              // that means that it has not yet been seen (even as a forward
+              // declaration) in the IDL file, and we will have to postpone
+              // the populating of our interface until they are all added.
+              if (CORBA::is_nil (result.in ()))
+                {
+                  this->ir_current_ =
+                    IR_IDLType::_narrow (prev_def.in (),
+                                         this->env_);
+                  TAO_IFR_CHECK_RETURN (-1);
+
+                  return 0;
+                }
+
+              bases[i] = IR_InterfaceDef::_narrow (result.in (),
+                                                   this->env_);
+              TAO_IFR_CHECK_RETURN (-1);
+
+              if (CORBA::is_nil (bases[i].in ()))
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("visit_interface -")
+                      ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
+                    ),  
+                    -1
+                  );
+                }
+            }
+
+          extant_def->base_interfaces (bases,
+                                       this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          extant_def->is_abstract (ACE_static_cast (CORBA::Boolean,
+                                                    node->is_abstract ()),
+                                   this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          extant_def->is_local (ACE_static_cast (CORBA::Boolean,
+                                                 node->is_local ()),
+                                this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          node->ifr_added_ = 1;
+
+          IR_Container_var new_scope =
+            IR_Container::_narrow (extant_def.in (),
+                                   this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          // Push the new IR object onto the scope stack.
+          if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" scope push failed\n")
+                ),  
+                -1
+              );
+            }
+
+          // Visit the members, if any.
+          if (this->visit_scope (node) == -1)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" visit_scope failed\n")
+                ),  
+                -1
+              );
+            }
+
+          // This spot in the AST doesn't necessarily have to be the
+          // interface definition - it could be any reference to it.
+          // The front end will already have fully defined it, so all
+          // the info is available anywhere. So it's a good idea to
+          // update the current IR object holder now.
+          this->ir_current_ = 
+            IR_IDLType::_duplicate (extant_def.in ());
+
+          IR_Container_ptr used_scope = IR_Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),  
+                -1
+              );
+            }
+        }
+      else
+        {
+          this->ir_current_ = 
+            IR_InterfaceDef::_narrow (prev_def.in (),
+                                      this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+
+          if (CORBA::is_nil (this->ir_current_.in ()))
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface -")
+                  ACE_TEXT (" IR_InterfaceDef::_narrow failed\n")
+                ),  
+                -1
+              );
+            }
         }
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_interface_fwd"));
 
-      return -1;
+  return 0;
+}
+
+int 
+ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
+{
+  AST_Interface *i = node->full_definition ();
+
+  // Is this interface already in the respository?
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (i->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  // If not, create an empty entry, to be populated later.
+  if (CORBA::is_nil (prev_def.in ()))
+    {
+      IR_InterfaceDefSeq bases (0);
+      bases.length (0);
+
+      IR_Container_ptr current_scope = IR_Container::_nil ();
+          
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
+        {
+          this->ir_current_ =
+            current_scope->create_interface (
+                               i->repoID (),
+                               i->local_name ()->get_string (),
+                               this->gen_version (i),
+                               bases,
+                               0,
+                               0,
+                               this->env_
+                             );
+          TAO_IFR_CHECK_RETURN (-1);
+
+          i->ifr_fwd_added_ = 1;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface_fwd -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
+  else
+    {
+      // There is already an entry in the repository, so just update
+      // the current IR object holder.
+      this->ir_current_ = 
+        IR_InterfaceDef::_narrow (prev_def.in (),
+                                  this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
+
+      // Nothing prevents this interface's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_interface_fwd -")
+              ACE_TEXT (" interface %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
+      else if (node->ifr_fwd_added_ == 0)
+        {
+          // No way to tell if this is just the definition of a forward
+          // declaration from another file, or an error. This warning
+          // will let the user decide, and roll back the processing of
+          // this IDL file if necessary.
+          this->redef_warning (node);
+
+          return -1;
+        } 
+    }
 
   return 0;
 }
@@ -664,63 +616,52 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_InterfaceFwd *)
 int 
 ifr_adding_visitor::visit_structure (AST_Structure *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  IR_Contained_var prev_def = 
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      IR_Contained_var prev_def = 
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ifr_adding_visitor_structure visitor (this->env_,
+                                            0);
 
-      if (CORBA::is_nil (prev_def.in ()))
-        {
-          ifr_adding_visitor_structure visitor (0);
+      int retval = visitor.visit_structure (node);
 
-          int retval = visitor.visit_structure (node);
-
-          if (retval == 0)
-            {
-              this->ir_current_ =
-                IR_IDLType::_duplicate (visitor.ir_current ());
-            }
-
-          return retval;
-        }
-      else
+      if (retval == 0)
         {
           this->ir_current_ =
-            IR_IDLType::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            IR_IDLType::_duplicate (visitor.ir_current ());
+        }
 
-          // Nothing prevents this struct's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_structure -")
-                  ACE_TEXT (" struct %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
+      return retval;
+    }
+  else
+    {
+      this->ir_current_ =
+        IR_IDLType::_narrow (prev_def.in (),
+                             this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
+
+      // Nothing prevents this struct's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_structure -")
+              ACE_TEXT (" struct %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
         }
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_structure"));
-
-      return -1;
-    }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -728,7 +669,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
 int 
 ifr_adding_visitor::visit_exception (AST_Exception *node)
 {
-  ifr_adding_visitor_exception visitor;
+  ifr_adding_visitor_exception visitor (this->env_);
 
   // No point in updating ir_current_ here because
   // ExceptionDef is not an IDLType.
@@ -739,100 +680,83 @@ ifr_adding_visitor::visit_exception (AST_Exception *node)
 int 
 ifr_adding_visitor::visit_enum (AST_Enum *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // Is this enum already in the respository?
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  // If not, create a new entry.
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      // Is this enum already in the respository?
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CORBA::ULong member_count = ACE_static_cast (CORBA::ULong, 
+                                                   node->member_count ());
 
-      // If not, create a new entry.
-      if (CORBA::is_nil (prev_def.in ()))
+      IR_EnumMemberSeq members (member_count);
+      members.length (member_count);
+
+      UTL_ScopedName *member_name = 0;
+
+      // Get a list of the member names.
+      for (CORBA::ULong i = 0; i < member_count; ++i)
         {
-          CORBA::ULong member_count = 
-            ACE_static_cast (CORBA::ULong, 
-                             node->member_count ());
+          member_name = node->value_to_name (i);
 
-          IR_EnumMemberSeq members (member_count);
-          members.length (member_count);
+          members[i] = 
+            CORBA::string_dup (member_name->last_component ()->get_string ());
+        }
 
-          UTL_ScopedName *member_name = 0;
+      IR_Container_ptr current_scope = IR_Container::_nil ();
 
-          // Get a list of the member names.
-          for (CORBA::ULong i = 0; i < member_count; ++i)
-            {
-              member_name = node->value_to_name (i);
-
-              members[i] = 
-                CORBA::string_dup (
-                    member_name->last_component ()->get_string ()
-                  );
-            }
-
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              this->ir_current_ =
-                current_scope->create_enum (
-                    node->repoID (),
-                    node->local_name ()->get_string (),
-                    this->gen_version (node),
-                    members,
-                    ACE_TRY_ENV
-                  );
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_enum -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
+        {
+          this->ir_current_ =
+            current_scope->create_enum (node->repoID (),
+                                        node->local_name ()->get_string (),
+                                        this->gen_version (node),
+                                        members,
+                                        this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
-          this->ir_current_ = 
-            IR_EnumDef::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Nothing prevents this enum's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_enum -")
-                  ACE_TEXT (" enum %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_enum -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
         }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_enum"));
+      // There is already an entry in the repository, so just update
+      // the current IR object holder.
+      this->ir_current_ = 
+        IR_EnumDef::_narrow (prev_def.in (),
+                             this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
 
-      return -1;
+      // Nothing prevents this enum's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_enum -")
+              ACE_TEXT (" enum %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -840,7 +764,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
 int 
 ifr_adding_visitor::visit_operation (AST_Operation *node)
 {
-  ifr_adding_visitor_operation visitor;
+  ifr_adding_visitor_operation visitor (this->env_);
 
   return visitor.visit_operation (node);
 }
@@ -880,129 +804,117 @@ ifr_adding_visitor::visit_field (AST_Field *node)
 int 
 ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  IR_AttributeDef_var new_def;
+
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      IR_AttributeMode mode = 
+        node->readonly () ? ATTR_READONLY : ATTR_NORMAL;
 
-      IR_AttributeDef_var new_def;
+      // TODO - used with components.
+      IR_ExceptionDefSeq dummy (0);
+      dummy.length (0);
 
-      if (CORBA::is_nil (prev_def.in ()))
+      AST_Type *type = node->field_type ();
+
+      // If this attribute is itself an interface, we just update
+      // the current IR object holder. The forward declaration
+      // (if any) will create a repository entry, and the full
+      // definition will take care of the interface's scope. Trying 
+      // to take care of the interface's scope at this point could
+      // cause problems, if the types of all its members have not yet
+      // been declared.
+      if (type->node_type () == AST_Decl::NT_interface)
         {
-          IR_AttributeMode mode = 
-            node->readonly () ? ATTR_READONLY : ATTR_NORMAL;
+          IR_Contained_var prev_type_def =
+            be_global->repository ()->lookup_id (type->repoID (),
+                                                  this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
 
-          // TODO - used with components.
-          IR_ExceptionDefSeq dummy (0);
-          dummy.length (0);
-
-          AST_Type *type = node->field_type ();
-
-          // If this attribute is itself an interface, we just update
-          // the current IR object holder. The forward declaration
-          // (if any) will create a repository entry, and the full
-          // definition will take care of the interface's scope. Trying 
-          // to take care of the interface's scope at this point could
-          // cause problems, if the types of all its members have not yet
-          // been declared.
-          if (type->node_type () == AST_Decl::NT_interface)
-            {
-              IR_Contained_var prev_type_def =
-                be_global->repository ()->lookup_id (type->repoID (),
-                                                      ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              this->ir_current_ = 
-                IR_IDLType::_narrow (prev_type_def.in (),
-                                     ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              // Since the type of this attribute has already been seen
-              // in the IDL file (or is a primitive type), the following
-              // call will simply look up the repository entry and place
-              // it in the current IR object holder.
-              if (type->ast_accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_attribute - ")
-                      ACE_TEXT ("failed to accept visitor\n")
-                    ), 
-                    -1
-                  );
-                }
-            }
-
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              IR_InterfaceDef_var iface = 
-                IR_InterfaceDef::_narrow (current_scope);
-
-              new_def =
-                iface->create_attribute (node->repoID (),
-                                         node->local_name ()->get_string (),
-                                         this->gen_version (node),
-                                         this->ir_current_.in (),
-                                         mode,
-                                         dummy,
-                                         dummy,
-                                         ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_attribute -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
+          this->ir_current_ = 
+            IR_IDLType::_narrow (prev_type_def.in (),
+                                 this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
-          new_def = 
-            IR_AttributeDef::_narrow (prev_def.in (),
-                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Nothing prevents this attribute's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on new_def.
-          if (CORBA::is_nil (new_def.in ()))
+          // Since the type of this attribute has already been seen
+          // in the IDL file (or is a primitive type), the following
+          // call will simply look up the repository entry and place
+          // it in the current IR object holder.
+          if (type->ast_accept (this) == -1)
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_attribute -")
-                  ACE_TEXT (" attribute %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_attribute - ")
+                  ACE_TEXT ("failed to accept visitor\n")
+                ), 
                 -1
               );
             }
         }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_attribute"));
 
-      return -1;
+      IR_Container_ptr current_scope = IR_Container::_nil ();
+
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
+        {
+          IR_InterfaceDef_var iface = 
+            IR_InterfaceDef::_narrow (current_scope);
+
+          new_def =
+            iface->create_attribute (node->repoID (),
+                                     node->local_name ()->get_string (),
+                                     this->gen_version (node),
+                                     this->ir_current_.in (),
+                                     mode,
+                                     dummy,
+                                     dummy,
+                                     this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_attribute -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
+  else
+    {
+      new_def = 
+        IR_AttributeDef::_narrow (prev_def.in (),
+                             this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
+
+      // Nothing prevents this attribute's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on new_def.
+      if (CORBA::is_nil (new_def.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_attribute -")
+              ACE_TEXT (" attribute %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
+    }
 
   return 0;
 }
@@ -1010,63 +922,52 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 int 
 ifr_adding_visitor::visit_union (AST_Union *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  IR_Contained_var prev_def = 
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      IR_Contained_var prev_def = 
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ifr_adding_visitor_union visitor (this->env_,
+                                        0);
 
-      if (CORBA::is_nil (prev_def.in ()))
-        {
-          ifr_adding_visitor_union visitor (0);
+      int retval = visitor.visit_union (node);
 
-          int retval = visitor.visit_union (node);
-
-          if (retval == 0)
-            {
-              this->ir_current_ =
-                IR_IDLType::_duplicate (visitor.ir_current ());
-            }
-
-          return retval;
-        }
-      else
+      if (retval == 0)
         {
           this->ir_current_ =
-            IR_UnionDef::_narrow (prev_def.in (),
-                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            IR_IDLType::_duplicate (visitor.ir_current ());
+        }
 
-          // Nothing prevents this union's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_union -")
-                  ACE_TEXT (" union %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
+      return retval;
+    }
+  else
+    {
+      this->ir_current_ =
+        IR_UnionDef::_narrow (prev_def.in (),
+                             this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
+
+      // Nothing prevents this union's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_union -")
+              ACE_TEXT (" union %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
         }
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_union"));
-
-      return -1;
-    }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1108,92 +1009,78 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
 {
   const char *id = node->repoID ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (id,
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (id,
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
 
-      // Nothing prevents this constant's repo id from already being
-      // in the repository as another type, if it came from another
-      // IDL file whose generated code is not linked to the generated
-      // code from this IDL file. So we check here before we make a
-      // call on ir_current_.
-      if (!CORBA::is_nil (prev_def.in ()))
-        {      
-          IR_ConstantDef_var const_def =
-            IR_ConstantDef::_narrow (prev_def.in (),
-                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+  // Nothing prevents this constant's repo id from already being
+  // in the repository as another type, if it came from another
+  // IDL file whose generated code is not linked to the generated
+  // code from this IDL file. So we check here before we make a
+  // call on ir_current_.
+  if (!CORBA::is_nil (prev_def.in ()))
+    {      
+      IR_ConstantDef_var const_def =
+        IR_ConstantDef::_narrow (prev_def.in (),
+                                 this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
 
-          if (CORBA::is_nil (const_def.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_constant -")
-                  ACE_TEXT (" constant %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
-
-          // If everything's ok, just return.
-          return 0;
-        }
-
-      AST_Expression::AST_ExprValue *ev = node->constant_value ()->ev ();
-
-      IR_PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
-
-      IR_IDLType_var idl_type = 
-        be_global->repository ()->get_primitive (pkind,
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Any any;
-
-      this->load_any (ev,
-                      any);
-
-      IR_Container_ptr current_scope = IR_Container::_nil ();
-
-      if (be_global->ifr_scopes ().top (current_scope) == 0)
-        {
-          IR_ConstantDef_var new_def =
-            current_scope->create_constant (
-                id,
-                node->local_name ()->get_string (),
-                this->gen_version (node),
-                idl_type.in (),
-                any,
-                ACE_TRY_ENV
-              );
-          ACE_TRY_CHECK;
-        }
-      else
+      if (CORBA::is_nil (const_def.in ()))
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_constant -")
-              ACE_TEXT (" scope stack is empty\n")
-            ),  
+              ACE_TEXT (" constant %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
             -1
           );
         }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_constant"));
 
-      return -1;
+      // If everything's ok, just return.
+      return 0;
     }
-  ACE_ENDTRY;
+
+  AST_Expression::AST_ExprValue *ev = node->constant_value ()->ev ();
+
+  IR_PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
+
+  IR_IDLType_var idl_type = 
+    be_global->repository ()->get_primitive (pkind,
+                                             this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  CORBA::Any any;
+
+  this->load_any (ev,
+                  any);
+
+  IR_Container_ptr current_scope = IR_Container::_nil ();
+
+  if (be_global->ifr_scopes ().top (current_scope) == 0)
+    {
+      IR_ConstantDef_var new_def =
+        current_scope->create_constant (id,
+                                        node->local_name ()->get_string (),
+                                        this->gen_version (node),
+                                        idl_type.in (),
+                                        any,
+                                        this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_constant -")
+          ACE_TEXT (" scope stack is empty\n")
+        ),  
+        -1
+      );
+    }
 
   return 0;
 }
@@ -1201,34 +1088,19 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
 int 
 ifr_adding_visitor::visit_array (AST_Array *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  this->element_type (node->base_type ());
+  TAO_IFR_CHECK_RETURN (-1);
+
+  AST_Expression **dims = node->dims ();
+
+  for (unsigned long i = node->n_dims (); i > 0; --i)
     {
-      this->element_type (node->base_type (),
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      AST_Expression **dims = node->dims ();
-
-      for (unsigned long i = node->n_dims (); i > 0; --i)
-        {
-          this->ir_current_ = 
-            be_global->repository ()->create_array (
-                dims[i - 1]->ev ()->u.ulval,
-                this->ir_current_.in (),
-                ACE_TRY_ENV
-              );
-          ACE_TRY_CHECK;
-        }
+      this->ir_current_ = 
+        be_global->repository ()->create_array (dims[i - 1]->ev ()->u.ulval,
+                                                this->ir_current_.in (),
+                                                this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_array"));
-
-      return -1;
-    }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1236,29 +1108,16 @@ ifr_adding_visitor::visit_array (AST_Array *node)
 int 
 ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->element_type (node->base_type (),
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  this->element_type (node->base_type ());
+  TAO_IFR_CHECK_RETURN (-1);
 
-      this->ir_current_ =
-        be_global->repository ()->create_sequence (
-                                      node->max_size ()->ev ()->u.ulval,
-                                      this->ir_current_.in (),
-                                      ACE_TRY_ENV
-                                    );
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_sequence"));
-
-      return -1;
-    }
-  ACE_ENDTRY;
+  this->ir_current_ =
+    be_global->repository ()->create_sequence (
+                                  node->max_size ()->ev ()->u.ulval,
+                                  this->ir_current_.in (),
+                                  this->env_
+                                );
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -1272,32 +1131,20 @@ ifr_adding_visitor::visit_string (AST_String *node)
 
   CORBA::ULong bound = ACE_static_cast (CORBA::ULong, ev->u.ulval);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  if (node->node_type () == AST_Decl::NT_string)
     {
-      if (node->node_type () == AST_Decl::NT_string)
-        {
-          this->ir_current_ =
-            be_global->repository ()->create_string (bound,
-                                                     ACE_TRY_ENV);
-        }
-      else
-        {
-          this->ir_current_ =
-            be_global->repository ()->create_wstring (bound,
-                                                      ACE_TRY_ENV);
-        }
-
-      ACE_TRY_CHECK;
+      this->ir_current_ =
+        be_global->repository ()->create_string (bound,
+                                                 this->env_);
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_string"));
-
-      return -1;
+      this->ir_current_ =
+        be_global->repository ()->create_wstring (bound,
+                                                  this->env_);
     }
-  ACE_ENDTRY;
+
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -1305,84 +1152,69 @@ ifr_adding_visitor::visit_string (AST_String *node)
 int 
 ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // Is this typedef already in the respository?
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  // If not, create a new entry.
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      // Is this typedef already in the respository?
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->element_type (node->base_type ());
+      TAO_IFR_CHECK_RETURN (-1);
 
-      // If not, create a new entry.
-      if (CORBA::is_nil (prev_def.in ()))
+      IR_Container_ptr current_scope = IR_Container::_nil ();
+
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          this->element_type (node->base_type (),
-                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              this->ir_current_ = 
-                current_scope->create_alias (
-                   node->repoID (),
-                   node->local_name ()->get_string (),
-                   this->gen_version (node),
-                   this->ir_current_.in (),
-                   ACE_TRY_ENV
-                 );
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
+          this->ir_current_ = 
+            current_scope->create_alias (node->repoID (),
+                                         node->local_name ()->get_string (),
+                                         this->gen_version (node),
+                                         this->ir_current_.in (),
+                                         this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
-          this->ir_current_ = 
-            IR_TypedefDef::_narrow (prev_def.in (),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Nothing prevents this typedef's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
-                  ACE_TEXT (" typedef %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
         }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_typedef"));
+      // There is already an entry in the repository, so just update
+      // the current IR object holder.
+      this->ir_current_ = 
+        IR_TypedefDef::_narrow (prev_def.in (),
+                                 this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
 
-      return -1;
+      // Nothing prevents this typedef's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
+              ACE_TEXT (" typedef %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1390,57 +1222,45 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 int 
 ifr_adding_visitor::visit_root (AST_Root *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  IR_Container_var new_scope = 
+    IR_Container::_narrow (be_global->repository (),
+                           this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
     {
-      IR_Container_var new_scope = 
-        IR_Container::_narrow (be_global->repository (),
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" scope push failed\n")
-            ),  
-            -1
-          );
-        }
-
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" visit_scope failed\n")
-            ),  
-            -1
-          );
-        }
-
-      IR_Container_ptr tmp = IR_Container::_nil ();
-
-      if (be_global->ifr_scopes ().pop (tmp) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" scope pop failed\n")
-            ),  
-            -1
-          );
-        }
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" scope push failed\n")
+        ),  
+        -1
+      );
     }
-  ACE_CATCHANY
+
+  if (this->visit_scope (node) == -1)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_root"));
-
-      return -1;
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),  
+        -1
+      );
     }
-  ACE_ENDTRY;
+
+  IR_Container_ptr tmp = IR_Container::_nil ();
+
+  if (be_global->ifr_scopes ().pop (tmp) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" scope pop failed\n")
+        ),  
+        -1
+      );
+    }
 
   return 0;
 }
@@ -1448,76 +1268,61 @@ ifr_adding_visitor::visit_root (AST_Root *node)
 int 
 ifr_adding_visitor::visit_native (AST_Native *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  IR_Contained_var prev_def =
+    be_global->repository ()->lookup_id (node->repoID (),
+                                         this->env_);
+  TAO_IFR_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (prev_def.in ()))
     {
-      IR_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      IR_Container_ptr current_scope = IR_Container::_nil ();
 
-      if (CORBA::is_nil (prev_def.in ()))
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          IR_Container_ptr current_scope = IR_Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              this->ir_current_ =
-                current_scope->create_native (
-                    node->repoID (),
-                    node->local_name ()->get_string (),
-                    this->gen_version (node),
-                    ACE_TRY_ENV
-                  );
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_native -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),  
-                -1
-              );
-            }
+          this->ir_current_ =
+            current_scope->create_native (node->repoID (),
+                                          node->local_name ()->get_string (),
+                                          this->gen_version (node),
+                                          this->env_);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
-          this->ir_current_ =
-            IR_NativeDef::_narrow (prev_def.in (),
-                                   ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Nothing prevents this native type's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before we make a
-          // call on ir_current_.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_native -")
-                  ACE_TEXT (" native type %s, in IDL file %s,  ")
-                  ACE_TEXT ("already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_native -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),  
+            -1
+          );
         }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_native"));
+      this->ir_current_ =
+        IR_NativeDef::_narrow (prev_def.in (),
+                               this->env_);
+      TAO_IFR_CHECK_RETURN (-1);
 
-      return -1;
+      // Nothing prevents this native type's repo id from already being
+      // in the repository as another type, if it came from another
+      // IDL file whose generated code is not linked to the generated
+      // code from this IDL file. So we check here before we make a
+      // call on ir_current_.
+      if (CORBA::is_nil (this->ir_current_.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_native -")
+              ACE_TEXT (" native type %s, in IDL file %s,  already entered")
+              ACE_TEXT (" in repository as a different type\n"),
+              node->full_name (),
+              be_global->filename ()
+            ),
+            -1
+          );
+        }
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1707,8 +1512,7 @@ ifr_adding_visitor::gen_version (AST_Decl *)
 }
 
 void 
-ifr_adding_visitor::element_type (AST_Type *base_type,
-                                  CORBA::Environment &ACE_TRY_ENV)
+ifr_adding_visitor::element_type (AST_Type *base_type)
 {
   if (base_type->anonymous ())
     {
@@ -1725,8 +1529,8 @@ ifr_adding_visitor::element_type (AST_Type *base_type,
     {
       IR_Contained_var contained = 
         be_global->repository ()->lookup_id (base_type->repoID (),
-                                             ACE_TRY_ENV);
-      ACE_CHECK;
+                                             this->env_);
+      TAO_IFR_CHECK;
 
       if (CORBA::is_nil (contained.in ()))
         {
@@ -1738,8 +1542,8 @@ ifr_adding_visitor::element_type (AST_Type *base_type,
         }
 
       this->ir_current_ = IR_IDLType::_narrow (contained.in (),
-                                               ACE_TRY_ENV);
-      ACE_CHECK;
+                                               this->env_);
+      TAO_IFR_CHECK;
     }
 }
 

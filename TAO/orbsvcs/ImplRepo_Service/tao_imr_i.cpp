@@ -61,8 +61,7 @@ TAO_IMR_i::init (int argc, char **argv)
       // Get the ImplRepo object
 
       CORBA::Object_var implrepo_object =
-        orb_->resolve_initial_references ("ImplRepoService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb_->resolve_initial_references ("ImplRepoService");
 
       if (CORBA::is_nil (implrepo_object.in ()))
         {

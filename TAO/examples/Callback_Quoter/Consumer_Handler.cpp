@@ -313,8 +313,7 @@ Consumer_Handler::run (void)
     {
       // Obtain and activate the RootPOA.
      CORBA::Object_var obj =
-            this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-     ACE_TRY_CHECK;
+            this->orb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);

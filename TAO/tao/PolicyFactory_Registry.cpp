@@ -43,8 +43,12 @@ TAO_PolicyFactory_Registry::register_policy_factory (
     {
       // PolicyFactory of given type already exists.
 
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 12,
-                                       CORBA::COMPLETED_NO));
+      /**
+       * @todo
+       * Fill in the appropriate minor code once the OMG decides what
+       * it should be.
+       */
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
     }
   else if (result == -1)
     {

@@ -161,20 +161,17 @@ int
 ACE_Service_Manager::list_services (void)
 {
   ACE_TRACE ("ACE_Service_Manager::list_services");
-  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance (), 0);
+  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
 
   for (const ACE_Service_Type *sr;
        sri.next (sr) != 0;
        sri.advance ())
     {
-      int len = ACE_OS::strlen (sr->name ()) + 11;
+      int len = ACE_OS::strlen (sr->name ()) + 1;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
-      ACE_OS::strcat (buf, (sr->active ()) ?
-                      ACE_TEXT (" (active) ") :
-                      ACE_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';
@@ -203,8 +200,7 @@ ACE_Service_Manager::list_services (void)
   return 0;
 }
 
-// Trigger a reconfiguration of the Service Configurator via its
-// svc.conf file.
+// Trigger a remote reconfiguration of the Service Configurator.
 
 int
 ACE_Service_Manager::reconfigure_services (void)
@@ -225,35 +221,6 @@ ACE_Service_Manager::reconfigure_services (void)
   ACE_Service_Config::reconfig_occurred ((sig_atomic_t) 1);
   return this->client_stream_.send_n ("done\n",
                                       sizeof ("done\n"));
-}
-
-// isolate the request-processing code
-void
-ACE_Service_Manager::process_request (ACE_TCHAR *request)
-{
-  ACE_TRACE("ACE_Service_Manager::process_request");
-  ACE_TCHAR *p;
-
-  // Kill trailing newlines.
-  for (p = request;
-       (*p != '\0') && (*p != '\r') && (*p != '\n');
-       p++)
-    continue;
-
-  *p = '\0';
-
-  if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
-    // Return a list of the configured services.
-    this->list_services ();
-  else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
-    // Trigger a reconfiguration by re-reading the local <svc.conf> file.
-    this->reconfigure_services ();
-  else
-    // Just process a single request passed in via the socket
-    // remotely.
-    ACE_Service_Config::process_directive (request);
-
-  // Additional management services may be handled here...
 }
 
 // Accept new connection from client and carry out the service they
@@ -295,7 +262,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
                   sa.get_port_number ()));
     }
 
-  ACE_TCHAR request[BUFSIZ];
+  char request[BUFSIZ];
 
   // Read service request from client.
 
@@ -321,13 +288,27 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       {
+        char *p;
+
+        // Kill trailing newlines.
+        for (p = request;
+             (*p != '\0') && (*p != '\r') && (*p != '\n');
+             p++)
+          continue;
+
+        *p = '\0';
+
         ACE_Event_Handler *old_signal_handler = 0;
         ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     this,
                                                     0,
                                                     &old_signal_handler);
+        if (ACE_OS::strcmp (request, "help") == 0)
+          this->list_services ();
+        else if (ACE_OS::strcmp (request, "reconfigure") == 0)
+          this->reconfigure_services ();
 
-        this->process_request (request);
+        // Additional management services may be handled here...
 
         // Restore existing SIGPIPE handler
         ACE_Reactor::instance ()->register_handler (SIGPIPE,

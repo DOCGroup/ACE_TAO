@@ -46,11 +46,8 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS +=
 
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      TAO_ORBSVCS += LifeCycle 
-
-    ifeq ($(corba_messaging),1)
-      TAO_ORBSVCS += FaultTolerance
-    endif #corba_messaging
+      TAO_ORBSVCS += LifeCycle \
+	             FaultTolerance
     endif # ACE_HAS_GNUG_PRE_2_8
 
     # The Load Balancer requires POA ServantLocator support, which

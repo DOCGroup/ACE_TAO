@@ -50,6 +50,10 @@
 
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
+#if defined(sun) || defined(__osf__)
+extern "C" int gethostname(char* name, int len);
+#endif
+
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 
@@ -104,6 +108,9 @@ typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr> Flo
 typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
 #include "AV_Core.h"
+
+int deactivate_servant (PortableServer::Servant servant);
+char *get_flowname (const char *flow_spec_entry_str);
 
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl,

@@ -178,6 +178,4 @@ module CosEventChannelAdmin
     };
 };
 
-#pragma prefix ""
-
 #endif /* TAO_EVENTCHANNELADMIN_IDL */

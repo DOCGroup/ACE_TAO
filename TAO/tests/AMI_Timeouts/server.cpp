@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
       Timeout_i timeout_i (orb.in ());
 
-      TimeoutObj_var timeout_var =
+      Timeout_var timeout_var =
         timeout_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
-      AMI_TimeoutObjHandler_var timeoutHandler_var =
+      AMI_TimeoutHandler_var timeoutHandler_var =
         timeoutHandler_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -127,20 +127,11 @@ main (int argc, char *argv[])
 
       client->activate ();
       */
-
+      
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       //delete client;
     }
@@ -151,6 +142,7 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

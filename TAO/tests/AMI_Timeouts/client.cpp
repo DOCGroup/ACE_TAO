@@ -78,8 +78,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TimeoutObj_var timeout_var =
-        TimeoutObj::_narrow (object.in (), ACE_TRY_ENV);
+      Timeout_var timeout_var =
+        Timeout::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (timeout_var.in ()))
@@ -115,30 +115,21 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
-      AMI_TimeoutObjHandler_var timeoutHandler_var =
+      AMI_TimeoutHandler_var timeoutHandler_var =
         timeoutHandler_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Instantiate client
-      TimeoutClient client (orb.in (),
-                            timeout_var.in (),
-                            timeoutHandler_var.in (),
-                            &timeoutHandler_i,
-                            msec);
+      TimeoutClient* client = new TimeoutClient (orb.in (),
+                                                 timeout_var.in (),
+                                                 timeoutHandler_var.in (),
+                                                 &timeoutHandler_i,
+                                                 msec);
 
-      client.activate ();
+      client->activate ();
 
       // ORB loop.
-      orb->run (ACE_TRY_ENV);  // Fetch responses
-      ACE_TRY_CHECK;
-
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb->run ();  // Fetch responses
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
@@ -150,6 +141,7 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

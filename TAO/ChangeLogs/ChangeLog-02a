@@ -1,2314 +1,443 @@
-Tue Mar 20 08:30:10 2001  Ossama Othman  <ossama@uci.edu>
-
-	* tao/Exception.cpp (_tao_get_omg_exception_description):
-
-	  Forgot to add the "const" qualifier to the description table
-	  declarations.  This fixes a "string literal loses const
-	  qualifier" warning.
-
-Tue Mar 20 06:17:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* orbsvcs/examples/RtEC/Schedule:/Service.cpp: Fixed a nagging
-	  warning in many platforms.  
-
-Mon Mar 19 19:49:04 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
-        * orbsvcs/tests/Event/Basic/BCast.bor:
-        * orbsvcs/tests/Event/Basic/Bitmask.bor:
-        * orbsvcs/tests/Event/Basic/Complex.bor:
-        * orbsvcs/tests/Event/Basic/Control.bor:
-        * orbsvcs/tests/Event/Basic/Disconnect.bor:
-        * orbsvcs/tests/Event/Basic/Gateway.bor:
-        * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
-        * orbsvcs/tests/Event/Basic/Negation.bor:
-        * orbsvcs/tests/Event/Basic/Observer.bor:
-        * orbsvcs/tests/Event/Basic/Random.bor:
-        * orbsvcs/tests/Event/Basic/Reconnect.bor:
-        * orbsvcs/tests/Event/Basic/Shutdown.bor:
-        * orbsvcs/tests/Event/Basic/Timeout.bor:
-        * orbsvcs/tests/Event/Basic/Wildcard.bor:
-        * orbsvcs/tests/Event/Performance/Connect.bor:
-        * orbsvcs/tests/Event/Performance/Inversion.bor:
-        * orbsvcs/tests/Event/Performance/Throughput.bor:
-        * orbsvcs/tests/Event/Performance/Latency.bor:
-        * orbsvcs/tests/Event/Performance/Latency_Server.bor:
-	  Use the new directory for the ECTest library.
-
-Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
-
-	* tao/Transport.cpp:
-	* tao/Transport.h:
-
-	  Added new thread-safe TAO_Synch_Refcountable class (which uses
- 	  TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
- 	  changed the private base of TAO_Transport to use it rather than
- 	  ACE_Refcountable.  Now refcounting of Transport objects should
- 	  be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
- 	  814]
-
-Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_activator): 
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_locator): 
-	* examples/POA/Loader/Server_Manager.cpp (create_activator): 
-	* examples/POA/Loader/Server_Manager.cpp (create_locator): 
-
-	  Fixed Servant Managers and Servant Activators leaks.  
-	
-	* tao/ORB_Core.cpp (collocation_strategy): When looking for a
-	  valid servant ORB, the following code was used:
-
-	  stub->servant_orb_ptr () != 0
-
-	  Unfortunately, servant_orb_ptr() duplicated the ORB.  Correct
-	  solution is to use:
-
-	  stub->servant_orb_var ().in () != CORBA::ORB::_nil ()
-
-	* tests/POA/wait_for_completion/wait_for_completion.cpp (main):
-	  The servant was not removed from the POA at the end of the
-	  program.  When the POA died in the static destructors, it tried
-	  to reach for the dead servant causing a seg fault.  This was
-	  fixed by destroying the POA before the servant died.
-
-Mon Mar 19 14:20:38 2001  Ossama Othman  <ossama@uci.edu>
-
-	* orbsvcs/tests/Makefile (DIRS):
-
-	  Added the `Security' directory to the list of directories to
-	  recurse into.
-
-Mon Mar 19 14:03:35 2001  Ossama Othman  <ossama@uci.edu>
-
-	* orbsvcs/tests/Security/Makefile:
-
-	  New top-level Security Service test suite Makefile.
-
-Mon Mar 19 13:58:44 2001  Ossama Othman  <ossama@uci.edu>
-
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-
-	  Added a new Makefile.
-
-Mon Mar 19 15:28:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* orbsvcs/tests/EC_Throughput: Added a space between the svc conf
-	  file and the option "-m". This could be the problem that has
-	  been dodging the builds for quite sometime.
-
-Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main): 
-	* examples/POA/FindPOA/FindPOA.cpp (find_non_existant_POA): 
-
-	  In non-debug compiles, asserts disappear.  Thus it was necessary
-	  to add ACE_UNUSED_ARG to variables that are just being asserted
-	  on.
-
-	* TAOACE.dsw: Added ACE DLL to gpref dependencies.
-	
-Mon Mar 19 12:59:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tests/Faults/run_test.pl: Fixed a problem that was signaling a
-	  flase alarm on many platforms in the nightly builds. 
-
-Mon Mar 19 11:28:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i: Moved the method service_context_list () from
-	  the .i file to .cpp file. This was causing SunCC 4.2 to choke
-	  when the debugging symbols were off and caused the clients
-	  linked with TAO to dump a core. Thanks to Carlos for suggesting
-	  that some methods in .i file could be the source of the
-	  problem. 
-	
-Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tao/Typecode.cpp:
-          The code was not checking for exceptions with ACE_CHECK or
-          ACE_CHECK_RETURN, but was using the return values.  This is
-          clearly broken and can result in some nasty behavior on
-          platforms without native exceptions.
+Tue Mar 20 09:34:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp:
-          Cosmetic fixes to fit the ACE-guidelines.
-
-        * tao/RT_Invocation_Endpoint_Selectors.cpp:
-          Don't use ACE_UNUSED_ARG() when simply removing the argument
-          name would do.
-
-        * tao/RT_Invocation_Endpoint_Selectors.cpp:
-        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
-        * orbsvcs/tests/CosEvent/Basic/Random.cpp:
-        * orbsvcs/tests/Concurrency/CC_tests.cpp:
-        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
-          Add missing ACE_CHECK, ACE_CHECK_RETURN or ACE_TRY_CHECK
-
-Mon Mar 19 10:03:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main):
-          Fixed a warning in KCC builds.
-
-Mon Mar 19 06:23:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/examples/RtEC/Schedule/Service.cpp: Commented out the
-          guard for RECONFIG_SCHED type. Theoretically the guard may not
-          be needed. This should solve one of the compile problems on Lynx
-          I386 builds.
-
-Mon Mar 19 03:02:11 2001  Ossama Othman  <ossama@uci.edu>
-
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
-
-          Fixed memory access violations.
-
-        * orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
-        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
-        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.h:
-        * orbsvcs/tests/Security/Secure_Invocation/README:
-        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.dsw:
-        * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/client.conf:
-        * orbsvcs/tests/Security/Secure_Invocation/client.cpp:
-        * orbsvcs/tests/Security/Secure_Invocation/client.dsp:
-        * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf:
-        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
-        * orbsvcs/tests/Security/Secure_Invocation/server.conf:
-        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
-        * orbsvcs/tests/Security/Secure_Invocation/server.dsp:
-        * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
-        * orbsvcs/tests/Security/Secure_Invocation/server_none.conf:
-        * orbsvcs/tests/Security/Secure_Invocation/server_nopasswd.conf:
-
-          New test that verifies secure invocations are working properly,
-          and to some extent the "SecurityCurrent" object.
-
-Mon Mar 19 00:16:13 2001  Ossama Othman  <ossama@uci.edu>
-
-        * orbsvcs/orbsvcs/Security.dsp:
-
-          Added missing custom IDL build steps to the "Release"
-          configuration.
-
-Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
-
-        * tests/RTCORBA/Banded_Connections/run_test.pl:
-
-          Changed the parameter passed to the server and the client.
-
-        * tests/RTCORBA/Banded_Connections/bands.unix:
-
-          Changed the bands to be adjacent.
-
-        * tests/RTCORBA/Banded_Connections/bands.nt:
-
-          Changed the priority bands to cover all the available priority
-          range available on win32.
-
-        * tests/RTCORBA/Banded_Connections/server.cpp:
-
-          It was creating and activating two CORBA object using the same
-          servant and using the UNIQUE_ID policy. This problem has been
-          fixed by using two different servant.
-
-        * tests/RTCORBA/Banded_Connections/client.cpp:
-
-          Fixed wront diagnostic message that was erroneously signaling an
-          error condition in case of success.
-
-        * tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
-
-          Changed the logic used to select the ORB endpoint that should
-          be used to send a GIOP request in presence of priority bands.
-          Before if the client was exposing a priority that was different
-          from one of the server ORB endpoint's priority, an exception
-          would have been raised even if the priority exposed by the
-          client was within one of the bands used by the server ORB.
-          The decision logic assume that the endpoint priority exported in
-          the server ORB are associated with the maximum value of the
-          relative bands.
-
-Sun Mar 18 21:13:36 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/IORInfo.cpp (add_ior_component_to_profile):
-        * tao/Object_Ref_Table.cpp (register_initial_reference):
-        * tao/PolicyFactory_Registry.cpp (register_policy_factory):
-
-          Added missing OMG assigned exception minor codes to ACE_THROW
-          expressions.
-
-        * tao/corbafwd.h:
-        * tao/CORBALOC_Parser.cpp (parse_string_count_helper):
-        * tao/CORBANAME_Parser.cpp (parse_string_dynamic_request_helper):
-
-          Removed uses of needless TAO_OMG_MINOR_BAD_PARAM_10 macro.
-
-Sun Mar 18 16:28:03 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/Exception.h:
-        * tao/corbafwd.h:
-
-          Added missing CODESET_INCOMPATIBLE and BAD_QOS to the list of
-          CORBA system exceptions (see CORBA 2.4.2 spec).
-
-        * tao/Exception.cpp (_tao_get_omg_exception_description):
-
-          Return the description of the OMG minor code for a given
-          CORBA::SystemException.  Descriptions correspond to those found
-          in the CORBA 2.4.2 spec and the recently adopted Portable
-          Interceptors spec.  [Bug 827]
-
-Sun Mar 18 18:09:05 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tests/Param_Test/ub_any_seq.cpp (init_parameters):
-
-          Fixed warnings issued by g++ 2.95.2.
-
-Sun Mar 18 13:30:00 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/Exception.cpp (_info):
-
-          Fixed _is_a() call on CORBA::BAD_PARAM() exception.  The
-          repository ID passed to the _is_a() call was missing the
-          version.
-
-Sun Mar 18 11:50:57 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/Exception.cpp (_info):
-
-          Fixed exception informational message so that it displays the
-          properly masked TAO and OMG minor codes, rather than the raw
-          minor codes.  The masked minor codes are more meaningful.
-
-        * tao/ORB_Core.i (check_shutdown):
-
-          Bitwise-OR the minor code in the CORBA::BAD_INV_ORDER()
-          exception being thrown with the TAO_OMG_VMCID constant/macro.
-          The minor code in use is one assigned by the OMG.
-
-Sun Mar 18 12:34:44 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tao/Sequence.i:
-          Fixed memory leak on bounded sequences.  This changed fixed
-          many a problem in Param_Test, but not all of them.
-
-        * tests/Param_Test/ub_any_seq.cpp:
-          Use CORBA::String_var to automatically deallocate memory
-          returned by the random string generation utility.
-
-        * orbsvcs/examples/CosEC/Simple/Makefile:
-        * orbsvcs/examples/Log/Client/Makefile:
-        * orbsvcs/examples/Notify/Filter/Makefile:
-          More QNX related fixes.
-
-Sun Mar 18 12:22:08 2001  Ossama Othman  <ossama@uci.edu>
-
-        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
-
-          Corrected debugging message to display "pre_init()" instead of
-          "post_init()."
-
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (tss_slot):
-
-          Added method to set the TSS slot ID assigned to the
-          "SSLIOPCurrent" object.  The constructor no longer accepts a TSS
-          slot ID parameter.
-
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
-
-          Moved call to "this->get_tss_slot_id()" from the pre_init()
-          method to the post_init() method.  This was necessary to get
-          around "order of initialization" restrictions imposed by the
-          PortableInterceptor::ORBInitInfo object,
-          i.e. resolve_initial_references() cannot be called from within
-          pre_init().
-
-Sun Mar 18 13:24:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/Cache_Entries.inl: Fixed a warning with Tru64 builds.
-
-Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/TAO_Static.dsp:
-
-          Removed apparently incorrect references to
-          Transport_Connection_Property.cpp.  Whoever updated this file
-          didn't do any testing.  Strike one, whoever you are!
-
-          Added missing files `Base_Transport_Property.*' to this project
-          file.
-
-Sun Mar 18 08:53:34 2001  Ossama Othman  <ossama@uci.edu>
-
-        * orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
-
-          Export the TAO_Security_Current_Impl class on MS Windows
-          builds.  Fixes a link-time "unresolved symbol" error.
-
-        * orbsvcs/orbsvcs/Makefile.SSLIOP:
-        * orbsvcs/orbsvcs/SSLIOP.bor:
-        * orbsvcs/orbsvcs/SSLIOP.dsp:
-
-          Don't bother compiling SSLIOPS.cpp.  It is empty since
-          SSLIOP.idl does not define remote interfaces.
-
-Sat Mar 17 19:36:02 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * examples/PluggableUDP/tests/{client,server}.cpp: Changed "true" to 1
-          and "false" to 0 to work on compiler platforms that don't
-          support bool.  Thanks to Craig Rodrigues for suggesting this
-          fix.
-
-Sun Mar 18 02:43:41 2001  Ossama Othman  <ossama@uci.edu>
-
-        * orbsvcs/orbsvcs/Security.dsp:
-        * orbsvcs/orbsvcs/Security.bor:
-
-          Added new Security Level 1 related files to the source lists in
-          these files.
-
-Sun Mar 18 01:53:42 2001  Ossama Othman  <ossama@uci.edu>
-
-        * Security/Security_Current.cpp:
-        * Security/Security_Current.h:
-        * Security/Security_Current.inl:
-        * Security/Security_Current_Impl.cpp:
-        * Security/Security_Current_Impl.h:
-        * Security/Security_ORBInitializer.cpp:
-        * Security/Security_ORBInitializer.h:
-
-          New Security Level 1 implementation.
-
-        * SSLIOP/SSLIOP_Connection_Handler.cpp:
-        * SSLIOP/SSLIOP_Current.cpp:
-        * SSLIOP/SSLIOP_Current.inl:
-        * SSLIOP/SSLIOP_Current_Impl.cpp:
-        * SSLIOP/SSLIOP_Current_Impl.h:
-        * SSLIOP/SSLIOP_Factory.cpp:
-        * SSLIOP/SSLIOP_Factory.h:
-        * SSLIOP/SSLIOP_ORBInitializer.cpp:
-        * SSLIOP/SSLIOP_ORBInitializer.h:
-
-          Updates to support Security Level 1 (via SSLIOP security
-          mechanism).
-
-        * Makefile.Security:
-
-          Added new Security Level 1 implementation to the source list.
-
-        * Makefile.SSLIOP:
-
-          Updated dependencies.
-
-Sat Mar 17 14:33:23 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/examples/CosEC/Simple/Makefile:
-        * orbsvcs/examples/Log/Client/Makefile:
-        * examples/Content_Server/AMI_Iterator/Makefile:
-        * examples/Simulator/Event_Supplier/Makefile:
-        * orbsvcs/examples/Notify/Filter/Makefile:
-        * orbsvcs/tests/EC_Basic/Makefile:
-        * orbsvcs/tests/EC_Throughput/Makefile:
-        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
-        * orbsvcs/tests/Interoperable_Naming/Makefile:
-        * orbsvcs/tests/Trading/Makefile:
-        * utils/nslist/Makefile:
-          More fixes to support QNX/RTP
-
-Sat Mar 17 14:28:24 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Client_Leaks/client.cpp:
-          Cosmetic fixes.
-
-Sat Mar 17 16:15:14 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
-        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-        * orbsvcs/orbsvcs/Makefile.SSLIOP:
-          Update the SSL Pluggable protocal to reflect the new transport
-          caching changes.
-
-Sat Mar 17 11:54:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Simple/Makefile:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile: Updated
-          dependencies.
-
-Sat Mar 17 10:47:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/IFR_Service/Makefile.EX:
-        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-        * orbsvcs/IFR_Service/Makefile.IFR_Service:
-        * orbsvcs/IFR_Service/Makefile.tao_ifr: Updated dependencies
-
-Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
-          Changed connection_cache () as transport_cache (). This fixes
-          some of the compile errors in g++.
-
-Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/BiDirectional/test_i.cpp: Changed connection_cache () as
-          transport_cache ()
-
-Sat Mar 17 09:55:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/Client_Leaks/Makefile: Fixed dependencies
-
-Sat Mar 17 09:23:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/IIOP_Connection_Handler.cpp:
-        * tao/Transport_Cache_Manager.cpp:
-        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
-        * tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnings with
-          g++.
-
-Fri Mar 16 18:25:54 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * tao/Cache_Entries.h:
-        * tao/Cache_Entries.inl:
-        * tao/Cache_Entries.cpp:
-          Modified the Cache_Entries to support caching the Transport
-          instead of the Connection_Handler. [Bug 814]
-
-        * tao/Connection_Handler.h:
-        * tao/Connection_Handler.inl:
-        * tao/Connection_Handler.cpp:
-          Removed the reference counting altogether.  The lifecycle of the
-          connection handler now follows the reactor. [Bug 814]
-
-        * tao/IIOP_Connection_Handler.h:
-        * tao/IIOP_Connection_Handler.i:
-        * tao/IIOP_Connection_Handler.cpp:
-        * tao/Strategies/SHMIOP_Connection_Handler.h:
-        * tao/Strategies/SHMIOP_Connection_Handler.inl:
-        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
-        * tao/Strategies/UIOP_Connection_Handler.h:
-        * tao/Strategies/UIOP_Connection_Handler.inl:
-        * tao/Strategies/UIOP_Connection_Handler.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
-        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.i:
-        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
-          Removed the transport data member.  The transport may exist
-          independently of the Connection_Handler.  The connection handler
-          now allocats the transport on the heap and maintains a reference
-          to it. [Bug 814]
-
-        * tao/IIOP_Connector.h:
-        * tao/IIOP_Connector.cpp:
-        * tao/Strategies/SHMIOP_Connector.h:
-        * tao/Strategies/SHMIOP_Connector.cpp:
-        * tao/Strategies/UIOP_Connector.h:
-        * tao/Strategies/UIOP_Connector.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-          Make connection based on transport. [Bug 814]
+          Improved error checking for Queued_Message allocations.
+
+Sat Mar 17 17:52:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Removed the current_message_ field, using the head of the queue
+          works just as well, at least as long as we always push events to
+          the end of the queue.
 
         * tao/IIOP_Transport.h:
         * tao/IIOP_Transport.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Use the Flushing Strategy to schedule output and cancel output
+          with the reactor.
+
+Sat Mar 17 15:34:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+          Fixed signed/unsigned warnings
+
+        * tests/Big_Oneways/Coordinator.cpp:
+          Print error messages in all exception cases
+
+        * tests/Big_Oneways/run_test.pl:
+          Run 3 peers to cause failures.
+
+Fri Mar 16 15:49:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+          Fixed debugging message for cancel_output.
+
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/server.dsp:
+          Fixed project files, the first version commited missed some
+          changes.
+
+Thu Mar 15 10:46:52 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+          Changed the test to work more predictably on multi-CPU boxes.
+          The sessions are configured at creation time, and they don't
+          start sending events until start() is called.
+          Instead of automatically destroy them on shutdown we wait until
+          they all stop and then explicitly use a destroy() method to take
+          them down.
+
+Tue Mar 13 15:08:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Makefile:
+        * tests/Big_Oneways/README:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/server.dsp:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Oneways/Session_Control.cpp:
+        * tests/Big_Oneways/Session_Task.h:
+        * tests/Big_Oneways/Session_Task.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+          Add new stress test for the non-blocking I/O features in the
+          ORB.  This test is more focussed than LongWrites, and its
+          shutdown sequence is better designed (LongWrites tends to crash
+          after running successfully.)
+
+        * tao/GIOP_Message_Handler.cpp:
+          Fixed unsigned/signed warning
+
+Thu Mar  8 19:12:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.cpp:
+          Had to manually merge Bala's changes from Sat Feb 17 23:08:44
+          2001.
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Cosmetic fixes.
+
+        * tao/IIOP_Transport.cpp:
+          Print debugging messages when output is scheduled, and alse when
+          it is canceled.
+          Do not register the handler more than once on the reactor.
+
+        * tao/Queued_Message.inl:
+          The done() condition was reversed.
+
+        * tao/Transport.cpp:
+          Add a ton of debugging mesages, including detailed messages of
+          outgoing and incoming data, information about each queued
+          message, etc.
+
+        * tao/Transport.cpp (send_message_block_chain):
+          Always add the number of bytes transferred on each send() call,
+          even when it returns an error.
+
+        * tao/Transport.cpp (send_message_i):
+          Use easier to read code when deciding what messages are queued.
+          Before calling schedule_output() and returning we must queue the
+          message, forgot to do that in the previous version.
+
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender_Task.cpp:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/client.cpp:
+          I'm tweaking the test trying to make the termination condition
+          more reliable.  Unfortunately after one of the clients finishes
+          the rest does not receive all the required messages.
+          I will probably have to change the protocol, which is probably a
+          good idea anyway, so we can control the number of threads too.
+
+        * tests/LongWrites/run_test.pl:
+          In the haste to merge the fix_bug132 bug I forgot to incorporate
+          the support for the multiple test types.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile:
+        * tests/LongWrites/Makefile:
+          Update dependencies.
+
+Wed Mar 07 08:48:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.inl:
+          Both done() and mb() were using contents_, but the flow has
+          changed to use current_message_.
+
+        * tao/Transport.cpp:
+          Simplify code flow in send_current_message()
+          Simplify code in dequeue_head()
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Update project files so they work on the branch.
+
+Tue Mar  6 19:44:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Handler.cpp:
+          When printing an invalid GIOP magic number use hex values, not
+          the character representation, because the latter can print out
+          garbage.
+
+        * tao/ORB_Core.cpp:
+          Print the return value of each handle_events() call, on an
+          attempt to figure out why it is spinning.
+
+        * tao/Transport.cpp:
+          Print handle, return value and errno after each call to
+          send_current_message()
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Don't enter the event loop if the reply has been received
+          already.
+
+Tue Mar  6 11:02:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Merged in changes from the fix_bug132 branch.  I need several
+          bug fixes from the main trunk.  In my experience the easiest way
+          to do this is to create a new branch higher up in the main
+          trunk, close the old branch and propagate its changes to the new
+          one.
+          In this case we created fix_bug132_iter02 (today) merge the
+          changes from fix_bug132 into that branch, and close fix_bug132.
+
+        Mon Mar  5 11:32:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.cpp:
+          Add debugging messages
+
+        * tests/LongWrites/Makefile:
+          Updates dependencies and object files for the client.
+
+        Fri Mar 02 15:29:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Continue implementation of reactive output.
+          On this pass I fixed the code to deal with several error
+          conditions, invoke schedule_output() if the connection returns
+          an EWOULDBLOCK, also cancel the output if there is no data to
+          send.
+          Fix syncronization on send_queued_message()
+          Fix memory allocation for message blocks contained in
+          Queued_Message, they cannot be cloned() because that would
+          allocate from TSS.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement schedule_output() and cancel_output() methods.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Do not re-insert the transport into the reactor on each wait,
+          once is enough.
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+          Implement a handle_output() callback, delegate on the
+          TAO_Transport
+
+        * tao/IIOP_Endpoint.cpp:
+          Remove unused #include
+
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.cpp:
+        * tests/LongWrites/svc.conf:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Sender_Task.cpp:
+          Add support for multi-threaded clients.
+          Try to count the number of incoming messages and only exit when
+          all have been received.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Removed a number of unused files from this unit test.
+
+        Sun Feb 25 10:22:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Transport.cpp:
+          Instead of releasing the message blocks as soon as possible we
+          delay until the queued message is deallocated.  This will make
+          it possible to release all the data in the same thread that
+          allocated it, preserving the support for TSS allocators.
+
+        * tests/LongWrites/Test.idl:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/run_test.pl:
+          The test can now send big oneways, big twoways and big twoways
+          with big responses.
+
+        Wed Feb 14 18:38:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.cpp:
+          Fixed queue manipulation logic
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          The test was miscounting remove operations from the queue.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsw:
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Add MSVC project files.
+
+        Wed Feb 14 10:02:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add flag to control message block ownership, used to minimize
+          memory allocations.
+
+        * tao/Transport.cpp:
+          Use the ownership flags for the Queued_Message.
+
+        * tests/Makefile:
+        * tests/Queued_Message_Test/Makefile:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Add new unit test for the TAO_Queued_Message class.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+          Update dependencies
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          The ACE_SSL_SOCK_Stream does not support sendv()
+
+        Mon Feb 12 15:44:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Update makefile to include new files
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
         * tao/Strategies/SHMIOP_Transport.h:
         * tao/Strategies/SHMIOP_Transport.cpp:
         * tao/Strategies/UIOP_Transport.h:
         * tao/Strategies/UIOP_Transport.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
-        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-          Removed obsolete methods and added methods to transition the
-          handler state (called by the connection handler) and to return
-          the protocol specific connection handler as a
-          TAO_Connection_Handler. [Bug 814]
+          Fixed all protocols to use the new send() method with iovec
+          parameters.
+
+        * tao/GIOP_Message_Lite.cpp:
+          Use the send() method with iovec arguments.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+        * tao/Transport.cpp:
+          More cleanup for the Sync_Strategies, the must_queue() method
+          does not require a Stub argument.
+
+        Mon Feb 12 10:15:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Add new method to send a message block chain.
+          The template method to send data takes an iovec argument.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement the iovec-based send() template method.
+
+        * tao/Queued_Message.cpp:
+          The cleanup code was broken.
+
+        * tao/GIOP_Message_Base.cpp:
+          Use the message block chain method to send short critical
+          messages.
+
+        Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Add new class to represent a queued message in the outgoing
+          path.  This class has to keep more than just the message block,
+          it also takes care of timeouts and signaling any waiting thread
+          when the message is sent.
+
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+          Define interface to signal threads waiting for a message to be
+          sent out, e.g. twoway requests blocked waiting for a queued
+          message.
+
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h
+        * tao/Reactive_Flushing_Strategy.cpp:
+          New classes to control how the outgoing data is flushed,
+          either by blocking on write() or by using the reactor.
+
+        * tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Add new methods to create the flushing strategy.
 
         * tao/ORB_Core.h:
         * tao/ORB_Core.i:
         * tao/ORB_Core.cpp:
-          Maintain a collection of transports instead of connection
-          handlers. [Bug 814]
+          Add accessor for the flushing strategy.  Notice that the
+          strategy is stateless so a single instance (per-ORB) is needed.
 
-        * tao/Makefile.bor:
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          The Sync_Strategies have been simplified.  They are now
+          stateless, and they only need to answer a couple of questions
+          (1) should a message be buffered, (2) should the ORB flush a
+          queue.
+
+        * performance-tests/Latency/st_client.cpp:
+          Destroy the ORB on shutdown.
+
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
-          Updated file information for Windows based compilers. [Bug 814]
+          Add the new files to the TAO project files.
 
-        * tao/Transport.cpp:
         * tao/Transport.h:
         * tao/Transport.inl:
-          Removed redundant methods and added new ones to support caching of
-          the transport within the orb core. [Bug 814]
-
-        * tao/Transport_Cache_Manager.h:
-        * tao/Transport_Cache_Manager.inl:
-        * tao/Transport_Cache_Manager.cpp:
-          Renamed the Connection_Cache_Manager.* to
-          Transport_Cache_Manager.*  The functionality is similar, just
-          replace the TAO_Connection_Handler with TAO_Transport.
-          [Bug 814]
-
-        * tao/Transport_Descriptor_Interface.h:
-        * tao/Transport_Descriptor_Interface.inl:
-        * tao/Transport_Descriptor_Interface.cpp:
-          Renamed the Connection_Descriptor_Interface.* to
-          Transport_Descriptor_Interface.*  The functionality was unchanged.
-          [Bug 814]
-
-        * tao/Private_Transport_Descriptor.h:
-        * tao/Private_Transport_Descriptor.inl:
-        * tao/Private_Transport_Descriptor.cpp:
-          Renamed the Private_Connection_Descriptor.* to
-          Private_Transport_Descriptor.*  The functionality was unchanged.
-          [Bug 814]
-
-        * tao/Base_Transport_Property.h:
-        * tao/Base_Transport_Property.inl:
-        * tao/Base_Transport_Property.cpp:
-          Renamed the Base_Connection_Property.* to
-          Base_Transport_Property.*  The functionality was unchanged.
-          [Bug 814]
-
-        * tao/Acceptor_Impl.cpp:
-        * tao/Asynch_Invocation.cpp:
-        * tao/Asynch_Reply_Dispatcher.cpp:
-        * tao/Asynch_Reply_Dispatcher.h:
-        * tao/Asynch_Reply_Dispatcher.i:
-        * tao/Connector_Registry.cpp:
-        * tao/Connector_Registry.h:
-        * tao/Exclusive_TMS.cpp:
-        * tao/Invocation.cpp:
-        * tao/Muxed_TMS.cpp:
-        * tao/Pluggable.h:
-        * tao/Protocols_Hooks.h:
-          Modifications to reflect method changes in the connection handler
-          and transport classes. [Bug 814]
-
-        * */Makefile:
-          Updated the dependencies to reflect the renaming of the 12 files.
-          [Bug 814]
-
-
-Fri Mar 16 15:48:03 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/PluggableUDP/DIOP/Makefile:
-          Define ACE_SHLIBS, otherwise Tru64/CXX is unhappy.
-
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-          Regroup code to use a single #if 0/#endif instead of multiple
-          sections of commented out code, easier to work that way.
-
-        * tests/Client_Leaks/Process_Factory.cpp:
-          Fixed Fuzz warning (i.e. missing ACE_CHECK_RETURN)
-
-Fri Mar 16 15:11:04 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/Event/lib/Makefile.bor:
-          The library must be installed for the tests to run correctly
-          under the nightly builds.
-
-Fri Mar 16 15:45:21 2001  Angelo Corsaro  <angelo@cs.wustl.edu>
-
-        * tests/RTCORBA/Client_Protocol/client.cpp (exception_test):
-          Moved an ACE_DEBUG that was writing an error message to the
-          CATCH block instead of the TRY. This fix a fictious error in the
-          Client_Protocol unit test.
-
-Fri Mar 16 13:53:04 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/EC_Throughput/run_test.pl:
-          Made several cosmetic fixes, but also re-enabled the ec_mt.conf
-          file test.  It works for me on my workspace, can't tell why it
-          fails in the nightly builds yet.
-
-        * orbsvcs/tests/EC_Throughput/ec_mt.conf:
-          Minor cosmetic fixes.
-
-Fri Mar 16 14:10:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
-          Reorganized how the libraries get included to fix static
-          builds.
-
-Fri Mar 16 13:57:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-
-          Modified generated union copy constructor and assignment
-          operator to safely copy an uninitialized union that can
-          contain a variable size member. A fix I had made for this
-          some time ago missed a few use cases. Thanks to Matt Cheers
-          <matt.cheers@boeing.com> for pointing one of them out. This
-          fix closes out [BUGID:820].
-
-Fri Mar 16 10:48:36 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Server_Leaks/run_test.pl:
-          The timeout period for the client was too short, extended it to
-          5 seconds.  Also reduced the total number of iterations in the
-          test and run more clients in parallel, for faster execution. The
-          test takes less than 1 minute on my machine (with nice -20).
-          Any machine that cannot run this in the timeout allowed for
-          nightly builds is too slow anyway.
-
-Fri Mar 16 12:43:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed a unused
-          variable warning.
-
-Fri Mar 16 07:22:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/EC_Throughput/run_test.pl: Removed the usage of
-          ec_mt.conf from the run_test.pl script. The builds complain
-          about an invalid service confiurator argument.
-
-Thu Mar 15 17:56:58 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * The following changes speed up the test without loosing
-          coverage.
-
-        * tests/Client_Leaks/client.cpp:
-          Reduce the number of iterations.
-
-        * tests/Client_Leaks/Process_Factory.cpp:
-          Reduce the sleep time.
-
-
-Thu Mar 15 15:49:30 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * docs/tutorials/Quoter/Makefile:
-          Disable compilation for platforms without native C++ exception
-          support
-
-        * docs/tutorials/Quoter/Event_Service/Makefile:
-        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
-          Add missing libraries
-
-        * docs/tutorials/Quoter/RT_Event_Service/index.html:
-        * docs/tutorials/Quoter/RT_Event_Service/Quoter.idl:
-          Copy IDL file from the Event_Service example, this is better for
-          automatic builds.
-
-Thu Mar 15 11:27:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/AMI_Timeouts/client.cpp (main):
-        * tests/AMI_Timeouts/server.cpp:
-        * tests/AMI_Timeouts/timeout_client.cpp:
-        * tests/AMI_Timeouts/timeout_client.h:
-        * tests/AMI_Timeouts/timeout_i.cpp: Fixed quite few errors in
-          SunCC 4.2 builds. The problem was the usage of the keyword 'bool'
-          which is not supported in SunCC 4.2. Changed them to
-          CORBA::Boolean which should be supported widely.
-
-Thu Mar 15 10:32:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory: Fixed a problem in
-          TRUE_64 builds. Added -lTAO and -lACE to the list of libraries.
-
-Thu Mar 15 09:21:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
-
-        * tao/Sequence.i:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
-
-          Recommit of changes from Fri Mar  9 14:38:06 2001 with
-          additional changes to fix the assignment operators
-          that broke Param_Test.
-
-          Fix a memory leak with bounded sequences of all types.
-          Also cleaned up some indentation in the generated code
-          and added a missing data member initialization.
-
-Thu Mar 15 07:21:21 2001  Balachandran Natarajan <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-          Fixed a problem with static builds.
-
-Wed Mar 14 21:21:21 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/orbsvcs/CosEventComm.idl:
-        * orbsvcs/orbsvcs/CosEventChannelAdmin.idl:
-          The prefix was not reset at the end, thanks to Sunil Rottoo
-          <sunil@gdc.ca> for pointing this out.
-
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-          Fixed warning about unused value in a variable.
-
-Wed Mar 14 21:53:03 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.h:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
-
-          Removed unused member variables.
-
-          Reference counted servants to manage their lifetime.
-
-          Initialized member variables.
-
-Wed Mar 14 17:28:19 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * tests/NestedUpcall/MT_Client_Test/client.cpp (main): Not sure
-          why the author was using (THR_BOUND | THR_SCHED_FIFO) as <flags>
-          to the Task::activate() call.  THR_SCHED_FIFO is for realtime
-          threads and does not work for regular users (e.g., bugzilla),
-          specially on Linux.  Once Ossama error checked the activate call
-          in:
-
-          Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
-
-        I the test started reporting the failed activate call because of
-          the flags and the test no longer worked.  Once I switched the
-          Task::activate() call to use the default flags, the test started
-          working again.
-
-Wed Mar 14 16:25:52 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams: Fixed broken dsps for the release
-          build.
-
-Wed Mar 14 16:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/EC_Throughput/ec.mt.conf: Renamed the file as
-          ec_mt.conf.
-        * orbsvcs/tests/EC_Throughput/ec_mt.conf: New file
-        * orbsvcs/tests/EC_Throughput/run_test.pl: Invalidated a reference
-          to a non-existent conf file in ec_mt_conf. Changed the name as
-          ec_mt.conf.
-
-Wed Mar 14 15:36:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Handler.h:
-        * tao/GIOP_Message_Handler.cpp: The high drama involved with BCB
-          not working with TAO 1.1.13 should be finally over. Thanks a lot
-          to Chris Kohlhoff and Johnny Willemsen for working on this and
-          providing patches.
-
-Wed Mar 14 14:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * tests/AMI_Timeouts/AMI_Timeouts.dsw
-        * tests/AMI_Timeouts/client.cpp
-        * tests/AMI_Timeouts/server.cpp
-        * tests/AMI_Timeouts/timeout.idl
-        * tests/AMI_Timeouts/timeout_client.cpp
-        * tests/AMI_Timeouts/timeout_client.h
-        * tests/AMI_Timeouts/timeout_i.cpp
-        * tests/AMI_Timeouts/timeout_i.h:
-
-          Renamed the "Timeout" IDL interface to "TimeoutObj" as it
-          had a name clash with Messaging::Timeout due to a SunCC 4.2
-          compiler bug.
-          Thanks to Bala our Build Czar for reporting this.
-
-Wed Mar 14 13:01:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Makefile:
-        * orbsvcs/orbsvcs/Makefile.FaultTolerance: Fixed a compile error
-          that was showing up on many platforms.
-
-Wed Mar 14 12:35:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/Leader_Followers/run_test.pl: Had a reference to a
-          non-available service configurator file. This is now
-          removed. This should fix the error seen in this test in the
-          daily builds. This is actually a proof that Chanaka's fix
-          works ;)
-
-Tue Mar 13 23:50:02 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.dsp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.dsp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.dsp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Simple_Three_Stage.dsw:
-        * orbsvcs/tests/AVStreams/AVStreams.dsw:
-
-          Added files to enable builds on windows.
-
-Tue Mar 13 22:54:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Three_Stage/sender.cpp:
-        * orbsvcs/tests/AVStreams/Three_Stage/distributer.cpp:
-
-          Fixed compile errors in the Fuzz builds.
-
-
-Tue Mar 13 15:21:32 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/ORB.cpp (ORB_init):
-        * tao/ClientRequestInfo.cpp:
-        * tao/PortableServer/ServerRequestInfo.cpp:
-        * tao/PortableServer/POA.cpp
-          (check_for_valid_wait_for_completions):
-
-          The OMG assigned exception minor code should be bitwise-ORed
-          with TAO_OMG_VMCID.
-
-Tue Mar 13 14:57:47 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-
-          Fixed compile errors.
-
-Tue Mar 13 14:13:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * rules.tao.GNU: Removed duplicate definition of -lTAO from
-          TAO_CLNT_LIBS.
-
-        * orbsvcs/IFR_Service/Makefile.IFR_Service:
-        * orbsvcs/tests/Event/Basic/Makefile:
-        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-        * orbsvcs/tests/Notify/Basic/Makefile:  Fixed more Makefiles.
-
-Tue Mar 13 13:02:05 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-
-        * utils/catior/catior.cpp: Removed tab charactres from the
-          previous change.
-
-Tue Mar 13 12:38:19 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-
-        * tao/TAO_Internal.cpp: Removed tab characters from the previous
-          change.
-
-Tue Mar 13 12:18:52 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-
-        * utils/catior/catior.cpp: Added a condition to check for IIOP 1.0
-          before calling the cat_tagged_components() operation. IIOP 1.0
-          IOR's do not have tagged components [Bug 727].
-
-Tue Mar 13 12:18:06 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-
-        * tao/TAO_Internal.cpp: If the specified service configurator file
-          for -ORBsvcconf does not exist, returns -1, eventually raising
-          CORBA::INITIALIZE exception [Bug 738].
-
-Tue Mar 13 11:59:45 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.h:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
-        * orbsvcs/tests/AVStreams/Makefile: Created a new test,
-          Simple_Three_Stage. It consists of a sender that sends data,
-          read from a file, to the distributer at a specified rate .The
-          distributer in turn sends the data to the receiver. The receiver
-          writes the data to a file.
-
-Tue Mar 13 11:59:45 2001  Craig Rodrigues <crodrigu@bbn.com>
-
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-        * orbsvcs/orbsvcs/AV/sfp.h:
-        * orbsvcs/orbsvcs/AV/sfp.cpp:
-           Cleaned up use of strings, replacing with ACE_CString
-           where appropriate.
-           Changed to Doxygen style comments.
-
-        *  orbsvcs/orbsvcs/AV/AVStreams_i.h:
-        *  orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-           Removed platform specific ifdef for gethostname, replaced
-           with ACE_OS::hostname()
-
-Tue Mar 13 06:48:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Base.cpp: Tried to apply a fix that Chris
-          Kolhloff had suggested.
-
-Mon Mar 12 23:40:09 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/Makefile.bor:
-        * orbsvcs/tests/EC_Basic/Makefile.bor:
-        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.bor:
-        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.bor:
-        * orbsvcs/tests/EC_Custom_Marshal/Makefile.bor:
-        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-        * orbsvcs/tests/EC_Mcast/Makefile.bor:
-        * orbsvcs/tests/EC_Multiple/Makefile.bor:
-        * orbsvcs/tests/EC_Throughput/ECT_Consumer.bor:
-        * orbsvcs/tests/EC_Throughput/ECT_Supplier.bor:
-        * orbsvcs/tests/EC_Throughput/ECT_Throughput.bor:
-        * orbsvcs/tests/EC_Throughput/Makefile.bor:
-        * orbsvcs/tests/Event_Latency/Makefile.bor:
-          Add more Borland Makefiles for the RT Event Service tests
-
-        * orbsvcs/tests/Simple_Naming/makefile.bor:
-          Add missing IORTable library
-
-Mon Mar 12 17:54:39 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Client_Leaks/client.cpp:
-          Ignore Test::Spawn_Failed exceptions, they are not the kind of
-          error we are looking for anyway.
-
-        * tests/Client_Leaks/run_test.pl:
-          Increase running time for the test.
-
-Mon Mar 12 18:46:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Base.cpp: Made a try fix for QNX and BCB.
-
-Mon Mar 12 16:50:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Makefile.FaultTolerance: Fixed the Makefile for
-          builds where corba_messaging is turned off.
-
-Mon Mar 12 14:56:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * examples/Buffered_Oneways/Makefile:
-        * examples/PluggableUDP/DIOP/Makefile:
-        * orbsvcs/IFR_Service/Makefile.IFR_Service:
-        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-        * orbsvcs/tests/Event/Basic/Makefile:
-        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
-        * orbsvcs/tests/Notify/Basic/Makefile:
-        * performance-tests/Pluggable/Makefile:
-        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
-        * performance-tests/Thruput/TAO/Makefile:
-        * tests/AMI/Makefile:
-        * tests/Codec/Makefile:
-        * tests/DSI_Gateway/Makefile:
-        * tests/FL_Cube/Makefile:
-        * tests/Forwarding/Makefile:
-        * tests/InterOp-Naming/Makefile:
-        * tests/MProfile/Makefile:
-        * tests/MT_Server/Makefile:
-        * tests/Multiple_Inheritance/Makefile:
-        * tests/Native_Exceptions/Makefile:
-        * tests/OctetSeq/Makefile:
-        * tests/Param_Test/Makefile:
-        * tests/Portable_Interceptors/Benchmark/Makefile:
-        * tests/Portable_Interceptors/Dynamic/Makefile:
-        * tests/Portable_Interceptors/ForwardRequest/Makefile:
-        * tests/Portable_Interceptors/IORInterceptor/Makefile:
-        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
-        * tests/QtTests/Makefile:
-        * tests/Single_Read/Makefile:
-        * tests/Timed_Buffered_Oneways/Makefile:
-        * tests/Timeout/Makefile: Fixed duplicate uses of library.  KCC is
-          the only compiler that catches this problem.  Usually, this is
-          caused by Makefiles adding -lTAO into $(LDLIBS) but it has
-          already been taken care of by rule.tao.GNU.
-
-Mon Mar 12 12:55:50 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * performance-tests/Latency/client.conf:
-        * performance-tests/Latency/st_client.conf:
-          Reenable the RW waiting strategy for both tests.  This
-          application does not need nested upcalls. This explains the
-          mysterious 10% drop in performance shown on the nightly builds,
-          I guess I wasn't thinking when I commited this files mixed on
-          the middle of all the ORB::run() changes. Frank Hunleth tracked
-          this one down.
-
-Mon Mar 12 11:37:14 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/Simple/echo/Echo_i.cpp:
-          Use list[CORBA::ULong(0)] instead of (*list)[0] to workaround
-          the MSVC problems with multiple conversions, the former looks
-          nicer to me.
-
-Mon Mar 12 13:33:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be/be_codegen.cpp:
-
-          Moved the generation of the #ifndef guard to prevent the
-          inclusion of skeleton source code more than once in a build to
-          come after the generation of the #include statement for the
-          pre-compiled header file (if any). Thanks to Pedro Brando
-          <pbrandao@inescporto.pt> for pointing out that the previous
-          order of code generation could sometimes cause the C++ compiler
-          to think that there is an extra #endif in the file.
-
-Mon Mar 12 13:20:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Lite.cpp (message_type): Added a fix to
-          soncolidate the outgoing message blocks before dumping the
-          contents for debugging purposes. Thanks to Johnny Willemsen for
-          providing this patch.
+        * tao/Transport.cpp:
+          Move much of the functionality of sending and outgoing message
+          queue up to the base transport class.  Remove a lot of code
+          deailing with the previous (blocking) queues.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Change the transport and connection handlers to use the new
+          outgoing message queue, the flushing strategy and the changes to
+          the SyncStrategy.
 
         * tao/GIOP_Message_Base.cpp:
-        * tao/GIOP_Message_Handler.cpp:
-        * tao/GIOP_Message_Handler.inl: Added code to align the message
-          blocks on an 8 byte boundary. This is needed for BCB as the
-          memory allocated doesn't seem to get aligned on an 8 byte
-          boundary. Hopefully this should fix most of the problem that
-          folks see on BCB. Thanks to Christopher Kohlhoff
-          <chris@kohlhoff.com> and Johnny Willemsen for putting in effort
-          to get behind what the compiler was actually doing.
-
-Mon Mar 12 12:39:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/Simple/time/Time_i.h:
-        * examples/Simple/echo/Echo_i.h:
-        * examples/Simple/echo/Echo_i.cpp:
-        * examples/Simple/grid/Grid_i.h:
-        * examples/Persistent_Grid/Grid_i.h:
-        * examples/Simple/bank/AccountManager_i.h: Fixed warnings and
-          errors in KCC builds.
-
-Mon Mar 12 12:14:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * TAO-INSTALL.html: Mentioned Windows 2000 explicitly in the
-          document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
-          raising the question.
-
-Mon Mar 12 11:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-
-          Removed code that was registering the connection handler with
-          the connection caching mechanism. We need to shortcut it, as we
-          use our own concept. The code was actually causing problems for
-          Craig Rodrigues <rodrigc@mediaone.net>, thanks for reporting.
-
-Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/AV/AV_Core.h (TAO_AV_Core): deactivate_servant()
-          and get_flowname() were global.  Moved them to the TAO_AV_Core
-          namespace.
-
-        * orbsvcs/tests/AVStreams: Added the following files to enable
-          builds on Win32:
-
-          - AVStreams.dsw
-          - Full_Profile/Full_Profile.dsw
-          - Full_Profile/ftp.dsp
-          - Full_Profile/server.dsp
-          - Latency/Latency.dsw
-          - Latency/control.dsp
-          - Latency/ping.dsp
-          - Latency/pong.dsp
-          - Multicast/Multicast.dsw
-          - Multicast/ftp.dsp
-          - Multicast/server.dsp
-          - Multicast_Full_Profile/Multicast_Full_Profile.dsw
-          - Multicast_Full_Profile/ftp.dsp
-          - Multicast_Full_Profile/server.dsp
-          - Pluggable/Pluggable.dsw
-          - Pluggable/ftp.dsp
-          - Pluggable/server.dsp
-          - Simple/run_test.pl
-
-Mon Mar 12 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * tao/Wait_On_Leader_Follower.cpp:
-
-          When timeouts were specified and the connection was closed
-          before the timer expired or the reply arrived we returned no
-          error, thereby letting the client believe that the request was
-          actually sucessful. This fixes the problem by returning -1 in
-          TAO_Wait_On_Leader_Follower::wait () in such cases.  Thanks to
-          Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this
-          patch.
-
-Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
-          template instantiations to Null_Mutex. The declaration was
-          Null_Mutex.
-
-Sun Mar 11 11:29:53 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/Makefile.bor:
-        * orbsvcs/tests/Event/Makefile.bor:
-        * orbsvcs/tests/Event/lib/Makefile.bor:
-        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
-        * orbsvcs/tests/Event/Basic/BCast.bor:
-        * orbsvcs/tests/Event/Basic/Bitmask.bor:
-        * orbsvcs/tests/Event/Basic/Complex.bor:
-        * orbsvcs/tests/Event/Basic/Control.bor:
-        * orbsvcs/tests/Event/Basic/Disconnect.bor:
-        * orbsvcs/tests/Event/Basic/Gateway.bor:
-        * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
-        * orbsvcs/tests/Event/Basic/Makefile.bor:
-        * orbsvcs/tests/Event/Basic/Negation.bor:
-        * orbsvcs/tests/Event/Basic/Observer.bor:
-        * orbsvcs/tests/Event/Basic/Random.bor:
-        * orbsvcs/tests/Event/Basic/Reconnect.bor:
-        * orbsvcs/tests/Event/Basic/Shutdown.bor:
-        * orbsvcs/tests/Event/Basic/Timeout.bor:
-        * orbsvcs/tests/Event/Basic/Wildcard.bor:
-        * orbsvcs/tests/Event/Performance/Connect.bor:
-        * orbsvcs/tests/Event/Performance/Inversion.bor:
-        * orbsvcs/tests/Event/Performance/Latency.bor:
-        * orbsvcs/tests/Event/Performance/Latency_Server.bor:
-        * orbsvcs/tests/Event/Performance/Makefile.bor:
-        * orbsvcs/tests/Event/Performance/Throughput.bor:
-          Add Borland Makefiles for the event service regression tests.
-
-Sun Mar 11 10:39:14 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Makefile.bor:
-        * tests/Client_Leaks/Makefile.bor:
-        * tests/Client_Leaks/child.bor:
-        * tests/Client_Leaks/client.bor:
-        * tests/Client_Leaks/server.bor:
-        * tests/Crashed_Callback/Makefile.bor:
-        * tests/Crashed_Callback/client.bor:
-        * tests/Crashed_Callback/server.bor:
-        * tests/LongUpcalls/Makefile.bor:
-        * tests/LongUpcalls/ami_client.bor:
-        * tests/LongUpcalls/ami_server.bor:
-        * tests/LongUpcalls/blocking_client.bor:
-        * tests/LongUpcalls/blocking_server.bor:
-        * tests/MT_Client/Makefile.bor:
-        * tests/MT_Client/client.bor:
-        * tests/MT_Client/orb_creation.bor:
-        * tests/MT_Client/server.bor:
-        * tests/MT_Client/simple-client.bor:
-        * tests/MT_Server/Makefile.bor:
-        * tests/MT_Server/client.bor:
-        * tests/MT_Server/server.bor:
-        * tests/Muxing/Makefile.bor:
-        * tests/Muxing/client.bor:
-        * tests/Muxing/server.bor:
-        * tests/Server_Leaks/Makefile.bor:
-        * tests/Server_Leaks/client.bor:
-        * tests/Server_Leaks/server.bor:
-        * performance-tests/Makefile.bor:
-        * performance-tests/Latency/Makefile.bor:
-        * performance-tests/Latency/ami-latency-client.bor:
-        * performance-tests/Latency/ami-throughput-client.bor:
-        * performance-tests/Latency/client.bor:
-        * performance-tests/Latency/dii_client.bor:
-        * performance-tests/Latency/server.bor:
-        * performance-tests/Latency/st_client.bor:
-        * performance-tests/Latency/st_server.bor:
-          Add Borland Makefiles for several crucial tests.
-
-Sun Mar 11 09:53:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/Simple/grid/Grid_i.h:
-        * examples/Persistent_Grid/Grid_i.h:
-        * examples/Simple/time/Time_i.h: Added a operator= to
-          keep g++ 2.7.2 happy.
-
-Sun Mar 11 09:02:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/Simple/echo/Echo_i.h:
-        * examples/Simple/bank/AccountManager_i.h: Added a operator= to
-          keep g++ 2.7.2 happy.
-
-Sun Mar 11 07:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Fixed a warning in
-          g++.
-
-Sun Mar 11 04:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
-        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
-        * examples/PluggableUDP/DIOP/Transport.cpp:
-
-          Added code to support two-way calls, but only for single-
-          threaded servers.
-
-        * examples/PluggableUDP/tests/server.cpp:
-        * examples/PluggableUDP/tests/client.cpp:
-        * tests/AMI_Timeouts.server.cpp:
-
-          Fixed some exception handling and shut down code.
-
-        * examples/PluggableUDP/tests/UDP_i.h:
-
-          Fixed the usage of ACE_Thread_Mutex in the single-thread
-          build. Added an include to "ace/Synch.h" and made the
-          lock to a ACE_Null_Mutex, as this servant supports only
-          single-threaded servers anyway.
-
-Sat Mar 10 22:27:58 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
-        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
-          Added the following fixes for bugs reported by
-          Sergey Logvin <S.Logvin@telesens.com.ua> -
-          + Filters are destroyed correctly.
-          + Fixed memory leak in EventChannelFactory.
-          + Implemented TAO_Notify_FilterAdmin_i::remove_all_filters.
-          + Fixed ConsumerAdmin::get_all_filters.
-          + Fixed SupplierAdmin::get_all_filters.
-          + Fixed CosNotifyFilter::Filter::get_constraints.
-          + Fixed Filter::get_all_constraints.
-
-Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tests/NestedUpcall/MT_Client_Test/client.cpp (main):
-
-          Make sure the server task was activated before continuing with
-          the test.
-
-        * tests/NestedUpcall/MT_Client_Test/local_server.cpp (MT_Server):
-
-          The ORB_Manager pointer may be zero, i.e. uninitialized, if the
-          server task was not activated.  Check that it is non-zero before
-          attempting to call methods through it.  Fixes a seg fault.
-
-Sat Mar 10 18:20:32 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/AMI/server.cpp:
-        * tests/AMI/client.cpp:
-        * tests/AMI/simple_client.cpp:
-        * examples/PluggableUDP/tests/client.cpp:
-          Don't use true or false, the lame platforms (gcc-2.7.2 and
-          Sun/CC 4.2) do not have a bool type.
-
-Sat Mar 10 18:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Client_Leaks/client.cpp:
-          Increase the number of iterations, the lower number did not
-          trigger the problem on TAO-1.1.12
-
-        * tests/Server_Leaks/client.cpp:
-          The do_shutdown flag was not initialized correctly.
-
-        * tests/Server_Leaks/run_test.pl:
-          Run multiple clients simultaneously, this speeds up the test
-          significantly.
-
-Sat Mar 10 16:51:38 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * docs/tutorials/Quoter/RT_Event_Service/index.html:
-          Fixed misleading instructions in the document.
-
-Sat Mar 10 16:08:46 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Makefile:
-          Add the new test to the recursive build
-
-        * tests/Server_Leaks/Makefile:
-          Fix the Makefile
-
-        * examples/Simple/echo/Echo_i.cpp:
-          Fixed stupid typo.
-
-Sat Mar 10 15:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/Content_Server/SMI_Iterator/Makefile:
-          Add missing library for QNX
-
-        * examples/Simple/echo/Echo_i.cpp (Echo_i::echo_list):
-          The code was not exception safe, and was abusing ACE_UNUSED_ARG()
-
-        * tests/Crashed_Callback/client.cpp:
-        * tests/Crashed_Callback/server.cpp:
-          The test was using SYNC_WITH_TARGET and we wanted
-          SYNC_WITH_SERVER behavior
-
-Sat Mar 10 15:30:05 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/README:
-        * tests/Muxing/README:
-        * tests/Muxing/Makefile:
-        * tests/Muxing/Muxing.dsw:
-        * tests/Muxing/Test.idl:
-        * tests/Muxing/run_test.pl:
-        * tests/Muxing/Client_Task.h:
-        * tests/Muxing/Client_Task.cpp:
-        * tests/Muxing/Receiver.h:
-        * tests/Muxing/Receiver.cpp:
-        * tests/Muxing/Server_Task.h:
-        * tests/Muxing/Server_Task.cpp:
-        * tests/Muxing/client.cpp:
-        * tests/Muxing/client.dsp:
-        * tests/Muxing/server.cpp:
-        * tests/Muxing/server.dsp:
-        * tests/Muxing/svc.conf:
-          New one-button test for connection muxing.  More than a
-          regression test this is just a simpler way to test the same
-          thing.
-
-        * tests/README:
-        * tests/Server_Leaks/README:
-        * tests/Server_Leaks/Makefile:
-        * tests/Server_Leaks/Server_Leaks.dsw:
-        * tests/Server_Leaks/Test.idl:
-        * tests/Server_Leaks/run_test.pl:
-        * tests/Server_Leaks/Ping_Service.h:
-        * tests/Server_Leaks/Ping_Service.cpp:
-        * tests/Server_Leaks/client.cpp:
-        * tests/Server_Leaks/client.dsp:
-        * tests/Server_Leaks/server.cpp:
-        * tests/Server_Leaks/server.dsp:
-          Another regression test for resource leaks on the server-side.
-
-        * tests/LongWrites/client.dsp:
-          Was trying to compile files not present on the main trunk.
-
-Sat Mar 10 11:46:28 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/RtEC/MCast/Makefile:
-        * tests/AVStreams/Latency/Makefile:
-        * tests/CosEvent/Basic/Makefile:
-        * tests/CosEvent/lib/Makefile:
-        * tests/EC_Custom_Marshal/Makefile:
-        * tests/FaultTolerance/IOGRManipulation/Makefile:
-        * tests/Notify/performance-tests/RedGreen/Makefile:
-        * tests/Notify/performance-tests/Throughput/Makefile:
-        * tests/Sched/Makefile:
-          More fixes to make QNX happy about the library
-          interdependencies.
-
-        * tests/FaultTolerance/IOGR/Manager.h:
-        * tests/FaultTolerance/IOGR/Manager.cpp:
-          Do not return anything from Manager::init(), exceptions are
-          raised to indicate errors, and the return value was ignored
-          anyway.
-
-Sat Mar 10 11:29:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/Simple/echo/Echo_i.cpp: Fixed a compile error in debian
-          Linux.
-
-Sat Mar 10 09:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * Reverted the change made by Paul Calabrese vide "Fri Mar  9
-          14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>. This
-          change was breaking all the tests for Sequences in
-          $TAO_ROOT/tests/Param_Test.
-
-Sat Mar 10 02:33:13 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Makefile:
-          Add the new test to the recursive Makefiles
-
-Sat Mar 10 02:09:29 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/README:
-        * tests/Client_Leaks/README:
-          Add new test to check that clients do not leak handle
-          resources.
-
-        * tests/Client_Leaks/Test.idl:
-          Define the IDL interfaces used in the test
-
-        * tests/Client_Leaks/child.cpp:
-        * tests/Client_Leaks/Process.h:
-        * tests/Client_Leaks/Process.cpp:
-          Implement the Process interface
-
-        * tests/Client_Leaks/server.cpp:
-        * tests/Client_Leaks/Process_Factory.h:
-        * tests/Client_Leaks/Process_Factory.cpp:
-          Implement the Process_Factory interface, create instances of the
-          child program as requested by the client.
-
-        * tests/Client_Leaks/client.cpp:
-          Invoke create_new_process() and shutdown() on the returned
-          process multiple times (1000 by default).
-
-        * tests/Client_Leaks/run_test.pl:
-          One button script
-
-        * tests/Client_Leaks/Makefile:
-        * tests/Client_Leaks/Client_Leaks.dsw:
-        * tests/Client_Leaks/child.dsp:
-        * tests/Client_Leaks/client.dsp:
-        * tests/Client_Leaks/server.dsp:
-          Project files and Makefile for the new test
-
-Fri Mar 09 23:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/README:
-        * tests/Crashed_Callback/README:
-          Document the purpose of the new Crashed_Callback test.
-
-        * tests/Crashed_Callback/Crashed_Callback.dsw:
-        * tests/Crashed_Callback/client.dsp:
-        * tests/Crashed_Callback/server.dsp:
-          Add project files for the Crashed_Callback test.
-
-        * tests/Crashed_Callback/Makefile:
-          Disable the test if corba messaging is disabled.
+          Propagate a few interface changes.
 
         * tests/LongWrites/LongWrites.dsw:
         * tests/LongWrites/client.dsp:
         * tests/LongWrites/server.dsp:
-          Add project files for the LongWrites test.
-
-Fri Mar  9 22:44:55 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tao/RT_ORBInitializer.cpp:
-          Use the ACE_Service_Config::new process_directive() call to
-          insert static services into the Service Repository, this
-          approach is cleaner than what I did on Feb 20th.
-
-Fri Mar  9 18:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Crashed_Callback/Crashed_Callback.h:
-          Minor cosmetic fixes.
-
-        * tests/Crashed_Callback/Service.h:
-        * tests/Crashed_Callback/Service.cpp:
-        * tests/Crashed_Callback/server.cpp:
-          Print out an error if the test did not finish successfully.
-
-        * tests/Crashed_Callback/run_test.pl:
-          Simplify the structure a bit, thanks to Darrell.
-
-Fri Mar 09 16:16:56 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * examples/POA/FindPOA/FindPOA.cpp (main): Added additional test
-          cases to make sure that the correct exception
-          (PortableServer::POA::AdapterNonExistent) is raised when looking
-          for a non-existant POA.
-
-Fri Mar  9 16:06:29 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tests/Makefile:
-        * tests/Crashed_Callback/Makefile:
-        * tests/Crashed_Callback/Test.idl:
-        * tests/Crashed_Callback/run_test.pl:
-        * tests/Crashed_Callback/Crashed_Callback.h:
-        * tests/Crashed_Callback/Crashed_Callback.cpp:
-        * tests/Crashed_Callback/Service.h:
-        * tests/Crashed_Callback/Service.cpp:
-        * tests/Crashed_Callback/client.cpp:
-        * tests/Crashed_Callback/server.cpp:
-          New regression test.  Verify that the ORB does raise an
-          exception when a callback interface dies.  This was reported by
-          Jody Hagins <jody@atdesk.com>.
-          It does work TAO-1.1.13 but it failed on TAO-1.1.12, we add the
-          regression to avoid future problems.
-
-Fri Mar  9 16:38:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * orbsvcs/IFR_Service/be_produce.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
-        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
-        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
-        * orbsvcs/IFR_Service/ifr_removing_visitor.h:
-        * orbsvcs/IFR_Service/ifr_visitor.cpp:
-        * orbsvcs/IFR_Service/ifr_visitor.h:
-        * orbsvcs/IFR_Service/ifr_visitor_macro.h:
-
-          Removed CORBA::Environment member from the visitor classes,
-          and its use. Instead, each visitor method that makes a
-          call to the IFR, or to _narrow, creates a new environment
-          variable. Thanks to Carlos for showing me the error in
-          trying to piggyback exception propagation onto the
-          propagation of the visit_* methods' error codes.
-
-        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
-
-          Made change corresponding to Darrell's below.
-
-Fri Mar 09 14:40:37 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/Simple/Simple_util.cpp:
-          Fixed compilation problems with the Simple examples.
-
-Fri Mar  9 14:07:06 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * TAO_IDL/driver/drv_preproc.cpp:
-
-          Jeff and I have been chatting about why "tao_idl -E" doesn't
-          work too well on Windows, and it was narrowed down to a system ()
-          call that used "cat".  I could not let this travesty of platform
-          independence continue to reside in our very own tao_idl compiler!
-
-          Um, yeah, so I changed that bit of code to read in the file and
-          print it out via ACE_DEBUG.
-
-Fri Mar  9 15:40:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
-
-        * tests/AMI/client.cpp:
-        * tests/AMI/simple_client.cpp:
-        * tests/AMI/server.cpp:
-
-          Fixed the custom event loop and clean-up code. This fixes
-          a seg fault problem Bala reported.
-
-Fri Mar  9 14:48:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * tao/Typecode.h:
-        * tao/Typecode.cpp:
-
-          Added method private_default_index_i() that does not
-          grab a lock like its counterpart private_default_index().
-          This enables the default index to be checked from
-          within a critical section of private_member_label().
-
-Fri Mar  9 14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>
-
-        * tao/Sequence.i:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
-
-          Fix a memory leak with bounded sequences of all types.
-          Also cleaned up some indentation in the generated code
-          and added a missing data member initialization.
-
-Fri Mar  9 14:27:00 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
-        * tao/Makefile:
-
-          Modifications to make things build correctly with Chorus 4.0.1.
-
-Fri Mar 09 12:54:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (parse): Fixed
-          TAO_Tokenizer::parse().  It was not delimiting strings
-          correctly.
-
-        * orbsvcs/tests/AVStreams/Simple: Made the following changes to
-          make things run more smoothly:
-
-          - Updated README.  Added information about defaults.
-
-          - ftp and server: Changed <ftp::client_mmdevice_> and
-          <ftp::streamctrl_> and <server::mmdevice> to be dynamic and use
-          servant reference counting to manage their lifetime. Otherwise,
-          things will crash on exit.
-
-          - ftp: Added defaults to all user specified parameters.
-
-          - ftp: Address should default to "localhost:0".
-
-          - ftp: Removed <Client::flowname> and <Client::frame_rate> since
-          they are not used.
-
-          - ftp: Changed CString to use operator= rather than set() since
-          it is more intuitive.
-
-          - ftp: <flow_spec.length> should be called *before* slot [0] is
-          used.
-
-Fri Mar  9 10:30:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be/be_codegen.cpp:
-
-          To a conditional checking for Linux in the handling of
-          the gperf input stream, added a check for QNX, which
-          seems to have similar behavior at that point. Thanks
-          to Andy Olson <andrew.olson@lmco.com> for reporting the
-          bug and for tracking down the problem.
-
-Fri Mar  9 16:07:55 2001  Johnny Willemsen <jwillemsen@remedy.nl>
-
-        * tests/Makefile.bor
-        * tests/QtTests/*.bor
-        * tests/Strategies/*.bor
-
-          Added BCB makefiles for these tests
-
-Fri Mar  9 07:25:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/FaultTolerance/IOGR/Makefile: Fixed a error.
-
-Fri Mar  9 07:00:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp: Fixed
-          some usage of ACE_CHECK which were giving warnings.
-
-Fri Mar  9 06:48:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * examples/Simple/Simple_util.cpp: Fixed a typo.
-
-Thu Mar  8 21:10:39 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/IOPC.cpp (operator>>=):
-        * tao/MessagingC.cpp (operator>>=):
-        * tao/PortableInterceptorC.cpp (operator>>=):
-
-          Fixed code so that ACE_TRY_CHECK is correctly called immediately
-          after a call that uses ACE_TRY_ENV is made.
-
-Thu Mar  8 20:44:23 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/Any.h:
-        * tao/Any.cpp:
-
-          Removed CORBA::Environment parameter from the constructor.  It's
-          a really bad idea to attempt to support emulated exceptions in
-          constructors.  In any case, the parameter wasn't used.
-
-        * tao/RequestInfo_Util.cpp (make_any):
-
-          Removed ACE_TRY_ENV parameter from the CORBA::Any constructor
-          call.  It is no longer part of the constructor's signature.
-
-        * docs/INS.html:
-
-        Updated URL for the INS spec.
-
-Thu Mar  8 21:34:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
-          warning with g++.
-
-Thu Mar  8 19:02:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * tao/IFR_Client/Interface.pidl:
-
-          Added some comments to the top of the file, about how to
-          regenerate the stub code, and how to regenerate and use
-          the diff files.
-
-        * tao/IFR_Client/diffs/InterfaceC.h.diff:
-        * tao/IFR_Client/diffs/InterfaceC.i.diff:
-        * tao/IFR_Client/diffs/InterfaceC.cpp.diff:
-        * orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
-        * orbsvcs/IFR_Service/diffs/InterfaceS.i.diff:
-        * orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
-        * orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
-
-          Regenerated these files.
-
-Thu Mar  8 15:32:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
-
-        * tao/Asynch_Invocation.cpp:
-        * tao/Asynch_Reply_Dispatcher.cpp:
-        * tao/Asynch_Reply_Dispatcher.h:
-        * tao/Asynch_Timeout_Handler.cpp:
-        * tao/Asynch_Timeout_Handler.h:
-
-          Moved the alloaction of the timeout handler from the asynch invocation,
-          where it was done dynamically, to the constructur of the asynch reply
-          dispatcher constructor, where it is allocated together with the
-          reply dispatcher. The reply dispatcher itself is allocated on the
-          heap as the invocation object will go away before the reply arrives.
-
-          This change also involved some restructuring of the timeout mechanism,
-          though nothing major.
-
-
-Thu Mar  8 14:20:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * tao/IFR_Client/InterfaceC.cpp:
-
-          Updated file to correspond with change in generated
-          code in the following entry:
-
-          Wed Mar  7 16:17:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-Thu Mar  8 12:39:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main):
-        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
-        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
-        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
-        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
-        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-        * examples/Simulator/Event_Supplier/Event_Con.cpp:
-        * examples/Simulator/Event_Supplier/Event_Con.cpp:
-        * examples/Simple/Simple_util.cpp:
-        * examples/Simple/echo/Echo_i.cpp:
-        * examples/Simple/echo/Echo_i.cpp:
-        * examples/Simple/echo/Echo_i.cpp: Fixed some
-          resolve_initial_reference fuzz errors.
-
-Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * examples/Borland/ChatClientWnd.cpp:
-        * examples/Callback_Quoter/Consumer_Handler.cpp:
-
-          Fixed some resolve_initial_reference fuzz errors.
-
-Thu Mar  8 11:01:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
-
-        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-          Added missing ACE_TRY_ENV to resolve_initial_references
-          call.
-
-Thu Mar  8 08:34:16 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * examples/Makefile:
-          Fixed path to the PluggableUDP directory.
-
-        * examples/PluggableUDP/tests/UDP_i.cpp:
-          Fixed throw spec for the invoke() method.
-
-        * tests/POA/Single_Threaded_POA/Makefile:
-          rules.bin.GNU cannot be included if there is an explicit rule to
-          build the binary.  Cleanup the macros and regenerate
-          dependencies.
-
-        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
-          Fixed warning about unused argument.
-
-Thu Mar  8 10:29:08 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
-
-          Added missing ACE_TRY_ENV to resolve_initial_references
-          call.
-
-Thu Mar  8 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * tests/AMI_Timeouts/timeout_client.cpp:
-          Added more time to wait for asynch replies in case of local and
-          remote timer == 0ms.
-
-        * tests/AMI_Timeouts/client.cpp:
-          Removed a memory leak caused by not deleting the client object.
-
-        * tests/AMI_Timeouts/timeout_i.cpp:
-          Removed some confusing debugging messages. Also, added a check
-          to accept only timeout exceptions and report others.
-
-Wed Mar  7 20:07:00 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/CosEvent_Service/Makefile:
-        * orbsvcs/Dump_Schedule/Makefile:
-        * orbsvcs/Event_Service/Makefile:
-        * orbsvcs/LifeCycle_Service/Makefile:
-        * orbsvcs/Logging_Service/Makefile:
-        * orbsvcs/Scheduling_Service/Makefile:
-        * orbsvcs/Trading_Service/Makefile:
-        * orbsvcs/tests/EC_Multiple/Makefile:
-        * orbsvcs/tests/Event/Basic/Makefile:
-        * orbsvcs/tests/Event_Latency/Makefile:
-        * TAO/examples/Content_Server/AMI_Observer/Makefile:
-        * TAO/examples/Quoter/Makefile:
-        * TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
-        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
-        * TAO/orbsvcs/examples/RtEC/Schedule/Makefile:
-        * TAO/orbsvcs/examples/RtEC/Simple/Makefile:
-        * TAO/orbsvcs/tests/Event/Performance/Makefile:
-        * TAO/orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-        * TAO/orbsvcs/tests/Notify/Basic/Makefile:
-          Add missing libraries for QNX
-
-        * tests/Collocation/Makefile.impl:
-          Add libraries missing for Tru64/CXX
-
-Wed Mar  7 19:36:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-        * orbsvcs/tests/AVStreams/Simple/Makefile:
-        * orbsvcs/tests/AVStreams/Makefile:
-
-          Added the Makefiles to compile the Simple test.
-
-Wed Mar 07 19:19:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * tao/PortableServer:
-
-          The SINGLE_THREAD_MODEL was not implemented correctly in the
-          POA.  As documented in Bug 483, the spec was misread to
-          understand that two threads cannot call the same servant in
-          a single threaded POA.  The spec actually meant that any two
-          servants in a single threaded POA cannot be called
-          simultaneously.  This was fixed by the following changes:
-
-          - There is one lock per single threaded POA instead of one
-            lock per servant.
-
-          - Since the lock is now on the POA instead of being on the
-            servant, there is no need to set up the per servant lock
-            when the servant is registered or when the servant is
-            removed from the POA.  Thus the <teardown_servant_lock>
-            and the <establish_servant_lock> were removed from the
-            POA.
-
-          - The lock type was changed from regular to recursive.
-
-        * tests/POA/Single_Threaded_POA:
-
-          New test added. This program tests to make sure that two threads
-          cannot call servants in a single threaded POA simultaneously.
-          At the same time, it makes sure that a servant can call itself
-          or other servants in the same POA while in an upcall.
-
-        * Updated the following files wrt the new test:
-
-          ACE_wrappers/TAO/tests/TAO_Tests.dsw
-          ACE_wrappers/TAO/tests/POA/Makefile
-          ACE_wrappers/TAO/tests/POA/README
-          ACE_wrappers/bin/auto_compile_win32.pl
-          ACE_wrappers/bin/auto_run_tests.lst
-
-        * tao/ORB_Core.cpp:
-
-          - There was a memory leak when an ORB was not explicitly
-            destroyed or shutdown by the user.  The fix was to call
-            TAO_ORB_Core::shutdown() from TAO_ORB_Core::fini().  This
-            will ensure that the Object Adapter(s) gets closed,
-            reactor registry is shutdown, the threads are canceled,
-            etc. when the user does not explicitly destroyed or
-            shutdown the ORB.  This fixes move than Bug 406 since it
-            cleans up after the user even when the user does not call
-            shutdown() or destroy() on the ORB.
-
-          - There was a guard added to avoid repeated shutdowns and
-            then there was no need to guard repeated destroys.
-
-          - Ossama's change to make <root_poa_> a ptr from the
-            original var type was incorrect because he thought that
-            poa_adapter->root() doesn't return a duplicate.  It
-            actually does duplicate (TAO_POA *root_poa() doesn't but
-            CORBA::Object_ptr root()does).  Therefore, his change was
-            reverted.
-
-          - Moved destroy_interceptors() from destroy() to shutdown().
-            All destroy() should do is (a) call shutdown() and (b)
-            unbind() from the ORB table.  Nothing else should really
-            be added to this method.  Everything else should go to the
-            shutdown() method.  Remember when the ORB Core is finally
-            removed from the ORB table, the reference count goes to
-            zero and fini() is called.  fini() calls shutdown() and
-            does not call destory() since destroy() will try to unbind
-            from the ORB table again.  Additional code should not be
-            added to destroy() since there is no guarantee that
-            orb->destroy() will ever be called by the user.  Since TAO
-            guarantees that shutdown() will be called, all cleanup
-            code should go there.
-
-Wed Mar  7 16:17:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be/be_visitor_operation/operation_cs/cpp:
-
-          Added to previous fix to handle case where the
-          return value is a struct or union of fixed size.
-          In these cases, the return value is not a pointer,
-          so ACE_CHECK_RETURN must return the result of a
-          call to the default constructor.
-
-Wed Mar 07 11:35:03 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * examples/Advanced/ch_21/Makefile (LDLIBS): Added missing
-          PortableServer library.  Fixes Bug 809.
-
-Wed Mar  7 13:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
-
-        * examples/PluggableUDP/Makefile:
-        * examples/Makefile:
-          Added DIOP and tests to the non-windows builds.
-
-Wed Mar  7 12:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be_operation/operation_cs.cpp:
-
-          Added to previous fix to handle the case where the
-          return type is an enum. In such a case, the added
-          ACE_CHECK_RETURN macro cannot just return 0, but
-          must return an enum value, which is a separate type.
-
-        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-
-          Cosmetic changes to generation of the *_setup_collocation
-          method.
-
-Wed Mar  7 10:50:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be_operation/operation_cs.cpp:
-
-          Broke up a chain of generated calls in the stub
-          operation implementation into separate statements,
-          and inserted a needed ACE_CHECK.
-
-Wed Mar  7 08:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * utils/wxNamingViewer/wxNamingViewer.dsp:
-
-          Changed the configuration names so they don't show up in
-          the nightly builds.
-
-Wed Mar 07 08:01:16 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/Stub.cpp (~TAO_Stub):
-
-          Make sure the returned TAO_Endpoint pointer is non-zero before
-          invoking methods through it.  It could be zero in the case of
-          profiles created by other ORBs.  Thanks to Goran Lowkrantz
-          <goran.lowkrantz@ismobile.com> for submitting the fix.
-
-Wed Mar  7 08:39:56 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * tests/AMI/client.cpp:
-        * tests/AMI/server.cpp:
-
-          Fixed build error when building with exceptions disabled.
-
-        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-
-          Removed a warning when compiling with multicast disabled.
-
-        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
-        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
-        * orbsvcs/tests/Notify/Basic/Simple.cpp:
-        * orbsvcs/tests/Notify/Basic/Updates.cpp:
-        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-        * orbsvcs/tests/Trading/colocated_test.cpp:
-
-          Fixed link errors on VxWorks due to multiply defined templates.
-          The templates in question were already instantiated in the orbsvcs
-          libraries.
-
-Wed Mar  7 06:43:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/examples/CosEC/RtEC_Based/lib: Fixed a typo in exception
-          macros.
-
-Wed Mar 07 00:07:48 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/PortableInterceptorS.h:
-
-          Some IDL files may include the `tao/PortableInterceptor.pidl'
-          file.  In those cases, the IDL compiler will generate an include
-          for this header in the skeleton.  This dummy header satisfies
-          that inclusion.
-
-        * tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
-
-          Removed this IDL files.  Some old C++ compilers couldn't handle the
-          reopened namespaces found in the stubs/skeletons associated with
-          this IDL.
-
-        * tests/Portable_Interceptors/ForwardRequest/test.idl:
-
-          Moved the "ServerRequestInterceptor" interface to this IDL file
-          since some old C++ compilers couldn't handle the reopened
-          namespaces found in the stubs/skeletons associated with this
-          IDL.
-
-        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
-
-          Include `testC.h' instead of `ServerRequestInterceptorC.h' since
-          the server request interceptor IDL was moved to the `test.idl'
-          file.
-
-        * tests/Portable_Interceptors/ForwardRequest/Makefile:
-        * tests/Portable_Interceptors/ForwardRequest/client.dsp:
-        * tests/Portable_Interceptors/ForwardRequest/client.bor:
-        * tests/Portable_Interceptors/ForwardRequest/server.bor:
-        * tests/Portable_Interceptors/ForwardRequest/server.dsp:
-
-          Removed references to the removed `ServerRequestInterceptor.idl'
-          file, and updated IDL compiler flags accordingly.
-
-Tue Mar 06 23:43:07 2001  Ossama Othman  <ossama@uci.edu>
-
-        * tao/CONV_FRAMEC.cpp (operator>>=):
-        * tao/DomainC.cpp (operator>>=):
-        * tao/DynamicC.cpp (operator>>=):
-        * tao/GIOPC.cpp (operator>>=):
-        * tao/IIOPC.cpp (operator>>=):
-        * tao/OctetSeqC.cpp (operator>>=):
-        * tao/StringSeqC.cpp (operator>>=):
-        * tao/TAOC.cpp (operator>>=):
-        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp
-          (authorize_level1):
-        * tests/Portable_Interceptors/Benchmark/client.cpp (run_test):
-        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
-          (svr_worker):
-        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
-
-          Added missing ACE_CHECK/ACE_TRY_CHECK macros.
-
-        * orbsvcs/tests/LoadBalancing/server.cpp (main):
-        * orbsvcs/tests/Security/RejectInsecure/server.cpp (main):
-        * orbsvcs/tests/Security/SecurityLevel1/server.cpp (main):
-        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
-          (authorize_level1):
-
-          Added missing ACE_TRY_ENV macros to the
-          resolve_initial_references() call.
-
-Wed Mar  7 07:46:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
-
-        * tests/Makefile.bor
-        * tests/ior_corbaloc/*.bor
-        * tests/Single_Read/*.bor
-
-          Added BCB specific makefiles for these tests
-
-Tue Mar  6 21:22:51 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
-
-        * tests/ior_corbaloc/status_i.cpp:
-          The default arguments were also set in the implementation file.
-          Corrected it.
-
-          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
-          for reporting this.
-
-Tue Mar  6 21:21:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
-
-        * tao/IIOP_Acceptor.h (port_span_): Added data member to track the
-          span of ports the user wishes a server-side ORB to search for an
-          open port. [Bug 817]
-
-        * tao/IIOP_Acceptor.cpp (parse_options): Added code to parse a new
-          "portspan" endpoint option to set the port_span_ data member. [Bug
-          817]
-
-        * tao/IIOP_Acceptor.cpp (CTOR): Default the port_span_ to 1. [Bug 817]
-
-        * tao/IIOP_Acceptor.cpp (open_i): Added code to search for a port
-          starting at the port specified in the -ORBEndpoint option, over a
-          span of port_span_ ports looking for an available port on which to
-          listen for requests.  Search is in-order linear.  If there are
-          multiple endpoints, then only the first endpoint gets search, and
-          all other endpoints use whatever port was found for that one.
-          This is identical to the behavior used for ephemeral ports. [Bug 817]
-
-Tue Mar  6 18:32:34 PST 2001 Mayur Deshpande  <mayur@balar.ece.uci.edu>
-
-        * docs/tutorials/Quoter/Makefile (Repository):
-          Top level Makefiel that recursively makes all tutorials in the subdirectories.
-
-        * docs/tutorials/Quoter/RT_Event_Service/Makefile (Repository):
-          Updated LDLIBS section
-
-        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h (Repository):
-        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.cpp (Repository):
-          Copied from ../Simple/Server
-
-        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp (Repository):
-          Handled 'dangling else' condition.
-
-        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h (Repository):
-          Included PortableServer header file
-
-        * docs/tutorials/Quoter/On_Demand_Activation/Makefile (Repository):
-          Makefile to make the new self-contained Tutorial.
-
-        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h (Repository):
-        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp (Repository):
-        * docs/tutorials/Quoter/On_Demand_Activation/Quoter.idl (Repository):
-        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp (Repository):
-          Copied from ../AMI
-
-        * docs/tutorials/Quoter/Naming_Service/Stock_i.h (Repository):
-        * docs/tutorials/Quoter/Naming_Service/Stock_i.cpp (Repository):
-        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.h (Repository):
-        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp (Repository):
-          Copied from ../Server.
-        * docs/tutorials/Quoter/Event_Service/Makefile (Message):
-            Makefile to make the self-contained AMI tutorial.
-
-        * docs/tutorials/Quoter/Event_Service/ec.conf (Message):
-          Works better with defaults (no need for an ec.conf file actually).
-
-        * docs/tutorials/Quoter/AMI/Makefile (Message):
-          Makefile to make the self-contained AMI tutorial.
-
-        * docs/tutorials/Quoter/idl/quoter_common_export.h (Repository):
-          For exporting DLL symbols.
-
-        * docs/tutorials/Quoter/idl/Quoter.idl (Repository):
-          The mother of all Quoter.idl file.
-
-        * docs/tutorials/Quoter/idl/Makefile (Repository):
-          Most of the IDL generated files were common to many tutoroals (especially
-          in the Simple directory), so the IDL file was moved into a separate directory,
-          the necessary files generated and stored in a library, Quoter_Common, to be
-          used by others.
-
-        * docs/tutorials/Quoter/Simple/Server/Stock_i.h (Repository):
-          Modified to take into account the new Quoter_Common library.
-
-        * docs/tutorials/Quoter/Simple/Server/Makefile (Repository):
-          Makefile to make the new self-contained Server tutorial.
-
-        * docs/tutorials/Quoter/Simple/Persistent (Repository):
-          Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
-          ../Client to make Impl-Repo self-sufficient.
-
-        * docs/tutorials/Quoter/Simple/Persistent/Makefile :
-          Makefile to make the new self-contained Persistent tutorial.
-
-        * docs/tutorials/Quoter/Simple/Impl-Repo :
-          Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
-          ../Client to make Impl-Repo self-sufficient.
-
-        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile :
-          Makefile to make the new self-contained ImprovedServer directory.
-
-        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html :
-          Corrected path to ImplRepo_Service.
-
-        * docs/tutorials/Quoter/Simple/Client/Makefile :
-          Makefile making use of the Common_Quoter library and 'idl' files.
-
-Tue Mar  6 17:56:42 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * utils/wxNamingViewer/pch.h:
-        * utils/wxNamingViewer/wxBindDialog.cpp:
-        * utils/wxNamingViewer/wxNamingViewer.dsp:
-        * utils/wxNamingViewer/wxNamingViewer.dsw:
-
-          Some fixes to get this util to work in MSVC 6.
-
-Tue Mar  6 17:29:42 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
-        * orbsvcs/ImplRepo_Service/Options.cpp:
-        * orbsvcs/ImplRepo_Service/Options.h:
-
-          Hmmm, yuck.  I'm cleaning up my 10 or so workspaces and found
-          that I still had this fix ready for checkin.  [Bug 723]
-          Originally submitted by RogerTragin@bigfoot.com (Roger Tragin).
-
-Tue Mar  6 15:40:42 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
-        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-        * orbsvcs/Event_Service/Event_Service.cpp:
-        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
-        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
-        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp:
-        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
-        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
-        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
-        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
-        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-        * orbsvcs/tests/Event/Basic/Observer.cpp:
-        * orbsvcs/tests/Event/Basic/Random.cpp:
-        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
-        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
-        * orbsvcs/tests/Event/lib/Consumer.cpp:
-        * orbsvcs/tests/Event/lib/Driver.cpp:
-        * orbsvcs/tests/Event/lib/Supplier.cpp:
-        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-        * performance-tests/Callback/Server_i.cpp:
-        * performance-tests/Callback/server.cpp:
-        * tests/LongWrites/client.cpp:
-        * tests/LongWrites/server.cpp:
-        * tests/Object_Loader/Test_i.cpp:
-        * tests/Timeout/client.cpp:
-          More ACE_TRY_ENV/ACE_CHECK fixes to make the Fuzz script happy.
-          Lucky for us, the Event Service changes are more a matter of
-          style than correctness.
-
-Tue Mar  6 17:35:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * tao/corbafwd.h:
-
-          Modified the enum TCKind to be compatible with CORBA 2.4,
-          and added some of the forward declarations and typedefs
-          needed to make the Interface Repository compatible with
-          CORBA 2.4.
-
-Tue Mar  6 16:11:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Handler.cpp (read_messages): Added a new method
-          read_messages () that would avoid code duplication.
-
-Tue Mar  6 13:44:38 2001  Darrell Brunsch <brunsch@uci.edu>
-
-        * examples/Quoter/run_test.pl:
-
-          Updated to new PerlACE::Run_Test.  Missed this one since
-          it didn't use ACEutils.
-
-        * examples/Quoter/testall.pl: (removed)
-
-          Out of date and not used anymore.
-
-        * examples/Quoter/README:
-
-          Removed some out of date comments.
-
-        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
-        * examples/Quoter/Factory_Finder.cpp:
-        * examples/Quoter/Generic_Factory.cpp:
-        * examples/Quoter/client.cpp:
-        * examples/Quoter/server.cpp:
-        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
-        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
-        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
-        * orbsvcs/tests/ImplRepo/nestea_server.cpp:
-
-          Fixed problems detected by fuzz.
-
-Tue Mar  6 15:54:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Handler.h:
-        * tao/GIOP_Message_Handler.cpp:
-        * tao/GIOP_Message_Base.cpp: Did some cosmetic changes to the code.
-
-Tue Mar  6 13:06:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * tests/AMI_Timeouts/client.cpp:
-        * tests/AMI_Timeouts/server.cpp:
-        * tests/AMI_Timeouts/timeout_client.cpp:
-        * tests/AMI_Timeouts/timeout_i.cpp:
-
-          Cleaned up the code and pretty-printed the output of the
-          debug messages.
-
-Tue Mar  6 11:51:18 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * tao/Wait_On_Leader_Follower.cpp:
-          Do not enter the leader loop if the reply has been received
-          already.  This eliminates a subtle race condition reported by
-          Derek Horton <trohed@yahoo.com>.
-
-Tue Mar  6 13:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tao/GIOP_Message_Handler.cpp (read_parse_message):
-        * tao/GIOP_Message_Base.cpp: Made some aesthetic changes and fixed
-          some comments.
-
-Tue Mar  6 13:25:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * tao/PortableServer/ImplRepoC.cpp:
-
-          Fixed some Any extraction operators overlooked in a
-          previous hand-crafting.
+        * tests/LongWrites/run_test.pl:
+          Got the test to compile (and run) under NT.
 
 Tue Mar  6 11:49:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/GIOP_Message_Handler.cpp (is_message_ready):
         * tao/GIOP_Message_Base.cpp: Made a pass through the code and
           fixed a few ACE_DEBUG statements and HEXDUMP statements. Thanks
-          to Johnny.Willemsen <jwillemsen@remedy.nl> for pointing these
+          to Johnny.Willemsen <jwillemsen@mego.nl> for pointing these
           out.
 
 Tue Mar 06 10:58:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
@@ -2412,11 +541,6 @@ Mon Mar  5 18:40:58 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI/client.cpp:
         * tests/AMI/server.cpp:
           Fixed misuse of ACE_CHECK_RETURN
-
-Mon Mar  5 14:21:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
-
-        * tests/Strategies/server.cpp :
-          Added ACE_TRY_ENV parameter to resolve_initial_references call.
 
 Mon Mar 05 20:29:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -3994,6 +2118,8 @@ Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
           Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
           bugs.
+
+
 
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

@@ -88,10 +88,12 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (udp_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
-                           ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil\n",
+                             ior),
+                            1);
+        }
 
       // Activate POA to handle the call back.
 
@@ -126,34 +128,30 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      UDP_Client_i *client = new UDP_Client_i (orb.in (),
+      UDP_Client_i* client = new UDP_Client_i (orb.in (),
                                                udp_var.in (),
                                                udpHandler_var.in (),
-                                               msec,
-                                               iterations);
+											   msec,
+											   iterations);
 
       // let the client run in a separate thread
       client->activate ();
 
       // ORB loop, will be shut down by our client thread
-      
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb->run ();  // Fetch responses
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+	  root_poa->destroy (true,  // ethernalize objects
+ 					     false, // wait for completion
+						 ACE_TRY_ENV);
+	  orb->destroy (ACE_TRY_ENV);
 
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+	  // it is save to delete the client, because the client was actually
+	  // the one calling orb->shutdown () triggering the end of the ORB
+	  // event loop.
+	  delete client;
 
-      // it is save to delete the client, because the client was actually
-      // the one calling orb->shutdown () triggering the end of the ORB
-      // event loop.
-      delete client;
     }
   ACE_CATCHANY
     {

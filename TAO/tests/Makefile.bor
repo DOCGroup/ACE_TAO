@@ -20,7 +20,6 @@ DIRS = \
         FL_Cube \
         Forwarding \
 	IDL_Test \
-        ior_corbaloc \
 	IORManipulation \
 	InterOp-Naming \
 	Leader_Followers \
@@ -35,18 +34,8 @@ DIRS = \
         POA \
 	Policies \
         Portable_Interceptors \
-        QtTests \
 	RTCORBA \
-        Single_Read \
-        Strategies \
 	Timed_Buffered_Oneways \
-	Timeout \
-	MT_Client \
-	MT_Server \
-	Muxing \
-	Client_Leaks \
-	Server_Leaks \
-	Crashed_Callback \
-	LongUpcalls
+	Timeout
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

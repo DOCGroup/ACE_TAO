@@ -18,9 +18,11 @@ FILES  	= Timer_Service
 PSRC   	= $(addsuffix .cpp,$(BIN))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LDLIBS 	=
+LDLIBS 	= 
 
-BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+LIBS   += $(ACELIB)
+
+BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

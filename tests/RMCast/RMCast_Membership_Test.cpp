@@ -197,7 +197,7 @@ Test_Proxy::Test_Proxy (void)
 // ****************************************************************
 
 Tester::Tester (void)
-  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0)))
+  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::gethrtime ()))
 {
   // Initialize the stack...
   this->membership_.next (this);

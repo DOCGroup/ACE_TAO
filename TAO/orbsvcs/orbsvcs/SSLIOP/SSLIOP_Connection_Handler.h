@@ -94,6 +94,9 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
+  /// Return the underlying transport object
+  TAO_Transport *transport (void);
+
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
@@ -101,8 +104,11 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
 
+  /// Object termination hook.
+  virtual int close (u_long flags = 0);
+
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_handler_to_cache (void);
 
   /// Process the <listen_list>
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
@@ -141,11 +147,14 @@ protected:
 
 private:
 
+  /// Transport object reference.
+  TAO_SSLIOP_Transport transport_;
+
   /// Reference count.It is used to count nested upcalls on this
   /// svc_handler i.e., the connection can close during nested upcalls,
   /// you should not delete the svc_handler until the stack unwinds
   /// from the nested upcalls.
-  u_long pending_upcalls_;
+  u_long refcount_;
 
   /// TCP configuration for this connection.
   TAO_IIOP_Properties *tcp_properties_;

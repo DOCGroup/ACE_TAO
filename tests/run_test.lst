@@ -44,8 +44,6 @@ Hash_Map_Bucket_Iterator_Test
 High_Res_Timer_Test
 IOStream_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test
-Logging_Strategy_Test
 Map_Manager_Test
 Map_Test
 MEM_Stream_Test: !Linux
@@ -78,7 +76,7 @@ Reactor_Notify_Test: !ST
 Reactor_Performance_Test: !chorus
 Reactor_Timer_Test
 Reader_Writer_Test
-Recursive_Mutex_Test: !ST
+Recursive_Mutex_Test
 Refcounted_Auto_Ptr_Test
 Reverse_Lock_Test
 Semaphore_Test

@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_extern.h"
 #include "TAO_IFR_BE_Export.h"
 #include "be_extern.h"
-#include "ifr_visitor_macro.h"
 #include "ifr_removing_visitor.h"
 #include "ifr_adding_visitor.h"
 
@@ -121,12 +120,12 @@ BE_produce (void)
       BE_abort ();
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       if (be_global->removing ())
         {
-          ifr_removing_visitor visitor;
+          ifr_removing_visitor visitor (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
@@ -143,7 +142,8 @@ BE_produce (void)
         }
       else
         {
-          ifr_adding_visitor visitor;
+          ifr_adding_visitor visitor (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
@@ -163,7 +163,6 @@ BE_produce (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("BE_produce"));
-
     }
   ACE_ENDTRY;
 

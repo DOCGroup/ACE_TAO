@@ -4,6 +4,8 @@
 // SSL_SOCK_Acceptor.i
 
 
+// Do nothing routine for constructor.
+
 ASYS_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
 {
@@ -23,8 +25,6 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                protocol)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
-
-  this->set_handle (this->acceptor_.get_handle ());
 }
 
 ASYS_INLINE
@@ -46,8 +46,6 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                protocol)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
-
-  this->set_handle (this->acceptor_.get_handle ());
 }
 
 ASYS_INLINE int

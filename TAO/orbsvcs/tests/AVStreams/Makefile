@@ -8,13 +8,12 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS =	Simple \
+DIRS  =	benchmark \
 	Latency \
 	Pluggable \
 	Full_Profile \
 	Multicast \
-	Multicast_Full_Profile \
-        Simple_Three_Stage
+	Multicast_Full_Profile
 
 # mpeg server_discovery
 

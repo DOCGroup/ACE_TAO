@@ -11,12 +11,12 @@ use PerlACE::Run_Test;
 $status = 0;
 
 $ec_conf = PerlACE::LocalFile ("ec.conf");
-$ec_mt_conf = PerlACE::LocalFile ("ec_mt.conf");
+$ec_mt_conf = PerlACE::LocalFile ("ec_mt_conf");
 
 print STDERR "================ Collocated tests, single threaded\n";
 
 $T = new PerlACE::Process ("ECT_Throughput",
-                           "-ORBSvcConf $ec_conf"
+                           "-ORBsvcconf $ec_conf"
                            . " -m new -u 10000 -n 1 -t 0 -c 4");
 
 
@@ -27,11 +27,11 @@ if ($test != 0) {
     $status = 1;
 }
 
-print STDERR "================ Collocated tests, multi threaded\n";
+print STDERR "================ Collocated tests, single threaded\n";
 
 $T = new PerlACE::Process ("ECT_Throughput",
-                           "-ORBSvcConf $ec_mt_conf" 
-                           . " -m new -u 10000 -n 1 -t 0 -c 4");
+                           "-ORBsvcconf $ec_mt_conf" 
+                           . "-m new -u 10000 -n 1 -t 0 -c 4");
 
 $test = $T->SpawnWaitKill (60);
 

@@ -58,22 +58,17 @@ Quoter_Generic_Factory_Server::init (int argc,
 
   ACE_TRY
     {
-      int result = 0;
       // Initialize the ORB Manager
       exception_message = "While initing the orb_manager";
-      result = this->orb_manager_.init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (result == -1)
+      if (this->orb_manager_.init (argc, argv, ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+      ACE_TRY_CHECK;
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
-      result = this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (result == -1)
+      if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+      ACE_TRY_CHECK;
 
       // Copy them, because parse_args expects them there.
       this->argc_ = argc;
@@ -103,7 +98,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Get the Naming Service object reference.
       exception_message = "While getting the Naming Service Reference";
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb_manager_.orb()->resolve_initial_references ("NameService");
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
@@ -153,13 +148,9 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name.length (1);
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
-      exception_message = "Generic_Factory::_this";
-      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       exception_message = "While binding the Generic Factory";
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
-                                      gf_obj.in (),
+                                      this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

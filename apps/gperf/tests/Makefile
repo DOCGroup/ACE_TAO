@@ -22,6 +22,8 @@
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
+LDLIBS =   -lACE
+
 srcdir = .
 GPERF = ../src/gperf
 

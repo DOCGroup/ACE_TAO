@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Joe Hoffert <joeh@cs.wustl.edu>
+ *  @author Joe Hoffert
  */
 //=============================================================================
+
 
 #ifndef ACE_ATM_CONNECTOR_H
 #define ACE_ATM_CONNECTOR_H
@@ -54,7 +55,7 @@ public:
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately
    * the value of -1 is returned with <errno == EWOULDBLOCK>.  If
-   * *timeout > {0, 0} then this is the maximum amount of time to wait before
+   * *timeout > {0, 0} then this is the amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * <errno == ETIME>.  The <local_sap> is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
@@ -84,7 +85,7 @@ public:
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately
    * the value of -1 is returned with <errno == EWOULDBLOCK>.  If
-   * *timeout > {0, 0} then this is the maximum amount of time to wait before
+   * *timeout > {0, 0} then this is the amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * <errno == ETIME>.  The <local_sap> is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then

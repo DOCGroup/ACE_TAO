@@ -588,11 +588,8 @@ IR_DefinitionKind CORBA_IRObject::def_kind (
     CORBA::SystemException
   ))
 {
-  _TAO_IRObject_Proxy_Impl &proxy = 
-    this->the_TAO_IRObject_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN ((IR_DefinitionKind)0);
   
-  return proxy.def_kind (
+  return this->the_TAO_IRObject_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).def_kind (
       this,
       ACE_TRY_ENV
     );
@@ -605,11 +602,8 @@ void CORBA_IRObject::destroy (
     CORBA::SystemException
   ))
 {
-  _TAO_IRObject_Proxy_Impl &proxy = 
-    this->the_TAO_IRObject_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.destroy (
+  this->the_TAO_IRObject_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).destroy (
       this,
       ACE_TRY_ENV
     );
@@ -2716,11 +2710,7 @@ char * IR_Contained::id (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.id (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).id (
       this,
       ACE_TRY_ENV
     );
@@ -2734,11 +2724,7 @@ void IR_Contained::id (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.id (
+  this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).id (
       this,
       id,
       ACE_TRY_ENV
@@ -2752,11 +2738,8 @@ char * IR_Contained::name (
     CORBA::SystemException
   ))
 {
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.name (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).name (
       this,
       ACE_TRY_ENV
     );
@@ -2770,11 +2753,7 @@ void IR_Contained::name (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.name (
+  this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).name (
       this,
       name,
       ACE_TRY_ENV
@@ -2788,11 +2767,7 @@ char * IR_Contained::version (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.version (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).version (
       this,
       ACE_TRY_ENV
     );
@@ -2806,11 +2781,7 @@ void IR_Contained::version (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.version (
+  this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).version (
       this,
       version,
       ACE_TRY_ENV
@@ -2824,11 +2795,7 @@ IR_Container_ptr IR_Contained::defined_in (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.defined_in (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).defined_in (
       this,
       ACE_TRY_ENV
     );
@@ -2841,11 +2808,7 @@ char * IR_Contained::absolute_name (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.absolute_name (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).absolute_name (
       this,
       ACE_TRY_ENV
     );
@@ -2858,11 +2821,7 @@ IR_Repository_ptr IR_Contained::containing_repository (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.containing_repository (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).containing_repository (
       this,
       ACE_TRY_ENV
     );
@@ -2936,11 +2895,7 @@ IR_Contained::Description * IR_Contained::describe (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.describe (
+  return this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).describe (
       this,
       ACE_TRY_ENV
     );
@@ -2956,11 +2911,7 @@ void IR_Contained::move (
     CORBA::SystemException
   ))
 {  
-  _TAO_Contained_Proxy_Impl &proxy = 
-    this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.move (
+  this->the_TAO_Contained_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).move (
       this,
       new_container,
       new_name,
@@ -8677,7 +8628,8 @@ IR_Container::IR_Container_setup_collocation (int collocated)
     this->the_TAO_Container_Proxy_Broker_ =
       _TAO_Container_Remote_Proxy_Broker::the_TAO_Container_Remote_Proxy_Broker ();
   
-  this->CORBA_IRObject_setup_collocation (collocated);  
+  this->CORBA_IRObject_setup_collocation (collocated);
+  
 }
 
 void IR_Container::_tao_any_destructor (void *x)
@@ -8812,11 +8764,7 @@ IR_Contained_ptr IR_Container::lookup (
     CORBA::SystemException
   ))
 { 
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.lookup (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).lookup (
       this,
       search_name,
       ACE_TRY_ENV
@@ -8832,11 +8780,7 @@ IR_ContainedSeq * IR_Container::contents (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.contents (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).contents (
       this,
       limit_type,
       exclude_inherited,
@@ -8855,11 +8799,7 @@ IR_ContainedSeq * IR_Container::lookup_name (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.lookup_name (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).lookup_name (
       this,
       search_name,
       levels_to_search,
@@ -9103,11 +9043,7 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.describe_contents (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).describe_contents (
       this,
       limit_type,
       exclude_inherited,
@@ -9126,11 +9062,7 @@ IR_ModuleDef_ptr IR_Container::create_module (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_module (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_module (
       this,
       id,
       name,
@@ -9151,11 +9083,7 @@ IR_ConstantDef_ptr IR_Container::create_constant (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_constant (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_constant (
       this,
       id,
       name,
@@ -9177,11 +9105,7 @@ IR_StructDef_ptr IR_Container::create_struct (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_struct (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_struct (
       this,
       id,
       name,
@@ -9203,11 +9127,7 @@ IR_UnionDef_ptr IR_Container::create_union (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_union (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_union (
       this,
       id,
       name,
@@ -9229,11 +9149,7 @@ IR_EnumDef_ptr IR_Container::create_enum (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_enum (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_enum (
       this,
       id,
       name,
@@ -9254,11 +9170,7 @@ IR_AliasDef_ptr IR_Container::create_alias (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_alias (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_alias (
       this,
       id,
       name,
@@ -9281,11 +9193,7 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_interface (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_interface (
       this,
       id,
       name,
@@ -9314,11 +9222,7 @@ IR_ValueDef_ptr IR_Container::create_value (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_value (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_value (
       this,
       id,
       name,
@@ -9345,11 +9249,7 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_value_box (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_value_box (
       this,
       id,
       name,
@@ -9370,11 +9270,7 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_exception (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_exception (
       this,
       id,
       name,
@@ -9394,11 +9290,7 @@ IR_NativeDef_ptr IR_Container::create_native (
     CORBA::SystemException
   ))
 {
-  _TAO_Container_Proxy_Impl &proxy = 
-    this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_native (
+  return this->the_TAO_Container_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_native (
       this,
       id,
       name,
@@ -10986,7 +10878,8 @@ IR_IDLType::IR_IDLType_setup_collocation (int collocated)
     this->the_TAO_IDLType_Proxy_Broker_ =
       ::_TAO_IDLType_Remote_Proxy_Broker::the_TAO_IDLType_Remote_Proxy_Broker ();
   
-  this->CORBA_IRObject_setup_collocation (collocated);  
+  this->CORBA_IRObject_setup_collocation (collocated);
+  
 }
 
 void IR_IDLType::_tao_any_destructor (void *x)
@@ -11120,11 +11013,8 @@ CORBA::TypeCode_ptr IR_IDLType::type (
     CORBA::SystemException
   ))
 {
-  _TAO_IDLType_Proxy_Impl &proxy = 
-    this->the_TAO_IDLType_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type (
+  return this->the_TAO_IDLType_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type (
       this,
       ACE_TRY_ENV
     );
@@ -12683,7 +12573,8 @@ IR_Repository::IR_Repository_setup_collocation (int collocated)
     this->the_TAO_Repository_Proxy_Broker_ =
       ::_TAO_Repository_Remote_Proxy_Broker::the_TAO_Repository_Remote_Proxy_Broker ();
   
-  this->IR_Container_setup_collocation (collocated); 
+  this->IR_Container_setup_collocation (collocated);
+  
 }
 
 void IR_Repository::_tao_any_destructor (void *x)
@@ -12831,11 +12722,7 @@ IR_Contained_ptr IR_Repository::lookup_id (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.lookup_id (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).lookup_id (
       this,
       search_id,
       ACE_TRY_ENV
@@ -12850,11 +12737,7 @@ CORBA::TypeCode_ptr IR_Repository::get_canonical_typecode (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.get_canonical_typecode (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).get_canonical_typecode (
       this,
       tc,
       ACE_TRY_ENV
@@ -12869,11 +12752,7 @@ IR_PrimitiveDef_ptr IR_Repository::get_primitive (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.get_primitive (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).get_primitive (
       this,
       kind,
       ACE_TRY_ENV
@@ -12888,11 +12767,7 @@ IR_StringDef_ptr IR_Repository::create_string (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_string (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_string (
       this,
       bound,
       ACE_TRY_ENV
@@ -12907,11 +12782,7 @@ IR_WstringDef_ptr IR_Repository::create_wstring (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_wstring (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_wstring (
       this,
       bound,
       ACE_TRY_ENV
@@ -12927,11 +12798,7 @@ IR_SequenceDef_ptr IR_Repository::create_sequence (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_sequence (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_sequence (
       this,
       bound,
       element_type,
@@ -12948,11 +12815,7 @@ IR_ArrayDef_ptr IR_Repository::create_array (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_array (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_array (
       this,
       length,
       element_type,
@@ -12969,11 +12832,7 @@ IR_FixedDef_ptr IR_Repository::create_fixed (
     CORBA::SystemException
   ))
 {
-  _TAO_Repository_Proxy_Impl &proxy = 
-    this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_fixed (
+  return this->the_TAO_Repository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_fixed (
       this,
       digits,
       scale,
@@ -13992,7 +13851,8 @@ IR_ComponentRepository::IR_ComponentRepository_setup_collocation (int collocated
     this->the_TAO_ComponentRepository_Proxy_Broker_ =
       _TAO_ComponentRepository_Remote_Proxy_Broker::the_TAO_ComponentRepository_Remote_Proxy_Broker ();
   
-  this->IR_Repository_setup_collocation (collocated);  
+  this->IR_Repository_setup_collocation (collocated);
+  
 }
 
 void IR_ComponentRepository::_tao_any_destructor (void *x)
@@ -14157,11 +14017,7 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentRepository_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_component (
+  return this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_component (
       this,
       id,
       name,
@@ -14185,11 +14041,7 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
     CORBA::SystemException
   ))
 { 
-  _TAO_ComponentRepository_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.create_home (
+  return this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_home (
       this,
       id,
       name,
@@ -15576,7 +15428,8 @@ IR_ConstantDef::IR_ConstantDef_setup_collocation (int collocated)
     this->the_TAO_ConstantDef_Proxy_Broker_ =
       _TAO_ConstantDef_Remote_Proxy_Broker::the_TAO_ConstantDef_Remote_Proxy_Broker ();
   
-  this->IR_Contained_setup_collocation (collocated);  
+  this->IR_Contained_setup_collocation (collocated);
+  
 }
 
 void IR_ConstantDef::_tao_any_destructor (void *x)
@@ -15723,11 +15576,7 @@ CORBA::TypeCode_ptr IR_ConstantDef::type (
     CORBA::SystemException
   ))
 { 
-  _TAO_ConstantDef_Proxy_Impl &proxy = 
-    this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.type (
+  return this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type (
       this,
       ACE_TRY_ENV
     );
@@ -15740,11 +15589,7 @@ IR_IDLType_ptr IR_ConstantDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ConstantDef_Proxy_Impl &proxy = 
-    this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.type_def (
+  return this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       ACE_TRY_ENV
     );
@@ -15758,11 +15603,7 @@ void IR_ConstantDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ConstantDef_Proxy_Impl &proxy = 
-    this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.type_def (
+  this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       type_def,
       ACE_TRY_ENV
@@ -15776,11 +15617,7 @@ CORBA::Any * IR_ConstantDef::value (
     CORBA::SystemException
   ))
 {
-  _TAO_ConstantDef_Proxy_Impl &proxy = 
-    this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.value (
+  return this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).value (
       this,
       ACE_TRY_ENV
     );
@@ -15794,11 +15631,7 @@ void IR_ConstantDef::value (
     CORBA::SystemException
   ))
 {
-  _TAO_ConstantDef_Proxy_Impl &proxy = 
-    this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.value (
+  this->the_TAO_ConstantDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).value (
       this,
       value,
       ACE_TRY_ENV
@@ -16249,7 +16082,8 @@ IR_TypedefDef::IR_TypedefDef_setup_collocation (int collocated)
       _TAO_TypedefDef_Remote_Proxy_Broker::the_TAO_TypedefDef_Remote_Proxy_Broker ();
   
   this->IR_Contained_setup_collocation (collocated);
-  this->IR_IDLType_setup_collocation (collocated);  
+  this->IR_IDLType_setup_collocation (collocated);
+  
 }
 
 void IR_TypedefDef::_tao_any_destructor (void *x)
@@ -16866,7 +16700,8 @@ IR_StructDef::IR_StructDef_setup_collocation (int collocated)
       _TAO_StructDef_Remote_Proxy_Broker::the_TAO_StructDef_Remote_Proxy_Broker ();
   
   this->IR_TypedefDef_setup_collocation (collocated);
-  this->IR_Container_setup_collocation (collocated);  
+  this->IR_Container_setup_collocation (collocated);
+  
 }
 
 void IR_StructDef::_tao_any_destructor (void *x)
@@ -17052,11 +16887,7 @@ IR_StructMemberSeq * IR_StructDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_StructDef_Proxy_Impl &proxy = 
-    this->the_TAO_StructDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.members (
+  return this->the_TAO_StructDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       ACE_TRY_ENV
     );
@@ -17070,11 +16901,7 @@ void IR_StructDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_StructDef_Proxy_Impl &proxy = 
-    this->the_TAO_StructDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.members (
+  this->the_TAO_StructDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       members,
       ACE_TRY_ENV
@@ -18250,11 +18077,7 @@ CORBA::TypeCode_ptr IR_UnionDef::discriminator_type (
     CORBA::SystemException
   ))
 {
-  _TAO_UnionDef_Proxy_Impl &proxy = 
-    this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.discriminator_type (
+  return this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).discriminator_type (
       this,
       ACE_TRY_ENV
     );
@@ -18267,11 +18090,7 @@ IR_IDLType_ptr IR_UnionDef::discriminator_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_UnionDef_Proxy_Impl &proxy = 
-    this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.discriminator_type_def (
+  return this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).discriminator_type_def (
       this,
       ACE_TRY_ENV
     );
@@ -18285,11 +18104,7 @@ void IR_UnionDef::discriminator_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_UnionDef_Proxy_Impl &proxy = 
-    this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.discriminator_type_def (
+  this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).discriminator_type_def (
       this,
       discriminator_type_def,
       ACE_TRY_ENV
@@ -18303,11 +18118,7 @@ IR_UnionMemberSeq * IR_UnionDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_UnionDef_Proxy_Impl &proxy = 
-    this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.members (
+  return this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       ACE_TRY_ENV
     );
@@ -18321,11 +18132,7 @@ void IR_UnionDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_UnionDef_Proxy_Impl &proxy = 
-    this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.members (
+  this->the_TAO_UnionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       members,
       ACE_TRY_ENV
@@ -19019,7 +18826,8 @@ IR_EnumDef::IR_EnumDef_setup_collocation (int collocated)
     this->the_TAO_EnumDef_Proxy_Broker_ =
       _TAO_EnumDef_Remote_Proxy_Broker::the_TAO_EnumDef_Remote_Proxy_Broker ();
   
-  this->IR_TypedefDef_setup_collocation (collocated); 
+  this->IR_TypedefDef_setup_collocation (collocated);
+  
 }
 
 void IR_EnumDef::_tao_any_destructor (void *x)
@@ -19192,11 +19000,7 @@ IR_EnumMemberSeq * IR_EnumDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_EnumDef_Proxy_Impl &proxy = 
-    this->the_TAO_EnumDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.members (
+  return this->the_TAO_EnumDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       ACE_TRY_ENV
     );
@@ -19210,11 +19014,7 @@ void IR_EnumDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_EnumDef_Proxy_Impl &proxy = 
-    this->the_TAO_EnumDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.members (
+  this->the_TAO_EnumDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       members,
       ACE_TRY_ENV
@@ -19739,7 +19539,8 @@ IR_AliasDef::IR_AliasDef_setup_collocation (int collocated)
     this->the_TAO_AliasDef_Proxy_Broker_ =
       _TAO_AliasDef_Remote_Proxy_Broker::the_TAO_AliasDef_Remote_Proxy_Broker ();
   
-  this->IR_TypedefDef_setup_collocation (collocated); 
+  this->IR_TypedefDef_setup_collocation (collocated);
+  
 }
 
 void IR_AliasDef::_tao_any_destructor (void *x)
@@ -19912,11 +19713,7 @@ IR_IDLType_ptr IR_AliasDef::original_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_AliasDef_Proxy_Impl &proxy = 
-    this->the_TAO_AliasDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.original_type_def (
+  return this->the_TAO_AliasDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).original_type_def (
       this,
       ACE_TRY_ENV
     );
@@ -19930,11 +19727,7 @@ void IR_AliasDef::original_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_AliasDef_Proxy_Impl &proxy = 
-    this->the_TAO_AliasDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.original_type_def (
+  this->the_TAO_AliasDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).original_type_def (
       this,
       original_type_def,
       ACE_TRY_ENV
@@ -20575,7 +20368,8 @@ IR_PrimitiveDef::IR_PrimitiveDef_setup_collocation (int collocated)
     this->the_TAO_PrimitiveDef_Proxy_Broker_ =
       _TAO_PrimitiveDef_Remote_Proxy_Broker::the_TAO_PrimitiveDef_Remote_Proxy_Broker ();
   
-  this->IR_IDLType_setup_collocation (collocated); 
+  this->IR_IDLType_setup_collocation (collocated);
+  
 }
 
 void IR_PrimitiveDef::_tao_any_destructor (void *x)
@@ -20722,11 +20516,7 @@ IR_PrimitiveKind IR_PrimitiveDef::kind (
     CORBA::SystemException
   ))
 {
-  _TAO_PrimitiveDef_Proxy_Impl &proxy = 
-    this->the_TAO_PrimitiveDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN ((IR::PrimitiveKind)0);
-  
-  return proxy.kind (
+  return this->the_TAO_PrimitiveDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).kind (
       this,
       ACE_TRY_ENV
     );
@@ -21339,11 +21129,7 @@ CORBA::ULong IR_StringDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_StringDef_Proxy_Impl &proxy = 
-    this->the_TAO_StringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return proxy.bound (
+  return this->the_TAO_StringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       ACE_TRY_ENV
     );
@@ -21357,11 +21143,7 @@ void IR_StringDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_StringDef_Proxy_Impl &proxy = 
-    this->the_TAO_StringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  
-  proxy.bound (
+  this->the_TAO_StringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       bound,
       ACE_TRY_ENV
@@ -21883,7 +21665,8 @@ IR_WstringDef::IR_WstringDef_setup_collocation (int collocated)
     this->the_TAO_WstringDef_Proxy_Broker_ =
       _TAO_WstringDef_Remote_Proxy_Broker::the_TAO_WstringDef_Remote_Proxy_Broker ();
   
-  this->IR_IDLType_setup_collocation (collocated);  
+  this->IR_IDLType_setup_collocation (collocated);
+  
 }
 
 void IR_WstringDef::_tao_any_destructor (void *x)
@@ -22030,11 +21813,8 @@ CORBA::ULong IR_WstringDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_WstringDef_Proxy_Impl &proxy = 
-    this->the_TAO_WstringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.bound (
+  return this->the_TAO_WstringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       ACE_TRY_ENV
     );
@@ -22048,11 +21828,8 @@ void IR_WstringDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_WstringDef_Proxy_Impl &proxy = 
-    this->the_TAO_WstringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.bound (
+  this->the_TAO_WstringDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       bound,
       ACE_TRY_ENV
@@ -22882,7 +22659,8 @@ IR_FixedDef::IR_FixedDef_setup_collocation (int collocated)
     this->the_TAO_FixedDef_Proxy_Broker_ =
       _TAO_FixedDef_Remote_Proxy_Broker::the_TAO_FixedDef_Remote_Proxy_Broker ();
   
-  this->IR_IDLType_setup_collocation (collocated); 
+  this->IR_IDLType_setup_collocation (collocated);
+  
 }
 
 void IR_FixedDef::_tao_any_destructor (void *x)
@@ -23029,11 +22807,8 @@ CORBA::UShort IR_FixedDef::digits (
     CORBA::SystemException
   ))
 {
-  _TAO_FixedDef_Proxy_Impl &proxy = 
-    this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.digits (
+  return this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).digits (
       this,
       ACE_TRY_ENV
     );
@@ -23047,11 +22822,8 @@ void IR_FixedDef::digits (
     CORBA::SystemException
   ))
 {
-  _TAO_FixedDef_Proxy_Impl &proxy = 
-    this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.digits (
+  this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).digits (
       this,
       digits,
       ACE_TRY_ENV
@@ -23065,11 +22837,8 @@ CORBA::Short IR_FixedDef::scale (
     CORBA::SystemException
   ))
 {
-  _TAO_FixedDef_Proxy_Impl &proxy = 
-    this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.scale (
+  return this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).scale (
       this,
       ACE_TRY_ENV
     );
@@ -23083,11 +22852,8 @@ void IR_FixedDef::scale (
     CORBA::SystemException
   ))
 {
-  _TAO_FixedDef_Proxy_Impl &proxy = 
-    this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.scale (
+  this->the_TAO_FixedDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).scale (
       this,
       scale,
       ACE_TRY_ENV
@@ -24337,11 +24103,8 @@ CORBA::ULong IR_SequenceDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_SequenceDef_Proxy_Impl &proxy = 
-    this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.bound (
+  return this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       ACE_TRY_ENV
     );
@@ -24355,11 +24118,8 @@ void IR_SequenceDef::bound (
     CORBA::SystemException
   ))
 {
-  _TAO_SequenceDef_Proxy_Impl &proxy = 
-    this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.bound (
+  this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).bound (
       this,
       bound,
       ACE_TRY_ENV
@@ -24373,11 +24133,8 @@ CORBA::TypeCode_ptr IR_SequenceDef::element_type (
     CORBA::SystemException
   ))
 {
-  _TAO_SequenceDef_Proxy_Impl &proxy = 
-    this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.element_type (
+  return this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type (
       this,
       ACE_TRY_ENV
     );
@@ -24390,11 +24147,8 @@ IR_IDLType_ptr IR_SequenceDef::element_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_SequenceDef_Proxy_Impl &proxy = 
-    this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.element_type_def (
+  return this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type_def (
       this,
       ACE_TRY_ENV
     );
@@ -24408,11 +24162,8 @@ void IR_SequenceDef::element_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_SequenceDef_Proxy_Impl &proxy = 
-    this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.element_type_def (
+  this->the_TAO_SequenceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type_def (
       this,
       element_type_def,
       ACE_TRY_ENV
@@ -25719,11 +25470,8 @@ CORBA::ULong IR_ArrayDef::length (
     CORBA::SystemException
   ))
 {
-  _TAO_ArrayDef_Proxy_Impl &proxy = 
-    this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.length (
+  return this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).length (
       this,
       ACE_TRY_ENV
     );
@@ -25737,11 +25485,8 @@ void IR_ArrayDef::length (
     CORBA::SystemException
   ))
 {
-  _TAO_ArrayDef_Proxy_Impl &proxy = 
-    this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.length (
+  this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).length (
       this,
       length,
       ACE_TRY_ENV
@@ -25755,11 +25500,8 @@ CORBA::TypeCode_ptr IR_ArrayDef::element_type (
     CORBA::SystemException
   ))
 {
-  _TAO_ArrayDef_Proxy_Impl &proxy = 
-    this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.element_type (
+  return this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type (
       this,
       ACE_TRY_ENV
     );
@@ -25772,11 +25514,8 @@ IR_IDLType_ptr IR_ArrayDef::element_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ArrayDef_Proxy_Impl &proxy = 
-    this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.element_type_def (
+  return this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type_def (
       this,
       ACE_TRY_ENV
     );
@@ -25790,11 +25529,8 @@ void IR_ArrayDef::element_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ArrayDef_Proxy_Impl &proxy = 
-    this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.element_type_def (
+  this->the_TAO_ArrayDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).element_type_def (
       this,
       element_type_def,
       ACE_TRY_ENV
@@ -26811,11 +26547,8 @@ CORBA::TypeCode_ptr IR_ExceptionDef::type (
     CORBA::SystemException
   ))
 {
-  _TAO_ExceptionDef_Proxy_Impl &proxy = 
-    this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type (
+  return this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type (
       this,
       ACE_TRY_ENV
     );
@@ -26828,11 +26561,8 @@ IR_StructMemberSeq * IR_ExceptionDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_ExceptionDef_Proxy_Impl &proxy = 
-    this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.members (
+  return this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       ACE_TRY_ENV
     );
@@ -26846,11 +26576,8 @@ void IR_ExceptionDef::members (
     CORBA::SystemException
   ))
 {
-  _TAO_ExceptionDef_Proxy_Impl &proxy = 
-    this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.members (
+  this->the_TAO_ExceptionDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).members (
       this,
       members,
       ACE_TRY_ENV
@@ -28404,11 +28131,8 @@ CORBA::TypeCode_ptr IR_AttributeDef::type (
     CORBA::SystemException
   ))
 {
-  _TAO_AttributeDef_Proxy_Impl &proxy = 
-    this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type (
+  return this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type (
       this,
       ACE_TRY_ENV
     );
@@ -28421,11 +28145,8 @@ IR_IDLType_ptr IR_AttributeDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_AttributeDef_Proxy_Impl &proxy = 
-    this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type_def (
+  return this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       ACE_TRY_ENV
     );
@@ -28439,11 +28160,8 @@ void IR_AttributeDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_AttributeDef_Proxy_Impl &proxy = 
-    this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.type_def (
+  this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       type_def,
       ACE_TRY_ENV
@@ -28457,11 +28175,8 @@ IR_AttributeMode IR_AttributeDef::mode (
     CORBA::SystemException
   ))
 {
-  _TAO_AttributeDef_Proxy_Impl &proxy = 
-    this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN ((IR_AttributeMode)0);
   
-  return proxy.mode (
+  return this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).mode (
       this,
       ACE_TRY_ENV
     );
@@ -28475,11 +28190,8 @@ void IR_AttributeDef::mode (
     CORBA::SystemException
   ))
 {
-  _TAO_AttributeDef_Proxy_Impl &proxy = 
-    this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.mode (
+  this->the_TAO_AttributeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).mode (
       this,
       mode,
       ACE_TRY_ENV
@@ -31204,11 +30916,8 @@ CORBA::TypeCode_ptr IR_OperationDef::result (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.result (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).result (
       this,
       ACE_TRY_ENV
     );
@@ -31221,11 +30930,8 @@ IR_IDLType_ptr IR_OperationDef::result_def (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.result_def (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).result_def (
       this,
       ACE_TRY_ENV
     );
@@ -31239,11 +30945,8 @@ void IR_OperationDef::result_def (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.result_def (
+  this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).result_def (
       this,
       result_def,
       ACE_TRY_ENV
@@ -31257,11 +30960,8 @@ IR_ParDescriptionSeq * IR_OperationDef::params (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.params (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).params (
       this,
       ACE_TRY_ENV
     );
@@ -31275,11 +30975,8 @@ void IR_OperationDef::params (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.params (
+  this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).params (
       this,
       params,
       ACE_TRY_ENV
@@ -31293,11 +30990,8 @@ IR_OperationMode IR_OperationDef::mode (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN ((IR_OperationMode)0);
   
-  return proxy.mode (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).mode (
       this,
       ACE_TRY_ENV
     );
@@ -31311,11 +31005,8 @@ void IR_OperationDef::mode (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.mode (
+  this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).mode (
       this,
       mode,
       ACE_TRY_ENV
@@ -31329,11 +31020,8 @@ IR_ContextIdSeq * IR_OperationDef::contexts (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.contexts (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).contexts (
       this,
       ACE_TRY_ENV
     );
@@ -31347,11 +31035,8 @@ void IR_OperationDef::contexts (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.contexts (
+  this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).contexts (
       this,
       contexts,
       ACE_TRY_ENV
@@ -31365,11 +31050,8 @@ IR_ExceptionDefSeq * IR_OperationDef::exceptions (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.exceptions (
+  return this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).exceptions (
       this,
       ACE_TRY_ENV
     );
@@ -31383,11 +31065,8 @@ void IR_OperationDef::exceptions (
     CORBA::SystemException
   ))
 {
-  _TAO_OperationDef_Proxy_Impl &proxy = 
-    this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.exceptions (
+  this->the_TAO_OperationDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).exceptions (
       this,
       exceptions,
       ACE_TRY_ENV
@@ -34587,11 +34266,8 @@ IR_InterfaceDefSeq * IR_InterfaceDef::base_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.base_interfaces (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_interfaces (
       this,
       ACE_TRY_ENV
     );
@@ -34605,11 +34281,8 @@ void IR_InterfaceDef::base_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.base_interfaces (
+  this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_interfaces (
       this,
       base_interfaces,
       ACE_TRY_ENV
@@ -34623,11 +34296,8 @@ CORBA::Boolean IR_InterfaceDef::is_abstract (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_abstract (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_abstract (
       this,
       ACE_TRY_ENV
     );
@@ -34641,11 +34311,8 @@ void IR_InterfaceDef::is_abstract (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.is_abstract (
+  this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_abstract (
       this,
       is_abstract,
       ACE_TRY_ENV
@@ -34659,11 +34326,8 @@ CORBA::Boolean IR_InterfaceDef::is_local (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_local (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_local (
       this,
       ACE_TRY_ENV
     );
@@ -34677,11 +34341,8 @@ void IR_InterfaceDef::is_local (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.is_local (
+  this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_local (
       this,
       is_local,
       ACE_TRY_ENV
@@ -34696,11 +34357,8 @@ CORBA::Boolean IR_InterfaceDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_a (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_a (
       this,
       interface_id,
       ACE_TRY_ENV
@@ -34721,11 +34379,8 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_attribute (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_attribute (
       this,
       id,
       name,
@@ -34753,11 +34408,8 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
     CORBA::SystemException
   ))
 {
-  _TAO_InterfaceDef_Proxy_Impl &proxy = 
-    this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_operation (
+  return this->the_TAO_InterfaceDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_operation (
       this,
       id,
       name,
@@ -37128,11 +36780,8 @@ CORBA::TypeCode_ptr IR_ValueMemberDef::type (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueMemberDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type (
+  return this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type (
       this,
       ACE_TRY_ENV
     );
@@ -37145,11 +36794,8 @@ IR_IDLType_ptr IR_ValueMemberDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueMemberDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.type_def (
+  return this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       ACE_TRY_ENV
     );
@@ -37163,11 +36809,8 @@ void IR_ValueMemberDef::type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueMemberDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.type_def (
+  this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).type_def (
       this,
       type_def,
       ACE_TRY_ENV
@@ -37181,11 +36824,8 @@ CORBA::Visibility IR_ValueMemberDef::access (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueMemberDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.access (
+  return this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).access (
       this,
       ACE_TRY_ENV
     );
@@ -37199,11 +36839,8 @@ void IR_ValueMemberDef::access (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueMemberDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.access (
+  this->the_TAO_ValueMemberDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).access (
       this,
       access,
       ACE_TRY_ENV
@@ -40656,11 +40293,8 @@ IR_InterfaceDefSeq * IR_ValueDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.supported_interfaces (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).supported_interfaces (
       this,
       ACE_TRY_ENV
     );
@@ -40674,11 +40308,8 @@ void IR_ValueDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.supported_interfaces (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).supported_interfaces (
       this,
       supported_interfaces,
       ACE_TRY_ENV
@@ -40692,11 +40323,8 @@ IR_InitializerSeq * IR_ValueDef::initializers (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.initializers (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).initializers (
       this,
       ACE_TRY_ENV
     );
@@ -40710,11 +40338,8 @@ void IR_ValueDef::initializers (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.initializers (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).initializers (
       this,
       initializers,
       ACE_TRY_ENV
@@ -40728,11 +40353,8 @@ IR_ValueDef_ptr IR_ValueDef::base_value (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.base_value (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_value (
       this,
       ACE_TRY_ENV
     );
@@ -40746,11 +40368,8 @@ void IR_ValueDef::base_value (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.base_value (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_value (
       this,
       base_value,
       ACE_TRY_ENV
@@ -40764,11 +40383,8 @@ IR_ValueDefSeq * IR_ValueDef::abstract_base_values (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.abstract_base_values (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).abstract_base_values (
       this,
       ACE_TRY_ENV
     );
@@ -40782,11 +40398,8 @@ void IR_ValueDef::abstract_base_values (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.abstract_base_values (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).abstract_base_values (
       this,
       abstract_base_values,
       ACE_TRY_ENV
@@ -40800,11 +40413,8 @@ CORBA::Boolean IR_ValueDef::is_abstract (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_abstract (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_abstract (
       this,
       ACE_TRY_ENV
     );
@@ -40818,11 +40428,8 @@ void IR_ValueDef::is_abstract (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.is_abstract (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_abstract (
       this,
       is_abstract,
       ACE_TRY_ENV
@@ -40836,11 +40443,8 @@ CORBA::Boolean IR_ValueDef::is_custom (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_custom (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_custom (
       this,
       ACE_TRY_ENV
     );
@@ -40854,11 +40458,8 @@ void IR_ValueDef::is_custom (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.is_custom (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_custom (
       this,
       is_custom,
       ACE_TRY_ENV
@@ -40872,11 +40473,8 @@ CORBA::Boolean IR_ValueDef::is_truncatable (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_truncatable (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_truncatable (
       this,
       ACE_TRY_ENV
     );
@@ -40890,11 +40488,8 @@ void IR_ValueDef::is_truncatable (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.is_truncatable (
+  this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_truncatable (
       this,
       is_truncatable,
       ACE_TRY_ENV
@@ -40909,11 +40504,8 @@ CORBA::Boolean IR_ValueDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_a (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_a (
       this,
       id,
       ACE_TRY_ENV
@@ -40932,11 +40524,8 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_value_member (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_value_member (
       this,
       id,
       name,
@@ -40961,11 +40550,8 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_attribute (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_attribute (
       this,
       id,
       name,
@@ -40993,11 +40579,8 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_operation (
+  return this->the_TAO_ValueDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_operation (
       this,
       id,
       name,
@@ -43406,11 +42989,8 @@ IR_IDLType_ptr IR_ValueBoxDef::original_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueBoxDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueBoxDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.original_type_def (
+  return this->the_TAO_ValueBoxDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).original_type_def (
       this,
       ACE_TRY_ENV
     );
@@ -43424,11 +43004,8 @@ void IR_ValueBoxDef::original_type_def (
     CORBA::SystemException
   ))
 {
-  _TAO_ValueBoxDef_Proxy_Impl &proxy = 
-    this->the_TAO_ValueBoxDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.original_type_def (
+  this->the_TAO_ValueBoxDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).original_type_def (
       this,
       original_type_def,
       ACE_TRY_ENV
@@ -43956,11 +43533,8 @@ IR_InterfaceDef_ptr IR_ProvidesDef::interface_type (
     CORBA::SystemException
   ))
 {
-  _TAO_ProvidesDef_Proxy_Impl &proxy = 
-    this->the_TAO_ProvidesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.interface_type (
+  return this->the_TAO_ProvidesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).interface_type (
       this,
       ACE_TRY_ENV
     );
@@ -44653,11 +44227,8 @@ IR_InterfaceDef_ptr IR_UsesDef::interface_type (
     CORBA::SystemException
   ))
 {
-  _TAO_UsesDef_Proxy_Impl &proxy = 
-    this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.interface_type (
+  return this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).interface_type (
       this,
       ACE_TRY_ENV
     );
@@ -44670,11 +44241,8 @@ CORBA::Boolean IR_UsesDef::is_multiple (
     CORBA::SystemException
   ))
 {
-  _TAO_UsesDef_Proxy_Impl &proxy = 
-    this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_multiple (
+  return this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_multiple (
       this,
       ACE_TRY_ENV
     );
@@ -45738,11 +45306,8 @@ CORBA::Boolean IR_EventDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_EventDef_Proxy_Impl &proxy = 
-    this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_a (
+  return this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_a (
       this,
       event_id,
       ACE_TRY_ENV
@@ -45756,11 +45321,8 @@ IR_ValueDef_ptr IR_EventDef::event (
     CORBA::SystemException
   ))
 {
-  _TAO_EventDef_Proxy_Impl &proxy = 
-    this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.event (
+  return this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).event (
       this,
       ACE_TRY_ENV
     );
@@ -49334,11 +48896,8 @@ IR_InterfaceDefSeq * IR_ComponentDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.supported_interfaces (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).supported_interfaces (
       this,
       ACE_TRY_ENV
     );
@@ -49352,11 +48911,8 @@ void IR_ComponentDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK;
   
-  proxy.supported_interfaces (
+  this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).supported_interfaces (
       this,
       supported_interfaces,
       ACE_TRY_ENV
@@ -49370,11 +48926,8 @@ IR_ComponentDef_ptr IR_ComponentDef::base_component (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.base_component (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_component (
       this,
       ACE_TRY_ENV
     );
@@ -49387,11 +48940,8 @@ IR_ProvidesDefSeq * IR_ComponentDef::provides_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.provides_interfaces (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).provides_interfaces (
       this,
       ACE_TRY_ENV
     );
@@ -49404,11 +48954,8 @@ IR_UsesDefSeq * IR_ComponentDef::uses_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.uses_interfaces (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).uses_interfaces (
       this,
       ACE_TRY_ENV
     );
@@ -49421,11 +48968,8 @@ IR_EmitsDefSeq * IR_ComponentDef::emits_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.emits_events (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).emits_events (
       this,
       ACE_TRY_ENV
     );
@@ -49438,11 +48982,8 @@ IR_PublishesDefSeq * IR_ComponentDef::publishes_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.publishes_events (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).publishes_events (
       this,
       ACE_TRY_ENV
     );
@@ -49455,11 +48996,8 @@ IR_ConsumesDefSeq * IR_ComponentDef::consumes_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.consumes_events (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).consumes_events (
       this,
       ACE_TRY_ENV
     );
@@ -49472,11 +49010,8 @@ CORBA::Boolean IR_ComponentDef::is_basic (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_basic (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_basic (
       this,
       ACE_TRY_ENV
     );
@@ -49493,11 +49028,8 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_provides (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_provides (
       this,
       id,
       name,
@@ -49519,11 +49051,8 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_uses (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_uses (
       this,
       id,
       name,
@@ -49545,11 +49074,8 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_emits (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_emits (
       this,
       id,
       name,
@@ -49570,11 +49096,8 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_publishes (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_publishes (
       this,
       id,
       name,
@@ -49595,11 +49118,8 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
-    this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_consumes (
+  return this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_consumes (
       this,
       id,
       name,
@@ -51497,11 +51017,8 @@ CORBA::Boolean IR_PrimaryKeyDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_PrimaryKeyDef_Proxy_Impl &proxy = 
-    this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_a (
+  return this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_a (
       this,
       primary_key_id,
       ACE_TRY_ENV
@@ -51515,11 +51032,8 @@ IR_ValueDef_ptr IR_PrimaryKeyDef::primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_PrimaryKeyDef_Proxy_Impl &proxy = 
-    this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.primary_key (
+  return this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).primary_key (
       this,
       ACE_TRY_ENV
     );
@@ -54010,11 +53524,8 @@ IR_HomeDef_ptr IR_HomeDef::base_home (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.base_home (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).base_home (
       this,
       ACE_TRY_ENV
     );
@@ -54027,11 +53538,8 @@ IR_ComponentDef_ptr IR_HomeDef::managed_component (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.managed_component (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).managed_component (
       this,
       ACE_TRY_ENV
     );
@@ -54044,11 +53552,8 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.primary_key (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).primary_key (
       this,
       ACE_TRY_ENV
     );
@@ -54061,11 +53566,8 @@ IR_FactoryDefSeq * IR_HomeDef::factories (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.factories (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).factories (
       this,
       ACE_TRY_ENV
     );
@@ -54078,11 +53580,8 @@ IR_FinderDefSeq * IR_HomeDef::finders (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.finders (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).finders (
       this,
       ACE_TRY_ENV
     );
@@ -54095,11 +53594,8 @@ CORBA::Boolean IR_HomeDef::is_basic (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.is_basic (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).is_basic (
       this,
       ACE_TRY_ENV
     );
@@ -54116,11 +53612,8 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_primary_key (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_primary_key (
       this,
       id,
       name,
@@ -54142,11 +53635,8 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_factory (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_factory (
       this,
       id,
       name,
@@ -54169,11 +53659,8 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
-    this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
   
-  return proxy.create_finder (
+  return this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV).create_finder (
       this,
       id,
       name,

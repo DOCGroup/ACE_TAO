@@ -853,10 +853,30 @@ TAO_POA::waiting_destruction (void) const
   return this->waiting_destruction_;
 }
 
-ACE_INLINE TAO_SYNCH_RECURSIVE_MUTEX &
-TAO_POA::single_threaded_lock (void) const
+ACE_INLINE void
+TAO_POA::establish_servant_lock (PortableServer::Servant servant)
 {
-  return *this->single_threaded_lock_;
+#if (TAO_HAS_MINIMUM_POA == 0)
+  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      servant->_increment_single_threaded_poa_lock_count ();
+    }
+#else /* TAO_HAS_MINIMUM_POA == 0 */
+  ACE_UNUSED_ARG (servant);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+}
+
+ACE_INLINE void
+TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
+{
+#if (TAO_HAS_MINIMUM_POA == 0)
+  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      servant->_decrement_single_threaded_poa_lock_count ();
+    }
+#else /* TAO_HAS_MINIMUM_POA == 0 */
+  ACE_UNUSED_ARG (servant);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 ACE_INLINE TAO_ORB_Core &

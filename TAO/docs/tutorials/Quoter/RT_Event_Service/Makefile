@@ -12,7 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 IDL_FILES = Quoter

@@ -80,6 +80,7 @@ main (int argc, char *argv[])
 
       // Install a persistent POA in order to achieve a persistent IOR
       // for our object.
+      //*
       CORBA::PolicyList policies;
       policies.length (2);
       policies[0] =
@@ -105,6 +106,7 @@ main (int argc, char *argv[])
       policies[1]->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      //*/
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -112,6 +114,7 @@ main (int argc, char *argv[])
 
       udp_i.orb (orb.in ());
 
+      //*
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("UDP_Object");
 
@@ -128,7 +131,8 @@ main (int argc, char *argv[])
 
       UDP_var udp_var = UDP::_narrow (obj.in (), ACE_TRY_ENV);
 
-      // UDP_var udp_var = udp_i._this (ACE_TRY_ENV);
+      //*/
+      //UDP_var udp_var = udp_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (udp_var.in ()))
         ACE_DEBUG ((LM_DEBUG,
@@ -156,6 +160,7 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+
       /*
       // Instantiate reply handler
       UDP_i udpHandler_i;
@@ -173,19 +178,10 @@ main (int argc, char *argv[])
 
       client->activate ();
       */
-      
-      orb->run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       //delete client;
     }

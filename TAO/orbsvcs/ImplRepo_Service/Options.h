@@ -62,9 +62,6 @@ public:
   /// Returns a pointer to the ORB.
   CORBA::ORB_ptr orb (void) const;
 
-  /// Will we listen for multicast location requests?
-   int multicast (void) const;
-
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
@@ -87,8 +84,8 @@ private:
   /// Loads ORB options from the registry
   int load_registry_options (ACE_ARGV &orb_options);
 
-  /// The persistent configuration object.
-  ACE_Configuration* config_;
+  /// Are we running as a service?
+  int service_;
 
   /// Debug level.
   unsigned int debug_;
@@ -96,20 +93,17 @@ private:
   /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
 
-  /// Will we listen for multicast location requests?
-  int multicast_;
+  /// The persistent configuration object.
+  ACE_Configuration* config_;
 
-  /// The ORB for the Implementation Repository.
-  CORBA::ORB_var orb_;
+  /// The amount of time to wait for a server to response after starting it.
+  ACE_Time_Value startup_timeout_;
 
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;
 
-  /// Are we running as a service?
-  int service_;
-
-  /// The amount of time to wait for a server to response after starting it.
-  ACE_Time_Value startup_timeout_;
+  /// The ORB for the Implementation Repository.
+  CORBA::ORB_var orb_;
 };
 
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;

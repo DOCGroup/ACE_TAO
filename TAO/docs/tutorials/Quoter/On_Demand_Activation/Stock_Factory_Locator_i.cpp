@@ -35,10 +35,6 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
       
       return servant;
     }
-    else
-    {
-      throw CORBA::OBJECT_NOT_EXIST ();
-    }  
   }catch (const CORBA::BAD_PARAM &) {
     throw CORBA::OBJECT_NOT_EXIST ();
   }

@@ -60,7 +60,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
-
+  
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -130,66 +130,19 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   delete visitor;
 
   *os << "{" << be_idt_nl;
-  *os << this->gen_environment_var ();
-
-  if (be_global->exception_support ())
-    {
-      *os << be_nl << be_nl;
-    }
-
+  *os << this->gen_environment_var () << be_nl;
+  
   // Generate code that retrieves the proper proxy implementation
   // using the proxy broker available, and perform the call
   // using the proxy implementation provided by the broker.
-
-  *os << intf->base_proxy_impl_name () << " &proxy = " << be_idt_nl
-      << "this->the" << intf->base_proxy_broker_name ()
-      << "_->select_proxy (this, ACE_TRY_ENV);" << be_uidt_nl;
-
+  
   if (!this->void_return_type (bt))
-    {
-      *os << "ACE_CHECK_RETURN (";
-
-      AST_Type *rt = node->return_type ();
-      bt = be_type::narrow_from_decl (rt);
-      AST_Decl::NodeType bnt = bt->base_node_type ();
-
-      if (bnt == AST_Decl::NT_enum)
-        {
-          // The enum is a unique type, so we must cast.
-          *os << "(" << bt->name () << ")0);";
-        }
-      else if (bnt == AST_Decl::NT_struct || bnt == AST_Decl::NT_union)
-        {
-          be_decl *bd = be_decl::narrow_from_decl (bt);
-
-          if (bd->size_type () == be_decl::FIXED)
-            {
-              // For a fixed size struct or union the return value
-              // is not a pointer, so we call the default constructor
-              // and return the result.
-              *os << bt->name () << " ());";
-            }
-          else
-            {
-              *os << "0);";
-            }
-        }
-      else
-        {
-          *os << "0);";
-        }
-      
-      *os << be_nl << be_nl
-          << "return ";
-    }
-  else
-    {
-      *os << "ACE_CHECK;" << be_nl << be_nl;
-    }
-
-  *os << "proxy." << node->local_name ()
+    *os << "return ";
+  
+  *os << "this->the" << intf->base_proxy_broker_name () << "_->select_proxy (this, ACE_TRY_ENV)."
+      << node->local_name ()
       << " (" << be_idt << be_idt_nl << "this";
-
+  
   if (node->nmembers () > 0)
     {
 
@@ -199,23 +152,23 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                       UTL_ScopeActiveIterator (node,
                                                UTL_Scope::IK_decls),
                       -1);
-
+      
       while (!si->is_done ())
         {
           AST_Decl *d = si->item ();
-
+	  
           if (d == 0)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"),
+                                 "bad node in this scope\n"), 
                                 -1);
-
+	      
             }
 	  *os << "," << be_nl;
           be_decl *decl = be_decl::narrow_from_decl (d);
-
+	  
 	  *os << decl->local_name();
 	  si->next ();
 	}
@@ -264,3 +217,6 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
 
   return 0;
 }
+
+
+

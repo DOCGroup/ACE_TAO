@@ -22,7 +22,9 @@ LSRC  	= Async_Timer_Queue_Test.cpp \
 	Thread_Timer_Queue_Test.cpp \
 	Driver.cpp
 
-LDLIBS 	=
+LDLIBS 	= 
+
+LIBS   += $(ACELIB)
 
 BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 

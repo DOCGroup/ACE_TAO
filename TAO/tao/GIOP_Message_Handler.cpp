@@ -19,18 +19,16 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
   : mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    current_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
+    // @@ This doesn't seem to work. The problem comes when we extract
+    // data portion from this buffer in the skeleton. Why?? Needs
+    // investigation.
+    // current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
     supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
-    message_state_ (orb_core),
-    orb_core_ (orb_core)
+    message_state_ (orb_core)
 {
-  ACE_CDR::mb_align (&this->current_buffer_);
 }
 
-
-
-// @@ A general cleanup is required. Will look into this after
-// 1.1.14.  This have got a bit messy after the changes for BCB..
 
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
@@ -167,7 +165,8 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
+                    ACE_TEXT ("TAO (%P|%t) bad header, "
+                              "magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -206,56 +205,18 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
 CORBA::ULong
 TAO_GIOP_Message_Handler::get_payload_size (void)
 {
-  // We need to store the offset due to alignment on the buffer, since
-  // this offset must be used in any recalculation of the message size.
-  size_t align_offset = this->rd_pos ();
-
   // Set the read pointer in <current_buffer_> to point to the size of
   // the payload
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_SIZE_OFFSET);
 
   CORBA::ULong x = this->read_ulong (this->current_buffer_.rd_ptr ());
 
-  if ((align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
-      {
-        size_t size = ACE_CDR::MAX_ALIGNMENT + 
-	              x + 
-		      TAO_GIOP_MESSAGE_HEADER_LEN;
-
-        // @@ This must come off the allocator. For some reason when I
-        // use the allocator things go for a toss. Need to revisit
-        // this...
-        ACE_Message_Block new_buffer (size);
-
-       ACE_CDR::mb_align (&new_buffer);
-
-       // Copy the data from the current buffer to the new large one.
-       new_buffer.copy (this->current_buffer_.base () + align_offset,
-                        this->message_size_ - align_offset);
-
-       // The rd_ptr and wr_ptr must be updated to match what is in the
-       // current buffer, but adjusted for the new alignment offset.
-       new_buffer.reset ();
-       ACE_CDR::mb_align (&new_buffer);
-       new_buffer.rd_ptr (this->rd_pos () - align_offset);
-       new_buffer.wr_ptr (this->wr_pos () - align_offset);
-
-       // @@ The transfer is tricky!
-       this->current_buffer_.data_block
-         (new_buffer.data_block ()->duplicate ());
-
-       // Transfer the new larger data block into the original buffer.
-       this->current_buffer_.rd_ptr (new_buffer.rd_ptr ());
-       this->current_buffer_.wr_ptr (new_buffer.wr_ptr ());
-
-       // new_buffer.data_block ()->base (0, 0);
-       // new_buffer.data_block (0);
-
-       // New message size is the size of the now larger buffer.
-       this->message_size_ = x +
-         TAO_GIOP_MESSAGE_HEADER_LEN +
-         ACE_CDR::MAX_ALIGNMENT;
-      }
+  if ((x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
+    {
+      // Increase the size of the <current_buffer_>
+      this->current_buffer_.size (x + TAO_GIOP_MESSAGE_HEADER_LEN);
+      this->message_size_ = x + TAO_GIOP_MESSAGE_HEADER_LEN;
+    }
 
   // Set the read pointer to the end of the GIOP message
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
@@ -345,7 +306,6 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
           // Reset the current buffer
           this->current_buffer_.reset ();
 
-
           // Set the read and write pointers again for the current buffer
           this->current_buffer_.rd_ptr (rd_pos);
           this->current_buffer_.wr_ptr (rd_pos +
@@ -406,7 +366,6 @@ TAO_GIOP_Message_Handler::more_messages (void)
 
           // Reset the supp buffer now
           this->supp_buffer_.reset ();
-
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
         }
 
@@ -498,19 +457,35 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
 
       return -1;
     }
-  // @@ What are the other error handling here??
   else if (n == 0)
     {
       return -1;
     }
 
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_Handler::read_messages"
+                  " received %d bytes\n",
+                  n));
+
+      size_t len;
+      for (size_t offset = 0; offset < size_t(n); offset += len)
+        {
+          len = n - offset;
+          if (len > 512)
+            len = 512;
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         this->current_buffer_.wr_ptr () + offset,
+                         len,
+                         "TAO (%P|%t) - read_messages "));
+        }
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
+    }
+
   // Now we have a succesful read. First adjust the write pointer
   this->current_buffer_.wr_ptr (n);
 
-  if (TAO_debug_level > 8)
-    {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
-    }
 
   return 0;
 

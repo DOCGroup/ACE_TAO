@@ -33,7 +33,7 @@
 #include "Parser_Registry.h"
 #include "Service_Callbacks.h"
 #include "Fault_Tolerance_Service.h"
-#include "Transport_Cache_Manager.h"
+#include "Connection_Cache_Manager.h"
 #include "Cleanup_Func_Registry.h"
 #include "Object_Ref_Table.h"
 
@@ -56,7 +56,7 @@ class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
-class TAO_Transport_Cache;
+class TAO_Connection_Cache;
 
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
@@ -81,6 +81,8 @@ class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
+
+class TAO_Flushing_Strategy;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -139,10 +141,10 @@ public:
   ACE_Allocator *input_cdr_buffer_allocator_;
   //@}
 
-  /// This is is just a place holder, in the future the transport
+  /// This is is just a place holder, in the future the connection
   /// cache will be separated from the connectors and it will be a
   /// (potentially) TSS object.
-  TAO_Transport_Cache *transport_cache_;
+  TAO_Connection_Cache *connection_cache_;
 
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
@@ -849,7 +851,7 @@ public:
   int open (CORBA::Environment &ACE_TRY_ENV);
 
   /// Return the underlying connection cache.
-  TAO_Transport_Cache_Manager &transport_cache (void);
+  TAO_Connection_Cache_Manager &connection_cache (void);
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
@@ -858,12 +860,20 @@ public:
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
 
-
-
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
+
+  /// Return the flushing strategy
+  /**
+   * The flushing strategy is created by the resource factory, and it
+   * is used by the ORB to control the mechanism used to flush the
+   * outgoing data queues.
+   * The flushing strategies are stateless, therefore, there is only
+   * one per ORB.
+   */
+  TAO_Flushing_Strategy *flushing_strategy (void);
 
 protected:
 
@@ -978,7 +988,7 @@ protected:
   /// Object reference to the root POA.  It will eventually be the
   /// object reference returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
-  CORBA::Object_var root_poa_;
+  CORBA::Object_ptr root_poa_;
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
@@ -1199,10 +1209,13 @@ protected:
   TAO_Parser_Registry parser_registry_;
 
   /// TAO's connection cache.
-  TAO_Transport_Cache_Manager transport_cache_;
+  TAO_Connection_Cache_Manager connection_cache_;
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// Hold the flushing strategy
+  TAO_Flushing_Strategy *flushing_strategy_;
 };
 
 // ****************************************************************

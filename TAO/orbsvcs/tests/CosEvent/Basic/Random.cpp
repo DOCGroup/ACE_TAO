@@ -278,7 +278,6 @@ RND_Driver::timer (const CORBA::Any &e,
             recursion++;
             new_event <<= recursion;
             this->supplier_.push (new_event, ACE_TRY_ENV);
-            ACE_CHECK;
           }
       }
       break;

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_FILE_CONNECTOR_H
 #define ACE_FILE_CONNECTOR_H
@@ -43,7 +44,7 @@ public:
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't
    * be done immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
+   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
    * time to wait before timing out.  If the time expires before the
    * connection is made <errno == ETIME>.  The <local_sap> and
    * <reuse_addr> parameters are ignored.  The <flags> and <perms>
@@ -67,7 +68,7 @@ public:
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't
    * be done immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
+   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
    * time to wait before timing out.  If the time expires before the
    * connection is made <errno == ETIME>.  The <local_sap> and
    * <reuse_addr> parameters are ignored.  The <flags> and <perms>

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H

@@ -71,10 +71,14 @@ public:
 
   virtual ACE_Event_Handler *event_handler (void);
 
+  virtual void close_connection (void);
+
+  virtual int idle (void);
+
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0,
-                        size_t *bytes_transferred = 0);
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
@@ -127,13 +131,6 @@ public:
 
   /// Open teh service context list and process it.
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
-
-  /// Method to do whatever it needs to do when the connection
-  /// handler is being closed and destroyed.
-  virtual void transition_handler_state (void);
-
-  // Access the connection handler
-  virtual TAO_Connection_Handler* connection_handler (void) const;
 
 private:
 

@@ -16,8 +16,8 @@
 #include "Bind_Dispatcher_Guard.h"
 #include "Endpoint.h"
 #include "RT_Policy_i.h"
-#include "Base_Transport_Property.h"
-#include "Private_Transport_Descriptor.h"
+#include "Base_Connection_Property.h"
+#include "Private_Connection_Descriptor.h"
 
 #include "Messaging_Policy_i.h"
 #include "GIOP_Utils.h"
@@ -136,7 +136,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  TAO_Transport::release (this->transport_);
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -240,18 +239,18 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       // Get the transport object.
       if (this->transport_ != 0)
         {
-          this->transport_->make_idle ();
+          this->transport_->idle ();
         }
 
       // Create descriptor for the connection we need to find.
-      TAO_Transport_Descriptor_Interface *desc;
-      TAO_Base_Transport_Property default_desc (this->endpoint_);
+      TAO_Connection_Descriptor_Interface *desc;
+      TAO_Base_Connection_Property default_desc (this->endpoint_);
       desc = &default_desc;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
       // RTCORBA::PrivateConnectionPolicy processing.
-      TAO_Private_Transport_Descriptor
+      TAO_Private_Connection_Descriptor
         private_desc (this->endpoint_,
                       ACE_reinterpret_cast (long, this->stub_));
       if (this->endpoint_selection_state_.private_connection_)
@@ -443,7 +442,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
             );
         }
       this->transport_->close_connection ();
-      TAO_Transport::release (this->transport_);
       this->transport_ = 0;
 
       this->endpoint_->reset_hint ();
@@ -474,7 +472,6 @@ TAO_GIOP_Invocation::close_connection (void)
 
   this->transport_->close_connection ();
   // this->transport_->idle ();
-  TAO_Transport::release (this->transport_);
   this->transport_ = 0;
 
   this->endpoint_->reset_hint ();

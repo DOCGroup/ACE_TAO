@@ -421,15 +421,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Dynamic::ParameterMode &
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ParameterMode, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (Dynamic::_tc_ParameterMode, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
-
+    ACE_TRY_CHECK;
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -483,15 +479,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_Parameter, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (Dynamic::_tc_Parameter, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -576,15 +568,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ParameterList, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (Dynamic::_tc_ParameterList, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -669,15 +657,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Exception
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ExceptionList, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
+    if (!type->equivalent (Dynamic::_tc_ExceptionList, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
-
+    ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(

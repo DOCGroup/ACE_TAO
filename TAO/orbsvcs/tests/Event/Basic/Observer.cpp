@@ -400,14 +400,13 @@ EC_Observer::consumer_push (void*,
           if (this->consumers_[i]->connected ())
             {
               this->consumers_[i]->disconnect (ACE_TRY_ENV);
-              ACE_CHECK;
             }
           else
             {
               this->EC_Driver::connect_consumer (consumer_admin.in (),
                                                  i, ACE_TRY_ENV);
-              ACE_CHECK;
             }
+          ACE_CHECK;
         }
     }
 }

@@ -22,9 +22,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil(naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to find the Naming Service\n"),
