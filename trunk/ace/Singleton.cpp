@@ -153,7 +153,6 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
           ACE_Object_Manager::shutting_down ())
         {
@@ -163,11 +162,9 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.  Either way,
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
-#endif /* ACE_MT_SAFE */
 
           ACE_NEW_RETURN (singleton, (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
                           0);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
@@ -186,7 +183,6 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
                             (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
                             0);
         }
-#endif /* ACE_MT_SAFE */
     }
 
   return &singleton->instance_;
@@ -239,7 +235,6 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
           ACE_Object_Manager::shutting_down ())
         {
@@ -249,13 +244,13 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.  Either way,
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
-#endif /* ACE_MT_SAFE */
 
           ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per ACE_Singleton instantiation.
           static ACE_LOCK *lock = 0;
@@ -267,16 +262,16 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           if (singleton == 0)
             {
+#endif /* ACE_MT_SAFE */
               ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
                               0);
-#endif /* ACE_MT_SAFE */
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
-        }
 #endif /* ACE_MT_SAFE */
+        }
     }
 
   return ACE_TSS_GET (&singleton->instance_, TYPE);
@@ -327,7 +322,6 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
           ACE_Object_Manager::shutting_down ())
         {
@@ -337,11 +331,10 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.  Either way,
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
-#endif /* ACE_MT_SAFE */
+
           ACE_NEW_RETURN (singleton,
                           (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
                           0);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
@@ -360,7 +353,6 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                             (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
                             0);
         }
-#endif /* ACE_MT_SAFE */
     }
 
   return ACE_TSS_GET (&singleton->instance_, TYPE);
