@@ -74,6 +74,7 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ci.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
 	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
 	* TAO_IDL/be_include/be_factory.h:
 	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init.h:
@@ -81,7 +82,8 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ch.h:
 	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ci.h:
 	* TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_cs.h:
-v	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
 	* TAO_IDL/include/ast_factory.h:
 
 	  New files that are part of the TAO IDL compiler's enhanced support
