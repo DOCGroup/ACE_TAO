@@ -1,3 +1,10 @@
+Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Synch.cpp: Declared template definitions for
+	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
+	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
+	  suggesting this.
+
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
