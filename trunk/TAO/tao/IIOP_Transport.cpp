@@ -401,13 +401,18 @@ TAO_IIOP_Transport::process_message (void)
       //    is going to take a look please contact bala@cs.wustl.edu
       //    for details on this-- Bala
 
+
+
       if (result == -1)
         {
+          // Something really critical happened, we will forget about
+          // every reply on this connection.
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
                         ACE_TEXT ("handle_client_input - ")
                         ACE_TEXT ("dispatch reply failed\n")));
+
           this->messaging_object_->reset ();
           this->tms_->connection_closed ();
           return -1;
@@ -416,7 +421,16 @@ TAO_IIOP_Transport::process_message (void)
       if (result == 0)
         {
           this->messaging_object_->reset ();
-          return 0;
+
+          // The reply dispatcher was no longer registered.
+          // This can happened when the request/reply
+          // times out.
+          // To throw away all registered reply handlers is 
+          // not the right thing, as there might be just one
+          // old reply coming in and several valid new ones
+          // pending. If we would invoke <connection_closed>
+          // we would throw away also the valid ones.
+          //return 0;
         }
 
 

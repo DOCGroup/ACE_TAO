@@ -144,7 +144,13 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                   ACE_TEXT ("TAO (%P|%t) - wait (follower) on <%x> ")
                                   ACE_TEXT ("cond == 0 || cond->wait (tv) == -1\n"),
                                   this->transport_));
-                  return -1;
+
+                    if (leader_follower.remove_follower (cond) == -1)
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                                  "remove_follower failed for <%x>\n", cond));
+
+                    return -1;
                   }
               }
           }

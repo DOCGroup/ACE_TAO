@@ -380,7 +380,16 @@ TAO_SHMIOP_Transport::process_message (void)
       if (result == 0)
         {
           this->messaging_object_->reset ();
-          return 0;
+
+          // The reply dispatcher was no longer registered.
+          // This can happened when the request/reply
+          // times out.
+          // To throw away all registered reply handlers is 
+          // not the right thing, as there might be just one
+          // old reply coming in and several valid new ones
+          // pending. If we would invoke <connection_closed>
+          // we would throw away also the valid ones.
+          //return 0;
         }
 
 

@@ -1,3 +1,31 @@
+Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tao/Muxed_TMS.cpp: Changed the return value in the case of a 
+          not found reply dispatcher from -1 to 0. The semantics of the 
+          return values is 1, for success, 0, for a not found reply dispatcher
+          (which is not critical, as this can easily happen with timeouts), and
+          -1 on a critical error.
+          Added in-source documentation for this.
+
+        * tao/Exclusive_TMS.cpp: Documented the return value, see description
+          for Muxed_TMS.cpp.
+
+        * tao/IIOP_Transport.cpp: 
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+          Changed return path of the method <process_message>.
+          In the case that we could not find the right reply dispatcher because
+          of a (meanwhile) invalid reply ID, we continue processing messages
+          instead of giving up processing.
+          This should fix the problem with the tao/tests/Timeout test.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Added code to remove the leader follower condition variable in the 
+          case of a timeout. This should fix a bug, where the condition
+          variable of the follower thread kept being registered
+          with the leader follower model while it went already away.
+
+
 Wed Feb 14 15:36:23 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * docs/orbsvcs.html: Added the Notification Service and it's tests
