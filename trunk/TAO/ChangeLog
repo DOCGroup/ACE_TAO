@@ -1,9 +1,17 @@
+Sat Jun 19 21:56:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+	* performance-tests/Protocols/client.cpp (run):
+	* performance-tests/Protocols/server.cpp (start_test):
+
+	  Fixed emulated exception compile-time errors and warnings.
+
 Sat Jun 19 12:20:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO-INSTALL.html:
 
-	  Updated the file with relevant and latest information. 
-	
+	  Updated the file with relevant and latest information.
+
 	* docs/minimumTAO.html:
 
 	  Moved the minimumTAO file from ACE_wrappers/docs, since it has

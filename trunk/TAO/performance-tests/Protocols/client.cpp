@@ -318,7 +318,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   this->policy_manager_->set_policy_overrides (this->tcp_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Let the server know what to expect..
   this->test_->start_test (iterations
@@ -328,7 +328,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   ::test::octets payload;
   payload.length (message_size);
@@ -387,7 +387,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   this->policy_manager_->set_policy_overrides (this->tcp_protocol_policy_,
                                                CORBA::SET_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   this->test_->end_test (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
