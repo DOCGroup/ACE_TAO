@@ -1,12 +1,32 @@
-Fri Jul  2 12:25:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
+Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+  
+  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
 	  Strategy Connector can automagically as well as explicitly cache
-	  and purge connection from its connection cache using different
-	  caching strategies.
+ 	  and purge connection from its connection cache using different
+ 	  caching strategies.
+	
 	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
-	  "purge_connections ()" whihc allows explicit purging of
-	  connnections from the connection cache.
+	  "purge_connections ()" which allows explicit purging of
+ 	  connnections from the connection cache.
+
+Fri Jul  2 11:49:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (open_i): It appears that
+	  
+	  if (ACE::debug ())
+	    ACE_Log_Msg::disable_debug_messages ();
+	
+          should really be
+
+	  if (ACE::debug () == 0)
+	    ACE_Log_Msg::disable_debug_messages ();
+  
+          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for 
+	  reporting this.
+  
+	* tests/Future_Test.cpp   (main): Make sure to use absolute time
+	  rather than relative time for the timeouts.  Thanks to Peter
+ 	  Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
 
 Fri Jul 01 11:50:21 1999  Steve Huston  <shuston@riverace.com>
 
@@ -223,14 +243,6 @@ Thu Jul 01 00:24:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/Thread_Pool_Reactor_Test.cpp:
         * tests/test_config.h: UNICODE fixes.  The usage of ASYS_TCHAR and
           LPCTSTR were mistaken in many places.
-
-Wed Jun 30 16:31:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-	* tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
-	  VxWorks compiler warnings by declaring ACE_USED_ARG where
-	  needed.
-	* tests/DLL_Test.cpp (cdecl_decoration): Removed "static" off the
-	  method declaration to make VxWorks happy.
 
 Wed Jun 30 16:13:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
