@@ -1,3 +1,8 @@
+Mon Dec 18 11:44:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp (connect_client): Fixed an unused
+	  argument warning on KCC compiler.
+
 Mon Dec 18 11:00:14 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Fixed problems when threads are not

@@ -144,9 +144,8 @@ connect_client (void *arg)
     {
       ACE_OS::sprintf (buf, ACE_TEXT ("Iteration %d"), cntr);
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
-      ssize_t len = 0;
 
-      if ((len = stream.send (buf, slen)) < slen)
+      if (stream.send (buf, slen) < slen)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Write_Handler::handle_output - send\n")),
                           0);
