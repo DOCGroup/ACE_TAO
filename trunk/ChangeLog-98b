@@ -1,3 +1,20 @@
+Thu Jun 18 20:46:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added the following definition:
+	       #define ACE_HAS_SIGINFO_T
+	       #define ACE_LACKS_SIGINFO_H
+	       #define ACE_LACKS_UCONTEXT_H
+	       #define ACE_LACKS_SI_ADDR
+
+	* include/makeinclude/platform_freebsd_pthread.GNU:  Changed to
+	  invoke linker directly using g++.  Added -pthread flag for
+	  linker.  This implies programs will link against libc_r
+	  automatically now.  Removed -lc_r.  Other minor changes.
+
+	  Thanks very much for lots of help from FreeBSD team esp. Amancio
+	  Hasty <hasty@rah.star-gate.com> and John Birrell
+	  <jb@cimlogic.com.au>.
+
 Thu Jun 18 19:32:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Token.cpp (dump): commented out print of owner_.  Is

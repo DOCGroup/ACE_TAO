@@ -11,19 +11,19 @@ versioned_so = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -fno-strict-prototypes -D_THREAD_SAFE
+CFLAGS          += -w -Wpointer-arith -pipe -D_THREAD_SAFE
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
-DLD             = ld
-LD		= $(CXX)
-LIBS            += -lc_r -lstdc++ -lcompat
-OCFLAGS         += -O2
-PIC             = -fpic -DPIC
+DLD             = $(CXX)
+LD		= $(CXX) -pthread
+LIBS            += -lstdc++ -lcompat
+OCFLAGS         += -O
+PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
-# SOFLAGS = $(CPPFLAGS) -shared
-SOFLAGS = -Bshareable -x /usr/lib/c++rt0.o
+SOFLAGS = $(CPPFLAGS) -shared
+# SOFLAGS = -Bshareable -x /usr/lib/c++rt0.o
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB = @echo
