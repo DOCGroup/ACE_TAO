@@ -59,10 +59,16 @@ TAO_IOR_LookupTable::find_ior (const ACE_CString &object_name,
   // returns 0 on success.
   //        -1 on failure.
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IOR Table find <%s>\n",
-                object_name.c_str ()));
+  // @@ This debugging output should *NOT* be used since the
+  //    object key string is not null terminated, nor can it
+  //    be null terminated without copying.  No copying should 
+  //    be done since performance is somewhat important here.
+  //    So, just remove the debugging output entirely.
+  //
+  //   if (TAO_debug_level > 0)
+  //     ACE_DEBUG ((LM_DEBUG,
+  //                 "TAO (%P|%t) IOR Table find <%s>\n",
+  //                 object_name.c_str ()));
 
   return this->hash_map_.find (object_name, ior);
 

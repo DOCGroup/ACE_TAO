@@ -1781,7 +1781,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
   CORBA::String_var string =
     this->object_to_string (obj);
 
-  if (string.in () == 0 || string.in ()[0] == '\0')
+  if (string.in () == 0 || string[0] == '\0')
     return -1;
 
   ACE_CString ior (string.in ());
@@ -1800,17 +1800,32 @@ int
 CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
                                    CORBA::Object_ptr &obj)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t): lookup service ID <%s>\n",
-                object_id.c_str ()));
+  // @@ This debugging output should *NOT* be used since the
+  //    object key string is not null terminated, nor can it
+  //    be null terminated without copying.  No copying should 
+  //    be done since performance is somewhat important here.
+  //    So, just remove the debugging output entirely.
+  //
+  //   if (TAO_debug_level > 0)
+  //     ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t): lookup service ID <%s>\n",
+  //                 object_id.c_str ()));
 
   ACE_CString ior;
 
   if (this->lookup_table_.find_ior (object_id, ior) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) cannot find IOR for <%s>\n",
-                       object_id.c_str ()),
-                      -1);
+    {
+      // @@ This debugging output should *NOT* be used since the
+      //    object key string is not null terminated, nor can it
+      //    be null terminated without copying.  No copying should 
+      //    be done since performance is somewhat important here.
+      //    So, just remove the debugging output entirely.
+      //
+      //       ACE_ERROR_RETURN ((LM_ERROR,
+      //                          "TAO (%P|%t) cannot find IOR for <%s>\n",
+      //                          object_id.c_str ()),
+      //                         -1);
+      return -1;
+    }
 
   obj = this->string_to_object (ior.c_str ());
 

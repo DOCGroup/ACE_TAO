@@ -983,10 +983,17 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                                  0,
                                  0);
 
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Simple Object key %s. Doing the Table Lookup ...\n",
-                        object_id.c_str ()));
+          // @@ This debugging output should *NOT* be used since the
+          //    object key string is not null terminated, nor can it
+          //    be null terminated without copying.  No copying should 
+          //    be done since performance is somewhat important here.
+          //    So, just remove the debugging output entirely.
+          //
+          //           if (TAO_debug_level > 0)
+          //             ACE_DEBUG ((LM_DEBUG,
+          //                         "Simple Object key %s. "
+          //                         "Doing the Table Lookup ...\n",
+          //                         object_id.c_str ()));
 
           CORBA::Object_ptr object_reference =
             CORBA::Object::_nil ();
