@@ -123,7 +123,7 @@ public:
                               CORBA::ULong request_id,
                               CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
@@ -131,14 +131,13 @@ public:
                              const TAO_Profile *profile,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int twoway,
-                            ACE_Time_Value *max_time_wait) = 0;
+                            int twoway) = 0;
   // Default action to be taken for send request.
 
   // = Get and set methods for the ORB Core.
@@ -164,14 +163,13 @@ public:
   // Get request id for the current invocation from the TMSobject.
 
   int bind_reply_dispatcher (CORBA::ULong request_id,
-                             TAO_Reply_Dispatcher *rd);
+                              TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
-  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
+  virtual int wait_for_reply (void);
   // Wait for the reply depending on the strategy.
 
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_wait_time = 0);
+  virtual int handle_client_input (int block = 0);
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. Returns -1 on errors.
@@ -181,6 +179,22 @@ public:
   // Register the handler with the reactor. Will be called by the Wait
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  // = Setting the Transport object in Idle state. Theese methods are
+  //   routed the TMS object. The TMS starategies implement the
+  //   methods accordingly. 
+  
+  virtual int idle_after_send (void);
+  // Request has been just sent, but the reply is not received. Idle
+  // the transport now.
+  
+  virtual int idle_after_reply (void);
+  // Request is sent and the reply is received. Idle the transport
+  // now. 
+
+  virtual int reply_received (const CORBA::ULong request_id);
+  // Check with the TMS whether the reply has been receieved for the
+  // request with <request_id>.
 
 protected:
   CORBA::ULong tag_;
@@ -230,11 +244,11 @@ public:
   // MProfile accessor
 
   virtual int parse_string (const char *string,
-                            CORBA::Environment &ACE_TRY_ENV) = 0;
+                            CORBA::Environment &env) = 0;
   // Initialize this object using the given input string.
   // Supports URL stylr of object references
 
-  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual CORBA::String to_string (CORBA::Environment &env) = 0;
   // Return a string representation for this profile.  client must
   // deallocate memory.
 
@@ -254,13 +268,14 @@ public:
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by the caller!
 
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
+  virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
+                                        CORBA::Environment &env) = 0;
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
 
   virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
+                             CORBA::Environment &env) = 0;
   // Return a hash value for this object.
 
   virtual int addr_to_string(char *buffer, size_t length) = 0;
@@ -313,15 +328,16 @@ public:
 
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,
-                            CORBA::Environment &ACE_TRY_ENV);
-  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
+                            CORBA::Environment &env);
+  virtual CORBA::String to_string (CORBA::Environment &env);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
+  virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
+                                        CORBA::Environment &env);
   virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV);
+                             CORBA::Environment &env);
   virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
 
@@ -415,8 +431,7 @@ public:
   // Shutdown Connector bridge and concreate Connector.
 
   virtual int connect (TAO_Profile *profile,
-                       TAO_Transport *&,
-                       ACE_Time_Value *max_wait_time) = 0;
+                       TAO_Transport *&) = 0;
   // To support pluggable we need to abstract away the connect()
   // method so it can be called from the GIOP code independant of the
   // actual transport protocol in use.
@@ -428,18 +443,18 @@ public:
   // Create a profile for this protocol and initialize it based on the
   // encapsulation in <cdr>
 
+protected:
+  virtual int make_profile (const char *endpoint,
+                            TAO_Profile *&,
+                            CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Create a profile with a given endpoint.
+
   virtual int check_prefix (const char *endpoint) = 0;
   // Check that the prefix of the provided endpoint is valid for use
   // with a given pluggable protocol.
 
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
-
-protected:
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Create a profile with a given endpoint.
 
 private:
   CORBA::ULong tag_;

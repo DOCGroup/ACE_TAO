@@ -34,7 +34,7 @@
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for Sbrk Memory Pool constructor options.
+  //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -104,7 +104,7 @@ protected:
 class ACE_Export ACE_Shared_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for Shared Memory Pool constructor options.
+  //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -114,8 +114,7 @@ public:
   ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
                                   size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
                                   size_t file_perms = ACE_DEFAULT_FILE_PERMS,
-                                  off_t minimum_bytes = 0,
-                                  size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
+                                  off_t minimum_bytes = 0);
 
   char *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -128,9 +127,6 @@ public:
 
   size_t file_perms_;
   // File permissions to use when creating/opening a segment.
-
-  size_t segment_size_;
-  // Shared memory segment size.
 };
 
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
@@ -224,9 +220,6 @@ protected:
   off_t minimum_bytes_;
   // What the minimim bytes of the initial segment should be.
 
-  size_t segment_size_;
-  // Shared memory segment size.
-
   key_t base_shm_key_;
   // Base shared memory key for the segment.
 
@@ -251,7 +244,7 @@ protected:
 class ACE_Export ACE_Local_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for Local Memory Pool constructor options.
+  //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -323,7 +316,7 @@ protected:
 class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for MMAP Memory Pool constructor options.
+  //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -433,13 +426,12 @@ protected:
 
   virtual size_t round_up (size_t nbytes);
 
-  virtual int commit_backing_store_name (size_t rounded_bytes,
-                                         off_t &map_size);
-  // Compute the new <map_size> of the backing store and commit the
+  virtual int commit_backing_store_name (size_t rounded_bytes, off_t &file_offset);
+  // Compute the new file_offset of the backing store and commit the
   // memory.
 
-  virtual int map_file (off_t map_size);
-  // Memory map the file up to <map_size> bytes.
+  virtual int map_file (off_t file_offset);
+  // Memory map the file up to <file_offset> bytes.
 
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Handle SIGSEGV and SIGBUS signals to remap shared memory

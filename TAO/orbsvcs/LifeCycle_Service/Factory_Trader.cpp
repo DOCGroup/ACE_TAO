@@ -34,7 +34,7 @@ Factory_Trader::Factory_Trader ()
     trading_Components_ptr_ (0),
     support_Attributes_ptr_(0)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       int argc = 0;
       // create the trader
@@ -45,19 +45,18 @@ Factory_Trader::Factory_Trader ()
       // this pointer is deleted when the trader_ptr is deleted
 
       // Set the service type repository
-      support_Attributes_ptr_->type_repos (this->repository_._this (ACE_TRY_ENV));
-      ACE_TRY_CHECK;
+      support_Attributes_ptr_->type_repos (this->repository_._this (TAO_TRY_ENV));
+      TAO_CHECK_ENV;
 
       // Add the "Factory" type to the repository
       this->add_type ();
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader constructor: Failed adding a new type.\n");
+      ACE_ERROR ((LM_ERROR, "Factory_Trader constructor: Failed adding a new type."));
+      TAO_TRY_ENV.print_exception ("Factory_Trader constructor: Exception.\n");
     }
-  ACE_ENDTRY;
-  // @@ ACE_CHECK?  No way to pass back any exceptions.
+  TAO_ENDTRY;
 }
 
 Factory_Trader::~Factory_Trader ()
@@ -69,7 +68,7 @@ Factory_Trader::~Factory_Trader ()
 void
 Factory_Trader::add_type ()
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // define the new type
       CosTradingRepos::ServiceTypeRepository::PropStruct propStruct_name;
@@ -100,16 +99,24 @@ Factory_Trader::add_type ()
                                   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
                                   propStructSeq,
                                   superTypeSeq,
-                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader::init.\n");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::init: User Exception.\n");
     }
-  ACE_ENDTRY;
-  // @@ ACE_CHECK
+  TAO_CATCH (CORBA::SystemException, sysex)
+    {
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::init: System Exception.\n");
+    }
+  TAO_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR, "Factory_Trader::init: Failed adding a new type."));
+    }
+  TAO_ENDTRY;
 }
 
 
@@ -119,7 +126,7 @@ Factory_Trader::_cxx_export (const char * name,
 	       const char * description,
 	       const CORBA::Object_ptr object_ptr)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       if (CORBA::is_nil(object_ptr))
 	{
@@ -142,26 +149,34 @@ Factory_Trader::_cxx_export (const char * name,
 
       // invoke the export method on the Register interface of the Trading Service
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
-                                 CORBA::string_dup("Factory"),
-                                 propertySeq,
-                                 ACE_TRY_ENV);
+			    CORBA::string_dup("Factory"),
+			    propertySeq,
+			    TAO_TRY_ENV);
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader::export: Failed to export factory.\n");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::export: User Exception.\n");
     }
-  ACE_ENDTRY;
-  // @@ ACE_CHECK*
+  TAO_CATCH (CORBA::SystemException, sysex)
+    {
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::export: System Exception.\n");
+    }
+  TAO_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR, "Factory_Trader::export: Failed to export factory.\n"));
+    }
+  TAO_ENDTRY;
 }
 
 
 CORBA::Object_ptr
 Factory_Trader::query (const CORBA::String constraint)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       CosTrading::Lookup::SpecifiedProps specifiedProps;
       specifiedProps._d(CosTrading::Lookup::all);
@@ -188,8 +203,8 @@ Factory_Trader::query (const CORBA::String constraint)
 			 CosTrading::OfferSeq_out(offerSeq_ptr),               // results
 			 CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
 			 CosTrading::PolicyNameSeq_out(policyNameSeq_ptr),     // Policies
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+			 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Initialize
       CORBA::Object_ptr object_ptr = 0;
@@ -219,11 +234,20 @@ Factory_Trader::query (const CORBA::String constraint)
 	}
       return object_ptr;
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Factory_Trader::query: Failed.\n");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::query: User Exception");
     }
-  ACE_ENDTRY;
-  // @@ ACE_CHECK_RETURN (?)
+  TAO_CATCH (CORBA::SystemException, sysex)
+    {
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("Factory_Trader::query: System Exception");
+    }
+  TAO_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR, "Factory_Trader::query: Failed.\n"));
+    }
+  TAO_ENDTRY;
   return 0;
 }

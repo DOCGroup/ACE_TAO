@@ -24,7 +24,7 @@
 
 static CORBA::Boolean
 catiiop (CORBA::String string,
-         CORBA::Environment &ACE_TRY_ENV)
+         CORBA::Environment &env)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -71,7 +71,8 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      env.exception (new CORBA_DATA_CONVERSION ());
+      return 0;
     }
 
   hostname = CORBA::string_alloc (1 + cp - string);
@@ -88,8 +89,9 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
+      env.exception (new CORBA_DATA_CONVERSION ());
       CORBA::string_free (hostname);
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      return 0;
     }
 
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -276,7 +278,7 @@ catior (CORBA::String str,
 
 static CORBA::Boolean
 catpoop (CORBA::String string,
-        CORBA::Environment &ACE_TRY_ENV)
+        CORBA::Environment &env)
 {
   if (!string || !*string)
     return 0;
@@ -291,7 +293,8 @@ catpoop (CORBA::String string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
+      env.exception (new CORBA_DATA_CONVERSION ());
+      return 0;
     }
 
   // Read the hostname.
@@ -559,13 +562,7 @@ cat_octet_seq (const char *object_name,
               object_name));
 
   for (i = 0; i < length; i++)
-    {
-      char c = objKey[i];
-      if (isprint (c))
-        ACE_DEBUG ((LM_DEBUG, "%c", c));
-      else
-        ACE_DEBUG ((LM_DEBUG, "."));
-    }
+    ACE_DEBUG ((LM_DEBUG, "%c", objKey[i]));
 
   CORBA::string_free (objKey);
   ACE_DEBUG ((LM_DEBUG, "\n"));

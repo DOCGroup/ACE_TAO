@@ -114,13 +114,14 @@ TAO_Unknown_Profile::_key (void) const
 }
 
 CORBA::Boolean
-TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
+TAO_Unknown_Profile::is_equivalent (TAO_Profile* other_profile,
+                                    CORBA::Environment &)
 {
   if (other_profile->tag () != this->tag ())
     return 0;
 
-  const TAO_Unknown_Profile *op =
-    ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
+  TAO_Unknown_Profile *op =
+    ACE_dynamic_cast (TAO_Unknown_Profile*, other_profile);
 
   return (this->body_ == op->body_);
 }
@@ -135,7 +136,7 @@ TAO_Unknown_Profile::hash (CORBA::ULong max,
 }
 
 int
-TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
+TAO_Unknown_Profile::addr_to_string (char * /* buffer */, 
                                      size_t /* length */)
 {
   return 0;
@@ -161,7 +162,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy ();
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -214,14 +215,19 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
                                       rd);
 }
 
+int
+TAO_Transport::wait_for_reply (void)
+{
+  return this->ws_->wait ();
+}
+
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.
 // If <block> is 1, then reply is read in a blocking manner.
 
 int
-TAO_Transport::handle_client_input (int /* block */,
-                                    ACE_Time_Value * /* max_wait_time */)
+TAO_Transport::handle_client_input (int /* block */)
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -233,9 +239,20 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
+TAO_Transport::idle_after_send (void)
 {
-  return this->ws_->wait (max_wait_time);
+  return this->tms ()->idle_after_send (this);
+}  
+int
+TAO_Transport::idle_after_reply (void)
+{
+  return this->tms ()->idle_after_reply (this);
+}
+
+int
+TAO_Transport::reply_received (const CORBA::ULong request_id)
+{
+  return this->tms ()->reply_received (request_id);
 }
 
 void
@@ -295,14 +312,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Check for a valid string
   if (!string || !*string)
-    {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        -1);
-    }
+    return 1;  // Failure
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
@@ -331,7 +341,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (ior_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // No colon ':' in the IOR!
     }
   else
@@ -344,7 +354,7 @@ TAO_Connector::make_mprofile (const char *string,
   // The delimiter used to seperate inidividual addresses.
 
   // Count the number of endpoints in the IOR.  This will be the number
-  // of entries in the MProfile.
+  // of entries in the Mprofile.
 
   CORBA::ULong profile_count = 1;
   // Number of endpoints in the IOR  (initialized to 1)
@@ -356,34 +366,28 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   // Tell the MProfile object how many Profiles it should hold.
-  // MProfile::set(size) returns the number profiles it can hold.
+  // Mprofile::set(size) returns the number profiles it can hold.
   if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_MPROFILE_CREATION_ERROR,
-          0),
-        CORBA::COMPLETED_NO),
-      -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Error while setting the MProfile size!
     }
 
   // The idea behind the following loop is to split the IOR into several
   // strings that can be parsed by each profile.
   // For example,
-  //    `1.3@moo,shu,1.1@chicken/arf'
+  //    `//1.3@moo,shu,1.1chicken/arf'
   // will be parsed into:
-  //    `1.3@moo/arf'
-  //    `shu/arf'
-  //    `1.1@chicken/arf'
+  //    `//1.3@moo/arf'
+  //    `//shu/arf'
+  //    `//1.1chicken/arf'
 
-  int objkey_index =
-    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
+  int objkey_index = ior.find (this->object_key_delimiter (), ior_index);
   // Find the object key
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Failure: No endpoints specified or no object key specified.
     }
 
@@ -403,42 +407,39 @@ TAO_Connector::make_mprofile (const char *string,
       if (end < ACE_static_cast (int, ior.length ()) && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end);
+
           endpoint += ior.substring (objkey_index);
           // Add the object key to the string.
 
           // The endpoint should now be of the form:
-          //    `N.n@endpoint/object_key'
+          //    `//N.n@endpoint/object_key'
           // or
-          //    `endpoint/object_key'
+          //    `//endpoint/object_key'
 
           TAO_Profile *profile = 0;
           // Must initialize since pointer is passed as a reference!
 
-          this->make_profile (endpoint.c_str (),
-                              profile,
-                              ACE_TRY_ENV);
-
-          ACE_CHECK_RETURN (-1);
-          // Failure:  Problem during profile creation
+          if (this->make_profile (endpoint.c_str (),
+                                  profile,
+                                  ACE_TRY_ENV) != 0)
+            {
+              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+              // Failure:  Problem during profile creation
+            }
 
           // Create a Profile using the individual endpoint string
 
           // Give up ownership of the profile.
-          if (mprofile.give_profile (profile) == -1)
+          if (mprofile.give_profile (profile) != 0)
             {
-              ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                CORBA_SystemException::_tao_minor_code (
-                  TAO_MPROFILE_CREATION_ERROR,
-                  0),
-                CORBA::COMPLETED_NO),
-              -1);
+              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+          ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
           // Unable to seperate endpoints
         }
     }

@@ -8,7 +8,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-TAO_IDLFLAGS +=  -Ge 1 -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT)
+TAO_IDLFLAGS +=  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 IDL_SRC = NavWeapC.cpp NavWeapS.cpp
 IDL_HDR = NavWeapC.h
 EVENT_TEST_SRCS = Event_Sup.cpp Logging_Sup.cpp DualEC_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
@@ -26,7 +26,7 @@ BIN2 = Event_Sup Logging_Sup DualEC_Sup Event_Con
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
   ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
     ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
@@ -86,25 +86,25 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/NavWeapC.o .obj/NavWeapC.so .shobj/NavWeapC.o .shobj/NavWeapC.so: NavWeapC.cpp NavWeapC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  NavWeapC.i NavWeapS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  NavWeapS_T.h NavWeapS_T.i NavWeapS_T.cpp NavWeapS.i
 .obj/NavWeapS.o .obj/NavWeapS.so .shobj/NavWeapS.o .shobj/NavWeapS.so: NavWeapS.cpp NavWeapS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  NavWeapC.h NavWeapC.i NavWeapS_T.h NavWeapS_T.i NavWeapS_T.cpp \
  NavWeapS.i
 .obj/Event_Sup.o .obj/Event_Sup.so .shobj/Event_Sup.o .shobj/Event_Sup.so: Event_Sup.cpp \
@@ -269,6 +269,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -327,6 +328,8 @@ realclean: clean
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
@@ -344,9 +347,14 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
@@ -361,8 +369,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
@@ -377,11 +385,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  Event_Sup.h NavWeapC.h NavWeapC.i DOVE_Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
@@ -548,6 +556,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -606,6 +615,8 @@ realclean: clean
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
@@ -623,9 +634,14 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
@@ -640,8 +656,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
@@ -656,11 +672,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  Logging_Sup.h NavWeapC.h NavWeapC.i DOVE_Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
@@ -827,6 +843,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -885,6 +902,8 @@ realclean: clean
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
@@ -902,9 +921,14 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
@@ -919,8 +943,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
@@ -931,11 +955,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
@@ -1030,8 +1054,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
@@ -1047,11 +1071,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  Event_Con.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
@@ -1219,6 +1243,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -1277,6 +1302,8 @@ realclean: clean
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
@@ -1294,9 +1321,14 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
@@ -1307,18 +1339,18 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \

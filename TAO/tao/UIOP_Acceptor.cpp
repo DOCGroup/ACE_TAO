@@ -40,14 +40,6 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 {
 }
 
-TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
-{
-  // Explicitly call close() to aid in post-error resource clean up.
-  // close() is called to ensure that the rendezvous point is removed
-  // from the filesystem.
-  this->close ();
-}
-
 int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
@@ -129,8 +121,8 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_CString &address)
 {
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet, major),
-                                ACE_static_cast (CORBA::Octet, minor));
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
+                                ACE_static_cast (CORBA::Octet,minor));
   ACE_UNIX_Addr addr (address.c_str ());
 
   return this->open_i (orb_core, addr);

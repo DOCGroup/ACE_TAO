@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_type, "$Id$")
 
@@ -94,13 +94,70 @@ be_type::compute_tc_name (void)
                                                                  (namebuf), 1,
                                                                  0, I_FALSE), NULL));
     }
+
   return;
+}
+
+UTL_ScopedName *
+be_type::compute_tc_name (const char *prefix, const char *suffix)
+{
+  // Both prefix and suffix has to be valid. Else return. 
+  if (prefix == 0 || suffix == 0)
+    return 0;
+    
+  static char namebuf [NAMEBUFSIZE];
+  UTL_ScopedName *n;
+
+  UTL_ScopedName *result = NULL;
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  n = this->name ();
+  while (n->tail () != NULL)
+    {
+      if (!result)
+        {
+          // does not exist
+          result = new UTL_ScopedName (n->head (), NULL);
+        }
+      else
+        {
+          result->nconc (new UTL_ScopedName (n->head (), NULL));
+        }
+      n = (UTL_ScopedName *)n->tail ();
+    }
+
+  ACE_OS::sprintf (namebuf,
+                   "_tc_%s%s%s",
+                   prefix,
+                   n->last_component ()->get_string (),
+                   suffix);
+  
+  if (!result)
+    {
+      // does not exist
+      result = new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                           (namebuf), 1, 0, I_FALSE), NULL);
+    }
+  else
+    {
+      result->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                                 (namebuf), 1,
+                                                                 0, I_FALSE), NULL));
+    }
+
+  return result;
 }
 
 // retrieve typecode name
 UTL_ScopedName *
-be_type::tc_name (void)
+be_type::tc_name (const char *prefix, const char *suffix)
 {
+  if (prefix != 0 && suffix != 0)
+    {
+      // Just compute and return the name.
+      return compute_tc_name (prefix, suffix);
+    }
+
+  // Compute and init the member.
   if (!this->tc_name_)
     compute_tc_name ();
 
@@ -135,15 +192,12 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
   char // hold the fully scoped name
     def_name [NAMEBUFSIZE],
     use_name [NAMEBUFSIZE];
-  char // these point to the prev, curr and next component in the scope
+  char // these point to the curr and next component in the scope
     *def_curr = def_name,
-    *def_next = 0,
+    *def_next,
     *use_curr = use_name,
-    *use_next = 0;
+    *use_next;
 
-  int len_to_match = 0; // how many chars to compare
-
-  // initialize the buffers
   ACE_OS::memset (this->nested_type_name_, '\0', NAMEBUFSIZE);
   ACE_OS::memset (def_name, '\0', NAMEBUFSIZE);
   ACE_OS::memset (use_name, '\0', NAMEBUFSIZE);
@@ -153,7 +207,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
   // match. Continue until there is a match and keep accumulating the path
   // traversed. This forms the first argument to the ACE_NESTED_CLASS
   // macro. Whenever there is no match, the remaining components of the
-  // def_scope form the second argument.
+  // def_scope form the second argument
 
   def_scope = ((this->defined_in ())?
                (be_scope::narrow_from_scope (this->defined_in ())->decl ()):
@@ -170,37 +224,21 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
       use_next = ACE_OS::strstr (use_curr, "::");
 
       if (def_next)
-        len_to_match = ACE_OS::strlen (def_curr) 
-          - ACE_OS::strlen (def_next);
-      else
-        len_to_match = ACE_OS::strlen (def_curr);
+        *def_next = 0;
 
       if (use_next)
-        {
-          int len  = ACE_OS::strlen (use_curr) 
-            - ACE_OS::strlen (use_next);
-          if (len > len_to_match)
-            len_to_match = len;
-        }
-      else
-        {
-          int len = ACE_OS::strlen (def_curr);
-          if (len > len_to_match)
-            len_to_match = len;
-        }
-      
-      if (!ACE_OS::strncmp (def_curr, use_curr, len_to_match))
+        *use_next = 0;
+
+      if (!ACE_OS::strcmp (def_curr, use_curr))
         {
           // initial prefix matches i.e., they have a common root
           // start by initializing the macro
 
           //@@          ACE_OS::sprintf (this->nested_type_name_, "ACE_NESTED_CLASS (");
-          //@@          ACE_OS::strcat (this->nested_type_name_, def_curr,
-          //len_to_match); // initialize the first argument 
+          //@@          ACE_OS::strcat (this->nested_type_name_, def_curr); // initialize the first argument
 
-          // shift the curr scopes to the next level
-          def_curr = (def_next ? (def_next + 2) : 0); // skip the ::
-          use_curr = (use_next ? (use_next + 2) : 0); // skip the ::
+          def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+          use_curr = (use_next ? (use_next+2) : 0); // skip the ::
 
           while (def_curr && use_curr)
             {
@@ -209,33 +247,18 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
               use_next = ACE_OS::strstr (use_curr, "::");
 
               if (def_next)
-                len_to_match = ACE_OS::strlen (def_curr) 
-                  - ACE_OS::strlen (def_next);
-              else
-                len_to_match = ACE_OS::strlen (def_curr);
+                *def_next = 0;
 
               if (use_next)
-                {
-                  int len  = ACE_OS::strlen (use_curr) 
-                    - ACE_OS::strlen (use_next);
-                  if (len > len_to_match)
-                    len_to_match = len;
-                }
-              else
-                {
-                  int len = ACE_OS::strlen (def_curr);
-                  if (len > len_to_match)
-                    len_to_match = len;
-                }
-      
-              if (!ACE_OS::strncmp (def_curr, use_curr, len_to_match))
+                *use_next = 0;
+
+              if (!ACE_OS::strcmp (def_curr, use_curr))
                 {
                   // they have same prefix, append to arg1
                   //@@    ACE_OS::strcat (this->nested_type_name_, "::");
-                  //@@ ACE_OS::strncat (this->nested_type_name_, def_curr,
-                  //len_to_match); 
-                  def_curr = (def_next ? (def_next + 2) : 0); // skip the ::
-                  use_curr = (use_next ? (use_next + 2) : 0); // skip the ::
+                  //@@ ACE_OS::strcat (this->nested_type_name_, def_curr);
+                  def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+                  use_curr = (use_next ? (use_next+2) : 0); // skip the ::
                 }
               else
                 {

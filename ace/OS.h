@@ -18,6 +18,7 @@
 #ifndef ACE_OS_H
 # define ACE_OS_H
 
+
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
@@ -303,15 +304,15 @@
 #   endif /* ACE_HAS_UNICODE && UNICODE */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
+# if !defined (ACE_DEFAULT_SERVER_HOST)
+#   define ACE_DEFAULT_SERVER_HOST "localhost"
+# endif /* ACE_DEFAULT_SERVER_HOST */
+
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
 #   define ACE_LOCALHOST ASYS_TEXT("localhost")
 # endif
-
-# if !defined (ACE_DEFAULT_SERVER_HOST)
-#   define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
-# endif /* ACE_DEFAULT_SERVER_HOST */
 
 // Default shared memory key
 # if !defined (ACE_DEFAULT_SHM_KEY)
@@ -412,7 +413,7 @@
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #   define ASYS_TCHAR wchar_t
-#   define ASYS_TEXT(STRING)   __TEXT (STRING)
+#   define ASYS_TEXT(STRING)   _TEXT(STRING)
 # else
 #   define ASYS_TCHAR char
 #   define ASYS_TEXT(STRING)   STRING
@@ -950,8 +951,8 @@ typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
-#   define ACE_DEFAULT_SHLIB_MODE 0
+const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = ACE_INVALID_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
 
 #   define ACE_INVALID_SEM_KEY -1
 
@@ -1033,8 +1034,9 @@ typedef struct timespec
 class ACE_Export ACE_PSOS_Time_t
 {
 public:
-  ACE_PSOS_Time_t (void);
-    // default ctor: date, time, and ticks all zeroed.
+
+  ACE_PSOS_Time_t ();
+    // default ctor: date, time, and ticks all zeroed
 
   ACE_PSOS_Time_t (const timespec_t& t);
     // ctor from a timespec_t
@@ -1049,14 +1051,18 @@ public:
     // static member function to set current system time
 
 #   if defined (ACE_PSOSIM)
-  static u_long init_simulator_time (void);
+
+  static u_long init_simulator_time ();
     // static member function to initialize system time, using UNIX calls
+
 #   endif /* ACE_PSOSIM */
 
   static const u_long max_ticks;
     // max number of ticks supported in a single system call
+
 private:
-  // = Constants for prying info out of the pSOS time encoding.
+
+  // constants for prying info out of the pSOS time encoding
   static const u_long year_mask;
   static const u_long month_mask;
   static const u_long day_mask;
@@ -1120,9 +1126,7 @@ private:
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 extern "C" {
-#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
-#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
+#   include /**/ <signal.h>
 #   include /**/ <pthread.h>
 #   if defined (DIGITAL_UNIX)
 #     define pthread_self __pthread_self
@@ -1222,12 +1226,11 @@ public:
   // Constant "0".
 
   static const ACE_Time_Value max_time;
-  // Constant for maximum time representable.  Note that this time is
-  // not intended for use with <select> or other calls that may have
-  // *their own* implementation-specific maximum time representations.
+  // Constant for maximum time representable.  Note that this time
+  // is not intended for use with select () or other calls that may
+  // have *their own* implementation-specific maximum time representations.
   // Its primary use is in time computations such as those used by the
-  // dynamic subpriority strategies in the <ACE_Dynamic_Message_Queue>
-  // class.
+  // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 
   // = Initialization methods.
 
@@ -1417,11 +1420,6 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_TEMPLATE_SPECIALIZATION
 # endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
-# if defined (ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION)
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -1658,12 +1656,10 @@ if (gobbler != 0) *gobbler = (ACE_Service_Object_Exterminator) _gobble_##X; retu
 
 // the following macros are for POSIX conformance.
 
-#   if !defined (ACE_HAS_USER_MODE_MASKS)
-#     define S_IRWXU 00700         /* read, write, execute: owner. */
-#     define S_IRUSR 00400         /* read permission: owner. */
-#     define S_IWUSR 00200         /* write permission: owner. */
-#     define S_IXUSR 00100         /* execute permission: owner. */
-#   endif /* ACE_HAS_USER_MODE_MASKS */
+#   define S_IRWXU 00700           /* read, write, execute: owner. */
+#   define S_IRUSR 00400           /* read permission: owner. */
+#   define S_IWUSR 00200           /* write permission: owner. */
+#   define S_IXUSR 00100           /* execute permission: owner. */
 #   define S_IRWXG 00070           /* read, write, execute: group. */
 #   define S_IRGRP 00040           /* read permission: group. */
 #   define S_IWGRP 00020           /* write permission: group. */
@@ -2114,7 +2110,7 @@ protected:
 typedef rwlock_t ACE_rwlock_t;
 #         endif /* !ACE_LACKS_RWLOCK_T */
 #         include /**/ <thread.h>
-#       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
+#       endif /* defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
 
 #     else
 #       if !defined (ACE_HAS_POSIX_SEM)
@@ -2429,8 +2425,6 @@ protected:
   ACE_cond_t waiting_important_writer_;
   // condition for the upgrading reader
 };
-#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
 #     include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
@@ -2587,11 +2581,9 @@ typedef unsigned int size_t;
 
 #   include /**/ <new.h>
 
-#   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
-#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
-#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
+#   if !defined (ACE_PSOS_DIAB_MIPS)
+#   include /**/ <signal.h>
+#   endif /* ACE_PSOS_DIAB_MIPS */
 
 #   include /**/ <errno.h>
 
@@ -2616,27 +2608,29 @@ typedef unsigned int size_t;
 # endif /* IOV_MAX */
 
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-  // Header information snarfed from compiler provided header files
-  // that are not included because there is already an identically
-  // named file provided with pSOS, which does not have this info from
-  // compiler supplied stdio.h.
-  extern FILE *fdopen (int, const char *);
-  extern int getopt (int, char *const *, const char *);
-  extern char *tempnam (const char *, const char *);
-  extern "C" int fileno (FILE *);
 
-//  #define fileno(stream) ((stream)->_file)
+  // header information snarfed from compiler provided header files
+  // that are not included because there is already an identically
+  // named file provided with pSOS, which does not have this info
+
+  // from compiler supplied stdio.h
+  extern FILE *fdopen(int, const char *);
+  extern int getopt(int, char *const *, const char *);
+  extern char *tempnam(const char *, const char *);
+  extern "C" int fileno(FILE *);
+
+//  #define fileno(stream)      ((stream)->_file)
 
   // from compiler supplied string.h
-  extern char *strdup (const char *);
+  extern char *strdup(const char *);
 
   // from compiler supplied stat.h
-  extern mode_t umask (mode_t);
-  extern int mkfifo (const char *, mode_t);
-  extern int mkdir (const char *, mode_t);
+  extern mode_t umask(mode_t);
+  extern int mkfifo(const char *, mode_t);
+  extern int mkdir(const char *, mode_t);
 
   // from compiler supplied stdlib.h
-  extern int putenv (char *);
+  extern int putenv(char *);
 
   int isatty (ACE_HANDLE h);
 
@@ -2650,6 +2644,7 @@ typedef unsigned int size_t;
 #   define islower iswlower
 #   define isdigit iswdigit
 # endif /* ACE_HAS_WINCE */
+
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
@@ -3075,14 +3070,7 @@ PAGE_NOCACHE  */
 #     define _O_CREAT O_CREAT
 #     define _O_EXCL  O_EXCL
 #     define _O_TRUNC O_TRUNC
-      // 0x0800 is used for O_APPEND.  0x08 looks free.
-#     define _O_TEMPORARY 0x08 // see fcntl.h
-#     define _O_RDWR   O_RDWR
-#     define _O_WRONLY O_WRONLY
-#     define _O_RDONLY O_RDONLY
-#     define _O_APPEND O_APPEND
-#     define _O_BINARY O_BINARY
-#     define _O_TEXT   O_TEXT
+#     define _O_TEMPORARY 0x0800 // see fcntl.h
 #   endif /* __BORLANDC__ */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
@@ -3151,10 +3139,7 @@ struct iovec
   size_t iov_len; // byte count to read/write
   char *iov_base; // data to be read/written
 
-  // WSABUF is a Winsock2-only type.
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   operator WSABUF &(void) { return *((WSABUF *) this); }
-#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 };
 
 struct msghdr
@@ -3177,6 +3162,7 @@ struct msghdr
   int msg_accrightslen;
 };
 
+
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
 #   define ACE_SELF (0)
@@ -3187,8 +3173,8 @@ typedef int ACE_pri_t;
 #     define RTLD_LAZY 1
 #   endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE 0
+const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
 
 # elif defined (ACE_PSOS)
 
@@ -3666,11 +3652,11 @@ extern "C" {
 }
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #   elif defined (__hpux)
 #     if defined(__GNUC__) || __cplusplus >= 199707L
 #       include /**/ <dl.h>
@@ -3678,15 +3664,15 @@ extern "C" {
 #       include /**/ <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
+  const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #   else
 #     if !defined(RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
+  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #   if defined (ACE_HAS_SOCKIO_H)
@@ -4006,18 +3992,6 @@ struct sigaction
 #   define ACE_LACKS_IP_ADD_MEMBERSHIP
 # endif /* IP_ADD_MEMBERSHIP */
 
-# if !defined (IP_DEFAULT_MULTICAST_TTL)
-#   define IP_DEFAULT_MULTICAST_TTL 0
-# endif /* IP_DEFAULT_MULTICAST_TTL */
-
-# if !defined (IP_DEFAULT_MULTICAST_LOOP)
-#   define IP_DEFAULT_MULTICAST_LOOP 0
-# endif /* IP_DEFAULT_MULTICAST_LOOP */
-
-# if !defined (IP_MAX_MEMBERSHIPS)
-#   define IP_MAX_MEMBERSHIPS 0
-# endif /* IP_MAX_MEMBERSHIP */
-
 # if !defined (SIOCGIFBRDADDR)
 #   define SIOCGIFBRDADDR 0
 # endif /* SIOCGIFBRDADDR */
@@ -4243,19 +4217,11 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   if defined (ACE_HAS_CHARPTR_DL)
-typedef ASYS_TCHAR * ACE_DL_TYPE;
-#   else
-typedef const ASYS_TCHAR * ACE_DL_TYPE;
-#   endif /* ACE_HAS_CHARPTR_DL */
-# else
-#   if defined (ACE_HAS_CHARPTR_DL)
+# if defined (ACE_HAS_CHARPTR_DL)
 typedef char * ACE_DL_TYPE;
-#   else
+# else
 typedef const char * ACE_DL_TYPE;
-#   endif /* ACE_HAS_CHARPTR_DL */
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* ACE_HAS_CHARPTR_DL */
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
@@ -4802,7 +4768,8 @@ private:
   int error_;
 };
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+
+#if defined (ACE_HAS_WINSOCK2)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
 #else
@@ -4810,38 +4777,21 @@ typedef u_long ACE_SERVICE_TYPE;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 typedef GROUP ACE_SOCK_GROUP;
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
-#define ACE_OVERLAPPED_SOCKET_FLAG WSA_FLAG_OVERLAPPED
 #else
 typedef u_long ACE_SERVICE_TYPE;
 typedef u_long ACE_SOCK_GROUP;
 typedef u_long ACE_Protocol_Info;
-#define ACE_OVERLAPPED_SOCKET_FLAG 0
-#endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
+#endif /* SERVICETYPE */
 
 class ACE_Export ACE_Flow_Spec
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if defined (ACE_HAS_WINSOCK2)
   : public FLOWSPEC
 #endif /* ACE_HAS_WINSOCK2 */
 {
   // = TITLE
   //   Wrapper class that defines the flow spec QoS information, which
-  //   is used by IntServ (RSVP) and DiffServ.
+  //   is used by RSVP.
 public:
-  // = Initialization methods.
-  ACE_Flow_Spec (void);
-  // Default constructor.
-
-  ACE_Flow_Spec (u_long token_rate,
-                 u_long token_bucket_size,
-                 u_long peak_bandwidth,
-                 u_long latency,
-                 u_long delay_variation,
-                 ACE_SERVICE_TYPE service_type,
-                 u_long max_sdu_size,
-                 u_long minimum_policed_size,
-                 int ttl);
-  // Constructor that initializes all the fields.
-
   // = Get/set the token rate in bytes/sec.
   u_long token_rate (void);
   void token_rate (u_long tr);
@@ -4873,20 +4823,16 @@ public:
   // = Get/set the minimum policed size in bytes.
   u_long minimum_policed_size (void);
   void minimum_policed_size (u_long mps);
-
-  // = Get/set the time-to-live.
-  int ttl (void);
-  void ttl (int t);
 };
 
 class ACE_Export ACE_QoS
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if defined (ACE_HAS_WINSOCK2)
   : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
 {
   // = TITLE
   //   Wrapper class that holds the sender and receiver flow spec
-  //   information, which is used by IntServ (RSVP) and DiffServ.
+  //   information, which is used by RSVP.
 public:
   // = Get/set the flow spec for data sending.
   ACE_Flow_Spec sending_flowspec (void);
@@ -4901,13 +4847,13 @@ public:
   void provider_specific (const iovec &ps);
 };
 
-class ACE_Export ACE_QoS_Params
+class ACE_Export ACE_Connect_QoS_Params
 {
   // = TITLE
   //   Wrapper class that simplifies the information passed to the QoS
   //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
-  ACE_QoS_Params (iovec *caller_data = 0,
+  ACE_Connect_QoS_Params (iovec *caller_data = 0,
                           iovec *callee_data = 0,
                           ACE_QoS *socket_qos = 0,
                           ACE_QoS *group_socket_qos = 0,
@@ -4976,15 +4922,10 @@ typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
 // method.
-#if defined(ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0
-typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
-#else
 typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
                                                 u_long bytes_transferred,
                                                 ACE_OVERLAPPED *overlapped,
                                                 u_long flags);
-#endif /* ACE_HAS_WINSOCK2 != 0 */
-
 class ACE_Export ACE_Accept_QoS_Params
 {
   // = TITLE
@@ -5144,12 +5085,14 @@ public:
 
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
-
-  static ASYS_TCHAR *dlerror (void);
-  static ACE_SHLIB_HANDLE dlopen (const ASYS_TCHAR *filename,
+  // WinCE only supports UNICODE, so we don't need these functions.
+# if !defined (ACE_HAS_WINCE)
+  static char *dlerror (void);
+  static ACE_SHLIB_HANDLE dlopen (const char *filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
                       const char *symbol);
+# endif /* ! ACE_HAS_WINCE */
 
   // = A set of wrappers for the directory iterator.
   static DIR *opendir (const char *filename);
@@ -5166,8 +5109,6 @@ public:
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
   static void last_error (int);
-  static int set_errno_to_last_error (void);
-  static int set_errno_to_wsa_last_error (void);
   static int fclose (FILE *fp);
   static int fcntl (ACE_HANDLE handle,
                     int cmd,
@@ -5380,17 +5321,17 @@ public:
   static char *asctime (const struct tm *tm);
   static char *asctime_r (const struct tm *tm,
                           char *buf, int buflen);
-  static ASYS_TCHAR *ctime (const time_t *t);
 # if !defined (ACE_HAS_WINCE)
+  static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock,
                         char *buf,
                         int buflen);
-# endif /* !ACE_HAS_WINCE */
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+# else
+  static wchar_t *ctime (const time_t *t);
   static wchar_t *ctime_r (const time_t *clock,
                            wchar_t *buf,
                            int buflen);
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* !ACE_HAS_WINCE */
   static size_t strftime (char *s,
                           size_t maxsize,
                           const char *format,
@@ -5793,7 +5734,7 @@ public:
   static int connect (ACE_HANDLE handle,
                       const sockaddr *addr,
                       int addrlen,
-                      const ACE_QoS_Params &qos_params);
+                      const ACE_Connect_QoS_Params &qos_params);
   // QoS-enabled <connect>, which passes <qos_params> to <connect>.
   // If the OS platform doesn't support QoS-enabled <connect> then the
   // <qos_params> are ignored and the BSD-style <connect> is called.
@@ -5853,7 +5794,7 @@ public:
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
                                const sockaddr *name,
                                int namelen,
-                               const ACE_QoS_Params &qos_params);
+                               const ACE_Connect_QoS_Params &qos_params);
   // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
@@ -5867,15 +5808,6 @@ public:
                        int flags,
                        struct sockaddr *addr,
                        int *addrlen);
-  static int recvfrom (ACE_HANDLE handle,
-                       iovec *buffers,
-                       int buffer_count,
-                       size_t &number_of_bytes_recvd,
-                       int &flags,
-                       struct sockaddr *addr,
-                       int *addrlen,
-                       ACE_OVERLAPPED *overlapped,
-                       ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int send (ACE_HANDLE handle,
                    const char *buf,
                    int len, int
@@ -5889,15 +5821,6 @@ public:
                      int flags,
                      const struct sockaddr *addr,
                      int addrlen);
-  static int sendto (ACE_HANDLE handle,
-                     const iovec *buffers,
-                     int buffer_count,
-                     size_t &number_of_bytes_sent,
-                     int flags,
-                     const struct sockaddr *addr,
-                     int addrlen,
-                     ACE_OVERLAPPED *overlapped,
-                     ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int setsockopt (ACE_HANDLE handle,
                          int level,
                          int optname,
@@ -5906,11 +5829,11 @@ public:
   // QoS-enabled <ioctl> wrapper.
   static int shutdown (ACE_HANDLE handle,
                        int how);
-  static ACE_HANDLE socket (int protocol_family,
+  static ACE_HANDLE socket (int domain,
                             int type,
                             int proto);
   // Create a BSD-style socket (no QoS).
-  static ACE_HANDLE socket (int protocol_family,
+  static ACE_HANDLE socket (int domain,
                             int type,
                             int proto,
                             ACE_Protocol_Info *protocolinfo,
@@ -6029,9 +5952,6 @@ public:
                           const wchar_t *t);
   static int strcmp (const wchar_t *s,
                      const wchar_t *t);
-  static size_t strspn (const wchar_t *string,
-                        const wchar_t *charset);
-  static wchar_t *strenvdup (const wchar_t *str);
 # endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
@@ -6093,11 +6013,6 @@ public:
   static long strtol (const wchar_t *s,
                       wchar_t **ptr,
                       int base);
-  static u_long strtoul (const wchar_t *s,
-                         wchar_t **ptr,
-                         int base);
-  static double strtod (const wchar_t *s,
-                        wchar_t **endptr);
   static int ace_isspace (wchar_t c);
 
 #   if defined (ACE_WIN32)
@@ -6122,9 +6037,9 @@ public:
 #     endif /* 0 */
   // the following three are newly added for CE.
   // but they can also be use on Win32.
-  static wchar_t *fgets (wchar_t *buf,
-                         int size,
-                         FILE *fp);
+  //   static char *fgets (wchar_t *buf,
+  //                       int size,
+  //                       FILE *fp);
   static int fprintf (FILE *fp,
                       const wchar_t *format,
                       ...);
@@ -6144,7 +6059,6 @@ public:
                    struct stat *);
   static int truncate (const wchar_t *filename,
                        off_t length);
-  static int putenv (const wchar_t *str);
   static wchar_t *getenv (const wchar_t *symbol);
   static int system (const wchar_t *s);
   static int hostname (wchar_t *name,
@@ -6162,8 +6076,6 @@ public:
   static int chdir (const wchar_t *path);
   static wchar_t *getcwd (wchar_t *,
                           size_t);
-  static int mkfifo (const wchar_t *file,
-                          mode_t mode = ACE_DEFAULT_FILE_PERMS);
 #   endif /* ACE_WIN32 */
 # endif /* ACE_HAS_UNICODE */
 
@@ -6472,14 +6384,14 @@ protected:
 
 public:
   virtual int init (void) = 0;
-  // Explicitly initialize.  Returns 0 on success, -1 on failure due
-  // to dynamic allocation failure (in which case errno is set to
-  // ENOMEM), or 1 if it had already been called.
+  // Explicitly initialize.  Returns 0 on success, -1 on failure
+  // due to either already having been initialized, or dynamic
+  // allocation failure (in which case errno is set to ENOMEM).
 
   virtual int fini (void) = 0;
-  // Explicitly destroy.  Returns 0 on success, -1 on failure because
-  // the number of fini () calls hasn't reached the number of init ()
-  // calls, or 1 if it had already been called.
+  // Explicitly destroy.  Returns 0 on success, -1 on failure due to
+  // already having been destroyed, or 1 because the number of fini ()
+  // calls hasn't reached the number of init () calls.
 
   enum Object_Manager_State
     {
@@ -7080,6 +6992,7 @@ private:
             } \
         } \
      while (0)
+
 #   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7093,17 +7006,7 @@ private:
             } \
         } \
      while (0)
-#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
-#   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-     do { \
-          if (POINTER) \
-            { \
-              POINTER->~T_CLASS T_PARAMETER (); \
-              DEALLOCATOR (POINTER); \
-            } \
-        } \
-     while (0)
-#else
+
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7113,7 +7016,7 @@ private:
             } \
         } \
      while (0)
-#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
+
 #   define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7128,17 +7031,7 @@ private:
             } \
         } \
      while (0)
-#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
-#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-     do { \
-          if (POINTER) \
-            { \
-              POINTER->~T_CLASS <T_PARAM1, T_PARAM2> (); \
-              DEALLOCATOR (POINTER); \
-            } \
-        } \
-     while (0)
-#else
+
 #   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -7148,25 +7041,7 @@ private:
             } \
         } \
      while (0)
-#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
-#   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
-     do { \
-          if (POINTER) \
-            { \
-              POINTER->~T_CLASS (); \
-              DEALLOCATOR (POINTER); \
-            } \
-        } \
-     while (0)
-#   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
-     do { \
-          if (POINTER) \
-            { \
-              POINTER->~T_CLASS (); \
-              DEALLOCATOR (POINTER); \
-            } \
-        } \
-     while (0)
+
 #   define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -7181,6 +7056,7 @@ private:
             } \
         } \
      while (0)
+
 # else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      do { \
@@ -7190,6 +7066,7 @@ private:
             } \
         } \
      while (0)
+
 #   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7203,13 +7080,12 @@ private:
             } \
         } \
      while (0)
+
 #   if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
   // LynxOS 3.0.0's g++ has trouble with the real versions of these.
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
 #     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
-#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
-#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
 #     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
 #   else
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
@@ -7221,6 +7097,7 @@ private:
               } \
           } \
        while (0)
+
 #     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
        do { \
             if (POINTER) \
@@ -7235,6 +7112,7 @@ private:
               } \
           } \
        while (0)
+
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
        do { \
             if (POINTER) \
@@ -7244,24 +7122,7 @@ private:
               } \
           } \
        while (0)
-#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
+
 #     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
        do { \
             if (POINTER) \
@@ -7276,6 +7137,7 @@ private:
               } \
           } \
        while (0)
+
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
@@ -7303,31 +7165,18 @@ private:
   do \
     RESULT = (TYPE) X; \
   while (0)
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_; \
-    TYPE ace_local_result_ = (TYPE) X; \
-    ace_result_ = ace_local_result_; \
+    TYPE ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
-      ACE_OS::set_errno_to_last_error (); \
+      errno = ::GetLastError (); \
     return ace_result_; \
   } while (0)
-#   else
-#     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    ace_result_ = (TYPE) X; \
-    if (ace_result_ == FAILVALUE) \
-      ACE_OS::set_errno_to_last_error (); \
-    return ace_result_; \
-  } while (0)
-#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x540) */
 #   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \
-      ACE_OS::set_errno_to_last_error (); \
+      errno = ::GetLastError (); \
   } while (0)
 # else
 #   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
@@ -7651,6 +7500,19 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   include "ace/Trace.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
+# if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "ace/OS.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
+
+# if !defined (ACE_HAS_MINIMAL_ACE_OS)
+    // This needs to come here to avoid problems with circular dependencies.
+#   include "ace/Log_Msg.h"
+# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
 // The following are some insane macros that are useful in cases when
 // one has to have a string in a certain format.  Both of these macros
 // allow the user to create a temporary copy. If the user needs to
@@ -7696,19 +7558,6 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 # else
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS.i"
-# endif /* ACE_HAS_INLINED_OSCALLS */
-
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-    // This needs to come here to avoid problems with circular dependencies.
-#   include "ace/Log_Msg.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
@@ -7759,23 +7608,24 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
   // lack them.
 
   // Evaluates to a non-zero value if status was returned for a child
-  // process that terminated normally.  0 means status wasn't
-  // returned.
+  // process that terminated normally.
+  // 0 means status wasn't returned.
 #if !defined (WIFEXITED)
 #   define WIFEXITED(stat) 0
 #endif /* WIFEXITED */
 
-  // If the value of WIFEXITED(stat) is non-zero, this macro evaluates
-  // to the exit code that the child process exit(3C), or the value
-  // that the child process returned from main.  Peaceful exit code is
-  // 0.
+  // If the  value  of  WIFEXITED(stat)  is non-zero,  this macro
+  // evaluates to the exit  code  that  the  child process exit(3C),
+  // or the value that the  child process returned from main.
+  // Peaceful exit code is 0.
 #if !defined (WEXITSTATUS)
 #   define WEXITSTATUS(stat) 0
 #endif /* WEXITSTATUS */
 
-  // Evaluates to a non-zero value if status was returned for a child
-  // process that terminated due to the receipt of a signal.  0 means
-  // status wasnt returned.
+  // Evaluates  to  a  non-zero  value   if status  was  returned for
+  // a child process  that  terminated  due   to   the receipt of a
+  // signal.
+  // 0 means status wasnt returned.
 #if !defined (WIFSIGNALED)
 #   define WIFSIGNALED(stat) 0
 #endif /* WIFSIGNALED */

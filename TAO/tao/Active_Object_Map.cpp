@@ -20,7 +20,7 @@ TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
 }
 
 /* static */
-size_t TAO_Active_Object_Map::system_id_size_ = 0;
+size_t TAO_Active_Object_Map::system_id_size_ (0);
 
 void
 TAO_Active_Object_Map::set_system_id_size
@@ -289,38 +289,6 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->user_id_map_;
 }
 
-int
-TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id,
-                                          int &deactivated)
-{
-  Map_Entry *entry = 0;
-  int result = this->user_id_map_->find (user_id,
-                                         entry);
-  if (result == 0)
-    {
-      if (entry->servant_ == 0)
-        {
-          result = 0;
-        }
-      else
-        {
-          result = 1;
-          if (entry->deactivated_)
-            {
-              deactivated = 1;
-            }
-        }
-    }
-  else
-    {
-      result = 0;
-    }
-
-  return result;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
 {
 }
@@ -332,26 +300,12 @@ TAO_Id_Uniqueness_Strategy::set_active_object_map (TAO_Active_Object_Map *active
 }
 
 int
-TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
-                                           int &deactivated)
+TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant)
 {
-  TAO_Active_Object_Map::Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
-  if (result == 0)
-    {
-      result = 1;
-      if (entry->deactivated_)
-        {
-          deactivated = 1;
-        }
-    }
+  if (this->active_object_map_->servant_map_->find (servant) == 0)
+    return 1;
   else
-    {
-      result = 0;
-    }
-
-  return result;
+    return 0;
 }
 
 int
@@ -482,8 +436,7 @@ TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
 ////////////////////////////////////////////////////////////////////////////////
 
 int
-TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant,
-                                             int &)
+TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant servant)
 {
   return -1;
 }
@@ -680,8 +633,8 @@ TAO_Id_Assignment_Strategy::set_active_object_map (TAO_Active_Object_Map *active
 }
 
 int
-TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
-                                            TAO_Active_Object_Map::Map_Entry *&)
+TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
+                                            TAO_Active_Object_Map::Map_Entry *&entry)
 {
   return -1;
 }

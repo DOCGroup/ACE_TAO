@@ -12,33 +12,34 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "TAO Implementation Repository\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
+      if (server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-          server.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      TAO_TRY_ENV.print_exception ("Unknown Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

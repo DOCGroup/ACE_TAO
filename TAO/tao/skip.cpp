@@ -31,7 +31,7 @@ ACE_RCSID(tao, skip, "$Id$")
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
                              void *context,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -85,43 +85,46 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::skip detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
                          void *context,
-                         CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Environment &env)
 {
   // Typecode of the element that makes the Any.
-  CORBA::TypeCode_var elem_tc;
+  CORBA::TypeCode_ptr elem_tc;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Status of encode operation.
   CORBA::TypeCode::traverse_status retval =
-    stream->decode (CORBA::_tc_TypeCode,
-                    &elem_tc.inout (),
-                    0,
-                    ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  // First retrieve the TypeCode for the element so that we can skip
+  // the value based on this typecode.
+  if (stream->decode (CORBA::_tc_TypeCode,
+                      &elem_tc,
+                      0,
+                      env) == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      retval = stream->skip (elem_tc.in (), ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      if (env.exception () == 0)
+        retval = stream->skip (elem_tc, env);
+      else
+        retval = CORBA::TypeCode::TRAVERSE_STOP;
     }
+  CORBA::release (elem_tc);
   return retval;
 }
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
                             void *context,
-                            CORBA::Environment  &ACE_TRY_ENV)
+                            CORBA::Environment  &env)
 {
   CORBA::Boolean continue_skipping = 1;
 
@@ -199,8 +202,8 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             ACE_DEBUG ((LM_DEBUG,
                         "TAO_Marshal_TypeCode::skip: "
                         "Bad kind_ value in CDR stream"));
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::TRAVERSE_STOP);
+          env.exception (new CORBA::BAD_TYPECODE ());
+          return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
 
@@ -211,9 +214,8 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::skip detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
@@ -222,7 +224,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
                                void *context,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
 
@@ -245,16 +247,15 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Principal::skip detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
                           void *context,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
 
@@ -307,9 +308,8 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_ObjRef::skip detected error\n"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
@@ -317,7 +317,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
                             void *context,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Environment &env)
 {
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
@@ -325,36 +325,41 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr param;
 
   // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  int member_count = tc->member_count (env);
 
-  for (int i = 0; i < member_count
-         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
-       i++)
-    {
-      param = tc->member_type (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      retval = stream->skip (param, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-    }
+  if (env.exception () == 0)
+    for (int i = 0; i < member_count
+           && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+         i++)
+      {
+        param = tc->member_type (i, env);
+        if (env.exception () == 0)
+          {
+            retval = stream->skip (param, env);
+          }
+        else
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+  else
+    return CORBA::TypeCode::TRAVERSE_STOP;
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_Struct::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::skip detected error\n"));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
 }
 
 // Encode unions.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                          void *context,
-                         CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Environment &env)
 {
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -365,7 +370,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr discrim_tc;
   CORBA::TypeCode_ptr member_tc;
   CORBA::Any_ptr member_label;
-  CORBA::ULongLong discrim_val;
+  CORBA::Long discrim_val;
   CORBA::ULong member_count;
   CORBA::Long  default_index;
   CORBA::ULong i;
@@ -374,133 +379,166 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
   // get the discriminator type which will enable us to skip the discriminator
   // value
-  discrim_tc = tc->discriminator_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  discrim_tc = tc->discriminator_type (env);
 
-  // decode the discriminator value
-  retval = stream->decode (discrim_tc, &discrim_val, 0, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (env.exception () == 0)
     {
-      // now get ready to skip the actual union value
-      default_index = tc->default_index (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      member_count = tc->member_count (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      // check which label value matches with the discriminator
-      // value. Accordingly, marshal the corresponding
-      // member_type. If none match, check if default exists
-      // and marshal accordingly. Otherwise it is an error.
-
-      for (i = 0; i < member_count; i++)
+      // decode the discriminator value
+      retval = stream->decode (discrim_tc, &discrim_val, 0, env);
+      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          member_label = tc->member_label (i, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          // now get ready to skip the actual union value
+          default_index = tc->default_index (env);
 
-          // do the matching
-          CORBA::TypeCode_var type = member_label->type ();
-          CORBA::ULong kind = type->kind (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-          switch (kind)
+          if (env.exception () == 0)
             {
-            case CORBA::tk_short:
-              {
-                CORBA::Short s;
-                *member_label >>= s;
-                if (s == *(CORBA::Short *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_ushort:
-              {
-                CORBA::UShort s;
-                *member_label >>= s;
-                if (s == *(CORBA::UShort *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_long:
-              {
-                CORBA::Long l;
-                *member_label >>= l;
-                if (l == *(CORBA::Long *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_ulong:
-              {
-                CORBA::ULong l;
-                *member_label >>= l;
-                if (l == *(CORBA::ULong *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_enum:
-              {
-                CORBA::ULong ul;
-                TAO_InputCDR stream (member_label->_tao_get_cdr ());
-                (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
-                if (ul == *(CORBA::ULong *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_char:
-              {
-                CORBA::Char c;
-                *member_label >>= CORBA::Any::to_char (c);
-                if (c == *(CORBA::Char *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            case CORBA::tk_wchar:
-              CORBA::WChar wc;
-              *member_label >>= CORBA::Any::to_wchar (wc);
-              if (wc == *(CORBA::WChar *) &discrim_val)
-                discrim_matched = 1;
-              break;
-            case CORBA::tk_boolean:
-              {
-                CORBA::Boolean b;
-                *member_label >>= CORBA::Any::to_boolean (b);
-                if (b == *(CORBA::Boolean *) &discrim_val)
-                  discrim_matched = 1;
-              }
-              break;
-            default:
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::TRAVERSE_STOP);
-            }// end of switch
+              member_count = tc->member_count (env);
+              if (env.exception () == 0)
+                {
+                  // check which label value matches with the discriminator
+                  // value. Accordingly, marshal the corresponding
+                  // member_type. If none match, check if default exists
+                  // and marshal accordingly. Otherwise it is an error.
 
-          // get the member typecode
-          member_tc = tc->member_type (i, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+                  for (i = 0; i < member_count; i++)
+                    {
+                      member_label = tc->member_label (i, env);
+                      if (env.exception () == 0)
+                        {
+                          // do the matching
+			                    CORBA::TypeCode_var type = member_label->type ();
+                          switch (type->kind (env))
+                            {
+                              case CORBA::tk_short:
+                                {
+                                  CORBA::Short s;
+                                  *member_label >>= s;
+                                  if (s == *(CORBA::Short *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_ushort:
+                                {
+                                  CORBA::UShort s;
+                                  *member_label >>= s;
+                                  if (s == *(CORBA::UShort *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_long:
+                                {
+                                  CORBA::Long l;
+                                  *member_label >>= l;
+                                  if (l == *(CORBA::Long *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_ulong:
+                                {
+                                  CORBA::ULong l;
+                                  *member_label >>= l;
+                                  if (l == *(CORBA::ULong *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_enum:
+                                {
+                                  CORBA::ULong ul;
+                                  TAO_InputCDR stream (member_label->_tao_get_cdr ());
+                                  (void)stream.decode (discrim_tc, &ul, 0, env);
+                                  if (ul == *(CORBA::ULong *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_char:
+                                {
+                                  CORBA::Char c;
+                                  *member_label >>= CORBA::Any::to_char (c);
+                                  if (c == *(CORBA::Char *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              case CORBA::tk_wchar:
+                                CORBA::WChar wc;
+                                *member_label >>= CORBA::Any::to_wchar (wc);
+                                if (wc == *(CORBA::WChar *) &discrim_val)
+                                  discrim_matched = 1;
+                                break;
+                              case CORBA::tk_boolean:
+                                {
+                                  CORBA::Boolean b;
+                                  *member_label >>= CORBA::Any::to_boolean (b);
+                                  if (b == *(CORBA::Boolean *) &discrim_val)
+                                    discrim_matched = 1;
+                                }
+                                break;
+                              default:
+                                env.exception (new CORBA::BAD_TYPECODE ());
+                                return CORBA::TypeCode::TRAVERSE_STOP;
+                            }// end of switch
 
-          // have we reached the default label, if so save a handle to
-          // the typecode for the default
-
-          if (default_index >= 0 && default_index-- == 0)
-            default_tc = member_tc;
-          if (discrim_matched)
+                          // get the member typecode
+                          member_tc = tc->member_type (i, env);
+                          if (env.exception () == 0)
+                            {
+                              if (default_index >= 0 && default_index-- == 0)
+                                // have we reached the default label?, if so,
+                                // save a handle to the typecode for the default
+                                default_tc = member_tc;
+                              if (discrim_matched)
+                                {
+                                  // marshal according to the matched typecode
+                                  return stream->skip (member_tc, env);
+                                }
+                            }
+                          else
+                            {
+                              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                              return CORBA::TypeCode::TRAVERSE_STOP;
+                            }
+                        }
+                      else
+                        {
+                          env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                          return CORBA::TypeCode::TRAVERSE_STOP;
+                        }
+                    } // end of for loop
+                  // we are here only if there was no match
+                  if (default_tc)
+                    return stream->skip (default_tc, env);
+                  else
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                }
+              else
+                {
+                  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                  return CORBA::TypeCode::TRAVERSE_STOP;
+                }
+            }
+          else
             {
-              // marshal according to the matched typecode
-              return stream->skip (member_tc, ACE_TRY_ENV);
+              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+              return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
-      if (default_tc != 0)
-        return stream->skip (default_tc, ACE_TRY_ENV);
+      else
+        {
+          env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
     }
-  return retval;
+  else
+    {
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
 }
 
 // decode string
 CORBA::TypeCode::traverse_status
 TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
                           void *context,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
   // Context is the CDR stream.
@@ -523,9 +561,8 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::skip detected error"));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
@@ -534,7 +571,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
                             void *context,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -555,27 +592,27 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
       if (bounds > 0)
         {
           // Get element typecode.
-          tc2 = tc->content_type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          tc2 = tc->content_type (env);
 
-          while (bounds-- && continue_skipping == 1)
+          if (env.exception () == 0)
             {
-              continue_skipping = stream->skip (tc2, ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-            }
-          if (continue_skipping)
-            return CORBA::TypeCode::TRAVERSE_CONTINUE;
+              while (bounds-- && continue_skipping == 1)
+                {
+                  continue_skipping = stream->skip (tc2, env);
+                }
+              if (continue_skipping)
+                return CORBA::TypeCode::TRAVERSE_CONTINUE;
+            } // no exception computing content type
         } // length is > 0
       else
         return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
-
   // error exit
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  env.exception (new CORBA::MARSHAL ());
+  return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // Decode array.
@@ -583,7 +620,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
                            void *context,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -591,36 +628,37 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
 
+  CORBA::ULong  bounds;
+
   // retrieve the bounds of the array
-  CORBA::ULong  bounds = tc->length (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  // get element typecode
-  tc2 = tc->content_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  while (bounds-- && continue_skipping == 1)
+  bounds = tc->length (env);
+  if (env.exception () == 0)
     {
-      continue_skipping = stream->skip (tc2, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-    }
-
-  if (continue_skipping)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
+      // get element typecode
+      tc2 = tc->content_type (env);
+      if (env.exception () == 0)
+        {
+          while (bounds-- && continue_skipping == 1)
+            {
+              continue_skipping = stream->skip (tc2, env);
+            }
+          if (continue_skipping)
+            return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        } // no exception computing content type
+    } // no exception computing bounds
   // error exit
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  env.exception (new CORBA::MARSHAL ());
+  return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // Decode alias.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
                          void *context,
-                         CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Environment &env)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_ptr tc2;
@@ -633,23 +671,23 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  tc2 = tc->content_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  retval = stream->skip (tc2, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
+  tc2 = tc->content_type (env);
+  if (env.exception () == 0)
+    {
+      retval = stream->skip (tc2, env);
+    }
   //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_Alias::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Alias::skip detected error\n"));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
 }
 
 // Decode exception For exceptions, the "hidden" type ID near the
@@ -662,7 +700,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
                           void *context,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
@@ -674,36 +712,42 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_STOP;
 
   // Number of fields in the exception
-  int member_count = tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  for (int i = 0; i < member_count
-         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
-       i++)
+  int member_count = tc->member_count (env);
+  if (env.exception () == 0)
     {
-      param = tc->member_type (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      retval = stream->skip (param, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      for (int i = 0; i < member_count
+             && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+           i++)
+        {
+          param = tc->member_type (i, env);
+          if (env.exception () == 0)
+            {
+              retval = stream->skip (param, env);
+            }
+          else
+            return CORBA::TypeCode::TRAVERSE_STOP;
+        }
     }
+  else
+      return CORBA::TypeCode::TRAVERSE_STOP;
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_Except::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Except::skip detected error\n"));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
 }
 
 // decode wstring
 CORBA::TypeCode::traverse_status
 TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
                            void *context,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -727,11 +771,12 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
 
   if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_WString::skip detected error\n"));
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_WString::skip detected error\n"));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
 }

@@ -67,8 +67,7 @@ Consumer_Handler::init (int argc,
     }
   ACE_CATCHANY
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Consumer_Handler::init\n");
+     ACE_TRY_ENV.print_exception ("Consumer_Handler::init\n");
      return -1;
    }
   ACE_ENDTRY;
@@ -106,8 +105,7 @@ Consumer_Handler::get_notifier (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Consumer_Handler::get_notifier\n");
+      ACE_TRY_ENV.print_exception ("Consumer_Handler::get_notifier\n");
       return -1;
     }
   ACE_ENDTRY;

@@ -13,7 +13,7 @@
 //      concurrency service test.
 //
 // = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
+//	Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -63,8 +63,7 @@ CC_TestUtils::create_lock_set (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_Client::create_lock_set");
+      ACE_TRY_ENV.print_exception ("CC_Client::create_lock_set");
       return 0;
     }
   ACE_ENDTRY;

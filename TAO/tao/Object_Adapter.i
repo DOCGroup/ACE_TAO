@@ -36,7 +36,7 @@ TAO_Object_Adapter::deactivate (CORBA::Boolean wait_for_completion,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->deactivate_i (wait_for_completion,
                       ACE_TRY_ENV);
@@ -47,22 +47,20 @@ TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1, ACE_TRY_ENV);
 
   return this->locate_servant_i (key,
                                  ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_SERVANT_LOCATION
+ACE_INLINE PortableServer::Servant
 TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
-                                  PortableServer::Servant &servant,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), TAO_SERVANT_NOT_FOUND);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->find_servant_i (key,
-                               servant,
                                ACE_TRY_ENV);
 }
 
@@ -165,64 +163,18 @@ TAO_Object_Adapter::Servant_Upcall::id (void) const
   return this->id_;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE PortableServer::ServantLocator::Cookie
-TAO_Object_Adapter::Servant_Upcall::locator_cookie (void) const
-{
-  return this->cookie_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
-{
-  this->cookie_ = cookie;
-}
-
-ACE_INLINE const char *
-TAO_Object_Adapter::Servant_Upcall::operation (void) const
-{
-  return this->operation_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::operation (const char *name)
-{
-  this->operation_ = name;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
-{
-  this->active_object_map_entry_ = entry;
-}
-
-ACE_INLINE TAO_Active_Object_Map::Map_Entry *
-TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (void) const
-{
-  return this->active_object_map_entry_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::using_servant_locator (void)
-{
-  this->using_servant_locator_ = 1;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 
 ACE_INLINE void
-TAO_POA_Current_Impl::poa (TAO_POA *p)
+TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
 {
-  this->poa_ = p;
+  this->poa_impl_ = impl;
 }
 
 ACE_INLINE TAO_POA *
-TAO_POA_Current_Impl::poa (void) const
+TAO_POA_Current_Impl::POA_impl (void) const
 {
-  return this->poa_;
+  return this->poa_impl_;
 }
 
 ACE_INLINE void
@@ -259,4 +211,32 @@ ACE_INLINE PortableServer::Servant
 TAO_POA_Current_Impl::servant (void) const
 {
   return this->servant_;
+}
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+ACE_INLINE PortableServer::ServantLocator::Cookie
+TAO_POA_Current_Impl::locator_cookie (void) const
+{
+  return this->cookie_;
+}
+
+ACE_INLINE void
+TAO_POA_Current_Impl::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
+{
+  this->cookie_ = cookie;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+ACE_INLINE void
+TAO_POA_Current_Impl::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
+{
+  this->active_object_map_entry_ = entry;
+}
+
+ACE_INLINE TAO_Active_Object_Map::Map_Entry *
+TAO_POA_Current_Impl::active_object_map_entry (void) const
+{
+  return this->active_object_map_entry_;
 }

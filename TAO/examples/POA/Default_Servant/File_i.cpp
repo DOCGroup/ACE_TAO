@@ -199,6 +199,11 @@ FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Close the file corresponding to this object reference.
-  ACE_OS::close (file_descriptor);
+  //close the file corresponding to this object reference
+  int result = ACE_OS::close (file_descriptor);
+
+  if (result != 0)
+    {
+      ACE_THROW (File::IOError ());
+    }
 }

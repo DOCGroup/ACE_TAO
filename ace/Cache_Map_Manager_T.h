@@ -65,36 +65,42 @@ public:
   // are used by the strategy and is transparent to the user of this
   // class.
 
-  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
-  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
+  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> 
           ITERATOR;
-  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
+  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> 
           REVERSE_ITERATOR;
 
    // = STL-style iterator typedefs.
-  typedef ITERATOR
+  typedef ITERATOR 
           iterator;
-  typedef REVERSE_ITERATOR
+  typedef REVERSE_ITERATOR 
           reverse_iterator;
 
   // = Initialization and termination methods.
 
-  ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
-                         size_t size = ACE_DEFAULT_MAP_SIZE,
-                         ACE_Allocator *alloc = 0);
-  // Initialize a <Cache_Map_Manager> with <caching_strategy> and
-  // <size> entries.
+  ACE_Cache_Map_Manager (size_t size = ACE_DEFAULT_MAP_SIZE,
+                         ACE_Allocator *alloc = 0,
+                         CACHING_STRATEGY *caching_s = 0,
+                         int delete_caching_strategy = 1);
+  // Initialize a <Cache_Map_Manager> with <size> entries.
+  // By default the caching strategy is allocated and deallocated by
+  // the class but if needed it can be changed as per the users need.
+  // The <delete_on_destruction> flag simply tells the class whether
+  // the ownership is given to the class or not.
 
   virtual ~ACE_Cache_Map_Manager (void);
   // Close down a <Cache_Map_Manager> and release dynamically allocated
   // resources.
 
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
-  // Initialize a cache with size <length>.
+            ACE_Allocator *alloc = 0,
+            CACHING_STRATEGY *caching_s = 0,
+            int delete_caching_strategy = 1);
+  // Initialise a cache with size <length> and set the caching_strategy.
 
   int close (void);
   // Close down a cache and release dynamically allocated resources.
@@ -159,10 +165,10 @@ public:
   int purge (void);
   // Remove entries from the cache depending upon the strategy.
 
-  size_t current_size (void) const;
+  size_t current_size (void);
   // Return the current size of the cache.
 
-  size_t total_size (void) const;
+  size_t total_size (void);
   // Return the total size of the cache.
 
   void dump (void) const;
@@ -181,7 +187,7 @@ public:
   MAP &map (void);
   // The map managed by the Cache_Map_Manager.
 
-  CACHING_STRATEGY &caching_strategy (void);
+  CACHING_STRATEGY *caching_strategy (void);
   // The caching strategy used on the cache.
 
 protected:
@@ -189,15 +195,12 @@ protected:
   MAP map_;
   // The underlying map which needs to be cached.
 
-  CACHING_STRATEGY &caching_strategy_;
+  CACHING_STRATEGY *caching_strategy_;
   // The strategy to be followed for caching entries in the map.
 
-private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-
+  int delete_caching_strategy_;
+  // This flag denotes whether the ownership lies in the hands of the
+  // class or not. Is yes, then it deletes the strategy.
 };
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
@@ -213,9 +216,9 @@ class ACE_Cache_Map_Iterator
 public:
 
   // = Traits.
-  typedef ACE_Reference_Pair<KEY, VALUE>
+  typedef ACE_Reference_Pair<KEY, VALUE> 
           value_type;
-  typedef ACE_Pair <VALUE, ATTRIBUTES>
+  typedef ACE_Pair <VALUE, ATTRIBUTES> 
           CACHE_VALUE;
   // The actual value mapped to the key in the cache. The <attributes>
   // are used by the strategy and is transperant to the cache user.
@@ -231,7 +234,7 @@ public:
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
+  ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION, 
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
                                     CACHING_STRATEGY, ATTRIBUTES> &rhs);
@@ -356,7 +359,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cache_Map_Manager_T.cpp")
+#pragma implementation ("ace/Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHE_MAP_MANAGER_T_H */

@@ -17,6 +17,7 @@ DIRS  = Generic_Servant \
 	Explicit_Activation \
 	FindPOA \
 	Forwarding \
+	Identity \
 	Loader \
 	NewPOA \
 	On_Demand_Activation \

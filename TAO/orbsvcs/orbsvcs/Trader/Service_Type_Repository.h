@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
-// $Id$
-
 // ========================================================================
+// $Id$
 //
 // = LIBRARY
 //    orbsvcs
@@ -36,7 +35,7 @@ public:
   ~TAO_Service_Type_Repository (void);
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (CORBA::Environment &)
+    incarnation (CORBA::Environment &_env)
       ACE_THROW_SPEC (());
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
@@ -44,7 +43,7 @@ public:
             const char *if_name,
             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
-            CORBA::Environment &)
+            CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -98,7 +97,7 @@ public:
   // END SPEC
 
   virtual void remove_type (const char  *name,
-                            CORBA::Environment &)
+                            CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -114,7 +113,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
   list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types,
-              CORBA::Environment &)
+              CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC
@@ -130,7 +129,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
   describe_type (const char *name,
-                 CORBA::Environment &)
+                 CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));
@@ -144,7 +143,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
   fully_describe_type (const char *name,
-                       CORBA::Environment &)
+                       CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));
@@ -161,7 +160,7 @@ public:
   // END SPEC
 
   virtual void mask_type (const char *name,
-                          CORBA::Environment &)
+                          CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -180,7 +179,7 @@ public:
   // END SPEC
 
   virtual void unmask_type (const char  *name,
-                            CORBA::Environment &)
+                            CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -243,7 +242,7 @@ public:
 
   void validate_properties (Prop_Map &prop_map,
                             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-                            CORBA::Environment &)
+                            CORBA::Environment &_env)
     ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName));
   // Confirm that the properties in props have valid names, and aren't
@@ -251,7 +250,7 @@ public:
 
   void validate_supertypes (Service_Type_Map &super_map,
                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
-                            CORBA::Environment &)
+                            CORBA::Environment &_env)
     ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
                      CosTrading::DuplicatePropertyName));
@@ -259,7 +258,7 @@ public:
 
   void validate_inheritance (Prop_Map &prop_map,
                              const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
-                             CORBA::Environment &)
+                             CORBA::Environment &_env)
     ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.

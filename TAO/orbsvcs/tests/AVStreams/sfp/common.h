@@ -7,6 +7,6 @@
 #include "orbsvcs/AV/sfp.h"
 #include "tao/TAO.h"
 
-static char *server_addr;
+const char *server_addr = "calypso.cs.wustl.edu:10000";
 
 #endif /* _COMMON_H_ */

@@ -124,6 +124,7 @@ ACE_Filecache_Handle::size (void) const
     return this->file_->size ();
 }
 
+
 // ------------------
 // ACE_Filecache_Hash
 // ------------------
@@ -203,9 +204,7 @@ ACE_Filecache::instance (void)
       // @@ James, please check each of the ACE_NEW_RETURN calls to
       // make sure that it is safe to return if allocation fails.
       if (ACE_Filecache::cvf_ == 0)
-        ACE_NEW_RETURN (ACE_Filecache::cvf_,
-                        ACE_Filecache,
-                        0);
+        ACE_NEW_RETURN (ACE_Filecache::cvf_, ACE_Filecache, 0);
     }
 
   return ACE_Filecache::cvf_;
@@ -645,7 +644,7 @@ int
 ACE_Filecache_Object::error_i (int error_value, const char *s)
 {
   s = s;
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p.\n"), s));
+  ACE_ERROR ((LM_ERROR, "%p.\n", s));
   this->error_ = error_value;
   return error_value;
 }

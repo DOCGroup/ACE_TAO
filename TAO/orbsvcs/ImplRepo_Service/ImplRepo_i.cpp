@@ -9,7 +9,6 @@
 #include "tao/Acceptor_Registry.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
-#include "ace/Auto_Ptr.h"
 
 // Constructor
 
@@ -20,193 +19,242 @@ ImplRepo_i::ImplRepo_i (void)
   // Nothing
 }
 
-// Starts the server defined by the POA name <server> if it is 
-// not already started and if it can be started.
+// Starts up the server associated with the object pointer and returns
+// an updated pointer.
 
-void
+CORBA::Object_ptr
+ImplRepo_i::activate_object (CORBA::Object_ptr obj,
+                             CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found,
+                     Implementation_Repository::Cannot_Activate))
+{
+  /* Implementation_Repository::INET_Addr *new_addr; */
+  TAO_Stub *new_stub_obj = 0;
+
+  if (OPTIONS::instance()->debug () >= 1)
+    {
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "Activating Object: %s\n",
+                  orb->object_to_string (obj)));
+    }
+
+  ACE_TRY
+    {
+      // @@ Where to get the poa name from?
+      /* new_addr = */ this->activate_server (0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // @@ Use auto_ptr<> to avoid memory leaks!
+      TAO_Stub *stub_obj = obj->_stubobj ();
+      TAO_IIOP_Profile *iiop_pfile =
+                ACE_dynamic_cast (TAO_IIOP_Profile *,
+                                  stub_obj->profile_in_use ());
+
+      TAO_MProfile mp(1);
+
+      TAO_Profile *new_pfile;
+      // @@ Would new_addr->host_ be different from object_addr()?
+      // if so I will add another ctor  fred
+      ACE_NEW_RETURN (new_pfile,
+                      TAO_IIOP_Profile (iiop_pfile->object_addr (),
+                                        iiop_pfile->object_key (),
+                                        iiop_pfile->version (),
+                                        stub_obj->orb_core ()),
+                      CORBA::Object::_nil ());
+
+      mp.give_profile (new_pfile);
+
+      // create new obj, pfile will be copied!
+      new_stub_obj = new TAO_Stub (stub_obj->type_id,
+                                   mp,
+                                   stub_obj->orb_core ());
+
+      if (new_stub_obj == 0)
+        return CORBA::Object::_nil ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return new CORBA_Object (new_stub_obj,
+                           obj->_servant ());
+}
+
+// Starts the server <server> if it is not already started
+
+Implementation_Repository::INET_Addr *
 ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound,
-                     ImplementationRepository::Administration::CannotActivate))
+                     Implementation_Repository::Not_Found,
+                     Implementation_Repository::Cannot_Activate))
 {
   int start = 0;
-  ACE_TString server_object_ior, host;
-  unsigned short port;
+  ASYS_TCHAR *ping_ior;
+  Implementation_Repository::INET_Addr *address =
+    new Implementation_Repository::INET_Addr;
+  address->port_ = 0;
+  address->host_ = CORBA::string_dup ("");
 
   if (OPTIONS::instance()->debug () >= 1)
-    ACE_DEBUG ((LM_DEBUG, "Activating Server: %s\n", server));
+    ACE_DEBUG ((LM_DEBUG,
+                "Activating Server: %s\n",
+                server));
 
   // Find out if it is already running
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
+  if (this->repository_.get_ping_ior (server, ping_ior) != 0)
     {
-      // If we had problems getting the server_object_ior, probably meant that
+      // If we had problems getting the ping_ior, probably meant that
       // there is no <server> registered
       ACE_ERROR ((LM_ERROR,
-                  "Error: Cannot find ServerObject IOR for server <%s>\n",
+                  "Error: Cannot find ping IOR for server <%s>\n",
                   server));
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                        address);
     }
 
-  // Check to see if there is one running (if there is a server_object_ior)
-  if (server_object_ior.length () != 0)
+  // if length is 0, then none is running yet.
+  if (ACE_OS::strlen (ping_ior) != 0)
     {
-      // It is running
       ACE_TRY
         {
           CORBA::ORB_var orb = this->orb_manager_.orb ();
           CORBA::Object_var object =
-            orb->string_to_object (server_object_ior.c_str (),
+            orb->string_to_object (ping_ior,
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ImplementationRepository::ServerObject_var server_object = 
-            ImplementationRepository::ServerObject::_narrow (object.in (), ACE_TRY_ENV);
+          Ping_Object_var ping_object = Ping_Object::_narrow (object.in (),
+                                                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (CORBA::is_nil (server_object.in ()))
+          if (CORBA::is_nil (ping_object.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          "Error: Invalid ServerObject IOR: <%s>\n",
-                          server_object_ior.c_str ()));
-              ACE_THROW (ImplementationRepository::Administration::NotFound ());
+                          "Error: Invalid Ping Object ior: <%s>\n",
+                          ping_ior));
+              ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                                address);
             }
 
-          // Check to see if we can ping it
-          server_object->ping (ACE_TRY_ENV);
+          ping_object->ping (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
-          // If we got an exception, then we have to restart it.
           start = 1;
         }
       ACE_ENDTRY;
     }
   else
-    // We need to restart
     start = 1;
 
   // Start it up...
   if (start == 1)
     {
-      // Check to see if it is already starting up
-      int startup_val = this->repository_.starting_up (server, 1);
+      // Start it up
+      char *cl;
 
-      if (startup_val == -1)
+      int status = this->repository_.get_comm_line (server,
+                                                    cl);
+
+      if (status == 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find startup info for server <%s>\n",
-                      server));
-          ACE_THROW(ImplementationRepository::Administration::NotFound ());
-        }
-      
-      if (startup_val == 0)
-        {
-          ACE_TString logical, startup, working;
-          if (this->repository_.get_startup_info (server, logical, startup, working) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "Error: Cannot find startup info for server <%s>\n",
-                          server));
-              ACE_THROW(ImplementationRepository::Administration::NotFound ());
-            }
-
-          if (startup.length () == 0)
-            {
-              // If there is no startup information, throw a transient exception
-              ACE_ERROR ((LM_ERROR,
-                          "Error: No startup information for server <%s>\n",
-                          server));
-              ACE_THROW (CORBA::TRANSIENT ());
-            }
-
-
           if (OPTIONS::instance()->debug () >= 1)
-            ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
-      
+            ACE_DEBUG ((LM_DEBUG,
+                        "Starting %s\n",
+                        server));
           ACE_Process_Options proc_opts;
 
-          proc_opts.command_line (startup.c_str ());
-          proc_opts.working_directory (working.c_str ());
+          proc_opts.command_line (cl);
 
           ACE_Process proc;
 
           if (proc.spawn (proc_opts) == -1)
             {
-              ACE_ERROR ((LM_ERROR, 
-                         "Error: Cannot activate server <%s> using <%s>\n",
+              ACE_ERROR ((LM_ERROR,
+                          "Error: Cannot activate server <%s> using <%s>\n",
                           server,
-                          startup.c_str ()));
-              ACE_THROW (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("N/A")));
+                          cl));
+              delete [] cl;
+              ACE_THROW_RETURN (Implementation_Repository::Cannot_Activate (CORBA::string_dup ("N/A")),
+                                address);
             }
-        }
-      
-      // Now that the server has been started up, we need to go back into the event
-      // loop so we can get the reponse or handle other requests
-      TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
-      int starting_up;
-      
-      while ((starting_up = this->repository_.starting_up (server)) == 1)
-        {
-          if (OPTIONS::instance()->debug () >= 2)
-            ACE_DEBUG ((LM_DEBUG, "activate_server: Going into handle_events\n"));
-          orb_core->reactor ()->handle_events ();
+          delete [] cl;
         }
-      if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "activate_server: Got out of handle_events loop\n"));
-      
-      // Check to see if it disappeared on us
-      if (starting_up == -1)
+      else
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find startup info for server <%s>\n",
+                      "Error: Cannot find commandline for server <%s>\n",
                       server));
-          ACE_THROW (ImplementationRepository::Administration::NotFound ());
+          ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                            address);
         }
 
-      // Now it should be started.
+      // @@ Here is where we need to wait for the response so we can
+      // find out where (host/port) the server started
+      ACE_OS::sleep (3);
     }
 
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
+  char *host;
+  u_short port;
+
+  if (this->repository_.get_hostport (server, host, port) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "ImplRepo_i::activate_server: "
                   "cannot resolve server <%s>\n",
                   server));
+      return address;
     }
+
+  address->host_ = CORBA::string_dup (host);
+  address->port_ = port;
+
+  return address;
 }
 
 // Adds an entry to the Repository about this <server>
 
 void
 ImplRepo_i::register_server (const char *server,
-                             const ImplementationRepository::StartupOptions &options,
+                             const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::AlreadyRegistered))
+                     Implementation_Repository::Already_Registered))
 {
   if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
+                              "Environment: %s\n"
                               "Working Directory: %s\n\n",
                               server,
-                              options.command_line.in (),
-                              options.working_directory.in ()));
-  
-  // Add the server
-  int status = this->repository_.add (server, 
-                                      "",
-                                      options.command_line.in (), 
-                                      options.working_directory.in ());
+                              options.command_line_.in (),
+                              options.environment_.in (),
+                              options.working_directory_.in ()));
+
+  Repository_Record rec (options.command_line_,
+                         options.environment_,
+                         options.working_directory_,
+                         "",
+                         0,
+                         "");
+
+  int status = this->repository_.add (server, rec);
 
   if (status == 1)
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Server %s Already Registered!\n",
                   server));
-      ACE_THROW (ImplementationRepository::Administration::AlreadyRegistered ());
+      ACE_THROW (Implementation_Repository::Already_Registered ());
     }
   else
     {
@@ -217,10 +265,12 @@ ImplRepo_i::register_server (const char *server,
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
+                              "Environment: %s\n"
                               "Working Directory: %s\n\n",
                               server,
-                              options.command_line.in (),
-                              options.working_directory.in ()));
+                              rec.comm_line,
+                              rec.env,
+                              rec.wdir));
     }
 }
 
@@ -229,18 +279,19 @@ ImplRepo_i::register_server (const char *server,
 
 void
 ImplRepo_i::reregister_server (const char *server,
-                               const ImplementationRepository::StartupOptions &options,
+                               const Implementation_Repository::Process_Options &options,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-  this->repository_.remove (server);
-
-  this->repository_.add (server, 
+  Repository_Record rec (options.command_line_,
+                         options.environment_,
+                         options.working_directory_,
                          "",
-                         options.command_line.in (),
-                         options.working_directory.in ());
+                         0,
+                         "");
+
+  this->repository_.update (server, rec);
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -249,10 +300,12 @@ ImplRepo_i::reregister_server (const char *server,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
+                          "Environment: %s\n"
                           "Working Directory: %s\n\n",
                           server,
-                          options.command_line.in (),
-                          options.working_directory.in ()));
+                          rec.comm_line,
+                          rec.env,
+                          rec.wdir));
 }
 
 // Remove the server entry from the Repository
@@ -261,7 +314,7 @@ void
 ImplRepo_i::remove_server (const char *server,
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound))
+                     Implementation_Repository::Not_Found))
 {
   if (this->repository_.remove (server) == 0)
     {
@@ -274,34 +327,56 @@ ImplRepo_i::remove_server (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Trying to remove unknown server <%s>\n",
                   server));
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_THROW (Implementation_Repository::Not_Found ());
     }
 }
 
 // Register the current location of the server
 
-ImplementationRepository::Address * 
-ImplRepo_i::server_is_running (const char * server,
-                               const ImplementationRepository::Address &addr,
-                               ImplementationRepository::ServerObject_ptr server_object,
+Implementation_Repository::INET_Addr *
+ImplRepo_i::server_is_running (const char *server,
+                               const Implementation_Repository::INET_Addr &addr,
+                               CORBA::Object_ptr ping,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound))
+                     Implementation_Repository::Not_Found))
 {
-  ImplementationRepository::Address *new_addr =
-    new ImplementationRepository::Address;
+  Implementation_Repository::INET_Addr *new_addr =
+    new Implementation_Repository::INET_Addr;
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Server <%s> is running\n",
                 server));
 
-  // Get the stringified server_object_ior
+  // Update the record in the repository
+  Repository_Record rec;
+
+  if (this->repository_.resolve (server, rec) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Unknown Server <%s>\n",
+                  server));
+      ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                        new_addr);
+    }
+
+  // Delete the stuff that we will update
+  delete [] rec.ping_ior;
+  delete [] rec.host;
+
+  ACE_NEW_RETURN (rec.host, ASYS_TCHAR[ACE_OS::strlen (addr.host_.in ()) + 1], 0);
+  ACE_OS::strcpy (rec.host, addr.host_.in ());
+  rec.port = addr.port_;
+
   CORBA::ORB_var orb = this->orb_manager_.orb ();
-  ASYS_TCHAR *server_object_ior = orb->object_to_string (server_object, ACE_TRY_ENV);
+  ASYS_TCHAR *ping_ior = orb->object_to_string (ping, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  if (this->repository_.update (server, addr.host.in (), addr.port, server_object_ior) == 0)
+  ACE_NEW_RETURN (rec.ping_ior, ASYS_TCHAR[ACE_OS::strlen (ping_ior) + 1], 0);
+  ACE_OS::strcpy (rec.ping_ior, ping_ior);
+
+  if (this->repository_.update (server, rec) == 0)
     {
       if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,
@@ -311,11 +386,19 @@ ImplRepo_i::server_is_running (const char * server,
   else
     {
       ACE_ERROR ((LM_ERROR,
-                 "Error: Could not update running information for server <%s>\n",
+                 "Error: While updating Repository while server_is_running () %s\n",
                  server));
-      ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), new_addr);
+      return new_addr;
     }
 
+  if (OPTIONS::instance()->debug () >= 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "The old host/port was: %Lu:%hu\n",
+                rec.host,
+                rec.port));
+
+  // @@ Don't use the ORB_Core_instance() keep a pointer to the ORB
+  //    and use the orb_core() accessor
   TAO_Acceptor_Registry* registry =
     orb->orb_core ()->acceptor_registry ();
 
@@ -338,16 +421,15 @@ ImplRepo_i::server_is_running (const char * server,
   // Get our host and port and convert it to something we can use.
   const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
 
-  new_addr->host = CORBA::string_dup (my_addr.get_host_name ());
-  new_addr->port = my_addr.get_port_number ();
+  // @@ We are assuming that we are on the same machine right now
+  new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
+  new_addr->port_ = my_addr.get_port_number ();
 
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The new host/port is: %Lu:%hu\n",
-                new_addr->host.in (),
-                new_addr->port));
-
-  this->repository_.starting_up (server, 0);
+                new_addr->host_.inout (),
+                new_addr->port_));
 
   return new_addr;
 }
@@ -358,25 +440,39 @@ void
 ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound))
+                     Implementation_Repository::Not_Found))
 {
-  if (this->repository_.update (server, "", 0, "") == 0)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  Repository_Record rec;
+
+  if (this->repository_.resolve (server, rec) == 0)
     {
-      if (OPTIONS::instance()->debug () >= 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Successful server_is_shutting_down () of <%s>\n",
-                    server));
+      ACE_OS::strcpy (rec.host, ASYS_TEXT (""));
+      rec.port = 0;
+      ACE_OS::strcpy (rec.ping_ior, ASYS_TEXT (""));
+
+      if (this->repository_.update (server, rec) == 0)
+        {
+          if (OPTIONS::instance()->debug () >= 1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Successful server_is_shutting_down () of <%s>\n",
+                        server));
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                     "Error: While updating Repository while shutting down <%s>\n",
+                     server));
+        }
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                 "Error: Could not update information for unknown server <%s>\n",
-                 server));
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+                  "Error: Unknown Server <%s>\n",
+                  server));
+      ACE_THROW (Implementation_Repository::Not_Found ());
     }
 }
-
-
 
 int
 ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
@@ -408,10 +504,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                     this),
                       -1);
 
-      CORBA::String_var str =
-        this->orb_manager_.activate (this->forwarder_impl_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      CORBA::String_var str  =
+        this->orb_manager_.activate (this->forwarder_impl_);
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The server IOR is: <%s>\n",
@@ -462,7 +556,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
+      ACE_TRY_ENV.print_exception ("Server_i::init");
       ACE_RETHROW;
     }
   ACE_ENDTRY;
@@ -484,24 +578,25 @@ ImplRepo_i::run (CORBA::Environment& env)
 CORBA::String
 ImplRepo_i::get_forward_host (const char *server)
 {
-  ACE_TString host, server_object_ior;
-  unsigned short port;
+  char *host;
+  u_short port;
 
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
+  if (this->repository_.get_hostport (server, host, port) != 0)
     return 0;
 
-  return CORBA::string_dup (host.c_str ());
+  return host;
 }
 
 CORBA::UShort
 ImplRepo_i::get_forward_port (const char *server)
 {
-  ACE_TString host, server_object_ior;
-  unsigned short port;
+  char *host;
+  u_short port;
 
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
+  if (this->repository_.get_hostport (server, host, port) != 0)
     return 0;
 
+  delete host;
   return port;
 }
 
@@ -513,215 +608,6 @@ ImplRepo_i::~ImplRepo_i (void)
   if (this->activator_ != 0)
     delete this->activator_;
 }
-
-
-// Returns the startup information for a server
-
-void 
-ImplRepo_i::find (const char * server,
-                  ImplementationRepository::ServerInformation_out info,
-                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ImplementationRepository::Administration::NotFound))
-{
-  ACE_TString logical, command_line, working_directory;
-  ACE_TString host, server_object_ior;
-  unsigned short port;
-
-  ACE_NEW_THROW_EX (info,
-                    ImplementationRepository::ServerInformation,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-  
-  // Get the information from the server repository.
-  if (this->repository_.get_startup_info (server, 
-                                          logical, 
-                                          command_line, 
-                                          working_directory) != 0)
-    ACE_THROW (ImplementationRepository::Administration::NotFound ());
-
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
-    ACE_THROW (ImplementationRepository::Administration::NotFound ());
-
-  // Fill in <info>.
-  info->logical_server = CORBA::string_dup (logical.c_str ());
-  info->server = CORBA::string_dup (server);
-  info->startup.command_line = CORBA::string_dup (command_line.c_str ());
-  info->startup.working_directory = CORBA::string_dup (working_directory.c_str ());
-  info->location.host = CORBA::string_dup (host.c_str ());
-  info->location.port = port;
-}
-
-
-// Used to access the list of servers registered.  May also return an
-// iterator which can be used to access more than <how_many> of them.
-
-void 
-ImplRepo_i::list (CORBA::ULong how_many,
-                  ImplementationRepository::ServerInformationList_out server_list,
-                  ImplementationRepository::ServerInformationIterator_out server_iterator,
-                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Initialize the out variables, so if we return early, they will
-  // not be dangling.
-  server_iterator = 
-    ImplementationRepository::ServerInformationIterator::_nil ();
-
-  ACE_NEW_THROW_EX (server_list,
-                    ImplementationRepository::ServerInformationList (0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  // Get a new iterator
-  auto_ptr<Server_Repository::HASH_IR_ITER> server_iter (this->repository_.new_iterator ());
-
-  // Check for a memory error.
-  if (server_iter.get () == 0)
-  {
-    ACE_THROW (CORBA::NO_MEMORY ());
-    ACE_CHECK;
-  }
-  
-  // Number of servers that will go into the server_list.
-  CORBA::ULong n;
-
-  if (this->repository_.get_repository_size () > how_many)
-    n = how_many;
-  else
-    n = this->repository_.get_repository_size ();
-  
-  // Now copy over to the server list.
-
-  server_list->length (n);
-
-  Server_Repository::HASH_IR_ENTRY *server_entry;
-
-  if (OPTIONS::instance()->debug () >= 2)
-    ACE_DEBUG ((LM_DEBUG, "list: Filling ServerList with %d servers\n", n));
-
-  for (CORBA::ULong i = 0; i < n; i++)
-    {
-      server_iter->next (server_entry);
-      server_iter->advance ();
-
-      ACE_TString logical, server, command_line, working_directory, host, server_ior;
-      unsigned short port;
-
-      server_entry->int_id_->get_running_info (host, port, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory);
-
-      server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
-      server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
-      server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
-      server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
-      server_list[i].location.host = CORBA::string_dup (host.c_str ());
-      server_list[i].location.port = port;
-    }
-
-
-  // Now work on the iterator
-
-  // Only set up an iterator if we need to
-  if (this->repository_.get_repository_size () > how_many)
-    {
-      if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "list: Creating ServerInformationIterator\n"));
-
-      // Create an ir_iter and give it the server_iter pointer
-      IR_Iterator *ir_iter;
-
-      // @@ The iterator object should be put in their own POA (a transient poa)
-      ACE_NEW_THROW_EX (ir_iter,
-                        IR_Iterator (server_iter.release (), this->orb_manager_.root_poa ()),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK;
-
-      ACE_TRY
-        {
-          CORBA::String_var str =
-            this->orb_manager_.activate (ir_iter, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          server_iterator = ir_iter->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_RETHROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-}
-
-
-// Attempts to gracefully shut down the server, if that fails, will try
-// to do it ungracefully.
-
-void 
-ImplRepo_i::shutdown_server (const char *server,
-                             CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ImplementationRepository::Administration::NotFound))
-{
-  ACE_TString server_object_ior, host;
-  unsigned short port;
-
-  // Find out if it is already running
-  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
-    {
-      // If we had problems getting the server_object_ior, probably meant that
-      // there is no <server> registered
-      ACE_ERROR ((LM_ERROR,
-                  "Error: Cannot find ServerObject IOR for server <%s>\n",
-                  server));
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
-    }
-
-  // Check to see if there is one running (if there is a server_object_ior)
-  if (server_object_ior.length () != 0)
-    {
-      // It is running, so shut it down
-      ACE_TRY
-        {
-          CORBA::Object_var object =
-            this->orb_manager_.orb ()->string_to_object (server_object_ior.c_str (),
-                                                         ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ImplementationRepository::ServerObject_var server_object = 
-            ImplementationRepository::ServerObject::_narrow (object.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (server_object.in ()))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "Error: Invalid ServerObject IOR: <%s>\n",
-                          server_object_ior.c_str ()));
-              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
-            }
-
-          // Call shutdown
-          server_object->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Remove running info from repository
-          if (this->repository_.update (server, "", 0, "") != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                         "Error: Could not update information for unknown server <%s>\n",
-                         server));
-              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
-            }          
-        }
-      ACE_CATCHANY
-        {
-          ACE_RETHROW;
-        }
-      ACE_ENDTRY;
-    }
-}
-
 
 IR_Adapter_Activator::IR_Adapter_Activator (IR_Forwarder *servant,
                                             PortableServer::POAManager_ptr poa_manager)
@@ -796,7 +682,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "IR_Adapter_Activator::unknown_adapter - %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "System Exception");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
       return 0;
     }
   ACE_ENDTRY;
@@ -816,15 +702,15 @@ IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
 }
 
 CORBA::RepositoryId
-IR_Forwarder::_primary_interface (const PortableServer::ObjectId &,
-                                  PortableServer::POA_ptr,
+IR_Forwarder::_primary_interface (const PortableServer::ObjectId & /* oid */,
+                                  PortableServer::POA_ptr /* poa */,
                                   CORBA::Environment &)
 {
   return 0;
 }
 
 void
-IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
+IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_ORB_Core *orb_core = this->orb_var_->orb_core ();
@@ -843,17 +729,10 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
 
   // Now FORWARD!!!
 
-  ACE_TRY
-    {
-      this->ir_impl_->activate_server (poa->the_name (),
-                                       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
+  Implementation_Repository::INET_Addr *new_addr = 0;
+  new_addr = this->ir_impl_->activate_server (poa->the_name (),
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
 
   CORBA_Object_ptr forward_object =
     this->orb_var_->key_to_object (poa_current_impl->object_key (),
@@ -868,8 +747,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
             ACE_dynamic_cast (TAO_IIOP_Profile *,
                               stub_obj->profile_in_use ());
 
-  iiop_pfile->port (this->ir_impl_->get_forward_port (poa->the_name ()));
-  iiop_pfile->host (this->ir_impl_->get_forward_host (poa->the_name ()));
+  iiop_pfile->port (new_addr->port_);
+  iiop_pfile->host (new_addr->host_);
 
   if (!CORBA::is_nil (forward_object))
     ACE_THROW (PortableServer::ForwardRequest (forward_object));
@@ -877,92 +756,3 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));
 }
-
-
-// Plain old constructor
-
-IR_Iterator::IR_Iterator (Server_Repository::HASH_IR_ITER *iterator,
-                          PortableServer::POA_ptr poa)
-  : iterator_ (iterator),
-    poa_ (poa)
-{
-  // Nothing
-}
-
-
-// Destructor
-
-IR_Iterator::~IR_Iterator ()
-{
-  delete iterator_;
-}
-
-
-// Returns the next list of up to <how_many> servers.  If empty, will return
-// false.
-
-CORBA::Boolean 
-IR_Iterator::next_n (CORBA::ULong how_many,
-                     ImplementationRepository::ServerInformationList_out server_list,
-                     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_NEW_THROW_EX (server_list,
-                    ImplementationRepository::ServerInformationList (0),
-                    CORBA::NO_MEMORY ());
-  
-  // If there are no more bindings...
-  if (this->iterator_->done ())
-    return 0; // Return false
-
-  // Initially assume that iterator has the requested number of
-  // bindings.
-  server_list->length (how_many);
-  
-  Server_Repository::HASH_IR_ENTRY *server_entry;
-  
-  // Iterate and populate the BindingList.
-  
-  for (CORBA::ULong i = 0; i < how_many; i++)
-    {
-      this->iterator_->next (server_entry);
-    
-      ACE_TString logical, server, command_line, working_directory, host, server_ior;
-      unsigned short port;
-
-      server_entry->int_id_->get_running_info (host, port, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory);
-
-      server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
-      server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
-      server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
-      server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
-      server_list[i].location.host = CORBA::string_dup (host.c_str ());
-      server_list[i].location.port = port;
-
-      if (this->iterator_->advance () == 0)
-        {
-          // If no more server left, reset length to the actual
-          // number servers and get out of the loop.
-          server_list->length (i + 1);
-          break;
-        }
-    }
-  return 1;
-}
-
-
-// Destroys the iterator.
-
-void IR_Iterator::destroy (CORBA::Environment &)
-   ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr<ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> >;
-template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> >;
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> >;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

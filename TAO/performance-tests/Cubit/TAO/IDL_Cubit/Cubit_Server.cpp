@@ -6,12 +6,7 @@
 ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 
 Cubit_Server::Cubit_Server (void)
-  : ior_output_file_ (0),
-    orb_manager_ (),
-    factory_impl_ (0),
-    factory_id_ (),
-    argc_ (0),
-    argv_ (0)
+  : ior_output_file_ (0)
 {
 }
 

@@ -20,14 +20,14 @@ ACE_UPIPE_Connector::dump (void) const
   ACE_TRACE ("ACE_UPIPE_Connector::dump");
 }
 
-ACE_UPIPE_Connector::ACE_UPIPE_Connector (void)
+ACE_UPIPE_Connector::ACE_UPIPE_Connector (void) 
 {
   ACE_TRACE ("ACE_UPIPE_Connector::ACE_UPIPE_Connector");
 }
 
 int
-ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
-			      const ACE_UPIPE_Addr &addr,
+ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream, 
+			      const ACE_UPIPE_Addr &addr, 
 			      ACE_Time_Value *timeout,
 			      const ACE_Addr & /* local_sap */,
 			      int /* reuse_addr */,
@@ -36,8 +36,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
 {
   ACE_TRACE ("ACE_UPIPE_Connector::connect");
   ACE_ASSERT (new_stream.get_handle () == ACE_INVALID_HANDLE);
-
-  ACE_HANDLE handle = ACE::handle_timed_open (timeout,
+  
+  ACE_HANDLE handle = ACE::handle_timed_open (timeout, 
 					      addr.get_path_name (),
 					      flags, perms);
 
@@ -55,18 +55,18 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
 
       new_stream.set_handle (handle);
       new_stream.remote_addr_ = addr; // class copy.
-      new_stream.reference_count_++;
+      new_stream.reference_count_++; 
 
       // Now send the address of our ACE_UPIPE_Stream over this pipe
       // to our corresponding ACE_UPIPE_Acceptor, so he may link the
       // two streams.
-      ssize_t result = ACE_OS::write (handle,
-				      (const char *) &ustream,
+      ssize_t result = ACE_OS::write (handle, 
+				      (const char *) &ustream, 
 				      sizeof ustream);
       if (result == -1)
-	ACE_ERROR ((LM_ERROR,
-		    ASYS_TEXT ("ACE_UPIPE_Connector %p\n"),
-		    ASYS_TEXT ("write to pipe failed")));
+	ACE_ERROR ((LM_ERROR, 
+		    "ACE_UPIPE_Connector %p\n", 
+		    "write to pipe failed"));
 
       // Wait for confirmation of stream linking.
       ACE_Message_Block *mb_p = 0;
@@ -77,9 +77,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       // Do *not* coalesce the following two checks for result == -1.
       // They perform different checks and cannot be merged.
       if (result == -1)
-	  ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("ACE_UPIPE_Connector %p\n"),
-		      ASYS_TEXT ("no confirmation from server")));
+	  ACE_ERROR ((LM_ERROR, "ACE_UPIPE_Connector %p\n",
+		      "no confirmation from server"));
       else
 	// Close down the new_stream at this point in order to
 	// conserve handles.  Note that we don't need the SPIPE
@@ -90,3 +89,4 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
     }
 }
 #endif /* ACE_HAS_THREADS */
+

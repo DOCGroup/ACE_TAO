@@ -13,8 +13,7 @@
 DIRS  = Cubit \
 	POA \
 	Pluggable \
-	Thruput \
-	Latency
+	Thruput
 
 # The following tests have not been updated yet
 # 	Demux

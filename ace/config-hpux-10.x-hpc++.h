@@ -59,8 +59,7 @@
 // Compiler enforces the "One Definition Rule"
 #  define ACE_HAS_ONE_DEFINITION_RULE
 
-// Compiler enforces need for 'template<>" when specializing template
-// classes.
+// Compiler enforces need for 'template<>" when specializing templates
 #  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 
 // Compiler enforces proper use of 'typename'

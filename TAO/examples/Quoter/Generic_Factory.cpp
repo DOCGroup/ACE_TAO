@@ -41,11 +41,13 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
     }
   ACE_ENDTRY;
 }
@@ -78,8 +80,13 @@ Quoter_Generic_Factory_Server::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_,
                                  ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+
   // Failure while activating the Quoter Factory Finder object
+  if (ACE_TRY_ENV.exception () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init: Failure while activating the Quoter Generic Factory Impl.\n"),
+                      -1);
 
 
   ACE_DEBUG ((LM_DEBUG,
@@ -181,11 +188,11 @@ Quoter_Generic_Factory_Server::init (int argc,
         ACE_DEBUG ((LM_DEBUG,
                     "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
       }
-
+            
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Quoter_Generic_Factory_Server::init: Exception");
+      ACE_TRY_ENV.print_exception ("Quoter_Generic_Factory_Server::init: Exception");
     }
   ACE_ENDTRY;
 
@@ -194,7 +201,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 }
 
 int
-Quoter_Generic_Factory_Server::run (CORBA::Environment& /*env*/)
+Quoter_Generic_Factory_Server::run (CORBA::Environment& env)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -261,12 +268,14 @@ main (int argc, char *argv [])
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   ACE_ENDTRY;

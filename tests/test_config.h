@@ -6,15 +6,9 @@
 // = FILENAME
 //    test_config.h
 //
-// = DESCRIPTION
-//
-//   This file factors out common macros and other utilities used by the
-//   ACE automated regression tests.
-//
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>,
-//    Tim Harrison <harrison@cs.wustl.edu>,
-//    and David Levine <levine@cs.wustl.edu>
+//    Prashant Jain <pjain@cs.wustl.edu>, Tim Harrison
+//    <harrison@cs.wustl.edu>, and David Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -114,7 +108,7 @@
 #define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
 #endif /* UNICODE */
 
-#if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_WINCE)
 const size_t ACE_MAX_CLIENTS = 4;
 #else
 const size_t ACE_MAX_CLIENTS = 30;
@@ -126,8 +120,13 @@ const size_t ACE_MAX_TIMERS = 4;
 const size_t ACE_MAX_DELAY = 10;
 const size_t ACE_MAX_INTERVAL = 0;
 const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+#if defined (__Lynx__)
+  const size_t ACE_MAX_PROCESSES = 4;
+  const size_t ACE_MAX_THREADS = 2;
+#else  /* ! __Lynx__ */
+  const size_t ACE_MAX_PROCESSES = 10;
+  const size_t ACE_MAX_THREADS = 4;
+#endif /* ! __Lynx__ */
 
 char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -168,12 +167,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   // This is the only way I could figure out to avoid an error
   // about attempting to unlink a non-existant file.
 #define ACE_INIT_LOG(NAME) \
-  ASYS_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
-                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
-                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
-                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
+  char temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, "%s%s%s", \
+                   ACE_LOG_DIRECTORY_A, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
+                   ACE_LOG_FILE_EXT_NAME_A); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   int fd_init_log; \
   if ((fd_init_log = ACE_OS::open (temp, \
                                    O_WRONLY | O_CREAT, 0x644)) != ERROR) \
@@ -189,12 +188,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #endif /* ghs */
 #else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
-  ASYS_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
-                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
-                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
-                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
+  char temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, "%s%s%s", \
+                   ACE_LOG_DIRECTORY_A, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
+                   ACE_LOG_FILE_EXT_NAME_A); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
 
@@ -236,7 +235,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
@@ -244,23 +243,16 @@ ACE_Test_Output::~ACE_Test_Output (void)
 int
 ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP)
-  // For PharLap, just send it all to the host console for now - redirect
-  // to a file there for saving/analysis.
-  EtsSelectConsole(ETS_CO_HOST);
-  ACE_LOG_MSG->msg_ostream (&cout);
-
-#else
   ASYS_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
   LPCTSTR test_dir;
 
 #if !defined (ACE_HAS_WINCE)
-  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
+  test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
 
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
-    test_dir = ACE_TEXT ("");
+    test_dir = ASYS_TEXT ("");
 
   ACE_OS::sprintf (temp,
                    ASYS_TEXT ("%s%s%s%s"),
@@ -270,35 +262,36 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
                    ACE_LOG_FILE_EXT_NAME_A);
 
 #if defined (VXWORKS)
-  // This is the only way I could figure out to avoid a console
-  // warning about opening an existing file (w/o O_CREAT), or
-  // attempting to unlink a non-existant one.
-  ACE_HANDLE fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
+  // This is the only way I could figure out to avoid a console warning
+  // about opening an existing file (w/o O_CREAT), or attempting to unlink
+  // a non-existant one.
+  int fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
   if (fd != ERROR)
     {
       ACE_OS::close (fd);
       ACE_OS::unlink (temp);
     }
-# else /* ! VXWORKS */
+#else /* ! VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
-  // exist: it creates a plain file instead of a directory.  If the
+  // exist:  it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-  ACE_OS::mkdir (ASYS_TEXT (ACE_LOG_DIRECTORY_A));
-# endif /* ! VXWORKS */
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
+#endif /* ! VXWORKS */
 
-# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   int flags = ios::out;
   if (append)
     flags |= ios::app;
   else
     flags |= ios::trunc;
 
-  this->output_file_->open (ASYS_ONLY_MULTIBYTE_STRING (temp),
-                            flags);
+  this->output_file_->open (temp, flags);
   if (this->output_file_->bad ())
-    return -1;
+    {
+      return -1;
+    }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ASYS_TCHAR *fmode = 0;
   if (append)
@@ -306,11 +299,9 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   else
     fmode = ASYS_TEXT ("w");
   this->output_file_ = ACE_OS::fopen (temp, fmode);
-# endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
-#endif /* ACE_HAS_PHARLAP */
-
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 

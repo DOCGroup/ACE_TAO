@@ -90,8 +90,7 @@ Notifier_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "Notifier_Server::init_naming_service\n");
+      ACE_TRY_ENV.print_exception ("Notifier_Server::init_naming_service\n");
       return -1;
     }
   ACE_ENDTRY;

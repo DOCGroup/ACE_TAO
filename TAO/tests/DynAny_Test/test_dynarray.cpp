@@ -146,8 +146,7 @@ Test_DynArray::run_test (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "test_dynarray::run_test");
+      ACE_TRY_ENV.print_exception ("test_dynarray::run_test");
       return -1;
     }
   ACE_ENDTRY;

@@ -22,7 +22,6 @@
 #define TAO_VAROUT_C
 
 #include "tao/varout.h"
-#include "tao/Sequence.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/varout.i"
@@ -30,59 +29,25 @@
 
 ACE_RCSID(tao, varout, "$Id$")
 
-template<class T, class T_var>
-TAO_Object_Field_T<T,T_var>::
-    TAO_Object_Field_T (const TAO_Object_Manager<T,T_var> & rhs)
-  : ptr_ (T::_duplicate (rhs.in ()))
-{
-}
-
-template<class T, class T_var> TAO_Object_Field_T<T,T_var>&
-TAO_Object_Field_T<T,T_var>::
-    operator= (const TAO_Object_Manager<T,T_var> & rhs)
-{
-  T* tmp = T::_duplicate (rhs.in ());
-  CORBA::release (this->ptr_);
-  this->ptr_ = tmp;
-
-  return *this;
-}
-
-template<class T, class T_var>
-TAO_Object_Field_T<T,T_var>::
-    TAO_Object_Field_T (const T_var & rhs)
-  : ptr_ (T::_duplicate (rhs.in ()))
-{
-}
-
-template<class T, class T_var> TAO_Object_Field_T<T,T_var>&
-TAO_Object_Field_T<T,T_var>::
-    operator= (const T_var & rhs)
-{
-  T* tmp = T::_duplicate (rhs.in ());
-  CORBA::release (this->ptr_);
-  this->ptr_ = tmp;
-
-  return *this;
-}
-
-template<class T, class T_var> void
-TAO_Object_Field_T<T,T_var>::_downcast (CORBA_Object* base_ptr,
-                                        CORBA_Environment &ACE_TRY_ENV)
+template<class T> void
+TAO_Object_Field_T<T>::_downcast (CORBA_Object* base_ptr,
+				  CORBA_Environment &env)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = 0;
-  this->ptr_ = T::_narrow (base_ptr, ACE_TRY_ENV);
+  this->ptr_ = T::_narrow (base_ptr, env);
+  if (env.exception () != 0) 
+    return;
 }
 
-template<class T, class T_var> CORBA_Object*
-TAO_Object_Field_T<T,T_var>::_upcast (void)
+template<class T> CORBA_Object*
+TAO_Object_Field_T<T>::_upcast (void)
 {
   return this->ptr_;
 }
 
-template<class T, class T_var> void
-TAO_Object_Field_T<T,T_var>::_release (void)
+template<class T> void
+TAO_Object_Field_T<T>::_release (void)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = 0;

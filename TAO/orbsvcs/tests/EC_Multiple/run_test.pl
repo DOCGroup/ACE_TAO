@@ -7,36 +7,22 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
-require ACEutils;
 
 $NS_ior = "NameService.ior";
-$status = 0;
+$sleeptime = 3;
 
-$NS = Process::Create ("..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$EXE_EXT,
-                       " -o $NS_ior ");
-if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
-  print STDERR "ERROR: waiting for naming service IOR file\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
-}
+$NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
+		       " -o $NS_ior ");
+
+sleep $sleeptime;
 
 # This is a very simple test, no multiple consumers and no gateways.
-$TEST = Process::Create ($EXEPREFIX."EC_Multiple".$EXE_EXT,
-			 "-ORBNameServiceIOR file://$NS_ior"
-			 ." -s local");
-if ($TEST->TimedWait (60) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $status = 1;
-  $TEST->Kill (); $TEST->TimedWait (1);
-}
+$status = system ($EXEPREFIX."EC_Multiple".$EXE_EXT.
+                  " -s local");
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
-}  
+$NS->Kill ();
 
+unlink $NS_ior;
+
+# @@ Capture any errors from the server too.
 exit $status;

@@ -233,10 +233,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
         case CORBA::tk_objref:
           {
-            typedef TAO_Object_Field_T<CORBA::Object,CORBA::Object_var>
-              TAO_Object_Field_Class;
-            TAO_Object_Field_Class* field =
-              ACE_reinterpret_cast (TAO_Object_Field_Class *,
+            TAO_Object_Field_T<CORBA_Object>* field =
+              ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
                                     ACE_const_cast (void *, source));
             field->_release ();
             retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -307,10 +305,13 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
 
   // Get a base pointer so we can use the union's virtual functions.
   base_union = ACE_reinterpret_cast (TAO_Base_Union *,
-                                     ACE_const_cast (void *,
+                                     ACE_const_cast (void *, 
                                                      data));
 
   discrim_tc = tc->discriminator_type (ACE_TRY_ENV);
+  // Get the discriminator type
+  // @@EXC@@ Why are we changing the exception thrown here?
+  //  if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   discrim_val = base_union->_discriminant ();
@@ -321,10 +322,14 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
 
   default_index = tc->default_index (ACE_TRY_ENV);
   // now get ready to marshal the actual union value
+  // @@EXC@@ Why are we changing the exception thrown here?
+  // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
   ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
 
   member_count = tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  // @@EXC@@ Why are we changing the exception thrown here?
+  // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
 
   // check which label value matches with the discriminator
   // value. Accordingly, marshal the corresponding
@@ -333,6 +338,8 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   for (i = 0; member_count-- != 0; i++)
     {
       member_label = tc->member_label (i, ACE_TRY_ENV);
+      // @@EXC@@ Why are we changing the exception thrown here?
+      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
       ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
 
       // do the matching
@@ -376,12 +383,14 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
             discrim_matched = 1;
           break;
         default:
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
                             CORBA::TypeCode::TRAVERSE_STOP);
         }// end of switch
 
       // get the member typecode
       member_tc = tc->member_type (i, ACE_TRY_ENV);
+      // @@EXC@@ Why are we changing the exception thrown here?
+      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),  CORBA::TypeCode::TRAVERSE_STOP);
       ACE_CHECK_RETURN ( CORBA::TypeCode::TRAVERSE_STOP);
 
       if (default_index >= 0 && default_index-- == 0)
@@ -393,21 +402,22 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
       if (discrim_matched)
         {
           // deep_free the discriminator value
-          retval = DEEP_FREE (discrim_tc,
-                              discrim_val,
-                              data2,
+          retval = DEEP_FREE (discrim_tc, 
+                              discrim_val, 
+                              data2, 
                               ACE_TRY_ENV);
 
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
                               CORBA::TypeCode::TRAVERSE_STOP);
 
           // marshal according to the matched typecode
-          return DEEP_FREE (member_tc,
+          // @@EXC@@ No need to check ACE_TRY_ENV.
+          return DEEP_FREE (member_tc, 
                             member_val,
-                            data2,
+                            data2, 
                             ACE_TRY_ENV);
         } // end of if
     } // end of for
@@ -415,21 +425,21 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   // we are here only if there was no match
 
   // deep_free the discriminator value
-  retval = DEEP_FREE (discrim_tc,
-                      discrim_val,
-                      data2,
+  retval = DEEP_FREE (discrim_tc, 
+                      discrim_val, 
+                      data2, 
                       ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), 
                       CORBA::TypeCode::TRAVERSE_STOP);
 
   if (default_tc)
-    return DEEP_FREE (default_tc,
-                      member_val,
-                      data2,
+    return DEEP_FREE (default_tc, 
+                      member_val, 
+                      data2, 
                       ACE_TRY_ENV);
   else
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

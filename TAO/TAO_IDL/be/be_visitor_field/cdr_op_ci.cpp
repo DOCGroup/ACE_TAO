@@ -132,7 +132,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
           << "_tao_aggregate_" << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // This is done in cdr_op_cs and hacked into *.i.
+      // proceed further
       break;
     default:
       // error

@@ -39,74 +39,63 @@ Data::Data (CORBA::ORB_var orb)
     m_any1 (CORBA::_tc_long),
     orb_ (orb)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::Environment env;
 
-  ACE_TRY
-    {
-      labels[0] = "type boolean";
-      labels[1] = "type octet";
-      labels[2] = "type char";
-      labels[3] = "type short";
-      labels[4] = "type long",
-      labels[5] = "type ushort";
-      labels[6] = "type ulong";
-      labels[7] = "type float";
-      labels[8] = "type double";
-      labels[9] = "type longlong";
-      labels[10] = "type ulonglong";
-      labels[11] = "type string";
-      labels[12] = "type typecode";
-      labels[13] = "type wchar";
-      labels[14] = "type any";
-      labels[15] = "type objref";
+  labels[0] = "type boolean";
+  labels[1] = "type octet";
+  labels[2] = "type char";
+  labels[3] = "type short";
+  labels[4] = "type long",
+  labels[5] = "type ushort";
+  labels[6] = "type ulong";
+  labels[7] = "type float";
+  labels[8] = "type double";
+  labels[9] = "type longlong";
+  labels[10] = "type ulonglong";
+  labels[11] = "type string";
+  labels[12] = "type typecode";
+  labels[13] = "type wchar";
+  labels[14] = "type any";
+  labels[15] = "type objref";
 
-      // Getting the RootPOA so we can generate object references.
-      CORBA::Object_var obj = 
-        this->orb_->resolve_initial_references ("RootPOA", 
-                                                ACE_TRY_ENV);
+  // Getting the RootPOA so we can generate object references.
+  CORBA::Object_var obj = 
+    this->orb_->resolve_initial_references ("RootPOA");
 
-      ACE_TRY_CHECK;
+  if (CORBA::is_nil (obj.in ()))
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) Unable to get root poa reference.\n"));
 
-      if (CORBA::is_nil (obj.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Unable to get root poa reference.\n"));
-        }
+  // Get the POA_var object from Object_var.
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj.in (), 
+                                  env);
 
-      // Get the POA_var object from Object_var.
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), 
-                                      ACE_TRY_ENV);
+  if (env.exception () != 0)
+    env.print_exception ("PortableServer::POA::_narrow");
 
-      ACE_TRY_CHECK;
+  // Generate values for the member variables.
+  this->m_objref1 =
+    root_poa->create_reference ("foo", 
+                                env);
 
-      // Generate values for the member variables.
-     this->m_objref1 =
-        root_poa->create_reference ("foo", 
-                                    ACE_TRY_ENV);
+  if (env.exception () != 0)
+    env.print_exception ("PortableServer::POA::create_reference_with_id");
 
-      ACE_TRY_CHECK;
+  this->m_objref2 =
+    root_poa->create_reference ("foo", 
+                                env);
 
-      this->m_objref2 =
-        root_poa->create_reference ("foo", 
-                                    ACE_TRY_ENV);
+  if (env.exception () != 0)
+    env.print_exception ("PortableServer::POA::create_reference_with_id");
+  
+  // Clean up after the POA
+  root_poa->destroy (1,
+                     1,
+                     env);
 
-      ACE_TRY_CHECK;
-
-      // Clean up after the POA
-      root_poa->destroy (1,
-                        1,
-                        ACE_TRY_ENV);
-
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in ORB/POA init\n");
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
+  if (env.exception () != 0)
+    env.print_exception ("PortableServer::POA::destroy");
 }
 
 Data::~Data (void)

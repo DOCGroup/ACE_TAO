@@ -133,7 +133,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
+              "%T (%t): Timer #%d (id #%d) expired\n",
               time_tag,
               this->timer_id_[time_tag]));
 

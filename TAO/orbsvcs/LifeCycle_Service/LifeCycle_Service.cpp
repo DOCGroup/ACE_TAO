@@ -26,36 +26,40 @@ Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
 
 Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Unbind the Factory Finder.
       CosNaming::Name generic_Factory_Name (2);
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("LifeCycle_Service");
-      this->namingContext_var_->unbind (generic_Factory_Name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->namingContext_var_->unbind (generic_Factory_Name,TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "User Exception");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
     }
-  ACE_ENDTRY;
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
+    }
+  TAO_ENDTRY;
 }
 
 int
 Life_Cycle_Service_Server::init (int argc,
                                      char *argv[],
-                                     CORBA::Environment& ACE_TRY_ENV)
+                                     CORBA::Environment& env)
 {
   if (this->orb_manager_.init (argc,
                                argv,
-                               ACE_TRY_ENV) == -1)
+                               env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init"),
                       -1);
-  // @@ Oh well.  This should actually come before "if".
-  ACE_CHECK_RETURN (-1);
 
   // Copy them, because parse_args expects them there.
   this->argc_ = argc;
@@ -71,25 +75,32 @@ Life_Cycle_Service_Server::init (int argc,
   // Activate the object.
   CORBA::String_var str  =
     this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_,
-                                 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+                                 env);
 
   // Failure while activating the  Factory Finder object
+  // @@ TODO Is this the right way to check this? Shouldn't env
+  // contain an exception?
+  if (env.exception () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init: Failure while activating the LifeCycle Service Impl.\n"),
+                      -1);
+
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
 
   // Register the LifeCycle Service with the Naming Service.
-  ACE_TRY
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Trying to get a reference to the Naming Service.\n"));
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb_manager_.orb()->resolve_initial_references ("NameService");
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
@@ -97,14 +108,14 @@ Life_Cycle_Service_Server::init (int argc,
 
       // Narrow the object reference to a Naming Context.
       namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in (),
-							      ACE_TRY_ENV);
-
-      ACE_TRY_CHECK;
+							      TAO_TRY_ENV);
 
       if (CORBA::is_nil (namingContext_var_.in ()))
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
+
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Naming Service.\n"));
 
@@ -112,22 +123,19 @@ Life_Cycle_Service_Server::init (int argc,
       life_Cycle_Service_Name.length (1);
       life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
-      CORBA::Object_ptr tmp = this->life_Cycle_Service_i_ptr_->_this(ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       namingContext_var_->bind (life_Cycle_Service_Name,
-                                tmp,
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+			       this->life_Cycle_Service_i_ptr_->_this(TAO_TRY_ENV),
+			       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Bound the LifeCycle Service to the Naming Context.\n"));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Life_Cycle_Service_Server::init");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -136,7 +144,6 @@ Life_Cycle_Service_Server::init (int argc,
 int
 Life_Cycle_Service_Server::run (CORBA::Environment &)
 {
-  
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -186,27 +193,31 @@ main (int argc, char *argv [])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_LifeCycleService: Life_Cycle_Service_Server \n\n"));
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
-      int check = life_Cycle_Service_Server.init (argc,
-                                                  argv,
-                                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (check)
+      if (life_Cycle_Service_Server.init (argc,
+					  argv,
+					  TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-          life_Cycle_Service_Server.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK
+          life_Cycle_Service_Server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
+      return -1;
+    }
+  TAO_ENDTRY;
   return 0;
 }
 

@@ -29,11 +29,11 @@ parse_args (int argc, char *argv[],
 int
 main (int argc, char** argv)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb_manager.init (argc, argv, TAO_TRY_ENV);
+      TAO_CHECK_ENV
 
       // Command line argument interpretation.
       CORBA::Boolean verbose = 0;
@@ -49,83 +49,83 @@ main (int argc, char** argv)
       TAO_Trading_Components_i& trd_comp = trader->trading_components ();
 
       // Set the service type repository
-      sup_attr.type_repos (type_repos._this (ACE_TRY_ENV));
-      ACE_TRY_CHECK;
+      sup_attr.type_repos (type_repos._this (TAO_TRY_ENV));
+      TAO_CHECK_ENV;
 
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose,
-         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      type_exporter.remove_all_types (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      type_exporter.remove_all_types (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      type_exporter.add_all_types (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      type_exporter.add_all_types (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      type_exporter.list_all_types (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      type_exporter.list_all_types (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      type_exporter.describe_all_types (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      type_exporter.describe_all_types (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      type_exporter.fully_describe_all_types (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      type_exporter.fully_describe_all_types (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
 	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose,
-	 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+	 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.withdraw_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.export_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.modify_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.modify_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.withdraw_offers_using_constraints (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers_using_constraints (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.withdraw_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.export_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer
 	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
 
-      offer_importer.perform_queries (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      offer_importer.perform_queries (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Trader Export Tests Failed"), -1);
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

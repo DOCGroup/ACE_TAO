@@ -53,7 +53,7 @@ client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
-	$(RM) core *.o *~ client server
+	rm -f core *.o *~ client server
 	$(MAKE) realclean
 
 

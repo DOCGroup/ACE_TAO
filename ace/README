@@ -169,9 +169,6 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
                                         Compiler handles explicit calling of
                                         template destructor correctly. See
                                         "ace/OS.h" for details.
-ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
-                                        with a NULL addr to accept()
-                                        (e.g, VxWorks).
 ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
                                         support namespaces (or the
                                         support is not fully
@@ -379,9 +376,6 @@ ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium
                                         microprocessor.
 ACE_HAS_POLL                            Platform contains <poll.h>
-ACE_HAS_POSITION_INDEPENDENT_MALLOC     The ACE_Malloc<> class uses
-                                        "position-independent" features
-                                        provided by ACE_Based_Pointer<>.
 ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX
                                         O_NONBLOCK semantics
 ACE_HAS_POSIX_SEM                       Platform supports POSIX
@@ -411,8 +405,6 @@ ACE_HAS_PTHREADS_DRAFT7                 Platform's 'Pthreads' is .1c draft 7
 ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         (This is the final standard
                                         Pthreads).
-ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
-                                        Pthreads (susp/cont, rwlocks)
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().

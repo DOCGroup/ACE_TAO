@@ -190,9 +190,6 @@ public:
   CORBA_ContextList_ptr _duplicate (void);
   // Increment the reference count.
 
-  static CORBA_ContextList_ptr _duplicate (CORBA_ContextList *);
-  // Increment the reference count.
-
   void _destroy (void);
   // Decrement the reference count and delete if it is 0.
 
@@ -214,10 +211,6 @@ public:
                CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ());
   // remove the typecode at slot i. Raises the "Bounds" exception
-
-  void _incr_refcnt (void);
-  void  _decr_refcnt (void);
-  // Increment and decrement ref counts
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ContextList_ptr _ptr_type;

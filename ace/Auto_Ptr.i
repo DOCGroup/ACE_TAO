@@ -67,8 +67,7 @@ ACE_Auto_Basic_Ptr<X>::operator *() const
   return *this->get ();
 }
 
-#if defined (ACE_LACKS_AUTO_PTR) || \
-    !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
              (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
 
 template<class X> ACE_INLINE

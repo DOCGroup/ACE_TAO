@@ -76,9 +76,7 @@ public:
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
-  int connect (TAO_Profile *&profile,
-               TAO_Transport *&transport,
-               ACE_Time_Value *max_wait_time = 0);
+  int connect (TAO_Profile *&profile, TAO_Transport *&transport);
   // This is where the transport protocol is selected based on some
   // policy.  This member will call the connect member of the
   // TAO_Connector class which in turn will call the concrete
@@ -92,10 +90,6 @@ public:
 
   TAO_Profile* create_profile (TAO_InputCDR& cdr);
   // Create a profile based on the contents of <cdr>
-
-  char object_key_delimiter (const char *ior);
-  // Obtain the object key delimiter used by the protocol specified in
-  // the provided URL style IOR.
 
 private:
   TAO_ConnectorSet connectors_;

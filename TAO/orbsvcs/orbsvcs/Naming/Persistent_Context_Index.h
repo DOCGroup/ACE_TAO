@@ -22,129 +22,87 @@
 class TAO_ORBSVCS_Export TAO_Persistent_Context_Index
 {
   // = TITLE
-  //     This class facilitates implementation of Persistent
-  //     Naming Service.  It keeps track, centrally, of several pieces of
-  //     info for each Persistent Naming Context, allowing to perform the
-  //     initialization necessary for each Naming Context to
-  //     restore the state of the Naming Service from persistent storage
-  //     on server start-up.
+  //
   //
   // = DESCRIPTION
-  //     This class creates a memory-mapped file, allocates a hash
-  //     table from that file, and uses the hash table to store POA id,
-  //     and table and counter pointers for each Persistent Naming
-  //     Context.  There are methods for adding and deleting entries
-  //     from this hash table as new Persistent Naming Contexts are
-  //     created and old ones are destroyed.  This hash table
-  //     facilitates Persistent Naming Context servant initialization
-  //     upon Naming Server start-up.
+  //
 public:
-  // = Some typedefs for convenience.
 
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
-    TAO_Persistent_Index_IntId> CONTEXT_INDEX;
-  // Hash map in which we will store info about each Persistent Naming Context.
-
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId> INDEX;
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
     TAO_Persistent_IntId> CONTEXT;
-  // Hash map used by Persistent Naming Context to keep its state.
-
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
-  > ALLOCATOR;
-  // Allocator we will be using to make the Naming Service persistent.
 
   // = Initialization and termination methods.
-
   TAO_Persistent_Context_Index (CORBA::ORB_ptr orb,
                                 PortableServer::POA_ptr poa);
-  // Constructor.
+  // "Do-nothing" constructor.
 
   int open (LPCTSTR file_name,
             void * base_address = ACE_DEFAULT_BASE_ADDR);
-  // Create ACE_Allocator, open/create memory-mapped file with the
-  // specified file name/base address.  Find or allocate <index_>.
-  // Return 0 on success or -1 on failure.
+  //
 
-  int init (size_t context_size);
-  // If <index_> contains no entries (i.e., was just created), create
-  // a root Persistent Naming Context servant with table of size
-  // <context_size>, and make an entry for it
-  // in the <index_>.  If <index_> contains entries, create a
-  // Persistent Naming Context servant for each entry.  Return 0 on
-  // success and -1 on failure.
+  int init (void);
+  // go through the index of contexts and create a servant of each,
+  // and register it with POA.  If no contexts are present, create one.
 
   ~TAO_Persistent_Context_Index (void);
-  // Destructor.  The memory mapped file that was opened/created is
-  // not deleted, since we want it to keep the state of the Naming
-  // Service until the next run.
-
-  // = Methods for adding/removing entries.
+  // destructor, do some cleanup :TBD: last dtor should "compress"
+  // file
 
   int bind (const char *poa_id,
-            ACE_UINT32 *&counter,
-            CONTEXT *hash_map);
-  // Create an entry for a Persistent Naming Context in <index_>,
-  // i.e., a context with <poa_id>, <counter> and <hash_map> has just
-  // been created, and is registering with us.
+                    ACE_UINT32 *&counter,
+                    CONTEXT *hash_map);
+  // Create an entry - new context is created.
 
-  int unbind (const char *poa_id);
-  // Remove an entry for the Persistent Naming Context with <poa_id>
-  // from <index_> (i.e., this context has just been destroyed).
-
-  // = Accessors.
+  int unbind (const char * poa_id);
+  // Unbind an entry - a context is destroyed.
 
   ACE_Allocator *allocator (void);
-  // Return allocator.
+  // accessor.
 
   CORBA::ORB_ptr orb (void);
-  // Return orb pointer.
+  //
 
-  char *root_ior (void);
-  // Return ior of the root Naming Context (returns a copy - must be
-  // deallocated by the user).
+  char * root_ior (void);
+  //
+
+  //@@ ACE_Null_Mutex might be sufficient here.
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+  > ALLOCATOR;
 
 private:
 
   int recreate_all (void);
-  // Helper for the <init> method.  Iterates over <index_>, and
-  // creates a servant for each entry.
+  //
 
   int create_index (void);
-  // Helper for the <open> method.
-
-  int create_index_helper (void *buffer);
-  // Helper for <create_index> method: places hash table into an
-  // allocated space.
+  // Allocate the appropriate type of map manager that stores the
+  // key/value binding.
 
   ACE_SYNCH_MUTEX lock_;
   // Lock to prevent multiple threads from modifying entries in the
-  // <index_> simultanneously.
+  // hash map simultanneously.
 
   ALLOCATOR *allocator_;
-  // Allocator that deals out memory from a memory-mapped file.  We
-  // use it here, and in TAO_Persistent_Naming_Context, whenever we
-  // deal with data that should be kept in persistent store.
+  // Pointer to the allocator
 
-  CONTEXT_INDEX *index_;
-  // Hash map where we keep entries for all Persistent Naming
-  // Contexts.
+  INDEX *index_;
+  // Pointer to the allocated map manager.
 
   LPCTSTR index_file_;
-  // Name of the memory-mapped file used by <allocator_>.
+  // Name of the file used for storage.
 
   void *base_address_;
-  // Base address for the memory-mapped file.
 
   CORBA::ORB_var orb_;
-  // ORB.  We use it for several object_to_string conversions, and
-  // keep it around for Persistent Naming Contexts' use.
+  //
 
   PortableServer::POA_var poa_;
-  // POA under which to register Persistent Naming Context servants
-  // during start-up.
+  //
 
   CORBA::String_var root_ior_;
-  // The ior of the root Naming Context.
+  //
 };
 
 #endif /* TAO_PERSISTENT_CONTEXT_INDEX_H */

@@ -13,7 +13,7 @@ ACE_Env_Value<T>::ACE_Env_Value (void)
 }
 
 template <class T> ACE_INLINE
-ACE_Env_Value<T>::ACE_Env_Value (const ASYS_TCHAR *varname,
+ACE_Env_Value<T>::ACE_Env_Value (const char *varname,
                                  const T &defval)
   : varname_ (varname),
     value_(defval)
@@ -22,7 +22,7 @@ ACE_Env_Value<T>::ACE_Env_Value (const ASYS_TCHAR *varname,
 }
 
 template <class T> ACE_INLINE void
-ACE_Env_Value<T>::open (const ASYS_TCHAR *varname,
+ACE_Env_Value<T>::open (const char *varname,
                         const T &defval)
 {
   varname_ = varname;
@@ -33,13 +33,13 @@ ACE_Env_Value<T>::open (const ASYS_TCHAR *varname,
 template <class T> ACE_INLINE void
 ACE_Env_Value<T>::fetch_value (void)
 {
-  const ASYS_TCHAR *env = ACE_OS::getenv (varname_);
+  const char *env = ACE_OS::getenv (varname_);
 
   if (env != 0)
     ACE_Convert (env, value_);
 }
 
-template <class T> ACE_INLINE const ASYS_TCHAR*
+template <class T> ACE_INLINE const char*
 ACE_Env_Value<T>::varname (void) const
 {
   return varname_;

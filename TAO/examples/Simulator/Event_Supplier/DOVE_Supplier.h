@@ -78,7 +78,6 @@ private:
   public:
 
     virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 

@@ -1,4 +1,17 @@
+// ============================================================================
 // $Id$
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Offer_Iterators_T.cpp
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+// ============================================================================
 
 #ifndef TAO_OFFER_ITERATORS_T_C
 #define  TAO_OFFER_ITERATORS_T_C
@@ -32,14 +45,14 @@ TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 template <class MAP_LOCK_TYPE> void
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 add_offer (CosTrading::OfferId id,
-           const CosTrading::Offer* /* offer */)
+           const CosTrading::Offer* offer)
 {
   this->offer_ids_.enqueue_tail (id);
 }
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-max_left (CORBA::Environment&)
+max_left (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::UnknownMaxLeft))
 {
@@ -50,7 +63,7 @@ template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers,
-        CORBA::Environment& ACE_TRY_ENV)
+        CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong ret_offers = 0;
@@ -58,11 +71,7 @@ next_n (CORBA::ULong n,
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
 
-  ACE_NEW_THROW_EX (offers,
-                    CosTrading::OfferSeq,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
+  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, 0);
   offers->length (max_possible_offers_in_sequence);
 
   // While there are entries left and we haven't filled <offers>
@@ -76,13 +85,17 @@ next_n (CORBA::ULong n,
       CosTrading::OfferId id;
       this->offer_ids_.dequeue_head (id);
 
-      CosTrading::OfferId_var offerid_var (id);
-      CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      TAO_TRY
+        {
+          CosTrading::OfferId_var offerid_var (id);
+          CosTrading::Offer* offer = this->db_.lookup_offer (id, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-      if (offer != 0)
-        this->pfilter_.filter_offer (offer,
-                                     offers[ret_offers++]);
+          if (offer != 0)
+            this->pfilter_.filter_offer (offer, offers[ret_offers++]);
+        }
+      TAO_CATCHANY {}
+      TAO_ENDTRY;
     }
 
   // Reset the length to the correct value

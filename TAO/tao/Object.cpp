@@ -158,15 +158,15 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 
 CORBA::Boolean
 CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &)
-    ACE_THROW_SPEC (())
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   if (other_obj == this)
     {
+      //      env.clear ();
       return 1;
     }
 
-  return this->_stubobj ()->is_equivalent (other_obj);
+  return this->_stubobj ()->is_equivalent (other_obj, ACE_TRY_ENV);
 }
 
 // TAO's extensions
@@ -534,18 +534,12 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (objdata == 0)
     return 0;
 
-  // Figure out if the servant is collocated.
-  TAO_ServantBase *servant = 0;
-  TAO_SERVANT_LOCATION servant_location =
-    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata,
-                                                           servant);
+  // Create a new CORBA_Object and give it the TAO_Stub just
+  // created.
+  TAO_ServantBase *servant =
+    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata);
 
-  int collocated = 0;
-  if (servant_location != TAO_SERVANT_NOT_FOUND)
-    collocated = 1;
-
-  // Create a new CORBA_Object and give it the TAO_Stub just created.
-  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, collocated), 0);
+  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, servant != 0), 0);
 
   // the corba proxy would have already incremented the reference count on
   // the objdata. So we decrement it here by 1 so that the objdata is now
@@ -563,13 +557,13 @@ TAO_Object_Field::~TAO_Object_Field (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>;
+template class TAO_Object_Field_T<CORBA_Object>;
 template class auto_ptr<TAO_MProfile>;
 template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>
+#pragma instantiate TAO_Object_Field_T<CORBA_Object>
 #pragma instantiate auto_ptr<TAO_MProfile>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>
 

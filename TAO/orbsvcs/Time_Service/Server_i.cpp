@@ -8,7 +8,8 @@ ACE_RCSID(Time_Service, Server_i, "$Id$")
 // Constructor.
 Server_i::Server_i (void)
   : ior_output_file_ (0),
-    use_ir_ (0)
+    use_ir_ (0),
+    register_with_ir_ (0)
 {
   // no-op.
 }
@@ -25,7 +26,7 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -45,6 +46,9 @@ Server_i::parse_args (void)
         break;
       case 'i': // Use the Implementation Repository.
         this->use_ir_ = 1;
+        break;
+      case 'r': // Register with the Implementation repository.
+        this->register_with_ir_ = 1;
         break;
       case '?':  // display help for use of the server.
       default:
@@ -68,16 +72,17 @@ Server_i::parse_args (void)
 // with it.
 
 int
-Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
+Server_i::init_naming_service (CORBA::Environment &)
 {
-  ACE_TRY
+
+  TAO_TRY
     {
       // Initialize the POA.
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
-                                         "time_server",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                         "my_child_poa",
+                                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       PortableServer::POA_ptr child_poa
         = this->orb_manager_.child_poa ();
@@ -92,13 +97,13 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
                                       child_poa) == -1)
         return -1;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from init_naming_service ()\n");
+      TAO_TRY_ENV.print_exception ("(%P|%t) Exception from init_naming_service ()\n");
+      TAO_TRY_ENV.clear ();
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -108,30 +113,32 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 int
 Server_i::init_IR (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       if (this->use_ir_ == 1)
         {
           ACE_NEW_RETURN (this->ir_helper_,
-                          IR_Helper ("time_server",
+                          IR_Helper ("child_poa",
                                      this->orb_manager_.child_poa (),
                                      this->orb_manager_.orb (),
                                      TAO_debug_level),
                           -1);
 
+          if (this->register_with_ir_ == 1)
+            this->ir_helper_->register_server ("server -i -ORBobjrefstyle url");
+
           this->ir_helper_->change_object (this->time_service_server_.in (),
-                                           ACE_TRY_ENV);
+                                           TAO_TRY_ENV);
         }
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       // Convert the IR server reference to a string.
       CORBA::String_var objref_server =
         this->orb_manager_.orb ()->object_to_string (this->time_service_server_.in (),
-                                                     ACE_TRY_ENV);
+                                                     TAO_TRY_ENV);
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Print the IR server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -147,12 +154,12 @@ Server_i::init_IR (void)
                 ACE_OS::fclose (this->ior_output_file_);
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      TAO_TRY_ENV.print_exception ("Exception:");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -163,8 +170,7 @@ Server_i::init_IR (void)
 int
 Server_i::create_server (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
 
       // Create a new server object.
@@ -182,21 +188,21 @@ Server_i::create_server (void)
       CORBA::String_var server_str =
         this->orb_manager_.activate_under_child_poa ("server",
                                                      this->time_service_server_impl_,
-                                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
 
       CORBA::Object_var server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in (),
-                                                          ACE_TRY_ENV);
+                                                          TAO_TRY_ENV);
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in (),
-                                                                  ACE_TRY_ENV);
+                                                                  TAO_TRY_ENV);
 
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // All this !! just to register a servant with the child poa.
       // Instead of using _this ().
@@ -205,7 +211,7 @@ Server_i::create_server (void)
 
       CORBA::String_var objref_server =
         this->orb_->object_to_string (server_ref.in (),
-                                      ACE_TRY_ENV);
+                                      TAO_TRY_ENV);
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -226,13 +232,12 @@ Server_i::create_server (void)
           ACE_OS::fclose (this->ior_output_file_);
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Server_i::create_server ()");
-      return -1;
+      TAO_TRY_ENV.print_exception ("Exception in Server_i::create_server ()");
+       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 0;
 }
 
@@ -244,19 +249,18 @@ Server_i::create_server (void)
 int
 Server_i::if_first_server (CosNaming::Name &server_context_name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       this->my_name_server_->resolve
-        (server_context_name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        (server_context_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
       return 1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 0;
 }
 
@@ -266,8 +270,7 @@ Server_i::if_first_server (CosNaming::Name &server_context_name)
 int
 Server_i::register_server (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       CosNaming::Name server_context_name;
       server_context_name.length (1);
@@ -282,14 +285,14 @@ Server_i::register_server (void)
         {
           // Get context.
           server_context =
-            this->my_name_server_->new_context (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            this->my_name_server_->new_context (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           // Bind.
           this->my_name_server_->rebind_context (server_context_name,
                                                  server_context.in (),
-                                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                 TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
 
       char host_name[MAXHOSTNAMELEN];
@@ -308,20 +311,19 @@ Server_i::register_server (void)
 
       this->my_name_server_->rebind (server_name,
                                      this->time_service_server_.in (),
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Binding ServerContext -> %s\n",
                   server_name[1].id.in ()));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from init_naming_service ()\n");
+      TAO_TRY_ENV.print_exception ("(%P|%t) Exception from init_naming_service ()\n");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -333,12 +335,12 @@ Server_i::register_server (void)
 int
 Server_i::init (int argc,
                 char *argv[],
-                CORBA::Environment &ACE_TRY_ENV)
+                CORBA::Environment &)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY
+  TAO_TRY
     {
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
@@ -346,13 +348,13 @@ Server_i::init (int argc,
 
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
-                                             "time_server",
-                                             ACE_TRY_ENV) == -1)
+                                             "child_poa",
+                                             TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",
                                  "init_child_poa"),
                                 -1);
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       int result = this->parse_args ();
 
@@ -364,9 +366,9 @@ Server_i::init (int argc,
 
       // Use the Naming Service Register the above implementation with the Naming Service.
       if (this->use_ir_ == 0)
-        this->init_naming_service (ACE_TRY_ENV);
+        this->init_naming_service (TAO_TRY_ENV);
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       // Create the server object.
       this->create_server ();
@@ -380,12 +382,12 @@ Server_i::init (int argc,
         this->register_server ();
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      TAO_TRY_ENV.print_exception ("Exception:");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -394,34 +396,34 @@ Server_i::init (int argc,
 // Initialize the IR Helper and run the event loop for ORB.
 
 int
-Server_i::run (CORBA::Environment &ACE_TRY_ENV)
+Server_i::run (CORBA::Environment &)
 {
-  ACE_TRY
+  TAO_TRY
     {
 
       if (this->use_ir_ == 1)
         {
-          this->ir_helper_->notify_startup (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->ir_helper_->notify_startup (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
 
-      if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
+      if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
                           -1);
 
-      if (this->use_ir_ == 1)
+      if (this->register_with_ir_ == 1)
         {
-          this->ir_helper_->notify_shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      TAO_TRY_ENV.print_exception ("Exception:");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

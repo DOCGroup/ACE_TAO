@@ -20,19 +20,19 @@ ACE_SOCK_Connector::dump (void) const
   ACE_TRACE ("ACE_SOCK_Connector::dump");
 }
 
-int
+int 
 ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
 					  ACE_Time_Value *timeout,
 					  const ACE_Addr &local_sap,
 					  int reuse_addr,
-					  int protocol_family,
+					  int protocol_family, 
 					  int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::shared_connect_start");
   // Only open a new socket if we don't already have a valid handle.
   if (new_stream.get_handle () == ACE_INVALID_HANDLE
       && new_stream.open (SOCK_STREAM,
-			  protocol_family,
+			  protocol_family, 
 			  protocol,
 			  reuse_addr) == -1)
     return -1;
@@ -58,7 +58,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
     return 0;
 }
 
-int
+int 
 ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
 					   ACE_Time_Value *timeout,
 					   int result)
@@ -98,14 +98,14 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
 // Actively connect and produce a new ACE_SOCK_Stream if things go well...
 
 int
-ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
-			     const ACE_Addr &remote_sap,
+ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream, 
+			     const ACE_Addr &remote_sap, 
 			     ACE_Time_Value *timeout,
 			     const ACE_Addr &local_sap,
 			     int reuse_addr,
 			     int /* flags */,
 			     int /* perms */,
-			     int protocol_family,
+			     int protocol_family, 
 			     int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
@@ -127,17 +127,15 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 }
 
 int
-ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
-			     const ACE_Addr &remote_sap,
-			     ACE_QoS_Params qos_params,
+ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream, 
+			     const ACE_Addr &remote_sap, 
+			     ACE_Connect_QoS_Params qos_params,
 			     ACE_Time_Value *timeout,
 			     const ACE_Addr &local_sap,
-                             ACE_Protocol_Info * /* protocolinfo */,
-                             ACE_SOCK_GROUP /* g */,
-			     u_long /* flags */,
 			     int reuse_addr,
+			     int /* flags */,
 			     int /* perms */,
-			     int protocol_family,
+			     int protocol_family, 
 			     int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
@@ -205,8 +203,8 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   return 0;
 }
 
-ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-					const ACE_Addr &remote_sap,
+ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream, 
+					const ACE_Addr &remote_sap, 
 					ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
 					int reuse_addr,
@@ -226,22 +224,20 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
 		     perms,
 		     protocol_family,
 		     protocol) == -1
-      && timeout != 0
+      && timeout != 0 
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
 		ASYS_TEXT ("%p\n"),
 		ASYS_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
-ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-					const ACE_Addr &remote_sap,
-					ACE_QoS_Params qos_params,
+ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream, 
+					const ACE_Addr &remote_sap, 
+					ACE_Connect_QoS_Params qos_params,
 					ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
-                                        ACE_Protocol_Info *protocolinfo,
-                                        ACE_SOCK_GROUP g,
-                                        u_long flags,
 					int reuse_addr,
+					int flags,
 					int perms,
 					int protocol_family,
 					int protocol)
@@ -253,16 +249,15 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
 		     qos_params,
 		     timeout,
 		     local_sap,
-                     protocolinfo,
-                     g,
-		     flags,
 		     reuse_addr,
+		     flags,
 		     perms,
 		     protocol_family,
 		     protocol) == -1
-      && timeout != 0
+      && timeout != 0 
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
 		ASYS_TEXT ("%p\n"),
 		ASYS_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
+

@@ -32,16 +32,11 @@
 class TAO_ORBSVCS_Export TAO_IntId
 {
   // = TITLE
-  //     Helper class for TAO_Transient_Bindings_Map: unifies several
-  //     data items, so they can be stored together as a  <value>
-  //     for a <key> in a hash table holding the state of a Transient
-  //     Naming Context.
+  //     Stores information a context keeps for each bound name.
   //
   // = DESCRIPTION
-  //     This class holds CORBA Object pointer and a binding type, so
-  //     they can be stored together as a <value> for a <key> in a
-  //     hash table holding the state of a Transient Naming Context.
-  //
+  //     Each bound name is associated with an object reference and
+  //     the type of binding.
 public:
   // = Initialization and termination methods.
   TAO_IntId (void);
@@ -60,28 +55,22 @@ public:
   void operator= (const TAO_IntId & rhs);
   // Assignment operator (does copy memory).
 
-  // = Data members.
-
   CORBA::Object_ptr ref_;
-  // Object reference to be stored in a Transient Naming Context.
+  // CORBA object reference of the bound object.
 
   CosNaming::BindingType type_;
-  // Binding type for <ref_>.
+  // Indicator of whether the object is a NamingContext that should
+  // participate in name resolution when compound names are used.
 };
 
 class TAO_ORBSVCS_Export TAO_ExtId
 {
   // = TITLE
-  //     Helper class for TAO_Transient_Bindings_Map: unifies several
-  //     data items, so they can be stored together as a  <key>
-  //     for a <value> in a hash table holding the state of a Transient
-  //     Naming Context.
+  //    Stores the name to which an object is bound.
   //
   // = DESCRIPTION
-  //     This class holds id and kind strings, so
-  //     they can be stored together as a <key> for a <value> in a
-  //     hash table holding the state of a Transient Naming Context.
-  //
+  //    This class is used as the External ID for the
+  //    <ACE_Hash_Map_Manager>.
 public:
   // = Initialization and termination methods.
 
@@ -98,8 +87,6 @@ public:
   ~TAO_ExtId (void);
   // Destructor.
 
-  // = Assignment and comparison operators.
-
   void operator= (const TAO_ExtId & rhs);
   // Assignment operator (does copy memory).
 
@@ -110,23 +97,18 @@ public:
   // Inequality comparison operator.
 
   u_long hash (void) const;
-  // <hash> function is required in order for this class to be usable by
-  // ACE_Hash_Map_Manager.
-
-  // = Data members.
+  // This class has to have a hash for use with ACE_Hash_Map_Manager.
 
   ACE_CString kind_;
-  // <kind> portion of the name to be associated with some object
-  // reference in a Transient Naming Context.
+  // Any information user wants to store (not used by Naming Service).
 
   ACE_CString id_;
-  // <id> portion of the name to be associated with some object
-  // reference in a Transient Naming Context.
-
-  // = Accessors: return <id_> and <kind_> in a const char * format.
+  // Any information user wants to store (not used by Naming Service).
 
   const char * id (void);
   const char * kind (void);
+  // Accessors.
+
 };
 
 #endif /* TAO_ENTRIES_H */

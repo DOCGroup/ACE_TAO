@@ -84,6 +84,9 @@ public:
   const char *instance_name ();
   // report the instance name for instantiation
 
+  const char *object_manager_name ();
+  // report the object manager name for the sequence of objects
+
 protected:
   virtual char *gen_name (void);
   // helper to create_name

@@ -163,10 +163,10 @@ public:
 
   virtual int find (const char *name, void *&pointer);
   // Locate <name> and pass out parameter via pointer.  If found,
-  // return 0, Returns -1 if <name> isn't found.
+  // return 0, Returns -1 if failure occurs.
 
   virtual int find (const char *name);
-  // Returns 0 if the name is in the mapping and -1 if not.
+  // returns 0 if the name is in the mapping. -1, otherwise.
 
   virtual int unbind (const char *name);
   // Unbind (remove) the name from the map.  Don't return the pointer

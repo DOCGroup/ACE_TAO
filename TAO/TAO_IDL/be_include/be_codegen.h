@@ -19,17 +19,11 @@
 #ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
 
-#include "ace/Singleton.h"
-#include "ace/Synch.h"
-
 #define NAMEBUFSIZE 1024
 // maximum length of static buffers used to store names
 
 class TAO_Visitor_Factory;
-class TAO_OutStream;
 class be_visitor_context;
-class be_visitor;
-class be_decl;
 
 class TAO_CodeGen
 {
@@ -75,7 +69,7 @@ public:
     TAO_ARGUMENT_PRE_UPCALL_SS,              // preprocessing of argument
                                              // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
-    TAO_ARGUMENT_COLLOCATED_UPCALL_SS, // passing argument
+    TAO_ARGUMENT_COLLOCATED_UPCALL_SS,                  // passing argument
                                                         // variable to upcall
     TAO_ARGUMENT_POST_UPCALL_SS,             // postprocessing of argument
                                              // variable after upcall
@@ -87,11 +81,8 @@ public:
     TAO_ATTRIBUTE_IH,                        // in implementation header
     TAO_ATTRIBUTE_SS,                        // in server skeletons
     TAO_ATTRIBUTE_IS,                        // in implementation skeletons
-    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH, // in server header for collocated
-    TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS,             // in server skeletons for
-                                             // collocated
-    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH, // in server header for collocated
-    TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,             // in server skeletons for
+    TAO_ATTRIBUTE_COLLOCATED_SH,             // in server header for collocated
+    TAO_ATTRIBUTE_COLLOCATED_SS,             // in server skeletons for
                                              // collocated
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
@@ -151,10 +142,8 @@ public:
     TAO_INTERFACE_SI,
     TAO_INTERFACE_SS,
     TAO_INTERFACE_IS,
-    TAO_INTERFACE_THRU_POA_COLLOCATED_SH,
-    TAO_INTERFACE_THRU_POA_COLLOCATED_SS,
-    TAO_INTERFACE_DIRECT_COLLOCATED_SH,
-    TAO_INTERFACE_DIRECT_COLLOCATED_SS,
+    TAO_INTERFACE_COLLOCATED_SH,
+    TAO_INTERFACE_COLLOCATED_SS,
     TAO_INTERFACE_ANY_OP_CH,
     TAO_INTERFACE_ANY_OP_CS,
     TAO_INTERFACE_CDR_OP_CH,
@@ -228,10 +217,8 @@ public:
     TAO_OPERATION_IH,                       // in implementation header
     TAO_OPERATION_SS,                       // in server skeletons
     TAO_OPERATION_IS,                       // in server skeletons
-    TAO_OPERATION_THRU_POA_COLLOCATED_SH,            // in collocated server header
-    TAO_OPERATION_THRU_POA_COLLOCATED_SS,            // in collocated server skel
-    TAO_OPERATION_DIRECT_COLLOCATED_SH,            // in collocated server header
-    TAO_OPERATION_DIRECT_COLLOCATED_SS,            // in collocated server skel
+    TAO_OPERATION_COLLOCATED_SH,            // in collocated server header
+    TAO_OPERATION_COLLOCATED_SS,            // in collocated server skel
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
                                              // signature
     TAO_OPERATION_RETTYPE_IS,                // return type in client header op
@@ -288,19 +275,72 @@ public:
     // Emitting code for AMI.
     TAO_OPERATION_AMI_CH,                  // AMI stub generation.
     TAO_OPERATION_AMI_CS,                  // AMI stub generation.
-    TAO_OPERATION_AMI_ARGLIST,             // AMI stubs in client header
+    TAO_OPERATION_AMI_ARGLIST_CH,             // AMI stubs in client header
+    TAO_OPERATION_AMI_ARGLIST_CS,             // AMI stubs in client cpp.
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
-    TAO_ARGUMENT_AMI_ARGLIST,              // Arg list in AMI stub.
+    TAO_ARGUMENT_AMI_ARGLIST_CH,              // Arg list in AMI stub.
+    TAO_ARGUMENT_AMI_ARGLIST_CS,              // Arg list in AMI stub.
     TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.
     TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
-    // @ Alex: FWD does nt make sense.
-    //         Should rename it.
-    TAO_AMI_HANDLER_CH,
-    TAO_AMI_HANDLER_OPERATION_CH,
-    TAO_AMI_HANDLER_OPERATION_ARGLIST,
-    TAO_ARGUMENT_AMI_HANDLER_ARGLIST,
+
+    TAO_AMI_HANDLER_SERVANT_CH,            // POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_SERVANT_CS,            // POA_AMI_*_Handler.
+
+    TAO_AMI_HANDLER_STUB_CH,               // AMI_*_Handler class visitor.
+
+    TAO_AMI_HANDLER_STUB_CS,               // AMI_*_Handler class visitor.
+
+    TAO_AMI_HANDLER_SERVANT_OPERATION_CH,  // Operation in AMI_*_Handler.
+    TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CS,
+    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH,
+    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS,
     TAO_ARGUMENT_ARGLIST_AMI_HANDLER,
+    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,
+
+    TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
+
+    TAO_COLLOCATED_AMI_HANDLER_CH,           // Collocated AMI_*_Handler class.
+
+    TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation inside the collocated AMI handler.
+
+// @@ Michael    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
+
+// @@ Michael    TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS,
+
+    TAO_AMI_HANDLER_STUB_OPERATION_CS,
+
+    TAO_AMI_HANDLER_TYPECODE_DEFN,           // Typecode definition for AMI Handler class.
+
+    TAO_AMI_OPERATION_ARG_INVOKE_CS,         // Invoke arguments for AMI's sendc method.
+
+    TAO_AMI_ARGUMENT_INVOKE_CS,
+
+    TAO_AMI_HANDLER_SKELETON_CS,
+
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS,        // Result argument declaration.
+
+    TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,           // Argument declartion.
+
+    TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,             // State derived out of the above
+
+    TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,         // Argument list for the upcall
+                                                     // (only out and inout arguments)
+    TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,              // State derived out of the above
+
+    TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS,     // Marshalling the return value
+
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS,   // Demarshalling the return value
+
+    TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS,        // Marshalling the inout and out arguments
+
+    TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS,             // State derived out of the above
+
+    TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS,      // Demarshalling the inout and out arguments
+
+    TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS,           // State derived out of the above
 
     // Emitting code for root.
     TAO_ROOT_CH,
@@ -424,11 +464,16 @@ public:
     // these are for typecode generation
     TAO_TC_DEFN_TYPECODE, // top level typecode
     TAO_TC_DEFN_TYPECODE_NESTED, // nested tc
+
     TAO_TC_DEFN_ENCAPSULATION, // encapsulation
+    TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION, // encapsulation
+
     TAO_TC_DEFN_SCOPE, // scope
     TAO_TC_DEFN_TC_SIZE, // tc size computation
     TAO_TC_DEFN_ENCAP_LEN, // encap size computation
     TAO_TC_DEFN_SCOPE_LEN, // scope size computation
+
+    TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
 
     // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN

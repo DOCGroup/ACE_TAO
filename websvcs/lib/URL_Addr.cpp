@@ -200,8 +200,7 @@ ACE_HTTP_Addr::ACE_HTTP_Addr (LPCTSTR host_name,
 }
 
 ACE_HTTP_Addr::ACE_HTTP_Addr (const ACE_HTTP_Addr &addr)
-  :  ACE_URL_Addr (),
-     hostname_ (0),
+  :  hostname_ (0),
      port_number_ (0),
      path_ (0),
      query_ (0)
@@ -270,7 +269,7 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
   return 0;
 }
 
-void
+void 
 ACE_HTTP_Addr::clear (void)
 {
   if (this->hostname_ != 0)
@@ -286,7 +285,7 @@ ACE_HTTP_Addr::url_size (int flags) const
 {
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
-  size_t size =
+  size_t size = 
     + sizeof (ASYS_TEXT ("http://"))
     + sizeof (ASYS_TEXT ("/:?")); // separators
 
@@ -320,7 +319,7 @@ path_copy (LPCTSTR begin,
            LPTSTR& target,
            LPCTSTR src)
 {
-  // Copy one character at a time, if we find a /../ we go back to the
+  // Copy one character at a time, if we find a /../ we go back to the 
   // previous '/'
   for (; *src != 0; ++src)
     {
@@ -377,7 +376,7 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
                       ASYS_TCHAR [n],
                       0);
 
-      // We copy the contens of <path> into <buf>; but simplifying the
+      // We copy the contens of <path> into <buf>; but simplifying the 
       // path, to avoid infinite loop like:
       // "foo/../foo/../foo/../foo/../foo/index.html"
       //
@@ -451,7 +450,8 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
 
   LPCTSTR string = address;
   string += http_size;
-  string += 2; // == strlen ("//");
+  ASYS_TCHAR separator[] = ASYS_TEXT("//");
+  string += sizeof(separator)/sizeof(separator[0]) - 1;
 
   // Make a copy of the string to manipulate it.
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (string), -1);
@@ -473,7 +473,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
         }
       ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path_start), -1);
     }
-
+  
   // By now t is null terminated at the start of the path, find the
   // port (if present).
   ASYS_TCHAR *port_start = ACE_OS::strchr(this->hostname_, ':');
@@ -496,7 +496,7 @@ ACE_HTTP_Addr::addr_to_string (LPTSTR buffer,
 {
   if (size < this->url_size (flags))
     return -1;
-
+  
   if (this->hostname_ == 0)
     return -1;
 
@@ -511,7 +511,7 @@ ACE_HTTP_Addr::addr_to_string (LPTSTR buffer,
     {
      n += ACE_OS::sprintf (buffer + n, "%s", this->hostname_);
     }
-
+  
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
     {
       n += ACE_OS::sprintf (buffer + n, ":%d", this->port_number_);
@@ -556,8 +556,7 @@ ACE_FTP_Addr::ACE_FTP_Addr (LPCTSTR host_name,
 }
 
 ACE_FTP_Addr::ACE_FTP_Addr (const ACE_FTP_Addr& addr)
-  :  ACE_URL_Addr (),
-     user_ (0),
+  :  user_ (0),
      passwd_ (0),
      hostname_ (0),
      path_ (0)
@@ -640,7 +639,7 @@ ACE_FTP_Addr::url_size (int flags) const
 {
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
-  size_t size =
+  size_t size = 
     + sizeof (ASYS_TEXT ("ftp://"))
     + sizeof (ASYS_TEXT ("@:/")); // separators
 
@@ -722,7 +721,8 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
 
   LPCTSTR string = address;
   string += ftp_size;
-  string += 2; // == strlen ("//");
+  ASYS_TCHAR separator[] = ASYS_TEXT("//");
+  string += sizeof(separator)/sizeof(separator[0]) - 1;
 
   // Make a copy of the string to manipulate it.
   ASYS_TCHAR *t;
@@ -844,7 +844,7 @@ ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
   return 0;
 }
 
-void
+void 
 ACE_Mailto_Addr::clear (void)
 {
   if (this->user_ != 0)
@@ -889,7 +889,7 @@ ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
       n += ACE_OS::sprintf (buffer + n, ASYS_TEXT ("?%s"),
                             this->headers_);
     }
-
+  
   return 0;
 }
 
@@ -947,3 +947,4 @@ ACE_Mailto_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 {
   return visitor->visit (this);
 }
+

@@ -11,7 +11,7 @@
 //      This is the command classes for the test of the concurrency service.
 //
 // = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
+//	Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -40,22 +40,21 @@ CC_Command::CC_Command(void)
 }
 
 CosConcurrencyControl::LockSet_var
-CC_Command::GetLockSet (char *lock_set_name,
-                        CORBA::Environment &ACE_TRY_ENV)
+CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_TRY
+  TAO_TRY
     {
       if(ACE_OS::strcmp(lock_set_name, "")!=0)
         {
           CORBA::Object_var ccls_obj =
             CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), lock_set_name,
-                                                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                              TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           CosConcurrencyControl::LockSet_var ccls =
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
-                                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                     TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           return ccls;
         }
@@ -64,17 +63,19 @@ CC_Command::GetLockSet (char *lock_set_name,
           // No lock set name was given. Use the global lock set.
           if(cc_lockset_.in()==0)
             {
-              ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+              TAO_TRY_ENV.clear();
+              TAO_TRY_ENV.exception (new CORBA::UNKNOWN ());
             }
           else
             return cc_lockset_;
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_RETHROW;
+      TAO_RETHROW_RETURN(0);
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
+  // We should never get here
   return 0;
 }
 
@@ -158,16 +159,15 @@ int CC_CreateLockSet_Cmd::execute(void)
 
   printf("Executing create command (lock set: %s)\n", name_);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       CosConcurrencyControl::LockSet_ptr lock_set =
         CC_TestUtils::create_lock_set();
       if(ACE_OS::strcmp(name_,"")!=0)// Do not bind an empty name
         {
           CC_naming_service::Instance()->bind_name(name_,
-                                                   lock_set, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                   lock_set, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
       else
         {
@@ -175,12 +175,12 @@ int CC_CreateLockSet_Cmd::execute(void)
           cc_lockset_ = lock_set;
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_CreateLockSet_Cmd::execute(void)");
+      TAO_TRY_ENV.print_exception("CC_CreateLockSet_Cmd::execute(void)");
+      excep_ = TAO_TRY_ENV.exception();
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 1; // CC_SUCCESS
 }
@@ -210,22 +210,21 @@ int CC_Lock_Cmd::execute(void)
   printf("Executing lock command (lock set: %s, mode: %s)\n",
          name_, CC_TestUtils::get_lock_mode_name(mode_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ccls->lock (mode_,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_Lock_Cmd::execute(void)");
-      return 0;
+      TAO_TRY_ENV.print_exception ("CC_Lock_Cmd::execute(void)");
+      excep_ = TAO_TRY_ENV.exception();
+      //      return 0; // should be CC_FAIL
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 1; // CC_SUCCESS
 }
 
@@ -254,24 +253,23 @@ int CC_UnLock_Cmd::execute(void)
   printf("Executing unlock command (lock set: %s, mode: %s)\n",
          name_, CC_TestUtils::get_lock_mode_name(mode_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->unlock (mode_,
-                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_UnLock_Cmd::execute(void)");
-      return 0;
+      TAO_TRY_ENV.print_exception ("CC_UnLock_Cmd::execute(void)");
+      excep_ = TAO_TRY_ENV.exception();
+      //      return 0; // should be CC_FAIL
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 1; // CC_SUCCESS
 }
 
@@ -302,15 +300,14 @@ int CC_TryLock_Cmd::execute(void)
 
   CORBA::Boolean lock_not_held;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       lock_not_held = ccls->try_lock (mode_,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (lock_not_held)
         {
@@ -323,13 +320,13 @@ int CC_TryLock_Cmd::execute(void)
                     "%s lock held\n",
                     CC_TestUtils::get_lock_mode_name (mode_)));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_TryLock_Cmd::execute(void)");
-      return 0;
+      TAO_TRY_ENV.print_exception ("CC_TryLock_Cmd::execute(void)");
+      excep_ = TAO_TRY_ENV.exception();
+      //      return 0; // Should be CC_FAIL
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 1; // CC_SUCCESS
 }
@@ -363,29 +360,30 @@ int CC_ChangeMode_Cmd::execute(void)
          name_, CC_TestUtils::get_lock_mode_name(held_mode_),
          CC_TestUtils::get_lock_mode_name(new_mode_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->change_mode (held_mode_, new_mode_,
-                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_ChangeMode_Cmd::execute(void)");
+      TAO_TRY_ENV.print_exception ("CC_ChangeMode_Cmd::execute(void)");
+      excep_ = TAO_TRY_ENV.exception();
+      //      return 0; // CC_FAIL
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 1; // CC_SUCCESS
 }
 
 CC_Sleep_Cmd::CC_Sleep_Cmd(int seconds)
   : time_ (seconds)
 {
+  //  printf("CC_Sleep_Cmd::CC_Sleep_Cmd: time: %i\n", seconds);
 }
 
 CC_Sleep_Cmd::~CC_Sleep_Cmd()
@@ -411,6 +409,7 @@ int CC_Sleep_Cmd::execute(void)
 CC_Repeat_Cmd::CC_Repeat_Cmd(int times)
   : times_ (times)
 {
+  //  printf("CC_Repeat_Cmd::CC_Repeat_Cmd: times: %i\n", times);
 }
 
 CC_Repeat_Cmd::~CC_Repeat_Cmd()
@@ -435,6 +434,7 @@ int CC_Repeat_Cmd::execute(void)
 CC_Wait_Cmd::CC_Wait_Cmd(char *prompt)
   : prompt_ (prompt)
 {
+  //  printf("CC_Wait_Cmd::CC_Wait_Cmd: prompt: %s\n", prompt);
 }
 
 CC_Wait_Cmd::~CC_Wait_Cmd()
@@ -561,29 +561,29 @@ CC_Lookup_Cmd::execute(void)
   // Do the lookup if we haven't done it before
   if(cc_lockset_.in() == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      TAO_TRY
         {
           CORBA::Object_var ccls_obj =
             CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), name_,
-                                                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                              TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           CosConcurrencyControl::LockSet_var ccls =
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
-                                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                                     TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           cc_lockset_ = ccls;
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "CC_UnLock_Cmd::execute(void)");
+          TAO_TRY_ENV.print_exception ("CC_UnLock_Cmd::execute(void)");
+          excep_ = TAO_TRY_ENV.exception();
+          //      return 0; // CC_FAIL
         }
-      ACE_ENDTRY;
+      TAO_ENDTRY;
     }
   return 1; // CC_SUCCESS
 }

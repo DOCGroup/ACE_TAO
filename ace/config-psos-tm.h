@@ -30,9 +30,7 @@
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-#define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#  include <signal.h>        //JINLU
-#undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
+#include <signal.h>          //JINLU
 #include <pna.h>             //JINLU
 #define NSIG _NSIG           //_NSIG = 32 defined in signal.h JINLU
 #define TCP_NODELAY  1       // this will be defined later by pSOS/TM

@@ -83,7 +83,7 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (CORBA::Environment &)
+Grid_i::width (CORBA::Environment &A)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
@@ -161,8 +161,7 @@ Grid_Factory_i::Grid_Factory_i (void)
 
 // Copy Constructor
 
-Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
-  :POA_Grid_Factory (grid)
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &)
 {
   // no-op
 }

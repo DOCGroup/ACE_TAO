@@ -16,7 +16,7 @@ BIN2 = Trading_Service
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Trader
@@ -172,13 +172,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -234,6 +227,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \

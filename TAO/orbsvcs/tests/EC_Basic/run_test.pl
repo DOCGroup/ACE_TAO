@@ -5,18 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-require Process;
-$status = 0;
-
-$TEST = Process::Create ($EXEPREFIX."EC_Basic".$EXE_EXT, "");
-
-if ($TEST->TimedWait (60) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $status = 1;
-  $TEST->Kill (); $TEST->TimedWait (1);
-}
+$status = system ($EXEPREFIX."EC_Basic".$EXE_EXT, "");
 
 # @@ Capture any errors from the server too.
 exit $status;

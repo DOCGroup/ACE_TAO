@@ -59,8 +59,7 @@ ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0),
-    queue_ ()
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR[] to ASYS_TCHAR *[]");
 
@@ -86,8 +85,7 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0),
-    queue_ ()
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] to ASYS_TCHAR[]");
 
@@ -117,8 +115,7 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
   // Step through all argv params and copy each one into buf; separate
   // each param with white space.
 
-  ACE_NEW (this->buf_,
-           ASYS_TCHAR[buf_len + 1]);
+  ACE_NEW (this->buf_, ASYS_TCHAR[buf_len + 1]);
 
   ASYS_TCHAR *end = this->buf_;
   int j;
@@ -155,8 +152,7 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0),
-    queue_ ()
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] + ASYS_TCHAR *[] to ASYS_TCHAR[]");
 
@@ -178,8 +174,7 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[],
   int buf_len = ACE_OS::strlen (first_buf) + ACE_OS::strlen (second_buf) + 1;
 
   // Allocate memory to the lenght of the combined argv string.
-  ACE_NEW (this->buf_,
-           ASYS_TCHAR[buf_len + 1]);
+  ACE_NEW (this->buf_, ASYS_TCHAR[buf_len + 1]);
 
   // copy the first argv string to the buffer
   ACE_OS::strcpy (this->buf_,first_buf);
@@ -201,8 +196,7 @@ ACE_ARGV::ACE_ARGV (int substitute_env_args)
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0),
-    queue_ ()
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
 

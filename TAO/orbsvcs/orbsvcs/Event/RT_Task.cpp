@@ -96,8 +96,7 @@ ACE_RT_Task::~ACE_RT_Task (void)
 int
 ACE_RT_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // @@ TODO It may be necessary to pass the options to this class
 
@@ -107,8 +106,8 @@ ACE_RT_Task::svc (void)
       };
       int argc = sizeof (argv)/sizeof (argv[0]);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 #endif
 
       RtecScheduler::OS_Priority thread_priority;
@@ -120,15 +119,15 @@ ACE_RT_Task::svc (void)
         (this->rt_info_,
          thread_priority,
          subpriority,
-         preemption_priority, ACE_TRY_ENV);
+         preemption_priority, TAO_TRY_ENV);
 #else
       ACE_Scheduler_Factory::server ()->priority
         (this->rt_info_,
          thread_priority,
          subpriority,
-         preemption_priority, ACE_TRY_ENV);
+         preemption_priority, TAO_TRY_ENV);
 #endif
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
       if (ACE_OS::thr_setprio (thread_priority) == -1)
         {
 #if defined (ACE_HAS_STHREADS)
@@ -167,11 +166,11 @@ ACE_RT_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "EC (%t) thread exiting.\n"));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -255,22 +254,21 @@ ACE_RT_Task::open_task (const char* name)
       tempname = tempbuffer;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
 #if 1
       rt_info_ =
-        this->scheduler_->create (tempname, ACE_TRY_ENV);
+        this->scheduler_->create (tempname, TAO_TRY_ENV);
 #else
       rt_info_ =
         ACE_Scheduler_Factory::server()->create (tempname,
-                                                 ACE_TRY_ENV);
+                                                 TAO_TRY_ENV);
 #endif
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
     }
-  ACE_CATCH (RtecScheduler::DUPLICATE_NAME, dn_ex)
+  TAO_CATCH (RtecScheduler::DUPLICATE_NAME, dn_ex)
     {
       // @@ TODO: Its already registered, IMHO this should at least
       // report a warning, but I'll stick to the previous code.
@@ -279,7 +277,7 @@ ACE_RT_Task::open_task (const char* name)
       // tempname), 0);
       return 0;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -311,8 +309,7 @@ ACE_RT_Task::synch_threads (size_t threads)
       RtecScheduler::Preemption_Subpriority_t subpriority;
       RtecScheduler::Preemption_Priority_t preemption_priority;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      TAO_TRY
         {
           {
             // @@ TODO handle exceptions
@@ -322,15 +319,15 @@ ACE_RT_Task::synch_threads (size_t threads)
               (rt_info_,
                thread_priority,
                subpriority,
-               preemption_priority, ACE_TRY_ENV);
+               preemption_priority, TAO_TRY_ENV);
 #else
             ACE_Scheduler_Factory::server ()->priority
               (rt_info_,
                thread_priority,
                subpriority,
-               preemption_priority, ACE_TRY_ENV);
+               preemption_priority, TAO_TRY_ENV);
 #endif
-            ACE_TRY_CHECK;
+            TAO_CHECK_ENV;
           }
 
           ACE_DEBUG ((LM_DEBUG, "EC (%t) spawning %d threads at os thread"
@@ -395,12 +392,11 @@ ACE_RT_Task::synch_threads (size_t threads)
                 }
             }
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "priority failed\n");
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
         }
-      ACE_ENDTRY;
+      TAO_ENDTRY;
 
     }
   else

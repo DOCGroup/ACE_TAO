@@ -22,7 +22,7 @@ static const char *TAO_Transport_Timeprobe_Description[] =
     "IIOP_Transport::send - end",
 
     "IIOP_Transport::receive - start",
-    "IIOP_Transport::receive - end",
+    "IIOP_Transport::recieve - end",
 
     "IIOP_Client_Transport::send_request - start",
     "IIOP_Client_Transport::send_request - end"
@@ -130,7 +130,7 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_IIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
+    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
@@ -171,13 +171,13 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
 void
 TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
                                          const TAO_Profile* pfile,
-                                         CORBA::ULong request_id,
+                                         CORBA::ULong /* request_id */,
                                          TAO_OutputCDR &output,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_IIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
+    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
@@ -191,7 +191,7 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
     ACE_THROW (CORBA::MARSHAL ());
 
 
-  if (TAO_GIOP::write_locate_request_header (request_id,
+  if (TAO_GIOP::write_locate_request_header (this->request_id (),
                                              key,
                                              output) != 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -200,8 +200,7 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
 int
 TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
-                                         int two_way,
-                                         ACE_Time_Value *max_wait_time)
+                                         int two_way)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
@@ -209,18 +208,19 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                   two_way) == -1)
     return -1;
 
-  return TAO_GIOP::send_message (this,
-                                 stream,
-                                 orb_core,
-                                 max_wait_time);
+  if (TAO_GIOP::send_message (this,
+                              stream,
+                              orb_core) == -1)
+    return -1;
+
+  return this->idle_after_send ();
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!
 int
-TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
-                                                ACE_Time_Value *max_wait_time)
+TAO_IIOP_Client_Transport::handle_client_input (int /* block */)
 {
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
@@ -251,19 +251,9 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
   TAO_GIOP_Message_State* message_state =
     this->tms_->get_message_state ();
 
-  if (message_state == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP_Transport::handle_client_input -"
-                    " nil message state\n"));
-      return -1;
-    }
-
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
-                                       *message_state,
-                                       max_wait_time);
+                                       *message_state);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -297,14 +287,11 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
       return -1;
     }
 
-  result =
-    this->tms_->dispatch_reply (request_id,
-                                reply_status,
-                                message_state->giop_version,
-                                reply_ctx,
-                                message_state);
-
-  if (result == -1)
+  if (this->tms_->dispatch_reply (request_id,
+                                  reply_status,
+                                  message_state->giop_version,
+                                  reply_ctx,
+                                  message_state) != 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -315,17 +302,12 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
       return -1;
     }
 
-  if (result == 0)
-    {
-      message_state->reset ();
-      return 0;
-    }
-
   // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
   this->tms_->destroy_message_state (message_state);
 
-  return result;
+  // Return something to indicate the reply is received.
+  return 1;
 }
 
 int
@@ -398,8 +380,7 @@ TAO_IIOP_Client_Transport::check_unexpected_data (void)
 // *********************************************************************
 
 ssize_t
-TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
-                          ACE_Time_Value *max_wait_time)
+TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
@@ -430,16 +411,9 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
           // we should set IOV_MAX to that limit.
           if (iovcnt == IOV_MAX)
             {
-              if (max_wait_time == 0)
-                n = this->handler_->peer ().sendv_n ((const iovec *) iov,
-                                                     iovcnt);
-              else
-                n = ACE::writev (this->handler_->peer ().get_handle (),
-                                 (const iovec*)iov,
-                                 iovcnt,
-                                 max_wait_time);
-
-              if (n <= 0)
+              n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+                                                   iovcnt);
+              if (n < 1)
                 return n;
 
               nbytes += n;
@@ -486,29 +460,24 @@ TAO_IIOP_Transport::send (const iovec *iov,
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
-  return ACE::recv_n (this->handler_->peer ().get_handle (),
-                      buf,
-                      len,
-                      max_wait_time);
+  return this->handler_->peer ().recv_n (buf, len);
 }
 
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
                           int flags,
-                          ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
-  return ACE::recv_n (this->handler_->peer ().get_handle (),
-                      buf,
-                      len,
-                      flags,
-                      max_wait_time);
+  return this->handler_->peer ().recv_n (buf,
+                                         len,
+                                         flags);
 }
 
 ssize_t
@@ -525,8 +494,7 @@ TAO_IIOP_Transport::recv (iovec *iov,
 int
 TAO_IIOP_Transport::send_request (TAO_ORB_Core *  /* orb_core */,
                                   TAO_OutputCDR & /* stream   */,
-                                  int             /* twoway   */,
-                                  ACE_Time_Value * /* max_wait_time */)
+                                  int             /* twoway   */)
 {
   return -1;
 }

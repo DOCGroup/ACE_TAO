@@ -10,8 +10,9 @@ ACE_RCSID(ImplRepo, nestea_i, "$Id$")
 
 // Constructor
 
-  Nestea_i::Nestea_i (const char *filename, int /*shutdown*/)
-: cans_ (0)
+Nestea_i::Nestea_i (const char *filename, int shutdown)
+: shutdown_ (shutdown),
+  cans_ (0)
 {
   this->data_filename_ = ACE::strnew (filename);
   
@@ -42,6 +43,9 @@ Nestea_i::drink (CORBA::Long cans,
 
   this->cans_ += cans;
 
+  if (this->shutdown_ != 0)
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
   this->save_data ();
 }
 
@@ -63,6 +67,9 @@ Nestea_i::crush (CORBA::Long cans,
   else
     this->cans_ -= cans;
   
+  if (this->shutdown_ != 0)
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
   this->save_data ();
 }
 
@@ -78,6 +85,9 @@ Nestea_i::bookshelf_size (CORBA::Environment &ACE_TRY_ENV)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::bookshelf_size\n"));
 
+  if (this->shutdown_ != 0)
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
   return this->cans_;
 }
 
@@ -91,6 +101,9 @@ Nestea_i::get_praise (CORBA::Environment &ACE_TRY_ENV)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::get_praise\n"));
+
+  if (this->shutdown_ != 0)
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
   if (this->cans_ > 500)
     return CORBA::string_dup ("Man, that is one excellent Nestea Collection!");

@@ -9,7 +9,7 @@
 //    Object_A_i.cpp
 //
 // = DESCRIPTION
-//    This class implements the Object A  of the
+//    This class implements the Object A  of the 
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -36,26 +36,27 @@ Initiator_i::~Initiator_i (void)
 }
 
 void
-Initiator_i::foo_object_B (CORBA::Environment &ACE_TRY_ENV)
+Initiator_i::foo_object_B (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));
 
-  ACE_TRY
+  TAO_TRY
     {
-      this->object_B_var_->foo (this->object_A_var_.in (),
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->object_B_var_->foo (this->object_A_var_.in (), 
+                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Initiator_i::foo_object_B: Returned from call.\n"));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the server");
+      TAO_TRY_ENV.print_exception ("calling the server_");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) END Initiator_i::foo_object_B ()\n"));
 }
+

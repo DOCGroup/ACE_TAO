@@ -409,9 +409,9 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
                                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return poa_current_impl->poa ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
-                                                                           interface,
-                                                                           ACE_TRY_ENV);
+  return poa_current_impl->POA_impl ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
+                                                                                interface,
+                                                                                ACE_TRY_ENV);
 }
 
 void
@@ -436,13 +436,3 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -92,7 +92,7 @@ public:
   // (potentially) TSS object.
 
   int is_server_thread_;
-  // Is this thread a server for this ORB?
+  // Is this thread a leader for this ORB?
 
   int is_leader_thread_;
   // Is this thread a leader for this ORB?
@@ -245,11 +245,11 @@ public:
   ACE_Thread_Manager *thr_mgr (void);
 
   // = Set/get <rootPOA>.
-  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+  TAO_POA *root_poa (CORBA::Environment &TAO_IN_ENV = TAO_default_environment (),
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = TAO_default_environment (),
                                               const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
@@ -432,7 +432,7 @@ protected:
   void create_and_set_root_poa (const char *adapter_name,
                                 TAO_POA_Manager *poa_manager,
                                 const TAO_POA_Policies *policies,
-                                CORBA::Environment &ACE_TRY_ENV);
+                                CORBA::Environment &TAO_IN_ENV);
   // Initialize the root POA.
 
   TAO_Object_Adapter *object_adapter_i (void);
@@ -644,9 +644,6 @@ public:
   int unbind (const char* orb_id);
   // The canonical ACE_Map methods.
 
-  TAO_ORB_Core *first_orb (void);
-  // Obtain the first ORB for the ORB_Core_instance() implementation
-
   static TAO_ORB_Table* instance (void);
   // Return a unique instance
 
@@ -658,9 +655,6 @@ protected:
 private:
   Table table_;
   // The implementation.
-
-  TAO_ORB_Core *first_orb_;
-  // The first ORB created by the user
 };
 
 // ****************************************************************

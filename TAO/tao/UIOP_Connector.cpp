@@ -109,8 +109,7 @@ TAO_UIOP_Connector::close (void)
 
 int
 TAO_UIOP_Connector::connect (TAO_Profile *profile,
-                             TAO_Transport *& transport,
-                             ACE_Time_Value *max_wait_time)
+                             TAO_Transport *& transport)
 {
   if (profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return -1;
@@ -123,13 +122,6 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
 
   const ACE_UNIX_Addr &oa = uiop_profile->object_addr ();
 
-  ACE_Synch_Options synch_options;
-  if (max_wait_time != 0)
-    {
-      synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
-                         *max_wait_time);
-    }
-
   TAO_UIOP_Client_Connection_Handler* result;
 
   // the connect call will set the hint () stored in the Profile
@@ -138,13 +130,12 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
   // affected.
   if (this->base_connector_.connect (uiop_profile->hint (),
                                      result,
-                                     oa,
-                                     synch_options) == -1)
+                                     oa) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXPATHLEN + 1];
-          profile->addr_to_string (buffer, MAXPATHLEN);
+          char buffer [MAXNAMELEN + 1];
+          profile->addr_to_string (buffer, MAXNAMELEN);
           ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
                       "%s failed (%p)\n",
                       __FILE__,
@@ -296,26 +287,26 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
+int
 TAO_UIOP_Connector::make_profile (const char *endpoint,
                                   TAO_Profile *&profile,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //
-  //    N.n@rendezvous_point|object_key
+  //    N.n//rendezvous_point|object_key
   //
   // or:
   //
-  //    rendezvous_point|object_key
+  //    //rendezvous_point|object_key
 
-  ACE_NEW_THROW_EX (profile,
-                    TAO_UIOP_Profile (endpoint,
-                                      this->orb_core_,
-                                      ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+  ACE_NEW_RETURN (profile,
+                  TAO_UIOP_Profile (endpoint,
+                                    this->orb_core_,
+                                    ACE_TRY_ENV),
+                  -1);
 
-  ACE_CHECK;
+  return 0;  // Success
 }
 
 

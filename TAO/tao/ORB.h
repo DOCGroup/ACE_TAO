@@ -24,7 +24,6 @@
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
-#include "tao/IORManipulation.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
@@ -51,10 +50,12 @@ typedef enum
 # pragma option -a                // BC++, use 1 byte alignment
 #endif
 
-// = Forward declarations.
-class TAO_MProfile;
+// Forward declarations of some data types are needed.
+
 class TAO_POA_Manager;
 class TAO_POA_Policies;
+
+// =Forward declarations
 struct TAO_Dispatch_Context;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
@@ -62,16 +63,23 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
+
+// Forward declaration and typedefs for the exception thrown by
+// the ORB Dynamic Any factory functions.
 class CORBA_ORB_InconsistentTypeCode;
-class TAO_ServantBase;
-class TAO_Stub;
+typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
 
-typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+
+// The new (POA) base class for servants.
+class TAO_ServantBase;
+
+class TAO_Stub;
+// Forward declarations.
 
 class TAO_Export CORBA_String_var
 {
@@ -308,16 +316,11 @@ public:
   {
   public:
     InvalidName (void);
-    InvalidName (const InvalidName &);
-    ~InvalidName (void);
-    InvalidName &operator= (const InvalidName &);
 
     virtual void _raise (void);
-    static InvalidName* _narrow (CORBA_Exception *ex);
-    // = TAO extension
-    static CORBA::Exception *_alloc (void);
+    InvalidName* _narrow (CORBA_Exception *ex);
+    virtual int _is_a (const char* interface_id) const;
   };
-  static CORBA::TypeCode_ptr _tc_InvalidName;
 
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
@@ -446,25 +449,25 @@ public:
   // @@EXC@@ Add the ACE_THROW_SPEC for these functions...
 
   CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &TAO_IN_ENV);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   int run (void);
@@ -491,17 +494,17 @@ public:
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               CORBA_Environment &ACE_TRY_ENV =
+                                               CORBA_Environment &TAO_IN_ENV =
                                                TAO_default_environment ());
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                ACE_Time_Value *timeout,
-                                               CORBA_Environment &ACE_TRY_ENV =
+                                               CORBA_Environment &TAO_IN_ENV =
                                                TAO_default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
-  // provided by the ORB for certain well-known object references.  TAO
-  // supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
-  // and "POACurrent" via this method.  The <timeout> value bounds the
+  // provided by the ORB for certain well-known object references.
+  // TAO supports the "NameService", "TradingService", "RootPOA", and
+  // "POACurrent" via this method.  The <timeout> value bounds the
   // amount of time the ORB blocks waiting to resolve the service.
   // This is most useful for bootstrapping remote services, such as
   // the "NameService" or "TradingService", that are commonly resolved
@@ -512,7 +515,7 @@ public:
   // <resolve_initial_references> specification.
 
   // Unimplemented function - throws CORBA::NO_IMPLEMENT.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &ACE_TRY_ENV =
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
                                                     TAO_default_environment ());
 
 #if defined(TAO_HAS_CORBA_MESSAGING)
@@ -527,8 +530,7 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  virtual TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
-                                                        TAO_ServantBase *&servant);
+  virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
   // must implement this and determine what is a collocated object
@@ -542,7 +544,7 @@ public:
                                       CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
-  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
+  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &TAO_IN_ENV,
                                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
                                      const TAO_POA_Policies *policies = 0);
@@ -550,13 +552,13 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                  CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //
@@ -580,17 +582,13 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static void init_orb_globals (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 
   static CORBA::Boolean orb_free_resources (void);
   // Indicates if we have reached a point where all ORB owned
   // resources will be deallocated.
-
-  // The function used by tao to handle the "unexpected" exceptions,
-  // It raises CORBA::UNKNOWN.
-  static void _tao_unexpected_exception (void);
 
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
@@ -626,22 +624,13 @@ protected:
   CORBA_ORB (TAO_ORB_Core *orb_core);
   virtual ~CORBA_ORB (void);
 
-  TAO_SERVANT_LOCATION _find_collocated_servant (TAO_Stub *sobj,
-                                                 TAO_ORB_Core *orb_core,
-                                                 TAO_ServantBase *& servant,
-                                                 const TAO_MProfile &mprofile);
-  // Check if local servant exists for <mprofile> in <orb_core>.
-
-  CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
+  CORBA_Object_ptr resolve_poa_current (CORBA_Environment &TAO_IN_ENV);
   // Resolve the POA current.
 
   CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
   // Resolve the Policy Manager for this ORB.
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
   // Resolve the Policy Current for this thread.
-
-  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
-  // Resolve the IOR Manipulation reference for this ORB.
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts);
@@ -658,11 +647,7 @@ private:
                                             CORBA::Environment& ACE_TRY_ENV);
   // Resolve the trading object reference.
 
-  CORBA_Object_ptr resolve_implrepo_service (ACE_Time_Value *timeout,
-                                             CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the Implementation Repository object reference.
-
-  int multicast_query (char* &buf,
+  int multicast_query (char *buf,
                        const char *service_name,
                        u_short port,
                        ACE_Time_Value *timeout);
@@ -674,20 +659,17 @@ private:
                                          u_short port,
                                          ACE_Time_Value *timeout,
                                          CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the reference of a service of type <name>.
+  // Resolve the refernce of a service of type <name>.
 
   CORBA::Object_ptr file_string_to_object (const char* filename,
-                                           CORBA::Environment &ACE_TRY_ENV);
+                                           CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
   CORBA::Object_ptr ior_string_to_object (const char* ior,
-                                          CORBA::Environment &ACE_TRY_ENV);
-  // Convert an OMG IOR into an object reference.
-
-  CORBA::Object_ptr url_ior_string_to_object (const char* ior,
-                                              CORBA::Environment &ACE_TRY_ENV);
-  // Convert an URL style IOR into an object reference.
+                                          CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
 
 private:
   ACE_SYNCH_MUTEX lock_;
@@ -726,10 +708,6 @@ private:
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
 
-  CORBA_Object_ptr implrepo_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured Implementation Repository.
-
   static int orb_init_count_;
   // Count of the number of times that <ORB_init> has been called.
   // This must be protected by <ACE_Static_Object_Lock>.
@@ -744,10 +722,6 @@ private:
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
-
-  TAO_IOR_Manipulation_impl ior_manipulation_;
-  // object used for manipulation profiles in an object reference, that
-  // is an IOR.
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.
@@ -798,17 +772,6 @@ public:
 private:
   CORBA::ORB_ptr &ptr_;
 };
-
-extern TAO_Export void
-operator<<= (CORBA::Any &, const CORBA::ORB::InvalidName &);
-extern TAO_Export void
-operator<<= (CORBA::Any &, CORBA::ORB::InvalidName*);
-extern TAO_Export CORBA::Boolean
-operator>>= (const CORBA::Any &, CORBA::ORB::InvalidName *&);
-extern TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
-extern TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

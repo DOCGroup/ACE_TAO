@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -58,33 +58,32 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->name () << "_ptr " << node->name ()
       << "::_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "CORBA::Environment &env" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl
-      << "CORBA::Boolean is_a = obj->_is_a (\""
-      << node->repoID () << "\", ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (" << node->name () << "::_nil ());" << be_nl
-      << "if (is_a == 0)" << be_idt_nl
+      << "if (!obj->_is_a (\"" << node->repoID () << "\", env))"
+      << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
   *os << "return " << node->name ()
-      << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
+      << "::_unchecked_narrow (obj, env);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // This may be necessary to work around a GCC compiler bug!
 //  const char *skel_name = node->full_skel_name (); // unused at this time
-//    const char *coll_name = node->full_coll_name ();
-//    assert (coll_name != 0);
+  const char *coll_name = node->full_coll_name ();
+  assert (coll_name != 0);
 
   // The _unchecked_narrow method
   *os << node->name () << "_ptr " << node->name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &" << be_uidt_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
@@ -141,7 +140,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // generate the is_a method
   os->indent ();
   *os << "CORBA::Boolean " << node->name () << "::_is_a (" <<
-    "const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+    "const CORBA::Char *value, CORBA::Environment &env)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "if (\n";
@@ -155,11 +154,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   os->indent ();
-  *os << "(!ACE_OS::strcmp ((char *)value, \"IDL:omg.org/CORBA/Object:1.0\")))\n";
+  *os << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
   *os << "  return 1; // success using local knowledge\n";
   os->decr_indent ();
   *os << "else" << be_nl;
-  *os << "  return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);\n";
+  *os << "  return this->CORBA_Object::_is_a (value, env);\n";
   os->decr_indent ();
   *os << "}\n\n";
 
@@ -184,10 +183,76 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "TypeCode definition failed\n"
-                         ), -1);
+                         "TypeCode definition failed\n"),
+                        -1);
     }
 
+  // AMI
+
+  // Generate code for the AMI Reply Handler.
+  if (idl_global->ami_call_back () == I_TRUE)
+    {
+      // = Generate the default stub code for Handler.
+
+      // Set the context.
+      be_visitor_context ctx (*this->ctx_);
+
+      // Set the state.
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS);
+
+      // Create the visitor.
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "Bad visitor\n"),
+                            -1);
+        }
+
+      // Call the visitor on this interface.
+      if (node->accept (visitor) == -1)
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "code gen for ami handler default stub failed\n"),
+                            -1);
+        }
+      delete visitor;
+
+      // = Generate the Servant Skeleton code.
+      // Set the context.
+      ctx = *this->ctx_;
+
+      // Set the state.
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS);
+
+      // Create the visitor.
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "Bad visitor\n"),
+                            -1);
+        }
+
+      // Call the visitor on this interface.
+      if (node->accept (visitor) == -1)
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "code gen for ami handler failed\n"),
+                            -1);
+        }
+      delete visitor;
+    }
 
   return 0;
 }

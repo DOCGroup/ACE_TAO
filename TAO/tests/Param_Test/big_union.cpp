@@ -60,20 +60,23 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref,
       // get access to a Coffee Object
       this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      this->reset_parameters ();
-      return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      //ACE_UNUSED_ARG (sysex);
       ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
+      return -1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
+      return -1;
     }
   ACE_ENDTRY;
-  return -1;
+  ACE_CHECK_RETURN (-1);
+
+  this->reset_parameters ();
+  return 0;
 }
 
 int
@@ -195,8 +198,6 @@ Test_Big_Union::reset_parameters (void)
       }
       break;
     }
-  this->out_ = new Param_Test::Big_Union (this->in_);
-  this->ret_ = new Param_Test::Big_Union (this->in_);
   return 0;
 }
 
@@ -204,24 +205,11 @@ int
 Test_Big_Union::run_sii_test (Param_Test_ptr objref,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      this->ret_ = objref->test_big_union (this->in_,
-                                           this->inout_,
-                                           this->out_,
-                                           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Big_Union::run_sii_test\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
+  this->ret_ = objref->test_big_union (this->in_,
+                                       this->inout_,
+                                       this->out_,
+                                       ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
@@ -229,60 +217,40 @@ Test_Big_Union::add_args (CORBA::NVList_ptr param_list,
                           CORBA::NVList_ptr retval,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      CORBA::Any in_arg (Param_Test::_tc_Big_Union,
-                         &this->in_,
-                         0);
+  CORBA::Any in_arg (Param_Test::_tc_Big_Union,
+                     &this->in_,
+                     0);
 
-      CORBA::Any inout_arg (Param_Test::_tc_Big_Union,
-                            &this->inout_,
-                            0);
+  CORBA::Any inout_arg (Param_Test::_tc_Big_Union,
+                        &this->inout_,
+                        0);
 
-      CORBA::Any out_arg (Param_Test::_tc_Big_Union,
-                          &this->out_.inout (),
-                          0);
+  CORBA::Any out_arg (Param_Test::_tc_Big_Union,
+                      &this->out_,
+                      0);
 
-      // add parameters
-      param_list->add_value ("u1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // add parameters
+  param_list->add_value ("u1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("u2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("u2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("u3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("u3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         ACE_TRY_ENV);
 
-      // add return value
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (Param_Test::_tc_Big_Union,
-                               &this->ret_.inout (),
-                               0,
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Big_Union::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
+  // add return value
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Big_Union,
+                                            &this->ret_,
+                                            0,
+                                            ACE_TRY_ENV);
+  return 0;
 }
 
 CORBA::Boolean

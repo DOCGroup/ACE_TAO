@@ -23,7 +23,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
-#include "orbsvcs/IR_Helper.h"
+
+#include "IR_Helper.h"
 
 class Server_i
 {
@@ -98,6 +99,9 @@ private:
 
   int use_ir_;
   // Use the Implementation Repository.
+
+  int register_with_ir_;
+  // Register with the Implementation Repository.
 
   int argc_;
   // Number of command line arguments.

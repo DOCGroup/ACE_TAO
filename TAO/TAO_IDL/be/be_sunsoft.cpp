@@ -92,18 +92,10 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
         case AST_Expression::EV_longdouble:
           break;
         case AST_Expression::EV_char:
-          // isprint() sees \ and ' as printable characters
-          // so we have to test for them first.
+          // isprint() sees '\' as a printable character
+          // so we have to test for it first.
           if (ev->u.cval == '\\')
             this->TAO_OutStream::print ("'\\\\'");
-          else if (ev->u.cval == '\'')
-            this->TAO_OutStream::print ("'\\''");
-
-          // This handles hex and octal escape sequences
-          // that would print out either as weird characters
-          // or as an unsigned number too large for a char.
-          else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
-            this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (isprint (ev->u.cval))
 	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
 	        else if (iscntrl (ev->u.cval))

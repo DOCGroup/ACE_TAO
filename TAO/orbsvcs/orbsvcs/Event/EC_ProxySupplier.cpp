@@ -372,17 +372,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event
     // references,
   }
 
-  ACE_TRY
-    {
-      consumer->push (event, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // @@ This is where the policies for misbehaving consumers
-      //    should kick in.... for the moment just ignore them.
-    }
-  ACE_ENDTRY;
+  consumer->push (event, ACE_TRY_ENV);
 }
 
 void
@@ -405,18 +395,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
-
-    ACE_TRY
-      {
-        consumer->push (event, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHANY
-      {
-        // @@ This is where the policies for misbehaving consumers
-        //    should kick in.... for the moment just ignore them.
-      }
-    ACE_ENDTRY;
+    consumer->push (event, ACE_TRY_ENV);
   }
 
   // The reference count was incremented just before delegating on the

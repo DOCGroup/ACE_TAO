@@ -138,7 +138,3 @@ TAO_Naming_Context::list (CORBA::ULong how_many,
 {
   impl_->list (how_many, bl, bi, ACE_TRY_ENV);
 }
-
-TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
-{
-}

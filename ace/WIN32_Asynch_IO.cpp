@@ -86,9 +86,7 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
                                                          proactor);
 
   if (win32_proactor == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to WIN32 Proactor failed\n"), -1);
 
   // Post myself.
   return win32_proactor->post_completion (this);
@@ -125,6 +123,8 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
   ACE_UNUSED_ARG (signal_number);
 }
 
+// ****************************************************************
+
 int
 ACE_WIN32_Asynch_Operation::open (ACE_Handler &handler,
                                   ACE_HANDLE handle,
@@ -149,18 +149,16 @@ ACE_WIN32_Asynch_Operation::open (ACE_Handler &handler,
 int
 ACE_WIN32_Asynch_Operation::cancel (void)
 {
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
-    && (   (defined (_MSC_VER) && (_MSC_VER > 1020)) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)))
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 
   // @@ This API returns 0 on failure. So, I am returning -1 in that
   //    case. Is that right? (Alex).
-
+  
   int result = (int) ::CancelIo (this->handle_);
-
+  
   if (result == 0)
     // Couldnt cancel the operations.
     return 2;
@@ -169,7 +167,9 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   return 0;
 
 #else /* Not ACE_HAS_WINNT4 && ACE_HAS_WINNT4!=0 && _MSC... */
+
   ACE_NOTSUP_RETURN (-1);
+
 #endif /* ACE_HAS_AIO_CALLS */
 }
 
@@ -324,6 +324,8 @@ ACE_WIN32_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proacto
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+// ********************************************************************
+
 ACE_WIN32_Asynch_Read_Stream::ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Read_Stream_Impl (),
@@ -381,7 +383,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
     return 1;
 
   // If initiate failed, check for a bad error.
-  ACE_OS::set_errno_to_last_error ();
+  errno = ::GetLastError ();
   switch (errno)
     {
     case ERROR_IO_PENDING:
@@ -396,14 +398,8 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
-        }
-
-      return -1;
+      // Return error
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
 }
 
@@ -434,6 +430,9 @@ ACE_WIN32_Asynch_Read_Stream::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
+
+
+// ************************************************************
 
 u_long
 ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write (void) const
@@ -476,7 +475,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
                                                 const void *completion_key,
                                                 u_long error)
 {
-  // Copy the data which was returned by <GetQueuedCompletionStatus>.
+  // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
@@ -565,6 +564,8 @@ ACE_WIN32_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proact
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+// ********************************************************************
+
 ACE_WIN32_Asynch_Write_Stream::ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Stream_Impl (),
@@ -621,7 +622,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
     return 1;
 
   // If initiate failed, check for a bad error.
-  ACE_OS::set_errno_to_last_error ();
+  errno = ::GetLastError ();
   switch (errno)
     {
     case ERROR_IO_PENDING:
@@ -636,13 +637,8 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("WriteFile")));
-        }
-      return -1;
+      // Return error
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WriteFile")), -1);
     }
 }
 
@@ -673,6 +669,8 @@ ACE_WIN32_Asynch_Write_Stream::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
+
+// ************************************************************
 
 ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
                                                                       ACE_HANDLE handle,
@@ -908,6 +906,8 @@ ACE_WIN32_Asynch_Read_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
+// ************************************************************
+
 ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
                                                                         ACE_HANDLE handle,
                                                                         ACE_Message_Block &message_block,
@@ -1052,6 +1052,8 @@ ACE_WIN32_Asynch_Write_File_Result::post_completion (ACE_Proactor_Impl *proactor
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+// ************************************************************
+
 ACE_WIN32_Asynch_Write_File::ACE_WIN32_Asynch_Write_File (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Stream_Impl (),
@@ -1139,6 +1141,8 @@ ACE_WIN32_Asynch_Write_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
+// ************************************************************
+
 u_long
 ACE_WIN32_Asynch_Accept_Result::bytes_to_read (void) const
 {
@@ -1208,7 +1212,7 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
+// Base class operations. These operations are here to kill dominance 
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1277,6 +1281,8 @@ ACE_WIN32_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+// ************************************************************
+
 ACE_WIN32_Asynch_Accept::ACE_WIN32_Asynch_Accept (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Accept_Impl (),
@@ -1313,15 +1319,9 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
                                       SOCK_STREAM,
                                       0);
       if (accept_handle == ACE_INVALID_HANDLE)
-        {
-          if (ACE::debug ())
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("ACE_OS::socket")));
-            }
-          return -1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("ACE_OS::socket")), -1);
       else
         // Remember to close the socket down if failures occur.
         close_accept_handle = 1;
@@ -1357,7 +1357,7 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
     return 1;
 
   // If initiate failed, check for a bad error.
-  ACE_OS::set_errno_to_last_error ();
+  errno = ::GetLastError ();
   switch (errno)
     {
     case ERROR_IO_PENDING:
@@ -1375,14 +1375,8 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
 
       // Cleanup dynamically allocated Asynch_Result.
       delete result;
-      
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
-        }
-      return -1;
+
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
 #else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
   ACE_NOTSUP_RETURN (-1);
@@ -1420,6 +1414,8 @@ ACE_WIN32_Asynch_Accept::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
+
+// *********************************************************************
 
 ACE_HANDLE
 ACE_WIN32_Asynch_Transmit_File_Result::socket (void) const
@@ -1590,6 +1586,8 @@ ACE_WIN32_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proac
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+// ************************************************************
+
 ACE_WIN32_Asynch_Transmit_File::ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Transmit_File_Impl (),
@@ -1644,7 +1642,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
     return 1;
 
   // If initiate failed, check for a bad error.
-  ACE_OS::set_errno_to_last_error ();
+  errno = ::GetLastError ();
   switch (errno)
     {
     case ERROR_IO_PENDING:
@@ -1658,14 +1656,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
       // Cleanup dynamically allocated Asynch_Result
       delete result;
-      
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("TransmitFile")));
-        }
-      return -1;
+
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("TransmitFile")), -1);
     }
 #else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
   ACE_NOTSUP_RETURN (-1);
@@ -1702,6 +1694,6 @@ ACE_Proactor *
 ACE_WIN32_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
-}
+} 
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

@@ -18,6 +18,9 @@
 // ================================================================
 
 #include "tao/PollableC.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
@@ -36,9 +39,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Pollable::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Pollable::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", env))
     return CORBA_Pollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -176,14 +177,14 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA_Pollable::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_Pollable::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA_Pollable::_interface_repository_id (void) const
@@ -198,9 +199,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::DIIPollable::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::DIIPollable::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", env))
     return CORBA::DIIPollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -235,15 +234,15 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
     );
 }
 
-CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/DIIPollable:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA::DIIPollable::_interface_repository_id (void) const
@@ -258,9 +257,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_PollableSet::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_PollableSet::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", env))
     return CORBA_PollableSet::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -670,14 +667,14 @@ CORBA::UShort CORBA_PollableSet::number_left (
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA_PollableSet::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_PollableSet::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PollableSet:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA_PollableSet::_interface_repository_id (void) const
@@ -736,9 +733,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Pollable_ptr &_tao
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>;
+  template class TAO_Object_Field_T<CORBA_Pollable>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_Pollable>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::DIIPollable_ptr _tao_elem)
@@ -792,9 +789,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DIIPollable_ptr &
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>;
+  template class TAO_Object_Field_T<CORBA::DIIPollable>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA::DIIPollable>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet_ptr _tao_elem)
@@ -848,9 +845,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet_ptr &_
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>;
+  template class TAO_Object_Field_T<CORBA_PollableSet>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_PollableSet>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::NoPossiblePollable &_tao_elem) // copying
@@ -1098,3 +1095,5 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

@@ -45,9 +45,9 @@ static int Test_Result = 0;        // Change to non-zero if test fails
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *    remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *, arg);
+  ACE_INET_Addr *    remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr      server_addr (remote_addr->get_port_number (),
-                                  ACE_LOCALHOST);
+                                  ASYS_TEXT ("localhost"));
   ACE_SOCK_Stream    cli_stream;
   ACE_SOCK_Connector con;
   ACE_Time_Value     timeout (ACE_DEFAULT_TIMEOUT);
@@ -156,8 +156,6 @@ server (void *arg)
   // will be detected and read into a ACE-allocated buffer.  Use a
   // 5 second timeout to give the client a chance to send it all.
 
-  ACE_OS::sleep (5);
-
   iovec iov[3];
   unsigned char buff[255];
   ssize_t len;
@@ -171,7 +169,7 @@ server (void *arg)
 
   iov[2].iov_base = ACE_reinterpret_cast (char *, &buff[175]);
   iov[2].iov_len = 80;
-
+  
   len = sock_str.recvv_n (iov, 3);
   if (len == -1)
     {
@@ -179,7 +177,6 @@ server (void *arg)
                   ASYS_TEXT ("Test 1, recvv failed")));
       Test_Result = 1;
     }
-
   ACE_ASSERT (len == 255);
   for (i = 0; i < 255; i++)
     if (buff[i] != i)
@@ -228,23 +225,19 @@ spawn (void)
           /* NOTREACHED */
         case 0:
           client (&server_addr);
-          ACE_OS::exit (0);
+          exit (0);
           /* NOTREACHED */
         default:
-          server (ACE_reinterpret_cast (void *, &peer_acceptor));
+          server ((void *) &peer_acceptor);
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           ACE_reinterpret_cast (void *, &peer_acceptor),
-           THR_NEW_LWP | THR_DETACHED) == -1)
+          (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           ACE_reinterpret_cast (void *, &server_addr),
-           THR_NEW_LWP | THR_DETACHED) == -1)
+          (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("thread create failed")));
 
       // Wait for the threads to exit.

@@ -91,7 +91,7 @@ public:
   // file
 
   // = Dynamic initialization hooks.
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
   // Initialize name options and naming context when dynamically
   // linked.
 
@@ -231,10 +231,10 @@ private:
   ACE_Name_Space *name_space_;
   // Name space (can be either local or remote) dynamically bound.
 
-  ASYS_TCHAR hostname_[MAXHOSTNAMELEN + 1];
+  char hostname_[MAXHOSTNAMELEN + 1];
   // Holds the local hostname.
 
-  const ASYS_TCHAR *netnameserver_host_;
+  const char *netnameserver_host_;
   // Holds name of net name server.
 
   int netnameserver_port_;
@@ -255,7 +255,7 @@ public:
   ~ACE_Name_Options (void);
 
   void parse_args (int argc,
-                   ASYS_TCHAR *argv[]);
+                   char *argv[]);
   // Parse arguments.
 
   // = Set/Get port number
@@ -267,8 +267,8 @@ public:
   void context (ACE_Naming_Context::Context_Scope_Type);
 
   // = Set/Get host name
-  void nameserver_host (const ASYS_TCHAR *host);
-  const ASYS_TCHAR *nameserver_host (void);
+  void nameserver_host (const char *host);
+  const char *nameserver_host (void);
 
   // = Set/Get name space directory
   void namespace_dir (LPCTSTR dir);
@@ -309,7 +309,7 @@ private:
   int nameserver_port_;
   // Port to connect to nameserver process.
 
-  const ASYS_TCHAR *nameserver_host_;
+  const char *nameserver_host_;
   // Hostname of nameserver.
 
   LPCTSTR namespace_dir_;

@@ -154,8 +154,7 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_UINT64 ULongLong;
 
-  # if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
-          || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
+  # if defined (_MSC_VER) && _MSC_VER >= 900
       typedef __int64 LongLong;
   # elif ACE_SIZEOF_LONG == 8
       typedef long LongLong;
@@ -193,12 +192,6 @@ public:
   #     else  /* ACE_SIZEOF_INT != 4 */
           // Applications will probably have trouble with this.
           char f[4];
-  #       if defined(_UNICOS)
-        Float (void);
-        Float (const float &init);
-        float operator= (const Float &rhs) const;
-        int operator!= (const Float &rhs) const;
-  #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };
   # endif /* ACE_SIZEOF_FLOAT != 4 */
@@ -729,13 +722,8 @@ public:
   // Re-initialize the CDR stream, copying the contents of the chain
   // of message_blocks starting from <data>.
 
-  ACE_Message_Block * steal_contents (void);
-  // Re-initialize the CDR stream, copying the contents of the chain
-  // of message_blocks starting from <data>.
-
-  void reset_contents (void);
-  // Re-initialize the CDR stream, forgetting about the old contents
-  // of the stream and allocating a new buffer (from the allocators).
+  ACE_Message_Block *steal_contents (void);
+  // Steal the contents from the currect CDR.
 
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....
@@ -752,6 +740,10 @@ public:
   int do_byte_swap (void) const;
   // If non-zero then this stream is writing in non-native byte order,
   // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+
+  int byte_order (void) const;
+  // If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
+  // it returns ~ACE_CDR_BYTE_ORDER.
 
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;

@@ -72,26 +72,19 @@ PP_Test_Client::read_ior (char *filename)
   this->f_handle_ = ACE_OS::open (filename,0);
 
   if (this->f_handle_ == ACE_INVALID_HANDLE)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to open %s for writing: %p\n",
-                         filename),
-                        -1);
-    }
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open %s for writing: %p\n",
+                       filename),
+                      -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
-
   char *data = ior_buffer.read ();
 
   if (data == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to allocate memory to read ior: %p\n"),
+                      -1);
 
   this->factory_key_ = ACE_OS::strdup (data);
-
   ior_buffer.alloc ()->free (data);
 
   return 0;
@@ -163,30 +156,19 @@ PP_Test_Client::parse_args (void)
 void
 PP_Test_Client::send_oneway (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  {
+    ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
 
-  ACE_TRY
+    this->objref_->send_oneway (this->env_);
+  }
+
+  this->call_count_++;
+
+  if (this->env_.exception () != 0)
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
-
-        this->objref_->send_oneway (ACE_TRY_ENV);
-      }
-
-      ACE_TRY_CHECK;
-
-      this->call_count_++;
-
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "from send_oneway");
-
+      this->env_.print_exception ("from send_oneway");
       this->error_count_++;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Twoway test.
@@ -194,30 +176,19 @@ PP_Test_Client::send_oneway (void)
 void
 PP_Test_Client::send_void (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  {
+    ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
 
-  ACE_TRY
+    this->objref_->send_void (this->env_);
+  }
+
+  this->call_count_++;
+
+  if (this->env_.exception () != 0)
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
-
-        this->objref_->send_void (ACE_TRY_ENV);
-      }
-
-      ACE_TRY_CHECK;
-
-      this->call_count_++;
-
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "from send_void");
-
+      this->env_.print_exception ("from send_void");
       this->error_count_++;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Send an octet
@@ -228,36 +199,26 @@ int
 PP_Test_Client::run ()
 {
   if (this->only_void_)
-    {
-      return this->run_void ();
-    }
+    return this->run_void ();
 
   if (this->only_oneway_)
-    {
-      return this->run_oneway ();
-    }
+    return this->run_oneway ();
 
-  CORBA::ULong i;
+  u_int i;
 
   // Show the results one type at a time.
 
   // VOID
   this->call_count_ = 0;
   this->error_count_ = 0;
-
   for (i = 0; i < this->loop_count_; i++)
-    {
-      this->send_void ();
-    }
+    this->send_void ();
 
   // ONEWAY
   this->call_count_ = 0;
   this->error_count_ = 0;
-
   for (i = 0; i < this->loop_count_; i++)
-    {
-      this->send_oneway ();
-    }
+    this->send_oneway ();
 
   // This causes a memPartFree on VxWorks.
   ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
@@ -269,143 +230,70 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  if (do_shutdown)
     {
-      if (do_shutdown)
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-                      "shutdown on Pluggable_Test object\n"));
-
-          this->objref_->shutdown (ACE_TRY_ENV);
-
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, 
-                      "server, please ACE_OS::exit"));
-        }
-
-      return 0;
+      ACE_DEBUG ((LM_DEBUG, "shutdown on Pluggable_Test object\n"));
+      this->objref_->shutdown (this->env_);
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from shutdown_server");
 
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int
 PP_Test_Client::run_oneway (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  u_int i;
 
-  ACE_TRY
+  // ONEWAY
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  for (i = 0; i < this->loop_count_; i++)
+    this->send_oneway ();
+  if (this->shutdown_)
     {
-      CORBA::ULong i;
-
-      // ONEWAY
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-
-      for (i = 0; i < this->loop_count_; i++)
-        {
-          this->send_oneway ();
-        }
-
-      if (this->shutdown_)
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-                      "shutdown on Pluggable_Test object\n"));
-
-          ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
-
-          this->objref_->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, 
-                      "server, please ACE_OS::exit"));
-        }
-
-      return this->error_count_ == 0 ? 0 : 1;
+      ACE_DEBUG ((LM_DEBUG, "shutdown on Pluggable_Test object\n"));
+      ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
+      this->objref_->shutdown (this->env_);
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
 
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+  return this->error_count_ == 0 ? 0 : 1;
 }
 
 int
 PP_Test_Client::run_void (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  u_int i;
 
-  ACE_TRY
+  // VOID
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  for (i = 0; i < this->loop_count_; i++)
+    this->send_void ();
+
+  if (this->shutdown_)
     {
-      CORBA::ULong i;
-
-      // ONEWAY
-      this->call_count_ = 0;
-      this->error_count_ = 0;
-
-      for (i = 0; i < this->loop_count_; i++)
-        {
-          this->send_void ();
-        }
-
-      if (this->shutdown_)
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-                      "shutdown on Pluggable_Test object\n"));
-
-          ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
-
-          this->objref_->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, 
-                      "server, please ACE_OS::exit"));
-        }
-
-      return this->error_count_ == 0 ? 0 : 1;
+      ACE_DEBUG ((LM_DEBUG, "shutdown on Pluggable_Test object\n"));
+      ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
+      this->objref_->shutdown (this->env_);
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
 
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+  return this->error_count_ == 0 ? 0 : 1;
 }
 
 PP_Test_Client::~PP_Test_Client (void)
 {
   // Free resources and close the IOR files.
   if (this->factory_ior_file_)
-    {
-      ACE_OS::fclose (this->factory_ior_file_);
-    }
+    ACE_OS::fclose (this->factory_ior_file_);
 
   if (this->f_handle_ != ACE_INVALID_HANDLE)
-    {
-      ACE_OS::close (this->f_handle_);
-    }
+    ACE_OS::close (this->f_handle_);
 
   if (this->factory_key_ != 0)
-    {
-      ACE_OS::free (this->factory_key_);
-    }
+    ACE_OS::free (this->factory_key_);
 }
 
 int
@@ -424,17 +312,13 @@ PP_Test_Client::init (int argc, char **argv)
       ACE_TRY_CHECK;
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        {
-          return -1;
-        }
+        return -1;
 
       if (this->factory_key_ == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%s: no factory key specified\n",
-                             this->argv_[0]),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%s: no factory key specified\n",
+                           this->argv_[0]),
+                          -1);
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->factory_key_,
@@ -447,12 +331,10 @@ PP_Test_Client::init (int argc, char **argv)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->factory_.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "invalid factory key <%s>\n",
-                             this->factory_key_),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid factory key <%s>\n",
+                           this->factory_key_),
+                          -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
@@ -467,21 +349,17 @@ PP_Test_Client::init (int argc, char **argv)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->objref_.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "null objref returned by factory\n"),
-                            -1);
-        }
-
-      return 0;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "null objref returned by factory\n"),
+                          -1);
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Pluggable_Test::init");
+      ACE_TRY_ENV.print_exception ("Pluggable_Test::init");
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0;)
+
+  return 0;
 }
 

@@ -235,16 +235,15 @@ ACE_Object_Manager::init (void)
           ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-          ACE_NEW_RETURN (preallocations_,
-                          ACE_Object_Manager_Preallocations,
+          ACE_NEW_RETURN (preallocations_, ACE_Object_Manager_Preallocations,
                           -1);
+
           // Open the main thread's ACE_Log_Msg.
           (void) ACE_LOG_MSG;
         }
 
-      ACE_NEW_RETURN (default_mask_,
-                      ACE_Sig_Set (1),
-                      -1);
+      ACE_NEW_RETURN (default_mask_, ACE_Sig_Set (1), -1);
+
       // Finally, indicate that the ACE_Object_Manager instance has
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
@@ -252,7 +251,7 @@ ACE_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return 1;
+      return -1;
     }
 }
 
@@ -302,9 +301,7 @@ ACE_Object_Manager::instance (void)
     {
       ACE_Object_Manager *instance_pointer;
 
-      ACE_NEW_RETURN (instance_pointer,
-                      ACE_Object_Manager,
-                      0);
+      ACE_NEW_RETURN (instance_pointer, ACE_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
@@ -312,7 +309,9 @@ ACE_Object_Manager::instance (void)
       return instance_pointer;
     }
   else
-    return instance_;
+    {
+      return instance_;
+    }
 }
 
 ACE_Sig_Set &
@@ -402,7 +401,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 {
   if (lock == 0)
     {
-      if (starting_up () || shutting_down ())
+      if (starting_up ()  ||  shutting_down ())
         {
           // The Object_Manager and its internal lock have not been
           // constructed yet.  Therefore, the program is single-
@@ -410,9 +409,8 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
-          ACE_NEW_RETURN (lock,
-                          ACE_Thread_Mutex,
-                          -1);
+
+          ACE_NEW_RETURN (lock, ACE_Thread_Mutex, -1);
         }
       else
         {
@@ -421,7 +419,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                                     ace_mon,
                                     *ACE_Object_Manager::instance ()->
-                                    internal_lock_,
+                                      internal_lock_,
                                     -1));
 
           if (lock == 0)
@@ -458,9 +456,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
 
-          ACE_NEW_RETURN (lock,
-                          ACE_Mutex,
-                          -1);
+          ACE_NEW_RETURN (lock, ACE_Mutex, -1);
         }
       else
         {
@@ -533,7 +529,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 {
   if (lock == 0)
     {
-      if (starting_up () || shutting_down ())
+      if (starting_up ()  ||  shutting_down ())
         {
           // The Object_Manager and its internal lock have not been
           // constructed yet.  Therefore, the program is single-
@@ -542,9 +538,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
 
-          ACE_NEW_RETURN (lock,
-                          ACE_RW_Thread_Mutex,
-                          -1);
+          ACE_NEW_RETURN (lock, ACE_RW_Thread_Mutex, -1);
         }
       else
         {
@@ -553,7 +547,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                                     ace_mon,
                                     *ACE_Object_Manager::instance ()->
-                                    internal_lock_,
+                                      internal_lock_,
                                     -1));
 
           if (lock == 0)
@@ -593,7 +587,7 @@ ACE_Object_Manager::fini (void)
   if (shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    return -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.

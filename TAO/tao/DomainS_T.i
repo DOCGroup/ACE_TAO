@@ -79,12 +79,12 @@ POA_CORBA::DomainManager_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::DomainManager_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA::DomainManager_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->DomainManager::_default_POA (ACE_TRY_ENV);
+  return this->DomainManager::_default_POA (env);
 }
 
 template <class T> ACE_INLINE

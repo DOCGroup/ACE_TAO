@@ -34,10 +34,6 @@
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
 struct ACE_Export ACE_Malloc_Stats
@@ -61,7 +57,6 @@ struct ACE_Export ACE_Malloc_Stats
 #define AMS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
-#if !defined (ACE_MALLOC_ALIGN)
 // ACE_MALLOC_ALIGN allows you to insure that allocated regions are at
 // least <ACE_MALLOC_ALIGN> bytes long.  It is especially useful when
 // you want areas to be at least a page long, or 32K long, or
@@ -76,28 +71,19 @@ struct ACE_Export ACE_Malloc_Stats
 // use a signed integer number of bytes you want.  For example:
 // #define ACE_MALLOC_ALIGN ((int)4096)
 
+#if !defined (ACE_MALLOC_ALIGN)
 #define ACE_MALLOC_ALIGN ((int)(sizeof (long)))
 #endif /* ACE_MALLOC_ALIGN */
 
 union ACE_Export ACE_Malloc_Header
 {
-  // = TITLE
-  //   We use a union to force alignment to the most restrictive type.
+  // TITLE
+  //    This is a block header.
 
-  class ACE_Malloc_Control_Block
+  struct ACE_Malloc_Control_Block
   {
-    // = TITLE
-    //    This is the control block header.  It's used by <ACE_Malloc>
-    //    to keep track of each chunk of data when it's in the free
-    //    list or in use.
-  public:
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-    ACE_Based_Pointer<ACE_Malloc_Header> next_block_;
-    // Points to next block if on free list.
-#else 
     ACE_Malloc_Header *next_block_;
     // Points to next block if on free list.
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
     size_t size_;
     // Size of this block.

@@ -44,7 +44,7 @@ TAO_default_environment ()
 
 // ****************************************************************
 
-TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
+TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
   : connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
@@ -118,6 +118,7 @@ TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref,
 
   // Add the objectID-IOR to the table and return the status.
   return table.add_ior (object_id, ior);
+
 }
 
 int
@@ -149,7 +150,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Be certain to copy the program name so that service configurator
   // has something to skip!
   ACE_Arg_Shifter arg_shifter (argc, argv);
-  const char *argv0 = "";
+  const char* argv0 = "";
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
@@ -204,12 +205,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Trading Service port used for Multicast
   u_short ts_port = 0;
-
-  // Implementation Repository Service IOR string.
-  ACE_CString ir_ior;
-
-  // Implementation Repository Service port #.
-  u_short ir_port = 0;
 
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
@@ -349,12 +344,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBHost") == 0)
         {
-          // @@ This option now has the same effect as specifying
-          //    an extra -ORBendpoint.  Ideally, this option
-          //    should be removed so that all INET specific
-          //    stuff can be removed from the ORB core but I
-          //    guess we need to leave it here for backward
-          //    compatibility.  C'est la vie.
+          // @@ Fred&Carlos: This option now has the same effect as specifying
+          //                 an extra -ORBendpoint.  Ideally, this option
+          //                 should be removed so that all INET specific
+          //                 stuff can be removed from the ORB core but I
+          //                 guess we need to leave it here for backward
+          //                 compatibility.  C'est la vie.
 
           old_style_endpoint = 1;
           // Specify the name of the host (i.e., interface) on which
@@ -365,8 +360,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // may be dropped in future releases.
 
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n"
-                      "In the future, use the `-ORBEndpoint' option.\n"));
+                      "(%P|%t) \nWARNING: The `-ORBhost' option is obsolete.\n"
+                      "In the future, use the `-ORBendpoint' option.\n"));
 
           if (arg_shifter.is_parameter_next())
             {
@@ -420,30 +415,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ts_port = ACE_OS::atoi (arg_shifter.get_current ());
-              arg_shifter.consume_arg ();
-            }
-        }
-      else if (ACE_OS::strcasecmp (current_arg,
-                                   "-ORBImplRepoIOR") == 0)
-        {
-          // Specify the IOR of the Implementation Repository
-
-          arg_shifter.consume_arg ();
-          if (arg_shifter.is_parameter_next ())
-            {
-              ir_ior = arg_shifter.get_current ();
-              arg_shifter.consume_arg ();
-            }
-        }
-      else if (ACE_OS::strcasecmp (current_arg,
-                                   "-ORBImplRepoPort") == 0)
-        {
-          // Specify the multicast port number for the Implementation Repository.
-
-          arg_shifter.consume_arg ();
-          if (arg_shifter.is_parameter_next ())
-            {
-              ir_port = ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -524,7 +495,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char *opt = arg_shifter.get_current ();
+              char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt,
                                       "URL") == 0)
                 use_ior = 0;
@@ -543,19 +514,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "YES") == 0 ||
-                  ACE_OS::strcasecmp (opt, "global") == 0)
-                {
-                  this->opt_for_collocation_ = 1;
-                  this->use_global_collocation_ = 1;
-                }
-              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
+              if (ACE_OS::strcasecmp (opt,
+                                      "YES") == 0)
+                this->opt_for_collocation_ = 1;
+              else if (ACE_OS::strcasecmp (opt,
+                                           "NO") == 0)
                 this->opt_for_collocation_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "per-orb") == 0)
-                {
-                  this->opt_for_collocation_ = 1;
-                  this->use_global_collocation_ = 0;
-                }
 
               arg_shifter.consume_arg ();
             }
@@ -578,6 +542,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
+      // @@ Ossama: could you add this option to the Options.html
+      //    file?  And could you also remove from the .html file the
+      //    stuff we took out of the default server strategy factory
+      //    and the default resource factory?
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBGlobalCollocation") == 0)
         // Specify whether we want to use collocation across ORBs;
@@ -585,9 +553,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // calls.
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      "Warning: -ORBGlobalCollocation option is obsolete."
-                      "  Please use '-ORBCollocation global/per-orb/no' instead.\n"));
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
@@ -638,7 +603,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) \nWARNING: The `host:port' pair style "
-                              "for `-ORBPreconnect' is obsolete.\n"
+                              "for `-ORBpreconnect' is obsolete.\n"
                               "In the future, use the URL style.\n"));
 
                   preconnections =
@@ -703,7 +668,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                                    "-ORBInitRef") == 0)
         {
           arg_shifter.consume_arg ();
-
           if (arg_shifter.is_parameter_next ())
             {
               init_ref = arg_shifter.get_current ();
@@ -848,14 +812,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   else
     this->use_tss_resources_ = use_tss_resources;
 
-  ACE_Reactor *reactor = this->reactor ();
-
+  (void) this->reactor ();
   // Make sure the reactor is initialized...
-  if (reactor == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "ORB Core unable to initialize reactor"),
-                      -1);
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -914,8 +872,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->orb_params ()->name_service_port (ns_port);
   this->orb_params ()->trading_service_ior (ts_ior);
   this->orb_params ()->trading_service_port (ts_port);
-  this->orb_params ()->implrepo_service_ior (ir_ior);
-  this->orb_params ()->implrepo_service_port (ir_port);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
@@ -1075,7 +1031,7 @@ TAO_ORB_Core::resource_factory (void)
                     "(%P|%t) WARNING - No Resource Factory found in Service Repository."
                     "  Using default instance with GLOBAL resource source specifier.\n"));
 
-      TAO_Default_Resource_Factory *default_factory;
+      TAO_Default_Resource_Factory* default_factory;
       ACE_NEW_RETURN (default_factory,
                       TAO_Default_Resource_Factory,
                       0);
@@ -1189,7 +1145,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   if (tss_resources->reactor_ != 0)
     {
       // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
       if (tss->reactor_ != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1421,7 +1377,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
       if (tss->input_cdr_dblock_allocator_ == 0)
         {
@@ -1450,7 +1406,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
       if (tss->input_cdr_buffer_allocator_ == 0)
         {
@@ -1481,7 +1437,7 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
   if (this->use_tss_resources_)
 #endif /* 0 */
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1514,7 +1470,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
   if (this->use_tss_resources_)
 #endif /* 0 */
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1592,7 +1548,7 @@ TAO_ORB_Core::reactor (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
       if (tss->reactor_ == 0)
         {
@@ -1629,7 +1585,7 @@ TAO_ORB_Core::default_environment (void) const
 }
 
 void
-TAO_ORB_Core::default_environment (CORBA_Environment *env)
+TAO_ORB_Core::default_environment (CORBA_Environment* env)
 {
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
@@ -1712,7 +1668,6 @@ TAO_TSS_Resources::~TAO_TSS_Resources (void)
 // ****************************************************************
 
 TAO_ORB_Table::TAO_ORB_Table (void)
-  : first_orb_ (0)
 {
 }
 
@@ -1740,76 +1695,56 @@ TAO_ORB_Table::end (void)
 }
 
 int
-TAO_ORB_Table::bind (const char *orb_id,
-                     TAO_ORB_Core *orb_core)
+TAO_ORB_Table::bind (const char* orb_id,
+                     TAO_ORB_Core* orb_core)
 {
-  if (this->first_orb_ == 0)
-    {
-      this->first_orb_ = orb_core;
-    }
   ACE_CString id (orb_id);
   return this->table_.bind (id, orb_core);
 }
 
 TAO_ORB_Core*
-TAO_ORB_Table::find (const char *orb_id)
+TAO_ORB_Table::find (const char* orb_id)
 {
-  TAO_ORB_Core *found = 0;
+  TAO_ORB_Core* found = 0;
   ACE_CString id (orb_id);
   this->table_.find (id, found);
   return found;
 }
 
 int
-TAO_ORB_Table::unbind (const char *orb_id)
+TAO_ORB_Table::unbind (const char* orb_id)
 {
   ACE_CString id (orb_id);
-  TAO_ORB_Core *orb_core;
-  int result = this->table_.unbind (id, orb_core);
-  if (result == 0)
-    {
-      if (orb_core == this->first_orb_)
-        {
-          Iterator begin = this->begin ();
-          Iterator end = this->end ();
-          if (begin != end)
-            this->first_orb_ = (*begin).int_id_;
-        }
-    }
-  return result;
+  return this->table_.unbind (id);
 }
 
 // ****************************************************************
+
+// This function exists because of Win32's proclivity for expanding
+// templates at link time.  Since DLLs are just executables, templates
+// get expanded and instantiated at link time.  Thus, if there are
+// references to the same template in an application AND in a DLL,
+// you're screwed.  Using this function, we workaround this by
+// insuring that everybody ALWAYS accesses the same instantiation.
+//
+// There's room for optimizations by making this inline for the ORB
+// core and non-inlined elsewhere, but that can be done later--after
+// it works.
 
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
 {
   // @@ This is a slight violation of layering, we should use
   //    TAO_ORB_Core_instance(), but that breaks during startup.
-  TAO_ORB_Table *orb_table = TAO_ORB_Table::instance ();
-  if (orb_table->first_orb () == 0)
+  TAO_ORB_Table* orb_table = TAO_ORB_Table::instance ();
+  TAO_ORB_Table::Iterator begin = orb_table->begin ();
+  TAO_ORB_Table::Iterator end = orb_table->end ();
+  if (begin == end)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                                *ACE_Static_Object_Lock::instance (), 0));
-
-      if (orb_table->first_orb () == 0)
-        {
-          int argc = 0;
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
-            {
-              (void) CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              // @@ What should we do here?
-            }
-          ACE_ENDTRY;
-        }
+      int argc = 0;
+      return CORBA::ORB_init (argc, 0, 0)->orb_core_;
     }
-
-  return orb_table->first_orb ();
+  return (*begin).int_id_;
 }
 
 // ****************************************************************

@@ -54,6 +54,34 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   return 0;
 }
 
+int
+ACE_SOCK::open (int type, 
+                int protocol_family, 
+                int protocol,
+                int reuse_addr)
+{
+  ACE_TRACE ("ACE_SOCK::open");
+  int one = 1;
+
+  this->set_handle (ACE_OS::socket (protocol_family,
+                                    type,
+                                    protocol));
+
+  if (this->get_handle () == ACE_INVALID_HANDLE)
+    return -1;
+  else if (protocol_family != PF_UNIX &&
+           reuse_addr 
+           && this->set_option (SOL_SOCKET,
+                                SO_REUSEADDR,
+                                &one,
+                                sizeof one) == -1)
+    {
+      this->close ();
+      return -1;
+    }
+  return 0;
+}
+
 // Close down a ACE_SOCK.
 
 int
@@ -70,34 +98,6 @@ ACE_SOCK::close (void)
   return result;
 }
 
-int
-ACE_SOCK::open (int type, 
-                int protocol_family, 
-                int protocol,
-                int reuse_addr)
-{
-  ACE_TRACE ("ACE_SOCK::open");
-  int one = 1;
-
-  this->set_handle (ACE_OS::socket (protocol_family,
-                                    type,
-                                    protocol));
-
-  if (this->get_handle () == ACE_INVALID_HANDLE)
-    return -1;
-  else if (protocol_family != PF_UNIX 
-           && reuse_addr 
-           && this->set_option (SOL_SOCKET,
-                                SO_REUSEADDR,
-                                &one,
-                                sizeof one) == -1)
-    {
-      this->close ();
-      return -1;
-    }
-  return 0;
-}
-
 // General purpose constructor for performing server ACE_SOCK
 // creation.
 
@@ -107,67 +107,7 @@ ACE_SOCK::ACE_SOCK (int type,
                     int reuse_addr)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-  if (this->open (type,
-                  protocol_family, 
-                  protocol,
-                  reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
+  if (this->open (type, protocol_family, 
+                  protocol, reuse_addr) == -1)
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
-
-int
-ACE_SOCK::open (int type, 
-                int protocol_family, 
-                int protocol,
-                ACE_Protocol_Info *protocolinfo,
-                ACE_SOCK_GROUP g,
-                u_long flags,
-                int reuse_addr)
-{
-  ACE_TRACE ("ACE_SOCK::open");
-
-  this->set_handle (ACE_OS::socket (protocol_family,
-                                    type,
-                                    protocol,
-                                    protocolinfo,
-                                    g,
-                                    flags));
-
-  int one = 1;
-
-  if (this->get_handle () == ACE_INVALID_HANDLE)
-    return -1;
-  else if (reuse_addr 
-           && this->set_option (SOL_SOCKET,
-                                SO_REUSEADDR,
-                                &one,
-                                sizeof one) == -1)
-    {
-      this->close ();
-      return -1;
-    }
-  return 0;
-}
-
-ACE_SOCK::ACE_SOCK (int type, 
-                    int protocol_family, 
-                    int protocol,
-                    ACE_Protocol_Info *protocolinfo,
-                    ACE_SOCK_GROUP g,
-                    u_long flags,
-                    int reuse_addr)
-{
-  // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-  if (this->open (type,
-                  protocol_family,
-                  protocol,
-                  protocolinfo,
-                  g,
-                  flags,
-                  reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
-}
-

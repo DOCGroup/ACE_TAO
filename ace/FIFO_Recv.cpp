@@ -41,7 +41,7 @@ ACE_FIFO_Recv::close (void)
 // aren't any writers at the moment!
 
 int
-ACE_FIFO_Recv::open (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Recv::open (const char *fifo_name,
 		     int flags,
 		     int perms,
 		     int persistent,
@@ -66,7 +66,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (void)
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
 }
 
-ACE_FIFO_Recv::ACE_FIFO_Recv (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Recv::ACE_FIFO_Recv (const char *fifo_name,
 			      int flags,
 			      int perms,
 			      int persistent,
@@ -82,3 +82,4 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const ASYS_TCHAR *fifo_name,
                                  sa) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Recv")));
 }
+

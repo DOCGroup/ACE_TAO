@@ -102,14 +102,7 @@ static int scan_obv_token (int token)
         return token;
       }
 #endif /* IDL_HAS_VALUETYPE */
-    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-    const TAO_IDL_CPP_Keyword_Entry *entry =
-      cpp_key_tbl.lookup (ace_yytext,
-                          ACE_OS::strlen (ace_yytext));
-    if (entry)
-      yylval.strval = ACE_OS::strdup (entry->mapping_);
-    else
-      yylval.strval = ACE_OS::strdup (ace_yytext);
+    yylval.strval = ACE_OS::strdup (ace_yytext);
     return IDENTIFIER;
 }
 
@@ -195,7 +188,7 @@ oneway		return IDL_ONEWAY;
   return IDENTIFIER;
 }
 
-"-"?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
+"-"?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
@@ -229,7 +222,7 @@ oneway		return IDL_ONEWAY;
 		  return IDL_UINTEGER_LITERAL;
 	      	}
 
-\"([^\\\"]*|\\[ntvbrfa\\\?\'\"])*\"	{
+"\""[^\"]*"\""	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
@@ -354,7 +347,7 @@ idl_parse_line_and_file(char *buf)
   for (; *r != '\0' && *r != ' ' && *r != '\t'; r++)
     continue;
   *r++ = 0;
-  idl_global->set_lineno(idl_atoui(h, 10));
+  idl_global->set_lineno(idl_atoi(h, 10));
 
   /* Find file name, if present */
   for (; *r != '"'; r++)
@@ -593,7 +586,7 @@ idl_escape_reader(
 	    }
 	    char save = str[i];
 	    str[i] = '\0';
-	    char out = (char)idl_atoui(&str[2], 16);
+	    char out = (char)idl_atoi(&str[2], 16);
 	    str[i] = save;
 	    return out;
 	}
@@ -607,7 +600,7 @@ idl_escape_reader(
 	    }
 	    char save = str[i];
 	    str[i] = '\0';
-	    char out = (char)idl_atoui(&str[1], 8);
+	    char out = (char)idl_atoi(&str[1], 8);
 	    str[i] = save;
 	    return out;
 	} else {

@@ -66,12 +66,8 @@ private:
   HTTP_Request &request_;
   // The IO and Request objects associated with this re
 
-#if defined (ACE_JAWS_BASELINE)
   char *HTTP_HEADER;
-#else
-  const char *HTTP_HEADER;
-#endif
-  const char *HTTP_TRAILER;
+  char *HTTP_TRAILER;
   int HTTP_HEADER_LENGTH;
   int HTTP_TRAILER_LENGTH;
   // HTTP Headers and trailers.

@@ -66,15 +66,37 @@ public:
   const char *fullname (void);
   // return the stringified full name
 
-  const char *flatname (void);
-  // return the flattened full scoped name
+  const char *ami_handler_fullname (void);
+  // return the stringified full name of the assosciated AMI reply handler.
 
+  const char *flatname (void);
+  // return the flattened full scoped name.
+
+  const char *ami_handler_flatname (void);
+  // return the flattened full scoped name of the assosciated AMI reply handler.
+
+  char* compute_flatname (const char *prefix, const char *suffix);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
 
   const char *repoID (void);
-  // retrieve the repository ID
+  // retrieve the repository ID.
+
+  const char *ami_handler_repoID (void);
+  // retrieve the repository ID of the assosciated AMI reply handler.
+
+  char *compute_repoID (const char *prefix, const char *suffix);
+  // Apply the prefix and suffix to the local name and compute the
+  // repoID.  Both the parameters should be non-null.
+
+  int compute_ami_handler_name (const char *name,
+                                char *&ami_handler_name);
+  // Computes the name of the corresponding AMI handler out of a
+  // given name. The name might contain POA_ at the beginning
+  // and might possibly have many scope levels.
 
   const char* prefix (void);
-  // retrive the repository ID prefix
+  // retrieve the repository ID prefix
 
   virtual idl_bool is_nested (void);
   // determines if we are inside of a nested scope or not
@@ -160,12 +182,20 @@ protected:
   char *fullname_;
   // our full scoped name
 
+  char *ami_handler_fullname_;
+  // our full scoped name of the associated AMI reply handler
+
   char *flatname_;
   // flattened fully scoped name
 
+  char *ami_handler_flatname_;
+  // flattened fully scoped name of the associated AMI reply handler
 
   char *repoID_;
   // repository ID
+
+  char *ami_handler_repoID_;
+  // repository ID of the associated AMI reply handler
 
   char *prefix_;
   // The repository ID prefix

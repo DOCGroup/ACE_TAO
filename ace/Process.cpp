@@ -239,16 +239,13 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
 {
-  ACE_NEW (command_line_buf_,
-           TCHAR[cobl]);
+  ACE_NEW (command_line_buf_, TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
-  ACE_NEW (environment_buf_,
-           TCHAR[ebl]);
-  ACE_NEW (environment_argv_,
-           LPTSTR[mea]);
+  ACE_NEW (environment_buf_, TCHAR[ebl]);
+  ACE_NEW (environment_argv_, LPTSTR[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
 
@@ -285,8 +282,8 @@ ACE_Process_Options::inherit_environment (void)
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p.\n"),
-                      ASYS_TEXT ("ACE_Process_Options::ACE_Process_Options")));
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "ACE_Process_Options::ACE_Process_Options"));
           break;
         }
 
@@ -424,7 +421,7 @@ ACE_Process_Options::setenv_i (LPTSTR assignment,
 
   // If environment larger than allocated buffer return. Also check to
   // make sure we have enough room.
-  if (environment_argv_index_ == max_environ_argv_index_
+  if (environment_argv_index_ == max_environ_argv_index_  
       || (len + environment_buf_index_) >= environment_buf_len_)
     return -1;
 
@@ -524,7 +521,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
 int
 ACE_Process_Options::command_line (LPCTSTR argv[])
 {
-  // @@ Factor out the code between this
+  // @@ Factor out the code between this 
   int i = 0;
 
   if (argv[i])

@@ -329,7 +329,7 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
     {
       rtinfo = new RT_Info;
       rtinfo->info_type = RtecScheduler::OPERATION;
-      rtinfo->entry_point = CORBA::string_dup(name);
+      rtinfo->entry_point = name;
       // Bind the rtinfo to the name.
       if (info_collection_.bind (lookup, rtinfo) != 0)
         {

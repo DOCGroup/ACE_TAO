@@ -184,13 +184,47 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "# pragma once\n"
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-      // Other include files
+      // Other include files.
 
       if (idl_global->export_include () != 0)
         {
           *this->client_header_ << "#include \""
-                                    << idl_global->export_include ()
+                                << idl_global->export_include ()
                                 << "\"\n";
+        }
+
+      // Include the Messaging files if AMI is enabled. 
+      if (idl_global->ami_call_back () == I_TRUE)
+        {
+          // Include Messaging skeleton file.
+          *this->client_header_ << "#include ";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"";
+          else
+            *this->client_header_ << "<";
+          
+          *this->client_header_ << "tao/MessagingS.h";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"\n";
+          else
+            *this->client_header_ << ">\n";
+
+          // Including Asynch Invocation file.
+          *this->client_header_ << "#include ";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"";
+          else
+            *this->client_header_ << "<";
+          
+          *this->client_header_ << "tao/Asynch_Invocation.h";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"\n";
+          else
+            *this->client_header_ << ">\n";
         }
 
       // We must include all the skeleton headers corresponding to
@@ -239,17 +273,6 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << idl_global->export_macro ()
                             << be_nl;
 
-      // Generate export macro for nested classes
-      *this->client_header_
-        << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-        << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
-        << "#  define TAO_EXPORT_NESTED_MACRO "
-        << idl_global->export_macro ()
-        << be_nl
-        << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n";
-
       *this->client_header_ << "#if defined(_MSC_VER)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
@@ -283,11 +306,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
     {
       return -1;
     }
-
-  // generate the include statement for the precompiled header file.
-  if (idl_global->pch_include ())
-    *this->client_stubs_ << "#include \""
-      << idl_global->pch_include () << "\"\n\n";
 
   // generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
@@ -520,11 +538,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     {
       return -1;
     }
-
-  // generate the include statement for the precompiled header file.
-  if (idl_global->pch_include ())
-    *this->server_skeletons_ << "#include \""
-      << idl_global->pch_include () << "\"\n\n";
 
   // generate the include statement for the server header
   *this->server_skeletons_ << "#include \"" <<

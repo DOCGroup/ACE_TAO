@@ -56,7 +56,6 @@ check_PROGRAMS = \
         Barrier_Test \
         Basic_Types_Test \
         Buffer_Stream_Test \
-	Cache_Map_Manager_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -133,7 +132,7 @@ Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
 CDR_Test_SOURCES = CDR_Test.cpp
 
-Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp
+# Cache_Manager_Test_SOURCES = Cache_Manager_Test.cpp
 
 Collection_Test_SOURCES = Collection_Test.cpp
 
@@ -244,7 +243,8 @@ TSS_Test_SOURCES = TSS_Test.cpp \
 
 Task_Test_SOURCES = Task_Test.cpp
 
-Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp
+Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp \
+                              Thread_Manager_Test.h
 
 Thread_Mutex_Test_SOURCES = Thread_Mutex_Test.cpp
 

@@ -184,7 +184,7 @@ Event_Supplier::load_schedule_data
     {
       ACE_NEW (data, Schedule_Viewer_Data);
 
-      const char *oper_name = 0;
+      char *oper_name = 0;
       switch (i % 4)
       {
       case 0:
@@ -241,7 +241,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 {
   static u_long last_completion = 0;
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
   {
     Schedule_Viewer_Data **sched_data;
 
@@ -282,7 +282,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         navigation_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Navigation, &navigation_, 0, ACE_TRY_ENV);
+        data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
       }
       else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
                (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
@@ -327,7 +327,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         weapons_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Weapons, &weapons_, 0, ACE_TRY_ENV);
+        data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
       }
       else {
         ACE_ERROR ((LM_ERROR,
@@ -336,7 +336,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                     (*sched_data)->operation_name));
       }
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
 
             if (last_completion > (*sched_data)->completion_time)
@@ -361,12 +361,12 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
     if (schedule_iter.done ())
       schedule_iter.first ();
   }
-  ACE_CATCHANY
+  TAO_CATCHANY
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));
   }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 
@@ -440,15 +440,15 @@ Event_Supplier::get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
       orb_Manager.init (argc,
                         argv,
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
 
       // Create the demo supplier.
@@ -467,14 +467,14 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

@@ -132,16 +132,14 @@ Client::Client (int niterations,
 int
 Client::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       for (int i = 0; i < this->niterations_; ++i)
         {
           // If we are using a global ORB this is a nop, otherwise it
           // initializes the ORB resources for this thread.
           int argc = 0;
-          CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
-          char* argv[1] = { argv0.inout () };
+          char* argv[] = { "" };
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
           ACE_TRY_CHECK;

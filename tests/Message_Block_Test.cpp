@@ -264,12 +264,12 @@ ACE_Cached_Allocator<MEMORY_CHUNK,
 struct
 {
   ACE_Allocator *strategy_;
-  const ASYS_TCHAR *name_;
+  LPCTSTR name_;
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
 } alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {
-  { NULL, ASYS_TEXT ("Default"), {0,0,0} },
-  { &mem_allocator, ASYS_TEXT ("Cached Memory"), {0,0,0} }
+  { NULL, ASYS_TEXT ("Default") },
+  { &mem_allocator, ASYS_TEXT ("Cached Memory") }
 };
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

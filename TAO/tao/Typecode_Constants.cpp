@@ -178,7 +178,6 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
 TAO_NAMESPACE_END
 
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
-CORBA::TypeCode_ptr CORBA_ORB::_tc_InvalidName = 0;
 
 #if !defined(TAO_HAS_MINIMUM_CORBA)
 
@@ -519,31 +518,6 @@ TAO_TypeCodes::init (void)
                          (char *) &_oc_CORBA_RepositoryId,
                          1,
                          sizeof (CORBA::RepositoryId));
-
-  static const CORBA::Long _oc_CORBA_ORB_InvalidName[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38, ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f52),
-    ACE_NTOHL (0x422f496e),
-    ACE_NTOHL (0x76616c69),
-    ACE_NTOHL (0x644e616d),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ORB/InvalidName:1.0
-    12, ACE_NTOHL (0x496e7661),
-    ACE_NTOHL (0x6c69644e),
-    ACE_NTOHL (0x616d6500),  // name = InvalidName
-    0, // member count
-  };
-  CORBA::ORB::_tc_InvalidName =
-    new CORBA::TypeCode(CORBA::tk_except,
-                        sizeof (_oc_CORBA_ORB_InvalidName),
-                        (char *) &_oc_CORBA_ORB_InvalidName,
-                        0,
-                        sizeof (CORBA::ORB::InvalidName));
 
   static const CORBA::Long _oc_CORBA_ORBid[] =
   {
@@ -1896,8 +1870,6 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_Identifier);
 
   CORBA::release (CORBA::_tc_RepositoryId);
-
-  CORBA::release (CORBA::ORB::_tc_InvalidName);
 
   CORBA::release (CORBA::_tc_ORBid);
 

@@ -151,7 +151,6 @@
 
 #define ACE_HAS_STRDUP_EMULATION
 #define ACE_LACKS_MKFIFO
-#define ACE_HAS_BROKEN_ACCEPT_ADDR
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)

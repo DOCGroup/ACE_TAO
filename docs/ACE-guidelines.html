@@ -587,7 +587,7 @@ bgcolor="#ffffff">
         should be avoided for non-template classes.<p>
 
     <li>Never use <code>bool</code>, <code>BOOL</code>, or similar
-        types.  (CORBA::Boolean is acceptable).  Use <code>int</code>
+        types.   (CORBA::Boolean is acceptable).  Use <code>int</code>
         or <code>u_int</code> instead for boolean types.<p>
 
     <li>Functions should always return -1 to indicate failure, and
@@ -596,11 +596,6 @@ bgcolor="#ffffff">
     <li>Separate the code of your templates from the code for
         non-parametric classes: some compilers get confused when
         template and non-template code is mixed in the same file.<p>
-
-    <li>It's a good idea to specify the include path (with <code>-I</code>)
-      to include any directory which contains files with template
-      definitions.  The <code>-ptv</code> Digital Unix cxx compiler option
-      may help diagnose missing template instantiation problems.<p>
     </li>
   </ul>
 
@@ -654,73 +649,6 @@ bgcolor="#ffffff">
         <strong><code>ASYS_ONLY_MULTIBYTE_STRING</code></strong>. See
         the end of <a href="../ace/OS.h">OS.h</a> for more details.<p>
 
-    <li>Here is a brief breakdown:<p>
-        <table BORDER=2 CELLSPACING=2 CELLPADDING=0>
-          <tr>
-            <th Align=left>Macro Name</th>
-            <td>NONE </td>
-            <td>UNICODE</td>
-            <td>MOSTLY</td>
-            <td>Remark</td>
-          </tr>
-          <tr>
-            <th align=left><code>ACE_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>C 2 W</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <th align=left><code>ACE_MULTIBYTE_STRING</code></tr>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>W 2 C</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>Convert char strings to where ASYS_TCHAR strings are
-                expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_MULTIBYTE_STRING</code></th>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>NOP</td>
-            <td>Convert LPTCSTR or LPTSTR strings to where ASYS_TCHAR
-                strings are expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_ONLY_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>NOP</td>
-            <td>Convert ASYS_TCHAR stirngs to where wchar strings are
-                expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_ONLY_MULTIBYTE_STRING</code></th>
-            <td>NOP</td>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>Convert ASYS_TCHAR strings to where</td>
-          </tr>
-        </table><p>
-        Where:
-
-        <UL>
-          <LI>UNICODE: When <code>UNICODE</code> is defined.
-          <li>MOSTLY: When <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is
-              defined
-          <li>C: char *
-          <li>W: wchar *
-          <li>T: ASYS_TCHAR*  (T == W) only when MOSTLY is defined,
-              otherwise, (T == C)
-          <li>NOP: No operation.
-        </ul><p>
   </ul><p>
 
   <li><strong>Exceptions</strong><p>
@@ -975,9 +903,7 @@ bgcolor="#ffffff">
 <ul>
   <li>When enhancing, updating, or fixing ACE or TAO, always:<p>
   <ol>
-    <li>Test your change on at least one platform.  All changes
-      <strong>must</strong> be tested with egcs before commiting.
-      That means you may need to test on two platforms.<p>
+    <li>Test your change on at least one platorm.<p>
     <li>Commit your change with a meaningful message.<p>
     <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,

@@ -75,7 +75,7 @@ int Quoter_Factory_i::init (CORBA::Environment &ACE_TRY_ENV)
         }
       ACE_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, location_string);
+          ACE_TRY_ENV.print_exception (location_string);
           return -1;
         }
       ACE_ENDTRY;
@@ -141,7 +141,7 @@ Quoter_i::get_quote (char const *,
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &/*the_criteria*/,
+                const CosLifeCycle::Criteria &the_criteria,
                 CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
@@ -252,7 +252,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quoter_i::copy - %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
 
       // Report a NoFactory exception back to the caller
       ACE_TRY_THROW (CosLifeCycle::NoFactory ());
@@ -353,7 +353,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR,"Quoter_i::move: %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
       return;
     }
   ACE_ENDTRY;

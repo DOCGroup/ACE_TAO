@@ -29,7 +29,7 @@ BIN2 = client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Time
@@ -177,25 +177,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/POAC.i \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -243,9 +234,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -466,25 +461,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/POAC.i \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -532,9 +518,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \

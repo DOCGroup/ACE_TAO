@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "CC_client"=.\Concurrency\CC_client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Colocated_Test"=.\Trading\Colocated_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -120,6 +132,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Logger Test Client"=.\Logger\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Logger Test Server"=.\Logger\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Sched_Conf"=.\Sched_Conf\Sched_Conf.dsp - Package Owner=<4>
 
 Package=<5>
@@ -167,3 +203,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

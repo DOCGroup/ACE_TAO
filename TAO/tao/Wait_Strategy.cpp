@@ -40,50 +40,25 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 }
 
 int
-TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
+TAO_Wait_On_Reactor::wait (void)
 {
   // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
 
-  // @@ Carlos: Can we rely on <reply_received> flag in the AMI case?
-  //    It depends on whether we are expecting replies or not, right?
-  //    So, I think we can simply return from this loop, when some
-  //    event occurs, and the invocation guy can call us again, if it
-  //    wants to. (AMI will call, if it is expecting replies, SMI will
-  //    call if the reply is not arrived) (Alex).
-  // @@ Alex: I think you are right, let's fix it later....
-
-  // Do the event loop, till we received the reply.
-
-  int result = 1;
+  // Do the event loop, till we fully receive a reply.
+  
+  int result = 0;
   this->reply_received_ = 0;
-  while (this->reply_received_ == 0 && result > 0)
+  while (this->reply_received_ == 0 && result >= 0)
     {
-      result = reactor->handle_events (max_wait_time);
+      result = reactor->handle_events (/* timeout */);
     }
 
   if (result == -1 || this->reply_received_ == -1)
     return -1;
 
-  // Return an error if there was a problem receiving the reply...
-  if (max_wait_time != 0)
-    {
-      if (this->reply_received_ != 1
-          && *max_wait_time == ACE_Time_Value::zero)
-        {
-          result = -1;
-          errno = ETIME;
-        }
-    }
-  else
-    {
-      result = 0;
-      if (this->reply_received_ == -1)
-        result = -1;
-    }
-
-  return result;
+  return 0;
 }
 
 int
@@ -153,23 +128,12 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     //if (TAO_debug_level > 0)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
     //this->transport_));
-
   }
-
-  // @@ Should we do here that checking for the difference in the
-  //    Reactor used??? (Alex).
 
   // Register the handler.
   this->transport_->register_handler ();
-  // @@ Carlos: We do this only if the reactor is different right?
-  //    (Alex)
-  // @@ Alex: that is taken care of in
-  //    IIOP_Transport::register_handler, but maybe we shouldn't do
-  //    this checking everytime, I recall that there was a problem
-  //    (sometime ago) about using the wrong ORB core, but that may
-  //    have been fixed...
-
-  // Send the request
+  
+  // Send the request.
   int result =
     this->TAO_Wait_Strategy::sending_request (orb_core,
                                               two_way);
@@ -190,7 +154,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
+TAO_Wait_On_Leader_Follower::wait (void)
 {
   // Cache the ORB core, it won't change and is used multiple times
   // below:
@@ -205,8 +169,6 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
                     leader_follower.lock (), -1);
 
   leader_follower.set_client_thread ();
-
-  ACE_Countdown_Time countdown (max_wait_time);
 
   // Check if there is a leader, but the leader is not us
   if (leader_follower.leader_available ()
@@ -232,26 +194,16 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       if (leader_follower.add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                    "add_follower failed for <%x>\n", cond));
+                    "add_follower failed for <%x>\n",
+                    cond));
 
-      while (!this->reply_received_ && leader_follower.leader_available ())
+      while (!this->reply_received_ &&
+             leader_follower.leader_available ())
         {
-          if (max_wait_time == 0)
-            {
-              if (cond == 0 || cond->wait () == -1)
-                return -1;
-            }
-          else
-            {
-              countdown.update ();
-              ACE_Time_Value tv = ACE_OS::gettimeofday ();
-              tv += *max_wait_time;
-              if (cond == 0 || cond->wait (&tv) == -1)
-                return -1;
-            }
+          if (cond == 0 || cond->wait () == -1)
+            return -1;
         }
 
-      countdown.update ();
       if (leader_follower.remove_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
@@ -264,7 +216,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       // our input. We are already removed from the follower queue.
       if (this->reply_received_ == 1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -273,7 +226,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
         }
       else if (this->reply_received_ == -1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -297,7 +251,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
   // This might increase the refcount of the leader.
   leader_follower.set_leader_thread ();
 
-  int result = 1;
+  int result = 0;
 
   {
     ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
@@ -312,8 +266,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
     //this->transport_));
 
-    while (result > 0 && this->reply_received_ == 0)
-      result = orb_core->reactor ()->handle_events (max_wait_time);
+    while (result >= 0 && this->reply_received_ == 0)
+      result = orb_core->reactor ()->handle_events ();
 
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
     //this->transport_));
@@ -342,22 +296,10 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
                       -1);
 
   // Return an error if there was a problem receiving the reply...
-  if (max_wait_time != 0)
+  result = 0;
+  if (this->reply_received_ == -1)
     {
-      if (this->reply_received_ != 1
-          && *max_wait_time == ACE_Time_Value::zero)
-        {
-          result = -1;
-          errno = ETIME;
-        }
-    }
-  else
-    {
-      result = 0;
-      if (this->reply_received_ == -1)
-        {
-          result = -1;
-        }
+      result = -1;
     }
 
   // Make us reusable
@@ -377,7 +319,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower ().lock (), -1);
+                    orb_core->leader_follower ().lock (), 
+                    -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
   //              this->transport_));
@@ -398,7 +341,6 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
-
 
   // Data was read, but there the reply has not been completely
   // received...
@@ -492,13 +434,12 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 
 // Wait on the read operation.
 int
-TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time)
+TAO_Wait_On_Read::wait (void)
 {
   int received_reply = 0;
-  while (received_reply != 1)
+  while (received_reply == 0)
     {
-      received_reply =
-        this->transport_->handle_client_input (1, max_wait_time);
+      received_reply = this->transport_->handle_client_input (1);
       if (received_reply == -1)
         return -1;
     }

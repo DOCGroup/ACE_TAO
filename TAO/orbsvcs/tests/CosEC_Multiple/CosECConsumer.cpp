@@ -97,7 +97,7 @@ CosECConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-CosECConsumer::push (const CORBA::Any &,
+CosECConsumer::push (const CORBA::Any &data,
                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
         CORBA::SystemException,

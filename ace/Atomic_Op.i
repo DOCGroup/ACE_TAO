@@ -149,21 +149,18 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 
 #if defined (ACE_WIN32)
 
-ACE_TEMPLATE_SPECIALIZATION
 inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
 {
   return ::InterlockedIncrement (&this->value_);
 }
 
-ACE_TEMPLATE_SPECIALIZATION
 inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
 {
   return ::InterlockedDecrement (&this->value_);
 }
 
-ACE_TEMPLATE_SPECIALIZATION
 inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
 {
@@ -171,7 +168,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
                          i);
 }
 
-ACE_TEMPLATE_SPECIALIZATION
 inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
@@ -181,14 +177,12 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread
 
 #if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 
-ACE_TEMPLATE_SPECIALIZATION
 inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (const long &i)
 {
   return ::InterlockedExchangeAdd (&this->value_, i);
 }
 
-ACE_TEMPLATE_SPECIALIZATION
 inline long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (const long &i)
 {

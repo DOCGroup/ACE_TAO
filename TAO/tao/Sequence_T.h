@@ -116,7 +116,7 @@ public:
   // to those for the <T *data> constructor for the sequence.
 };
 
-template <class T, size_t MAX>
+template <class T, CORBA::ULong MAX>
 class TAO_Bounded_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -215,14 +215,12 @@ public:
 // *************************************************************
 
 template<class T,class T_var> class TAO_Unbounded_Object_Sequence;
-template<class T, class T_var, size_t MAX> class TAO_Bounded_Object_Sequence;
-template<size_t MAX> class TAO_Bounded_String_Sequence;
-
-template<class T,class T_var> class TAO_Object_Field_T;
+template<class T, class T_var, CORBA::ULong MAX> class TAO_Bounded_Object_Sequence;
+template<CORBA::ULong MAX> class TAO_Bounded_String_Sequence;
 
 // *************************************************************
 
-template<class T, class T_var>
+template<class T,class T_var>
 class TAO_Object_Manager
 {
   // = TITLE
@@ -279,11 +277,6 @@ public:
   // <this->release_> is true.
   // @@ TODO what happens if rhs.release_ is true an this->relase_ is
   // false?
-
-  TAO_Object_Manager<T,T_var> &operator= (const TAO_Object_Field_T<T,T_var> &rhs);
-  // Assignment from another var-like type, only release if
-  // <this->release_> is true and only duplicate if this->release_ is
-  // true.
 
   TAO_Object_Manager<T,T_var> &operator= (T *);
   // Assignment from T *.
@@ -448,7 +441,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var, size_t MAX>
+template<class T, class T_var,CORBA::ULong MAX>
 class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -566,7 +559,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var, size_t MAX>
+template<class T, class T_var,CORBA::ULong MAX>
 class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -614,7 +607,7 @@ public:
 
 // *************************************************************
 
-template<size_t MAX>
+template<CORBA::ULong MAX>
 class TAO_Bounded_String_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE

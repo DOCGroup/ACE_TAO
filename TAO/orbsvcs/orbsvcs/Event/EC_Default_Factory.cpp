@@ -52,7 +52,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
     {
       char *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
+      if (ACE_OS::strcmp (arg, "-ECdispatching") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -82,7 +82,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECDispatchingThreads") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECdispatchingthreads") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -94,7 +94,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECFiltering") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECfiltering") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -124,7 +124,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierFiltering") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECsupplierfiltering") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -150,7 +150,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECTimeout") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECtimeout") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -178,7 +178,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECObserver") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECobserver") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -204,7 +204,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECScheduling") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECscheduling") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -230,7 +230,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECPushSupplierSet") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECpushsupplierset") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -260,7 +260,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxyConsumerLock") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECproxyconsumerlock") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -290,7 +290,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxySupplierLock") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECproxysupplierlock") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -320,7 +320,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECConsumerAdminLock") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECconsumeradminlock") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -350,7 +350,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierAdminLock") == 0)
+      else if (ACE_OS::strcmp (arg, "-ECsupplieradminlock") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -504,7 +504,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x
 }
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 {
   if (this->timeout_ == 0)
     {

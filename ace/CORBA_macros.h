@@ -80,35 +80,21 @@
 # define ACE_CHECK_RETURN(RETV)
 
 // ACE_THROW_INT should not be used by the user.
-# define ACE_THROW_INT(EXCEPTION) \
-    do { \
-      ACE_UNUSED_ARG(ACE_TRY_ENV); \
-      throw EXCEPTION; \
-    } while (0)
+# define ACE_THROW_INT(EXCEPTION) throw EXCEPTION
 
 // Throwing an exception is easy. These two macros should _NOT_ be
 // used within try blocks.
-# define ACE_THROW(EXCEPTION) \
-    do { \
-      ACE_UNUSED_ARG(ACE_TRY_ENV); \
-      throw EXCEPTION; \
-    } while (0)
-
+# define ACE_THROW(EXCEPTION) throw EXCEPTION
 // Throwing an exception when the function reqires a return value.
-# if defined (WIN32) || defined (__HP_aCC)
+# if defined (WIN32)
 #   define ACE_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
-          ACE_UNUSED_ARG(ACE_TRY_ENV); \
           throw EXCEPTION; \
           return RETV; \
         } while (0)
 # else /* WIN32 */
-#   define ACE_THROW_RETURN(EXCEPTION,RETV) \
-      do { \
-        ACE_UNUSED_ARG(ACE_TRY_ENV); \
-        throw EXCEPTION; \
-      } while (0)
+#   define ACE_THROW_RETURN(EXCEPTION,RETV) throw EXCEPTION
 # endif /* WIN32 */
 
 // For compilers with native exceptions, we can simply use
@@ -332,8 +318,8 @@
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
+// The following ACE_NEW_THROW* macros are to be depricated soon.
+// -------------------- Start Depricated --------------------
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -346,7 +332,7 @@
   do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
      } while (0)
-// -------------------- End Deprecated --------------------
+// -------------------- End Depricated --------------------
 
 #else
 
@@ -354,8 +340,8 @@
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
+// The following ACE_NEW_THROW* macros are to be depricated soon.
+// -------------------- Start Depricated --------------------
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -369,7 +355,7 @@
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
      } while (0)
-// -------------------- End Deprecated --------------------
+// -------------------- End Depricated --------------------
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
@@ -385,15 +371,15 @@
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
-// The following ACE_GUARD_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
+// The following ACE_GUARD_THROW* macros are to be depricated soon.
+// -------------------- Start Depricated --------------------
 # define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
 # define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
-// -------------------- End Deprecation --------------------
+// -------------------- End Deprication --------------------
 
 // ============================================================
 

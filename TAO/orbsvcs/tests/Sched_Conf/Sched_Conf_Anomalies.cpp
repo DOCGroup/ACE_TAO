@@ -190,12 +190,13 @@ main (int argc, char *argv[])
                   }
   };
 
-  ACE_TRY_NEW_ENV
+
+  TAO_TRY
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -205,12 +206,12 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
@@ -222,40 +223,37 @@ main (int argc, char *argv[])
       
       if (ACE_Scheduler_Factory::use_config (my_name_client.get_context (),
 					     service_name) < 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Unable to bind to the scheduling service.\n"),
-                            1);
-        }
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to bind to the scheduling service.\n"),
+                          1);
+          }
+          // create and initialize RT_Infos in the scheduler,
+          // make second half of array depend on first half.
+          for (int i = 0; i < operation_count; ++i)
+          {
+            // create the RT_Info
+            config_infos[i].handle =
+              ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
+                                                        TAO_TRY_ENV);
 
-      // create and initialize RT_Infos in the scheduler,
-      // make second half of array depend on first half.
-      for (int i = 0; i < operation_count; ++i)
-        {
-          // create the RT_Info
-          config_infos[i].handle =
-            ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
-                                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // initialize the RT_Info
-          ACE_Scheduler_Factory::server ()->
-            set (config_infos[i].handle,
-                 ACE_static_cast (RtecScheduler::Criticality_t,
-                                  config_infos[i].criticality),
-                 config_infos[i].worst_case_execution_time,
-                 config_infos[i].typical_execution_time,
-                 config_infos[i].cached_execution_time,
-                 config_infos[i].period,
-                 ACE_static_cast (RtecScheduler::Importance_t,
-                                  config_infos[i].importance),
-                 config_infos[i].quantum,
-                 config_infos[i].threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t, 
-                                  config_infos[i].info_type),
-                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+            // initialize the RT_Info
+            ACE_Scheduler_Factory::server ()->
+              set (config_infos[i].handle,
+                   ACE_static_cast (RtecScheduler::Criticality_t,
+                                    config_infos[i].criticality),
+                   config_infos[i].worst_case_execution_time,
+                   config_infos[i].typical_execution_time,
+                   config_infos[i].cached_execution_time,
+                   config_infos[i].period,
+                   ACE_static_cast (RtecScheduler::Importance_t,
+                                    config_infos[i].importance),
+                   config_infos[i].quantum,
+                   config_infos[i].threads,
+                   ACE_static_cast (RtecScheduler::Info_Type_t, 
+                                    config_infos[i].info_type),
+                   TAO_TRY_ENV);
+      }
 
 
       // register dependency of good consumer on good supplier
@@ -264,8 +262,7 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
 
       // register dependency of consumer that will have unresolved remote 
       // dependencies on supplier with unresolved remote dependencies
@@ -274,8 +271,7 @@ main (int argc, char *argv[])
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
 
 
       // register dependency of consumer that will have unresolved local
@@ -285,8 +281,7 @@ main (int argc, char *argv[])
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
 
 
       // register dependencies on each supplier of first consumer that will 
@@ -296,24 +291,20 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                        TAO_TRY_ENV);
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                        TAO_TRY_ENV);
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
+
 
       // Register dependencies on each of the other consumers by second 
       // consumer that will have both unresolved local and unresolved remote 
@@ -323,32 +314,26 @@ main (int argc, char *argv[])
                         config_infos[1].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                        TAO_TRY_ENV);
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                        TAO_TRY_ENV);
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                        TAO_TRY_ENV);
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
+
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;
@@ -373,17 +358,17 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos_out, configs_out, anomalies_out, ACE_TRY_ENV);
+         infos_out, configs_out, anomalies_out, TAO_TRY_ENV);
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
+         infos.out (), configs.out (), anomalies.out (), TAO_TRY_ENV);
 #endif /* ! __SUNPRO_CC */
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             configs.in (),
@@ -391,11 +376,11 @@ main (int argc, char *argv[])
                                             "Sched_Conf_Anomalies_Runtime.h",
                                             format_string);
     }
-  ACE_CATCHANY
+  TAO_CATCH (CORBA::SystemException, sys_ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

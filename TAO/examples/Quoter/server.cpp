@@ -138,7 +138,7 @@ Quoter_Server::init (int argc,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quote_Server::init - %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
       ACE_RETHROW;
     }
   ACE_ENDTRY;
@@ -199,7 +199,7 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quote_Server::init_naming_service - %s", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
       return -1;
     }
   ACE_ENDTRY;
@@ -242,7 +242,8 @@ Quoter_Server::~Quoter_Server (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "Could not unbind Quoter Server from the Name Service\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "~Quoter_Server");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "~Quoter_Server");
     }
   ACE_ENDTRY;
 
@@ -269,12 +270,14 @@ main (int argc, char *argv[])
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   ACE_ENDTRY;

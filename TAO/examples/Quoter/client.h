@@ -51,9 +51,6 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
-  CORBA::ORB_var orb_;
-  // Remember our orb.
-
   int init_naming_service (void);
   // Function to initialize the naming service.
 
@@ -86,6 +83,9 @@ private:
 
   Stock::Quoter_var quoter_var_;
   // Quoter obj ref.
+
+  CORBA::ORB_var orb_;
+  // Remember our orb.
 
   int useLifeCycleService_;
   // Flag to tell if the a Generic Factory is going to be used

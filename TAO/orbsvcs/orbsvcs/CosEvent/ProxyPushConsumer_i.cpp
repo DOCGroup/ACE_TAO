@@ -136,7 +136,6 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   this->proxypushconsumer_->push (events,
                                   ACE_TRY_ENV);
-  ACE_CHECK;
 }
 
 void

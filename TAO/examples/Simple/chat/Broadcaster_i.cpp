@@ -43,7 +43,7 @@ Broadcaster_i::~Broadcaster_i (void)
 void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Environment &TAO_TRY_ENV)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
@@ -57,7 +57,8 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
-    ACE_THROW (Broadcaster::CannotAdd ("failed to add to the receiver set\n"));
+    TAO_TRY_ENV.exception (new Broadcaster::CannotAdd
+                           ("failed to add to the receiver set\n"));
 
   // Tell everyone which person just joined the chat.
   ACE_CString broadcast_string =
@@ -65,24 +66,22 @@ Broadcaster_i::add (Receiver_ptr receiver,
     + ACE_CString (nickname)
     + ACE_CString (" has joined the chat ****\n");
 
-  ACE_TRY
+  TAO_TRY
     {
       this->broadcast (broadcast_string.fast_rep (),
-		       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+		       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Broadcaster_i::broadcast failed.\t\n");
+      TAO_TRY_ENV.print_exception ("Broadcaster_i::add\t\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO_ENDTRY;
 }
 
 void
 Broadcaster_i::remove (Receiver_ptr receiver,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::Environment &TAO_TRY_ENV)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -109,7 +108,8 @@ Broadcaster_i::remove (Receiver_ptr receiver,
 
   // Remove the reference from our list.
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
-    ACE_THROW(Broadcaster::CannotRemove ("failed to remove from receiver set\n"));
+    TAO_TRY_ENV.exception(new Broadcaster::CannotRemove
+                          ("failed to remove from receiver set\n"));
 
   // Tell everyone, which person left the chat.
   ACE_CString broadcast_string = "**** "
@@ -118,19 +118,18 @@ Broadcaster_i::remove (Receiver_ptr receiver,
     + " ****\n";
 
   this->broadcast (broadcast_string.fast_rep (),
-                   ACE_TRY_ENV);
-  ACE_CHECK;
+                   TAO_TRY_ENV);
 }
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Environment &T)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  ACE_TRY
+  TAO_TRY
     {
       ACE_CString sender_nickname ("Sender Unknown");
 
@@ -152,21 +151,19 @@ Broadcaster_i::say (Receiver_ptr receiver,
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
       this->broadcast (broadcast_string.fast_rep (),
-                       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Broadcaster_i::say\t\n");
+      TAO_TRY_ENV.print_exception ("Broadcaster_i::say\t\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO_ENDTRY;
 }
 
 void
 Broadcaster_i::broadcast (const char *text,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &)
 {
   // Broadcast the message to all registered clients.
 
@@ -174,18 +171,17 @@ Broadcaster_i::broadcast (const char *text,
        iter != this->receiver_set_.end ();
        iter++)
     {
-      ACE_TRY
+      TAO_TRY
         {
           (*iter).receiver_->message (text,
-                                      ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Failed to send a message\n");
+          TAO_TRY_ENV.print_exception ("Failed to send a message\n");
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
+      TAO_ENDTRY;
     }
 }
 

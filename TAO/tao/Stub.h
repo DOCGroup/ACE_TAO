@@ -213,12 +213,12 @@ class TAO_Export TAO_Stub
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-  void do_static_call (CORBA_Environment &ACE_TRY_ENV,
+  void do_static_call (CORBA_Environment &TAO_IN_ENV,
                        const TAO_Call_Data *info,
                        void** args);
   // The "stub interpreter" method parameters are:
   //
-  //    - ACE_TRY_ENV ... used for exception reporting
+  //    - TAO_IN_ENV ... used for exception reporting
   //    - info ... describes the call
   //    - args parameters follow
   //
@@ -241,7 +241,7 @@ public:
                         CORBA::NamedValue_ptr result,
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
-                        CORBA_Environment &ACE_TRY_ENV =
+                        CORBA_Environment &TAO_IN_ENV =
                               TAO_default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
@@ -259,7 +259,7 @@ public:
   //    - result ... result and its description
   //    - flags ... only one DII flag is legal
   //    - exceptions ... list of legal user-defined exceptions
-  //    - ACE_TRY_ENV ... used for exception reporting.
+  //    - TAO_IN_ENV ... used for exception reporting.
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -300,14 +300,16 @@ public:
   // All objref representations carry around a type ID.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+          CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
   // that refers/points to the same remote object (i.e. are
   // equivalent).
 
-  CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
+  CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
+                                CORBA_Environment &TAO_IN_ENV =
+                                      TAO_default_environment ());
   // Implement the is_equivalent() method for the CORBA::Object
 
   // Our Constructors ...
@@ -400,7 +402,7 @@ public:
   // temporary.
 
 protected:
-  void put_params (CORBA_Environment &ACE_TRY_ENV,
+  void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
                    TAO_GIOP_Invocation &call,
                    void** args);
@@ -411,7 +413,7 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &ACE_TRY_ENV =
+                   CORBA_Environment &TAO_IN_ENV =
                          TAO_default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
@@ -476,10 +478,6 @@ private:
 
   TAO_ORB_Core* orb_core_;
   // The ORB
-
-  CORBA::ORB_var orb_;
-  // ORB required for reference counting.  This will help us keep the
-  // ORB around until the CORBA::Object we represent dies.
 
   CORBA::ORB_var servant_orb_;
   // If this stub refers to a collocated object then we need to hold on to

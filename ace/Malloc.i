@@ -20,7 +20,7 @@ ACE_INLINE void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr = 0;
+  char *ptr;
 
   ACE_NEW_RETURN (ptr, char[nbytes], 0);
 
@@ -144,8 +144,11 @@ ACE_INLINE void
 ACE_Static_Allocator_Base::free (void *ptr)
 {
   // Check to see if ptr is within our pool?!
+#if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (ptr);
+#else
   ACE_ASSERT (ptr >= this->buffer_ && ptr < this->buffer_ + this->size_);
+#endif /* ACE_NDEBUG */
 }
 
 ACE_INLINE int
@@ -229,3 +232,4 @@ ACE_Static_Allocator_Base::ACE_Static_Allocator_Base (char *buffer,
     offset_ (0)
 {
 }
+

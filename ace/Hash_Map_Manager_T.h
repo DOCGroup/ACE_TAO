@@ -98,24 +98,17 @@ public:
   friend class ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  typedef EXT_ID 
-          KEY;
-  typedef INT_ID 
-          VALUE;
-  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> 
-          ENTRY;
+  typedef EXT_ID KEY;
+  typedef INT_ID VALUE;
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
-          ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
-          REVERSE_ITERATOR;
+  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> ITERATOR;
+  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> REVERSE_ITERATOR;
 
   // = STL-style iterator typedefs.
-  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
-          iterator;
-  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
-          reverse_iterator;
+  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> iterator;
+  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> reverse_iterator;
 
   // = Initialization and termination methods.
 
@@ -245,10 +238,10 @@ public:
   int unbind (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
   // Remove entry from map.
 
-  size_t current_size (void) const;
+  size_t current_size (void);
   // Return the current size of the map.
 
-  size_t total_size (void) const;
+  size_t total_size (void);
   // Return the total size of the map.
 
   ACE_LOCK &mutex (void);
@@ -479,7 +472,9 @@ public:
   // = Initialization method.
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
+
   // = Iteration methods.
+
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
@@ -522,7 +517,9 @@ public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                     int head = 0);
+
   // = Iteration methods.
+
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.

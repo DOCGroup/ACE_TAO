@@ -58,6 +58,10 @@ TAO_IOR_Multicast::init (const char *ior,
                        "subscribe"),
                       -1);
 
+  // Initialise the IOR_LookupTable.
+
+  //  this->ior_lookup_table_.add_ior ("ObjectID1","iioploc://tango.cs.wustl.edu:9999/ObjectID1");
+
   return 0;
 }
 
@@ -71,19 +75,20 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_IOR_Multicast::Handle_input\n"));
-
-  // The length of the service name string that follows.
+  // The header has the length of the data following it.
   CORBA::Short header;
-  // Port to which to reply.
   ACE_UINT16 remote_port;
-  // Name of the service for which the client is looking.
-  char service_name[BUFSIZ];
+
+  char *name;
+  ACE_NEW_RETURN (name,
+                  char[BUFSIZ],
+                  0);
+
+  CORBA::String_var service_name (name);
 
   ACE_INET_Addr remote_addr;
 
-  // Take a peek at the header to find out how long is the service
-  // name string we should receive.
+  // Take a peek at the header and get the length of data in bytes.
   ssize_t n = this->mcast_dgram_.recv (&header,
                                        sizeof(header),
 				       remote_addr,
@@ -99,7 +104,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "Header value < 1\n"),
                       0);
 
-  // Receive full client multicast request.
+  // Construct an iovec to receive.
   const int iovcnt = 3;
   iovec iov[iovcnt];
 
@@ -108,7 +113,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iov[1].iov_base = (char *) &remote_port;
   iov[1].iov_len  = sizeof (ACE_UINT16);
   iov[2].iov_base = (char *) service_name;
-  iov[2].iov_len  = ACE_NTOHS (header);
+  iov[2].iov_len  = ACE_NTOHS (header) - sizeof (ACE_UINT16);
 
   // Read the iovec.
   n = this->mcast_dgram_.recv (iov,
@@ -119,21 +124,21 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
 		       n),
 		      0);
+  // Null terminate.
+  service_name [ACE_NTOHS (header) - sizeof (ACE_UINT16)] = 0;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"(%P|%t) Received multicast.\n"
 		"Service Name received : %s\n"
 		"Port received : %u\n",
-		service_name,
+		service_name.in (),
 		ACE_NTOHS (remote_port)));
+  ACE_CString ior(this->ior_);
 
-  // Our reply data.
-  ACE_CString ior (this->ior_);
-
-  if (ACE_OS::strcmp (service_name,
+  if (ACE_OS::strcmp (service_name.in (),
                       "NameService") != 0
-      && ACE_OS::strcmp (service_name,
+      && ACE_OS::strcmp (service_name.in (),
                          "TradingService") != 0)
     {
       // The client has requested an IOR other than for the
@@ -141,7 +146,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // to find_ior will fill the ior for us if the service name is
       // found in the table.
 
-      ACE_CString service (service_name);
+      ACE_CString service (service_name.in ());
 
       if (this->ior_lookup_table_.find_ior (service, ior) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,7 +154,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 			  0);
     }
 
-  // Reply to the multicast message.
   ACE_SOCK_Connector connector;
   ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
 			   remote_addr.get_host_name ());
@@ -161,28 +165,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "IOR_Multicast::connect failed\n"),
 		      0);
-  // Send the IOR back to the client.  (Send iovec, which contains ior
-  // length as the first element, and ior itself as the second.)
-
-  // Length of ior to be sent.
-  CORBA::Short data_len =
-    ACE_HTONS (ior.length () + 1);
-
-  // Vector to be sent.
-  const int cnt = 2;
-  iovec iovp[cnt];
-
-  // The length of ior to be sent.
-  iovp[0].iov_base = (char *) &data_len;
-  iovp[0].iov_len  = sizeof (CORBA::Short);
-
-  // The ior.
-  iovp[1].iov_base = ACE_const_cast (char*, ior.c_str ());
-  iovp[1].iov_len  = ior.length () + 1;
-
-  ssize_t result = stream.sendv_n (iovp,
-                                   cnt);
-
+  // Send the IOR back to the client.
+  ssize_t result = stream.send_n (ior.c_str (),
+                                  ACE_OS::strlen (ior.c_str ()) + 1);
   // Close the stream.
   stream.close ();
 

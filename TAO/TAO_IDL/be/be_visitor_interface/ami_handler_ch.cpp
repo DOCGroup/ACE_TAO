@@ -20,9 +20,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -58,7 +58,7 @@ be_visitor_interface_ami_handler_ch::visit_interface (be_interface *node)
   // Generate the skeleton class name.
 
   // Start with whatever indentation level we are at.
-  os->indent (); 
+  os->indent ();
 
   // We shall have a POA_ prefix only if we are at the topmost level. 
   if (!node->is_nested ())
@@ -85,7 +85,7 @@ be_visitor_interface_ami_handler_ch::visit_interface (be_interface *node)
   // This class will inherit from the Messaging::ReplyHandler class. 
   *os << "class " << idl_global->export_macro ()
       << " " << namebuf
-      << " : public POA_Messaging::ReplyHandler" 
+      << " : public POA_Messaging::ReplyHandler"
       << be_nl;
 
   // Body of the class definition.

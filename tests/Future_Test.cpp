@@ -70,7 +70,7 @@ class Prime_Scheduler : public ACE_Task_Base
 public:
   // = Initialization and termination methods.
   Prime_Scheduler (const ASYS_TCHAR *,
-                   Prime_Scheduler * = 0);
+             Prime_Scheduler * = 0);
   // Constructor.
 
   virtual int open (void *args = 0);
@@ -232,7 +232,7 @@ Method_Request_end::call (void)
 
 // Constructor
 Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
-                                  Prime_Scheduler *new_scheduler)
+                      Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
   ACE_NEW (this->name_,
@@ -373,39 +373,21 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<const ASYS_TCHAR *>;
 template class ACE_Future<int>;
 template class ACE_Future<u_long>;
-template class ACE_Future_Rep<const ASYS_TCHAR *>;
+template class ACE_Future_Rep<ASYS_TCHAR const *>;
 template class ACE_Future_Rep<int>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
-template class ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>;
-template class ACE_Node<ACE_Future_Observer<int> *>;
-template class ACE_Node<ACE_Future_Observer<u_long> *>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<int> *>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Future<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future<int>
 #pragma instantiate ACE_Future<u_long>
-#pragma instantiate ACE_Future_Rep<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future_Rep<ASYS_TCHAR const *>
 #pragma instantiate ACE_Future_Rep<int>
 #pragma instantiate ACE_Future_Rep<u_long>
 #pragma instantiate auto_ptr<ACE_Method_Request>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
-#pragma instantiate ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>
-#pragma instantiate ACE_Node<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Node<ACE_Future_Observer<u_long> *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -543,8 +525,7 @@ main (int, ASYS_TCHAR *[])
     ACE_Future<int> f1;
     f1.set (100);
 
-    // Note you need to use absolute time, not relative time.
-    ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
+    ACE_Time_Value timeout (1);
     int value = 0;
 
     if (f1.get (value, &timeout) == 0
@@ -556,7 +537,6 @@ main (int, ASYS_TCHAR *[])
                   ASYS_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
                   ASYS_TEXT ("not work, broken Ace_Future<> implementation.\n")));
   }
-
   {
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("Checking if Ace_Future<T>::operator= is implemented ")
@@ -579,10 +559,9 @@ main (int, ASYS_TCHAR *[])
     // instance at this moment
 
     // The stuff below might crash the process if the <operator=>
-    // implementation was bad.
+    // implementation was bad
     int value = 0;
-
-    ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
+    ACE_Time_Value timeout (1);
 
     f1.set (100);
     f1.get (value, &timeout);

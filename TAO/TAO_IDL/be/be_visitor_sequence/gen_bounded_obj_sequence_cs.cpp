@@ -76,6 +76,21 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
+  static char object_manager [NAMEBUFSIZE];
+  ACE_OS::memset (object_manager, '\0', NAMEBUFSIZE);
+
+  if (node->is_nested ())
+    {
+      ACE_OS::sprintf (object_manager, "%s::%s",
+                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->fullname (),
+                       node->object_manager_name ());
+    }
+  else
+    {
+      ACE_OS::sprintf (object_manager, "%s",
+                       node->object_manager_name ());
+    }
+
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();

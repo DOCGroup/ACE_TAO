@@ -189,29 +189,24 @@ TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
 // ****************************************************************
 
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (CORBA::ULong size)
 {
   return new CORBA::Octet[size];
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE void
 TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (CORBA::Octet *buffer)
 {
   delete [] buffer;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (void)
   :  mb_ (0)
 {
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum,
@@ -220,7 +215,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maxim
 {
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
                                                    CORBA::ULong length,
@@ -231,7 +225,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maxim
 {
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE const CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
 {
@@ -240,7 +233,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
 
 // This function is a little too big to be inlined, but some compilers
 // (Sun/CC 4.1?) die if it isn't :-(
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
 {
@@ -291,7 +283,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
   return result;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
 {
@@ -300,7 +291,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
   return tmp[i];
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE const CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
 {
@@ -309,14 +299,12 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
   return tmp[i];
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE ACE_Message_Block*
 TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
 {
   return this->mb_;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
                                                const ACE_Message_Block* mb)
@@ -329,7 +317,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
   this->release_ = 0;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
                                                CORBA::ULong length,

@@ -21,7 +21,7 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       Client_i client_i;
 
@@ -29,15 +29,14 @@ main (int argc, char *argv[])
 	  || client_i.run () == -1)
 	return -1;
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client::main\t\n");
+      TAO_TRY_ENV.print_exception ("client::main\t\n");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

@@ -20,156 +20,86 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
-#include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
 
+#if defined (UNICODE)
+#define ACE_TString ACE_WString
+#else /* UNICODE */
+#define ACE_TString ACE_CString
+#endif /* UNICODE */
 
-class Server_Info
-  // = TITLE
-  //   Information about IR registered servers.
-  //
-  // = DESCRIPTION
-  //   Contains all the necessary information about the server including
-  //   Information on how to start it up and where it is running.
+struct Repository_Record
 {
-public:
-  // = Constructors
+  // Constructors
+  Repository_Record ();
+  Repository_Record (const Repository_Record &);
+  Repository_Record (const ASYS_TCHAR *c,
+                     const ASYS_TCHAR *e,
+                     const ASYS_TCHAR *w,
+                     const ASYS_TCHAR *h,
+                     const unsigned short p,
+                     const ASYS_TCHAR *pi);
 
-  Server_Info (const ACE_TString POA_name,
-               const ACE_TString logical_server_name,
-               const ACE_TString startup_command,
-               const ACE_TString working_dir);
-  // Initialize the command_line and working_dir.
 
-  // = Destructors
+  // Destructor
+  ~Repository_Record ();
 
-  ~Server_Info ();
-  // The only destructor there is.
+  // Assignment Operator
+  Repository_Record &operator= (Repository_Record &);
 
-  void update_running_info (const ACE_TString host,
-                            const unsigned short port,
-                            const ACE_TString server_object_ior);
-  // Updates information that is relevant only when an instance
-  // of the server is running.
-
-  void get_startup_info (ACE_TString &logical_server_name,
-                         ACE_TString &startup_command,
-                         ACE_TString &working_dir);
-  // Returns startup information.
-
-  void get_running_info (ACE_TString &host,
-                         unsigned short &port,
-                         ACE_TString &server_object_ior);
-  // Returns information about a running instance.
-
-  // @@ Does this belong here?
-  //  int startup ();
-  // Starts up the server based on the information.
-  // Returns:  0  if successful
-  //           -1 if there is no registration command (it has to be manually
-  //              restarted)
-
-  int starting_up_;
-  // This is a flag to determine if the process has already been spawned
-  // and we are just waiting for it to start up.
-
-private:
-  ACE_TString logical_server_name_;
-  // Which server process this poa is grouped in.
-
-  ACE_TString POA_name_;
-  // The name of the POA.
-
-  ACE_TString startup_command_;
-  // The command line startup command (program and arguments).
-
-  ACE_TString working_dir_;
-  // The working directory.
-
-  ACE_TString host_;
-  // Current hostname used by the server.
-
-  unsigned short port_;
-  // Current port used by the server.
-
-  ACE_TString server_object_ior_;
-  // IOR of the server object in the server.
-
-  // No copying allowed.
-  void operator= (Server_Info &);
-  Server_Info (Server_Info &);
+  // Fields
+  ASYS_TCHAR *comm_line;
+  ASYS_TCHAR *env;
+  ASYS_TCHAR *wdir;
+  ASYS_TCHAR *host;
+  unsigned short port;
+  ASYS_TCHAR *ping_ior;
 };
 
-
-
-
-class Server_Repository
-  // = TITLE
-  //   Repository of Server_Infos.
-  //
-  // = DESCRIPTION
-  //   Handles the storage, updating, and startup of servers.
+class Repository
 {
 public:
-  Server_Repository ();
+  Repository ();
   // Default Constructor
 
   typedef ACE_Hash_Map_Entry<ACE_TString,
-                             Server_Info *> HASH_IR_ENTRY;
+                             Repository_Record *> HASH_IR_ENTRY;
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_TString,
-                                  Server_Info *,
+                                  Repository_Record *,
                                   ACE_Hash<ACE_TString>,
                                   ACE_Equal_To<ACE_TString>,
                                   ACE_Null_Mutex> HASH_IR_MAP;
 
   typedef ACE_Hash_Map_Iterator_Ex<ACE_TString,
-                                   Server_Info *,
+                                   Repository_Record *,
                                    ACE_Hash<ACE_TString>,
                                    ACE_Equal_To<ACE_TString>,
                                    ACE_Null_Mutex> HASH_IR_ITER;
 
-  int add (const ACE_TString POA_name,
-           const ACE_TString logical_server_name,
-           const ACE_TString startup_command,
-           const ACE_TString working_dir);
+  int add (ACE_TString key, const Repository_Record &rec);
   // Add a new server to the Repository
 
-  int update (const ACE_TString POA_name,
-              const ACE_TString host,
-              const unsigned short port,
-              const ACE_TString server_object_ior);
-  // Update the associated process information.
+  int update (ACE_TString key, const Repository_Record &rec);
+  // Updates an existing key with <rec>
 
-  int get_startup_info (const ACE_TString POA_name,
-                        ACE_TString &logical_server_name,
-                        ACE_TString &startup_command,
-                        ACE_TString &working_dir);
-  // Returns information related to startup.
+  int remove (ACE_TString key);
+  // Removes the server from the Repository
 
-  int get_running_info (const ACE_TString POA_name,
-                        ACE_TString &host,
-                        unsigned short &port,
-                        ACE_TString &server_object_ior);
-  // Returns information related to a running copy.
+  int resolve (ACE_TString key, Repository_Record &rec);
+  // Find the key record in the Repository
 
-  int starting_up (const ACE_TString POA_name, int new_value);
-  // Checks the starting_up_ variable in the Server_Info and
-  // returns the previous value or -1 if the POA_name wasn't found
+  // = Accessor methods
+  int get_comm_line (ACE_TString key, ASYS_TCHAR *&comm_line);
+  int get_env (ACE_TString key, ASYS_TCHAR *&env);
+  int get_wdir (ACE_TString key, ASYS_TCHAR *&wdir);
+  int get_ping_ior (ACE_TString key, ASYS_TCHAR *&ping_ior);
+  int get_hostport (ACE_TString key, ASYS_TCHAR *&host, unsigned short &port);
 
-  int starting_up (const ACE_TString POA_name);
-  // Same as above but does not alter the value.
-
-  int remove (const ACE_TString POA_name);
-  // Removes the server from the Repository.
-
-  HASH_IR_ITER *new_iterator ();
-  // Returns a new iterator that travels over the repository.
-
-  size_t get_repository_size ();
-  // Returns the number of entries in the repository.
+  // Dump method
+  void dump (void);
 
 private:
   HASH_IR_MAP repository_;

@@ -40,15 +40,15 @@ cubit.hh:      cubit.idl
 	       $(PREPRO) cubit.idl
 
 clean:
-	       $(RM) client server cubit.hh *_s.cc *_c.cc *.o;
-	$(RM) -r Templates.DB; $(RM) *~
+	       rm -f client server cubit.hh *_s.cc *_c.cc *.o;
+	rm -rf Templates.DB; rm -f *~
 
 .SUFFIXES: .cc
 
 .cc.a:
 	       $(CCC) -c $(CCFLAGS) $<
 	       $(AR) $(ARFLAGS) $@ $*.o
-	       $(RM) $*.o
+	       rm -f $*.o
 
 .cc:
 	       $(CCC) $(CCFLAGS) $(LDFLAGS) $< -o $@

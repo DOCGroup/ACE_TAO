@@ -39,9 +39,7 @@ CORBA_DomainManager_ptr CORBA_DomainManager::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_DomainManager::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_DomainManager::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", ACE_TRY_ENV))
     return CORBA_DomainManager::_nil ();
   return CORBA_DomainManager::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -96,6 +94,7 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -153,9 +152,7 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::ConstructionPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ConstructionPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV))
     return CORBA::ConstructionPolicy::_nil ();
   return CORBA::ConstructionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -213,6 +210,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
@@ -346,11 +344,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>;
+  template class TAO_Object_Field_T<CORBA_DomainManager>;
   template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>;
   template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>
+# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
 # pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
 # pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -408,9 +406,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
+  template class TAO_Object_Field_T<CORBA_ConstructionPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
+# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */

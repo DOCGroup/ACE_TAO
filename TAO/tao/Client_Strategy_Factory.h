@@ -25,6 +25,7 @@ class ACE_Lock;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Transport;
+class TAO_ORB_Core;
 
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
@@ -39,12 +40,12 @@ public:
   virtual ~TAO_Client_Strategy_Factory (void);
   // Destructor
 
-  virtual ACE_Lock* create_profile_lock (void);
-  // Create the lock for the forwarding Profile used by the
+  virtual ACE_Lock* create_iiop_profile_lock (void);
+  // Create the lock for the forwarding IIOP Profile used by the
   // <TAO_GIOP_Invocation::location_forward> and the
   // <TAO_GIOP_Invocation::start>.
 
-  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (void);
+  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
   // Create the correct client request muxing strategy.
 
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);

@@ -12,22 +12,21 @@ require ACEutils;
 $con_count = 10;
 $sup_count = 10;
 $ev_count = 8;
-$status = 0;
 
 sub cosec_multiple_test2
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT, "");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT, "");
+    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT, "");
+    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT);
 
     sleep 10;
 
@@ -51,19 +50,11 @@ sub cosec_multiple_test2
     }
 
     print "waiting for the last supplier to finish\n";
-    if ($SUPP->TimedWait (60) == -1) {
-      print STDERR "ERROR: supplier timedout\n";
-      $status = 1;
-      $SUPP->Kill (); $SUPP->TimedWait (1);
-    }
+    $SUPP->Wait ();
 
 
     print "waiting for the last consumer to finish\n";
-    if ($CONS->TimedWait (60) == -1) {
-      print STDERR "ERROR: consumer timedout\n";
-      $status = 1;
-      $CONS->Kill (); $CONS->TimedWait (1);
-    }
+    $CONS->Wait ();
 
 
     print "cleanup...\n";
@@ -71,9 +62,9 @@ sub cosec_multiple_test2
     $SV2->Kill ();
     $SV3->Kill ();
 
-    $SV1->TimedWait (1);
-    $SV2->TimedWait (1);
-    $SV3->TimedWait (1);
+    $SV1->Wait ();
+    $SV2->Wait ();
+    $SV3->Wait ();
 
     print "done!.\n";
 }
@@ -112,5 +103,3 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 
 cosec_multiple_test2 ();
-
-exit $status;

@@ -64,6 +64,8 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
+  const char * object_manager = node->object_manager_name ();
+
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
@@ -71,6 +73,9 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
+
+  //forward declaration of the object manager;
+  *os << "class " << object_manager << ";" << be_nl << be_nl;
 
   *os << "class " << class_name << " : public TAO_Unbounded_Base_Sequence" << be_nl
       << "{" << be_nl
@@ -101,10 +106,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
 
   // operator[]
-  *os << "TAO_Object_Manager<"
-      << pt->name () << ","
-      << pt->name () << "_var>"
-      << " operator[] (CORBA::ULong index) const;" << be_nl;
+  *os << object_manager << " operator[] (CORBA::ULong index) const;" << be_nl;
 
   // allocbuf
   *os << "static ";
@@ -157,6 +159,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 
   // generate #endif for AHETI
   os->gen_endif_AHETI();
+
+  // Due to a bug with g++2.7.2.3 we have to generate the object manager class
+  // after the sequence class and instead forward declare it above
+
+  this->gen_object_manager (node);
+  // Generate the code for the object manager
 
   delete visitor;
   return 0;

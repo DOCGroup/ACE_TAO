@@ -1,4 +1,17 @@
+// ============================================================================
 // $Id$
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Trader_Base.cpp
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Trader.h"
 #include "Offer_Iterators_T.h"
@@ -7,6 +20,10 @@
 #include "Trader_Interfaces.h"
 
 ACE_RCSID(Trader, Trader, "$Id$")
+
+  // *************************************************************
+  // TAO_Trader_Base
+  // *************************************************************
 
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
@@ -93,6 +110,10 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
+  // *************************************************************
+  // Attribute Classes
+  // *************************************************************
+
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
@@ -170,14 +191,12 @@ void
 TAO_Support_Attributes_i::
 type_repos (CosTrading::TypeRepository_ptr new_value)
 {
-  // @@ Seth, There is no way to propagate the exception out.
+  CORBA::Environment TAO_IN_ENV;
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   this->type_repos_ = new_value;
-  // @@ What can we do even if we catch this?
   this->service_type_repos_ =
-    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, ACE_TRY_ENV);
+    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, TAO_IN_ENV);
 }
 
 CosTradingRepos::ServiceTypeRepository_ptr
@@ -605,6 +624,10 @@ operator== (const CosTrading::Admin::OctetSeq& left,
   return return_value;
 }
 
+  // *************************************************************
+  // TAO_Trader_Factory
+  // *************************************************************
+
 #include "ace/Arg_Shifter.h"
 #include "Trader_T.h"
 
@@ -804,8 +827,8 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
                 }
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0
-               || ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
+      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -837,39 +860,32 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
     }
 }
 
+  // *************************************************************
+  // TAO_Sequence_Extracter_Base
+  // *************************************************************
+
 CORBA::TCKind
 TAO_Sequence_Extracter_Base::
 sequence_type (CORBA::TypeCode* type_code,
-               CORBA::Environment& ACE_TRY_ENV)
+               CORBA::Environment& env)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Seth, why do you use a comma to separate the two statements?
   CORBA::TCKind return_value = CORBA::tk_void,
-  type_kind = type_code->kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (return_value);
+    type_kind = type_code->kind (env);
 
-  if (type_kind == CORBA::tk_alias
-      || type_kind == CORBA::tk_sequence)
+  if (type_kind == CORBA::tk_alias || type_kind == CORBA::tk_sequence)
     {
       CORBA::TypeCode_ptr base = type_code;
 
-      while (base->kind (ACE_TRY_ENV) == CORBA::tk_alias)
+      while (base->kind (env) == CORBA::tk_alias)
+        base = base->content_type (env);
+
+      if (base->kind (env) == CORBA::tk_sequence)
         {
-          base = base->content_type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (return_value);
-        }
+          base = base->content_type (env);
+          TAO_CHECK_ENV_RETURN (env, return_value);
 
-      CORBA::TCKind base_kind = base->kind (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (return_value);
-
-      if (base_kind == CORBA::tk_sequence)
-        {
-          base = base->content_type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (return_value);
-
-          base_kind = base->kind (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (return_value);
-          return_value = base_kind;
+          return_value = base->kind (env);
         }
     }
 

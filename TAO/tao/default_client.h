@@ -42,12 +42,12 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
-  ACE_Lock* create_profile_lock (void);
-  // create the lock for the forwarding Profile used by
+  ACE_Lock* create_iiop_profile_lock (void);
+  // create the lock for the forwarding IIOP Profile used by
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
-  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (void);
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
   // Create the correct client request muxing strategy.
 
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
@@ -60,7 +60,7 @@ private:
     TAO_THREAD_LOCK
   };
 
-  Lock_Type profile_lock_type_;
+  Lock_Type iiop_profile_lock_type_;
   // the lock type for forwarding IIOP Profile
 
   enum Transport_Mux_Strategy

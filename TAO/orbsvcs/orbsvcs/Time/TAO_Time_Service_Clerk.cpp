@@ -56,11 +56,12 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  env.exception (new CORBA::NO_IMPLEMENT ());
+  return 0;
 }
 
 // This creates a new UTO based on the given parameters.

@@ -29,7 +29,7 @@ TAO_IIOP_Profile::object_addr (void) const
 ACE_INLINE const char *
 TAO_IIOP_Profile::host (void)
 {
-  return this->host_.in ();
+  return this->host_;
 }
 
 ACE_INLINE CORBA::UShort

@@ -85,7 +85,7 @@ visit_union_branch (be_union_branch *node)
       else
         *os << be_nl;
     }
-
+  
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -213,9 +213,7 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl;
   *os << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
-      << "(TAO_Object_Field_T<"
-      << bt->name () << ","
-      << bt->name () << "_var>), 0);" << be_uidt_nl;
+      << "TAO_Object_Field_T<" << bt->name () << ">, 0);" << be_uidt_nl;
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;

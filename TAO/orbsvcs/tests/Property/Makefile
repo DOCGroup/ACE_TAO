@@ -21,7 +21,7 @@ BIN2 = server client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Property,$(findstring Property,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Property
@@ -177,13 +177,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -239,6 +232,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -500,13 +495,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -562,6 +550,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \

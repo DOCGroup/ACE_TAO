@@ -68,9 +68,8 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // ACE_Object_Manager:  we'll have to leak this instance.
 #endif /* ACE_MT_SAFE */
 
-          ACE_NEW_RETURN (singleton,
-                          (ACE_Singleton<TYPE,
-                           ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
@@ -87,9 +86,8 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton,
-                              (ACE_Singleton<TYPE, ACE_LOCK>),
-                              0);
+              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
             }
@@ -161,9 +159,9 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
 #endif /* ACE_MT_SAFE */
-          ACE_NEW_RETURN (singleton,
-                          (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
-                          0);
+
+          ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
@@ -179,9 +177,9 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton,
-                              (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
+              ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
                               0);
+
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
             }

@@ -316,9 +316,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 
       *os << "this->u_." << ub->local_name ()
           << "_ = new TAO_Object_Field_T<"
-          << bt->nested_type_name (bu, "") << ",";
-      // Must use another statement, nested_type_name has side effects...
-      *os << bt->nested_type_name (bu, "_var")
+          << bt->nested_type_name (bu, "")
           << "> (" << bt->name ()
           << "::_duplicate (val));" << be_uidt_nl;
     }
@@ -388,9 +386,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 
       *os << "this->u_." << ub->local_name ()
           << "_ = new TAO_Object_Field_T<"
-          << bt->nested_type_name (bu, "") << ",";
-      // Must use another statement, nested_type_name has side effects...
-      *os << bt->nested_type_name (bu, "") << "_var"
+          << bt->nested_type_name (bu, "")
           << "> (" << bt->name ()
           << "::_duplicate (val));" << be_uidt_nl;
     }
@@ -465,11 +461,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
           if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
             {
               *os << "this->u_." << ub->local_name () << "_ = new "
-                  << "TAO_Object_Field_T<CORBA::Object,"
-                  << "CORBA::Object_var> (CORBA::Object::_duplicate (val));"
+                  << "TAO_Object_Field_T<CORBA::Object> (CORBA::Object::_duplicate (val));"
                   << be_uidt_nl;
             }
-          else
+          else 
             {
               *os << "this->u_." << ub->local_name () << "_ = "
                   << bt->name () << "::_duplicate (val);" << be_uidt_nl;
@@ -508,12 +503,12 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
           << "{" << be_idt_nl;
       if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
         {
-          *os << "return this->u_." << ub->local_name ()
+          *os << "return this->u_." << ub->local_name () 
               << "_->ptr ();" << be_uidt_nl;
         }
       else
         {
-          *os << "return this->u_." << ub->local_name ()
+          *os << "return this->u_." << ub->local_name () 
               << "_;" << be_uidt_nl;
         }
       *os << "}\n\n";

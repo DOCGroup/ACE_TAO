@@ -218,14 +218,14 @@ public:
                      const RtecEventComm::EventHeader& rhs) const;
   };
 
-protected:
+private:
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos,
                  CORBA::Environment &env);
   void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos,
                  CORBA::Environment &env);
   // Helper functions to compute the consumer and supplier QOS.
 
-protected:
+private:
   TAO_EC_Event_Channel* event_channel_;
   // The event channel.
 

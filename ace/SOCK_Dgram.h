@@ -43,12 +43,9 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   ACE_SOCK_Dgram (const ACE_Addr &local,
-                  const ACE_QoS_Params &qos_params,
+                  const ACE_Connect_QoS_Params &qos_params,
                   int protocol_family = PF_INET,
                   int protocol = 0,
-                  ACE_Protocol_Info *protocolinfo = 0,
-                  ACE_SOCK_GROUP g = 0,
-                  u_long flags = 0,
                   int reuse_addr = 0);
   // This is a QoS-enabed method for initiating a socket dgram that
   // will accept datagrams at the <local> address.  The <qos_params>
@@ -62,12 +59,9 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   int open (const ACE_Addr &local,
-            const ACE_QoS_Params &qos_params,
+            const ACE_Connect_QoS_Params &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
-            ACE_Protocol_Info *protocolinfo = 0,
-            ACE_SOCK_GROUP g = 0,
-            u_long flags = 0,
             int reuse_addr = 0);
   // This is a QoS-enabed method for initiating a socket dgram that
   // will accept datagrams at the <local> address.  The <qos_params>
@@ -81,14 +75,14 @@ public:
                 size_t n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
-  // Send an <n> byte <buf> to the datagram socket (uses <sendto(3)>).
+  // Send an <n> byte <buf> to the datagram socket (uses sendto(3)).
 
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
                 int flags = 0) const;
   // Receive an <n> byte <buf> from the datagram socket (uses
-  // <recvfrom(3)>).
+  // recvfrom(3)).
 
   ssize_t recv (iovec *io_vec,
                 ACE_Addr &addr,
@@ -106,14 +100,14 @@ public:
                 const ACE_Addr &addr,
                 int flags = 0) const;
   // Send an <iovec> of size <n> to the datagram socket (uses
-  // <sendmsg(3)>).
+  // sendmsg(3)).
 
   ssize_t recv (iovec iov[],
                 size_t n,
                 ACE_Addr &addr,
                 int flags = 0) const;
   // Recv an <iovec> of size <n> to the datagram socket (uses
-  // <recvmsg(3)>).
+  // recvmsg(3)).
 
   ssize_t recv (void *buf,
                 size_t n,
@@ -127,43 +121,6 @@ public:
   // specified in *<timeout> elapses).  If <recv> times out a -1 is
   // returned with <errno == ETIME>.  If it succeeds the number of
   // bytes received is returned.
-
-  ssize_t send (const iovec buffers[],
-                int buffer_count,
-                size_t &number_of_bytes_sent,
-                int flags,
-                const ACE_Addr &addr,
-                ACE_OVERLAPPED *overlapped,
-                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  // I/O (uses <WSASentTo>).  Returns 0 on success.
-
-  ssize_t recv (iovec buffers[],
-                int buffer_count,
-                size_t &number_of_bytes_recvd,
-                int &flags,
-                ACE_Addr &addr,
-                ACE_OVERLAPPED *overlapped,
-                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Recv <buffer_count> worth of <buffers> from <addr> using
-  // overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
-
-  ssize_t send (const void *buf,
-                size_t n,
-                const ACE_Addr &addr,
-                int flags,
-                ACE_OVERLAPPED *overlapped,
-                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
-
-  ssize_t recv (void *buf,
-                size_t n,
-                ACE_Addr &addr,
-                int flags,
-                ACE_OVERLAPPED *overlapped,
-                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Receive an <n> byte <buf> from the datagram socket (uses
-  // <WSARecvFrom>).
 
   void dump (void) const;
   // Dump the state of an object.

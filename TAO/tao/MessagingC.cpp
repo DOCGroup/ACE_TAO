@@ -174,9 +174,7 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RebindPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RebindPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RebindPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RebindPolicy:1.0", ACE_TRY_ENV))
     return Messaging::RebindPolicy::_nil ();
   return Messaging::RebindPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -207,7 +205,7 @@ CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RebindPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -241,9 +239,7 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::SyncScopePolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/SyncScopePolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::SyncScopePolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/SyncScopePolicy:1.0", ACE_TRY_ENV))
     return Messaging::SyncScopePolicy::_nil ();
   return Messaging::SyncScopePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -274,7 +270,7 @@ CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORB
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/SyncScopePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -336,9 +332,7 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestPriorityPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestPriorityPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RequestPriorityPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RequestPriorityPolicy:1.0", ACE_TRY_ENV))
     return Messaging::RequestPriorityPolicy::_nil ();
   return Messaging::RequestPriorityPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -369,7 +363,7 @@ CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestPriorityPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -403,9 +397,7 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyPriorityPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyPriorityPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::ReplyPriorityPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/ReplyPriorityPolicy:1.0", ACE_TRY_ENV))
     return Messaging::ReplyPriorityPolicy::_nil ();
   return Messaging::ReplyPriorityPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -436,7 +428,7 @@ CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, 
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyPriorityPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -470,9 +462,7 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_narrow
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestStartTimePolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestStartTimePolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RequestStartTimePolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RequestStartTimePolicy:1.0", ACE_TRY_ENV))
     return Messaging::RequestStartTimePolicy::_nil ();
   return Messaging::RequestStartTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -503,7 +493,7 @@ CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *valu
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestStartTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -537,9 +527,7 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestEndTimePolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestEndTimePolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RequestEndTimePolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RequestEndTimePolicy:1.0", ACE_TRY_ENV))
     return Messaging::RequestEndTimePolicy::_nil ();
   return Messaging::RequestEndTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -570,7 +558,7 @@ CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value,
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestEndTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -604,9 +592,7 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyStartTimePolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyStartTimePolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::ReplyStartTimePolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/ReplyStartTimePolicy:1.0", ACE_TRY_ENV))
     return Messaging::ReplyStartTimePolicy::_nil ();
   return Messaging::ReplyStartTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -637,7 +623,7 @@ CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value,
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyStartTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -671,9 +657,7 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyEndTimePolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyEndTimePolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::ReplyEndTimePolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/ReplyEndTimePolicy:1.0", ACE_TRY_ENV))
     return Messaging::ReplyEndTimePolicy::_nil ();
   return Messaging::ReplyEndTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -704,7 +688,7 @@ CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, C
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyEndTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -738,9 +722,7 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
 {
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RelativeRequestTimeoutPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0", ACE_TRY_ENV))
     return Messaging::RelativeRequestTimeoutPolicy::_nil ();
   return Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -771,7 +753,7 @@ CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -805,10 +787,7 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
 {
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RelativeRoundtripTimeoutPolicy::_nil
-                    ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0", ACE_TRY_ENV))
     return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
   return Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -839,7 +818,7 @@ CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Ch
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -901,9 +880,7 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RoutingPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RoutingPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::RoutingPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/RoutingPolicy:1.0", ACE_TRY_ENV))
     return Messaging::RoutingPolicy::_nil ();
   return Messaging::RoutingPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -934,7 +911,7 @@ CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA:
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RoutingPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -968,9 +945,7 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::MaxHopsPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/MaxHopsPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::MaxHopsPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/MaxHopsPolicy:1.0", ACE_TRY_ENV))
     return Messaging::MaxHopsPolicy::_nil ();
   return Messaging::MaxHopsPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1001,7 +976,7 @@ CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA:
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/MaxHopsPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1035,9 +1010,7 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::QueueOrderPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/QueueOrderPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::QueueOrderPolicy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/QueueOrderPolicy:1.0", ACE_TRY_ENV))
     return Messaging::QueueOrderPolicy::_nil ();
   return Messaging::QueueOrderPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1068,7 +1041,7 @@ CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, COR
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/QueueOrderPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1281,9 +1254,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyHandler::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyHandler:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::ReplyHandler::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/ReplyHandler:1.0", ACE_TRY_ENV))
     return Messaging::ReplyHandler::_nil ();
   return Messaging::ReplyHandler::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1313,7 +1284,7 @@ CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value, CORBA::
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyHandler:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1344,9 +1315,7 @@ Messaging::Poller_ptr Messaging::Poller::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::Poller::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/Poller:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (Messaging::Poller::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:Messaging/Poller:1.0", ACE_TRY_ENV))
     return Messaging::Poller::_nil ();
   return Messaging::Poller::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1709,15 +1678,15 @@ char * Messaging::Poller::op_name (
   return _tao_retval;
 }
 
-CORBA::Boolean Messaging::Poller::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean Messaging::Poller::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/Poller:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* Messaging::Poller::_interface_repository_id (void) const
@@ -2192,8 +2161,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
   template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
 
 #if defined(TAO_POLLER)
-  template class TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
-  template class TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>;
+  template class TAO_Object_Field_T<Messaging::ReplyHandler>;
+  template class TAO_Object_Field_T<Messaging::Poller>;
 #endif /* TAO_POLLER */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -2201,8 +2170,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
 
 #if defined(TAO_POLLER)
-#  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
-#  pragma instantiate TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>
+#  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler>
+#  pragma instantiate TAO_Object_Field_T<Messaging::Poller>
 #endif /* TAO_POLLER */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -12,6 +12,6 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-// Not needed with glibc 2.1.1:  #define __USE_XOPEN
+#define __USE_XOPEN
 
 #endif /* ACE_CONFIG_H */

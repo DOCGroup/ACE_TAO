@@ -13,17 +13,15 @@ DIRS  =	orbsvcs \
 	Scheduling_Service \
 	Event_Service \
 	Dump_Schedule \
+	Concurrency_Service \
 	LifeCycle_Service \
 	Trading_Service \
+	Logging_Service \
 	Time_Service \
 	ImplRepo_Service \
 	CosEvent_Service \
 	tests \
 	examples
-
-# Not compiled by default
-#	Concurrency_Service \
-
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

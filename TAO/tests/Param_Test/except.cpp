@@ -52,44 +52,26 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
       req->invoke (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UnknownUserException, user_ex)
+  ACE_CATCH (Param_Test::Ooops, ex)
     {
-      Param_Test::Ooops* oops;
-      Param_Test::BadBoy* bad_boy;
-
-      if (user_ex.exception () >>= oops)
+      if (TAO_debug_level > 0)
         {
-          if (TAO_debug_level > 0)
-            {
-              const char *reason = oops->reason.in ();
-              if (reason == 0)
-                reason = "nil";
-              ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::dii_req_invoke - "
-                          "expected user exception"
-                          " (%s,%d)\n", reason, oops->input));
-            }
-          this->inout_ = this->in_ * 2;
-          this->out_ = this->in_ * 3;
-          this->ret_ = this->in_ * 4;
-          return;
-        }
-      else if (user_ex.exception () >>= bad_boy)
-        {
-          ACE_PRINT_EXCEPTION ((*bad_boy),
-                               "Test_Exception::dii_req_invoke - "
-                               "unexpected (but known) user exception\n");
-          this->inout_ = this->in_ * 5;
-          this->out_ = this->in_ * 5;
-          this->ret_ = this->in_ * 5;
-        }
-      else
-        {
+          const char *reason = ex.reason.in ();
+          if (reason == 0)
+            reason = "nil";
           ACE_DEBUG ((LM_DEBUG,
-                      "Test_Exception::dii_req_invoke - "
-                      "unexpected (and unknown) user exception\n"));
+                      "Test_Exception::run_sii_test - "
+                      "expected user exception"
+                      " (%s,%d)\n", reason, ex.input));
         }
+      this->inout_ = this->in_ * 3;
+      this->out_ = this->in_ * 4;
+      this->ret_ = this->in_ * 5;
 
+      // Why should we use clear ?????
+      //TAO_TRY_ENV.clear ();
+
+      return;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
@@ -98,11 +80,19 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
           ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
                                "expected system exception\n");
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
+      this->inout_ = this->in_ * 4;
+      this->out_ = this->in_ * 5;
+      this->ret_ = this->in_ * 6;
+
+      // TAO_TRY_ENV.clear ();
 
       return;
+    }
+  ACE_CATCH (Param_Test::BadBoy, ex)
+    {
+      ACE_PRINT_EXCEPTION (ex, "Test_Exception::run_sii_test - "
+                           " unexpected exception\n");
+      ACE_TRY_THROW (Param_Test::BadBoy ());
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -134,7 +124,6 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
 {
   ACE_TRY
     {
-      this->in_++;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_,
@@ -153,31 +142,31 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
                       "expected user exception"
                       " (%s,%d)\n", reason, ex.input));
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
+      this->inout_ = this->in_ * 3;
+      this->out_ = this->in_ * 4;
+      this->ret_ = this->in_ * 5;
       return -1;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
-                               "expected system exception\n");
+          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - expected system exception\n");
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
-      return 0;
+      this->inout_ = this->in_ * 4;
+      this->out_ = this->in_ * 5;
+      this->ret_ = this->in_ * 6;
+      return -1;
     }
   ACE_CATCH (Param_Test::BadBoy, ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Test_Exception::run_sii_test - "
-                           "unexpected user exception\n");
+      ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - unexpected system exception\n");
+      return -1;
     }
   ACE_ENDTRY;
-  return -1;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
@@ -185,70 +174,51 @@ Test_Exception::add_args (CORBA::NVList_ptr param_list,
                           CORBA::NVList_ptr retval,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      // we provide top level memory to the ORB to retrieve the data
-      CORBA::Any in_arg (CORBA::_tc_ulong,
-                         &this->in_,
-                         0);
+  // we provide top level memory to the ORB to retrieve the data
+  CORBA::Any in_arg (CORBA::_tc_ulong,
+                     &this->in_,
+                     0);
 
-      CORBA::Any inout_arg (CORBA::_tc_ulong,
-                            &this->inout_,
-                            0);
+  CORBA::Any inout_arg (CORBA::_tc_ulong,
+                        &this->inout_,
+                        0);
 
-      CORBA::Any out_arg (CORBA::_tc_ulong,
-                          &this->out_,
-                          0);
+  CORBA::Any out_arg (CORBA::_tc_ulong,
+                      &this->out_,
+                      0);
 
-      // add parameters
-      param_list->add_value ("s1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // add parameters
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("s2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("s3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         ACE_TRY_ENV);
 
-      // add return value. Let the ORB allocate storage. We simply tell the ORB
-      // what type we are expecting.
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (CORBA::_tc_ulong,
-                               &this->ret_,
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Exception::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
+  // add return value. Let the ORB allocate storage. We simply tell the ORB
+  // what type we are expecting.
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_ulong,
+                                                    &this->ret_,
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
+  return 0;
 }
 
 CORBA::Boolean
 Test_Exception::check_validity (void)
 {
-  if (this->inout_ == this->in_ * 2 &&
-      this->out_ == this->in_ * 3 &&
-      this->ret_ == this->in_ * 4)
+  CORBA::ULong n = (this->iterations_++) % 3;
+  if (this->inout_ == this->in_ * (n + 2) &&
+      this->out_ == this->in_ * (n + 3) &&
+      this->ret_ == this->in_ * (n + 4))
     return 1;
   return 0;
 }

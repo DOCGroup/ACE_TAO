@@ -116,18 +116,10 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
       << "template class TAO_Object_Field_T<"
-      << node->name () << ","
-      << node->name () << "_var>;" << be_uidt_nl
-      << "template class TAO_Object_Manager<"
-      << node->name () << ","
-      << node->name () << "_var>;" << be_uidt_nl
+      << node->name () << ">;" << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
       << "#  pragma instantiate TAO_Object_Field_T<"
-      << node->name () << ","
-      << node->name () << "_var>" << be_uidt_nl
-      << "#  pragma instantiate TAO_Object_Manager<"
-      << node->name () << ","
-      << node->name () << "_var>" << be_uidt_nl
+      << node->name () << ">" << be_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */\n\n";
 
   // all we have to do is to visit the scope and generate code

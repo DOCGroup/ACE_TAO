@@ -12,9 +12,9 @@ ACE_RCSID(ace, Naming_Context, "$Id$")
 
 // Make life easier later on...
 
-typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
+typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> 
         LOCAL_NAME_SPACE;
-typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
+typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> 
         LITE_LOCAL_NAME_SPACE;
 
 // The following Factory is used by the ACE_Service_Config and
@@ -48,10 +48,8 @@ int
 ACE_Naming_Context::local (void)
 {
   ACE_TRACE ("ACE_Naming_Context::local");
-  return ACE_OS::strcmp (this->netnameserver_host_,
-                         ASYS_TEXT ("localhost")) == 0
-    || ACE_OS::strcmp (this->netnameserver_host_,
-                       this->hostname_) == 0;
+  return ACE_OS::strcmp (this->netnameserver_host_, "localhost") == 0
+    || ACE_OS::strcmp (this->netnameserver_host_, this->hostname_) == 0;
 }
 
 int
@@ -59,7 +57,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 {
   ACE_TRACE ("ACE_Naming_Context::open");
   ACE_OS::hostname (this->hostname_,
-                    (sizeof this->hostname_ / sizeof (ASYS_TCHAR)));
+                    (sizeof this->hostname_ / sizeof (char)));
 
   this->netnameserver_host_ =
     this->name_options_->nameserver_host ();
@@ -103,7 +101,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("NAME_SPACE::NAME_SPACE\n")),
+                       "NAME_SPACE::NAME_SPACE\n"),
                       -1);
   return 0;
 }
@@ -347,7 +345,7 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
                                         const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
-  return this->list_value_entries (set_out,
+  return this->list_value_entries (set_out, 
                                    ACE_WString (pattern_in));
 }
 
@@ -365,7 +363,7 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
                                        const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
-  return this->list_type_entries (set_out,
+  return this->list_type_entries (set_out, 
                                   ACE_WString (pattern_in));
 }
 
@@ -384,7 +382,7 @@ ACE_Naming_Context::dump ()
 }
 
 int
-ACE_Naming_Context::init (int argc, ASYS_TCHAR *argv[])
+ACE_Naming_Context::init (int argc, char *argv[])
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -459,14 +457,14 @@ ACE_Name_Options::process_name (LPCTSTR pname)
 }
 
 void
-ACE_Name_Options::nameserver_host (const ASYS_TCHAR *host)
+ACE_Name_Options::nameserver_host (const char *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
   ACE_OS::free ((void *) this->nameserver_host_);
   this->nameserver_host_ = ACE_OS::strdup (host);
 }
 
-const ASYS_TCHAR *
+const char *
 ACE_Name_Options::nameserver_host (void)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
@@ -566,11 +564,11 @@ ACE_Name_Options::verbose (void)
 }
 
 void
-ACE_Name_Options::parse_args (int argc, ASYS_TCHAR *argv[])
+ACE_Name_Options::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
   ACE_LOG_MSG->open (argv[0]);
-  this->process_name (ASYS_ONLY_WIDE_STRING (argv[0]));
+  this->process_name (ACE_WIDE_STRING (argv[0]));
 
   // Default is to use the PROC_LOCAL context...
   this->context (ACE_Naming_Context::PROC_LOCAL);
@@ -580,18 +578,18 @@ ACE_Name_Options::parse_args (int argc, ASYS_TCHAR *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("b:c:dh:l:P:p:s:T:vr"));
+  ACE_Get_Opt get_opt (argc, argv, "b:c:dh:l:P:p:s:T:vr");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("PROC_LOCAL")) == 0)
+          if (ACE_OS::strcmp (get_opt.optarg, "PROC_LOCAL") == 0)
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("NODE_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, "NODE_LOCAL") == 0)
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("NET_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, "NET_LOCAL") == 0)
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;
@@ -605,24 +603,24 @@ ACE_Name_Options::parse_args (int argc, ASYS_TCHAR *argv[])
         this->nameserver_host (get_opt.optarg);
         break;
       case 'l':
-        this->namespace_dir (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->namespace_dir (ACE_WIDE_STRING (get_opt.optarg));
         break;
       case 'P':
-        this->process_name (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->process_name (ACE_WIDE_STRING (get_opt.optarg));
         break;
       case 'p':
         this->nameserver_port (ACE_OS::atoi (get_opt.optarg));
         break;
       case 's':
-        this->database (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->database (ACE_WIDE_STRING (get_opt.optarg));
         break;
       case 'b':
         this->base_address ((char *) ACE_OS::atoi (get_opt.optarg));
         break;
       case 'T':
-        if (ACE_OS::strcasecmp (get_opt.optarg, ASYS_TEXT ("ON")) == 0)
+        if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.optarg, ASYS_TEXT ("OFF")) == 0)
+        else if (ACE_OS::strcasecmp (get_opt.optarg, "OFF") == 0)
           ACE_Trace::stop_tracing ();
         break;
       case 'v':

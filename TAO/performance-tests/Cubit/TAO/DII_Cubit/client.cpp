@@ -245,8 +245,7 @@ DII_Cubit_Client::init (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DII_Cubit_Client::init");
+      ACE_TRY_ENV.print_exception ("DII_Cubit_Client::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -417,8 +416,7 @@ DII_Cubit_Client::cube_short_dii (void)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_short_dii");
+      ACE_TRY_ENV.print_exception ("cube_short_dii");
       return;
     }
   ACE_ENDTRY;
@@ -462,8 +460,7 @@ DII_Cubit_Client::cube_long_dii (void)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_long_dii");
+      ACE_TRY_ENV.print_exception ("cube_long_dii");
       return;
     }
   ACE_ENDTRY;
@@ -510,8 +507,7 @@ DII_Cubit_Client::cube_octet_dii (void)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_octet_dii");
+      ACE_TRY_ENV.print_exception ("cube_octet_dii");
       return;
     }
   ACE_ENDTRY;
@@ -565,8 +561,7 @@ DII_Cubit_Client::cube_union_dii (void)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_union_dii");
+      ACE_TRY_ENV.print_exception ("cube_union_dii");
       return;
     }
   ACE_ENDTRY;
@@ -617,8 +612,7 @@ DII_Cubit_Client::cube_struct_dii (void)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_struct_dii");
+      ACE_TRY_ENV.print_exception ("cube_struct_dii");
       return;
     }
   ACE_ENDTRY;
@@ -678,8 +672,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_octet_seq_dii");
+      ACE_TRY_ENV.print_exception ("cube_octet_seq_dii");
       return;
     }
   ACE_ENDTRY;
@@ -740,8 +733,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   ACE_CATCHANY
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_long_seq_dii");
+      ACE_TRY_ENV.print_exception ("cube_long_seq_dii");
       return;
     }
   ACE_ENDTRY;
@@ -836,8 +828,7 @@ DII_Cubit_Client::run (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DII_Cubit_Client: server shutdown");
+      ACE_TRY_ENV.print_exception ("DII_Cubit_Client: server shutdown");
       return -1;
     }
   ACE_ENDTRY;

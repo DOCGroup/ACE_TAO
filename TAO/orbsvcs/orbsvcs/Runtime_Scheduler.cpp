@@ -48,10 +48,10 @@ ACE_Runtime_Scheduler::create (const char *entry_point,
 
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::lookup (const char * entry_point,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &TAO_IN_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return create (entry_point, ACE_TRY_ENV);
+  return create (entry_point, TAO_IN_ENV);
 }
 
 
@@ -110,7 +110,7 @@ ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
                                  RtecScheduler::Quantum_t quantum,
                                  CORBA::Long threads,
                                  RtecScheduler::Info_Type_t info_type,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &TAO_IN_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
@@ -120,7 +120,7 @@ ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
     {
       ACE_DEBUG ((LM_DEBUG, "Unknown task: no entry for handle %d\n",
                   handle));
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK());
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK());
       // NOTREACHED
     }
   if (rt_info_[handle - 1].worst_case_execution_time != time
@@ -147,13 +147,13 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
                                  RtecScheduler::OS_Priority& o_priority,
                                  RtecScheduler::Preemption_Subpriority_t& subpriority,
                                  RtecScheduler::Preemption_Priority_t& p_priority,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &TAO_IN_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
 {
   if (handle <= 0 || handle > entry_count_)
-    ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+    TAO_THROW (RtecScheduler::UNKNOWN_TASK ());
     // NOTREACHED
 
   o_priority = rt_info_[handle - 1].priority;
@@ -170,22 +170,20 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                                              RtecScheduler::OS_Priority& priority,
                                              RtecScheduler::Preemption_Subpriority_t& subpriority,
                                              RtecScheduler::Preemption_Priority_t& p_priority,
-                                             CORBA::Environment &ACE_TRY_ENV)
+                                             CORBA::Environment &TAO_IN_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
 {
-  RtecScheduler::handle_t handle = lookup (entry_point, ACE_TRY_ENV);
-  ACE_CHECK;
-
+  RtecScheduler::handle_t handle = lookup (entry_point, TAO_IN_ENV);
   if (handle < -1)
-    // The exception was thrown or is in ACE_TRY_ENV already.
+    // The exception was thrown or is in TAO_IN_ENV already.
     return;
   this->priority (handle,
                   priority,
                   subpriority,
                   p_priority,
-                  ACE_TRY_ENV);
+                  TAO_IN_ENV);
 }
 
 
@@ -197,12 +195,12 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                        RtecScheduler::handle_t /* dependency */,
                                        CORBA::Long /* number_of_calls */,
                                        RtecScheduler::Dependency_Type_t /* dependency_type */,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       CORBA::Environment &TAO_IN_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
-    ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+    TAO_THROW (RtecScheduler::UNKNOWN_TASK ());
     // NOTREACHED
 
 #if 0
@@ -251,7 +249,7 @@ void
 ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                RtecScheduler::OS_Priority& priority,
                                                RtecScheduler::Dispatching_Type_t & d_type,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               CORBA::Environment &TAO_IN_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::NOT_SCHEDULED,
                       RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
@@ -260,13 +258,13 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
   if (config_count_ <= 0
       || config_info_ [p_priority].preemption_priority != p_priority)
     {
-      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
+      TAO_THROW (RtecScheduler::NOT_SCHEDULED ());
       ACE_NOTREACHED (return);
     }
   // throw an exception if an invalid priority was passed
   else if (p_priority < 0 || p_priority >= config_count_)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_PRIORITY_LEVEL());
+      TAO_THROW (RtecScheduler::UNKNOWN_PRIORITY_LEVEL());
       ACE_NOTREACHED (return);
     }
   else
@@ -284,13 +282,13 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
 // to the number returned, inclusive.
 
 RtecScheduler::Preemption_Priority_t
-ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &ACE_TRY_ENV)
+ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &TAO_IN_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
+    TAO_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
                       (RtecScheduler::Preemption_Priority_t) -1);
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);

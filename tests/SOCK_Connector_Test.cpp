@@ -172,8 +172,8 @@ fail_no_listener_nonblocking (void)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Test not executed fully; ")
-                  ASYS_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
+                  ASYS_TEXT ("Test not executed fully; "
+                             "expected EWOULDBLOCK, %p (%d)\n"),
                   ASYS_TEXT ("not"), errno));
       status = -1;
     }

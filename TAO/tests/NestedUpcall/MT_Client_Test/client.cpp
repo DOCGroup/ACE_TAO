@@ -145,31 +145,29 @@ MT_Client::parse_args (void)
 int
 MT_Client::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
+  {
+    for (unsigned long i = 0; i < this->iterations_; i++)
     {
-      for (unsigned long i = 0; i < this->iterations_; i++)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) MT_Client::run: %d of %d\n",
-                      i,
-                      this->iterations_));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) MT_Client::run: %d of %d\n",
+                  i,
+                  this->iterations_));
 
-          // call the recursive object MT_Object for nested upcalls
-          // testing
-          this->mT_Object_var_->yadda (0,
-                                       0,
-                                       ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      // call the recursive object MT_Object for nested upcalls
+      // testing
+      this->mT_Object_var_->yadda (0,
+                                   0,
+                                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client:run");
-      return -1;
-    }
-  ACE_ENDTRY;
+  }
+  TAO_CATCHANY
+  {
+    TAO_TRY_ENV.print_exception ("MT_Client:run");
+    return -1;
+  }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -197,8 +195,7 @@ MT_Client::init (int argc, char **argv,
 
   this->client_number_ = client_number;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       char buf[64];
       ACE_OS::sprintf (buf, "thread_%x", this);
@@ -270,7 +267,7 @@ MT_Client::init (int argc, char **argv,
                            "MT_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -281,8 +278,7 @@ MT_Client::init (int argc, char **argv,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       TAO_ORB_Manager orb_manager;
 
@@ -326,6 +322,8 @@ main (int argc, char **argv)
         delete clients[i];
 
       delete [] clients;
+
+      //orb_manager.orb ()->shutdown ();
 
       // wait for the server thread to end
       result |= server_thr_mgr.wait ();

@@ -104,8 +104,8 @@ test_boundaries (void)
       const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
       ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
 #else /* ! defined (ACE_PSOS_DIAB) */
-      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since ")
-                  ASYS_TEXT ("the set is empty!\n"));
+      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since "
+                                  "the set is empty!\n"));
 #endif /* defined (ACE_PSOS_DIAB) */
     }
 

@@ -55,9 +55,7 @@ ACE_Process_Manager::resize (size_t size)
 
   ACE_Process_Descriptor *temp;
   
-  ACE_NEW_RETURN (temp,
-                  ACE_Process_Descriptor[size],
-                  -1);
+  ACE_NEW_RETURN (temp, ACE_Process_Descriptor[size], -1);
 
   for (size_t i = 0; i < this->max_table_size_; i++)
     temp[i] = this->proc_table_[i]; // Structure assignment.

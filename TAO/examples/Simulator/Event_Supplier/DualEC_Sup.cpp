@@ -78,34 +78,33 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   nav_roll_ (0),
   nav_pitch_ (0)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       this->sched_hi_name_.length (1);
       this->sched_hi_name_[0].id = CORBA::string_dup ("DUAL_SCHED_HI");
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       this->sched_lo_name_.length (1);
       this->sched_lo_name_[0].id = CORBA::string_dup ("DUAL_SCHED_LO");
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       this->channel_hi_name_.length (1);
       this->channel_hi_name_[0].id = CORBA::string_dup ("DUAL_EC_HI");
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       this->channel_lo_name_.length (1);
       this->channel_lo_name_[0].id = CORBA::string_dup ("DUAL_EC_LO");
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
-      this->terminator_ = terminator_impl_._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->terminator_ = terminator_impl_._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "DualEC_Supplier::DualEC_Supplier : could "
-                           "not resolve reference to terminator");
+    TAO_TRY_ENV.print_exception ("DualEC_Supplier::DualEC_Supplier : could "
+                                 "not resolve reference to terminator");
   }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Initialize the high priority RT_Info data
   rt_info_nav_hi_.entry_point = "DUALEC_NAV_HI";
@@ -142,29 +141,28 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 
 DualEC_Supplier::~DualEC_Supplier ()
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       this->navigation_Supplier_.disconnect ();
       this->weapons_Supplier_.disconnect ();
 
       // Unbind the schedulers from the NS.
-      this->naming_context_->unbind (this->sched_hi_name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->naming_context_->unbind (this->sched_lo_name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->naming_context_->unbind (this->sched_hi_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->naming_context_->unbind (this->sched_lo_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Unbind the ECs from the NS.
-      this->naming_context_->unbind (this->channel_hi_name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->naming_context_->unbind (this->channel_lo_name_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->naming_context_->unbind (this->channel_hi_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->naming_context_->unbind (this->channel_lo_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "DualEC_Supplier::~DualEC_Supplier");
+      TAO_TRY_ENV.print_exception ("DualEC_Supplier::~DualEC_Supplier");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // @@TBD - destroy the ECs
   // @@TBD - destroy the schedulers
@@ -175,7 +173,7 @@ DualEC_Supplier::init ()
 {
   this->get_options (argc_, argv_);
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
   {
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
@@ -187,12 +185,12 @@ DualEC_Supplier::init ()
                         1);
 
     this->root_POA_var_ =
-      PortableServer::POA::_narrow (poaObject_var.in (), ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow (poaObject_var.in (), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
     this->poa_manager_ =
-       root_POA_var_->the_POAManager (ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+       root_POA_var_->the_POAManager (TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
@@ -205,17 +203,16 @@ DualEC_Supplier::init ()
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in (),
-                                       ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+                                       TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
   }
-  ACE_CATCHANY
+  TAO_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                         "DualEC_Supplier::init");
+    TAO_TRY_ENV.print_exception ("DualEC_Supplier::init");
     return -1;
   }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Create two scheduling service instances.
   if (this->create_schedulers () == -1)
@@ -289,16 +286,16 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void 
-DualEC_Supplier::Terminator::shutdown (CORBA::Environment &ACE_TRY_ENV)
+DualEC_Supplier::Terminator::shutdown (CORBA::Environment &_env)
 {
-  ACE_TRY
+  TAO_TRY
     {
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 
@@ -307,14 +304,14 @@ DualEC_Supplier::Terminator::shutdown (CORBA::Environment &ACE_TRY_ENV)
 void *
 DualEC_Supplier::run_orb (void *) 
 {
-  ACE_TRY
+  TAO_TRY
     {
       TAO_ORB_Core_instance ()->orb ()->run (); 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -328,7 +325,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
   DualEC_Supplier * sup = 
     ACE_static_cast (DualEC_Supplier *, arg);
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       ACE_Unbounded_Queue_Iterator<Navigation *>
         nav_iter (sup->navigation_data_);
@@ -351,7 +348,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
         if ((nav_iter.next (nav)) && (nav) && (*nav))
           {
-            any.replace (_tc_Navigation, *nav, 0, ACE_TRY_ENV);
+            any.replace (_tc_Navigation, *nav, 0, TAO_TRY_ENV);
 
             // Sleep briefly to avoid too much livelock (a little is good). 
             ACE_OS::sleep (sup->nav_pause_);
@@ -392,10 +389,10 @@ DualEC_Supplier::run_nav_thread (void *arg)
       while (++total_sent < sup->total_messages_);
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -409,7 +406,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
   DualEC_Supplier * sup = 
     ACE_static_cast (DualEC_Supplier *, arg);
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       ACE_Unbounded_Queue_Iterator<Weapons *>
         weap_iter (sup->weapons_data_);
@@ -432,7 +429,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
         if ((weap_iter.next (weap)) && (weap) && (*weap))
           {
-            any.replace (_tc_Weapons, *weap, 0, ACE_TRY_ENV);
+            any.replace (_tc_Weapons, *weap, 0, TAO_TRY_ENV);
 
             // Sleep briefly to avoid too much livelock (a little is good). 
             ACE_OS::sleep (sup->weap_pause_);
@@ -462,10 +459,10 @@ DualEC_Supplier::run_weap_thread (void *arg)
       while (++total_sent < sup->total_messages_);
 
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -482,7 +479,7 @@ DualEC_Supplier::create_schedulers (void)
   // create either a runtime or a config scheduler for 
   // each instance
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       if (use_runtime_schedulers_)
         {
@@ -499,25 +496,25 @@ DualEC_Supplier::create_schedulers (void)
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_hi_ = sched_hi_impl_->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->sched_hi_ = sched_hi_impl_->_this (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           ACE_NEW_RETURN (this->sched_lo_impl_,
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_lo_ = sched_lo_impl_->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->sched_lo_ = sched_lo_impl_->_this (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           // Register Scheduling Service Implementations with Naming Service
 
           this->naming_context_->bind (this ->sched_hi_name_, 
-                                       this->sched_hi_.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                       this->sched_hi_.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           naming_context_->bind (this->sched_lo_name_, 
-                                 this->sched_lo_.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                 this->sched_lo_.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           // Register high and low priority rt_infos with the 
           // schedulers to force priority differentiation.
@@ -525,9 +522,9 @@ DualEC_Supplier::create_schedulers (void)
           this->sched_hi_rt_info_hi_ = 
             this->sched_hi_->
               create (this->rt_info_dummy_hi_.entry_point, 
-                      ACE_TRY_ENV);
+                      TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
@@ -543,16 +540,16 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_hi_.threads,
                  ACE_static_cast (RtecScheduler::Info_Type_t,
                                   this->rt_info_dummy_hi_.info_type),
-                 ACE_TRY_ENV);
+                 TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_hi_rt_info_lo_ = 
             this->sched_hi_->
               create (this->rt_info_dummy_lo_.entry_point, 
-                      ACE_TRY_ENV);
+                      TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
@@ -568,16 +565,16 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_lo_.threads,
                  ACE_static_cast (RtecScheduler::Info_Type_t,
                                   this->rt_info_dummy_lo_.info_type),
-                 ACE_TRY_ENV);
+                 TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_hi_rt_info_hi_ = 
             this->sched_lo_->
               create (this->rt_info_dummy_hi_.entry_point, 
-                      ACE_TRY_ENV);
+                      TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
@@ -593,16 +590,16 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_hi_.threads,
                  ACE_static_cast (RtecScheduler::Info_Type_t,
                                   this->rt_info_dummy_hi_.info_type),
-                 ACE_TRY_ENV);
+                 TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_hi_rt_info_lo_ = 
             this->sched_lo_->
               create (this->rt_info_dummy_lo_.entry_point, 
-                      ACE_TRY_ENV);
+                      TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
@@ -618,19 +615,18 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_lo_.threads,
                  ACE_static_cast (RtecScheduler::Info_Type_t,
                                   this->rt_info_dummy_lo_.info_type),
-                 ACE_TRY_ENV);
+                 TAO_TRY_ENV);
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "DualEC_Supplier::create_schedulers");
+      TAO_TRY_ENV.print_exception ("DualEC_Supplier::create_schedulers");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -642,7 +638,7 @@ DualEC_Supplier::create_schedulers (void)
 int 
 DualEC_Supplier::create_event_channels (void)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Create Event Service Implementations, passing in the respective
       // Scheduling Service Implementations (which must already be created).
@@ -653,8 +649,8 @@ DualEC_Supplier::create_event_channels (void)
                                         &default_module_factory_),
                       -1);
 
-      this->ec_hi_ = ec_hi_impl_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->ec_hi_ = ec_hi_impl_->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_NEW_RETURN (this->ec_lo_impl_,
                       ACE_EventChannel (sched_lo_.in (), 
@@ -663,27 +659,26 @@ DualEC_Supplier::create_event_channels (void)
                                         &default_module_factory_),
                       -1);
 
-      this->ec_lo_ = ec_lo_impl_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->ec_lo_ = ec_lo_impl_->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Register Event Service Implementations with Naming Service
 
       naming_context_->bind (this->channel_hi_name_, 
-                             this->ec_hi_.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                             this->ec_hi_.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       naming_context_->bind (this->channel_lo_name_, 
-		                     this->ec_lo_.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+		                     this->ec_lo_.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
   }
-  ACE_CATCHANY
+  TAO_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                         "DualEC_Supplier::create_event_channels");
+    TAO_TRY_ENV.print_exception ("DualEC_Supplier::create_event_channels");
     return -1;
   }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -691,7 +686,7 @@ DualEC_Supplier::create_event_channels (void)
 void
 DualEC_Supplier::compute_schedules (void)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
 #if defined (__SUNPRO_CC)
           // Sun C++ 4.2 warns with the code below:
@@ -713,8 +708,8 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_hi, configs_out_hi, anomalies_out_hi, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+             infos_out_hi, configs_out_hi, anomalies_out_hi, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           RtecScheduler::RT_Info_Set_out infos_out_lo (this->infos_lo_);
           RtecScheduler::Config_Info_Set_out configs_out_lo (this->configs_lo_);
@@ -724,8 +719,8 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_lo, configs_out_lo, anomalies_out_lo, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+             infos_out_lo, configs_out_lo, anomalies_out_lo, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
 #else  /* ! __SUNPRO_CC */
 
@@ -735,8 +730,8 @@ DualEC_Supplier::compute_schedules (void)
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              this->infos_hi_.out (), this->configs_hi_.out (), 
-             this->anomalies_hi_.out (), ACE_TRY_ENV);
-           ACE_TRY_CHECK;
+             this->anomalies_hi_.out (), TAO_TRY_ENV);
+           TAO_CHECK_ENV;
 
           sched_lo_->compute_scheduling
             (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -744,8 +739,8 @@ DualEC_Supplier::compute_schedules (void)
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              this->infos_lo_.out (), this->configs_lo_.out (), 
-             this->anomalies_lo_.out (), ACE_TRY_ENV);
-           ACE_TRY_CHECK;
+             this->anomalies_lo_.out (), TAO_TRY_ENV);
+           TAO_CHECK_ENV;
 
 #endif /* ! __SUNPRO_CC */
 
@@ -755,7 +750,7 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_hi_.in (),
                                                 anomalies_hi_.in (),
                                                 this->hi_schedule_file_name_);
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
         }
 
       if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != 0))
@@ -764,24 +759,24 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_lo_.in (),
                                                 anomalies_lo_.in (),
                                                 this->lo_schedule_file_name_);
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 void
 DualEC_Supplier::start_generating_events (void)
 {
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Activate the POA manager.
-      poa_manager_->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      poa_manager_->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Spawn a thread that runs the orb event loop
       ACE_Thread_Manager orb_thread_manager;
@@ -816,7 +811,7 @@ DualEC_Supplier::start_generating_events (void)
 
       // Shut down the ORB via the termination servant
       this->terminator_->shutdown ();
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       // Wait for the thread that runs the orb event loop.
       orb_thread_manager.wait ();
@@ -841,11 +836,11 @@ DualEC_Supplier::start_generating_events (void)
         if (weap_iter.next (weap_temp) && weap_temp)
           delete (*weap_temp);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
 }
 
@@ -1152,15 +1147,15 @@ main (int argc, char *argv [])
 
 
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
       orb_Manager.init (argc,
                         argv,
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
 
       // Create the demo supplier.
@@ -1179,13 +1174,13 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

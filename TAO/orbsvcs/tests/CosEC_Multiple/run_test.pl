@@ -11,7 +11,6 @@ require ACEutils;
 
 #event count
 $ev_count = 2;
-$status = 0;
 
 # setup CosEC params such that..
 # cos event service name = "cosec1"
@@ -28,110 +27,70 @@ $CosEC2_params = "-n cosec2 -e 20 -o 5 -p \"6 21\"";
 sub cosec_multiple_test1
 {
     # first start the Naming service..
-    $SV1 = Process::Create ("..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."Naming_Service".$DIR_SEPARATOR
-			    ."Naming_Service".$EXE_EXT, "");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ("..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."Event_Service".$DIR_SEPARATOR
-			    ."Event_Service".$EXE_EXT, "-t new");
+    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ("..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."CosEvent_Service".$DIR_SEPARATOR
-			    ."CosEvent_Service".$EXE_EXT, $CosEC1_params);
+    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC1_params);
 
     sleep 10;
 
     # now start the CosEC2..
-    $SV4 = Process::Create ("..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."CosEvent_Service".$DIR_SEPARATOR
-			    ."CosEvent_Service".$EXE_EXT, $CosEC2_params);
+    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC2_params);
 
     sleep 10;
 
     #start 1 consumer that uses CosEC1 to receive events
-    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec1 -c $ev_count");
+    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec1 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec2 -c $ev_count");
+    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec2 -c $ev_count");
 
     sleep 10;
 
     #wait for the supplier to finish
-    if ($SUPP->TimedWait (60) == -1) {
-      print STDERR "ERROR: supplier timedout\n";
-      $status = 1;
-      $SUPP->Kill (); $SUPP->TimedWait (1);
-    }
+    $SUPP->Wait ();
 
 
     #wait for the consumer to finish
-    if ($CONS->TimedWait (60) == -1) {
-      print STDERR "ERROR: consumer timedout\n";
-      $status = 1;
-      $CONS->Kill (); $CONS->TimedWait (1);
-    }
+    $CONS->Wait ();
 
     #----------
  #start 1 consumer that uses CosEC1 to receive events
-    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec2 -c $ev_count");
+    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec2 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec1 -c $ev_count");
+    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec1 -c $ev_count");
 
     sleep 10;
 
     #wait for the supplier to finish
-    if ($SUPP2->TimedWait (60) == -1) {
-      print STDERR "ERROR: supplier2 timedout\n";
-      $status = 1;
-      $SUPP2->Kill (); $SUPP2->TimedWait (1);
-    }
+    $SUPP2->Wait ();
 
 
     #wait for the consumer to finish
-    if ($CONS2->TimedWait (60) == -1) {
-      print STDERR "ERROR: consumer2 timedout\n";
-      $status = 1;
-      $CONS2->Kill (); $CONS2->TimedWait (1);
-    }
-
+    $CONS2->Wait ();
     #----------
     # cleanup..
-    $SV1->Terminate ();
-    $SV2->Terminate ();
-    $SV3->Terminate ();
-    $SV4->Terminate ();
+    $SV1->Kill ();
+    $SV2->Kill ();
+    $SV3->Kill ();
+    $SV4->Kill ();
 
-    if ($SV1->TimedWait (5) == -1 ||
-        $SV2->TimedWait (5) == -1 ||
-        $SV3->TimedWait (5) == -1 ||
-        $SV4->TimedWait (5)) {
-      $SV1->Kill ();
-      $SV2->Kill ();
-      $SV3->Kill ();
-      $SV4->Kill ();
-      $SV1->TimedWait (1);
-      $SV2->TimedWait (1);
-      $SV3->TimedWait (1);
-      $SV4->TimedWait (1);
-      print STDERR "ERROR: couldn't terminate servers nicely\n";
-      $status = 1;
-    }
+    $SV1->Wait ();
+    $SV2->Wait ();
+    $SV3->Wait ();
+    $SV4->Wait ();
 }
 
 # Parse the arguments
@@ -155,5 +114,3 @@ for ($i = 0; $i <= $#ARGV; $i++)
 }
 
 cosec_multiple_test1 ();
-
-exit $status;

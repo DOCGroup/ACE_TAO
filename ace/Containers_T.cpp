@@ -32,8 +32,7 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
   : top_ (0),
     size_ (size)
 {
-  ACE_NEW (this->stack_,
-           T[size]);
+  ACE_NEW (this->stack_, T[size]);
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 }
 
@@ -42,8 +41,7 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
   : top_ (s.top_),
     size_ (s.size_)
 {
-  ACE_NEW (this->stack_,
-           T[s.size_]);
+  ACE_NEW (this->stack_, T[s.size_]);
 
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 
@@ -799,15 +797,6 @@ ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_
   // the list
 }
 
-template <class T> void
-ACE_Double_Linked_List_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
-{
-  this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
-  this->current_ = ACE_static_cast (T*, dll.head_->next_);
-  // Advance current_ out of the null area and onto the first item in
-  // the list
-}
-
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::first (void)
 {
@@ -894,15 +883,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Reverse_Iterator)
 ACE_Double_Linked_List_Reverse_Iterator<T>::ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
 {
-  this->current_ = ACE_static_cast (T*, dll.head_->prev_);
-  // Advance current_ out of the null area and onto the last item in
-  // the list
-}
-
-template <class T> void
-ACE_Double_Linked_List_Reverse_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
-{
-  this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
   this->current_ = ACE_static_cast (T*, dll.head_->prev_);
   // Advance current_ out of the null area and onto the last item in
   // the list
@@ -1488,8 +1468,8 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
       if (this->max_size_ < bs.cur_size_)
         {
           delete [] this->search_structure_;
-          ACE_NEW (this->search_structure_,
-                   ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
+          ACE_NEW (this->search_structure_, ACE_TYPENAME
+                   ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
           this->max_size_ = bs.cur_size_;
         }
 

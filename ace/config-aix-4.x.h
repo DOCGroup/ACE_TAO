@@ -8,7 +8,7 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-#if defined (__xlC__) || (__IBMCPP__)
+#if defined (__xlC__)
    // AIX xlC compiler
    //********************************************************************
    //
@@ -19,14 +19,6 @@
 
    // Keep an eye on this as the compiler and standards converge...
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
-#if defined (__IBMCPP__)
-   #define ACE_TEMPLATES_REQUIRE_SOURCE
-#endif /* __IBMCPP__ */
-
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#undef WIFEXITED
-#undef WEXITSTATUS
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 #  define ACE_TEMPLATES_REQUIRE_PRAGMA
 
@@ -200,25 +192,23 @@
 // 4.3 and up has 1003.1c standard; 4.2 has draft 7
 #if (ACE_AIX_MINOR_VERS >= 3)
 #  define ACE_HAS_PTHREADS_STD
-#  define ACE_HAS_PTHREADS_UNIX98_EXT
 #else
 #  define ACE_HAS_PTHREADS_DRAFT7
-#  define ACE_LACKS_RWLOCK_T
-#  define ACE_LACKS_SETSCHED
-#  define ACE_LACKS_THREAD_STACK_ADDR
-// If ACE doesn't compile due to the lack of these methods, please
-// send email to ace-users@cs.wustl.edu reporting this.
-// #define ACE_LACKS_CONDATTR_PSHARED
-// #define ACE_LACKS_MUTEXATTR_PSHARED
 #endif /* ACE_AIX_MINOR_VERS >= 3 */
-
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SIGTHREADMASK
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to ace-users@cs.wustl.edu reporting this.
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
+#define ACE_LACKS_RWLOCK_T
+#define ACE_LACKS_SETSCHED
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
+#define ACE_LACKS_THREAD_STACK_ADDR
 
 // By default, tracing code is not compiled.  To compile it in, cause
 // ACE_NTRACE to not be defined, and rebuild ACE.

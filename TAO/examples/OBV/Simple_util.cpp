@@ -161,8 +161,7 @@ Server<Servant>::init (const char *servant_name,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "Exception in activation of POA");
+      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
       return -1;
     }
   ACE_ENDTRY;
@@ -284,7 +283,7 @@ Client<InterfaceObj, Var>::init (const char *name,
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    name,
+                                    0,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -319,7 +318,7 @@ Client<InterfaceObj, Var>::init (const char *name,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
+      ACE_TRY_ENV.print_exception ("Client_i::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -330,7 +329,7 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &)
+Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
 {
 
   return 0;

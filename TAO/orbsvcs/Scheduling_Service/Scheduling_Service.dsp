@@ -13,16 +13,18 @@ CFG=Scheduling_Service - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Scheduling_Service.mak" CFG="Scheduling_Service - Win32 Debug"
+!MESSAGE NMAKE /f "Scheduling_Service.mak"\
+ CFG="Scheduling_Service - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Scheduling_Service - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Scheduling_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Scheduling_Service - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Scheduling_Service - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -107,9 +109,5 @@ SOURCE=.\Scheduler.h
 SOURCE=.\Scheduler_Generic.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\Scheduling_Service.h
-# End Source File
 # End Target
 # End Project

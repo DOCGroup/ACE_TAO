@@ -13,6 +13,8 @@
 
 ACE_RCSID(tao, POA, "$Id$")
 
+////////////////////////////////////////////////////////////////////////////////
+
 // Timeprobes class
 #include "tao/Timeprobe.h"
 
@@ -61,8 +63,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Object_Adapter_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+////////////////////////////////////////////////////////////////////////////////
+
 /* static */
-size_t TAO_Object_Adapter::transient_poa_name_size_ = 0;
+size_t TAO_Object_Adapter::transient_poa_name_size_ (0);
 
 void
 TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
@@ -72,17 +76,19 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
       switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
         {
         case TAO_LINEAR:
-          TAO_Object_Adapter::transient_poa_name_size_ =
-            sizeof (CORBA::ULong);
+
+          TAO_Object_Adapter::transient_poa_name_size_ = sizeof (CORBA::ULong);
           break;
+
         case TAO_DYNAMIC_HASH:
-          TAO_Object_Adapter::transient_poa_name_size_ =
-            sizeof (CORBA::ULong);
+
+          TAO_Object_Adapter::transient_poa_name_size_ = sizeof (CORBA::ULong);
           break;
+
         case TAO_ACTIVE_DEMUX:
         default:
-          TAO_Object_Adapter::transient_poa_name_size_ =
-            ACE_Active_Map_Manager_Key::size ();
+
+          TAO_Object_Adapter::transient_poa_name_size_ = ACE_Active_Map_Manager_Key::size ();
           break;
         }
     }
@@ -107,12 +113,15 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
 
   Hint_Strategy *hint_strategy = 0;
   if (creation_parameters.use_active_hint_in_poa_names_)
-    ACE_NEW (hint_strategy,
-             Active_Hint_Strategy (creation_parameters.poa_map_size_));
+    {
+      ACE_NEW (hint_strategy,
+               Active_Hint_Strategy (creation_parameters.poa_map_size_));
+    }
   else
-    ACE_NEW (hint_strategy,
-             No_Hint_Strategy);
-
+    {
+      ACE_NEW (hint_strategy,
+               No_Hint_Strategy);
+    }
   // Give ownership to the auto pointer.
   auto_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
 
@@ -122,11 +131,14 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   switch (creation_parameters.poa_lookup_strategy_for_persistent_id_policy_)
     {
     case TAO_LINEAR:
+
       ACE_NEW (ppnm,
                persistent_poa_name_linear_map (creation_parameters.poa_map_size_));
       break;
+
     case TAO_DYNAMIC_HASH:
     default:
+
       ACE_NEW (ppnm,
                persistent_poa_name_hash_map (creation_parameters.poa_map_size_));
       break;
@@ -138,15 +150,20 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
     {
     case TAO_LINEAR:
+
       ACE_NEW (tpm,
                transient_poa_linear_map (creation_parameters.poa_map_size_));
       break;
+
     case TAO_DYNAMIC_HASH:
+
       ACE_NEW (tpm,
                transient_poa_hash_map (creation_parameters.poa_map_size_));
       break;
+
     case TAO_ACTIVE_DEMUX:
     default:
+
       ACE_NEW (tpm,
                transient_poa_active_map (creation_parameters.poa_map_size_));
       break;
@@ -154,12 +171,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   // Give ownership to the auto pointer.
   auto_ptr<transient_poa_map> new_transient_poa_map (tpm);
 
-  this->hint_strategy_ =
-    new_hint_strategy.release ();
-  this->persistent_poa_name_map_ =
-    new_persistent_poa_name_map.release ();
-  this->transient_poa_map_ =
-    new_transient_poa_map.release ();
+  this->hint_strategy_ = new_hint_strategy.release ();
+  this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
+  this->transient_poa_map_ = new_transient_poa_map.release ();
 }
 
 TAO_Object_Adapter::~TAO_Object_Adapter (void)
@@ -167,6 +181,7 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->hint_strategy_;
   delete this->persistent_poa_name_map_;
   delete this->transient_poa_map_;
+
   delete this->lock_;
 }
 
@@ -178,18 +193,22 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 #if defined (ACE_HAS_THREADS)
   if (enable_locking)
     {
-      ACE_Lock *the_lock;
+      ACE_Lock *the_lock = 0;
+
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (thread_lock),
                       0);
+
       return the_lock;
     }
 #endif /* ACE_HAS_THREADS */
 
-  ACE_Lock *the_lock;
+  ACE_Lock *the_lock = 0;
+
   ACE_NEW_RETURN (the_lock,
                   ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                   0);
+
   return the_lock;
 }
 
@@ -276,7 +295,9 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
   }
 
   if (result != 0)
-    ACE_THROW (CORBA::OBJ_ADAPTER ());
+    {
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
 
   {
     ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_FIND_POA_START);
@@ -291,7 +312,9 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
   }
 
   if (result != 0)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    {
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    }
 }
 
 int
@@ -319,10 +342,14 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
   TAO_POA *parent = this->orb_core_.root_poa ();
   if (parent->name () != *iterator)
-    ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                      -1);
+    {
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        -1);
+    }
   else
-    ++iterator;
+    {
+      ++iterator;
+    }
 
   for (;
        iterator != end;
@@ -369,12 +396,16 @@ TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
                               poa_name_out system_name)
 {
   if (poa->persistent ())
-    return this->bind_persistent_poa (folded_name,
-                                      poa,
-                                      system_name);
+    {
+      return this->bind_persistent_poa (folded_name,
+                                        poa,
+                                        system_name);
+    }
   else
-    return this->bind_transient_poa (poa,
-                                     system_name);
+    {
+      return this->bind_transient_poa (poa,
+                                       system_name);
+    }
 }
 
 int
@@ -383,10 +414,14 @@ TAO_Object_Adapter::unbind_poa (TAO_POA *poa,
                                 const poa_name &system_name)
 {
   if (poa->persistent ())
-    return this->unbind_persistent_poa (folded_name,
-                                        system_name);
+    {
+      return this->unbind_persistent_poa (folded_name,
+                                          system_name);
+    }
   else
-    return this->unbind_transient_poa (system_name);
+    {
+      return this->unbind_transient_poa (system_name);
+    }
 }
 
 int
@@ -403,30 +438,28 @@ TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (-1);
 
   PortableServer::Servant servant = 0;
-  TAO_SERVANT_LOCATION servant_location =
-    poa->locate_servant_i (id,
-                           servant,
-                           ACE_TRY_ENV);
+  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
+                                                           servant,
+                                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  switch (servant_location)
+  switch (result)
     {
-    case TAO_SERVANT_FOUND:
+    case TAO_POA::FOUND:
       // Optimistic attitude
-    case TAO_DEFAULT_SERVANT:
-    case TAO_SERVANT_MANAGER:
+    case TAO_POA::DEFAULT_SERVANT:
+    case TAO_POA::SERVANT_MANAGER:
       return 0;
 
-    case TAO_SERVANT_NOT_FOUND:
+    case TAO_POA::NOT_FOUND:
       return -1;
     }
 
   return -1;
 }
 
-TAO_SERVANT_LOCATION
+PortableServer::Servant
 TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
-                                    PortableServer::Servant &servant,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   PortableServer::ObjectId id;
@@ -436,15 +469,29 @@ TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
                     id,
                     poa,
                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
+  ACE_CHECK_RETURN (0);
 
-  TAO_SERVANT_LOCATION servant_location = poa->locate_servant_i (id,
-                                                                 servant,
-                                                                 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
+  PortableServer::Servant servant = 0;
+  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
+                                                           servant,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-  return servant_location;
+  switch (result)
+    {
+    case TAO_POA::FOUND:
+      return servant;
+
+    case TAO_POA::DEFAULT_SERVANT:
+    case TAO_POA::SERVANT_MANAGER:
+    case TAO_POA::NOT_FOUND:
+      return 0;
+    }
+
+  return 0;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy (void)
 {
@@ -455,6 +502,8 @@ TAO_Object_Adapter::Hint_Strategy::object_adapter (TAO_Object_Adapter *oa)
 {
   this->object_adapter_ = oa;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::Active_Hint_Strategy::Active_Hint_Strategy (CORBA::ULong map_size)
   : persistent_poa_system_map_ (map_size)
@@ -478,8 +527,8 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
     {
       result = this->persistent_poa_system_map_.find (system_name,
                                                       poa);
-      if (result != 0
-          || folded_name != poa->folded_name ())
+      if (result != 0 ||
+          folded_name != poa->folded_name ())
         {
           result = this->object_adapter_->persistent_poa_name_map_->find (folded_name,
                                                                           poa);
@@ -507,16 +556,19 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (const poa_name &f
 
   if (result == 0)
     {
-      result =
-        this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
-                                                               poa);
+      result = this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
+                                                                      poa);
 
       if (result != 0)
-        this->persistent_poa_system_map_.unbind (name);
+        {
+          this->persistent_poa_system_map_.unbind (name);
+        }
       else
-        ACE_NEW_RETURN (system_name,
-                        poa_name (name),
-                        -1);
+        {
+          ACE_NEW_RETURN (system_name,
+                          poa_name (name),
+                          -1);
+        }
     }
 
   return result;
@@ -529,11 +581,14 @@ TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (const poa_name 
   int result = this->persistent_poa_system_map_.unbind (system_name);
 
   if (result == 0)
-    result =
-      this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
+    {
+      result = this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
+    }
 
   return result;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy (void)
 {
@@ -548,10 +603,9 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (const poa_name &syste
                                                                       poa);
   if (result != 0)
     {
-      result =
-        this->object_adapter_->activate_poa (system_name,
-                                             poa,
-                                             ACE_TRY_ENV);
+      result = this->object_adapter_->activate_poa (system_name,
+                                                    poa,
+                                                    ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -563,13 +617,15 @@ TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (const poa_name &folde
                                                            TAO_POA *poa,
                                                            poa_name_out system_name)
 {
-  int result =
-    this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
-                                                           poa);
+  int result = this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
+                                                                      poa);
   if (result == 0)
-    ACE_NEW_RETURN (system_name,
-                    poa_name (folded_name),
-                    -1);
+    {
+      ACE_NEW_RETURN (system_name,
+                      poa_name (folded_name),
+                      -1);
+    }
+
   return result;
 }
 
@@ -581,6 +637,8 @@ TAO_Object_Adapter::No_Hint_Strategy::unbind_persistent_poa (const poa_name &fol
 
   return this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (int begin,
                                                           CORBA::ULong size,
@@ -595,7 +653,9 @@ TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (int begin,
       this->operator++ ();
     }
   else
-    this->position_ = this->size_;
+    {
+      this->position_ = this->size_;
+    }
 }
 
 int
@@ -618,9 +678,9 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
     TAO_POA::name_separator_length ();
 
   CORBA::ULong how_many =
-    this->position_
-    - this->last_separator_
-    - TAO_POA::name_separator_length ();
+    this->position_ -
+    this->last_separator_ -
+    TAO_POA::name_separator_length ();
 
   return ACE_CString (ACE_reinterpret_cast (const char *,
                                             &this->folded_buffer_[start_at]),
@@ -630,22 +690,28 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
 TAO_Object_Adapter::poa_name_iterator &
 TAO_Object_Adapter::poa_name_iterator::operator++ (void)
 {
-  for (this->last_separator_ = this->position_;
-       ;
-       )
+  this->last_separator_ = this->position_;
+
+  while (1)
     {
       ++this->position_;
       if (this->position_ < this->size_)
         {
           if (this->folded_buffer_[this->position_] == TAO_POA::name_separator ())
-            break;
+            {
+              break;
+            }
         }
       else
-        break;
+        {
+          break;
+        }
     }
 
   return *this;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::iteratable_poa_name::iteratable_poa_name (const poa_name &folded_name)
   : folded_name_ (folded_name)
@@ -667,6 +733,8 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
                    this->folded_name_.length (),
                    this->folded_name_.get_buffer ());
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_Object_Adapter &object_adapter)
   : object_adapter_ (object_adapter)
@@ -690,14 +758,17 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
   this->object_adapter_.non_servant_upcall_in_progress_ = 0;
 
   // Reset thread id.
-  this->object_adapter_.non_servant_upcall_thread_ =
-    ACE_OS::NULL_thread;
+  this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::NULL_thread;
 
   // If locking is enabled.
   if (this->object_adapter_.enable_locking_)
-    // Wakeup all waiting threads.
-    this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+    {
+      // Wakeup all waiting threads.
+      this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+    }
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_adapter)
   : object_adapter_ (object_adapter),
@@ -705,13 +776,7 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_a
     servant_ (0),
     state_ (INITIAL_STAGE),
     id_ (),
-    current_context_ (),
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-    cookie_ (0),
-    operation_ (0),
-#endif /* TAO_HAS_MINIMUM_CORBA */
-    active_object_map_entry_ (0),
-    using_servant_locator_ (0)
+    current_context_ ()
 {
 }
 
@@ -723,8 +788,10 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Acquire the object adapter lock first.
   int result = this->object_adapter_.lock ().acquire ();
   if (result == -1)
-    // Locking error.
-    ACE_THROW (CORBA::OBJ_ADAPTER ());
+    {
+      // Locking error.
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
 
   // We have acquired the object adapater lock.  Record this for later
   // use.
@@ -733,8 +800,18 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  this->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
-  ACE_CHECK;
+  while (this->object_adapter_.enable_locking_ &&
+         this->object_adapter_.non_servant_upcall_in_progress_ &&
+         ! ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
+                              ACE_OS::thr_self ()))
+    {
+      // If so wait...
+      result = this->object_adapter_.non_servant_upcall_condition_.wait ();
+      if (result == -1)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
 
   // Locate the POA.
   this->object_adapter_.locate_poa (key,
@@ -750,7 +827,8 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Setup current for this request.
   this->current_context_.setup (this->poa_,
                                 key,
-                                0);
+                                0,
+                                operation);
 
   // We have setup the POA Current.  Record this for later use.
   this->state_ = POA_CURRENT_SETUP;
@@ -761,8 +839,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
     // Lookup the servant.
     this->servant_ = this->poa_->locate_servant_i (operation,
                                                    this->id_,
-                                                   *this,
-                                                   this->current_context_,
+                                                   &this->current_context_,
                                                    ACE_TRY_ENV);
     ACE_CHECK;
   }
@@ -784,126 +861,6 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // use.
   this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
 
-  // Lock servant (if appropriate).
-  this->single_threaded_poa_setup (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // We have acquired the servant lock.  Record this for later use.
-  this->state_ = SERVANT_LOCK_ACQUIRED;
-
-  // After this point, <this->servant_> is ready for dispatching.
-}
-
-TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
-{
-  switch (this->state_)
-    {
-    case SERVANT_LOCK_ACQUIRED:
-      // Unlock servant (if appropriate).
-      this->single_threaded_poa_cleanup ();
-      /* FALLTHRU */
-
-    case OBJECT_ADAPTER_LOCK_RELEASED:
-      // Cleanup servant locator related state.  Note that because
-      // this operation does not change any Object Adapter related
-      // state, it is ok to call it outside the lock.
-      this->servant_locator_cleanup ();
-
-      // Since the object adapter lock was released, we must acquire
-      // it.
-      //
-      // Note that errors are ignored here since we cannot do much
-      // with it.
-      this->object_adapter_.lock ().acquire ();
-
-      // Cleanup servant related state.
-      this->servant_cleanup ();
-
-      // Cleanup POA related state.
-      this->poa_cleanup ();
-      /* FALLTHRU */
-
-    case POA_CURRENT_SETUP:
-      // Teardown current for this request.
-      this->current_context_.teardown ();
-      /* FALLTHRU */
-
-    case OBJECT_ADAPTER_LOCK_ACQUIRED:
-      // Finally, since the object adapter lock was acquired, we must
-      // release it.
-      this->object_adapter_.lock ().release ();
-
-      /* FALLTHRU */
-    case INITIAL_STAGE:
-    default:
-      // @@ Keep compiler happy, the states above are the only
-      //    possible ones.
-      break;
-    }
-}
-
-void
-TAO_Object_Adapter::Servant_Upcall::wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV)
-{
-  // Check if a non-servant upcall is in progress.  If a non-servant
-  // upcall is in progress, wait for it to complete.  Unless of
-  // course, the thread making the non-servant upcall is this thread.
-  while (this->object_adapter_.enable_locking_ &&
-         this->object_adapter_.non_servant_upcall_in_progress_ &&
-         ! ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
-                              ACE_OS::thr_self ()))
-    {
-      // If so wait...
-      int result =
-        this->object_adapter_.non_servant_upcall_condition_.wait ();
-      if (result == -1)
-        ACE_THROW (CORBA::OBJ_ADAPTER ());
-    }
-}
-
-void
-TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
-{
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  if (this->using_servant_locator_)
-    {
-      // If we are a single threaded POA, teardown the appropriate
-      // locking in the servant.
-      //
-      // Note that teardown of the servant lock must happen before the
-      // post_invoke() call since that might end up deleting the
-      // servant.
-      //
-      this->poa_->teardown_servant_lock (this->servant_);
-
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          PortableServer::POA_var poa = this->poa_->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->poa_->servant_locator_->postinvoke (this->current_context_.object_id (),
-                                                    poa.in (),
-                                                    this->operation_,
-                                                    this->cookie_,
-                                                    this->servant_,
-                                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // Ignore errors from servant locator ....
-        }
-      ACE_ENDTRY;
-    }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-}
-
-void
-TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV)
-{
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   // Lock servant (if necessary).
@@ -914,108 +871,129 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
   // lock.  Otherwise, the thread that wants to release this lock will
   // not be able to do so since it can't acquire the object adapterx
   // lock.
+  //
   if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
-      int result = this->servant_->_single_threaded_poa_lock ().acquire ();
+      result = this->servant_->_single_threaded_poa_lock ().acquire ();
 
       if (result == -1)
-        // Locking error.
-        ACE_THROW (CORBA::OBJ_ADAPTER ());
-    }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-}
-
-void
-TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
-{
-  // Since the servant lock was acquired, we must release it.
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-  if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
-    this->servant_->_single_threaded_poa_lock ().release ();
-#endif /* TAO_HAS_MINIMUM_CORBA */
-}
-
-void
-TAO_Object_Adapter::Servant_Upcall::servant_cleanup (void)
-{
-  // Cleanup servant related stuff.
-  if (this->active_object_map_entry_ != 0)
-    {
-      // Decrement the reference count.
-      CORBA::UShort new_count = --this->active_object_map_entry_->reference_count_;
-
-      if (new_count == 0)
         {
-          if (this->poa_->waiting_servant_deactivation_ > 0)
-            {
-              // Wakeup all waiting threads.
-              this->poa_->servant_deactivation_condition_.broadcast ();
-            }
-
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
-            {
-              this->poa_->cleanup_servant (this->active_object_map_entry_,
-                                           ACE_TRY_ENV);
-
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              // Ignore errors from servant cleanup ....
-            }
-          ACE_ENDTRY;
+          // Locking error.
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
-}
 
-void
-TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
-{
-  // Decrease <poa->outstanding_requests_> now that the upcall
-  // is complete.
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // We have acquired the servant lock.  Record this for later use.
+  this->state_ = SERVANT_LOCK_ACQUIRED;
+
   //
-  // Note that the object adapter lock is acquired before
-  // <POA::outstanding_requests_> is increased.
-  CORBA::ULong outstanding_requests =
-    this->poa_->decrement_outstanding_requests ();
+  // After this point, <this->servant_> is ready for dispatching.
+  //
+}
 
-  // Check if all pending requests are over.
-  if (outstanding_requests == 0)
+TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
+{
+  switch (this->state_)
     {
-      // If locking is enabled and some thread is waiting in POA::destroy.
-      if (this->object_adapter_.enable_locking_ &&
-          this->poa_->wait_for_completion_pending_)
-        // Wakeup all waiting threads.
-        this->poa_->outstanding_requests_condition_.broadcast ();
-      if (this->poa_->waiting_destruction_)
+    case SERVANT_LOCK_ACQUIRED:
+
+      // Since the servant lock was acquired, we must release it.
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
         {
-          delete this->poa_;
-          this->poa_ = 0;
+          this->servant_->_single_threaded_poa_lock ().release ();
         }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+      /** Fall through **/
+
+    case OBJECT_ADAPTER_LOCK_RELEASED:
+
+      // Since the object adapter lock was released, we must acquire
+      // it.
+      //
+      // Note that errors are ignored here since we cannot do much
+      // with it.
+      this->object_adapter_.lock ().acquire ();
+
+      {
+        // Decrease <poa->outstanding_requests_> now that the upcall
+        // is complete.
+        //
+        // Note that the object adapter lock is acquired before
+        // <POA::outstanding_requests_> is increased.
+        CORBA::ULong outstanding_requests =
+          this->poa_->decrement_outstanding_requests ();
+
+        // If locking is enabled and some thread is waiting in POA::destroy.
+        if (this->object_adapter_.enable_locking_ &&
+            outstanding_requests == 0 &&
+            this->poa_->wait_for_completion_pending_)
+          {
+            // Wakeup all waiting threads.
+            this->poa_->outstanding_requests_condition_.broadcast ();
+          }
+      }
+
+      /** Fall through **/
+
+    case POA_CURRENT_SETUP:
+
+      // Teardown current for this request.
+      this->current_context_.teardown ();
+
+      /** Fall through **/
+
+    case OBJECT_ADAPTER_LOCK_ACQUIRED:
+
+      // Finally, since the object adapter lock was acquired, we must
+      // release it.
+      this->object_adapter_.lock ().release ();
+
+      /** Fall through **/
+
+    case INITIAL_STAGE:
+    default:
+      // @@ Keep compiler happy, the states above are the only
+      //    possible ones.
+      break;
     }
 }
+
+// ****************************************************************
 
 TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
-  : poa_ (0),
+  : poa_impl_ (0),
     object_id_ (),
     object_key_ (0),
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+    cookie_ (0),
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     servant_ (0),
+    operation_ (0),
     previous_current_impl_ (0),
+    active_object_map_entry_ (0),
     setup_done_ (0)
 {
 }
 
 void
-TAO_POA_Current_Impl::setup (TAO_POA *p,
+TAO_POA_Current_Impl::setup (TAO_POA *impl,
                              const TAO_ObjectKey &key,
-                             PortableServer::Servant servant)
+                             PortableServer::Servant servant,
+                             const char *operation)
 {
   // Remember information about this upcall.
-  this->poa_ = p;
+  this->poa_impl_ = impl;
   this->object_key_ = &key;
   this->servant_ = servant;
+  this->operation_ = operation;
 
   // Set the current context and remember the old one.
   TAO_TSS_Resources *tss =
@@ -1031,6 +1009,68 @@ TAO_POA_Current_Impl::setup (TAO_POA *p,
 void
 TAO_POA_Current_Impl::teardown (void)
 {
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  if (this->cookie_ != 0)
+    {
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->poa_impl_->orb_core_.object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY_EX (LOCATOR)
+        {
+          PortableServer::POA_var poa = this->get_POA (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (LOCATOR);
+
+          this->poa_impl_->servant_locator_->postinvoke (this->object_id (),
+                                                         poa.in (),
+                                                         this->operation_,
+                                                         this->cookie_,
+                                                         this->servant_,
+                                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (LOCATOR);
+        }
+      ACE_CATCHANY
+        {
+          // Ignore errors from servant locator ....
+        }
+      ACE_ENDTRY;
+    }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // Cleanup servant related stuff.
+  if (this->active_object_map_entry_ != 0)
+    {
+      // Decrement the reference count.
+      CORBA::UShort new_count = --this->active_object_map_entry_->reference_count_;
+
+      if (new_count == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY_EX (SERVANT)
+            {
+              this->poa_impl_->cleanup_servant (this->active_object_map_entry_,
+                                                ACE_TRY_ENV);
+
+              ACE_TRY_CHECK_EX (SERVANT);
+            }
+          ACE_CATCHANY
+            {
+              // Ignore errors from servant cleanup ....
+            }
+          ACE_ENDTRY;
+        }
+    }
+
   if (this->setup_done_)
     {
       TAO_TSS_Resources *tss =
@@ -1044,7 +1084,7 @@ TAO_POA_Current_Impl::teardown (void)
 PortableServer::POA_ptr
 TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var result = this->poa_->_this (ACE_TRY_ENV);
+  PortableServer::POA_var result = this->poa_impl_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return result._retn ();
@@ -1060,8 +1100,10 @@ TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
 TAO_ORB_Core &
 TAO_POA_Current_Impl::orb_core (void) const
 {
-  return this->poa_->orb_core_;
+  return this->poa_impl_->orb_core_;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 PortableServer::POA_ptr
 TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
@@ -1069,8 +1111,11 @@ TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
   TAO_POA_Current_Impl *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                      0);
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
+    }
+
   return impl->get_POA (ACE_TRY_ENV);
 }
 
@@ -1080,8 +1125,11 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
   TAO_POA_Current_Impl *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                      0);
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
+    }
+
   return impl->get_object_id (ACE_TRY_ENV);
 }
 
@@ -1101,6 +1149,8 @@ TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
   tss->poa_current_impl_ = new_current;
   return old;
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

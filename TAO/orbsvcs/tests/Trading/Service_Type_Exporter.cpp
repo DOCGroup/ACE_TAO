@@ -7,42 +7,43 @@ ACE_RCSID(Trading, Service_Type_Exporter, "$Id$")
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose,
-                           CORBA::Environment& ACE_TRY_ENV)
+                           CORBA::Environment& TAO_IN_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
   : verbose_ (verbose),
     lookup_ (lookup_if)
 {
   // Obtain the Service Type Repository.
-  CosTrading::TypeRepository_var obj = lookup_if->type_repos (ACE_TRY_ENV);
-  ACE_CHECK;
+  CosTrading::TypeRepository_var obj = lookup_if->type_repos (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Narrow the Service Type Repository.
-  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj.in (),
-                                                                  ACE_TRY_ENV);
-  ACE_CHECK;
+  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj.in (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Build the service type descriptions.
   this->create_types ();
 }
 
 void
-TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
 
   for (int i = NUM_TYPES - 1; i >= 0; i--)
     {
-      ACE_TRY
+      TAO_TRY
         {
-          this->repos_->remove_type (TT_Info::INTERFACE_NAMES[i], ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->repos_->remove_type (TT_Info::INTERFACE_NAMES[i], TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
-      ACE_CATCH (CosTrading::UnknownServiceType, excp)
+      TAO_CATCH (CosTrading::UnknownServiceType, excp)
         {
           if (this->verbose_)
             {
@@ -50,19 +51,18 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& ACE_TRY_ENV)
                 ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %s\n", excp.type.in ()));
             }
 
+          TAO_TRY_ENV.clear ();
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "TAO_Service_Type_Exporter::remove_all_types");
+          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::remove_all_types");
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
+      TAO_ENDTRY;
     }
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -76,12 +76,12 @@ TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
               "adding all types to the Repository.\n"));
-  this->add_all_types_to (this->repos_.ptr (), ACE_TRY_ENV);
-  // ACE_CHECK;
+  this->add_all_types_to (this->repos_.ptr (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -96,57 +96,50 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV
               "add all types to all repositories.\n"));
 
   ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
-  CosTrading::Link_var link_if = this->lookup_->link_if (ACE_TRY_ENV);
-  ACE_CHECK;
+  CosTrading::Link_var link_if = this->lookup_->link_if (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
               " linked to the root trader.\n"));
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (ACE_TRY_ENV);
-  ACE_CHECK;
+  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_DEBUG ((LM_DEBUG, "Exporting service types with each of the linked"
               " traders.\n"));
   for (int i = link_name_seq->length () - 1; i >= 0; i--)
     {
-      CosTradingRepos::ServiceTypeRepository_ptr str = 0;
-      ACE_TRY
+      TAO_TRY
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            link_if->describe_link (link_name_seq[i], TAO_IN_ENV);
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
 
           CosTrading::TypeRepository_var remote_repos = 
-            link_info->target->type_repos (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            link_info->target->type_repos (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-          str =
-            CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in (),
-                                                             ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          CosTradingRepos::ServiceTypeRepository_ptr str =
+            CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
+          this->add_all_types_to (str, TAO_IN_ENV);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
         }
-      ACE_CATCHANY 
+      TAO_CATCHANY
         {
-          // @@ Seth, Ignore all these exceptions?
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
-
-      // @@ Seth, But this one?
-      this->add_all_types_to (str, ACE_TRY_ENV);
-      ACE_CHECK;
+      TAO_ENDTRY;
     }
 }
 
 void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
-                  CORBA::Environment& ACE_TRY_ENV)
+                  CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -159,54 +152,58 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 {
   for (int i = 0; i < NUM_TYPES; i++)
     {
-      ACE_TRY
+      TAO_TRY
         {
           repos->add_type (TT_Info::INTERFACE_NAMES[i],
                            this->type_structs_[i].if_name,
                            this->type_structs_[i].props,
                            this->type_structs_[i].super_types,
-                           ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                           TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
-      ACE_CATCH (CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, ste)
+      TAO_CATCH (CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, ste)
         {
-          ACE_PRINT_EXCEPTION (ste, "TAO_Service_Type_Exporter::add_all_types");
+          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
 
           if (ste.name.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", ste.name.in ()));
+
+          TAO_TRY_ENV.clear ();
         }
-      ACE_CATCH (CosTrading::IllegalPropertyName, excp)
+      TAO_CATCH (CosTrading::IllegalPropertyName, excp)
         {
-          ACE_PRINT_EXCEPTION (excp, "TAO_Service_Type_Exporter::add_all_types");
+          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
 
           if (excp.name.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", excp.name.in ()));
+
+          TAO_TRY_ENV.clear ();
         }
-      ACE_CATCH (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, vtr)
+      TAO_CATCH (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, vtr)
         {
-          ACE_PRINT_EXCEPTION (vtr, "TAO_Service_Type_Exporter::add_all_types");
+          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
 
           if (vtr.type_1.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Type One: %s\n", vtr.type_2.in ()));
           if (vtr.type_2.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Type Two: %s\n", vtr.type_2.in ()));
+
+          TAO_TRY_ENV.clear ();
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "TAO_Service_Type_Exporter::add_all_types");
-          ACE_RETHROW;
+          TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+          TAO_RETHROW;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
+      TAO_ENDTRY;
     }
 }
 
 void
-TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  TAO_TRY
     {
       CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
@@ -214,8 +211,8 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
 
       sst.all_ (1);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var type_names =
-        this->repos_->list_types (sst, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->repos_->list_types (sst, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       for (int i = type_names->length () - 1; i >= 0; i--)
         {
@@ -226,23 +223,21 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
             }
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_Service_Type_Exporter::list_all_types");
-      ACE_RETHROW;
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::list_all_types");
+      TAO_RETHROW;
     }
-  ACE_ENDTRY;
-  // ACE_CHECK;
+  TAO_ENDTRY;
 }
 
 void
-TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
 {
-  ACE_TRY
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "describing all types in the Repository.\n"));
@@ -251,8 +246,8 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& ACE_TRY_ENV)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->describe_type (TT_Info::INTERFACE_NAMES[i],
-                                         ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                         TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           if (this->verbose_)
             {
@@ -261,22 +256,21 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& ACE_TRY_ENV)
             }
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_Service_Type_Exporter::describe_all_types");
-      ACE_RETHROW;
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::describe_all_types");
+      TAO_RETHROW;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 void
-TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& ACE_TRY_ENV)
+TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
 {
-  ACE_TRY
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "fully describing all types in the Repository.\n"));
@@ -285,8 +279,8 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& ACE_TRY
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->fully_describe_type (TT_Info::INTERFACE_NAMES[i],
-                                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           if (this->verbose_)
             {
@@ -295,13 +289,12 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& ACE_TRY
             }
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_Service_Type_Exporter::fully_describe_all_types");
-      ACE_RETHROW;
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::fully_describe_all_types");
+      TAO_RETHROW;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 void

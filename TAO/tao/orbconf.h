@@ -118,26 +118,13 @@
 // Service.
 #if !defined (TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT)
 #define TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT 10016
-#endif /* TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT */
+#endif /* TAO_DEFAULT_NAME_SERVER_REQUEST_PORT */
 
 // The default UDP port number for replying to a location request to
 // the TAO Trading Service.
 #if !defined (TAO_DEFAULT_TRADING_SERVER_REPLY_PORT)
 #define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
-#endif /* TAO_DEFAULT_TRADING_SERVER_REPLY_PORT */
-
-// The default UDP multicast port number for locating the TAO 
-// Implementation Repository Service.
-#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT 10018
-#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Implementation Repository Service.
-#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT 10019
-#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT */
-
+#endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
 
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
@@ -248,15 +235,6 @@
 #undef major
 #endif /* major*/
 
-#if !defined (TAO_EXPORT_NESTED_CLASSES) \
-    && defined (ACE_EXPORT_NESTED_CLASSES)
-#define TAO_EXPORT_NESTED_CLASSES
-#endif /* !defined TAO_EXPORT_NESTED_CLASSES */
-
-#if !defined (TAO_EXPORT_NESTED_MACRO)
-#define TAO_EXPORT_NESTED_MACRO
-#endif /* !defined (TAO_EXPORT_NESTED_MACRO) */
-
 // Assume DOS/Windows if "configure" didn't get run.
 
 #if defined (_WIN32)
@@ -288,8 +266,7 @@
 // responsible for instantiating the templates.
 //
 #if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    ( defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) )
+    defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -298,13 +275,11 @@
 // something useful.
 #define TAO_OBJID_NAMESERVICE      "NameService"
 #define TAO_OBJID_TRADINGSERVICE   "TradingService"
-#define TAO_OBJID_IMPLREPOSERVICE  "ImplRepoService"
 #define TAO_OBJID_ROOTPOA          "RootPOA"
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
 #define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
-#define TAO_OBJID_IORMANIPULATION  "IORManipulation"
 
 // TAO Naming Service.
 
@@ -393,20 +368,15 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 // it creates 1.1 endpoints (and profiles).  If you need to talk to
 // old clients that only understand 1.0 (and do not attempt to use 1.0
 // with 1.1 servers), then change the values below.
-#if !defined (TAO_DEF_GIOP_MAJOR)
+#if !defined(TAO_DEF_GIOP_MAJOR)
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */
-#if !defined (TAO_DEF_GIOP_MINOR)
+#if !defined(TAO_DEF_GIOP_MINOR)
 #define TAO_DEF_GIOP_MINOR 1
 #endif /* TAO_DEF_GIOP_MINOR */
 
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)
 #define TAO_STD_PROFILE_COMPONENTS
-
-#if !defined (TAO_DEFAULT_IOR_SIZE)
-// This is the default size of the buffer used for processing IORs.
-#define TAO_DEFAULT_IOR_SIZE 1024
-#endif /* TAO_DEFAULT_IOR_SIZE */
 
 #endif  /* TAO_ORB_CONFIG_H */

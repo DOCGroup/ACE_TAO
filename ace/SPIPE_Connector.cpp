@@ -26,8 +26,8 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
   if (this->connect (new_io, remote_sap, timeout, local_sap,
 		     reuse_addr, flags, perms) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("address %s, %p\n"),
-	       remote_sap.get_path_name (), ASYS_TEXT ("ACE_SPIPE_Connector")));
+    ACE_ERROR ((LM_ERROR, "address %s, %p\n",
+	       remote_sap.get_path_name (), "ACE_SPIPE_Connector"));
 }
 
 void
@@ -62,7 +62,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   new_io.set_handle (handle);
   new_io.remote_addr_ = remote_sap; // class copy.
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   DWORD pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT;
 
   // Set named pipe mode and buffering characteristics.

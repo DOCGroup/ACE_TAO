@@ -83,8 +83,7 @@ Driver::init (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Driver::init");
+      ACE_TRY_ENV.print_exception ("Driver::init");
       return -1;
     }
   ACE_ENDTRY;

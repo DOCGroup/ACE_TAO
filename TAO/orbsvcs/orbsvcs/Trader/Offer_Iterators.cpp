@@ -1,8 +1,25 @@
+// ========================================================================
 // $Id$
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//   Offer_Iterators.cpp
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//
+// ========================================================================
 
 #include "Offer_Iterators.h"
 
 ACE_RCSID(Trader, Offer_Iterators, "$Id$")
+
+  // *************************************************************
+  // TAO_Offer_Iterator
+  // *************************************************************
 
 TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
   : pfilter_ (pfilter)
@@ -14,22 +31,35 @@ TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
 }
 
 void
-TAO_Offer_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Offer_Iterator::destroy (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
 
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_TRY
+    {
+      PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;
 }
+
+  // *************************************************************
+  // TAO_Query_Only_Offer_Iterator
+  // *************************************************************
 
 TAO_Query_Only_Offer_Iterator::
 TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
@@ -81,6 +111,10 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   return offers_in_sequence != 0;
 }
 
+  // *************************************************************
+  // TAO_Offer_Iterator_Collection
+  // *************************************************************
+
 TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection (void)
 {
 }
@@ -92,19 +126,15 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
       CosTrading::OfferIterator* offer_iter;
       this->iters_.dequeue_head (offer_iter);
 
-      ACE_TRY_NEW_ENV
+      TAO_TRY
         {
-          offer_iter->destroy (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          offer_iter->destroy (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           CORBA::release (offer_iter);
         }
-      ACE_CATCHANY
-        {
-          // Don't let the exceptions propagate since we're in a
-          // destructor!
-        }
-      ACE_ENDTRY;
+      TAO_CATCHANY {}
+      TAO_ENDTRY;
     }
 }
 
@@ -119,18 +149,14 @@ add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 CORBA::Boolean
 TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       CORBA::Environment &env)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong offers_left = n;
   CORBA::Boolean return_value = 1;
   CosTrading::OfferSeq_var out_offers;
 
-  ACE_NEW_THROW_EX (offers,
-                    CosTrading::OfferSeq,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (return_value);
-
+  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, return_value);
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
       CORBA::ULong offset = 0;
@@ -141,30 +167,36 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Determine how many offers we should retrieve from this
       // iterator.
 
-      // Retrieve the set of offers.
-      any_left =
-        iter->next_n (offers_left,
-                      CosTrading::OfferSeq_out (out_offers.out ()),
-                      ACE_TRY_ENV);
-      ACE_CHECK_RETURN (return_value);
-
-      // If we've exhausted this iterator, destroy it.
-      if (any_left == 0)
+      TAO_TRY
         {
-          iter->destroy (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (return_value);
-          CORBA::release (iter);
+          // Retrieve the set of offers.
+          any_left =
+            iter->next_n (offers_left,
+                          CosTrading::OfferSeq_out (out_offers.out ()),
+                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          // If we've exhausted this iterator, destroy it.
+          if (any_left == 0)
+            {
+              iter->destroy (env);
+              CORBA::release (iter);
+            }
+          else
+            this->iters_.enqueue_head (iter);
+
+          // Merge it with the passed set.
+          offset = offers->length ();
+          offers->length (out_offers->length () + offset);
+          for (int j = out_offers->length () - 1; j >= 0; j--)
+            offers[j + offset] = out_offers[j];
+
+          offers_left -= out_offers->length ();
         }
-      else
-        this->iters_.enqueue_head (iter);
-
-      // Merge it with the passed set.
-      offset = offers->length ();
-      offers->length (out_offers->length () + offset);
-      for (int j = out_offers->length () - 1; j >= 0; j--)
-        offers[j + offset] = out_offers[j];
-
-      offers_left -= out_offers->length ();
+      TAO_CATCHANY
+        {
+        }
+      TAO_ENDTRY;
     }
 
   // Determine if we have anything left to offer.
@@ -175,7 +207,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 }
 
 void
-TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& ACE_TRY_ENV)
+TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy all iterators in the collection.
@@ -186,32 +218,43 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& ACE_TRY_ENV)
       CosTrading::OfferIterator** iter = 0;
 
       iters_iter.next (iter);
-      (*iter)->destroy (ACE_TRY_ENV);
-      ACE_CHECK;
+      (*iter)->destroy (TAO_IN_ENV);
     }
 
   // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
 
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_TRY
+    {
+      PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;
 }
 
 CORBA::ULong
-TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &ACE_TRY_ENV)
+TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &TAO_IN_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::UnknownMaxLeft))
 {
-  ACE_THROW_RETURN (CosTrading::UnknownMaxLeft(),
-                    0);
+  TAO_THROW_RETURN (CosTrading::UnknownMaxLeft(), 0);
 }
+
+  // *************************************************************
+  // TAO_Offer_Id_Iterator
+  // *************************************************************
+
 
 TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)
 {
@@ -241,22 +284,30 @@ TAO_Offer_Id_Iterator::max_left (CORBA::Environment &)
 }
 
 void
-TAO_Offer_Id_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Offer_Id_Iterator::destroy (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
 
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_TRY
+    {
+      PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;
 }
 
 CORBA::Boolean
@@ -272,9 +323,9 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);
 
   if (returnable_items == 0)
-    ACE_NEW_RETURN (_ids,
-                    CosTrading::OfferIdSeq,
-                    return_value);
+    {
+      ACE_NEW_RETURN (_ids, CosTrading::OfferIdSeq, return_value);
+    }
   else
     {
       // Allocate space for the returned OfferIds.
@@ -291,7 +342,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 	      this->ids_.dequeue_head (offer_id);
 	      id_buf[i] = offer_id;
 	    }
-
+	
 	  // Place them into an OfferIdSeq.
 	  ACE_NEW_RETURN (_ids,
 			  CosTrading::OfferIdSeq (returnable_items,
@@ -301,9 +352,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 			  return_value);
 	}
       else
-	ACE_NEW_RETURN (_ids,
-                        CosTrading::OfferIdSeq,
-                        return_value);
+	ACE_NEW_RETURN (_ids, CosTrading::OfferIdSeq, return_value);
     }
 
   // Return true only if there are items left to be returned in

@@ -260,13 +260,7 @@ public:
   // Note that <tv> is assumed to be in "absolute" rather than
   // "relative" time.  The value of <tv> is updated upon return, i.e.,
   // the caller gets the amount of time that has elapsed while waiting
-  // to acquire the semaphore.  
-  //
-  // NOTE: Solaris threads do not support timed semaphores.
-  // Therefore, if you're running on Solaris you might want to
-  // consider using the ACE POSIX pthreads implementation instead,
-  // which can be enabled by compiling ACE with
-  // -D_POSIX_PTHREAD_SEMANTICS.
+  // to acquire the semaphore.
 
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0

@@ -150,21 +150,19 @@ int
 ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
                                          u_long &command_action)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // Forward the request.
-      up_->push (request, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      up_->push (request, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       // No exceptions should be raised (push is a oneway) but we try
       // to print something useful anyway.
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ACE_ES_Dispatching_Base::dispatch_event");
+      TAO_TRY_ENV.print_exception ("ACE_ES_Dispatching_Base::dispatch_event");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Tell our caller to release the request.
   command_action = ACE_RT_Task_Command::RELEASE;
@@ -239,10 +237,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 
 void
 ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
-  down_->connected (consumer, ACE_TRY_ENV);
-  ACE_CHECK;
+  down_->connected (consumer, TAO_IN_ENV);
 
   // This code does dynamic allocation of channel dispatch threads.
   // It requires that consumer's priorities are known at connection
@@ -253,8 +250,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
   // We have to tell the lower portions of the channel about the
   // consumer first.  This is so that any changes to the consumer's
   // qos will take effect when we get the dispatch priority.
-  down_->connected (consumer, ACE_TRY_ENV);
-  ACE_CHECK;
+  down_->connected (consumer, TAO_IN_ENV);
 
   RtecScheduler::OS_Priority priority =
     ACE_Scheduler::instance ().preemption_priority (consumer->qos ().rt_info_);
@@ -336,7 +332,7 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
 // <request> has been dynamically allocated by the filtering module.
 void
 ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::Environment &TAO_IN_ENV)
 {
   ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
@@ -346,6 +342,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
 
   if (request->rt_info () != 0)
     {
+      // @@ TODO use TAO_TRY&friends
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED);
 #if 1
       this->scheduler_->priority
@@ -353,17 +350,17 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
          thread_priority,
          subpriority,
          preemption_priority,
-         ACE_TRY_ENV);
+         TAO_IN_ENV);
 #else
       ACE_Scheduler_Factory::server ()->priority
         (request->rt_info (),
          thread_priority,
          subpriority,
          preemption_priority,
-         ACE_TRY_ENV);
+         TAO_IN_ENV);
 #endif
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED);
-      ACE_CHECK;
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
   else
     {
@@ -385,7 +382,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                   " dropping event.\n", preemption_priority));
       return;
 #if 0
-      ACE_THROW (SYNC_ERROR (0, , "ACE_ES_Priority_Dispatching::push"));
+      TAO_THROW (SYNC_ERROR (0, , "ACE_ES_Priority_Dispatching::push"));
 #endif /* 0 */
     }
 
@@ -400,7 +397,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                     " release failed.\n"));
       if (errno != EPIPE)
         {
-          ACE_THROW (CORBA::NO_MEMORY ());
+          TAO_THROW (CORBA::NO_MEMORY ());
           // @@ Orbix parameters
           // 0, ,
           // "ACE_ES_Priority_Dispatching::push enqueue failed"));
@@ -620,8 +617,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                          "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY
+        TAO_TRY
           {// @@ TODO: Handle exceptions...
 #if 1
             this->scheduler_->set
@@ -635,7 +631,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                ORBSVCS_Time::zero (),
                1,
                RtecScheduler::OPERATION,
-               ACE_TRY_ENV);
+               TAO_TRY_ENV);
 #else
             ACE_Scheduler_Factory::server()->set (rt_info_,
                                                   RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -647,17 +643,16 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                                                   ORBSVCS_Time::zero (),
                                                   1,
                                                   RtecScheduler::OPERATION,
-                                                  ACE_TRY_ENV);
+                                                  TAO_TRY_ENV);
 #endif
-            ACE_TRY_CHECK;
+            TAO_CHECK_ENV;
           }
-        ACE_CATCHANY
+        TAO_CATCHANY
           {
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "ACE_ES_Dispatch_Queue::exception");
-            return -1;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ACE_ES_Dispatch_Queue::exception"), -1);
           }
-        ACE_ENDTRY;
+        TAO_ENDTRY;
       }
       // FALLTHROUGH
     case 1:
@@ -728,21 +723,19 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
   // Store the priority of the task currently running.
   channel_->rtu_manager ()->priority (request->priority ());
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // Forward the request.
-      up_->push (request, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      up_->push (request, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       // No exceptions should be raised (push is a oneway) but we try
       // to print something useful anyway.
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ACE_ES_Dispatching_Base::dispatch_event");
+      TAO_TRY_ENV.print_exception ("ACE_ES_Dispatching_Base::dispatch_event");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Reset the priority.
   channel_->rtu_manager ()->priority (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO, ACE_SCOPE_PROCESS));
@@ -760,11 +753,10 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
 
 void
 ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   // First enqueue the message in the proper queue.
-  ACE_ES_Priority_Dispatching::push (request, ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_ES_Priority_Dispatching::push (request, TAO_IN_ENV);
 
   // If the current event is higher priority (lower value) than the
   // current running task, then tell the task to preempt itself.

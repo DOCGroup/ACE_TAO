@@ -142,10 +142,10 @@ public:
   // the map resizes or when this slot is reused.  Therefore, the user
   // should use the pointer immediately and not hold on to it.
 
-  size_t current_size (void) const;
+  size_t current_size (void);
   // Return the current size of the map.
 
-  size_t total_size (void) const;
+  size_t total_size (void);
   // Return the total size of the map.
 
   static const ACE_Active_Map_Manager_Key npos (void);

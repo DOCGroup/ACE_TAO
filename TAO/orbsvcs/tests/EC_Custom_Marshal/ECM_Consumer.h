@@ -31,7 +31,8 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
 public:
   Test_Consumer (Driver* driver, void* cookie);
 
-  void connect (int event_a,
+  void connect (const char* name,
+                int event_a,
                 int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);

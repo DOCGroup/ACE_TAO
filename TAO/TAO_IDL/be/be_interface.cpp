@@ -33,9 +33,13 @@ ACE_RCSID(be, be_interface, "$Id$")
 // default constructor
 be_interface::be_interface (void)
   : full_skel_name_ (0),
+    ami_handler_full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
+    ami_handler_full_coll_name_ (0),
     local_coll_name_ (0),
+    ami_handler_local_coll_name_ (0),
+    ami_handler_local_name_ (0),
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
@@ -48,9 +52,13 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
     full_skel_name_ (0),
+    ami_handler_full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
+    ami_handler_full_coll_name_ (0),
     local_coll_name_ (0),
+    ami_handler_local_coll_name_ (0),
+    ami_handler_local_name_ (0),
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
@@ -63,41 +71,50 @@ be_interface::~be_interface (void)
       delete[] this->full_skel_name_;
       this->full_skel_name_ = 0;
     }
+  if (this->ami_handler_full_skel_name_ != 0)
+    {
+      delete[] this->ami_handler_full_skel_name_;
+      this->ami_handler_full_skel_name_ = 0;
+    }
   if (this->full_coll_name_ != 0)
     {
       delete[] this->full_coll_name_;
       this->full_coll_name_ = 0;
+    }
+  if (this->ami_handler_full_coll_name_ != 0)
+    {
+      delete[] this->ami_handler_full_coll_name_;
+      this->ami_handler_full_coll_name_ = 0;
     }
   if (this->local_coll_name_ != 0)
     {
       delete[] this->local_coll_name_;
       this->local_coll_name_ = 0;
     }
+  if (this->ami_handler_local_coll_name_ != 0)
+    {
+      delete[] this->ami_handler_local_coll_name_;
+      this->ami_handler_local_coll_name_ = 0;
+    }
+  if (this->ami_handler_local_name_ != 0)
+    {
+      delete[] this->ami_handler_local_name_;
+      this->ami_handler_local_name_ = 0;
+    }
 }
 
 // compute stringified fully qualified collocated class name.
 void
-be_interface::compute_coll_name (int type)
+be_interface::compute_coll_name (void)
 {
-// @@ not thread safe.
-  static int cached_type = -1;
-  if (type == cached_type && this->full_coll_name_ != 0)
+  if (this->full_coll_name_ != 0)
     return;
-  else
-    {
-      cached_type = type;
-      delete this->full_coll_name_;
-      delete this->local_coll_name_;
-    }
 
-  static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
-                                            "_tao_direct_collocated_" };
+  const char collocated[] = "_tao_collocated_";
   const char poa[] = "POA_";
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
-  const char *collocated = collocated_names[type];
-
-  int namelen = ACE_OS::strlen (collocated) + sizeof (poa) + 1;
+  int namelen = sizeof (collocated) + sizeof (poa);
 
   UTL_IdListActiveIterator *i;
   ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
@@ -153,7 +170,7 @@ be_interface::compute_coll_name (int type)
   delete i;
 
   // Compute the local name for the collocated class.
-  int localen = ACE_OS::strlen (collocated) + 1;
+  int localen = sizeof (collocated);
   localen += ACE_OS::strlen (this->local_name ()->get_string ());
   ACE_NEW (this->local_coll_name_, char[localen]);
   ACE_OS::strcpy(this->local_coll_name_, collocated);
@@ -162,19 +179,134 @@ be_interface::compute_coll_name (int type)
 }
 
 const char *
-be_interface::full_coll_name (int type)
+be_interface::full_coll_name (void)
 {
-  this->compute_coll_name (type);
+  if (this->full_coll_name_ == 0)
+    this->compute_coll_name ();
 
   return this->full_coll_name_;
 }
 
 const char*
-be_interface::local_coll_name (int type) const
+be_interface::local_coll_name (void) const
 {
-  ACE_const_cast (be_interface*, this)->compute_coll_name (type);
+
+  if (this->local_coll_name_ == 0)
+    ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
   return this->local_coll_name_;
+}
+
+
+const char*
+be_interface::ami_handler_full_coll_name (void)
+{
+  if (this->ami_handler_full_coll_name_ == 0)
+    compute_ami_handler_name (this->full_coll_name(),
+                               this->ami_handler_full_coll_name_);
+
+  return this->ami_handler_full_coll_name_;
+}
+
+const char*
+be_interface::ami_handler_local_coll_name (void)
+{
+  if (this->ami_handler_local_coll_name_ == 0)
+    compute_ami_handler_name (this->local_coll_name(),
+                              this->ami_handler_local_coll_name_);
+
+  return this->ami_handler_local_coll_name_;
+}
+
+const char*
+be_interface::ami_handler_local_name (void)
+{
+  if (this->ami_handler_local_name_ == 0)
+    compute_ami_handler_name (this->local_name()->get_string (),
+                              this->ami_handler_local_name_);
+
+  return this->ami_handler_local_name_;
+}
+
+// Generate collocated local and full names for the arbitrary local
+// name under the scope of this interface. Usefull to generate AMI
+// Handlers.
+int
+be_interface::compute_coll_names (const char *local_name,
+                                  char *&coll_local_name,
+                                  char *&coll_full_name)
+
+{
+  const char collocated[] = "_tao_collocated_";
+  const char poa[] = "POA_";
+
+  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
+  // prefix and the local name and the (optional) "::"
+  int namelen = sizeof (collocated) + sizeof (poa);
+
+  UTL_IdListActiveIterator *i;
+  ACE_NEW_RETURN (i, UTL_IdListActiveIterator (this->name ()), -1);
+  while (!i->is_done ())
+    {
+      // reserve 2 characters for "::".
+      namelen += ACE_OS::strlen (i->item ()->get_string ()) + 2;
+      i->next ();
+    }
+  delete i;
+
+  ACE_NEW_RETURN (coll_full_name,
+                  char[namelen+1],
+                  -1);
+  coll_full_name[0] = 0; // null terminate the string...
+
+  // Iterate again....
+  ACE_NEW_RETURN (i, UTL_IdListActiveIterator (this->name ()), -1);
+
+  // Only the first component get the "POA_" preffix.
+  int poa_added = 0;
+  while (!i->is_done ())
+    {
+      const char* item = i->item ()->get_string ();
+
+      // Increase right away, so we can test for the final component
+      // in the loop.
+      i->next ();
+
+      // We add the POA_ preffix only if the first component is not
+      // the global scope...
+      if (ACE_OS::strcmp (item, "") != 0)
+        {
+          if (!i->is_done ())
+            {
+              // We only add the POA_ preffix if there are more than
+              // two components in the name, in other words, if the
+              // class is inside some scope.
+              if (!poa_added)
+                {
+                  ACE_OS::strcat (coll_full_name, poa);
+                  poa_added = 1;
+                }
+              ACE_OS::strcat (coll_full_name, item);
+              ACE_OS::strcat (coll_full_name, "::");
+            }
+          else
+            {
+              ACE_OS::strcat (coll_full_name, collocated);
+              ACE_OS::strcat (coll_full_name, item);
+            }
+        }
+    }
+  delete i;
+
+  // Compute the local name for the collocated class.
+  int localen = sizeof (collocated);
+  localen += ACE_OS::strlen (local_name);
+  ACE_NEW_RETURN (coll_local_name, char[localen], -1);
+  ACE_OS::strcpy(coll_local_name, collocated);
+  ACE_OS::strcat(coll_local_name,
+                 local_name);
+
+  return 0;
 }
 
 // compute stringified fully scoped skel name
@@ -258,6 +390,17 @@ be_interface::full_skel_name (void)
 
   return this->full_skel_name_;
 }
+
+const char*
+be_interface::ami_handler_full_skel_name (void)
+{
+  if (this->ami_handler_full_skel_name_ == 0)
+    compute_ami_handler_name (this->full_skel_name(),
+                              this->ami_handler_full_skel_name_);
+
+  return this->ami_handler_full_skel_name_;
+}
+
 
 // Am I in some kind of a multiple inheritance
 int be_interface::in_mult_inheritance (void)
@@ -562,7 +705,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << name () << "::_duplicate (p.ptr ());\n";
+  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
@@ -1905,6 +2048,31 @@ be_interface::gen_skel_helper (be_interface *derived,
 }
 
 int
+be_interface::collocated_ctor_helper (be_interface *derived,
+                                      be_interface *base,
+                                      TAO_OutStream *os)
+{
+  if (derived == base)
+    // we are the same. Don't do anything, otherwise we will end up calling
+    // ourself
+    return 0;
+
+  if (base->is_nested ())
+    {
+      be_decl *scope;
+      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
+          << base->local_coll_name () << ") (servant, stub)," << be_nl;
+    }
+  else
+    {
+      *os << "  " << base->full_coll_name () << " (servant, stub)," << be_nl;
+    }
+
+  return 0;
+}
+
+int
 be_interface::copy_ctor_helper (be_interface *derived,
                                 be_interface *base,
                                 TAO_OutStream *os)
@@ -1953,6 +2121,13 @@ be_interface::in_mult_inheritance_helper (be_interface *derived,
       derived->in_mult_inheritance (1);
     }
   return 0;
+}
+
+const char*
+be_interface::relative_coll_name (const char *collname)
+{
+  return be_interface::relative_name (this->full_coll_name (),
+                                      collname);
 }
 
 // return the relative skeleton name (needed due to NT compiler insanity)
@@ -2054,6 +2229,8 @@ be_interface::accept (be_visitor *visitor)
 {
   return visitor->visit_interface (this);
 }
+
+
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)

@@ -89,8 +89,8 @@ ACE_INLINE size_t
 ACE_Shared_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::round_up");
-  if (nbytes < this->segment_size_)
-    nbytes = this->segment_size_;
+  if (nbytes < ACE_DEFAULT_SEGMENT_SIZE)
+    nbytes = ACE_DEFAULT_SEGMENT_SIZE;
 
   return ACE::round_to_pagesize (nbytes);
 }

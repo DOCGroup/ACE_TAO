@@ -14,30 +14,29 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service clerk\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      int r = clerk.init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (r == -1)
+      if (clerk.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-          clerk.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          clerk.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

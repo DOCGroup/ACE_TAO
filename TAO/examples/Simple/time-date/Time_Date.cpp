@@ -19,12 +19,14 @@ DLL_ORB::svc (void)
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   ACE_ENDTRY;
@@ -137,7 +139,7 @@ Time_Date_Servant::init (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "DLL_ORB::init");
+      ACE_TRY_ENV.print_exception ("DLL_ORB::init");
       return -1;
     }
   ACE_ENDTRY;

@@ -306,9 +306,7 @@ ACE_ST_CORBA_Handler::instance (void)
 
   if (ACE_ST_CORBA_Handler::instance_ == 0)
     {
-      ACE_NEW_RETURN (ACE_ST_CORBA_Handler::instance_,
-                      ACE_ST_CORBA_Handler,
-                      0);
+      ACE_NEW_RETURN (ACE_ST_CORBA_Handler::instance_, ACE_ST_CORBA_Handler, 0);
       ACE_ST_CORBA_Handler::instance_->get_orbix_descriptors ();
     }
 

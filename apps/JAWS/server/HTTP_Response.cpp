@@ -11,11 +11,7 @@
 
 ACE_RCSID(server, HTTP_Response, "$Id$")
 
-#if defined (ACE_JAWS_BASELINE)
-static char * const EMPTY_HEADER = "";
-#else
-static const char * const EMPTY_HEADER = "";
-#endif /* ACE_JAWS_BASELINE */
+static char * const EMPTY_HEADER = (char *)"";
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
   : io_(io), request_(request)
@@ -324,7 +320,7 @@ HTTP_Response::build_headers (void)
   if (this->request_.version () == 0
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
-      HTTP_HEADER = EMPTY_HEADER;
+      HTTP_HEADER = (char *) EMPTY_HEADER;
       HTTP_HEADER_LENGTH = 0;
     }
   else

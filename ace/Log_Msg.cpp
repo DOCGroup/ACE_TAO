@@ -96,9 +96,7 @@ ACE_Log_Msg_Manager::get_lock (void)
     {
       ACE_NO_HEAP_CHECK;
 
-      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_,
-                        ACE_Recursive_Thread_Mutex,
-                        0);
+      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Recursive_Thread_Mutex, 0);
 
       // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
@@ -214,9 +212,7 @@ ACE_Log_Msg::instance (void)
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN_I (tss_log_msg,
-                          ACE_Log_Msg,
-                          0);
+        ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
         // Store the dynamically allocated pointer in thread-specific
         // storage.  It gets deleted via the ACE_TSS_cleanup function
         // when the thread terminates.
@@ -236,9 +232,8 @@ ACE_Log_Msg::instance (void)
   // ACE_Log_Msg_Manager::get_lock() to initialize the message queue,
   // so instead we do it here.
   if (ACE_Log_Msg_message_queue == 0)
-    ACE_NEW_RETURN (ACE_Log_Msg_message_queue,
-                    ACE_LOG_MSG_IPC_STREAM,
-                    0);
+    ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
+
   // Singleton implementation.
   static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
   if (log_msg == 0)
@@ -773,10 +768,6 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 #if defined (ACE_WIN32)
                         LPTSTR lpMsgBuf = 0;
 
-     // PharLap can't do FormatMessage, so try for socket
-     // error.
-# if !defined (ACE_HAS_PHARLAP)
-
                         ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
                                          NULL,
                                          errno,
@@ -784,7 +775,6 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                                          (LPTSTR) &lpMsgBuf,
                                          0,
                                          NULL);
-# endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
                         // <FormatMessage>, we'll assume this is a

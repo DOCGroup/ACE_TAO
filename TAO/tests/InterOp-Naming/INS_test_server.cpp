@@ -27,12 +27,14 @@ main (int argc, char *argv[])
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   ACE_ENDTRY;

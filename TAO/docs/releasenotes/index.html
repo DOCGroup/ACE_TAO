@@ -31,7 +31,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a HREF="../poa_migration.html">POA Migration Notes</a></li>
 
 <li>
-<a href="../implrepo/index.html">Implementation Repository</a></li>
+<a href="../implrepo/status.html">Implementation Repository</a></li>
 
 <li>
 <a href="#interfrepo">Interface Repository</a></li>
@@ -319,7 +319,7 @@ extra pass over the internal representation of the IDL file has to be done.<P>
 </ul>
 
 
-<hr>
+<hr></li>
 
 <br><!--#include virtual="orbcore.html" -->
 <hr>
@@ -347,12 +347,12 @@ protocols, e.g., replacements for GIOP. Each of these steps is outlined
 below:
 <ul>
 <li>
-<b>Basic pluggable transport protocols framework</b>: We have added
+<b>Basic pluggable transport protocols framework</b>: We're currently adding
 several Bridge classes that decouple the transport-specific details from
 the rest of TAO's ORB Core. This allows us to isolate the details of how
 messages are communicated at the transport layer in a few classes. This
-design resulted in the restructuring of the ORB Core and how requests are
-handled.  For instance, there is now the concept of communication layers:
+design has led us to restructure how TAO's ORB Core sends and receives
+requests. For instance, there is now the concept of communication layers:
 Objects (e.g., references, method invocations, etc.), ORB Messaging, Transport,
 and Network. The Object layer is just the usual stubs and skeletons.</li>
 
@@ -375,7 +375,7 @@ QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
 <b>Example Transport protocols</b>- The first example, aside from IIOP, that
-has been implemented, UIOP, uses local IPC. Other interesting transport
+has been implemented uses UNIX domain sockets. Other interesting transport
 protocols would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
 UDP/IP.</li> <p>
 
@@ -400,7 +400,7 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             list of TAO_Acceptors is kept in the Acceptor
             Registry. When the ORB needs to create an IOR it iterates
             over all the acceptors to do so. Using either multiple
-            <code>-ORBEndpoint</code> options or several endpoints
+            <code>-ORBendpoint</code> options or several endpoints
             separated by semi-colons ';', the user can specify what
             addresses the ORB should use.  Each endpoint is specified
             in URL format (ex: <code>iiop://foo.bar.com:0</code>),
@@ -431,10 +431,11 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
 
 <li>
 	    Enabled the UIOP protocol, this protocol uses local IPC
-            (aka UNIX domain sockets) as the transport mechanism.  The
-            protocol is loaded by default.  If no explicit
-            <code>-ORBEndpoint</code> option is used (ex:
-            <code>-ORBEndpoint uiop:///tmp/my_rendezvous</code>). 
+            (aka UNIX domain) sockets as the transport mechanism.  The
+            protocol is loaded by default but no endpoints are created
+            unless an explicit <code>-ORBendpoint</code> option is
+            used (ex: <code>-ORBendpoint
+            uiop:///tmp/my_rendezvous</code>).
 
 </li><P>
 
@@ -444,32 +445,22 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             its list of arguments.  These protocol names are used to
             load an abstract factory via the service configurator.
             This factory can create acceptors or connectors on demand.
-            By default only IIOP and UIOP (if supported by the
-            platform) are loaded.
+            By default only IIOP and UIOP are loaded.
 </li><P>
 
 <li>
-
-The service configurator is now used to load protocol factories.
-
-</li><P>
-
-<li>
-
-	    The <code>-ORBHost</code> and <code>-ORBPort</code>
-            options are deprecated. The new <code>-ORBEndpoint</code>
+	    The <code>-ORBhost</code> and <code>-ORBport</code>
+            options are deprecated. The new <code>-ORBendpoint</code>
             option supercedes them. If the deprecated options are
-            used, the ORB issues a warning.  The user should not
-            depend on the existence of these options in the future.
+            used, the ORB issues a warning.
 </li><P>
 
 <li>
-            The <code>-ORBPreconnect</code> option supports multiple
+            The <code>-ORBpreconnect</code> option supports multiple
             protocols using the same URL formats that
-            <code>-ORBEndpoint</code> does. Note that the old
+            <code>-ORBendpoint</code> does. Note that the old
             <em><code>host:port</code></em> format is supported for
-            backwards compatibility, but the user should not depend on 
-            the existence of this old format.
+            backwards compatibility.
 </li><P>
 
 <li>
@@ -489,7 +480,7 @@ The service configurator is now used to load protocol factories.
 &lt;key_string&gt; = &lt;string&gt; | empty_string<br>
 </code></blockquote>
 
-            In TAO, <code>iiop</code> URL style object references are
+            <code>iiop</code> URL style object references are
             equivalent to <code>iioploc</code> URL style object
             references.  <code>uiop</code> URL style object references
             have a similar syntax:
@@ -513,47 +504,13 @@ The service configurator is now used to load protocol factories.
             forward slash is needed to prevent ambiguities of
             where the rendezvous point ends and where the key
             string begins since both may contain forward
-            slashes in them.
+            slashes in them. 
 
             The <i>rendezvous point</i> for <code>uiop</code> is
             any valid path and filename that the ORB has permission to
-            read and write to.  However, UIOP rendezvous points have
-            the same restrictions that local IPC has:
-                <blockquote><li>
-                  To guarantee portability, local IPC rendezvous
-                  points (including the path and filename) should not
-                  be longer than 99 characters long. Some platforms
-                  may support longer rendezvous points, usually 108
-                  characters including the null terminator, but
-                  Posix.1g only requires that local IPC rendezvous
-                  point arrays contain a maximum of <b>at least</b>
-                  100 characters, including the null terminator.<P>
+            read and write to.<P>
 
-                  If an endpoint is longer than what the platform
-                  supports then it will be truncated so that it fits,
-                  and a warning will be issued.<P>
-                </li>
-                <li>
-                  Avoid using <em>relative</em> paths in your UIOP endpoints.
-                  If possible, use <b><em>absolute</em></b> paths
-                  instead.  Imagine that the server is given an
-                  endpoint to create using <code>-ORBEndpoint
-                  uiop://foobar</code>.  A local IPC rendezvous
-                  point called <code>foobar</code> will be created
-                  in the current  working directory.  If the client
-                  is not started in the directory where the
-                  <code>foobar</code> rendezvous point exists then
-                  the client will not be able to communicate with
-                  the server since its point of communication, the
-                  rendezvous point, was not found. On the other
-                  hand, if an absolute path was used, the client
-                  would know exactly where to find the rendezvous
-                  point.<P>  It is up to the user to make sure that
-                  a given UIOP endpoint is accessible by both the
-                  server and the client.<P>
-                </li></blockquote>
-
-            The <code>-ORBEndpoint</code> option uses a syntax similar
+            The <code>-ORBendpoint</code> option uses a syntax similar 
             to that of the URL style object reference shown above.
             The only difference is that the object key delimiter and
             the object key string are not specified.
@@ -566,6 +523,8 @@ Known Issues:
 
 <ul>
 <li>
+The ORB Core's resource factory needs to be enhanced to support the dynamic
+allocation of resources for different transport protocols.</li><p>
 </ul>
 Critical Work:
 
@@ -578,11 +537,11 @@ Complete support for multiple profiles.</li><p>
 Future Work:
 <ul>
 <li>
-Verify all of TAO's regression tests still work. This will be followed
+Verify all of TAO's regression tests still work. This will be followed 
 by performing a suite of tests to compare performance of with the unmodified
 TAO distribution. Also, we'll extensively retest TAO using Purify and
 Quantify.
-</li><p>
+</li><p> 
 
 <li>
 In parallel, we will add support for multiple profiles.</li><p>
@@ -841,6 +800,13 @@ Support for a load balancing feature similar to the one present in ORBIX.
 It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
 </li>
 <li>
+Update to the 'destroy' method, once the POA restructuring effort is complete, to do the "Right Thing TM".
+</li>
+<li>
+Replication of the bindings to other Naming Service's currently running.
+It will probably be modeled after the LDAP Multi-Master Replication
+Protocol.</li>
+<li>
 Support for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status.
@@ -900,7 +866,7 @@ go through the test examples at $TAO/orbsvcs/tests/CosPropertyService.
 Property Service is has been used by the TAO's <a href="#av">Audio Video Streaming
 Service</a>developed for TAO. For general documentation of the
 Property Service, please read <a
-href="http://www.omg.org/corba/sectrans.html#prop">The Property Service
+href="http://www.omg.org/corba/sectrans.htm#prop">The Property Service
 Specification.</a>
 
 <P>Recent Work:

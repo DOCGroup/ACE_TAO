@@ -12,7 +12,6 @@
 
 DIRS  = Callback_Quoter \
         POA \
-	Logging \
 	Quoter \
 	Simple \
 	Event_Comm \

@@ -113,8 +113,8 @@ CosEvent_Service::startup (int argc, char *argv[],
   this->resolve_naming_service (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->init (this->poa_.in (),
-              this->poa_.in (),
+  this->init (this->poa_,
+              this->poa_,
               this->eventTypeIds_,
               this->eventSourceIds_,
               this->source_type_pairs_,
@@ -175,6 +175,7 @@ CosEvent_Service::activate_rtec (CORBA::Environment &ACE_TRY_ENV)
     {
       // Try to locate a remote rtec.
       this->locate_rtec (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Use the return value to check success.
       if (CORBA::is_nil (this->rtec_.in ()))

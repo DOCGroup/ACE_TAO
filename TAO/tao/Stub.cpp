@@ -89,12 +89,8 @@ TAO_Stub::TAO_Stub (char *repository_id,
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
 
-  // Duplicate the ORB. This will help us keep the ORB around until
-  // the CORBA::Object we represent dies.
-  this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
-
   this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
+    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 
   this->set_base_profiles (profiles);
 }
@@ -108,11 +104,11 @@ TAO_Stub::TAO_Stub (char *repository_id,
 //    can get different values, depending on the profile_in_use!!
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max,
-                CORBA::Environment &ACE_TRY_ENV)
+                CORBA::Environment &env)
 {
   // we rely on the profile object to has it's address info
   if (profile_in_use_)
-    return profile_in_use_->hash (max, ACE_TRY_ENV);
+    return profile_in_use_->hash (max, env);
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
 }
 
@@ -124,7 +120,8 @@ TAO_Stub::hash (CORBA::ULong max,
 // NOTE that this must NOT go across the network!
 // @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
-TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
+TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
+                         CORBA::Environment &env)
 {
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
@@ -136,7 +133,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
     return 0;
 
   // Compare the profiles
-  return this_profile->is_equivalent (other_profile);
+  return this_profile->is_equivalent (other_profile, env);
 }
 
 // Memory managment
@@ -336,10 +333,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
               // (ASG) will do 03/22/98.
               // @@ IMHO this should be handled in the stub
               // (coryan)
-              CORBA::TCKind kind = pdp->tc->kind (ACE_TRY_ENV);
-              ACE_CHECK;
-
-              switch (kind)
+              switch (pdp->tc->kind (TAO_IN_ENV))
                 {
                 case CORBA::tk_string:
                   {

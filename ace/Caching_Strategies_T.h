@@ -19,161 +19,13 @@
 
 #include "ace/OS.h"
 
-#include "ace/Caching_Utility_T.h"
+#include "ace/Caching_Strategy_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Cleanup_Strategies_T.h"
-
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
-class ACE_Caching_Strategy
-{
-  // = TITLE
-  //     This class is an abstract base class for a caching strategy.
-  //
-  // = DESCRIPTION
-  //     This class consists of all the interfaces a caching strategy should have and
-  //   is used in association with the ACE_Caching_Strategy_Adaptor.
-
-public:
-
-  virtual ~ACE_Caching_Strategy (void);
-  // Destructor.
-
-  virtual int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
-                    int delete_cleanup_strategy = 1,
-                    CACHING_STRATEGY_UTILITY *utility_s = 0,
-                    int delete_caching_strategy_utility = 1) = 0;
-  // This method which does the actual initialisation.
-
-  virtual ATTRIBUTES attributes (void) = 0;
-  // Accessor method for the timer attributes.
-
-  // = Accessor methods for the percentage of entries to purge.
-  virtual double purge_percent (void) = 0;
-  virtual void purge_percent (double percentage) = 0;
-
-  // = Strategy related Operations
-
-  virtual int notify_bind (int result,
-                           const ATTRIBUTES &attr) = 0;
-  // This method acts as a notification about the CONTAINERs bind
-  // method call.
-
-  virtual int notify_find (int result,
-                           ATTRIBUTES &attr) = 0;
-  // This method acts as a notification about the CONTAINERs find
-  // method call
-
-  virtual int notify_unbind (int result,
-                             const ATTRIBUTES &attr) = 0;
-  // This method acts as a notification about the CONTAINERs unbind
-  // method call
-
-  virtual int notify_trybind (int result,
-                              ATTRIBUTES &attr) = 0;
-  // This method acts as a notification about the CONTAINERs trybind
-  // method call
-
-  virtual int notify_rebind (int result,
-                             const ATTRIBUTES &attr) = 0;
-  // This method acts as a notification about the CONTAINERs rebind
-  // method call
-
-  virtual int clear_cache (CONTAINER &container) = 0;
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove.
-
-  virtual void dump (void) const = 0;
-  // Dumps the state of the object.
-};
-
-//////////////////////////////////////////////////////////////////////////
-
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
-class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>
-{
-  // = TITLE
-  //     This class follows the Adaptor pattern and is used to provide
-  //     External Polymorphism by deriving from ACE_Caching_Strategy.
-  //
-  // = DESCRIPTION
-  //     This class simply delegates all requests to the
-  //     IMPLEMNETATION object within. This class should be passed in
-  //     place of the the abstract base ACE_Caching_Strategy class as
-  //     part of the External Polymorphism pattern.
-
-public:
-
-  ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
-                                int delete_implementation = 0);
-  // Constructor.
-
-  ~ACE_Caching_Strategy_Adapter (void);
-  // Destructor.
-
-  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
-            int delete_cleanup_strategy = 1,
-            CACHING_STRATEGY_UTILITY *utility_s = 0,
-            int delete_caching_strategy_utility = 1);
-  // This method which does the actual initialisation.
-
-  ATTRIBUTES attributes (void);
-  // Accessor method for the timer attributes.
-
-  // = Accessor methods for the percentage of entries to purge.
-  double purge_percent (void);
-  void purge_percent (double percentage);
-
-  // = Strategy related Operations
-
-  int notify_bind (int result,
-                   const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs bind
-  // method call.
-
-  int notify_find (int result,
-                   ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs find
-  // method call
-
-  int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs unbind
-  // method call
-
-  int notify_trybind (int result,
-                      ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs trybind
-  // method call
-
-  int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs rebind
-  // method call
-
-  int clear_cache (CONTAINER &container);
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove.
-
-  IMPLEMENTATION &implementation (void);
-  // Accessor to the implementation.
-
-  void dump (void) const;
-  // Dumps the state of the object.
-
-private:
-
-  IMPLEMENTATION *implementation_;
-  // Implementation class.
-
-  int delete_implementation_;
-  // Do we need to delete the implementation?
-};
-
-//////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_LRU_Caching_Strategy
@@ -187,7 +39,7 @@ class ACE_LRU_Caching_Strategy
   //     is updated whenever an item is inserted or looked up in the
   //     container. When the need of purging entries arises, the items
   //     with the lowest timer values are removed.
-  //
+  //     
   //     Explanation of the template parameter list:
   //     CONTAINER is any map with entries of type <KEY, VALUE>.
   //     The ATTRIBUTES are the deciding factor for purging of entries
@@ -195,14 +47,14 @@ class ACE_LRU_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge.
+  //     to purge. 
 
 public:
 
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
   typedef CONTAINER CACHE;
-
+ 
   // = Initialisation and termination.
 
   ACE_LRU_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
@@ -218,7 +70,7 @@ public:
   // in the cache which can be purged automagically and by default is
   // set to 10%. The ultility which helps the caching strategy in the
   // purging of entries needs to be specified. By default a new one
-  // will be created of type CACHING_STRATEGY_UTILITY and
+  // will be created of type CACHING_STRATEGY_UTILITY and 
   // <delete_caching_strategy_utility> decides whether to destroy the
   // utility object or not.
 
@@ -236,9 +88,9 @@ public:
   // Accessor method for the timer attributes.
 
   // = Accessor methods for the percentage of entries to purge.
-  double purge_percent (void);
-
-  void purge_percent (double percentage);
+  unsigned int purge_percent (void);
+  
+  void purge_percent (unsigned int percentage);
 
   // =  Strategy related Operations
 
@@ -249,28 +101,36 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs find
+  //This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs unbind
+  //This method acts as a notification about the CONTAINERs unbind
   // method call
 
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs trybind
+  //This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs rebind
+  //This method acts as a notification about the CONTAINERs rebind
   // method call
 
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
+
+  int clear_cache (CONTAINER &container, 
+                   unsigned int &total_container_entries);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove. The <total_container_entries>
+  // can be specified explicitly and facilitates use of the caching
+  // strategy even when the <entries_> is not maintained by the
+  // strategy itself.
 
   void dump (void) const;
   // Dumps the state of the object.
@@ -283,12 +143,12 @@ private:
   // This element is the one which is the deciding factor for purging
   // of an ITEM.
 
-  double purge_percent_;
+  unsigned int purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
   // The no of entries bound in the cache.
-
+  
   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
   // The cleanup strategy which can be used to destroy the entries of
   // the container.
@@ -300,7 +160,7 @@ private:
   CACHING_STRATEGY_UTILITY *caching_strategy_utility_;
   // This is the helper class which will decide and expunge entries
   // from the cache.
-
+  
   int delete_caching_strategy_utility_;
   // The flag which denotes the ownership of the
   // caching_strategy_utility. If 1 then this class itself will
@@ -330,7 +190,7 @@ class ACE_LFU_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge.
+  //     to purge. 
 
 public:
 
@@ -371,12 +231,12 @@ public:
   // Access the attributes.
 
   // = Accessor methods for the percentage of entries to purge.
-  double purge_percent (void);
-
-  void purge_percent (double percentage);
+  unsigned int purge_percent (void);
+  
+  void purge_percent (unsigned int percentage);
 
   // =  Strategy related Operations
-
+  
   int notify_bind (int result,
                    const ATTRIBUTES &attr);
   // This method acts as a notification about the CONTAINERs bind
@@ -388,17 +248,17 @@ public:
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs unbind
+  //This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs trybind
+  //This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs rebind
+  //This method acts as a notification about the CONTAINERs rebind
   // method call
 
 
@@ -406,14 +266,22 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
+  int clear_cache (CONTAINER &container, 
+                   unsigned int &total_container_entries);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove. The <total_container_entries>
+  // can be specified explicitly and facilitates use of the caching
+  // strategy even when the <entries_> is not maintained by the
+  // strategy itself.
+
   void dump (void) const;
   // Dumps the state of the object.
 
 private:
 
   typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-
-  double purge_percent_;
+ 
+  unsigned int purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
@@ -457,7 +325,7 @@ class ACE_FIFO_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge.
+  //     to purge. 
 
 public:
 
@@ -481,8 +349,8 @@ public:
   // purging of entries will be default be the
   // ACE_Caching_Strategy_Utility and the
   // <delete_caching_strategy_utility> decides whether to destroy the
-  // utility or not.
-
+  // utility or not. 
+  
   ~ACE_FIFO_Caching_Strategy (void);
 
   int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
@@ -497,9 +365,9 @@ public:
   // Accessor method.
 
   // = Accessor methods for the percentage of entries to purge.
-  double purge_percent (void);
-
-  void purge_percent (double percentage);
+  unsigned int purge_percent (void);
+  
+  void purge_percent (unsigned int percentage);
 
   // =  Strategy related Operations
 
@@ -509,17 +377,17 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs find
+  //This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs unbind
+  //This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs trybind
+  //This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
@@ -530,23 +398,31 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
+  int clear_cache (CONTAINER &container, 
+                   unsigned int &total_container_entries);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove. The <total_container_entries>
+  // can be specified explicitly and facilitates use of the caching
+  // strategy even when the <entries_> is not maintained by the
+  // strategy itself.
+
   void dump (void) const;
   // Dumps the state of the object.
 
 private:
 
   typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-
+ 
   ATTRIBUTES order_;
   // The order is the deciding factor for the item to be removed from
   // the cache.
 
-  double purge_percent_;
+  unsigned int purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
   // The no of entries bound in the cache.
-
+ 
   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
   // The cleanup strategy which can be used to destroy the entries of
   // the container.
@@ -605,9 +481,9 @@ public:
   // Accessor method.
 
  // = Accessor methods for the percentage of entries to purge.
-  double purge_percent (void);
-
-  void purge_percent (double percentage);
+  unsigned int purge_percent (void);
+  
+  void purge_percent (unsigned int percentage);
 
   // =  Strategy related Operations
 
@@ -617,17 +493,17 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs find
+  //This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs unbind
+  //This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  // This method acts as a notification about the CONTAINERs trybind
+  //This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
@@ -638,9 +514,17 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
+  int clear_cache (CONTAINER &container, 
+                   unsigned int &total_container_entries);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove. The <total_container_entries>
+  // can be specified explicitly and facilitates use of the caching
+  // strategy even when the <entries_> is not maintained by the
+  // strategy itself.
+
   void dump (void) const;
   // Dumps the state of the object.
-
+  
 };
 
 #if defined (__ACE_INLINE__)
@@ -652,7 +536,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Caching_Strategies_T.cpp")
+#pragma implementation ("ace/Caching_Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHING_STRATEGIES_H */

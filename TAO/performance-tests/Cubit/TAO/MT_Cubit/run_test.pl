@@ -5,14 +5,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-$usage = "run_tests.pl [-l suppress -ORBGIOPlite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
+$usage = "run_tests.pl [-l suppress -ORBgioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
 use lib "../../../../../bin";
 require ACEutils;
 
 $iorfile = "mtcubit.ior";
 $sleeptime = 3;
-$gioplite = '-ORBGIOPlite';
+$gioplite = '-ORBgioplite';
 $iterations = 1000;
 $low_priority_threads = 1;
 $thread_per_rate = '';
@@ -69,7 +69,7 @@ $CL = Process::Create ('.' . $DIR_SEPARATOR . "client" . $EXE_EXT .
                   " $gioplite $thread_per_rate " .
                   "-f $iorfile -n $iterations -t $threads");
 
-$client = $CL->TimedWait (120);
+$client = $CL->TimedWait (60);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);

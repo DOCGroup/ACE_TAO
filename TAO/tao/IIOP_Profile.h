@@ -20,7 +20,6 @@
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
 
-#include "tao/ORB.h"
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
@@ -66,7 +65,7 @@ public:
 
   TAO_IIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    CORBA::Environment &env);
   // Create object using a string ior.
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
@@ -82,10 +81,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    CORBA::Environment &env);
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::String to_string (CORBA::Environment &env);
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -104,13 +103,14 @@ public:
   TAO_ObjectKey *_key (void) const;
   //  Return a pointer to the Object Key.
 
-  CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+  CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
+                                CORBA::Environment &env);
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                     CORBA::Environment &env);
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
@@ -154,7 +154,7 @@ private:
 
 private:
 
-  CORBA::String_var host_;
+  char *host_;
   // String representing the hosts name.
 
   CORBA::UShort port_;

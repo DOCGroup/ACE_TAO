@@ -87,7 +87,7 @@ char *
 Key_List::special_input (char delimiter)
 {
   int size = 80;
-  char *buf = 0;
+  char *buf;
   ACE_NEW_RETURN (buf,
                   char[size],
                   0);
@@ -124,7 +124,7 @@ Key_List::special_input (char delimiter)
         {
           // Yikes, time to grow the buffer!
 
-          char *temp = 0;
+          char *temp;
           ACE_NEW_RETURN (temp,
                           char[size *= 2],
                           0);
@@ -1119,7 +1119,7 @@ Key_List::output_hash_function (void)
                   max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
 
   ACE_OS::printf ("\n#if defined (ACE_MVS)");
-#if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
+  if (ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE)
     {
       // We are running in EBCDIC environment.
       for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
@@ -1145,7 +1145,7 @@ Key_List::output_hash_function (void)
  			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
         }
     }
-#  else
+  else
     {
       // We are running in ASCII environment.
       for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
@@ -1179,7 +1179,6 @@ Key_List::output_hash_function (void)
  			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
         }
     }
-#endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
    ACE_OS::printf ("\n#endif /* ACE_MVS */");
 
   // Optimize special case of ``-k 1,$''
@@ -1317,12 +1316,12 @@ Key_List::output_lookup_array (void)
     {
       const int DEFAULT_VALUE = -1;
 
-      Duplicate_Entry *duplicates = 0;
+      Duplicate_Entry *duplicates;
       ACE_NEW_RETURN (duplicates,
                       Duplicate_Entry[total_duplicates],
                       -1);
 
-      int *lookup_array = 0;
+      int *lookup_array;
       ACE_NEW_RETURN (lookup_array,
                       int[max_hash_value + 1],
                       -1);

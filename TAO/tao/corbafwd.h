@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -344,7 +343,7 @@ typedef void (*TAO_Skeleton)(
     CORBA_ServerRequest &,
     void *,
     void *,
-    CORBA_Environment &ACE_TRY_ENV
+    CORBA_Environment &TAO_IN_ENV
   );
 
 // forward declare sequences.
@@ -355,14 +354,6 @@ template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
 // We tried with CORBA_Environment::default_environment (),
 // CORBA::default_environment() and others.
 extern TAO_Export CORBA_Environment& TAO_default_environment (void);
-
-enum TAO_SERVANT_LOCATION
-{
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
-};
 
 TAO_NAMESPACE CORBA
 {
@@ -896,7 +887,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
                                                 char *argv[],
                                                 const char *orb_name,
-                                                CORBA_Environment &ACE_TRY_ENV);
+                                                CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
 
   // = TAO extensions...
@@ -916,7 +907,7 @@ TAO_NAMESPACE CORBA
 //
 // For details on how to ask more numbers check:
 //
-// http://www.omg.org/cgi-bin/doc?ptc/99-02-01
+// http://www.omg.org/cgi-bin/doc?ptc/99-02-01 
 //
 
 // These numbers were assigned by the OMG.  Do *NOT* change.
@@ -926,7 +917,7 @@ TAO_NAMESPACE CORBA
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile ids in TAO.
-#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Local IPC (Unix Domain) */
+#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
 // @@ The values below are suggestions for some of the protocols
 //    we have thought of, subject to change at any point
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
@@ -961,28 +952,21 @@ TAO_NAMESPACE CORBA
 #define TAO_DEFAULT_MINOR_CODE 0x54410000
 #define TAO_MAX_MINOR_CODE 0x54410FFF
 
-// Minor code encoding.  Encode the location in 5 bits, and the errno
-// in 7 bits:
-// 0x   0101 0100   0100 0001   0000   ____ _     ___ ____
-//          T           A        0    location      errno
+// Minor code encoding.  Encode the location in 8 bits, and the errno
+// in 4 bits:
+// 0x   0101 0100   0100 0001   0000   ____  ____     ____
+//          T           A        0      location      errno
 
-// Location encoding:  5 bits, after the errno encoding.
-#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 7)
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 7)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 7)
-#define TAO_POA_DISCARDING                         (0x04U << 7)
-#define TAO_POA_HOLDING                            (0x05U << 7)
-#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 7)
-#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 7)
-#define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 7)
-#define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 7)
-#define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 7)
-#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0BU << 7)
-#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0CU << 7)
-#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0DU << 7)
-// *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
+// Location encoding:  8 bits, after the errno encoding.
+#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 4)
+#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 4)
+#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 4)
+#define TAO_POA_DISCARDING                         (0x04U << 4)
+#define TAO_POA_HOLDING                            (0x05U << 4)
+#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 4)
+#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 4)
 
-// errno encoding:  bottom 7 bits.
+// errno encoding:  bottom 4 bits.
 #define TAO_UNSPECIFIED_MINOR_CODE  0x0U
 #define TAO_ETIMEDOUT_MINOR_CODE    0x1U
 #define TAO_ENFILE_MINOR_CODE       0x2U
@@ -994,13 +978,7 @@ TAO_NAMESPACE CORBA
 #define TAO_ENOSYS_MINOR_CODE       0x8U
 #define TAO_EPERM_MINOR_CODE        0x9U
 #define TAO_EAFNOSUPPORT_MINOR_CODE 0xAU
-#define TAO_EAGAIN_MINOR_CODE       0xBU
-#define TAO_ENOMEM_MINOR_CODE       0xCU
-#define TAO_EACCES_MINOR_CODE       0xDU
-#define TAO_EFAULT_MINOR_CODE       0xEU
-#define TAO_EBUSY_MINOR_CODE        0xFU
-#define TAO_EEXIST_MINOR_CODE       0x10U
-// *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
+#define TAO_UNKNOWN_MINOR_CODE      0xFU
 
 // These numbers are assigned by the OpenGroup, a database is
 // available at
@@ -1018,7 +996,7 @@ TAO_NAMESPACE CORBA
 
 // ****************************************************************
 
-// A helper class to handle the various kinds of octet sequences used
+// A helper clas to handle the various kinds of octet sequences used
 // inside the ORB.
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;

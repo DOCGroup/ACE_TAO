@@ -21,6 +21,9 @@
 #define TAO_IDL_POLLABLEC_H
 
 #include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/Object.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
@@ -140,12 +143,12 @@ class TAO_Export CORBA_Pollable : public virtual CORBA_Object
   static CORBA_Pollable_ptr _duplicate (CORBA_Pollable_ptr obj);
   static CORBA_Pollable_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_Pollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_Pollable_ptr _nil (void);
@@ -161,7 +164,7 @@ class TAO_Export CORBA_Pollable : public virtual CORBA_Object
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -234,19 +237,19 @@ public:
   static CORBA_DIIPollable_ptr _duplicate (CORBA_DIIPollable_ptr obj);
   static CORBA_DIIPollable_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_DIIPollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_DIIPollable_ptr _nil (void);
 
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -274,12 +277,12 @@ public:
   static CORBA_PollableSet_ptr _duplicate (CORBA_PollableSet_ptr obj);
   static CORBA_PollableSet_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_PollableSet_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static CORBA_PollableSet_ptr _nil (void);
@@ -372,7 +375,7 @@ public:
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -433,5 +436,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 
 #endif /* TAO_IDL_POLLABLEC_H */

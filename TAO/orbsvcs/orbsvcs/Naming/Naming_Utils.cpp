@@ -11,10 +11,10 @@
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
 TAO_Naming_Server::TAO_Naming_Server (void)
-  : naming_context_ (),
+  : naming_context_impl_ (0),
+    naming_context_ (),
     ior_multicast_ (0),
-    naming_service_ior_ (),
-    context_index_ (0)
+    naming_service_ior_ ()
 {
 }
 
@@ -24,10 +24,10 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       ACE_Time_Value *timeout,
                                       int resolve_for_existing_naming_service,
                                       LPCTSTR persistence_location)
-  : naming_context_ (),
+  : naming_context_impl_ (0),
+    naming_context_ (),
     ior_multicast_ (0),
-    naming_service_ior_ (),
-    context_index_ (0)
+    naming_service_ior_ ()
 {
   if (this->init (orb,
                   poa,
@@ -49,29 +49,48 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          int resolve_for_existing_naming_service,
                          LPCTSTR persistence_location)
 {
-  if (resolve_for_existing_naming_service)
+  // Don't look for a Naming Service; become one.
+  if (!resolve_for_existing_naming_service)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      return this->init_new_naming (orb,
+                                    poa,
+                                    persistence_location,
+                                    context_size);
+    }
+  else
+    {
+      //
+      // Try to find an existing Naming Service.
+      //
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService",
+                                         timeout);
+
+      // No luck in finding an existing Naming Service.
+      if (CORBA::is_nil (naming_obj.in ()))
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nNameService not resolved, so we'll become a NameService\n"));
+
+          // Become a Naming Service.
+          return this->init_new_naming (orb,
+                                        poa,
+                                        persistence_location,
+                                        context_size);
+        }
+      else
         {
           //
-          // Try to find an existing Naming Service.
+          // Success in finding a Naming Service.
           //
-          CORBA::Object_var naming_obj =
-            orb->resolve_initial_references ("NameService",
-                                             timeout,
-                                             ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nNameService found!\n"));
 
-          if (!CORBA::is_nil (naming_obj.in ()))
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
             {
-              //
-              // Success in finding a Naming Service.
-              //
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "\nNameService found!\n"));
-
               this->naming_context_ =
                 CosNaming::NamingContext::_narrow (naming_obj.in (),
                                                    ACE_TRY_ENV);
@@ -80,28 +99,18 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
               this->naming_service_ior_ =
                 orb->object_to_string (naming_obj.in (),
                                        ACE_TRY_ENV);
+
               ACE_TRY_CHECK;
-
-              return 0;
             }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (-1);
         }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nWe'll become a NameService\n"));
-
-  // Become a Naming Service.
-  return this->init_new_naming (orb,
-                                poa,
-                                persistence_location,
-                                context_size);
+  return 0;
 }
 
 int
@@ -114,26 +123,24 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_TRY
     {
       if (persistence_location != 0)
-        //
-        // Initialize Persistent Naming Service.
-        //
         {
-          // Allocate and initialize Persistent Context Index.
-          ACE_NEW_RETURN (this->context_index_,
+          // This needs to be cleaned up (currently a memory leak) when
+          // TAO_Naming_Server dies.
+          TAO_Persistent_Context_Index *context_index;
+          ACE_NEW_RETURN (context_index,
                           TAO_Persistent_Context_Index (orb, poa),
                           -1);
 
-          if (this->context_index_->open (persistence_location) == -1
-              || this->context_index_->init (context_size) == -1)
-            {
-              if (TAO_debug_level >0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "TAO_Naming_Server: context_index initialization failed\n"));
-              return -1;
-            }
+          if (context_index->open (persistence_location) == -1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "context_index->open failed"));
 
-          // Set the root Naming Context reference and ior.
-          this->naming_service_ior_= this->context_index_->root_ior ();
+          if (context_index->init () == -1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "context_index->init failed"));
+
+          // Set the ior and objref to the root naming context.
+          this->naming_service_ior_= context_index->root_ior ();
 
           CORBA::Object_var obj =
             orb->string_to_object (this->naming_service_ior_.in (),
@@ -144,52 +151,85 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             CosNaming::NamingContext::_narrow (obj.in (),
                                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+          // To make NS locatable through iioploc.  Right now not
+          // checking the return value.
+          orb->_tao_add_to_IOR_table ("NameService",
+                                      obj.in ());
         }
       else
         {
-          //
-          // Initialize Transient Naming Service.
-          //
-          this->naming_context_ =
-            TAO_Transient_Naming_Context::make_new_context (poa,
-                                                            TAO_ROOT_NAMING_CONTEXT,
-                                                            context_size,
-                                                            ACE_TRY_ENV);
+          TAO_Transient_Naming_Context *context_impl = 0;
+          ACE_NEW_RETURN (context_impl,
+                          TAO_Transient_Naming_Context (poa,
+                                                        "NameService",
+                                                        context_size),
+                          -1);
+
+          // Put <context_impl> into the auto pointer temporarily, in case
+          // next allocation fails.
+          ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context> temp (context_impl);
+
+          TAO_Naming_Context *context = 0;
+          ACE_NEW_RETURN (context,
+                          TAO_Naming_Context (context_impl),
+                          -1);
+
+          // Change what we hold in auto pointer.
+          temp.release ();
+          ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
+
+          // Register with the POA.
+          PortableServer::ObjectId_var id =
+            PortableServer::string_to_ObjectId ("NameService");
+
+          poa->activate_object_with_id (id.in (),
+                                        context,
+                                        ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Set the root Naming Context ior.
+          this->naming_context_ =
+            context->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // Give POA the ownership of this servant.
+          context->_remove_ref (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // To make NS locatable through iioploc.  Right now not
+          // checking the return value.
+          orb->_tao_add_to_IOR_table ("NameService",
+                                      this->naming_context_.in ());
+
+          // Stringify the objref we'll be implementing, and print it
+          // to stdout.  Someone will take that string and give it to
+          // a client.
           this->naming_service_ior_=
             orb->object_to_string (this->naming_context_.in (),
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
-        }
 
-      // Make the Naming Service locatable through iioploc.
-      if (orb->_tao_add_to_IOR_table ("NameService",
-                                      this->naming_context_.in ())
-          == -1)
-        {
-          if (TAO_debug_level >0)
+          if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO_Naming_Server: cannot add to ior table.\n"));
-          return -1;
+                        "NameService IOR is <%s>\n",
+                        this->naming_service_ior_.in ()));
+
+          // everything succeeded, so set the pointer, get rid of Auto_Ptr.
+          this->naming_context_impl_ = context;
+          temp2.release ();
         }
 #if defined (ACE_HAS_IP_MULTICAST)
-      //
-      // Install ior multicast handler.
-      //
       // Get reactor instance from TAO.
       ACE_Reactor *reactor =
         TAO_ORB_Core_instance ()->reactor ();
 
       // First, see if the user has given us a multicast port number
-      // on the command-line;
+      // for the name service on the command-line;
       u_short port =
         TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
 
       if (port == 0)
         {
-          // Check environment var. for multicast port.
           const char *port_number =
             ACE_OS::getenv ("NameServicePort");
 
@@ -197,13 +237,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             port = ACE_OS::atoi (port_number);
         }
 
-      // Port wasn't specified on the command-line or in environment -
-      // use the default.
       if (port == 0)
         port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-      // Instantiate a handler which will handle client requests for
-      // the root Naming Context ior, received on the multicast port.
+      // Instantiate a server which will receive requests for an ior
       ACE_NEW_RETURN (this->ior_multicast_,
                       TAO_IOR_Multicast (this->naming_service_ior_.in (),
                                          port,
@@ -217,19 +254,20 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO_Naming_Server: cannot register Event handler\n"));
+                        "cannot register Event handler\n"));
           return -1;
         }
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Naming_Server: The multicast server setup is done.\n"));
-
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "The multicast server setup is done.\n"));
+        }
 #endif /* ACE_HAS_IP_MULTICAST */
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Naming Service");
       return -1;
     }
   ACE_ENDTRY;
@@ -238,11 +276,21 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   return 0;
 }
 
+// Returns the "NameService" NamingContext implementation object.
+
+TAO_Naming_Context &
+TAO_Naming_Server::get_naming_context (void)
+{
+  return *this->naming_context_impl_;
+}
+
 CORBA::String
 TAO_Naming_Server::naming_service_ior (void)
 {
   return CORBA::string_dup (this->naming_service_ior_.in ());
 }
+
+// Returns a pointer to the NamingContext.
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator-> (void) const
@@ -259,15 +307,18 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
          ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
       delete this->ior_multicast_;
     }
-
-  delete context_index_;
+  delete this->naming_context_impl_;
 }
+
+// Returns a pointer to the NamingContext.
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
 {
   return this->naming_context_.ptr ();
 }
+
+// Returns a pointer to the NamingContext.
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::get_context (void) const
@@ -283,8 +334,7 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
   ACE_TRY
     {
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", timeout, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService", timeout);
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -148,6 +148,10 @@ private:
 
   typedef ACE_RMS_Scheduler_Strategy Scheduler_Strategy;
 
+#elif defined (TAO_USES_RMS_DYN_SCHEDULING)
+
+  typedef ACE_RMS_Dyn_Scheduler_Strategy Scheduler_Strategy;
+
 #elif defined (TAO_USES_CRITICALITY_SCHEDULING)
 
   typedef ACE_Criticality_Scheduler_Strategy Scheduler_Strategy;

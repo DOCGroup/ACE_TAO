@@ -98,17 +98,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_IS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
+    case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
+    case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
@@ -183,17 +177,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_IS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
+    case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
+    case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);

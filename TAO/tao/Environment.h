@@ -63,18 +63,14 @@ public:
   CORBA_Environment (void);
   // The default constructor, the environment will hold no exceptions.
 
-  CORBA_Environment (const CORBA_Environment &ACE_TRY_ENV);
+  CORBA_Environment (const CORBA_Environment &env);
   // Copy constructor.
 
-  CORBA_Environment &operator=(const CORBA_Environment &ACE_TRY_ENV);
+  CORBA_Environment &operator=(const CORBA_Environment &env);
   // Assingment.
 
   ~CORBA_Environment (void);
   // Destructor, release the exception.
-
-  static CORBA_Environment * _duplicate (CORBA_Environment *);
-  static CORBA_Environment * _nil (void);
-  // Some static methods that need to be defined in every pseudo object
 
   CORBA_Exception* exception (void) const;
   // Return the exception.  Caller must call <_incr_refcnf> in order

@@ -84,10 +84,10 @@ ACE_Module<ACE_SYNCH_USE>::link (ACE_Module<ACE_SYNCH_USE> *m)
 
 template <ACE_SYNCH_DECL> int
 ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name,
-                                 ACE_Task<ACE_SYNCH_USE> *writer_q,
-                                 ACE_Task<ACE_SYNCH_USE> *reader_q,
-                                 void *arg,
-                                 int flags /* = M_DELETE */)
+                               ACE_Task<ACE_SYNCH_USE> *writer_q,
+                               ACE_Task<ACE_SYNCH_USE> *reader_q,
+                               void *arg,
+                               int flags /* = M_DELETE */)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::open");
   this->name (mod_name);
@@ -102,17 +102,13 @@ ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name,
 
   if (writer_q == 0)
     {
-      ACE_NEW_RETURN (writer_q,
-                      ACE_Thru_Task<ACE_SYNCH_USE>,
-                      -1);
+      writer_q = new ACE_Thru_Task<ACE_SYNCH_USE>;
       ACE_SET_BITS (flags, M_DELETE_WRITER);
     }
 
   if (reader_q == 0)
     {
-      ACE_NEW_RETURN (reader_q,
-                      ACE_Thru_Task<ACE_SYNCH_USE>,
-                      -1);
+      reader_q = new ACE_Thru_Task<ACE_SYNCH_USE>;
       ACE_SET_BITS (flags, M_DELETE_READER);
     }
 
@@ -191,9 +187,7 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ASYS_TCHAR *mod_name,
   this->q_pair_[1] = 0;
 
   if (this->open (mod_name, writer_q, reader_q, args, flags) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Module")));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Module")));
 }
 
 template <ACE_SYNCH_DECL> int

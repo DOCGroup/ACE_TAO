@@ -278,10 +278,7 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ThreadPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::ThreadPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -320,6 +317,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -415,10 +413,7 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::LifespanPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/LifespanPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/LifespanPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::LifespanPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -457,6 +452,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -552,10 +548,7 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
 {
   if (CORBA::is_nil (obj))
     return PortableServer::IdUniquenessPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::IdUniquenessPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -594,6 +587,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -688,10 +682,7 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
 {
   if (CORBA::is_nil (obj))
     return PortableServer::IdAssignmentPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::IdAssignmentPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -730,6 +721,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -827,10 +819,7 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ImplicitActivationPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::ImplicitActivationPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -869,6 +858,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -964,10 +954,7 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ServantRetentionPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::ServantRetentionPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1006,6 +993,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -1101,10 +1089,7 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
 {
   if (CORBA::is_nil (obj))
     return PortableServer::RequestProcessingPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::RequestProcessingPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1143,6 +1128,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -1220,10 +1206,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::POAManager::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/POAManager:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::POAManager::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/POAManager:1.0", ACE_TRY_ENV))
     return PortableServer::POAManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
@@ -1410,10 +1393,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::AdapterActivator::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/AdapterActivator:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::AdapterActivator::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/AdapterActivator:1.0", ACE_TRY_ENV))
     return PortableServer::AdapterActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
@@ -1474,10 +1454,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ServantManager::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ServantManager:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ServantManager::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantManager:1.0", ACE_TRY_ENV))
     return PortableServer::ServantManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
@@ -1538,10 +1515,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ServantActivator::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ServantActivator:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ServantActivator::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantActivator:1.0", ACE_TRY_ENV))
     return PortableServer::ServantActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
@@ -1603,10 +1577,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ServantLocator::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/ServantLocator:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ServantLocator::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantLocator:1.0", ACE_TRY_ENV))
     return PortableServer::ServantLocator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
@@ -1670,10 +1641,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
 {
   if (CORBA::is_nil (obj))
     return PortableServer::POA::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/POA:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/POA:1.0", ACE_TRY_ENV))
     return PortableServer::POA::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
@@ -3115,15 +3083,12 @@ PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer:
 
 PortableServer::Current_ptr PortableServer::Current::_narrow (
                                                               CORBA::Object_ptr obj,
-                                                              CORBA::Environment &ACE_TRY_ENV
+                                                              CORBA::Environment &env
                                                               )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::Current::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/PortableServer/Current:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::Current::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/Current:1.0", env))
     return PortableServer::Current::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -3291,6 +3256,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 

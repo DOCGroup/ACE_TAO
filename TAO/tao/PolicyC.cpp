@@ -166,14 +166,12 @@ CORBA_InvalidPolicies::CORBA_InvalidPolicies(
 
 CORBA_Policy_ptr CORBA_Policy::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_Policy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Policy::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", env))
     return CORBA_Policy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -194,7 +192,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 
 CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
@@ -237,6 +235,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -284,6 +283,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -330,6 +330,7 @@ void CORBA_Policy::destroy (
 
   for (;;)
   {
+    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
@@ -353,14 +354,14 @@ void CORBA_Policy::destroy (
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA_Policy::_interface_repository_id (void) const
@@ -423,14 +424,12 @@ CORBA_PolicyTypeSeq::~CORBA_PolicyTypeSeq (void)
 
 CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyManager::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_PolicyManager::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", env))
     return CORBA_PolicyManager::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -447,7 +446,7 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
 
 CORBA_PolicyManager_ptr CORBA_PolicyManager::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
@@ -488,14 +487,14 @@ void CORBA_PolicyManager::set_policy_overrides (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA_PolicyManager::_interface_repository_id (void) const
@@ -508,14 +507,12 @@ const char* CORBA_PolicyManager::_interface_repository_id (void) const
 
 CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyCurrent::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_PolicyCurrent::_nil ());
-  if (is_a == 0)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", env))
     return CORBA_PolicyCurrent::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -532,7 +529,7 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
 
 CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Environment &env
   )
 {
   if (CORBA::is_nil (obj))
@@ -550,16 +547,16 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_unchecked_narrow (
     );
 }
 
-CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyCurrent:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyManager:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
+    return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
 const char* CORBA_PolicyCurrent::_interface_repository_id (void) const
@@ -978,9 +975,9 @@ template class TAO_Unbounded_Sequence<CORBA::ULong>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>;
 template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 
-//  template class TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>;
-//  template class TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>;
-//  template class TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>;
+//  template class TAO_Object_Field_T<CORBA_Policy>;
+//  template class TAO_Object_Field_T<CORBA_PolicyManager>;
+//  template class TAO_Object_Field_T<CORBA_PolicyCurrent>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -989,8 +986,8 @@ template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
 #pragma instantiate TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
 
-//#  pragma instantiate TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

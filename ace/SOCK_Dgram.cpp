@@ -26,7 +26,7 @@ ACE_SOCK_Dgram::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_Dgram::recv (iovec io_vec[], 
+ACE_SOCK_Dgram::recv (iovec *io_vec, 
 		      ACE_Addr &addr, 
 		      int flags,
                       const ACE_Time_Value *timeout) const
@@ -133,42 +133,26 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
-                                const ACE_QoS_Params &qos_params,
+                                const ACE_Connect_QoS_Params &qos_params,
                                 int protocol_family, 
                                 int protocol,
-                                ACE_Protocol_Info *protocolinfo,
-                                ACE_SOCK_GROUP g,
-                                u_long flags,
                                 int reuse_addr)
-  : ACE_SOCK (SOCK_DGRAM,
-              protocol_family,
-              protocol,
-              protocolinfo,
-              g,
-              flags,
-              reuse_addr)
+  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
 {
   ACE_UNUSED_ARG (qos_params);
-  ACE_UNUSED_ARG (local);
 }
 
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local, 
-                      const ACE_QoS_Params &qos_params,
+                      const ACE_Connect_QoS_Params &qos_params,
                       int protocol_family, 
                       int protocol,
-                      ACE_Protocol_Info *protocolinfo,
-                      ACE_SOCK_GROUP g,
-                      u_long flags,
                       int reuse_addr)
 {
   ACE_UNUSED_ARG (local);
   ACE_UNUSED_ARG (qos_params);
   ACE_UNUSED_ARG (protocol_family);
   ACE_UNUSED_ARG (protocol);
-  ACE_UNUSED_ARG (protocolinfo);
-  ACE_UNUSED_ARG (g);
-  ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (reuse_addr);
 
   // Under construction...
@@ -298,9 +282,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else 
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -347,9 +329,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else 
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_SOCK_Dgram::recv (buf, length, addr, flags);

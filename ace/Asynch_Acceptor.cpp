@@ -301,13 +301,11 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
-    && (   (defined (_MSC_VER) && (_MSC_VER > 1020)) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)))
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
   return (int) ::CancelIo (this->listen_handle_);
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER) && (_MSC_VER > 1020)) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020)) */
 }
 
 template <class HANDLER> void
@@ -411,9 +409,7 @@ ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
 {
   // Default behavior
   HANDLER *handler = 0;
-  ACE_NEW_RETURN (handler,
-                  HANDLER,
-                  0);
+  ACE_NEW_RETURN (handler, HANDLER, 0);
   return handler;
 }
 

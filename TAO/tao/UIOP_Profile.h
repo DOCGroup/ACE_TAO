@@ -39,7 +39,7 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required
-  //   for locating ORBs over local IPC.
+  //   for locating ORBs over Unix Domain Sockets.
   //
   // = DESCRIPTION
   //   This class defines the UIOP profile.
@@ -66,7 +66,7 @@ public:
 
   TAO_UIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &env);
   // Create object using a string ior.
 
   TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
@@ -82,10 +82,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &env);
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  CORBA::String to_string (CORBA::Environment &env);
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -94,6 +94,7 @@ public:
 
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
+  // FIXME:  NO MARSHALING for Unix Domain Sockets is needing
 
   const TAO_ObjectKey &object_key (void) const;
   // @@ deprecated, return a reference to the Object Key.
@@ -104,13 +105,14 @@ public:
   TAO_ObjectKey *_key (void) const;
   // Return a pointer to the Object Key.
 
-  CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+  CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
+                                CORBA::Environment &env);
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, rendezvous point, object_key
   // and version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                     CORBA::Environment &env);
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
@@ -119,14 +121,14 @@ public:
   const ACE_UNIX_Addr &object_addr (void) const;
   // return a reference to the object_addr.
 
-  const char *rendezvous_point (void) const;
-  // Return a pointer to the rendezvous point string.
-  // This object maintains ownership of the returned string.
+  const char *rendezvous_point (void);
+  // Return a pointer to the rendezvous point string.  This object maintains
+  // ownership of this string.
 
-  const char *rendezvous_point (const char *rendezvous);
-  // Set the rendezvous point and verify that it is 
-  // valid (e.g. wasn't truncated because it was too long).
-  // This object maintains ownership of the returned string.
+  const char *rendezvous_point (const char *r);
+  // Copy the string r into rendezvous_point_ and return the
+  // resulting pointer.
+  // This object maintains ownership of this string.
 
   const TAO_GIOP_Version &version (void) const;
   // Return a pointer to this profile's version.  This object
@@ -141,9 +143,16 @@ public:
   const TAO_Tagged_Components& tagged_components (void) const;
   TAO_Tagged_Components& tagged_components (void);
   // Access the tagged components, notice that they are empty and
-  // ignored for GIOP 1.0.
+  // ignored for GIOP 1.0
 
 private:
+  int set (const ACE_UNIX_Addr &addr);
+  // helper method to set the UNIX_Addr.
+
+private:
+
+  char *rendezvous_point_;
+  // String representing the rendezvous point.
 
   TAO_GIOP_Version version_;
   // UIOP version number.

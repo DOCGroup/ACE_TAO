@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE DLL"=..\ace\ace_dll.dsp - Package Owner=<4>
+Project: "ACE dynamic library"=..\ace\ace_dll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -24,13 +24,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
+    Project_Dep_Name orbsvcs
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ORB Services DLL"=.\orbsvcs\orbsvcs\orbsvcs.dsp - Package Owner=<4>
+Project: "TAO"=.\tao\TAO.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,28 +39,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TAO DLL"=.\tao\TAO.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
+    Project_Dep_Name ACE dynamic library
     End Project Dependency
 }}}
 
@@ -75,10 +54,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name ACE dynamic library
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
+    Project_Dep_Name gperf
     End Project Dependency
 }}}
 
@@ -92,6 +71,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE dynamic library
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name gperf_lib
     End Project Dependency
@@ -108,7 +90,28 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
+    Project_Dep_Name ACE dynamic library
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "orbsvcs"=.\orbsvcs\orbsvcs\orbsvcs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tao_idl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 

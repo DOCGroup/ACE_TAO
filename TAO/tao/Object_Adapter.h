@@ -89,6 +89,7 @@ class TAO_Export TAO_POA_Current_Impl
   //     insure that all <set_*> operations are performed in the
   //     execution thread so that the proper <TAO_POA_Current> pointer
   //     is obtained from TSS.
+
 public:
 
   friend class TAO_POA;
@@ -103,10 +104,10 @@ public:
   // the guise of multiple object ids.  This has _out semantics Raises
   // the <CORBA::NoContext> exception.
 
-  void poa (TAO_POA *);
+  void POA_impl (TAO_POA *impl);
   // Set the POA implementation.
 
-  TAO_POA *poa (void) const;
+  TAO_POA *POA_impl (void) const;
   // Get the POA imeplemantation
 
   TAO_ORB_Core &orb_core (void) const;
@@ -130,6 +131,22 @@ public:
   PortableServer::Servant servant (void) const;
   // Get the servant for the current upcall.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::ServantLocator::Cookie locator_cookie (void) const;
+  // Get the Servant Locator's cookie
+
+  void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
+  // Set the Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
+  // Set the <active_object_map_entry>.
+
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
+  // Get the <active_object_map_entry>.
+
   TAO_POA_Current_Impl (void);
   // Convenience constructor combining construction & initialization.
 
@@ -138,11 +155,12 @@ public:
 
   void setup (TAO_POA *impl,
               const TAO_ObjectKey &key,
-              PortableServer::Servant servant);
+              PortableServer::Servant servant,
+              const char *operation);
   // Setup the current.
 
 protected:
-  TAO_POA *poa_;
+  TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
 
   PortableServer::ObjectId object_id_;
@@ -153,11 +171,25 @@ protected:
   const TAO_ObjectKey *object_key_;
   // The object key of the current context.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::ServantLocator::Cookie cookie_;
+  // Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   PortableServer::Servant servant_;
   // The servant for the current upcall.
 
+  const char *operation_;
+  // Operation name for this current.
+
   TAO_POA_Current_Impl *previous_current_impl_;
   // Current previous from <this>.
+
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
+  // Pointer to the entry in the TAO_Active_Object_Map corresponding
+  // to the servant for this request.
 
   int setup_done_;
   // Is setup complete?
@@ -195,9 +227,8 @@ public:
   int locate_servant (const TAO_ObjectKey &key,
                       CORBA_Environment &ACE_TRY_ENV);
 
-  TAO_SERVANT_LOCATION find_servant (const TAO_ObjectKey &key,
-                                     PortableServer::Servant &servant,
-                                     CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::Servant find_servant (const TAO_ObjectKey &key,
+                                        CORBA_Environment &ACE_TRY_ENV);
 
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
@@ -241,9 +272,8 @@ protected:
   int locate_servant_i (const TAO_ObjectKey &key,
                         CORBA_Environment &ACE_TRY_ENV);
 
-  TAO_SERVANT_LOCATION find_servant_i (const TAO_ObjectKey &key,
-                                       PortableServer::Servant &servant,
-                                       CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::Servant find_servant_i (const TAO_ObjectKey &key,
+                                          CORBA_Environment &ACE_TRY_ENV);
 
   void dispatch_servant_i (const TAO_ObjectKey &key,
                            CORBA::ServerRequest &req,
@@ -536,8 +566,6 @@ public:
     //     adapter's lock held.
   public:
 
-    friend class TAO_POA;
-
     Servant_Upcall (TAO_Object_Adapter &object_adapter);
     // Constructor.
 
@@ -561,40 +589,7 @@ public:
     PortableServer::Servant servant (void) const;
     // Servant accessor.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-    PortableServer::ServantLocator::Cookie locator_cookie (void) const;
-    // Get the Servant Locator's cookie
-
-    void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
-    // Set the Servant Locator's cookie
-
-    const char *operation (void) const;
-    // Get the operation name.
-
-    void operation (const char *);
-    // Set the operation name.
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-    void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
-    // Set the <active_object_map_entry>.
-
-    TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
-    // Get the <active_object_map_entry>.
-
-    void using_servant_locator (void);
-    // We are using the servant locator for this upcall.
-
   protected:
-
-    void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
-    void servant_locator_cleanup (void);
-    void single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV);
-    void single_threaded_poa_cleanup (void);
-    void servant_cleanup (void);
-    void poa_cleanup (void);
-
     TAO_Object_Adapter &object_adapter_;
 
     TAO_POA *poa_;
@@ -615,23 +610,6 @@ public:
     PortableServer::ObjectId id_;
 
     TAO_POA_Current_Impl current_context_;
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-    PortableServer::ServantLocator::Cookie cookie_;
-    // Servant Locator's cookie
-
-    const char *operation_;
-    // Operation name for this current.
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-    TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
-    // Pointer to the entry in the TAO_Active_Object_Map corresponding
-    // to the servant for this request.
-
-    int using_servant_locator_;
-    // Are we using the servant locator?
 
   private:
     Servant_Upcall (const Servant_Upcall &);

@@ -126,82 +126,81 @@ Server::Server (void)
 int
 Server::init (int argc,
               char *argv[],
-              CORBA::Environment& ACE_TRY_ENV)
+              CORBA::Environment& env)
 {
-  ACE_TRY
+  // Initialize the orb_manager
+  this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     "child_poa",
+                                     env);
+  TAO_CHECK_ENV_RETURN (env,
+                        -1);
+
+  CORBA::ORB_var orb =
+    this->orb_manager_.orb ();
+
+  PortableServer::POA_var child_poa =
+    this->orb_manager_.child_poa ();
+
+
+  int result = this->parse_args (argc,argv);
+  if (result == -1)
+    ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
+  // Initialize the naming services
+
+  if (my_name_client_.init (orb.in ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
+
+  // Register the video mmdevice object with the ORB
+  switch (this->strategy_)
     {
-      // Initialize the orb_manager
-      this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+    case REACTIVE_STRATEGY:
+      ACE_NEW_RETURN (this->mmdevice_,
+                      TAO_MMDevice (&this->reactive_strategy_),
+                      -1);
+      break;
+    case PROCESS_STRATEGY:
+      ACE_NEW_RETURN (this->mmdevice_,
+                      TAO_MMDevice (&this->process_strategy_),
+                      -1);
+      break;
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,"Invalid strategy\n"),-1);
+    }
 
-      CORBA::ORB_var orb =
-        this->orb_manager_.orb ();
-
-      PortableServer::POA_var child_poa =
-        this->orb_manager_.child_poa ();
-
-
-      int result = this->parse_args (argc,argv);
-      if (result == -1)
-        ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
-      // Initialize the naming services
-
-      if (my_name_client_.init (orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-
-      // Register the video mmdevice object with the ORB
-      switch (this->strategy_)
-        {
-        case REACTIVE_STRATEGY:
-          ACE_NEW_RETURN (this->mmdevice_,
-                          TAO_MMDevice (&this->reactive_strategy_),
-                          -1);
-          break;
-        case PROCESS_STRATEGY:
-          ACE_NEW_RETURN (this->mmdevice_,
-                          TAO_MMDevice (&this->process_strategy_),
-                          -1);
-          break;
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,"Invalid strategy\n"),-1);
-        }
-
-      // create the video server mmdevice with the naming service pointer.
-      this->orb_manager_.activate_under_child_poa ("Bench_Server_MMDevice",
-                                                   this->mmdevice_,
-                                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // create the video server mmdevice with the naming service pointer.
+  this->orb_manager_.activate_under_child_poa ("Bench_Server_MMDevice",
+                                               this->mmdevice_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
 
   // Register the mmdevice with the naming service.
-      CosNaming::Name server_mmdevice_name (1);
-      server_mmdevice_name.length (1);
-      server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
+  CosNaming::Name server_mmdevice_name (1);
+  server_mmdevice_name.length (1);
+  server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
 
-      // Register the video control object with the naming server.
-      this->my_name_client_->rebind (server_mmdevice_name,
-                                     this->mmdevice_->_this (),
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      //   result = this->signal_handler_.register_handler ();
+  // Register the video control object with the naming server.
+  this->my_name_client_->bind (server_mmdevice_name,
+                               this->mmdevice_->_this (env),
+                               env);
 
-      //   if (result < 0)
-      //     ACE_ERROR_RETURN ((LM_ERROR,
-      //                        "(%P|%t) Error registering signal handler"),
-      //                       -1);
-    }
-  ACE_CATCHANY
+  if (env.exception () != 0)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server::init");
-      return -1;
+      env.clear ();
+      this->my_name_client_->rebind (server_mmdevice_name,
+                              this->mmdevice_->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,-1);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+//   result = this->signal_handler_.register_handler ();
+
+//   if (result < 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,
+//                        "(%P|%t) Error registering signal handler"),
+//                       -1);
   return 0;
 }
 
@@ -213,7 +212,7 @@ Server::parse_args (int argc,char **argv)
   char child_name [BUFSIZ], buf[BUFSIZ];
   ACE_OS::strcpy (child_name,"child_process");
   this->strategy_ = REACTIVE_STRATEGY;
-  int c;
+  char c;
   while ((c = opts ()) != -1)
     {
       switch (c)
@@ -230,6 +229,7 @@ Server::parse_args (int argc,char **argv)
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server [-p/-r]"),-1);
+          break;
         }
     }
   ACE_OS::sprintf (buf,"%s -ORBobjrefstyle url",child_name);
@@ -239,13 +239,12 @@ Server::parse_args (int argc,char **argv)
 
 // Runs the server
 int
-Server::run (CORBA::Environment& ACE_TRY_ENV)
+Server::run (CORBA::Environment& env)
 {
   // Run the ORB event loop
   while (1)
     {
-      this->orb_manager_.run (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+      this->orb_manager_.run (env);
       if (errno== EINTR)
         continue;
       else
@@ -275,23 +274,21 @@ int
 main (int argc, char **argv)
 {
   Server server;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
+      if (server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
-      server.run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      server.run (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Bench_Server::Exception \n");
+      TAO_TRY_ENV.print_exception ("Bench_Server::Exception");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  TAO_ENDTRY;
 
   return 0;
 }

@@ -3,8 +3,7 @@
 ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)
-  :  ACE_Task<ACE_SYNCH> (thr_manager),
-     allocator_ (0)
+  :  ACE_Task<ACE_SYNCH> (thr_manager)
 {
 }
 

@@ -195,7 +195,7 @@ be_sequence::managed_type (void)
                 // if this pseudo is a CORBA::Object, then the managed type is
                 // an objref
                 if (!ACE_OS::strcmp (bpd->local_name ()->get_string (),
-                                     "Object"))
+                                     "Object")) 
                   this->mt_ = be_sequence::MNG_OBJREF;
                 else
                   this->mt_ = be_sequence::MNG_PSEUDO;
@@ -274,21 +274,21 @@ be_sequence::instance_name ()
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
+        ACE_OS::sprintf (namebuf, 
                          "_TAO_Unbounded_Object_Sequence_%s",
                          this->flatname());
       else
-        ACE_OS::sprintf (namebuf,
+        ACE_OS::sprintf (namebuf, 
                          "_TAO_Bounded_Object_Sequence_%s_%d",
                          this->flatname(),
                          this->max_size ()->ev()->u.ulval);
       break;
     case be_sequence::MNG_STRING: // sequence of strings
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
+        ACE_OS::sprintf (namebuf, 
                          "TAO_Unbounded_String_Sequence");
       else
-        ACE_OS::sprintf (namebuf,
+        ACE_OS::sprintf (namebuf, 
                          "_TAO_Bounded_String_Sequence_%s",
                          this->flatname());
       break;
@@ -299,20 +299,20 @@ be_sequence::instance_name ()
 	  // if the base type is an octet (or an alias for octet)
 	  be_predefined_type *predef =
 	    be_predefined_type::narrow_from_decl (prim_type);
-	  if (predef != 0 &&
+	  if (predef != 0 && 
 	      predef->pt() == AST_PredefinedType::PT_octet)
-	    ACE_OS::sprintf (namebuf,
+	    ACE_OS::sprintf (namebuf, 
 			     "TAO_Unbounded_Sequence<CORBA::Octet>");
 	  else
-            ACE_OS::sprintf (namebuf,
+            ACE_OS::sprintf (namebuf, 
                              "_TAO_Unbounded_Sequence_%s",
                              this->flatname());
                              // or prim_type->flatname ());
 	  // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
 	  // predef, predef->pt (), namebuf));
-	}
+	}        
       else
-        ACE_OS::sprintf (namebuf,
+        ACE_OS::sprintf (namebuf, 
                          "_TAO_Bounded_Sequence_%s_%d",
                           this->flatname(),
                           //prim_type->flatname (),
@@ -320,8 +320,47 @@ be_sequence::instance_name ()
       break;
     }
 
-  return namebuf;
+  return namebuf; 
 }
+
+
+const char *
+be_sequence::object_manager_name ()
+{
+  static char namebuf[NAMEBUFSIZE];
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+
+  be_type *bt;
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%N:%l) be_visitor_sequence_ch::"
+                  "gen_instantiate_name - "
+                  "Bad element type\n"));
+      return namebuf;
+    }
+
+  be_scope * bs = be_scope::narrow_from_scope (this->defined_in());
+
+  if (!bs)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%N:%l) be_visitor_sequence_ch::"
+                  "gen_instantiate_name - "
+                  "Bad element type\n"));
+      return namebuf;
+    }
+
+  ACE_OS::sprintf (namebuf, 
+                   "_TAO_Object_Manager_%s_%s",
+                   bs->decl()->flatname(),
+                   bt->flatname());  
+
+
+  return namebuf; 
+}
+
 
 idl_bool
 be_sequence::in_recursion (be_type *node)
@@ -345,7 +384,7 @@ be_sequence::in_recursion (be_type *node)
                          ASYS_TEXT ("bad base type\n")),
                         0);
     }
-
+  
   if (!ACE_OS::strcmp (node->fullname (), type->fullname ()))
     // they match
     return 1;

@@ -541,10 +541,6 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  int is_servant_in_map (PortableServer::Servant servant);
-
-  int is_user_id_in_map (const PortableServer::ObjectId &user_id);
-
   PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
                                                CORBA_Environment &ACE_TRY_ENV);
 
@@ -621,15 +617,24 @@ protected:
                         CORBA::Boolean &is_system_id,
                         TAO_Temporary_Creation_Time &poa_creation_time);
 
+  // Should really be protected, but some compilers complain
+public:
+  enum LOCATION_RESULT
+  {
+    FOUND,
+    DEFAULT_SERVANT,
+    SERVANT_MANAGER,
+    NOT_FOUND
+  };
+
 protected:
-  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
-                                         PortableServer::Servant &servant,
-                                         CORBA_Environment &ACE_TRY_ENV);
+  LOCATION_RESULT locate_servant_i (const PortableServer::ObjectId &id,
+                                    PortableServer::Servant &servant,
+                                    CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::Servant locate_servant_i (const char *operation,
                                             const PortableServer::ObjectId &id,
-                                            TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                                            TAO_POA_Current_Impl &poa_current_impl,
+                                            TAO_POA_Current_Impl *poa_current_impl,
                                             CORBA_Environment &ACE_TRY_ENV);
 
   const TAO_Creation_Time &creation_time (void);
@@ -728,12 +733,6 @@ protected:
   ACE_SYNCH_CONDITION outstanding_requests_condition_;
 
   CORBA::Boolean wait_for_completion_pending_;
-
-  CORBA::Boolean waiting_destruction_;
-
-  ACE_SYNCH_CONDITION servant_deactivation_condition_;
-
-  CORBA::ULong waiting_servant_deactivation_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

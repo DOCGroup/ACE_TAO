@@ -7,8 +7,8 @@ EXE = client
 all: $(EXE)
 
 clean:
-	-$(RM) core *.o cubitC.* cubitS.* $(EXE) 
-	-$(RM) -r Templates.DB
+	-rm -f core *.o cubitC.* cubitS.* $(EXE) 
+	-rm -rf Templates.DB
 
 cubitS.cpp: cubit.idl
 	$(ORBCC) cubit.idl

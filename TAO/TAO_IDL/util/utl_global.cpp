@@ -110,7 +110,6 @@ IDL_GlobalData::IDL_GlobalData (void)
       changing_standard_include_files_ (1),
       export_macro_ (0),
       export_include_ (0),
-      pch_include_ (0),
       client_hdr_ending_ (ACE::strnew ("C.h")),
       client_stub_ending_ (ACE::strnew ("C.cpp")),
       client_inline_ending_ (ACE::strnew ("C.i")),
@@ -139,8 +138,6 @@ IDL_GlobalData::IDL_GlobalData (void)
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),
-      gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
-      gen_direct_collocation_ (I_FALSE),
 #ifdef ACE_HAS_EXCEPTIONS
       exception_support_ (I_TRUE),
 #else
@@ -1029,18 +1026,6 @@ IDL_GlobalData::export_include (void) const
   return this->export_include_;
 }
 
-const char*
-IDL_GlobalData::pch_include (void) const
-{
-  return this->pch_include_;
-}  
-
-void
-IDL_GlobalData::pch_include (const char *s)
-{
-  this->pch_include_ = ACE_OS::strdup (s);
-}
-
 void
 IDL_GlobalData::export_include (const char *s)
 {
@@ -1330,34 +1315,16 @@ IDL_GlobalData::compiled_marshaling (idl_bool val)
   this->compiled_marshaling_ = val;
 }
 
-idl_bool
-IDL_GlobalData::compiled_marshaling (void)
-{
-  return this->compiled_marshaling_;
-}
-
 void
 IDL_GlobalData::gen_impl_files (idl_bool val)
 {
   this->gen_impl_files_ = val;
 }
 
-idl_bool
-IDL_GlobalData::gen_impl_files (void)
-{
-  return this->gen_impl_files_;
-}
-
 void
 IDL_GlobalData::gen_copy_ctor (idl_bool val)
 {
   this->gen_copy_ctor_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_copy_ctor (void)
-{
-  return this->gen_copy_ctor_;
 }
 
 void
@@ -1367,33 +1334,27 @@ IDL_GlobalData::gen_assign_op (idl_bool val)
 }
 
 idl_bool
+IDL_GlobalData::gen_impl_files (void)
+{
+  return this->gen_impl_files_;
+}
+
+idl_bool
+IDL_GlobalData::gen_copy_ctor (void)
+{
+  return this->gen_copy_ctor_;
+}
+
+idl_bool
 IDL_GlobalData::gen_assign_op (void)
 {
   return this->gen_assign_op_;
 }
 
-void
-IDL_GlobalData::gen_thru_poa_collocation (idl_bool val)
-{
-  this->gen_thru_poa_collocation_ = val;
-}
-
 idl_bool
-IDL_GlobalData::gen_thru_poa_collocation (void)
+IDL_GlobalData::compiled_marshaling (void)
 {
-  return this->gen_thru_poa_collocation_;
-}
-
-void
-IDL_GlobalData::gen_direct_collocation (idl_bool val)
-{
-  this->gen_direct_collocation_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_direct_collocation (void)
-{
-  return this->gen_direct_collocation_;
+  return this->compiled_marshaling_;
 }
 
 void

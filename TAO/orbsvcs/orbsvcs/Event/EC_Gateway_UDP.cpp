@@ -29,7 +29,7 @@ void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
                           TAO_ECG_UDP_Out_Endpoint* endpoint,
-                          CORBA::Environment &)
+                          CORBA::Environment &TAO_IN_ENV)
 {
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
@@ -51,24 +51,24 @@ TAO_ECG_UDP_Sender::mtu (CORBA::ULong new_mtu)
 }
 
 void
-TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& ACE_TRY_ENV)
+TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& TAO_IN_ENV)
 {
-  this->close (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->close (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 void
 TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &TAO_IN_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Open gateway\n"));
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
-    this->close (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->close (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   if (sub.dependencies.length () == 0)
     return;
@@ -77,24 +77,24 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
   //ACE_SupplierQOS_Factory::debug (pub);
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->lcl_ec_->for_consumers (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->lcl_ec_->for_consumers (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   RtecEventComm::PushConsumer_var consumer_ref =
-    this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->_this (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Consumer "));
   //ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub,
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
+                                                TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 }
 
 void
@@ -306,8 +306,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                                fragment_count,
                                iov,
                                iovcnt,
-                               ACE_TRY_ENV);
-          ACE_CHECK;
+                               TAO_IN_ENV);
+          TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
           fragment_id++;
           fragment_offset += fragment_size;
 
@@ -331,7 +331,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                    CORBA::ULong fragment_count,
                                    iovec iov[],
                                    int iovcnt,
-                                   CORBA::Environment& ACE_TRY_ENV)
+                                   CORBA::Environment& TAO_IN_ENV)
 {
   CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
@@ -369,14 +369,14 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) send failed %p\n", ""));
-      ACE_THROW(CORBA::COMM_FAILURE ());
+      TAO_THROW(CORBA::COMM_FAILURE ());
     }
   else if (n == 0)
     {
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) EOF on send \n"));
-      ACE_THROW(CORBA::COMM_FAILURE ());
+      TAO_THROW(CORBA::COMM_FAILURE ());
     }
 }
 
@@ -612,11 +612,11 @@ TAO_ECG_UDP_Request_Entry::fragment_buffer (CORBA::ULong fragment_offset)
 
 void
 TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event,
-                                   CORBA::Environment& ACE_TRY_ENV)
+                                   CORBA::Environment& TAO_IN_ENV)
 {
   TAO_InputCDR cdr (&this->payload_,
                     ACE_static_cast(int,this->byte_order_));
-  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, ACE_TRY_ENV);
+  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, TAO_IN_ENV);
 }
 
 // ****************************************************************
@@ -648,7 +648,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
                             int max_timeout,
-                            CORBA::Environment &)
+                            CORBA::Environment &TAO_IN_ENV)
 {
   this->ignore_from_ = ignore_from;
 
@@ -672,38 +672,38 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 
 void
 TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
-    this->close (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->close (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   if (pub.publications.length () == 0)
     return;
 
   // = Connect as a supplier to the local EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->lcl_ec_->for_suppliers (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->lcl_ec_->for_suppliers (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   RtecEventComm::PushSupplier_var supplier_ref =
-    this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->_this (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Receiver (%t) Gateway/Supplier "));
   // ACE_SupplierQOS_Factory::debug (pub);
 
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                 pub,
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
+                                                TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 }
 
 void
@@ -739,10 +739,10 @@ TAO_ECG_UDP_Receiver::disconnect_push_supplier (CORBA::Environment &)
 }
 
 void
-TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& ACE_TRY_ENV)
+TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& TAO_IN_ENV)
 {
-  this->close (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->close (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 
@@ -925,15 +925,14 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       RtecEventComm::EventSet event;
-      entry->int_id_->decode (event, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      entry->int_id_->decode (event, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      this->consumer_proxy_->push (event, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->consumer_proxy_->push (event, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       //      ACE_DEBUG ((LM_DEBUG,
       //                  "TAO_ECG_UDP_Received (%P|%t): push %d "
@@ -941,12 +940,11 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       //                  request_id,
       //                  from.get_ip_address (), from.get_port_number ()));
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ECG_UDP_Receive_EH::handle_input");
+      TAO_TRY_ENV.print_exception ("ECG_UDP_Receive_EH::handle_input");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 0;
 }
 
@@ -1046,29 +1044,32 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
 
 int
 TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& ACE_TRY_ENV)
+                        CORBA::Environment& TAO_IN_ENV)
 {
   this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (ec);
   RtecEventChannelAdmin::Observer_var obs =
-    this->observer_._this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+    this->observer_._this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
-  this->handle_ = this->ec_->append_observer (obs.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  this->handle_ = this->ec_->append_observer (obs.in (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   return 0;
 }
 
 int
-TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
+TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
 {
-  if (this->handle_ == 0)
-    return 0;
+  if (this->reactor ()->remove_handler (this,
+                                        ACE_Event_Handler::READ_MASK) == -1)
+    return -1;
 
-  RtecEventChannelAdmin::Observer_Handle h = this->handle_;
+  if (this->dgram_.unsubscribe () == -1)
+    return -1;
+
+  this->ec_->remove_observer (this->handle_, TAO_IN_ENV);
   this->handle_ = 0;
-  this->ec_->remove_observer (h, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   {
     PortableServer::POA_var poa =
@@ -1080,13 +1081,6 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
     poa->deactivate_object (id.in (), ACE_TRY_ENV);
     ACE_CHECK_RETURN (-1);
   }
-
-  if (this->reactor ()->remove_handler (this,
-                                        ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
-
-  if (this->dgram_.close () == -1)
-    return -1;
 
   return 0;
 }
@@ -1118,7 +1112,7 @@ TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 void
 TAO_ECG_Mcast_EH::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& ACE_TRY_ENV)
+    CORBA::Environment& TAO_IN_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG,
@@ -1146,8 +1140,8 @@ TAO_ECG_Mcast_EH::update_consumer (
       must_register = 1;
       RtecUDPAdmin::UDP_Addr addr;
 
-      this->receiver_->get_addr (header, addr, ACE_TRY_ENV);
-      ACE_CHECK;
+      this->receiver_->get_addr (header, addr, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       if (this->subscribe (inet_addr) == -1)
@@ -1184,19 +1178,19 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& ACE_TRY_ENV)
+    CORBA::Environment& TAO_IN_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_consumer (sub, ACE_TRY_ENV);
+  this->eh_->update_consumer (sub, TAO_IN_ENV);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS& pub,
-    CORBA::Environment& ACE_TRY_ENV)
+    CORBA::Environment& TAO_IN_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_supplier (pub, ACE_TRY_ENV);
+  this->eh_->update_supplier (pub, TAO_IN_ENV);
 }
 
 // ****************************************************************

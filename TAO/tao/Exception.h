@@ -71,10 +71,6 @@ public:
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
-  ACE_CString _info (void) const;
-  // Returns a string containing information about the exception. This
-  // function is not CORBA compliant.
-
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -104,7 +100,6 @@ class TAO_Export CORBA_UserException : public CORBA_Exception
   //   using OMG-IDL.
 public:
   // = Initialization and termination methods.
-
   CORBA_UserException (const CORBA_UserException &src);
   // Copy ctor.
 
@@ -128,7 +123,7 @@ public:
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
 
-  //protected:
+protected:
   CORBA_UserException (void);
   // Default constructor.
 };
@@ -143,9 +138,6 @@ class TAO_Export CORBA_SystemException : public CORBA_Exception
   //   defines these.
 public:
   // = Initialization and termination methods.
-
-  CORBA_SystemException (void);
-  // Default Ctor
 
   CORBA_SystemException (const CORBA_SystemException &src);
   // Copy ctor.
@@ -181,10 +173,6 @@ public:
 
   void _tao_print_system_exception (FILE *f = stdout) const;
   // Print the system exception <ex> to output determined by f.  This
-  // function is not CORBA compliant.
-
-  ACE_CString _info (void) const;
-  // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
   static CORBA::ULong _tao_minor_code (u_int location,
@@ -227,41 +215,40 @@ public: \
   virtual void _raise (void); \
 }
 
-
-TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
-TAO_SYSTEM_EXCEPTION(BAD_PARAM);        // an invalid parameter was passed
-TAO_SYSTEM_EXCEPTION(NO_MEMORY);        // memory allocation failure
-TAO_SYSTEM_EXCEPTION(IMP_LIMIT);        // violated implementation limit
-TAO_SYSTEM_EXCEPTION(COMM_FAILURE);     // communication failure
-TAO_SYSTEM_EXCEPTION(INV_OBJREF);       // invalid object reference
-TAO_SYSTEM_EXCEPTION(OBJECT_NOT_EXIST); // no such object
-TAO_SYSTEM_EXCEPTION(NO_PERMISSION);    // no permission for operation
-TAO_SYSTEM_EXCEPTION(INTERNAL);         // ORB internal error
-TAO_SYSTEM_EXCEPTION(MARSHAL);          // error marshaling param/result
-TAO_SYSTEM_EXCEPTION(INITIALIZE);       // ORB initialization failure
-TAO_SYSTEM_EXCEPTION(NO_IMPLEMENT);     // implementation unavailable
-TAO_SYSTEM_EXCEPTION(BAD_TYPECODE);     // bad typecode
-TAO_SYSTEM_EXCEPTION(BAD_OPERATION);    // invalid operation
-TAO_SYSTEM_EXCEPTION(NO_RESOURCES);     // out of resources for request
-TAO_SYSTEM_EXCEPTION(NO_RESPONSE);      // response not yet available
-TAO_SYSTEM_EXCEPTION(PERSIST_STORE);    // persistent storage failure
-TAO_SYSTEM_EXCEPTION(BAD_INV_ORDER);    // routine invocations out of order
-TAO_SYSTEM_EXCEPTION(TRANSIENT);        // transient error, try again later
-TAO_SYSTEM_EXCEPTION(FREE_MEM);         // cannot free memory
-TAO_SYSTEM_EXCEPTION(INV_IDENT);        // invalid identifier syntax
-TAO_SYSTEM_EXCEPTION(INV_FLAG);         // invalid flag was specified
-TAO_SYSTEM_EXCEPTION(INTF_REPOS);       // interface repository unavailable
-TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);      // error processing context object
-TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);      // object adapter failure
-TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);  // data conversion error
-TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policy override
+TAO_SYSTEM_EXCEPTION(UNKNOWN);
+TAO_SYSTEM_EXCEPTION(BAD_PARAM);
+TAO_SYSTEM_EXCEPTION(NO_MEMORY);
+TAO_SYSTEM_EXCEPTION(IMP_LIMIT);
+TAO_SYSTEM_EXCEPTION(COMM_FAILURE);
+TAO_SYSTEM_EXCEPTION(INV_OBJREF);
+TAO_SYSTEM_EXCEPTION(OBJECT_NOT_EXIST);
+TAO_SYSTEM_EXCEPTION(NO_PERMISSION);
+TAO_SYSTEM_EXCEPTION(INTERNAL);
+TAO_SYSTEM_EXCEPTION(MARSHAL);
+TAO_SYSTEM_EXCEPTION(INITIALIZE);
+TAO_SYSTEM_EXCEPTION(NO_IMPLEMENT);
+TAO_SYSTEM_EXCEPTION(BAD_TYPECODE);
+TAO_SYSTEM_EXCEPTION(BAD_OPERATION);
+TAO_SYSTEM_EXCEPTION(NO_RESOURCES);
+TAO_SYSTEM_EXCEPTION(NO_RESPONSE);
+TAO_SYSTEM_EXCEPTION(PERSIST_STORE);
+TAO_SYSTEM_EXCEPTION(BAD_INV_ORDER);
+TAO_SYSTEM_EXCEPTION(TRANSIENT);
+TAO_SYSTEM_EXCEPTION(FREE_MEM);
+TAO_SYSTEM_EXCEPTION(INV_IDENT);
+TAO_SYSTEM_EXCEPTION(INV_FLAG);
+TAO_SYSTEM_EXCEPTION(INTF_REPOS);
+TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);
+TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
+TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
+TAO_SYSTEM_EXCEPTION(INV_POLICY);
 TAO_SYSTEM_EXCEPTION(REBIND);
 TAO_SYSTEM_EXCEPTION(TIMEOUT);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);   // operation needs transaction
-TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK); // operation was a no-op
-TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);    // invalid TP context passed
+TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);
+TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);
+TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);
 
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -328,7 +315,7 @@ public:
   // Make the TypeCode for the CORBA::UnknownUserException standard
   // exception.
 
-  static void init (CORBA_Environment &ACE_TRY_ENV =
+  static void init (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ());
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
@@ -338,7 +325,7 @@ public:
 
   static CORBA_SystemException *
        create_system_exception (const char *id,
-                                CORBA_Environment &ACE_TRY_ENV =
+                                CORBA_Environment &TAO_IN_ENV =
                                     TAO_default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
@@ -384,9 +371,6 @@ public:
   CORBA_ExceptionList_ptr _duplicate (void);
   // Increase the reference count.
 
-  static CORBA_ExceptionList_ptr _duplicate (CORBA_ExceptionList *);
-  // Increase the reference count in the spec defined manner.
-
   void _destroy (void);
 
   static CORBA_ExceptionList_ptr _nil (void);
@@ -398,18 +382,14 @@ public:
   // Add and consume a TypeCode to the list
 
   CORBA::TypeCode_ptr item (CORBA::ULong slot,
-                            CORBA_Environment &ACE_TRY_ENV =
+                            CORBA_Environment &TAO_IN_ENV =
                             TAO_default_environment ());
   // Return the typecode at slot i. Raises the "Bounds" exception.
 
   void remove (CORBA::ULong slot,
-               CORBA_Environment &ACE_TRY_ENV =
+               CORBA_Environment &TAO_IN_ENV =
                TAO_default_environment ());
   // Remove the typecode at slot i. Raises the "Bounds" exception.
-
-  void  _incr_refcnt (void);
-  void  _decr_refcnt (void);
-  // Increment and decrement ref counts
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ExceptionList_ptr _ptr_type;

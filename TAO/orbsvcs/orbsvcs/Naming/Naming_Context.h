@@ -204,9 +204,6 @@ class TAO_ORBSVCS_Export TAO_Naming_Context_Impl
 
 public:
 
-  virtual ~TAO_Naming_Context_Impl (void);
-  // Destructor.
-
   // = CosNaming::NamingContext idl interface methods.
 
   virtual void bind (const CosNaming::Name &n,

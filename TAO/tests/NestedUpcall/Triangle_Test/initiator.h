@@ -85,9 +85,6 @@ private:
 
   char **argv_;
   // commandline arguments.
-
-  CORBA::String_var str_;
-  // IOR of my servant.
 };
 
 #endif /* _TRIANGLE_TEST_INITITATOR_SERVER_H */

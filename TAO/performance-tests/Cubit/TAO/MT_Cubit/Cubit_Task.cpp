@@ -63,29 +63,24 @@ Cubit_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Create Servants failed.\n"),
                       -1);
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       GLOBALS::instance ()->barrier_->wait ();
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
-      int r = this->orb_manager_.run (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (r == -1)
+      if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "run"),
                           -1);
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "poa->destroy()");
+      TAO_TRY_ENV.print_exception ("poa->destroy()");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Need to clean up and do a CORBA::release on everything we've
   // created!
@@ -99,8 +94,7 @@ Cubit_Task::svc (void)
 int
 Cubit_Task::initialize_orb (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       ACE_ARGV args (this->orbargs_);
 
@@ -112,14 +106,14 @@ Cubit_Task::initialize_orb (void)
                        "ORB %d",
                        this->task_id_);
 
-      int r = this->orb_manager_.init_child_poa (argc,
-                                                 argv,
-                                                 "persistent_poa",
-                                                 orb_name,
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (r == -1)
+      if (this->orb_manager_.init_child_poa (argc,
+                                             argv,
+                                             "persistent_poa",
+                                             orb_name,
+                                             TAO_TRY_ENV) == -1)
         return -1;
+
+      TAO_CHECK_ENV;
 
       this->orb_ = this->orb_manager_.orb ();
 
@@ -132,18 +126,17 @@ Cubit_Task::initialize_orb (void)
           ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
                           ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
                           -1);
-          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon,
-                                    GLOBALS::instance ()->ready_mtx_, 1));
+          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "orb_init");
+      TAO_TRY_ENV.print_exception ("orb_init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -160,8 +153,7 @@ Cubit_Task::get_servant_ior (u_int index)
 int
 Cubit_Task::create_servants (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA",

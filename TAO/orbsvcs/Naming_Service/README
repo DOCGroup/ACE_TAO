@@ -1,171 +1,135 @@
 // $Id$
 
-This directory contains the files that implement the TAO
-Naming server.
-
+        This directory contains the files that implement the TAO
+Naming server.  The TAO Naming Service uses IP Multicast to process
+client "resolve_initial_references()" requests.
 
 To Run:
 ======
 
-% Naming_Service [-ORBnameserviceport nsport]
+% Naming_Service [-ORBobjrefstyle url]
+                 [-ORBnameserviceport nsport]
                  [-o ior_output_file]
                  [-p pid_file_name]
                  [-s context_size]
                  [-t time]
                  [-f persitence_file_name]
 
-Optional Command-line Arguments:
-===============================
+Arguments:
+==========
+        port
+                 The ORB port.
+
         nsport
-                Multicast port for listening for requests from
-                clients trying to bootstrap to a Naming Service
-                through the use of multicast.
+                Multicast port.
+
 
         output_file
-                The name of the file, in which to store the IOR of the
-                root Naming Service context.
+                The name of the file, in which to store IOR of the
+                root Naming Service context.  (This file can then be
+                used by clients instead of multicast, to obtain the
+                Naming Service IOR).
 
        pid_file_name
                 The name of the file, in which to store the process id
                 of the Naming Service server.
 
         context_size
-                 Size of the hash table allocated for
+                 Size of the hash table allocated upon the creation of
                  the root Naming Context (if one is created).  All
                  contexts created under the root will use the same
                  size for their hash tables.  The default is 1024.
 
         time
-                How long (in seconds) the server should listen for
-                client requests before terminating.
+                How long the server should listen for requests before
+                exiting.
 
         persistence_file_name
-                The name of the file to use to store/retrieve
-                persistent state of the Naming Service.  Without this
-                option, Naming Service is started in non-persistent mode.
+                The name of the file to use to store/read from the
+                persistent state of the Naming Service.
 
 Environment Variables:
 =====================
 
-        NameServicePort
-                Multicast port for listening for requests from
-                clients trying to bootstrap to a Naming Service
-                through the use of multicast.
-
+        NameServicePort - Multicast port to listen on for
+        "resolve_initial_references" requests.
 
 Persistence:
 ===========
 TAO Naming Service has an optional persistence capability.  By
-default, the Naming Service is started in a non-persistent mode.
+default, a non-persistent version of the Naming Service is used.
 Supplying "-f" command-line option to the server causes a persistent
 version of the Naming Service to run.
 
-The file specified with the "-f" option is used to store the
+The file, which name is supplied along with the "-f" option, is used to store the
 persistent state of the Naming Service, i.e., all Naming Contexts and
-their bindings.  When "-f" option is specified:
+all their bindings.  When "-f" option is specified:
 
-    1. If the specified file does not exist, it is created
+    1. If the specified file does not exist, the file is created
        and used to store the state of the Naming Service.  An initial
        (root) Naming Context is also created.
 
     2. If the specified file exists, it is scanned and:
                         a) If any inconsistency is detected in the
-                        stored state, or the file is not recognized by
-                        the Naming Service, the server exits.  (This
-                        may happen, for example, if a server or host
-                        crashed in the middle of writing a record to
-                        this file on a previous run).  A
-                        noncorrupted version of the file must be used instead.
+                        stored state or the file is not recognized by
+                        the Naming Service, the server exits.  A
+                        noncorrupted version of the file must be used.
 
-                        b) If the file is recognized and is ok, the
-                        state stored in the file becomes the current state of
+                        b) If no Naming Contexts exist, an initial
+                        (root) Naming Context is created.
+
+                        c) If one or more Naming Contexts exist, the
+                        state stored in the file becomes the state of
                         the Naming Service.
 
+Sample Run:
+==========
 
-Implementation Policies:
-=======================
+% Naming_Service -ORBobjrefstyle url -ORBnameserviceport 19999
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+listening as object <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+The multicast server setup is done.
 
-- Destroying Binding Iterators
-             A binding iterator is destroyed when client invokes
-             <destroy> operation either on the iterator itself or on
-             the naming context it is iterating over.  In both cases,
-             subsequent calls on the binding iterator object will
-             cause OBJECT_NOT_EXIST exception.
+NameService Client:
+==================
 
-- Dealing with orphaned contexts
-             This implementation of the Naming Service does not
-             include any form of 'garbage collection' for orphaned
-             naming contexts.  It is solely the responsibility of
-             clients to clean up after themselves and not leak server
-             resources.  All the resources, including orphaned
-             contexts, are released during the Naming Server
-             shutdown.
+A client of the TAO Naming Service will use the ORB
+resolve_initial_references() method to resolve the "NamingService"
+object service.  By default, this resolution is performed using
+Multicast.  This behavior can be overridden in the following ways:
 
-Clients: ways to bootstrap to the Naming Service:
-================================================
+        1. Pass the argument -ORBnameserviceior ior.
+           This ior is got from the output of the Naming_Service from
+           line 'listening as object <iiop:..>'.
 
-There are several methods for a client to bootstrap to a Naming
-Service, i.e., there are several mechanisms <resolve_initial_references> can use
-when asked for "NameService".
+           For example, If a client wants to use the Naming_Service
+           from the sample run it could use:
 
-       1. By default (unless other options are specified - see items 2
-          and 3 below), ip multicast is used to locate a Naming
-          Service. TAO Naming Server is listening for client multicast
-          requests on a specified port.  On the client side,
-          <resolve_initial_references> sends out a multicast request
-          on the network, trying to locate a Naming Service.  When a
-          Naming Server receives a multicast request from a client, it
-          replies to the sender with the ior of its root
-          Naming Context.  Note, the port used for this bootstrapping
-          process, i.e., 'multicast port', has nothing to do with the
-          ORB port used for CORBA communication.  Other points worth
-          mentioning:
+           % client -ORBnameserviceior <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
-          - A client and a server will only click through this
-            multicast protocol if they are using the same multicast
-            port.  For both client and server -ORBnameserviceport
-            command-line option and NameServicePort environment
-            variable can be used to specify the multicast port to use.
-            If none is specified, the default port is used.  (The
-            ability to specify multicast ports can be used to match
-            certain clients with certain Naming Servers, when there
-            are more than one Naming Server running on the network).
+        2. Set the environment variable `NameServiceIOR' (minus the
+           quotes), as follows in csh or tcsh:
 
-          - If there are several Naming Servers running on the
-            network, each listening on the same port for
-            multicast requests, each will send a reply to a client's
-            request.  The client's orb will use the first response it
-            receives, so the Naming Service will, in fact, be selected at
-            random.
+           % setenv NameServiceIOR <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
-          Since this mechanism is proprietary to TAO (i.e.,
-          non-standard), it only works when both client and server are
-          written using TAO.  There is no way to turn multicasting
-          off, but it is used only as a last resort, i.e., any of the
-          options below will override it.
+           and then run the client,
 
-          When OS platform doesn't support multicast, or client or
-          server isn't written using TAO, or a more reliable location
-          method is desired, etc., one of the options below can be
-          used to bootstrap to the Naming Service.
+           % client <.. client's arguments>
 
-        2. Command-line option -ORBnameserviceior or environment
-           variable NameServiceIOR can be used on the client side to
-           specify the object that the call to
-           <resolve_initial_references> should return to the client.
-           (On the server side, -o option can be used to get the ior).
+These two techniques may be needed in an environment where
 
-           Example (Unix, same host):
+        1. There is more than one NamingService, to avoid the
+           confusion of a server registering its object with one
+           NamingService and the client getting the reply from some
+           other NamingService.
 
-           % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
-           % my_client -ORBnameserviceior file://ior_file
+        2. The OS platform doesn't support multicast.
 
-           On the first line, we start the Naming Service, and output
-           its ior to <ior_file>.  On the second line, we start some
-           client, and specify the ior <resolve_initial_references>
-           should return for the Naming Service in a file format.
-
-        3. TAO implements Interoperable Naming Service.  So, most of the
-           initialzation options provided by INS can be used to
-           bootstrap to the Naming Service (see TAO's releasenotes for the
-           status of INS implementation).
+        3. The client or server isn't written using TAO, and therefore
+           doesn't use TAO's multicast NameService resolution protocol.

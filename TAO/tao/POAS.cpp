@@ -298,10 +298,11 @@ POA_PortableServer::_tao_collocated_ThreadPolicy::value (
 }
 
 PortableServer::ThreadPolicy*
-POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ThreadPolicy (this, stub);
 }
 
@@ -584,10 +585,11 @@ POA_PortableServer::_tao_collocated_LifespanPolicy::value (
 }
 
 PortableServer::LifespanPolicy*
-POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_LifespanPolicy (this, stub);
 }
 
@@ -1153,10 +1155,11 @@ POA_PortableServer::_tao_collocated_IdAssignmentPolicy::value (
 }
 
 PortableServer::IdAssignmentPolicy*
-POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy (this, stub);
 }
 
@@ -1439,10 +1442,11 @@ POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::value (
 }
 
 PortableServer::ImplicitActivationPolicy*
-POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (this, stub);
 }
 
@@ -1723,10 +1727,11 @@ POA_PortableServer::_tao_collocated_ServantRetentionPolicy::value (
 }
 
 PortableServer::ServantRetentionPolicy*
-POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy (this, stub);
 }
 
@@ -2007,10 +2012,11 @@ POA_PortableServer::_tao_collocated_RequestProcessingPolicy::value (
 }
 
 PortableServer::RequestProcessingPolicy*
-POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy (this, stub);
 }
 
@@ -2131,10 +2137,11 @@ POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &A
 }
 
 PortableServer::POAManager*
-POA_PortableServer::POAManager::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_POAManager (this, stub);
 }
 
@@ -2215,10 +2222,11 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_ada
 
 
 PortableServer::AdapterActivator*
-POA_PortableServer::AdapterActivator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::AdapterActivator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_AdapterActivator (this, stub);
 }
 
@@ -2284,10 +2292,11 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
 
 
 PortableServer::ServantManager*
-POA_PortableServer::ServantManager::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantManager::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ServantManager (this, stub);
 }
 
@@ -2389,10 +2398,11 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
 
 
 PortableServer::ServantActivator*
-POA_PortableServer::ServantActivator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantActivator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ServantActivator (this, stub);
 }
 
@@ -2498,10 +2508,11 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
 
 
 PortableServer::ServantLocator*
-POA_PortableServer::ServantLocator::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::ServantLocator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_ServantLocator (this, stub);
 }
 
@@ -2905,10 +2916,11 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
 
 
 PortableServer::POA*
-POA_PortableServer::POA::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::POA::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_POA (this, stub);
 }
 
@@ -2996,9 +3008,10 @@ PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_obje
 
 
 PortableServer::Current*
-POA_PortableServer::Current::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_PortableServer::Current::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_PortableServer::_tao_collocated_Current (this, stub);
 }

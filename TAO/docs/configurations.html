@@ -80,11 +80,11 @@ Roadmap</h3>
 model.</a></li>
 
 <li>
-<a href="#tpool">Multiple threads, thread-pool model.</a></li>
+<a href="#tpool">Multiple threads, thread-pool model.</a> (Not yet implemented.)</li>
 
 <li>
 <a href="#multiorb-tpool">Multiple threads, ORB-per-thread, thread-pool
-model.</a></li>
+model.</a> (Not yet implemented.)</li>
 
 <li>
 Each configuration has the following information:</li>
@@ -166,8 +166,8 @@ reactively and running in separate threads.</li>
 a new thread whose job is to service requests coming from the connection.
 The new threads inherits all properties from the ORB threads (see below.)</li>
 
-<li> <tt>thread-pool</tt>: The ORB pre-spawn a group of threads for
-servicing the incoming requests.  Threads are not bound to a specific connection.</li>
+<li>
+<tt>thread-pool</tt> (not yet implemented): ... to be continued ...</li>
 </UL><P>
 
 <li>
@@ -225,8 +225,8 @@ multiple threads using the same <tt>CORBA::Object</tt> and using forwarding,
 it is necessary to protect the forwarding <tt>IIOP_Profile</tt>, which
 is part of the <tt>IIOP_Object</tt>, which is part of the CORBA::Object
 against multiple access. Therefore a mutex lock is used by default to ensure
-proper access. Using the switch <tt>-ORBprofilelock</tt> this policy
-can be deactivated specifying <tt>-ORBprofilelock null</tt>. A motivation
+proper access. Using the switch <tt>-ORBiiopprofilelock</tt> this policy
+can be deactivated specifying <tt>-ORBiiopprofilelock null</tt>. A motivation
 to do this might be performance reasons in cases, where no forwarding is
 used or no multithreading with access to shared <tt>CORBA::Object</tt>'s.
 Deactivating forces the ORB to use a null mutex, which does introduce only
@@ -457,7 +457,7 @@ threads which service requests form establiched connections.</td>
 is a good example on using <i>multiple threads, ORB-per-thread, and thread-per-connection</i>
 configuration.<P>
 <li>
-<a NAME="tpool"></a>Multiple threads, thread-pool model.</li><P>
+<a NAME="tpool"></a>Multiple threads, thread-pool model. (Not yet implemented.)</li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
@@ -495,7 +495,7 @@ movement between threads.</td>
 
 <P><li>
 Multiple threads, ORB-per-thread, thread-pool model.<a NAME="multiorb-tpool"></a>
-</li><P>
+(Not yet implemented.)</li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>

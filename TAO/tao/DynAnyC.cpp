@@ -813,7 +813,6 @@ CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (void)
 CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
@@ -827,7 +826,6 @@ CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (CORBA::ULong max,
                                     CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
@@ -840,7 +838,6 @@ CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (
   ) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
@@ -1108,7 +1105,6 @@ CORBA_AnySeq::CORBA_AnySeq (void)
 CORBA_AnySeq::CORBA_AnySeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
@@ -1122,7 +1118,6 @@ CORBA_AnySeq::CORBA_AnySeq (CORBA::ULong max,
                 CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
@@ -1133,7 +1128,6 @@ CORBA_AnySeq::CORBA_AnySeq (CORBA::ULong max,
 CORBA_AnySeq::CORBA_AnySeq (const CORBA_AnySeq &seq) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
@@ -1356,19 +1350,19 @@ CORBA::TypeCode_ptr _tc_CORBA_DynArray =
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_DynAny,CORBA_DynAny_var>;
-  template class TAO_Object_Field_T<CORBA_DynEnum,CORBA_DynEnum_var>;
-  template class TAO_Object_Field_T<CORBA_DynStruct,CORBA_DynStruct_var>;
-  template class TAO_Object_Field_T<CORBA_DynUnion,CORBA_DynUnion_var>;
-  template class TAO_Object_Field_T<CORBA_DynSequence,CORBA_DynSequence_var>;
-  template class TAO_Object_Field_T<CORBA_DynArray,CORBA_DynArray_var>;
+  template class TAO_Object_Field_T<CORBA_DynAny>;
+  template class TAO_Object_Field_T<CORBA_DynEnum>;
+  template class TAO_Object_Field_T<CORBA_DynStruct>;
+  template class TAO_Object_Field_T<CORBA_DynUnion>;
+  template class TAO_Object_Field_T<CORBA_DynSequence>;
+  template class TAO_Object_Field_T<CORBA_DynArray>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynAny,CORBA_DynAny_var>
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynEnum,CORBA_DynEnum_var>
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynStruct,CORBA_DynStruct_var>
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynUnion,CORBA_DynUnion_var>
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynSequence,CORBA_DynSequence_var>
-#  pragma instantiate TAO_Object_Field_T<CORBA_DynArray,CORBA_DynArray_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynAny>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynEnum>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynStruct>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynUnion>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynSequence>
+#  pragma instantiate TAO_Object_Field_T<CORBA_DynArray>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

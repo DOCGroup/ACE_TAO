@@ -77,17 +77,18 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type_Impl *stp;
-      ACE_NEW_RETURN (stp,
-                      ACE_Service_Object_Type (svc_handler,
-                                               this->svc_name_),
-                      -1);
+      ACE_Service_Type_Impl *stp =
+        new ACE_Service_Object_Type (svc_handler, this->svc_name_);
+
+      if (stp == 0)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
 
       ACE_Service_Type *srp =
-        new ACE_Service_Type (this->svc_name_,
-                              stp,
-                              handle,
-                              1);
+        new ACE_Service_Type (this->svc_name_, stp, handle, 1);
+
       if (srp == 0)
         {
           delete stp;
@@ -206,7 +207,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("error: must have a non-NULL thread manager\n")),
+                       "error: must have a non-NULL thread manager\n"),
                       -1);
   else
     return 0;

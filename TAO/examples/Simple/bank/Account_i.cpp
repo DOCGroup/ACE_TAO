@@ -53,14 +53,14 @@ Account_i::deposit (CORBA::Float deposit,
 
 void
 Account_i::withdraw (CORBA::Float withdrawl,
-		     CORBA::Environment &ACE_TRY_ENV)
+		     CORBA::Environment &env)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Bank::Account::Overdraft))
 {
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
   else
-    ACE_THROW (Bank::Account::Overdraft ("Exception::Overdraft\n"));
+    env.exception (new Bank::Account::Overdraft ("Exception::Overdraft\n"));
 }
 
 char *

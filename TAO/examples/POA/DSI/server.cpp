@@ -156,7 +156,7 @@ main (int argc, char **argv)
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
       for (CORBA::ULong i = 0;
-           i < policies.length ();
+           i < policies.length () && ACE_TRY_ENV.exception () == 0;
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
@@ -202,6 +202,7 @@ main (int argc, char **argv)
       // set the state of the poa_manager to active i.e ready to process requests
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
 
       // Run the ORB
       if (orb->run () == -1)

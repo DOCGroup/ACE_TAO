@@ -153,8 +153,7 @@ run Task_Test                           # tests ACE_Thread_Manager, ACE_Task
 # Thread_Manager_Test: UNICOS fails due to no pthread_kill nor pthread_cancel
 test $Unicos || run Thread_Manager_Test                 # tests ACE_Thread_Manager, ACE_Task
 run Thread_Pool_Test                    # tests ACE_Thread_Manager, ACE_Task
-run Future_Test                         # tests ACE_Thread_Manager, ACE_Task, ACE_Future
-# run Future_Set_Test                     # tests ACE_Thread_Manager, ACE_Task, ACE_Future_Set
+run Future_Test                         # tests ACE_Thread_Manager, ACE_Task
 run RB_Tree_Test                        # tests ACE_RB_Tree, ACE_RB_Tree_Iterator
 run Reactors_Test                       # tests ACE_Task, ACE_Mutex, ACE_Reactor
 run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
@@ -187,8 +186,7 @@ fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
-run Cache_Map_Manager_Test              # tests ACE_Cache_Map_Manager and ACE_Hash_Cache_Manager and caching features.
-run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
+#### run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.
 run Message_Queue_Notifications_Test    # tests ACE_Message_Queue + ACE_Reactor
 test $chorus || run Message_Queue_Test  # tests ACE_Message_Queue + Forward and Reverse Message Queue Iterators.

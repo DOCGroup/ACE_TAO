@@ -256,23 +256,24 @@ void* POA_CORBA::Policy::_downcast (
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   const char *opname = req.operation (); // retrieve operation name
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    env.exception (new CORBA_BAD_OPERATION ());
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
   }
 else
-    skel (req, this, context, ACE_TRY_ENV);
+    skel (req, this, context, env);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA/Policy:1.0";
+  return "IDL:CORBA/Policy:1.0";
 }
 
 // ****************************************************************
@@ -331,9 +332,9 @@ void POA_CORBA::_tao_collocated_Policy::destroy  (
 }
 
 CORBA::Policy*
-POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_CORBA::Policy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   ACE_CHECK_RETURN (0);
   return new POA_CORBA::_tao_collocated_Policy (this, stub);
 }

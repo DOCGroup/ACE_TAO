@@ -37,7 +37,7 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //
   // = DESCRIPTION
   //   Specialization of the base TAO_Transport class to handle the IIOP
-  //   protocol.  This class in turn will be further specialized for
+  //   protocol.  This class in turn will be further speciialized for
   //   the client and server side.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
@@ -94,8 +94,7 @@ public:
 
   virtual int send_request (TAO_ORB_Core *orb_core ,
                             TAO_OutputCDR &stream,
-                            int twoway,
-                            ACE_Time_Value *max_wait_time);
+                            int twoway);
   // Default action to be taken for send request.
 
 protected:
@@ -133,7 +132,7 @@ public:
                               CORBA::ULong request_id,
                               CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
@@ -141,21 +140,19 @@ public:
                              const TAO_Profile *profile,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
   int send_request (TAO_ORB_Core *orb_core,
                     TAO_OutputCDR &stream,
-                    int twoway,
-                    ACE_Time_Value *max_wait_time);
+                    int twoway);
   // This is a bridge method for the connection handlers
   // <send_request> method.  The connection handler is responsible for
   // concurrency strategies, typically using the leader-follower
   // pattern.
 
-  int handle_client_input (int block = 0,
-                           ACE_Time_Value *max_time_value = 0);
+  int handle_client_input (int block = 0);
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. If <block> is 1, then reply is read in a blocking

@@ -17,7 +17,6 @@
 # if defined (__STANDARD_CXX)
     // Green Hills 1.8.9, but not 1.8.8.
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#   define ACE_LACKS_AUTO_PTR
 #   define ACE_LACKS_CHAR_RIGHT_SHIFTS
 #   define ACE_LACKS_UNBUFFERED_STREAMBUF
 # endif /* __STANDARD_CXX */
@@ -27,7 +26,6 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_LONGLONG_T
 # define ACE_LACKS_SIGNED_CHAR
-
 
 #else  /* ! ghs */
 # error ace/config-ghs-common.h can only be used with Green Hills compilers!

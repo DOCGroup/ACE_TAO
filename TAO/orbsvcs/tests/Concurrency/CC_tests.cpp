@@ -51,8 +51,7 @@ CC_Test::create_lock_set (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_Client::create_lock_set");
+      ACE_TRY_ENV.print_exception ("CC_Client::create_lock_set");
       return 0;
     }
   ACE_ENDTRY;
@@ -152,8 +151,7 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Single_Lock_With_Mode::run");
+      ACE_TRY_ENV.print_exception ("Test_Single_Lock_With_Mode::run");
       return CC_FAIL;
     }
   ACE_ENDTRY;
@@ -200,8 +198,7 @@ Test_Setup_LockSet::run (int /* times_to_run */)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Against_Other_LockSet::run");
+      ACE_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
       return CC_FAIL;
     }
   ACE_ENDTRY;
@@ -247,8 +244,7 @@ Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Against_Other_LockSet::run");
+      ACE_TRY_ENV.print_exception ("Test_Against_Other_LockSet::run");
       return CC_FAIL;
     }
   ACE_ENDTRY;
@@ -291,8 +287,7 @@ Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Unlock_Already_Created_LockSet::run");
+      ACE_TRY_ENV.print_exception ("Test_Unlock_Already_Created_LockSet::run");
       return CC_FAIL;
     }
   ACE_ENDTRY;
@@ -372,8 +367,7 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Release_Not_Held_Lock::run");
+      ACE_TRY_ENV.print_exception ("Test_Release_Not_Held_Lock::run");
       return CC_FAIL;
     }
   ACE_ENDTRY;

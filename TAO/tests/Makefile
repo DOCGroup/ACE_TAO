@@ -19,11 +19,7 @@ DIRS  = CDR \
         Multiple_Inheritance \
 	MT_Client \
 	MT_Server \
-	FL_Cube \
-	POA \
-	Faults \
-	IORManipulation \
-	Timeout
+	FL_Cube
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

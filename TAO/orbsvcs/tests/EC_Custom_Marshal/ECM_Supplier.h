@@ -39,6 +39,7 @@ public:
   void connect (const char* name,
                 int event_a,
                 int event_b,
+                int event_period,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the supplier to the EC.

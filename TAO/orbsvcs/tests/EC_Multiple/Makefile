@@ -14,7 +14,7 @@ BIN2 = EC_Multiple
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Event
@@ -24,18 +24,11 @@ endif # Event
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  # This test causes g++ 2.7.2.3 (the compiler) to core dump.
-  all clean realclean:
-	@echo orbsvcs/tests/EC_Multiple is not built with older versions of g++
-else # ! ACE_HAS_GNUG_PRE_2_8
-  include $(ACE_ROOT)/include/makeinclude/macros.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-endif # ! ACE_HAS_GNUG_PRE_2_8
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 #### Local rules and variables...
 
@@ -164,25 +157,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/IORS.h \
- $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/IORC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/POAC.i \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -230,9 +214,13 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \

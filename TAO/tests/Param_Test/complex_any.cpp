@@ -57,8 +57,8 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Complex_Any::init_parameters (Param_Test_ptr,
-                                   CORBA::Environment &)
+Test_Complex_Any::init_parameters (Param_Test_ptr objref,
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   return this->reset_parameters ();
 }
@@ -167,60 +167,40 @@ Test_Complex_Any::add_args (CORBA::NVList_ptr param_list,
                             CORBA::NVList_ptr retval,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      CORBA::Any in_arg (CORBA::_tc_any,
-                         &this->in_,
-                         0);
+  CORBA::Any in_arg (CORBA::_tc_any,
+                     &this->in_,
+                     0);
 
-      CORBA::Any inout_arg (CORBA::_tc_any,
-                            &this->inout_,
-                            0);
+  CORBA::Any inout_arg (CORBA::_tc_any,
+                        &this->inout_,
+                        0);
 
-      CORBA::Any out_arg (CORBA::_tc_any,
-                          &this->out_.inout (), // .out () causes crash
-                          0);
+  CORBA::Any out_arg (CORBA::_tc_any,
+                      &this->out_.inout (), // .out () causes crash
+                      0);
 
-      // add parameters
-      param_list->add_value ("ca1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // add parameters
+  param_list->add_value ("ca1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("ca2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("ca2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         ACE_TRY_ENV);
 
-      param_list->add_value ("ca3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  param_list->add_value ("ca3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         ACE_TRY_ENV);
 
-      // add return value
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (CORBA::_tc_any,
-                               &this->ret_.inout (), // see above
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Complex_Any::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
+  // add return value
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_any,
+                                            &this->ret_.inout (), // see above
+                                            0, // does not own
+                                            ACE_TRY_ENV);
+  return 0;
 }
 
 CORBA::Boolean

@@ -38,11 +38,6 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
-  enum {
-    THRU_POA = 0,
-    DIRECT = 1
-  };
-  // Collocated stubs type value.
 
   // used to pass functions to the template method
   typedef int (*tao_code_emitter) (be_interface *, be_interface *, TAO_OutStream *);
@@ -90,6 +85,9 @@ public:
   const char *full_skel_name (void);
   // Retrieve the fully scoped skel class name.
 
+  const char *ami_handler_full_skel_name (void);
+  // Retrieve the fully scoped skel AMI handler class name
+
   //
   // Each interface (to fix names "T") also defines two help classes,
   // the "collocated" class inherits from T, but delegates on the
@@ -101,11 +99,27 @@ public:
   // defines the stubs (all operations in T are pure virtual).
   // @@ TODO currently the stub class is not implemented.
   //
-  const char *full_coll_name (int);
-  // retrieve the fully qualified collocated class name
+  const char *full_coll_name (void);
+  // Retrieve the fully qualified collocated class name
 
-  const char *local_coll_name (int) const;
-  // retrieve the fully qualified collocated class name
+  const char *ami_handler_full_coll_name (void);
+  // Retrieve the fully qualified collocated AMI handler class name
+
+  const char *local_coll_name (void) const;
+  // Retrieve the fully qualified collocated class name.
+
+  const char *ami_handler_local_coll_name (void);
+  // Retrieve the fully qualified collocated AMI handler class name.
+
+  const char *ami_handler_local_name (void);
+  // Retrieve the local name of the AMI handler
+
+  int compute_coll_names (const char *local_name,
+                          char *&coll_local_name,
+                          char *&coll_full_name);
+  // Generate collocated local and full names for the arbitrary local
+  // name under the scope of this interface. Usefull to generate AMI
+  // Handlers.
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
@@ -113,6 +127,9 @@ public:
 
   const char *relative_skel_name (const char *other_class_name);
   // relative skeleton name
+
+  const char *relative_coll_name (const char *other_class_name);
+  // relative name for collocated class.
 
   int in_mult_inheritance (void);
   // am I in some form of multiple inheritance
@@ -153,6 +170,12 @@ public:
   // helper method passed to the template method to generate code for the
   // skeletons in the inline file
 
+  static int collocated_ctor_helper (be_interface *,
+                                     be_interface *,
+                                     TAO_OutStream *os);
+  // helper method passed to the template method to invoke ctors of all the
+  // base classes.
+
   static int copy_ctor_helper (be_interface *,
                                be_interface *,
                                TAO_OutStream *os);
@@ -192,7 +215,7 @@ public:
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
 
-  void compute_coll_name (int);
+  void compute_coll_name (void);
   // compute the fully qualified collocated class name.
 
 private:
@@ -233,14 +256,26 @@ private:
   char *full_skel_name_;
   // Fully scoped skeleton name.
 
+  char *ami_handler_full_skel_name_;
+  // Fully scoped AMI Handler skeleton name
+
   int skel_count_;
   // Number of static skeletons in the operation table.
 
   char *full_coll_name_;
-  // full collocated name
+  // Full collocated name
+
+  char *ami_handler_full_coll_name_;
+  // Full collocated name of the AMI handler
 
   char *local_coll_name_;
-  // local collocated name
+  // Local collocated name
+
+  char *ami_handler_local_coll_name_;
+  // Local collocated name of the AMI handler
+
+  char *ami_handler_local_name_;
+  // Local name of the AMI Handler
 
   int in_mult_inheritance_;
   // am I directly or indirectly involved in a multiple inheritance. If the

@@ -7,21 +7,21 @@
 CFG=Simple Naming Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "client.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "client.mak" CFG="Simple Naming Client - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Simple Naming Client - Win32 Release" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "Simple Naming Client - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
+# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
 
@@ -77,7 +77,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib TAOd.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -129,13 +129,13 @@ SOURCE=.\test_object.idl
 !IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test_object.idl
 InputName=test_object
 
 BuildCmds= \
-	tao_idl -Ge 1 $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -168,13 +168,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test_object.idl
 InputName=test_object
 
 BuildCmds= \
-	tao_idl -Ge 1 $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -204,7 +204,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -230,7 +230,15 @@ SOURCE=.\test_objectS_T.i
 # Begin Source File
 
 SOURCE=.\test_objectS_T.cpp
+
+!IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF
+
 # End Source File
 # End Group
 # End Target

@@ -426,6 +426,77 @@ private:
 };
 
 
+class TAO_ORBSVCS_Export ACE_RMS_Dyn_Scheduler_Strategy : public ACE_Scheduler_Strategy
+  // = TITLE
+  //    ACE_RMS_Dyn_Scheduler_Strategy
+  //
+  // = DESCRIPTION
+  //    Defines "schedule" method using Rate Monotonic priority assignment for
+  //    the critical set, single priority for the dynamic (non-critical) set.
+{
+public:
+
+  ACE_RMS_Dyn_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+    // = Constructor.
+
+  virtual ~ACE_RMS_Dyn_Scheduler_Strategy ();
+    // = Virtual destructor.
+
+  static ACE_RMS_Dyn_Scheduler_Strategy *instance ();
+    // = Returns an instance of the strategy.
+
+  virtual int priority_comp (const Dispatch_Entry &first_entry,
+                             const Dispatch_Entry &second_entry);
+    // = Compares two dispatch entries by maximum criticality: returns -1
+    //   if the first Dispatch_Entry is greater in the order, 0 if they're
+    //   equivalent, or 1 if the second Dispatch_Entry is greater in the order.
+
+  virtual void sort (Dispatch_Entry **dispatch_entries,
+                     u_int count);
+    // = Sort the dispatch entry pointer array in descending priority order.
+
+  virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
+    // = Determine the minimum critical priority number.
+
+  virtual ACE_DynScheduler::Dispatching_Type
+    dispatch_type (const Dispatch_Entry &entry);
+    // = Provide the dispatching queue type for the given dispatch entry.
+
+protected:
+
+  virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                    RtecScheduler::Time current_time);
+    // = Returns a dynamic subpriority value at the current time for the
+    //   given timeline entry: if the operation is in the
+    //   critical set, the dynamic subpriority value is always 0; if the
+    //   operation is non-critical and has non-negative laxity, then the
+    //   dynamic subpriority value is positive, and a lower laxity gives a
+    //   higher dynamic subpriority if the operation is non-critical and has
+    //   negative laxity, the value is the (negative) laxity value.
+
+
+  virtual int dynamic_subpriority_comp
+    (const Dispatch_Entry &first_entry,
+     const Dispatch_Entry &second_entry);
+    // = Compares two dispatch entries within the very high and high
+    //   criticality sets by minimum period (RMS) or of two dispatch entries
+    //   within the medium, low, and very low criticality sets by minimum
+    //   laxity: returns -1 if the first Dispatch_Entry is greater in the 
+    //   order, 0 if they're equivalent, or 1 if the second Dispatch_Entry is 
+    //   greater in the order.
+
+private:
+
+  static int sort_function (void *arg1, void *arg2);
+    // = Comparison function to pass to qsort: calls instance ()->sort_comp ().
+
+  static ACE_RMS_Dyn_Scheduler_Strategy *instance_;
+    // = Instance of the strategy.
+
+};
+
+
+
 class TAO_ORBSVCS_Export ACE_Criticality_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_Criticality_Scheduler_Strategy

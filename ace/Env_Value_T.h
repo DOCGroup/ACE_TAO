@@ -42,7 +42,7 @@ public:
   // variable name or a default value.  Before being useful it must
   // <open()>ed.
 
-  ACE_Env_Value (const ASYS_TCHAR *varname,
+  ACE_Env_Value (const char *varname,
                  const T &vardefault);
   // Constructor that calls <open>.
 
@@ -52,11 +52,11 @@ public:
   operator T (void);
   // Returns the value as type T.
 
-  void open (const ASYS_TCHAR *varname, const T &defval);
+  void open (const char *varname, const T &defval);
   // The constructor, read <varname> from the enviroment, using
   // <vardefault> as its value if it is not defined.
 
-  const ASYS_TCHAR *varname (void) const;
+  const char *varname (void) const;
   // Returns the name of the variable being tracked.
 
 private:
@@ -66,11 +66,11 @@ private:
 
   void fetch_value (void);
 
-  const ASYS_TCHAR *varname_;
+  const char *varname_;
   T value_;
 };
 
-template <class T> void ACE_Convert (const ASYS_TCHAR *s, T &t);
+template <class T> void ACE_Convert (const char *s, T &t);
 // Function to convert a string <s> into type <T>.
 
 #if defined (__ACE_INLINE__)
@@ -89,62 +89,62 @@ template <class T> void ACE_Convert (const ASYS_TCHAR *s, T &t);
 // conversion will be necessary.
 
 template <class T> inline void
-ACE_Convert (const ASYS_TCHAR *s, T &t)
+ACE_Convert (const char *s, T &t)
 {
   t = T (s);
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, ASYS_TCHAR *&v)
+ACE_Convert (const char *s, char *&v)
 {
-  v = (ASYS_TCHAR *) s;
+  v = (char *) s;
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, const ASYS_TCHAR *&v)
+ACE_Convert (const char *s, const char *&v)
 {
-  v = (const ASYS_TCHAR *) s;
+  v = (const char *) s;
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, short &si)
+ACE_Convert (const char *s, short &si)
 {
   si = ACE_static_cast (short, ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, u_short &us)
+ACE_Convert (const char *s, u_short &us)
 {
   us = ACE_static_cast (u_short, ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, u_int &i)
+ACE_Convert (const char *s, u_int &i)
 {
   i = ACE_static_cast (u_int,
                        ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, long &l)
+ACE_Convert (const char *s, long &l)
 {
   l = ACE_OS::strtol (s, 0, 10);
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, int &i)
+ACE_Convert (const char *s, int &i)
 {
   i = ACE_static_cast (int, ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, u_long &ul)
+ACE_Convert (const char *s, u_long &ul)
 {
   ul = ACE_OS::strtoul (s, 0, 10);
 }
 
 inline void
-ACE_Convert (const ASYS_TCHAR *s, double &d)
+ACE_Convert (const char *s, double &d)
 {
   d = ACE_OS::strtod (s, 0);
 }

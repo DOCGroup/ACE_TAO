@@ -32,11 +32,6 @@ USELIB("..\ace\aced.lib");
 static int release_mutex = 1;
 static int child_process = 0;
 static const char *mutex_name = ACE_DEFAULT_MUTEX_A;
-#if defined (__Lynx__)
-  static const unsigned int processes = 4;
-#else  /* ! __Lynx__ */
-  static const unsigned int processes = ACE_MAX_PROCESSES;
-#endif /* ! __Lynx__ */
 
 // Explain usage and exit.
 static void
@@ -103,14 +98,14 @@ acquire_release (void)
 #endif /* ! ACE_LACKS_FORK */
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, char *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
-  ACE_ERROR ((LM_INFO, ASYS_TEXT ("fork is not supported on this platform\n")));
+  ACE_START_TEST ("Process_Mutex_Test");
+  ACE_ERROR ((LM_INFO, "fork is not supported on this platform\n"));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
 
@@ -125,7 +120,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
   else
     {
-      ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
+      ACE_START_TEST ("Process_Mutex_Test");
       ACE_INIT_LOG ("Process_Mutex_Test-children");
 
       ACE_Process_Options options;
@@ -140,11 +135,12 @@ main (int argc, ASYS_TCHAR *argv[])
                               ACE_TEXT (" -c -n %s"),
                               ACE_WIDE_STRING (mutex_name));
 
-      // Spawn processes that will contend for the lock.
-      ACE_Process servers[processes];
+      // Spawn ACE_MAX_PROCESSES processes that will contend for the
+      // lock.
+      ACE_Process servers[ACE_MAX_PROCESSES];
       size_t i;
 
-      for (i = 0; i < processes; i++)
+      for (i = 0; i < ACE_MAX_PROCESSES; i++)
         {
           ACE_ASSERT (servers[i].spawn (options) != -1);
           ACE_DEBUG ((LM_DEBUG,
@@ -152,7 +148,7 @@ main (int argc, ASYS_TCHAR *argv[])
                       servers[i].getpid ()));
         }
 
-      for (i = 0; i < processes; i++)
+      for (i = 0; i < ACE_MAX_PROCESSES; i++)
         {
           // Wait for the process we created to exit.
           ACE_ASSERT (servers[i].wait () != -1);

@@ -26,13 +26,9 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-# CPP_LOCATION is for TAO builds - says where the C preprocessor is
-CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
-# If the user has requested building without threads, then don't set any
-# for 10.20, but for 11.00, the default is to use threads, so explicitly
-# turn them off if the user requested build without threads.
+# If the user has requested building without threads, then don't set any.
 #
 ifeq ($(threads),1)
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
@@ -40,14 +36,11 @@ THR_DEFS	= -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
 else
 THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
-else
-ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-THR_DEFS	= -DACE_HAS_THREADS=0
 endif
-endif
-
+#
+# Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
+CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W829,302
 # Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
 # the system header files.  667 is also suppressed, but the compiler still
 # tells you there was a future error, but at least you can pick out any real
@@ -64,7 +57,7 @@ PIC		= +Z
 AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
-LDFLAGS		= -Wl,+s -z
+LDFLAGS		= -Wl,+s
 SOFLAGS		= -b
 
 ifeq ($(distrib),1)
@@ -86,13 +79,10 @@ SOEXT		= sl
 
 ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1
-else
+endif
 ifeq ($(buildbits),64)
 CCFLAGS		+= +DA2.0 +DS2.0
 LDFLAGS		+= -Wl,+vnocompatwarnings
-else
-CCFLAGS         += +DAportable
-endif
 endif
 
 #

@@ -26,13 +26,13 @@ class TAO_ORBSVCS_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
   //     name to object  bindings in a Naming Context.
   //
   // = DESCRIPTION
-  //     Wrapper on top of ACE_Hash_Map_With_Allocator (which is a wrapper
+  //     Wrapper on top of ACE_Shared_Hash_Map (which is a wrapper
   //     around ACE_Hash_Map_Manager).  Uses ACE_Allocator (allocating
   //     from persistent storage) to make bindings persistent and
   //     supports TAO_Bindings_Map interface.  Used by TAO_Persistent_Naming_Context.
 public:
 
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
   // Underlying data structure - typedef for ease of use.
 
   // = Initialization and termination methods.
@@ -86,9 +86,8 @@ public:
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type);
   // Overwrite a binding containing <id> and <kind> (or create a new
-  // one if one doesn't exist) with the specified parameters.  Return
-  // 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
-  // if the new and old bindings differ in type).
+  // one if one doesn't exist) with the specified parameters.  Returns
+  // -1 on failure.
 
   virtual int unbind (const char * id,
                       const char * kind);
@@ -106,13 +105,6 @@ public:
   // its deallocation.
 
 protected:
-
-  int open_helper (size_t hash_table_size,
-                   void *buffer);
-  // Helper to the <open> method.  By isolating placement new into a
-  // separate method, we can deal with memory allocation failures more
-  // efficiently.  If there is a problem in HASH_MAP constructor, we
-  // can clean up preallocated space.
 
   int shared_bind (const char *id,
                    const char *kind,
@@ -173,18 +165,6 @@ public:
   virtual ~TAO_Persistent_Naming_Context (void);
   // Destructor.
 
-  // = Utility methods.
-  static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
-                                                        const char *poa_id,
-                                                        size_t context_size,
-                                                        TAO_Persistent_Context_Index *ind,
-                                                        CORBA::Environment &ACE_TRY_ENV);
-  // This utility method factors out the code needed to create a new
-  // Persistent Naming Context servant and activate it under the
-  // specified POA with the specified id.  This function is static so
-  // that the code can be used, both from inside the class (e.g., <new_context>),
-  // and from outside (e.g., Naming_Utils.cpp).
-
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
   virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment &ACE_TRY_ENV);
@@ -201,32 +181,19 @@ public:
   // are returned with a BindingIterator.  In the naming context does
   // not contain any additional bindings <bi> returned as null.
 
-protected:
-
-  void set_cleanup_level (int level);
-  // Set <destroyed_> flag (inherited from TAO_Hash_Naming_Context) to
-  // <level>.  Legal values for <destroyed_> are 0, 1, and 2.  The
-  // values specify the extent of cleanup that should take place in the
-  // context's destructor:
-  // '0' - no cleanup (e.g., if the context goes out of scope, but
-  // it's state is to remain in persistent storage);
-  // '1' - free up the underlying data structure in persistent storage
-  // (e.g., if the initialization of this context was only partially completed
-  // due to some failures, and we need to roll back);
-  // '2' - free up the underlying data structure, and deregister this
-  // naming context from its <index_> (e.g., if the context had
-  // <destroy> method invoked and needs to be completely removed from existence).
 
   ACE_UINT32 *counter_;
   // Counter used for generation of POA ids for children Naming
   // Contexts.
 
-  TAO_Persistent_Bindings_Map *persistent_context_;
+  TAO_Persistent_Bindings_Map * persistent_context_;
   // A pointer to the underlying data structure used to store name
   // bindings. While our superclass (TAO_Hash_Naming_Context) also
   // maintains a pointer to the data structure, keeping this pointer
   // around saves us from the need to downcast when invoking
   // non-virtual methods.
+
+protected:
 
   TAO_Persistent_Context_Index *index_;
   // A pointer to the index object of this naming service: it keeps

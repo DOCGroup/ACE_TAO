@@ -173,10 +173,7 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
   // C++ does not allow an object declaration inside a union. Hence we
   // must have a pointer. This changes some of the methods.
   // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
-  *os << "TAO_Object_Field_T<"
-      << bt->nested_type_name (bu, "") << ",";
-  // Must use another statement, nested_type_name has side effects...
-  *os << bt->nested_type_name (bu, "_var")
+  *os << "TAO_Object_Field_T<" << bt->nested_type_name (bu, "")
       << "> *" << ub->local_name () << "_;\n";
   return 0;
 }
@@ -210,10 +207,7 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
   // C++ does not allow an object declaration inside a union. Hence we
   // must have a pointer. This changes some of the methods.
   // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
-  *os << "TAO_Object_Field_T<"
-      << bt->nested_type_name (bu, "") << ",";
-  // Must use another statement, nested_type_name has side effects...
-  *os << bt->nested_type_name (bu, "_var")
+  *os << "TAO_Object_Field_T<" << bt->nested_type_name (bu, "")
       << "> *" << ub->local_name () << "_;\n";
   return 0;
 }
@@ -250,9 +244,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
       // check if we are dealing with a CORBA::Object
       if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "TAO_Object_Field_T<"
-              << bt->name () << ","
-              << bt->name () << "_var"
+          *os << "TAO_Object_Field_T<" << bt->name () 
               << "> *" << ub->local_name () << "_;\n";
         }
       else

@@ -12,7 +12,7 @@
 ACE_RCSID(tao, default_client, "$Id$")
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
-  : profile_lock_type_ (TAO_THREAD_LOCK)
+  : iiop_profile_lock_type_ (TAO_THREAD_LOCK)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -56,7 +56,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
   for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              "-ORBProfileLock") == 0)
+                              "-ORBIIOPProfileLock") == 0)
         {
         curarg++;
         if (curarg < argc)
@@ -65,32 +65,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
 
             if (ACE_OS::strcasecmp (name,
                                     "thread") == 0)
-              this->profile_lock_type_ = TAO_THREAD_LOCK;
+              this->iiop_profile_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->profile_lock_type_ = TAO_NULL_LOCK;
+              this->iiop_profile_lock_type_ = TAO_NULL_LOCK;
           }
-        }
-
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBIIOPProfileLock") == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "WARNING: The -ORBIIOPProfileLock option"
-                      " is deprecated and will be removed.\n"
-                      "         Please use -ORBProfileLock instead\n"));
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
-
-              if (ACE_OS::strcasecmp (name,
-                                      "thread") == 0)
-                this->profile_lock_type_ = TAO_THREAD_LOCK;
-              else if (ACE_OS::strcasecmp (name,
-                                           "null") == 0)
-                this->profile_lock_type_ = TAO_NULL_LOCK;
-            }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -133,11 +112,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
 }
 
 ACE_Lock *
-TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
+TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
-  if (this->profile_lock_type_ == TAO_NULL_LOCK)
+  if (this->iiop_profile_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
                     ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                     0);
@@ -150,27 +129,25 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
 }
 
 // @@ Alex: implement the WS and TMS methods here, similar to the
-//    create_profile_lock above...
+//    create_iiop_profile_lock above...
 // @@ Alex: remember your idea of using the
 //    -ORBclientconnectionhandler option to implement the WS factory,
 //    but you need new options for the TMS...
 
 // Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
-TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_ORB_Core *orb_core)
 {
   TAO_Transport_Mux_Strategy *tms = 0;
 
-  //if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
-  //ACE_NEW_RETURN (tms,
-  //                TAO_Muxed_TMS,
-  //                0);
-  //else
-
-  // @@ Alex: Always creating Exclusive TMS. (Alex).
-  ACE_NEW_RETURN (tms,
-                  TAO_Exclusive_TMS,
-                  0);
+  if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
+    ACE_NEW_RETURN (tms,
+                    TAO_Muxed_TMS (orb_core),
+                    0);
+  else
+    ACE_NEW_RETURN (tms,
+                    TAO_Exclusive_TMS (orb_core),
+                    0);
 
   return tms;
 }

@@ -22,7 +22,6 @@
 #define TAO_BE_VISITOR_DECL_H
 
 #include "be_visitor.h"
-#include "be_codegen.h"
 
 class be_visitor_decl : public be_visitor
 {
@@ -47,11 +46,6 @@ protected:
 
   be_visitor_context *ctx_;
   // any context information required by the visitor
-
-  int gen_anonymous_base_type (be_type *bt,
-                               TAO_CodeGen::CG_STATE cg_state);
-  // Factors out common code used when one anonymous type is
-  // contained by another.
 };
 
 

@@ -43,7 +43,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Reactive_Strategy::activate");
+      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Reactive_Strategy::activate");
       return -1;
     }
   ACE_ENDTRY;
@@ -185,7 +185,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                                                                                       AVStreams::VDev_ptr &vdev,
-                                                                                      CORBA::Environment &/* ACE_TRY_ENV */)
+                                                                                      CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -285,7 +285,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                                                                                       AVStreams::VDev_ptr &vdev,
-                                                                                      CORBA::Environment &/* ACE_TRY_ENV */)
+                                                                                      CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -343,7 +343,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Child_Process");
+      ACE_TRY_ENV.print_exception ("TAO_Child_Process");
       return -1;
     }
   ACE_ENDTRY;
@@ -447,7 +447,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Object_ptr vdev_obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr vdev_obj;
   ACE_TRY
     {
       char vdev_name [BUFSIZ];
@@ -528,7 +528,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_V
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"orb_manager_.run ()");
+      ACE_TRY_ENV.print_exception ("orb_manager_.run ()");
       return -1;
     }
   ACE_ENDTRY;
@@ -542,12 +542,11 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
 {
   char sem_str [BUFSIZ];
 
-  long pid = this->pid_;
   sprintf (sem_str,
            "%s:%s:%ld",
            "TAO_AV_Process_Semaphore",
            this->host_,
-           pid);
+           this->pid_);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
@@ -599,7 +598,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Reactive_Strategy::activate");
+      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Reactive_Strategy::activate");
       return -1;
     }
   ACE_ENDTRY;
@@ -641,17 +640,20 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_M
   return 0;
 }
 
-
+// %% its not clear whether we should be deleting the objects, since
+// if the application overrides the make_mediactrl methods etc.,
+// then, we may not own these objects.
+// For now, we dont delete the objects, since they exist for the
+// lifetime of the process anyway
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-int
-TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names (void)
+TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
 {
   // Remove the names from the naming service
+  if (CORBA::is_nil (this->naming_context_.in ()) == 0)
+    return;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (CORBA::is_nil (this->naming_context_.in ()) == 0)
-        return 0;
       this->naming_context_->unbind (this->stream_endpoint_name_,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -662,23 +664,10 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Process_Strategy::activate");
-      return -1;
+      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  return 0;
-}
 
-// %% its not clear whether we should be deleting the objects, since
-// if the application overrides the make_mediactrl methods etc.,
-// then, we may not own these objects.
-// For now, we dont delete the objects, since they exist for the
-// lifetime of the process anyway
-template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
-{
-  this->unbind_names ();
 //  if (this->stream_endpoint_ != 0)
 //    delete this->stream_endpoint_;
 //  if (this->vdev_ != 0)

@@ -19,10 +19,14 @@
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
   // = TITLE
-  //     This is result object is used by the <end_event_loop> of the
+  // 
+  //     This is result object is used by the <end_event_loop> of the 
   //     ACE_Proactor interface to wake up all the threads blocking
   //     for completions.
-
+  // 
+  // = DESCRIPTION
+  // 
+  
 public:
   ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
                                const void *act = 0,
@@ -30,17 +34,19 @@ public:
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
   // Constructor.
-
+  
   virtual ~ACE_WIN32_Wakeup_Completion (void);
   // Destructor.
-
-
+  
+  
   virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
                          u_long error = 0);
   // This method calls the <handler>'s <handle_wakeup> method.
 };
+
+// *********************************************************************
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         int used_with_reactor_event_loop)
@@ -90,19 +96,13 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                             this->number_of_threads_);
   if (cp == 0)
     {
-      ACE_OS::set_errno_to_last_error ();
+      errno = ::GetLastError ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (errno != ERROR_INVALID_PARAMETER)
-        {
-          if (ACE::debug ())
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("CreateIoCompletionPort")));
-            }
-          return -1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("CreateIoCompletionPort")), -1);
     }
   return 0;
 }
@@ -177,7 +177,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       int priority,
                                                       int signal_number)
 {
-  ACE_Asynch_Read_Stream_Result_Impl *implementation = 0;
+  ACE_Asynch_Read_Stream_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Stream_Result (handler,
                                                        handle,
@@ -201,7 +201,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                        int priority,
                                                        int signal_number)
 {
-  ACE_Asynch_Write_Stream_Result_Impl *implementation = 0;
+  ACE_Asynch_Write_Stream_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Stream_Result (handler,
                                                         handle,
@@ -227,7 +227,7 @@ ACE_WIN32_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                     int priority,
                                                     int signal_number)
 {
-  ACE_Asynch_Read_File_Result_Impl *implementation = 0;
+  ACE_Asynch_Read_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_File_Result (handler,
                                                      handle,
@@ -255,7 +255,7 @@ ACE_WIN32_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      int priority,
                                                      int signal_number)
 {
-  ACE_Asynch_Write_File_Result_Impl *implementation = 0;
+  ACE_Asynch_Write_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_File_Result (handler,
                                                       handle,
@@ -282,7 +282,7 @@ ACE_WIN32_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                  int priority,
                                                  int signal_number)
 {
-  ACE_Asynch_Accept_Result_Impl *implementation = 0;
+  ACE_Asynch_Accept_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept_Result (handler,
                                                   listen_handle,
@@ -312,7 +312,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         int priority,
                                                         int signal_number)
 {
-  ACE_Asynch_Transmit_File_Result_Impl *implementation = 0;
+  ACE_Asynch_Transmit_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Transmit_File_Result (handler,
                                                          socket,
@@ -339,7 +339,7 @@ ACE_WIN32_Proactor::create_asynch_timer (ACE_Handler &handler,
                                          int priority,
                                          int signal_number)
 {
-  ACE_Asynch_Result_Impl *implementation = 0;
+  ACE_Asynch_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Timer (handler,
                                           act,
@@ -357,14 +357,12 @@ ACE_WIN32_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   // Perform a non-blocking "poll" for all the I/O events that have
   // completed in the I/O completion queue.
 
+  ACE_Time_Value timeout (0, 0);
   int result = 0;
 
-  for (ACE_Time_Value timeout (0, 0);
-       ;
-       )
+  while (1)
     {
       result = this->handle_events (timeout);
-
       if (result != 0 || errno == ETIME)
         break;
     }
@@ -422,7 +420,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
                                              milli_seconds);
   if (result == FALSE && overlapped == 0)
     {
-      ACE_OS::set_errno_to_last_error ();
+      errno = ::GetLastError ();
 
       if (errno == WAIT_TIMEOUT)
         {
@@ -430,15 +428,10 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return 0;
         }
       else
-        {
-          if (ACE::debug ())
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("GetQueuedCompletionStatus")));
-            }
-          return -1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("GetQueuedCompletionStatus")),
+                          -1);
     }
   else
     {
@@ -447,7 +440,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       // If errors happen, grab the error.
       if (result == FALSE)
-        ACE_OS::set_errno_to_last_error ();
+        errno = ::GetLastError ();
       else
         errno = 0;
 
@@ -487,7 +480,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 {
   // Grab the event associated with the Proactor
   HANDLE handle = this->get_handle ();
-
+  
   // If Proactor event is valid, signal it
   if (handle != ACE_INVALID_HANDLE &&
       handle != 0)
@@ -501,14 +494,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
                                     ) == FALSE)
     {
       delete result;
-
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("PostQueuedCompletionStatus failed")));
-        }
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR, "PostQueuedCompletionStatus failed\n"), -1);
     }
 
   return 0;
@@ -518,19 +504,18 @@ int
 ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_WIN32_Wakeup_Completion *wakeup_completion = 0;
-
   for (ssize_t ci = 0; ci < how_many; ci++)
     {
       ACE_NEW_RETURN (wakeup_completion,
                       ACE_WIN32_Wakeup_Completion (this->wakeup_handler_),
                       -1);
-
+      
       if (wakeup_completion->post_completion (this) == -1)
         return -1;
     }
-
+  
   return 0;
-}
+}  
 
 int
 ACE_WIN32_Proactor::wake_up_dispatch_threads (void)
@@ -555,6 +540,8 @@ ACE_WIN32_Proactor::number_of_threads (size_t threads)
 {
   this->number_of_threads_ = threads;
 }
+
+// *********************************************************************
 
 ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer (ACE_Handler &handler,
                                                 const void *act,
@@ -582,6 +569,8 @@ ACE_WIN32_Asynch_Timer::complete (u_long bytes_transferred,
 
   this->handler_.handle_time_out (this->time_, this->act ());
 }
+
+// *********************************************************************
 
 ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
                                                           const void *act,

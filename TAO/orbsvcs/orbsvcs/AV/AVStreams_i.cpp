@@ -231,13 +231,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       // Request a_party to create the endpoint and vdev
       CORBA::Boolean met_qos;
       CORBA::String_var named_vdev;
-      AVStreams::StreamCtrl_var streamctrl =
-        this->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+
       if (!CORBA::is_nil (a_party))
         {
           this->sep_a_ =
-            a_party-> create_A (streamctrl.in (),
+            a_party-> create_A (this->_this (ACE_TRY_ENV),
                                 this->vdev_a_.out (),
                                 the_qos,
                                 met_qos,
@@ -255,7 +253,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       if (!CORBA::is_nil (b_party))
         {
           this->sep_b_ =
-            b_party-> create_B (streamctrl.in (),
+            b_party-> create_B (this->_this (ACE_TRY_ENV),
                                 this->vdev_b_.out (),
                                 the_qos,
                                 met_qos,
@@ -284,7 +282,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               ACE_TRY_CHECK;
             }
           // Multicast source being added.
-          CORBA::Boolean result = this->vdev_a_->set_Mcast_peer (streamctrl.in (),
+          CORBA::Boolean result = this->vdev_a_->set_Mcast_peer (this->_this (ACE_TRY_ENV),
                                                                  this->mcastconfigif_ptr_,
                                                                  the_qos,
                                                                  the_flows,
@@ -314,7 +312,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       if (!CORBA::is_nil (a_party) && !CORBA::is_nil (b_party))
         {
           // Tell the 2 VDev's about one another
-          this->vdev_a_->set_peer (streamctrl.in (),
+          this->vdev_a_->set_peer (this->_this (ACE_TRY_ENV),
                                    this->vdev_b_.in (),
                                    the_qos,
                                    the_flows,
@@ -322,7 +320,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
           ACE_TRY_CHECK;
 
-          this->vdev_b_->set_peer (streamctrl.in (),
+          this->vdev_b_->set_peer (this->_this (ACE_TRY_ENV),
                                    this->vdev_a_.in (),
                                    the_qos,
                                    the_flows,
@@ -645,10 +643,8 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       AVStreams::flowSpec flow_spec (the_spec);
       this->handle_preconnect (flow_spec);
 
-      AVStreams::StreamEndPoint_var streamendpoint = this->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       // Use the base class implementation of connect
-      responder->request_connection (streamendpoint.in (),
+      responder->request_connection (this->_this (ACE_TRY_ENV),
                                      0,
                                      qos_spec,
                                      flow_spec,
@@ -1069,7 +1065,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name,
       CORBA::Object_ptr fep_entry = 0;
       // Remove the fep from the hash table.
       if (this->fep_map_.unbind (fep_name_key,fep_entry)!= 0)
-        ACE_THROW (AVStreams::streamOpFailed ());
+        TAO_THROW_ENV (AVStreams::streamOpFailed (),ACE_TRY_ENV);
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0,j=0 ; i <this->flows_.length (); i++)
@@ -1398,11 +1394,8 @@ TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
       ACE_NEW_RETURN (stream_ctrl,
                       TAO_StreamCtrl,
                       0);
-      AVStreams::MMDevice_var mmdevice = 
-        this->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       stream_ctrl->bind_devs (peer_device,
-                              mmdevice.in (),
+                              AVStreams::MMDevice::_duplicate (this->_this (ACE_TRY_ENV)),
                               the_qos,
                               the_spec,
                               ACE_TRY_ENV);
@@ -1788,16 +1781,13 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr flow_producer,
       this->producer_ = flow_producer;
       this->consumer_ = flow_consumer;
 
-      AVStreams::FlowConnection_var flowconnection =
-        this->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->producer_->set_peer (flowconnection.in (),
+      this->producer_->set_peer (this->_this (ACE_TRY_ENV),
                                  this->consumer_,
                                  the_qos,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->consumer_->set_peer (flowconnection.in (),
+      this->consumer_->set_peer (this->_this (ACE_TRY_ENV),
                                  this->producer_,
                                  the_qos,
                                  ACE_TRY_ENV);
@@ -2363,62 +2353,44 @@ TAO_FDev::create_producer (AVStreams::FlowConnection_ptr the_requester,
 
 // hook for the applications to override the creation process.
 AVStreams::FlowProducer_ptr
-TAO_FDev::make_producer (AVStreams::FlowConnection_ptr /* the_requester */,
-                         AVStreams::QoS & /* the_qos */,
-                         CORBA::Boolean_out /* met_qos */,
-                         char *& /* named_fdev */,
+TAO_FDev::make_producer (AVStreams::FlowConnection_ptr the_requester,
+                         AVStreams::QoS & the_qos,
+                         CORBA::Boolean_out met_qos,
+                         char *& named_fdev,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  AVStreams::FlowProducer_ptr flow_producer = AVStreams::FlowProducer::_nil ();
-  ACE_TRY
-    {
-      // memory leak??
-      TAO_FlowProducer *producer;
-      ACE_NEW_RETURN (producer,
-                      TAO_FlowProducer,
-                      0);
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_fdev);
 
-      flow_producer = producer->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_FDev::make_producer");
-      return flow_producer;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (flow_producer);
-  return flow_producer;
+  // memory leak??
+  TAO_FlowProducer *producer;
+  ACE_NEW_RETURN (producer,
+                  TAO_FlowProducer,
+                  0);
+  return producer->_this (ACE_TRY_ENV);
 }
 
 // hook for the applications to override the consumer creation.
 AVStreams::FlowConsumer_ptr
-TAO_FDev::make_consumer (AVStreams::FlowConnection_ptr /* the_requester */,
-                         AVStreams::QoS & /* the_qos */,
-                         CORBA::Boolean_out /* met_qos */,
-                         char *& /* named_fdev */,
+TAO_FDev::make_consumer (AVStreams::FlowConnection_ptr the_requester,
+                         AVStreams::QoS & the_qos,
+                         CORBA::Boolean_out met_qos,
+                         char *& named_fdev,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  AVStreams::FlowConsumer_ptr  flow_consumer = AVStreams::FlowConsumer::_nil ();
-  ACE_TRY
-    {
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_fdev);
 
   // memory leak??
   TAO_FlowConsumer *consumer;
   ACE_NEW_RETURN (consumer,
                   TAO_FlowConsumer,
                   0);
-  flow_consumer = consumer->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_FDev::make_consumer");
-      return flow_consumer;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (flow_consumer);
-  return flow_consumer;
+  return consumer->_this (ACE_TRY_ENV);
 }
 
 AVStreams::FlowConsumer_ptr

@@ -5,77 +5,54 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
+$tao_root = $ENV{TAO_ROOT};
+# This is a Perl script that runs the Naming Service, client and servers
+
 unshift @INC, '../../../../bin';
 require Process;
-require ACEutils;
+require Uniqueid;
 
 # amount of delay between running the servers
 
 $sleeptime = 6;
-$status = 0;
 
 # variables for parameters
 
-$nsior = "ns.ior";
-
+$nsport = 20000 + uniqueid ();
 sub name_server
 {
-    my $args = " -o $nsior";
-    my $prog = 
-      print ("\nNaming_Service: $args\n");
-
-    unlink $nsior;
-    $NS = Process::Create ("..".$DIR_SEPARATOR
-			   ."..".$DIR_SEPARATOR
-			   ."Naming_Service".$DIR_SEPARATOR
-			   ."Naming_Service".$EXE_EXT, $args);
-    if (ACE::waitforfile_timed ($nsior, 5) == -1) {
-      print STDERR "ERROR: cannot find naming service IOR file\n";
-      $NS->Kill (); $NS->TimedWait (1);
-      exit 1;
-    }
+    my $args = "-ORBnameserviceport $nsport";
+    my $prog = "$tao_root/orbsvcs/Naming_Service/Naming_Service"
+        .$EXE_EXT;
+    print ("\nNaming_Service: $prog$EXE_EXT $args\n");
+    $NS = Process::Create ($prog, $args);
 }
 
 
 sub server
 {
-    my $args = "-ORBNameServiceIOR file://$nsior";
-    print ("\nServer $args\n");
+    my $args = "-ORBnameserviceport $nsport";
+    print ("\nServer: server$EXE_EXT $args\n");
     $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", $args);
 }
 
 
 sub client
 {
-    my $args = "-ORBNameServiceIOR file://$nsior";
-    print ("\nclient $args\n");
+    my $args = "-ORBnameserviceport $nsport";
+    print ("\nclient: client $args\n");
     $CL = Process::Create ($EXEPREFIX."client$EXE_EXT", $args);
 }
 
 name_server ();
+sleep $sleeptime;
 
 server ();
 sleep $sleeptime;
 
 client ();
+sleep $sleeptime;
 
-if ($CL->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
-}
+$NS->Kill ();
+$SV->Kill ();
 
-$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
-}
-  
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
-}
-
-exit $status;

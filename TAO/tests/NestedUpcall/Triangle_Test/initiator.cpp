@@ -9,7 +9,7 @@
 //    initiator.cpp
 //
 // = DESCRIPTION
-//    This class implements a simple server for the
+//    This class implements a simple server for the 
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -83,7 +83,7 @@ Initiator_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg,0);
+        result = this->read_ior (get_opts.optarg,0); 
         // read IOR for Object A
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,7 +92,7 @@ Initiator_Server::parse_args (void)
                             -1);
             break;
       case 'g': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg,1);
+        result = this->read_ior (get_opts.optarg,1); 
         // read IOR for Object A
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,16 +119,16 @@ Initiator_Server::parse_args (void)
 int
 Initiator_Server::init (int argc,
                        char** argv,
-                       CORBA::Environment& ACE_TRY_ENV)
+                       CORBA::Environment& env)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa",
-                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+                                     env);
 
+  TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -141,78 +141,82 @@ Initiator_Server::init (int argc,
                       this->argv_[0]),
                       -1);
 
-  ACE_TRY
-    {
-      // Get Object A
 
-      CORBA::Object_var object_A_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_A_key_,
-                                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  TAO_TRY
+  {
+    // Get Object A
 
-      this->object_A_var_ =
-        Object_A::_narrow (object_A_obj_var.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+    CORBA::Object_var object_A_obj_var =
+      this->orb_manager_.orb()->string_to_object (this->object_A_key_,
+                                  TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (this->object_A_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid object A key <%s>\n",
-                           object_A_key_),
-                          -1);
+    this->object_A_var_ =
+      Object_A::_narrow (object_A_obj_var.in(), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Object A IOR: %s\n",
-                  this->object_A_key_));
-      ACE_DEBUG ((LM_DEBUG, "Object A received OK\n"));
+    if (CORBA::is_nil (this->object_A_var_.in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "invalid object A key <%s>\n",
+                         object_A_key_),
+                         -1);
 
-      // Get Object B
+    ACE_DEBUG ((LM_DEBUG, 
+                "Object A IOR: %s\n", 
+                this->object_A_key_));
+    ACE_DEBUG ((LM_DEBUG, "Object A received OK\n"));
 
-      CORBA::Object_var object_B_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_B_key_,
-                                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
-      this->object_B_var_ =
-        Object_B::_narrow (object_B_obj_var.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+    // Get Object B
 
-      if (CORBA::is_nil (this->object_B_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid object b key <%s>\n",
-                           object_B_key_),
-                          -1);
+    CORBA::Object_var object_B_obj_var =
+      this->orb_manager_.orb()->string_to_object (this->object_B_key_,
+                                    TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Object A IOR: %s\n",
-                  this->object_A_key_));
-      ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
+    this->object_B_var_ =
+      Object_B::_narrow (object_B_obj_var.in(), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
 
-      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      return -1;
-    }
-  ACE_CATCH (CORBA::UserException, userex)
-    {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
-      return -1;
-    }
-  ACE_ENDTRY;
+    if (CORBA::is_nil (this->object_B_var_.in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "invalid object b key <%s>\n",
+                         object_B_key_),
+                         -1);
 
-  ACE_NEW_RETURN (this->initiator_i_ptr_,
+    ACE_DEBUG ((LM_DEBUG, 
+                "Object A IOR: %s\n", 
+                this->object_A_key_));
+    ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
+
+  }
+  TAO_CATCH (CORBA::SystemException, sysex)
+  {
+    ACE_UNUSED_ARG (sysex);
+    TAO_TRY_ENV.print_exception ("System Exception");
+    return -1;
+  }
+  TAO_CATCH (CORBA::UserException, userex)
+  {
+    ACE_UNUSED_ARG (userex);
+    TAO_TRY_ENV.print_exception ("User Exception");
+    return -1;
+  }
+  TAO_ENDTRY;
+
+
+  ACE_NEW_RETURN (this->initiator_i_ptr_, 
                   Initiator_i(this->object_A_var_.in(),
-                              this->object_B_var_.in()),
+                                 this->object_B_var_.in()),
                   -1);
 
-  this->str_ =
-    this->orb_manager_.activate (this->initiator_i_ptr_,
-                                 ACE_TRY_ENV);
+  CORBA::String_var str  =
+    this->orb_manager_.activate_under_child_poa ("initiator",
+                                                 this->initiator_i_ptr_,
+                                                 env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              this->str_.in ()));
+              str.in ()));
 
 
   return 0;
@@ -220,35 +224,32 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Initiator_Server::run (CORBA::Environment &)
 {
-  ACE_TRY
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Initiator_Server::run: Trying to invoke "
-                  "foo on Object A\n"));
+  TAO_TRY
+  {
+    ACE_DEBUG ((LM_DEBUG,
+              "Initiator_Server::run: Trying to invoke foo on Object A\n"));
 
-      Initiator_var initiator =
-        this->initiator_i_ptr_->_this(ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->object_A_var_->foo (initiator.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG,
-                  "Initiator_Server::run: Returned from invoke "
-                  "foo on Object A\n"));
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      return -1;
-    }
-  ACE_CATCH (CORBA::UserException, userex)
-    {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
-      return -1;
-    }
-  ACE_ENDTRY;
+    this->object_A_var_->foo (this->initiator_i_ptr_->_this(TAO_TRY_ENV), 
+                              TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+    ACE_DEBUG ((LM_DEBUG,
+              "Initiator_Server::run: Returned from invoke foo on Object A\n"));
+  }
+  TAO_CATCH (CORBA::SystemException, sysex)
+  {
+    ACE_UNUSED_ARG (sysex);
+    TAO_TRY_ENV.print_exception ("System Exception");
+    return -1;
+  }
+  TAO_CATCH (CORBA::UserException, userex)
+  {
+    ACE_UNUSED_ARG (userex);
+    TAO_TRY_ENV.print_exception ("User Exception");
+    return -1;
+  }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -259,21 +260,8 @@ Initiator_Server::~Initiator_Server (void)
     ACE_OS::free (this->object_A_key_);
   if (this->object_B_key_ != 0)
     ACE_OS::free (this->object_B_key_);
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_manager_.deactivate (this->str_.in (),
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Initiator_Server::~Initiator_Server");
-    }
-  ACE_ENDTRY;
-
-  delete this->initiator_i_ptr_;
+  if (this->initiator_i_ptr_ != 0)
+    delete initiator_i_ptr_;
 }
 
 int
@@ -283,28 +271,28 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
-      if (initiator_Server.init (argc, argv, ACE_TRY_ENV) == -1)
+      if (initiator_Server.init (argc,argv,TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-          initiator_Server.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          initiator_Server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return 0;
 }

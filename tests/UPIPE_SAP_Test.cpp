@@ -45,11 +45,11 @@ connector (void *)
 
   ACE_OS::sleep (5);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) connector starting connect\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) connector starting connect\n"));
   ACE_UPIPE_Connector con;
 
   if (con.connect (c_stream, addr) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) connector ACE_UPIPE_Connector failed\n"));
 
   ACE_Message_Block *mb;
 
@@ -58,10 +58,10 @@ connector (void *)
   mb->copy ("hello");
 
   if (c_stream.send (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) error connector send\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) error connector send\n"));
 
   if (c_stream.recv (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) error connector recv\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) error connector recv\n"));
 
   ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "thanks") == 0);
 
@@ -71,10 +71,10 @@ connector (void *)
   // Now try the send()/recv() interface.
   char mytext[] = "This string is sent by connector as a buffer";
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) connector sending text\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) connector sending text\n"));
   if (c_stream.send (mytext, sizeof (mytext)) == -1)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%t) buffer send from connector failed\n")));
+                "(%t) buffer send from connector failed\n"));
 
   char conbuf[BUFSIZ];  // Buffer to receive response.
 
@@ -84,17 +84,17 @@ connector (void *)
     {
       if (c_stream.recv (&c, 1) == -1)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) buffer recv from connector failed\n")));
+                    "(%t) buffer recv from connector failed\n"));
       else
         conbuf[i] = c;
     }
 
   conbuf[i] = '\0';
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) conbuf = %s\n"), conbuf));
+  ACE_DEBUG ((LM_DEBUG, "(%t) conbuf = %s\n", conbuf));
   ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
 
   c_stream.close ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) exiting thread\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting thread\n"));
   return 0;
 }
 
@@ -106,12 +106,12 @@ acceptor (void *args)
 
   if (acceptor->accept (s_stream) == -1)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%t) ACE_UPIPE_Acceptor.accept failed\n")));
+                "(%t) ACE_UPIPE_Acceptor.accept failed\n"));
 
   ACE_Message_Block *mb = 0;
 
   if (s_stream.recv (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) acceptor recv failed\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) acceptor recv failed\n"));
 
   ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "hello") == 0);
 
@@ -119,13 +119,13 @@ acceptor (void *args)
   mb->copy ("thanks");
 
   if (s_stream.send (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) acceptor send failed\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) acceptor send failed\n"));
 
   char s_buf[BUFSIZ];
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) acceptor sleeping on recv\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) acceptor sleeping on recv\n"));
 
   if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) acceptor recv failed\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) acceptor recv failed\n"));
   else
     ACE_ASSERT (ACE_OS::strcmp (s_buf,
                                 "This string is sent by connector as a buffer") == 0);
@@ -134,18 +134,18 @@ acceptor (void *args)
   ACE_OS::strcpy (s_buf, svr_response);
 
   if (s_stream.send (s_buf, sizeof (svr_response)) == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) acceptor send failed\n")));
+    ACE_DEBUG ((LM_DEBUG, "(%t) acceptor send failed\n"));
 
   s_stream.close ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) exiting thread\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting thread\n"));
   return 0;
 }
 #endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || (ACE_WIN32&&NT4)*/
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, char *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("UPIPE_SAP_Test"));
+  ACE_START_TEST ("UPIPE_SAP_Test");
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || \
         (defined (ACE_WIN32) && \
@@ -158,17 +158,17 @@ main (int, ASYS_TCHAR *[])
                                               (void *) &acc,
                                               THR_NEW_LWP,
                                               0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Spawn a connector thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (connector),
                                               (void *) 0,
                                               THR_NEW_LWP,
                                               0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) joined with acceptor thread\n")));
+  ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
 
   // Close the acceptor
   acc.close ();
@@ -176,9 +176,9 @@ main (int, ASYS_TCHAR *[])
 #else
 
 #if !defined (ACE_HAS_THREADS)
-  ACE_ERROR ((LM_INFO, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO, "threads not supported on this platform\n"));
 #else
-  ACE_ERROR ((LM_INFO, ASYS_TEXT ("UPIPE is not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO, "UPIPE is not supported on this platform\n"));
 #endif /* !defined (ACE_HAS_THREADS) */
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) && NT4) */
 

@@ -202,9 +202,6 @@ public:
   void operator<<= (from_string);
   // insert a bounded string
 
-  void operator<<= (const CORBA_Exception &exception);
-  // insert an exception into the Any
-
   // = Special types.
 
   // These extract octets, chars, booleans, bounded strings, and
@@ -252,14 +249,14 @@ public:
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
-                CORBA_Environment &ACE_TRY_ENV =
+                CORBA_Environment &TAO_IN_ENV =
                   TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
-                CORBA_Environment &ACE_TRY_ENV =
+                CORBA_Environment &TAO_IN_ENV =
                   TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
@@ -268,7 +265,7 @@ public:
   // Return TypeCode of the element stored in the Any.
 
   void type (CORBA::TypeCode_ptr type,
-             CORBA_Environment &ACE_TRY_ENV =
+             CORBA_Environment &TAO_IN_ENV =
                TAO_default_environment ());
   // For use along with <<= of a value of aliased type when the alias must
   // be preserved.
@@ -298,7 +295,7 @@ public:
 
   void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
-                     CORBA::Environment &ACE_TRY_ENV =
+                     CORBA::Environment &TAO_IN_ENV =
                        TAO_default_environment ());
   // Replace via message block instead of <value_>.
 
@@ -306,14 +303,14 @@ public:
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV =
+                     CORBA::Environment &TAO_IN_ENV =
                        TAO_default_environment ());
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV =
+                     CORBA::Environment &TAO_IN_ENV =
                        TAO_default_environment ());
   // Replace the value of the Any, used in the >>= operators.
 
@@ -324,7 +321,7 @@ public:
   // Useful for template programming.
 
 protected:
-  void free_value (CORBA::Environment &ACE_TRY_ENV);
+  void free_value (CORBA::Environment &TAO_IN_ENV);
   // Release the <value_>.
 
 private:
@@ -373,7 +370,7 @@ public:
   CORBA_Any_var &operator= (const CORBA_Any_var &a);
   // assignment from an Any_var
   // This operation requires memory allocation.
-  // If the allocation fails, *this is returned
+  // If the allocation fails, *this is returned 
   // unmodified.
 
   CORBA_Any *operator-> (void);
@@ -451,79 +448,79 @@ private:
 # include "tao/Any.i"
 #else
 
-// Copying versions of insertion
+// Copying versions of insertion 
 // operators which are defined as members of the Any class
 // must also be defined for Any_var.
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Short);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::UShort);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Long);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::ULong);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::LongLong);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::ULongLong);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Float);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Double);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     const CORBA_Any&);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     const char*);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::TypeCode_ptr);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     const CORBA::Object_ptr);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_boolean);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_char);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_wchar);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_octet);
-extern TAO_Export void operator<<= (CORBA_Any_var,
+extern TAO_Export void operator<<= (CORBA_Any_var, 
                                     CORBA::Any::from_string);
 
 // These are not required by the spec, but will make users
 // of other ORBs that are used to them more comfortable.
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Short&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::UShort&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Long&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::ULong&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::LongLong&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::ULongLong&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Float&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Double&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA_Any&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::TypeCode_ptr&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               char*&);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_boolean);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_octet);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_char);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_wchar);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_string);
-extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+extern TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var, 
                                               CORBA::Any::to_object);
 
 #endif /* __ACE_INLINE__ */

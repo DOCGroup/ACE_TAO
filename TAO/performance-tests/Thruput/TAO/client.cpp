@@ -4,7 +4,7 @@
 //
 // = TAO tests
 //    Throughput measurement using the TTCP benchmark adapted to work
-//    using TAO
+//    using TAO 
 //
 // = FILENAME
 //   client.cpp
@@ -47,7 +47,7 @@ CORBA::Long buflen = 8 * 1024;  // length of buffer, default 8,192 bytes
 CORBA::Char *buf;               // ptr to dynamic buffer
 CORBA::Long nbuf;               // number of buffers to send in sinkmode
 CORBA::Short port = TAO_DEFAULT_SERVER_PORT;    // TCP port number
-const char* host = "localhost";              // ptr to name of host
+CORBA::Char *host = "localhost";              // ptr to name of host
 CORBA::Long verbose = 0;        // 0=print basic info, 1=print cpu
                                 // rate, proc resource usage.
 CORBA::Char fmt = 'K';          // output
@@ -76,12 +76,16 @@ main (int argc, char *argv[])
 
   int c;
   CORBA::ORB_ptr        orb_ptr;   // underlying ORB
+  CORBA::String  objkey = "TTCP_IIOP_test"; // name of the TTCP object on the
                                             // server
   CORBA::Object_ptr     objref = CORBA::Object::_nil(); // object reference
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object
+  CORBA::Environment    env;       // environment
+
+  ACE_UNUSED_ARG (objkey);
 
   // parse the arguments
-  ACE_Get_Opt get_opt (argc, argv, "d:vm:l:L:S:q:i:f:");
+  ACE_Get_Opt get_opt (argc, argv, "d:vm:l:L:S:q:i:f:"); // Command line options
   TAO_debug_level = 0;
   while ((c = get_opt ()) != -1)
     {
@@ -143,103 +147,114 @@ main (int argc, char *argv[])
         }
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  //
+  // Transmitter
+  //
+
+  // get a handle to the ORB
+  orb_ptr = CORBA::ORB_init (argc, argv, "internet", env);
+  if (env.exception () != 0)
     {
-      //
-      // Transmitter
-      //
-      
-      // get a handle to the ORB
-      orb_ptr = CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      env.print_exception ("ORB initialization", stdout);
+      return -1;
+    }
 
-      ACE_DEBUG ((LM_DEBUG, "Read IOR string as: %s\n" , ior));
+  ACE_DEBUG ((LM_DEBUG, "Read IOR string as: %s\n" , ior));
 
-      // retrieve an object reference out of the stringified IOR
-      objref = orb_ptr->string_to_object (ior, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // retrieve an object reference out of the stringified IOR
+  objref = orb_ptr->string_to_object (ior, env);
 
-      if (!CORBA::is_nil (objref))
+  if (env.exception () != 0)
+    {
+      env.print_exception ("string_to_object", stdout);
+      return -1;
+    }
+
+  if (!CORBA::is_nil (objref))
+    {
+      // if it is a valid obj ref, narrow it to a ttcp_sequence CORBA object
+      ttcp_seq = ttcp_sequence::_narrow (objref, env);
+      if (env.exception () != 0)
         {
-          // if it is a valid obj ref, narrow it to a ttcp_sequence
-          // CORBA object 
-          ttcp_seq = ttcp_sequence::_narrow (objref, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          env.print_exception ("ttcp_sequence::_narrow");
+          return  -1;
+        }
 
-          if (!CORBA::is_nil (ttcp_seq))
+      if (!CORBA::is_nil (ttcp_seq))
+        {
+
+          // the number of iterations is based on the total data size and the
+          // individual buffer size sent
+          nbuf = srcDataSize/buflen;
+          ACE_DEBUG ((LM_DEBUG, "data size = %d, buflen = %d, nbuf = %d\n",
+                      srcDataSize, buflen, nbuf));
+
+          //
+          // Prepare the Message to be sent
+          //
+
+
+          // first allocate a buffer of the desired size and alignment
+          errno = 0;
+          if ((buf = (char *) ACE_OS::malloc (buflen)) == (char *) NULL)
+            err ("malloc");
+
+          // fill the buffer with the data type to be sent
+          FillPattern (buf, buflen, dt);
+
+          //
+          // Start the timers on the client and server sides
+          //
+
+          prep_timer ();  // start our time
+          env.clear ();
+          ttcp_seq->start_timer (env); // ask the server to start its timer
+          if (env.exception () != 0)
             {
-              // the number of iterations is based on the total data size and the
-              // individual buffer size sent
-              nbuf = srcDataSize/buflen;
-              ACE_DEBUG ((LM_DEBUG, "data size = %d, buflen = %d, nbuf = %d\n",
-                          srcDataSize, buflen, nbuf));
-
-              //
-              // Prepare the Message to be sent
-              //
-
-              
-              // first allocate a buffer of the desired size and alignment
-              errno = 0;
-              if ((buf = (char *) ACE_OS::malloc (buflen)) == (char *) NULL)
-                err ("malloc");
-
-              // fill the buffer with the data type to be sent
-              FillPattern (buf, buflen, dt);
-
-              //
-              // Start the timers on the client and server sides
-              //
-
-              prep_timer ();  // start our time
-              // ask the server to start its timer
-              ttcp_seq->start_timer (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
+              env.print_exception ("start_timer operation", stdout);
+              return -1;
+            }
 
 #if defined (ACE_HAS_QUANTIFY)
-              /* start recording quantify data from here */
-              quantify_clear_data ();
-              quantify_start_recording_data ();
+          /* start recording quantify data from here */
+          quantify_clear_data ();
+          quantify_start_recording_data ();
 #endif /* ACE_HAS_QUANTIFY */
-              // send the same buffer nbuf times
-              while (nbuf--)
+          // send the same buffer nbuf times
+          while (nbuf--)
+            {
+              switch (dt){
+              case SEND_SHORT:
+                ttcp_seq->sendShortSeq (*sseq, env);
+                nbytes += sseq->length () * sizeof (CORBA::Short);
+                break;
+              case SEND_LONG:
+                ttcp_seq->sendLongSeq (*lseq, env);
+                nbytes += lseq->length () * sizeof (CORBA::Long);
+                break;
+              case SEND_OCTET:
+                ttcp_seq->sendOctetSeq (*oseq, env);
+                nbytes += oseq->length () * sizeof (CORBA::Octet);
+                break;
+              case SEND_DOUBLE:
+                ttcp_seq->sendDoubleSeq (*dseq, env);
+                nbytes += dseq->length () * sizeof (CORBA::Double);
+                break;
+              case SEND_CHAR:
+                ttcp_seq->sendCharSeq (*cseq, env);
+                nbytes += cseq->length () * sizeof (CORBA::Char);
+                break;
+              case SEND_STRUCT:
+                ttcp_seq->sendStructSeq (*Sseq, env);
+                nbytes += Sseq->length () * sizeof (BinStruct);
+                break;
+              }
+              numCalls++; // nbytes and numCalls are used in the thruput
+                          // measurement
+              if (env.exception () != 0)
                 {
-                  switch (dt)
-                    {
-                    case SEND_SHORT:
-                      ttcp_seq->sendShortSeq (*sseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += sseq->length () * sizeof (CORBA::Short);
-                      break;
-                    case SEND_LONG:
-                      ttcp_seq->sendLongSeq (*lseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += lseq->length () * sizeof (CORBA::Long);
-                      break;
-                    case SEND_OCTET:
-                      ttcp_seq->sendOctetSeq (*oseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += oseq->length () * sizeof (CORBA::Octet);
-                      break;
-                    case SEND_DOUBLE:
-                      ttcp_seq->sendDoubleSeq (*dseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += dseq->length () * sizeof (CORBA::Double);
-                      break;
-                    case SEND_CHAR:
-                      ttcp_seq->sendCharSeq (*cseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += cseq->length () * sizeof (CORBA::Char);
-                      break;
-                    case SEND_STRUCT:
-                      ttcp_seq->sendStructSeq (*Sseq, ACE_TRY_ENV);
-                      ACE_TRY_CHECK;
-                      nbytes += Sseq->length () * sizeof (BinStruct);
-                      break;
-                  }
-                  numCalls++; // nbytes and numCalls are used in the thruput
-                  // measurement
+                  env.print_exception ("send operation", stdout);
+                  return -1;
                 }
             }
 #if defined (ACE_HAS_QUANTIFY)
@@ -249,27 +264,24 @@ main (int argc, char *argv[])
           // Stop the timer
           //
           // stop the timer on the server side
-          ttcp_seq->stop_timer (ACE_TRY_ENV);
-
+          ttcp_seq->stop_timer (env);
+          if (env.exception () != 0)
+            {
+              env.print_exception ("stop_timer operation", stdout);
+              return -1;
+            }
           // stop our timer
           (void) read_timer (stats, sizeof (stats));
 
           // print results
           PrintStats();
         }
-
-      CORBA::release (ttcp_seq);
-      CORBA::release (objref);
-      CORBA::release (orb_ptr);
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      return -1;
-    }
-  ACE_ENDTRY;
 
-  return 0;
+  CORBA::release (ttcp_seq);
+  CORBA::release (objref);
+  CORBA::release (orb_ptr);
+  return (0);
 }
 
 int print_usage (void)

@@ -61,8 +61,6 @@ ACE_RCSID(tao, decode, "$Id$")
 // code out into a separate routine called both by CDR::decoder () and
 // by the code retrieving typecode parameters from encapsulations.
 
-typedef TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> TAO_Object_Field_Class;
-
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
                                const void *data,
@@ -695,8 +693,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 
             if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
               {
-                TAO_Object_Field_Class* field =
-                  ACE_reinterpret_cast (TAO_Object_Field_Class *,
+                TAO_Object_Field_T<CORBA_Object>* field =
+                  ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
                                         ACE_const_cast (void *, data));
                 field->_downcast (object, ACE_TRY_ENV);
               }
@@ -715,7 +713,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::decode detected error\n"));
-
+     
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -734,7 +732,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
   CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_ptr member_tc = 0;
+  CORBA::TypeCode_ptr member_tc;
   CORBA::Any_ptr member_label;
   CORBA::ULong discrim_size_with_pad;
   const void *discrim_val;
@@ -748,25 +746,30 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
 
   discrim_tc = tc->discriminator_type (ACE_TRY_ENV);
   // get the discriminator type
+
+  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // decode the discriminator value
   discrim_val = base_union->_discriminant ();
   stream->decode (discrim_tc, discrim_val, data2, ACE_TRY_ENV);
+  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   discrim_size_with_pad = tc->TAO_discrim_pad_size (ACE_TRY_ENV);
+  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // move the pointer to point to the actual value
   data = (char *) data + discrim_size_with_pad;
   data2 = (char *) data2 + discrim_size_with_pad;
-
   // now get ready to marshal the actual union value
   default_index = tc->default_index (ACE_TRY_ENV);
+  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   member_count = tc->member_count (ACE_TRY_ENV);
+  // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // check which label value matches with the discriminator
@@ -777,6 +780,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   for (i = 0; member_count-- != 0; i++)
     {
       member_label = tc->member_label (i, ACE_TRY_ENV);
+      // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       // do the matching
@@ -856,11 +860,12 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
 
       // get the member typecode
       member_tc = tc->member_type (i, ACE_TRY_ENV);
+      // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      // have we reached the default label?, if so,
-      // save a handle to the typecode for the default
       if (default_index >= 0 && default_index-- == 0)
+                                // have we reached the default label?, if so,
+                                // save a handle to the typecode for the default
         default_tc = member_tc;
       if (discrim_matched)
         {
@@ -868,22 +873,13 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
           // marshal according to the matched typecode
           if (member_tc->kind () == CORBA::tk_objref)
             {
-              CORBA_Object_ptr object;
-              int retval =
-                stream->decode (member_tc, &object, data2, ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                {
-                  // we know that the object pointer is stored in a
-                  // TAO_Object_Field_T parametrized type
-                  TAO_Object_Field_Class* field =
-                    ACE_reinterpret_cast (TAO_Object_Field_Class *,
-                                          member_val);
-                  field->_downcast (object, ACE_TRY_ENV);
-                  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-                }
-              return CORBA::TypeCode::TRAVERSE_CONTINUE;
+              // we know that the object pointer is stored in a
+              // TAO_Object_Field_T parametrized type
+              TAO_Object_Field_T<CORBA_Object>* field =
+                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                                      member_val);
+              CORBA::Object_ptr ptr = field->_upcast ();
+              return stream->decode (member_tc, &ptr, data2, ACE_TRY_ENV);
             }
           else
             {
@@ -899,22 +895,13 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
       member_val = base_union->_access (1);
       if (default_tc->kind () == CORBA::tk_objref)
         {
-          CORBA_Object_ptr object;
-          int retval =
-            stream->decode (member_tc, &object, data2, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-            {
-              // we know that the object pointer is stored in a
-              // TAO_Object_Field_T parametrized type
-              TAO_Object_Field_Class* field =
-                ACE_reinterpret_cast (TAO_Object_Field_Class *,
-                                      member_val);
-              field->_downcast (object, ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-            }
-          return CORBA::TypeCode::TRAVERSE_CONTINUE;
+          // we know that the object pointer is stored in a
+          // TAO_Object_Field_T parametrized type
+          TAO_Object_Field_T<CORBA_Object>* field =
+            ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                                  member_val);
+          CORBA::Object_ptr ptr = field->_upcast ();
+          return stream->decode (default_tc, &ptr, data2, ACE_TRY_ENV);
         }
       else
         {
@@ -1203,7 +1190,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
   // get element typecode
   tc2 = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
+  
   size = tc2->size (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 

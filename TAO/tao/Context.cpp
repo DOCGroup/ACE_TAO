@@ -78,7 +78,7 @@ CORBA_Context::set_one_value (const char * /* propname */,
 }
 
 void
-CORBA_Context::set_values (CORBA::NVList_ptr,
+CORBA_Context::set_values (CORBA::NVList_ptr values,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
@@ -142,6 +142,8 @@ CORBA_ContextList::item (CORBA::ULong slot,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   char **ctx;
+  ACE_TRY_ENV.clear ();
+
   if (this->ctx_list_.get (ctx,
                            slot) == -1)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
@@ -153,7 +155,8 @@ void
 CORBA_ContextList::remove (CORBA::ULong,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  // unimplemented
+  ACE_TRY_ENV.clear ();
 }
 
 CORBA_ContextList_ptr
@@ -170,20 +173,6 @@ CORBA_ContextList::_destroy (void)
 
   if (current == 0)
     delete this;
-}
-
-void
-CORBA_ContextList::_incr_refcnt (void)
-{
-  this->ref_count_++;
-}
-
-void
-CORBA_ContextList::_decr_refcnt (void)
-{
-  this->ref_count_--;
-    if (this->ref_count_ != 0)
-      delete this;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

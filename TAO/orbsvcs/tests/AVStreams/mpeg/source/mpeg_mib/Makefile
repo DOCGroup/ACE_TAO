@@ -36,7 +36,7 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
   LIB = $(LIB2)
   SHLIB = $(SHLIB2)

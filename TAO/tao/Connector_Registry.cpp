@@ -9,7 +9,6 @@
 #include "tao/debug.h"
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
-  : connectors_ ()
 {
 }
 
@@ -33,7 +32,6 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
       if ((*connector)->tag () == tag)
         return *connector;
     }
-
   return 0;
 }
 
@@ -56,27 +54,8 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 
       if (connector)
         {
-          if (connector->open (orb_core) != 0)
-            {
-              delete connector;
-
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) unable to open connector for "
-                                 "<%s>.\n",
-                                 (*factory)->protocol_name ().c_str ()),
-                                -1);
-            }
-
-          if (connectors_.insert (connector) == -1)
-            {
-              delete connector;
-
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) unable to add a <%s> connector "
-                                 "to the connector registry.\n",
-                                 (*factory)->protocol_name ().c_str ()),
-                                -1);
-            }
+          connectors_.insert (connector);
+          connector->open (orb_core);
         }
       else
         return -1;
@@ -136,17 +115,14 @@ TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
 
 int
 TAO_Connector_Registry::connect (TAO_Profile *&profile,
-                                 TAO_Transport *&transport,
-                                 ACE_Time_Value *max_wait_time)
+                                 TAO_Transport *&transport)
 {
+
   // Find the appropriate connector object
   TAO_Connector *connector =
     this->get_connector (profile->tag ());
 
-  if (connector == 0)
-    return -1;
-
-  return connector->connect (profile, transport, max_wait_time);
+  return connector->connect (profile, transport);
 }
 
 int
@@ -156,12 +132,8 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 {
   if (!ior)
     // Failure: Null IOR string pointer
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (
-      CORBA_SystemException::_tao_minor_code (
-        TAO_NULL_POINTER_MINOR_CODE,
-        0),
-      CORBA::COMPLETED_NO),
-      -1);
+    ACE_THROW_RETURN (CORBA::MARSHAL (),
+                      -1);
 
   TAO_ConnectorSetItor first_connector =
     this->connectors_.begin ();
@@ -174,39 +146,28 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
     {
       if (*connector)
         {
-          int mp_result = (*connector)->make_mprofile (ior,
-                                                       mprofile,
-                                                       ACE_TRY_ENV);
-
-          ACE_CHECK_RETURN (mp_result);
-
-          if (mp_result == 0)
-            return 0;  // Success
+          if ((*connector)->make_mprofile (ior,
+                                           mprofile,
+                                           ACE_TRY_ENV) == 0)
+            // Success.
+            return 0;  
         }
       else
         // Failure: Null pointer to connector in connector registry.
-        ACE_THROW_RETURN (CORBA::INV_OBJREF (
-          CORBA_SystemException::_tao_minor_code (
-            TAO_NULL_POINTER_MINOR_CODE,
-            0),
-          CORBA::COMPLETED_NO),
-          -1);
+        ACE_THROW_RETURN (CORBA::MARSHAL (),
+                          -1);
     }
 
   // Failure: None of the connectors were able to parse the URL style
   // IOR into an MProfile.
-  ACE_THROW_RETURN (CORBA::INV_OBJREF (
-   CORBA_SystemException::_tao_minor_code (
-      TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL,
-      0),
-   CORBA::COMPLETED_NO),
-   -1);
+  ACE_THROW_RETURN (CORBA::MARSHAL (),
+                    -1);
 }
 
 TAO_Profile *
 TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 {
-  CORBA::ULong tag = 0;
+  CORBA::ULong tag;
 
   // If there is an error we abort.
   if ((cdr >> tag) == 0)
@@ -219,12 +180,13 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     {
       if (TAO_debug_level > 0)
         {
+          // @@ TODO create a generic profile in this case...
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) unknown profile tag %d\n",
                       tag));
         }
 
-      TAO_Profile *pfile = 0;
+      TAO_Profile *pfile;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag),
                       0);
@@ -233,17 +195,16 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
           pfile->_decr_refcnt ();
           pfile = 0;
         }
-
       return pfile;
     }
 
-  // OK, we've got a known profile.  It's going to be encapsulated
+  // OK, we've got known profile.  It's going to be encapsulated
   // ProfileData.  Create a new decoding stream and context for it,
   // and skip the data in the parent stream
 
   // ProfileData is encoded as a sequence of octet. So first get the
   // length of the sequence.
-  CORBA::ULong encap_len = 0;
+  CORBA::ULong encap_len;
   if ((cdr >> encap_len) == 0)
     return 0;
 
@@ -256,33 +217,6 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     return 0;
 
   return connector->create_profile (str);
-}
-
-char
-TAO_Connector_Registry::object_key_delimiter (const char *ior)
-{
-  if (!ior)
-    return 0; // Failure: Null IOR string pointer
-
-  TAO_ConnectorSetItor first_connector =
-    this->connectors_.begin ();
-  TAO_ConnectorSetItor last_connector =
-    this->connectors_.end ();
-
-  for (TAO_ConnectorSetItor connector = first_connector;
-       connector != last_connector;
-       ++connector)
-    {
-      if (*connector)
-        {
-          if ((*connector)->check_prefix (ior) == 0)
-            return (*connector)->object_key_delimiter ();
-        }
-    }
-
-  // Failure: None of the connectors were able to match their protocol
-  // against the provided string.
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

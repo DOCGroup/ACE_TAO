@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
-// $Id$
 
 // ========================================================================
+// $Id$
 //
 // = LIBRARY
 //    orbsvcs
@@ -23,23 +23,25 @@
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
 
+  // *************************************************************
+  // TAO_Interpreter
+  // *************************************************************
+
 class TAO_Interpreter
+// = TITLE
+//      TAO_Interpreter is the superclass for all interpreters. Its
+//      build tree method invokes the yacc parser to parse a constraint
+//      or preference string.
 {
-  // = TITLE
-  //      TAO_Interpreter is the superclass for all interpreters. Its
-  //      build tree method invokes the yacc parser to parse a constraint
-  //      or preference string.
 protected:
-  // = Initialization and termination methods.
-  TAO_Interpreter (void);
-  // Constructor.
+
+  TAO_Interpreter (void) : root_ (0) {}
 
   ~TAO_Interpreter (void);
-  // Destructor.
 
   int build_tree (const char* preferences);
-  // Using the Yacc generated parser, construct an expression tree
-  // representing <constraints> from the tokens returned by it.
+  // Using the Yacc generated parser, construct an expression
+  // tree representing <constraints> from the tokens returned by it.
 
   static int is_empty_string (const char* str);
 
@@ -48,36 +50,38 @@ protected:
   // successfully builds a tree from the constraints.
 };
 
+  // *************************************************************
+  // TAO_Constraint_Interpreter
+  // *************************************************************
+
 class TAO_Constraint_Interpreter : public TAO_Interpreter
+//
+// = TITLE
+//   TAO_Constraint_Interpreter will, given a constraint string whose
+//   syntax and semantics comply with the trader specification for the
+//   constraint language, determine if a CosTrading::Offer meets the
+//   constraints.
+//
+// = DESCRIPTION
+//   TAO_Constraint_Interpreter will first build an expression tree
+//   representing the constraint expression using Lex and Yacc. Then,
+//   using a TAO_Constraint_Validator, it will validate the semantic
+//   correctness of the tree. When the evaluate method is invoked with
+//   an Offer, the TAO_Constraint_Interpreter will construct an
+//   EvaluationVisitor, which will evaluate the tree and decide
+//   whether the offer meets the constraints.
 {
-  //
-  // = TITLE
-  //   TAO_Constraint_Interpreter will, given a constraint string whose
-  //   syntax and semantics comply with the trader specification for the
-  //   constraint language, determine if a CosTrading::Offer meets the
-  //   constraints.
-  //
-  // = DESCRIPTION
-  //   TAO_Constraint_Interpreter will first build an expression tree
-  //   representing the constraint expression using Lex and Yacc. Then,
-  //   using a TAO_Constraint_Validator, it will validate the semantic
-  //   correctness of the tree. When the evaluate method is invoked with
-  //   an Offer, the TAO_Constraint_Interpreter will construct an
-  //   EvaluationVisitor, which will evaluate the tree and decide
-  //   whether the offer meets the constraints.
 public:
-  // = Initialization and termination methods.
+
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints,
-                              CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              CORBA::Environment& env)
+    ACE_THROW_SPEC ((CosTrading::IllegalConstraint));
 
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints,
-                              CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              CORBA::Environment& env)
+    ACE_THROW_SPEC ((CosTrading::IllegalConstraint));
   // This constructor builds an expression tree representing the
   // constraint specified in <constraints>, and throws an Illegal
   // Constraint exception if the constraint given has syntax errors or
@@ -94,33 +98,35 @@ public:
   // tree was constructed. This method is thread safe (hopefully).
 };
 
+  // *************************************************************
+  // TAO_Preference_Interpreter
+  // *************************************************************
+
 class TAO_Preference_Interpreter : public TAO_Interpreter
+// = TITLE
+//   The TAO_Preference_Interpreter will, given a valid preference
+//   string and offers, will order the offers based on the offers'
+//   compliance with the preferences.
+//
+// = DESCRIPTION
+//   Each time the order_offer method is invoked, the
+//   TAO_Preference_Interpreter stores the offer reference in the
+//   order dictated by its evaluation of the preference string. After
+//   the TAO_Preference_Interpreter client has finished ordering all
+//   the offers, it will extract the offers in order using the
+//   remove_offer method.
 {
-  // = TITLE
-  //   The TAO_Preference_Interpreter will, given a valid preference
-  //   string and offers, will order the offers based on the offers'
-  //   compliance with the preferences.
-  //
-  // = DESCRIPTION
-  //   Each time the order_offer method is invoked, the
-  //   TAO_Preference_Interpreter stores the offer reference in the
-  //   order dictated by its evaluation of the preference string. After
-  //   the TAO_Preference_Interpreter client has finished ordering all
-  //   the offers, it will extract the offers in order using the
-  //   remove_offer method.
 public:
-  // = Initialization and termination methods.
+
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference,
-                              CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              CORBA::Environment& env)
+    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference,
-                              CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              CORBA::Environment& env)
+    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   // Parse the preference string, determining first if it's
   // valid. Throw an IllegalPreference exception if the preference
@@ -175,10 +181,14 @@ private:
   // The ordered list of offers.
 };
 
+  // *************************************************************
+  // Ugly Lex/Yacc Stuff
+  // *************************************************************
+
 // Functions we need for parsing.
-extern int yyparse (void);
-extern void yyrestart (FILE*);
-extern int yylex (void);
+extern int yyparse(void);
+extern void yyrestart(FILE*);
+extern int yylex(void);
 
 // Have yylex read from the constraint string, not from stdin.
 #undef YY_INPUT
@@ -188,17 +198,18 @@ extern int yylex (void);
 #define yyerror(x)
 
 class TAO_Lex_String_Input
+// = TITLE
+//   Stupid hack to have Lex read from a string and not from
+//   stdin. Essentially, the interpreter needs to call yylex() until
+//   EOF, and call TAO_Lex_String_Input::reset() with the new string,
+//   prior to calling yyparse.
 {
-  // = TITLE
-  //   Have Lex read from a string and not from stdin. Essentially,
-  //   the interpreter needs to call yylex() until EOF, and call
-  //   TAO_Lex_String_Input::reset() with the new string, prior to
-  //   calling yyparse.
 public:
-  static void reset (char* input_string);
+
+  static void reset(char* input_string);
   // Reset the lex input.
 
-  static int copy_into (char* buf, int max_size);
+  static int copy_into(char* buf, int max_size);
   // Method lex will call to read from the input string.
 
 private:

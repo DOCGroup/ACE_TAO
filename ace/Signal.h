@@ -17,10 +17,6 @@
 #ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
 
-#if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
-# error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
-#endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
-
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -110,6 +106,7 @@ public:
                   ACE_Sig_Set &sigmask,
                   int flags = 0);
   ACE_Sig_Action (const ACE_Sig_Action &s);
+  ACE_Sig_Action (struct sigaction *);
 
   ~ACE_Sig_Action (void);
   // Default dtor.

@@ -35,6 +35,7 @@ public:
   virtual int init (int argc, char* argv[]);
   // Dynamic linking hook
 
+  // @@ Fred&Ossama: Shouldn't we use a plain const char* here?
   virtual int match_prefix (const ACE_CString &prefix);
   // verify prefix is a match
 

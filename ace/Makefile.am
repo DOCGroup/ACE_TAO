@@ -187,19 +187,14 @@ libACE_Threads_la_SOURCES = \
 
 libACE_Demux_la_SOURCES = \
         Event_Handler.cpp \
-	FlReactor.cpp \
         Handle_Set.cpp \
-	Msg_WFMO_Reactor.cpp \
         POSIX_Proactor.cpp \
         Priority_Reactor.cpp \
         Proactor.cpp \
         Reactor.cpp \
         Select_Reactor.cpp \
         Select_Reactor_Base.cpp \
-	TP_Reactor.cpp \
-	TkReactor.cpp \
-        WFMO_Reactor.cpp \
-        XtReactor.cpp
+        WFMO_Reactor.cpp
 
 libACE_Connection_la_SOURCES = \
         Asynch_IO.cpp \
@@ -280,7 +275,6 @@ libACE_Svcconf_la_SOURCES = \
 
 libACE_Streams_la_SOURCES = \
         CDR_Stream.cpp \
-	Codeset_IBM1047.cpp \
         Message_Block.cpp \
         Message_Queue.cpp \
         Task.cpp
@@ -307,12 +301,15 @@ libACE_Other_la_SOURCES = \
         CORBA_Handler.cpp \
         CORBA_Ref.cpp \
         Local_Name_Space.cpp \
+        Msg_WFMO_Reactor.cpp \
         Name_Proxy.cpp \
         Name_Request_Reply.cpp \
         Name_Space.cpp \
         Naming_Context.cpp \
         Registry_Name_Space.cpp \
-        Remote_Name_Space.cpp
+        Remote_Name_Space.cpp \
+        TP_Reactor.cpp \
+        XtReactor.cpp
 
 libACE_la_SOURCES = \
 	$(libACE_OS_la_SOURCES) \
@@ -385,11 +382,6 @@ ACE_TEMPLATE_FILES = \
         Auto_Ptr.cpp \
         Connector.cpp \
         Containers_T.cpp \
-	Cache_Map_Manager_T.cpp \
-        Cached_Connect_Strategy_T.cpp \
-        Caching_Strategies_T.cpp \
-        Caching_Utility_T.cpp \
-        Cleanup_Strategies_T.cpp \
         Dump_T.cpp \
         Dynamic_Service.cpp \
         Env_Value_T.cpp \
@@ -397,10 +389,7 @@ ACE_TEMPLATE_FILES = \
         Free_List.cpp \
         Functor_T.cpp \
         Future.cpp \
-	Future_Node.cpp \
-	Future_Set.cpp \
         Hash_Map_Manager_T.cpp \
-        Hash_Cache_Map_Manager_T.cpp \
         IOStream_T.cpp \
         LOCK_SOCK_Acceptor.cpp \
         Local_Name_Space_T.cpp \
@@ -446,8 +435,8 @@ pkginclude_HEADERS = \
         ACE.i \
         ARGV.h \
         ARGV.i \
-        ATM_Addr.h \
-        ATM_Addr.i \
+	ATM_Addr.h \
+	ATM_Addr.i \
         Acceptor.h \
         Acceptor.i \
         Activation_Queue.h \
@@ -478,17 +467,6 @@ pkginclude_HEADERS = \
         CORBA_Ref.h \
         CORBA_Ref.i \
         CORBA_macros.h \
-        Cache_Map_Manager_T.h \
-        Cache_Map_Manager_T.i \
-        Cached_Connect_Strategy_T.h \
-        Cached_Connect_Strategy_T.i \
-        Caching_Strategies_T.h \
-        Caching_Strategies_T.i \
-        Caching_Utility_T.h \
-        Caching_Utility_T.i \
-        Cleanup_Strategies_T.h \
-        Cleanup_Strategies_T.i \
-        Codeset_IBM1047.h \
         Connector.h \
         Connector.i \
         Containers.h \
@@ -539,8 +517,6 @@ pkginclude_HEADERS = \
         FILE_IO.h \
         FILE_IO.i \
         Filecache.h \
-        FlReactor.h \
-        FlReactor.i \
         Free_List.h \
         Free_List.i \
         Functor.h \
@@ -548,14 +524,10 @@ pkginclude_HEADERS = \
         Functor_T.h \
         Functor_T.i \
         Future.h \
-        Future_Node.h \
-        Future_Set.h \
         Get_Opt.h \
         Get_Opt.i \
         Handle_Set.h \
         Handle_Set.i \
-        Hash_Cache_Map_Manager_T.h \
-        Hash_Cache_Map_Manager_T.i \
         Hash_Map_Manager.h \
         Hash_Map_Manager.i \
         Hash_Map_Manager_T.h \
@@ -804,7 +776,6 @@ pkginclude_HEADERS = \
         Timer_Queue_T.i \
         Timer_Wheel.h \
         Timer_Wheel_T.h \
-        TkReactor.h \
         Token.h \
         Token.i \
         Token_Collection.h \

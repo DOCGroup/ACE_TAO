@@ -117,29 +117,6 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
-#if defined(_UNICOS)
-// placeholders to get things compiling
-ACE_CDR::Float::Float()
-{
-}
-
-ACE_CDR::Float::Float(const float & init))
-{
-}
-
-float
-ACE_CDR::Float::operator= (const ACE_CDR::Float &rhs) const
-{
-    return 0.0f;
-}
-
-int
-ACE_CDR::Float::operator!= (const ACE_CDR::Float &rhs) const
-{
-    return 0;
-}
-#endif /* _UNICOS */
-
 // ****************************************************************
 
 ACE_OutputCDR::ACE_OutputCDR (size_t size,
@@ -736,9 +713,7 @@ ACE_InputCDR::read_string (char *&x)
   this->read_ulong (len);
   if (len > 0)
     {
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::Char[len],
-                      0);
+      ACE_NEW_RETURN (x, ACE_CDR::Char[len], 0);
       if (this->read_char_array (x, len))
         return 1;
       delete [] x;
@@ -776,9 +751,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   this->read_ulong (len);
   if (this->good_bit())
     {
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::WChar[len],
-                      0);
+      ACE_NEW_RETURN (x, ACE_CDR::WChar[len], 0);
       if (this->read_wchar_array (x, len))
         return 1;
 
@@ -1048,10 +1021,4 @@ ACE_InputCDR::steal_contents (void)
   ACE_CDR::mb_align (&this->start_);
 
   return block;
-}
-
-void
-ACE_InputCDR::reset_contents (void)
-{
-  this->start_.data_block (this->start_.data_block ()->clone ());
 }

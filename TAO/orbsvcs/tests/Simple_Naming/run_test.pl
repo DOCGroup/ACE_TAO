@@ -5,33 +5,29 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a Perl script that runs all Naming Service tests.  It starts
-# all the servers and clients as necessary.
+# This is a Perl script that runs the client and all the other servers that
+# are needed
 
 unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 require Uniqueid;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
+# amount of delay between running the servers
+
 $sleeptime = 8;
 
-# Variables for command-line arguments to client and server
-# executables. 
-$ns_multicast_port = 10000 + uniqueid ();  
-$ns_orb_port = 12000 + uniqueid ();
+# variables for parameters
+
+$nsmport = 10000 + uniqueid ();
 $iorfile = "ns.ior";
-$persistent_ior_file = "pns.ior";
-$persistent_log_file = "test_log";
-$data_file = "test_run.data";
 
 sub name_server
 {
-  my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
+  my $args = "-ORBnameserviceport $nsmport -o $iorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR".
-      "Naming_Service".$DIR_SEPARATOR.
-          "Naming_Service".$EXE_EXT;
+    "Naming_Service".$DIR_SEPARATOR.
+      "Naming_Service".$EXE_EXT;
 
   unlink $iorfile;
   $NS = Process::Create ($prog, $args);
@@ -45,54 +41,39 @@ sub name_server
 
 sub client
 {
-  my $args = "@_"." ";
+  my $args = $_[0]." "."-ORBnameserviceport $nsmport ".
+    "-ORBnameserviceior file://$iorfile";
   my $prog = $EXEPREFIX."client".$EXE_EXT;
 
   $CL = Process::Create ($prog, $args);
-
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-      print STDERR "ERROR: client timedout\n";
-      $CL->Kill (); $CL->TimedWait (1);
-  }
 }
 
-# Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBnameserviceior file://$iorfile",
-         "-s -ORBnameserviceport $ns_multicast_port",
-         "-t -ORBnameserviceior file://$iorfile", 
-         "-i -ORBnameserviceior file://$iorfile", 
-         "-e -ORBnameserviceior file://$iorfile", 
-         "-y -ORBnameserviceior file://$iorfile",
-         "-p $persistent_ior_file -ORBnameserviceior file://$iorfile",
-         "-c file://$persistent_ior_file -ORBnameserviceior file://$iorfile");
-
-@server_opts = ("", "", "", "", "", "",
-                "-ORBEndpoint iiop://localhost:$ns_orb_port -f $persistent_log_file",
-                "-ORBEndpoint iiop://localhost:$ns_orb_port -f $persistent_log_file");
+# Options for all tests recognized by the 'client' program.
+@opts = ("-s", "-t", "-i", "-e", "-y");
 
 @comments = ("Simple Test: \n",
-             "Simple Test (using multicast to locate the server): \n",
              "Tree Test: \n",
              "Iterator Test: \n",
              "Exceptions Test: \n",
-             "Destroy Test: \n",
-             "Persistent Test (Part 1): \n",
-             "Persistent Test (Part 2): \n");
+             "Destroy Test: \n");
 
 $test_number = 0;
 
-unlink $persistent_ior_file, $persistent_log_file;
-
-# Run server and client for each of the tests.  Client uses ior in a
-# file to bootstrap to the server.
+# Run server and client with each option available to the client.
 foreach $o (@opts)
 {
-  name_server ($server_opts[$test_number]);
+  name_server ();
 
-  print STDERR "\n          ".$comments[$test_number];
+  print STDERR "\n";
+  print STDERR "          ".$comments[$test_number];
 
   client ($o);
+  $client = $CL->TimedWait (60);
+  if ($client == -1) {
+    print STDERR "ERROR: client timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
+
 
   $NS->Terminate (); $server = $NS->TimedWait (5);
   if ($server == -1) {
@@ -102,20 +83,25 @@ foreach $o (@opts)
   $test_number++;
 }
 
-unlink $persistent_ior_file, $persistent_log_file;
+print STDERR "\n";
+
+print STDERR "          Multithreaded Test:\n";
 
 # Now run the multithreaded test, sending output to the file.
-print STDERR "\n          Multithreaded Test:\n";
-unlink $data_file;
-
 open (OLDOUT, ">&STDOUT");
-open (STDOUT, ">$data_file") or die "can't redirect stdout: $!";
+open (STDOUT, ">test_run.data") or die "can't redirect stdout: $!";
 open (OLDERR, ">&STDERR");
 open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
 
 name_server ();
 
-client ("-ORBnameserviceior file://$iorfile", "-m25");
+client ("-m25");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
 close (STDERR);
 close (STDOUT);
@@ -141,4 +127,3 @@ print STDERR "\n";
 
 # @@ Capture any exit status from the processes.
 exit 0;
-

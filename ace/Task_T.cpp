@@ -56,8 +56,7 @@ ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man,
 
   if (mq == 0)
     {
-      ACE_NEW (mq,
-               ACE_Message_Queue<ACE_SYNCH_USE>);
+      ACE_NEW (mq, ACE_Message_Queue<ACE_SYNCH_USE>);
       this->delete_msg_queue_ = 1;
     }
 

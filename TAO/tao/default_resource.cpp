@@ -11,6 +11,7 @@
 #include "tao/Connector_Registry.h"
 
 #include "ace/Select_Reactor.h"
+#include "ace/XtReactor.h"
 #include "ace/FlReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
@@ -28,8 +29,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
     use_locked_data_blocks_ (1),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
-    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
-    protocol_factories_ ()
+    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
 }
 
@@ -55,6 +55,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
     if (ACE_OS::strcasecmp (argv[curarg],
                             "-ORBResources") == 0)
       {
+        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) The -ORBResources option "
+                    "has been moved to the ORB parameters\n"));
         curarg++;
         if (curarg < argc)
           {
@@ -109,6 +111,15 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - FlReactor"
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
+            else if (ACE_OS::strcasecmp (name,
+                                         "xt") == 0)
+#if defined(ACE_HAS_XT)
+              reactor_type_ = TAO_REACTOR_XT;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - XtReactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_HAS_XT */
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
@@ -168,7 +179,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         curarg++;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item = 0;
+            TAO_Protocol_Item *item;
             ACE_NEW_RETURN (item,
                             TAO_Protocol_Item (argv[curarg]),
                             -1);
@@ -188,6 +199,9 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
+  // @@ Ossama, if you want to be very paranoid, you could get memory
+  // leak if insert operations failed.
+
   if (factory == end)
     {
       TAO_Protocol_Factory *protocol_factory = 0;
@@ -200,8 +214,9 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        "TAO (%P|%t) No %s found in Service Repository.  "
-                        "Using default instance IIOP Protocol Factory.\n"));
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "IIOP Protocol Factory"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
@@ -211,18 +226,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
       item->factory (protocol_factory);
 
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          delete item;
-          delete protocol_factory;
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) Unable to add "
-                             "<%s> to protocol factory set.\n",
-                             item->protocol_name ().c_str ()),
-                            -1);
-        }
-
+      this->protocol_factories_.insert (item);
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -249,18 +253,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);
       item->factory (protocol_factory);
 
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          delete item;
-          delete protocol_factory;
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) Unable to add "
-                             "<%s> to protocol factory set.\n",
-                             item->protocol_name ().c_str ()),
-                            -1);
-        }
-
+      this->protocol_factories_.insert (item);
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -348,6 +341,12 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 #endif /* ACE_HAS_FL */
       break;
 
+    case TAO_REACTOR_XT:
+#if defined(ACE_HAS_XT)
+      ACE_NEW_RETURN (impl, ACE_XtReactor, 0);
+#endif /* ACE_HAS_FL */
+      break;
+
     case TAO_REACTOR_WFMO:
 #if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
@@ -370,19 +369,10 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor (void)
 {
-  ACE_LOG_MSG->errnum (0);
-
-  ACE_Reactor *reactor = 0;
+  ACE_Reactor *reactor;
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   0);
-
-  if (ACE_LOG_MSG->errnum () != 0)
-    {
-      delete reactor;
-      reactor = 0;
-    }
-
   return reactor;
 }
 
@@ -441,7 +431,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
-  ACE_Allocator *allocator = 0;
+  ACE_Allocator *allocator;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
 }
@@ -449,7 +439,7 @@ TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
-  ACE_Allocator *allocator = 0;
+  ACE_Allocator *allocator;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
 }

@@ -2,10 +2,8 @@
 
 #include "common.h"
 #include "ace/Event_Handler.h"
-#include "ace/Get_Opt.h"
 
-static char *data;
-static char *addr;
+char *data = "Hello how are you";
 int fragment = 0;
 
 class frame_handler: public ACE_Event_Handler
@@ -20,14 +18,14 @@ class frame_handler: public ACE_Event_Handler
     {
       reactor->schedule_timer (this,
                                0,
-                               10);
+                               20);
     }
 
   // Called when timer expires.  
-  int handle_timeout (const ACE_Time_Value &/* tv */,
-                      const void */* arg */)
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg = 0)
     {
-      //       ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
+       ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
        if (fragment)
          {
            size_t mb_len = SFP_MAX_PACKET_SIZE*2;
@@ -67,41 +65,16 @@ private:
 };
 
 int
-parse_args (int argc,char **argv)
-{
-  ACE_Get_Opt opts (argc,argv,"fa:");
-  int c;
-  while ((c = opts ()) != -1)
-    {	
-      switch (c)
-        {
-        case 'f':
-          fragment = 1;
-          break;
-        case 'a':
-          addr = ACE_OS::strdup (opts.optarg);
-          break;
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,"Usage:client [-f] [-a addr]"),-1); 
-        }	
-    }
-  return 0;	
-}
-
-
-int
 main (int argc, char **argv)
 {
-  server_addr = ACE_OS::strdup ("localhost:10000");
-  addr = server_addr;
-  data = ACE_OS::strdup ("Hello how are you");
   TAO_ORB_Manager orb_manager;
   
   orb_manager.init (argc,argv);
 
-  int result = parse_args (argc,argv);    
-  if (result < 0)
-    return 1;
+  if (argc > 1)
+    if (ACE_OS::strcmp (argv[1],"-f") == 0)
+      fragment = 1;
+    
   ACE_Time_Value timeout1 (5),timeout2 (50);
 
   TAO_SFP sfp (orb_manager.orb (),
@@ -110,7 +83,9 @@ main (int argc, char **argv)
            timeout2,
            0);
 
-  result = sfp.start_stream (addr);
+  int result;
+
+  result = sfp.start_stream (server_addr);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,"sfp start failed\n"),1);
 
@@ -119,9 +94,9 @@ main (int argc, char **argv)
                          TAO_ORB_Core_instance ()->reactor ());
 
   result = orb_manager.run ();
-//   if (result == 0)
-//     ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
-//   else if (result == -1)
-//     ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
+  if (result == 0)
+    ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
+  else if (result == -1)
+    ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
   return 0;
 }

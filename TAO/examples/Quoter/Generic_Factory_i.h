@@ -48,7 +48,8 @@ public:
 
 private:
   CosNaming::NamingContext_ptr get_naming_context (const CosLifeCycle::Key &factory_key,
-                                                   CORBA::Environment &);
+                                                   CORBA::Environment &env_here,
+                                                   CORBA::Environment &_env_there);
   // a helper to get the proper naming context.
 
 };

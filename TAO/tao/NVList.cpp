@@ -90,21 +90,20 @@ CORBA_NVList::~CORBA_NVList (void)
 // add an element and just initialize its flags
 CORBA::NamedValue_ptr
 CORBA_NVList::add (CORBA::Flags flags,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   CORBA::Environment &env)
 {
   // call the helper to allocate a NamedValue element (if necessary)
-  return this->add_element (flags, ACE_TRY_ENV);
+  return this->add_element (flags, env);
 }
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
 CORBA_NVList::add_item (const char *name,
                         CORBA::Flags flags,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &env)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
 
   if (nv)
     {
@@ -121,11 +120,11 @@ CORBA::NamedValue_ptr
 CORBA_NVList::add_value (const char *name,
                          const CORBA::Any &value,
                          CORBA::Flags flags,
-                         CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Environment &env)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
+
   if (nv)
     {
       // now initialize the fields
@@ -148,15 +147,14 @@ CORBA_NVList::add_value (const char *name,
               nv->any_.replace (value.type_,
                                 value.value_,
                                 0,
-                                ACE_TRY_ENV);
+                                env);
             }
           else
             {
               nv->any_._tao_replace (value.type_,
                                      value.cdr_,
-                                     ACE_TRY_ENV);
+                                     env);
             }
-          ACE_CHECK_RETURN (0);
         }
       return nv;
     }
@@ -168,12 +166,11 @@ CORBA_NVList::add_value (const char *name,
 CORBA::NamedValue_ptr
 CORBA_NVList::add_item_consume (char *name,
                                 CORBA::Flags flags,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &env)
 {
 
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
 
   if (nv)
     {
@@ -192,11 +189,10 @@ CORBA::NamedValue_ptr
 CORBA_NVList::add_value_consume (char * name,
                                  CORBA::Any * value,
                                  CORBA::Flags flags,
-                                 CORBA::Environment & ACE_TRY_ENV)
+                                 CORBA::Environment & env)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
 
   if (nv)
     {
@@ -224,12 +220,14 @@ CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 
 // Helper method
 CORBA::NamedValue_ptr
-CORBA_NVList::add_element (CORBA::Flags flags,
-                           CORBA::Environment &ACE_TRY_ENV)
+CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
 {
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    {
+      env.exception (new CORBA::BAD_PARAM ());
+      return 0;
+    }
 
   CORBA::NamedValue_ptr nv;
 
@@ -250,15 +248,20 @@ CORBA_NVList::add_element (CORBA::Flags flags,
 
 // return the item at location n
 CORBA::NamedValue_ptr
-CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
+CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
 {
   if (n >= this->max_) // 0 based indexing
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+    {
+      env.exception (new CORBA::TypeCode::Bounds ());
+      return 0;
+    }
+  else
+    {
+      CORBA::NamedValue_ptr *nv;
 
-  CORBA::NamedValue_ptr *nv;
-
-  this->values_.get (nv, n);
-  return *nv;
+      this->values_.get (nv, n);
+      return *nv;
+    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -25,8 +25,8 @@ ACE_FIFO_Recv_Msg::dump (void) const
 // reading."  This ensures that the FIFO never gets EOF, even if there
 // aren't any writers at the moment!
 
-int
-ACE_FIFO_Recv_Msg::open (const ASYS_TCHAR *fifo_name,
+int 
+ACE_FIFO_Recv_Msg::open (const char *fifo_name,
 			 int flags,
 			 int perms,
 			 int persistent,
@@ -46,7 +46,7 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (void)
   ACE_TRACE ("ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg");
 }
 
-ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const char *fifo_name,
 				      int flags,
 				      int perms,
 				      int persistent,
@@ -56,7 +56,7 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ASYS_TCHAR *fifo_name,
 
   if (this->ACE_FIFO_Recv_Msg::open (fifo_name,
 				     flags,
-				     perms,
+				     perms, 
 				     persistent,
                                      sa) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Recv_Msg")));

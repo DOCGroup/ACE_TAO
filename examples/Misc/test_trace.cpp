@@ -42,8 +42,7 @@ public:
     
     if (depth > 0)
       return recursive (depth - 1);
-    else
-      return 0;
+
     // Destructor of <ACE_Trace> automatically called.
   }
 

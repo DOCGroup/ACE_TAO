@@ -13,13 +13,13 @@ TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory (void)
 }
 
 ACE_Lock *
-TAO_Client_Strategy_Factory::create_profile_lock (void)
+TAO_Client_Strategy_Factory::create_iiop_profile_lock (void)
 {
   return 0;
 }
 
 TAO_Transport_Mux_Strategy *
-TAO_Client_Strategy_Factory::create_transport_mux_strategy (void)
+TAO_Client_Strategy_Factory::create_transport_mux_strategy (TAO_ORB_Core *orb_core)
 {
   return 0;
 }

@@ -354,7 +354,7 @@ public:
   // Constructor
 
   void init (TAO_InputCDR &msg,
-             CORBA_Environment &ACE_TRY_ENV =
+             CORBA_Environment &TAO_IN_ENV =
                  TAO_default_environment ());
   // Initialize the header from the values found in <msg>.
 
@@ -407,9 +407,9 @@ public:
     Fragment = 7                // by both.
   };
 
-  static void send_close_connection (const TAO_GIOP_Version &version,
-                                     TAO_Transport *transport,
-                                     void *ctx);
+  static void close_connection (const TAO_GIOP_Version &version,
+                                TAO_Transport *transport,
+                                void *ctx);
   // Close a connection, first sending GIOP::CloseConnection.
 
   static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
@@ -434,8 +434,7 @@ public:
 
   static int send_message (TAO_Transport *transport,
                            TAO_OutputCDR &stream,
-                           TAO_ORB_Core* orb_core,
-                           ACE_Time_Value *max_wait_time = 0);
+                           TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
   static void dump_msg (const char *label,
@@ -443,14 +442,13 @@ public:
                         size_t len);
   // Print out a message header.
 
-  static int send_error (const TAO_GIOP_Version &version,
-                         TAO_Transport *transport);
+  static void send_error (const TAO_GIOP_Version &version,
+                          TAO_Transport *transport);
   // Send an error message back to a caller.
 
   static ssize_t read_buffer (TAO_Transport *transport,
                               char *buf,
-                              size_t len,
-                              ACE_Time_Value *max_wait_time);
+                              size_t len);
   // Loop on data read ... this is required since <recv> won't block
   // until the requested amount of data is available.
 
@@ -461,12 +459,10 @@ public:
                           TAO_ORB_Core *orb_core,
                           TAO_GIOP_Message_State &state,
                           CORBA::ULong &header_size,
-                          TAO_InputCDR &input,
-                          ACE_Time_Value *max_wait_time);
+                          TAO_InputCDR &input);
   static int handle_input (TAO_Transport *transport,
                            TAO_ORB_Core *orb_core,
-                           TAO_GIOP_Message_State &state,
-                           ACE_Time_Value *max_wait_time = 0);
+                           TAO_GIOP_Message_State &state);
 
   static int parse_reply (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
@@ -474,16 +470,16 @@ public:
                           TAO_GIOP_ServiceContextList& reply_ctx,
                           CORBA::ULong& request_id,
                           CORBA::ULong& reply_status);
-  static int process_server_message (TAO_Transport *transport,
-                                     TAO_ORB_Core *orb_core,
-                                     TAO_InputCDR &input,
-                                     const TAO_GIOP_Message_State& state);
+  static void process_server_message (TAO_Transport *transport,
+                                      TAO_ORB_Core *orb_core,
+                                      TAO_InputCDR &input,
+                                      const TAO_GIOP_Message_State& state);
 
-  static int process_server_request (TAO_Transport *transport,
-                                     TAO_ORB_Core* orb_core,
-                                     TAO_InputCDR &input,
-                                     TAO_OutputCDR &output,
-                                     const TAO_GIOP_Version& version);
+  static void process_server_request (TAO_Transport *transport,
+                                      TAO_ORB_Core* orb_core,
+                                      TAO_InputCDR &input,
+                                      TAO_OutputCDR &output,
+                                      const TAO_GIOP_Version& version);
   // A request was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -493,11 +489,11 @@ public:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  static int process_server_locate (TAO_Transport *transport,
-                                    TAO_ORB_Core* orb_core,
-                                    TAO_InputCDR &input,
-                                    TAO_OutputCDR &output,
-                                    const TAO_GIOP_Version& version);
+  static void process_server_locate (TAO_Transport *transport,
+                                     TAO_ORB_Core* orb_core,
+                                     TAO_InputCDR &input,
+                                     TAO_OutputCDR &output,
+                                     const TAO_GIOP_Version& version);
   // A LocateRequest was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).

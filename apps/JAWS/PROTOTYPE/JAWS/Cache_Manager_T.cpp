@@ -72,13 +72,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     {
       this->maxsize_ = 0;
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-      ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
-                             JAWS_Cache_Hash,
-                             KEY, HASH_FUNC, EQ_FUNC);
-#else
       ACE_DES_FREE (this->hash_, this->allocator_->free, Cache_Hash);
-#endif
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
@@ -144,13 +138,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       errno = ENOMEM;
       this->maxsize_ = 0;
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-      ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
-                             JAWS_Cache_Hash,
-                             KEY, HASH_FUNC, EQ_FUNC);
-#else
       ACE_DES_FREE (this->hash_, this->allocator_->free, Cache_Hash);
-#endif
       this->hash_ = 0;
       this->hashsize_ = 0;
 
@@ -175,25 +163,13 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 
   if (this->hash_)
     {
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-      ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
-                             JAWS_Cache_Hash,
-                             KEY, HASH_FUNC, EQ_FUNC);
-#else
       ACE_DES_FREE (this->hash_, this->allocator_->free, Cache_Hash);
-#endif
       this->hash_ = 0;
     }
 
   if (this->heap_)
     {
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-      ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
-                             JAWS_Cache_List,
-                             KEY, FACTORY, HASH_FUNC, EQ_FUNC);
-#else
       ACE_DES_FREE (this->heap_, this->allocator_->free, Cache_Heap);
-#endif
       this->heap_ = 0;
     }
 

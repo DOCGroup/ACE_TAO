@@ -21,8 +21,8 @@ ACE_SV_Semaphore_Simple::dump (void) const
 }
 
 int
-ACE_SV_Semaphore_Simple::control (int cmd,
-				  int value,
+ACE_SV_Semaphore_Simple::control (int cmd, 
+				  int value, 
 				  u_short semnum) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
@@ -34,7 +34,7 @@ ACE_SV_Semaphore_Simple::control (int cmd,
 
       semctl_arg.val = value;
       return ACE_OS::semctl (this->internal_id_,
-                             semnum,
+                             semnum, 
 			     cmd,
                              semctl_arg);
     }
@@ -50,9 +50,9 @@ ACE_SV_Semaphore_Simple::init (key_t k, int i)
 }
 
 // General ACE_SV_Semaphore operation. Increment or decrement by a
-// specific amount (positive or negative; amount can`t be zero).
-
-int
+// specific amount (positive or negative; amount can`t be zero). 
+     
+int 
 ACE_SV_Semaphore_Simple::op (int val, u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
@@ -72,11 +72,11 @@ ACE_SV_Semaphore_Simple::op (int val, u_short n, int flags) const
 // Open or create one or more SV_Semaphores.  We return 0 if all is
 // OK, else -1.
 
-int
-ACE_SV_Semaphore_Simple::open (key_t k,
-			       int flags,
-			       int initial_value,
-			       u_short n,
+int 
+ACE_SV_Semaphore_Simple::open (key_t k, 
+			       int flags, 
+			       int initial_value, 
+			       u_short n, 
 			       int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
@@ -102,10 +102,10 @@ ACE_SV_Semaphore_Simple::open (key_t k,
   return 0;
 }
 
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
-						  int flags,
-						  int initial_value,
-						  u_short n,
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k, 
+						  int flags, 
+						  int initial_value, 
+						  u_short n, 
 						  int perms)
   : key_ (k)
 {
@@ -121,11 +121,11 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 // measured close to collition ratio of nearly 0.1% for
 // ACE::unique_name()-like strings.
 
-key_t
+key_t 
 ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::name_2_key");
-
+  
   if (name == 0)
     {
       errno = EINVAL;
@@ -140,36 +140,36 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 
 // Open or create a ACE_SV_Semaphore.  We return 1 if all is OK, else
 // 0.
-
-int
-ACE_SV_Semaphore_Simple::open (const char *name,
-			       int flags,
-			       int initial_value,
-			       u_short n,
+     
+int 
+ACE_SV_Semaphore_Simple::open (const char *name, 
+			       int flags, 
+			       int initial_value, 
+			       u_short n, 
 			       int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
 
   key_t key;
-
+  
   if (name == 0)
     key = ACE_DEFAULT_SEM_KEY;
-  else
+  else 
     key = this->name_2_key (name);
 
   return this->open (key, flags, initial_value, n, perms);
 }
 
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
-						  int flags,
-						  int initial_value,
-						  u_short n,
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name, 
+						  int flags, 
+						  int initial_value, 
+						  u_short n, 
 						  int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (name, flags, initial_value, n, perms) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+    ACE_ERROR ((LM_ERROR, "%p\n", 
+		"ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple"));
 }
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
@@ -189,8 +189,8 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void)
 // is being shut down, as we do an IPC_RMID on the ACE_SV_Semaphore,
 // regardless of whether other processes may be using it or not.  Most
 // other processes should use close() below.
-
-int
+     
+int 
 ACE_SV_Semaphore_Simple::remove (void) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
@@ -198,3 +198,4 @@ ACE_SV_Semaphore_Simple::remove (void) const
   ((ACE_SV_Semaphore_Simple *) this)->init ();
   return result;
 }
+

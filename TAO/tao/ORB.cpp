@@ -46,16 +46,6 @@
 #include "tao/Messaging_Policy_i.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-#if defined (ACE_HAS_EXCEPTIONS)
-# if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#  include /**/ <exception>
-#  if !defined (ACE_WIN32)
-using std::set_unexpected;
-#  endif /* !ACE_WIN32 */
-# else
-#  include /**/ <exception.h>
-# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -71,61 +61,10 @@ static const char file_prefix[] = "file://";
 // Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
 
-CORBA::Boolean
-operator<< (TAO_OutputCDR &strm,
-            const CORBA::ORB::InvalidName &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm,
-                           CORBA::ORB::InvalidName &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
+// ****************************************************************
 
 CORBA_ORB::InvalidName::InvalidName (void)
-  : CORBA_UserException (CORBA::ORB::_tc_InvalidName)
 {
-}
-
-CORBA::ORB::InvalidName::~InvalidName (void)
-{
-}
-
-CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
-{
-}
-
-// assignment operator
-CORBA::ORB::InvalidName&
-CORBA::ORB::InvalidName::operator= (const CORBA::ORB::InvalidName &_tao_excp)
-{
-
-  this->CORBA_UserException::operator= (_tao_excp);
-  return *this;
-}
-
-CORBA_ORB::InvalidName*
-CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
-{
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", ex->_id ()))
-    return ACE_dynamic_cast (CORBA::ORB::InvalidName*, ex);
-  else
-    return 0;
 }
 
 void
@@ -134,10 +73,21 @@ CORBA_ORB::InvalidName::_raise (void)
   TAO_RAISE(*this);
 }
 
-// TAO extension - the _alloc method
-CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
+CORBA_ORB::InvalidName*
+CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
 {
-  return new CORBA::ORB::InvalidName;
+  if (ex->_is_a ("IDL:omg.orb/CORBA/ORB/InvalidName:1.0"))
+    return ACE_dynamic_cast (CORBA_ORB::InvalidName*, ex);
+  return 0;
+}
+
+int
+CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+                          "IDL:omg.orb/CORBA/ORB/InvalidName:1.0") ==
+           0)
+          || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
@@ -149,7 +99,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     schedule_service_ (CORBA_Object::_nil ()),
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ()),
-    implrepo_service_ (CORBA_Object::_nil ()),
     orb_core_ (orb_core),
 # ifdef TAO_HAS_VALUETYPE
     valuetype_factory_map_ (0),
@@ -168,8 +117,6 @@ CORBA_ORB::~CORBA_ORB (void)
     CORBA::release (this->event_service_);
   if (!CORBA::is_nil (this->trading_service_))
     CORBA::release (this->trading_service_);
-  if (!CORBA::is_nil (this->implrepo_service_))
-    CORBA::release (this->implrepo_service_);
 
   this->orb_core_->fini ();
 
@@ -465,22 +412,17 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_ior_manipulation (CORBA::Environment& ACE_TRY_ENV)
-{
-  return this->ior_manipulation_._this (ACE_TRY_ENV);
-}
-
-CORBA_Object_ptr
 CORBA_ORB::resolve_service (const char *service_name,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Object_var return_value = CORBA_Object::_nil ();
+  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
   // First check to see if we've already initialized this.
-  if (!CORBA::is_nil (this->name_service_))
+  if (this->name_service_ != CORBA_Object::_nil ())
     {
-      return_value = CORBA::Object::_duplicate (this->name_service_);
+      // @@ Someone please double-check this ;-)
+      return_value = this->name_service_;
     }
   else
     {
@@ -495,10 +437,13 @@ CORBA_ORB::resolve_service (const char *service_name,
 
       if (name_service_ior.length () != 0)
         {
-          return_value =
+          this->name_service_ =
             this->string_to_object (name_service_ior.c_str (),
                                     ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA_Object::_nil ());
+
+          // check for errors
+          if (ACE_TRY_ENV.exception () != 0)
+            this->name_service_ = CORBA_Object::_nil ();
         }
       else
         {
@@ -518,25 +463,24 @@ CORBA_ORB::resolve_service (const char *service_name,
                 port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
             }
 
-          return_value =
+          this->name_service_ =
             this->multicast_to_service (service_name,
                                         port,
                                         timeout,
                                         ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
-      this->name_service_ = CORBA::Object::_duplicate (return_value.ptr ());
     }
 
   // Return ior.
-  return return_value._retn ();
+  return_value = this->name_service_;
+  return CORBA_Object::_duplicate (return_value);
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Object_var return_value = CORBA_Object::_nil ();
+  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
@@ -557,9 +501,12 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
 
       if (trading_service_ior.length () != 0)
         {
-          return_value =
+          this->trading_service_ =
             this->string_to_object (trading_service_ior.c_str (), ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA_Object::_nil ());
+
+          // check for errors
+          if (ACE_TRY_ENV.exception () != 0)
+            this->trading_service_ = CORBA_Object::_nil ();
         }
       else
         {
@@ -579,80 +526,20 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
 
-          return_value =
+          this->trading_service_ =
             this->multicast_to_service ("TradingService",
                                         port,
                                         timeout,
                                         ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
-      this->trading_service_ = return_value.ptr ();
     }
 
-  return CORBA_Object::_duplicate (return_value._retn ());
-}
-
-CORBA_Object_ptr
-CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
-                                     CORBA::Environment& ACE_TRY_ENV)
-{
-    CORBA_Object_var return_value = CORBA_Object::_nil ();
-
-    // First check to see if we've already initialized this.
-    if (this->implrepo_service_ != CORBA_Object::_nil ())
-      {
-        return_value = this->implrepo_service_;
-      }
-    else
-      {
-        ACE_CString implrepo_service_ior =
-          this->orb_core_->orb_params ()->implrepo_service_ior ();
-
-        // Second, check to see if the user has give us a parameter on
-        // the command-line.
-        if (implrepo_service_ior.length () == 0)
-          // Third, check to see if the user has an environment variable.
-          implrepo_service_ior = ACE_OS::getenv ("ImplRepoServiceIOR");
-
-        if (implrepo_service_ior.length () != 0)
-          {
-            return_value =
-              this->string_to_object (implrepo_service_ior.c_str (), ACE_TRY_ENV);
-            ACE_CHECK_RETURN (CORBA_Object::_nil ());
-          }
-        else
-          {
-            // First, determine if the port was supplied on the command line
-            // @@ FRED: need a generic rep for this!
-            u_short port =
-              this->orb_core_->orb_params ()->implrepo_service_port ();
-
-            if (port == 0)
-              {
-                // Look for the port among our environment variables.
-                const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
-
-                if (port_number != 0)
-                  port = ACE_OS::atoi (port_number);
-                else
-                  port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
-              }
-
-            return_value =
-              this->multicast_to_service ("ImplRepoService",
-                                          port,
-                                          timeout,
-                                          ACE_TRY_ENV);
-            ACE_CHECK_RETURN (CORBA_Object::_nil ());
-          }
-        this->implrepo_service_ = return_value.ptr ();
-      }
-
-    return CORBA_Object::_duplicate (return_value._retn ());
+  return_value = this->trading_service_;
+  return CORBA_Object::_duplicate (return_value);
 }
 
 int
-CORBA_ORB::multicast_query (char *&buf,
+CORBA_ORB::multicast_query (char *buf,
                             const char *service_name,
                             u_short port,
                             ACE_Time_Value *timeout)
@@ -675,6 +562,7 @@ CORBA_ORB::multicast_query (char *&buf,
     }
   else
     {
+      // This starts out initialized to all zeros!
       ACE_INET_Addr multicast_addr (port,
                                     ACE_DEFAULT_MULTICAST_ADDR);
       // Open the datagram.
@@ -686,21 +574,21 @@ CORBA_ORB::multicast_query (char *&buf,
         }
       else
         {
-          // Convert the acceptor port into network byte order.
+          // Convert the port we're listening on into network byte
+          // order.
           ACE_UINT16 response_port =
             ACE_HTONS (my_addr.get_port_number ());
 
-          // Length of service name we will send.
+          // Length of data to be sent. This is sent as a header.
           CORBA::Short data_len =
-            ACE_HTONS (ACE_OS::strlen (service_name) + 1);
+            ACE_HTONS (sizeof (ACE_UINT16)
+                       + ACE_OS::strlen (service_name));
 
-          // Vector we will send.  It contains: 1) length of service
-          // name string, 2)port on which we are listening for
-          // replies, and 3) name of service we are looking for.
+          // Vector to be sent.
           const int iovcnt = 3;
           iovec iovp[iovcnt];
 
-          // The length of service name string.
+          // The length of data to be sent.
           iovp[0].iov_base = (char *) &data_len;
           iovp[0].iov_len  = sizeof (CORBA::Short);
 
@@ -710,7 +598,7 @@ CORBA_ORB::multicast_query (char *&buf,
 
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
-          iovp[2].iov_len  = ACE_OS::strlen (service_name) + 1;
+          iovp[2].iov_len  = ACE_OS::strlen (service_name);
 
           // Send the multicast.
           result = dgram.send (iovp,
@@ -734,11 +622,11 @@ CORBA_ORB::multicast_query (char *&buf,
                             "# of bytes sent is %d.\n",
                             __FILE__,
                             result));
-              // Wait for response until timeout.
+              // Wait for response until
+              // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
               ACE_Time_Value tv (timeout == 0
                                  ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                                  : *timeout);
-
               // Accept reply connection from server.
               if (acceptor.accept (stream,
                                    0,
@@ -752,62 +640,35 @@ CORBA_ORB::multicast_query (char *&buf,
               else
                 {
                   // Receive the IOR.
+                  result = stream.recv (buf,
+                                        BUFSIZ,
+                                        0,
+                                        timeout);
+                  // Close socket now.
+                  stream.close ();
 
-                  // IOR length.
-                  CORBA::Short ior_len;
-                  result = stream.recv_n (&ior_len,
-                                          sizeof ior_len,
-                                          0,
-                                          &tv);
-                  if (result != sizeof (ior_len))
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                                  "%p\n",
-                                  "multicast_query: unable to receive ior length"));
-                      result = -1;
-                    }
+                  // Check for errors.
+                  if (result == -1)
+                    ACE_ERROR ((LM_ERROR,
+                                "%p\n",
+                                "error reading IIOP multicast response"));
                   else
                     {
-                      // Allocate more space for the ior if we don't
-                      // have enough.
-                      ior_len = ACE_NTOHS (ior_len);
-                      if (ior_len > TAO_DEFAULT_IOR_SIZE)
-                        {
-                          buf = CORBA::string_alloc (ior_len);
-                          if (buf == 0)
-                            {
-                              ACE_ERROR ((LM_ERROR,
-                                          "%p\n",
-                                          "multicast_query: unable to allocate memory"));
-                              result = -1;
-                            }
-                        }
+                      // Null terminate message.
+                      buf[result] = 0;
 
-                      if (result != -1)
-                        {
-                          // Receive the ior.
-                          result = stream.recv_n (buf,
-                                                  ior_len,
-                                                  0,
-                                                  &tv);
-                          if (result == -1)
-                            ACE_ERROR ((LM_ERROR,
-                                        "%p\n",
-                                        "error reading ior"));
-                          else if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG,
-                                        "%s: service resolved to IOR <%s>\n",
-                                        __FILE__,
-                                        buf));
-                        }
+                      if (TAO_debug_level > 0)
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "%s: service resolved to IOR <%s>\n",
+                                    __FILE__,
+                                    buf));
                     }
                 }
             }
         }
     }
 
-  // Clean up.
-  stream.close ();
+  // We don't need the dgram or acceptor anymore.
   dgram.close ();
   acceptor.close ();
 
@@ -822,49 +683,43 @@ CORBA_ORB::multicast_query (char *&buf,
 //    and we return NULL.
 
 CORBA_Object_ptr
-CORBA_ORB::multicast_to_service (const char *service_name,
+CORBA_ORB::multicast_to_service (const char * service_name,
                                  u_short port,
                                  ACE_Time_Value *timeout,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
-  char buf[TAO_DEFAULT_IOR_SIZE];
-  char *ior = buf;
-  CORBA::String_var cleaner;
-
-  CORBA_Object_var return_value =
-    CORBA_Object::_nil ();
+  char buf[BUFSIZ + 1];
 
   // Use UDP multicast to locate the  service.
-  int result = this->multicast_query (ior,
-                                      service_name,
-                                      port,
-                                      timeout);
+  CORBA_Object_ptr return_value =
+    CORBA_Object::_nil ();
 
-  // If the IOR didn't fit into <buf>, memory for it was dynamically
-  // allocated - make sure it gets deallocated.
-  if (ior != buf)
-    cleaner = ior;
-
-  if (result == 0)
+  if (this->multicast_query (buf,
+                             service_name,
+                             port,
+                             timeout) == 0)
     {
       // Convert IOR to an object reference.
-      return_value =
-        this->string_to_object ((CORBA::String) ior,
+      CORBA_Object_ptr objectified_ior =
+        this->string_to_object ((CORBA::String) buf,
                                 ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
+
+      // Check for errors.
+      if (ACE_TRY_ENV.exception () == 0)
+        return_value = objectified_ior;
     }
 
-  // Return object reference.
-  return return_value._retn ();
+  // Return ior.
+  return return_value;
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (const char *name,
-                                       CORBA_Environment &ACE_TRY_ENV)
+                                       CORBA_Environment &TAO_IN_ENV)
 {
   return this->resolve_initial_references (name,
                                            0,
-                                           ACE_TRY_ENV);
+                                           TAO_IN_ENV);
 }
 
 CORBA_Object_ptr
@@ -883,8 +738,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     return this->resolve_policy_current (ACE_TRY_ENV);
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
-    return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
   // Is not one of the well known services, try to find it in the
   // InitRef table....
@@ -910,11 +763,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
         {
-          // @@ This parsing code should be merged with or use the
-          //    parsing code used during MProfile creation in the
-          //    TAO_Connector base class.
-          //            -Ossama
-
           ACE_CString list_of_profiles;
 
           // Used by the strtok_r.
@@ -931,16 +779,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                        &lasts))
             {
               list_of_profiles += ACE_CString (str);
-
-              // Make sure that default initial reference doesn't
-              //    end with the object key delimiter character.
-
-              const char object_key_delimiter =
-                this->orb_core_->connector_registry ()->object_key_delimiter (str);
-
-              if (list_of_profiles[list_of_profiles.length() - 1] !=
-                  object_key_delimiter)
-                list_of_profiles += ACE_CString (object_key_delimiter);
+              list_of_profiles += ACE_CString ("/");
               list_of_profiles += object_id;
               list_of_profiles += ACE_CString (",");
             }
@@ -966,9 +805,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
-    return this->resolve_implrepo_service (timeout, ACE_TRY_ENV);
 
   else
     ACE_THROW_RETURN (CORBA::ORB::InvalidName (), 0);
@@ -1000,12 +836,14 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   TAO_Stub *stub = 0;
 
   size_t pfile_count =
-    this->orb_core_->acceptor_registry ()->endpoint_count ();
+         this->orb_core_->acceptor_registry ()->endpoint_count ();
 
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
   this->orb_core_->acceptor_registry ()->make_mprofile (key, mp);
+
+  ACE_CHECK_RETURN (stub);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
@@ -1021,10 +859,12 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 CORBA::Object_ptr
 CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
-  TAO_Stub *data = this->create_stub_object (key, type_id, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  TAO_Stub *data = this->create_stub_object (key, type_id, env);
+
+  if (env.exception () != 0)
+    return CORBA::Object::_nil ();
 
   // Create the CORBA level proxy
   CORBA_Object *new_obj = new CORBA_Object (data);
@@ -1033,7 +873,8 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   if (CORBA::is_nil (new_obj))
     {
       data->_decr_refcnt ();
-      ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
+      env.exception (new CORBA::INTERNAL ());
+      return CORBA::Object::_nil ();
     }
 
   return new_obj;
@@ -1045,51 +886,51 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
 CORBA_DynAny_ptr
 CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_any (any, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_any (any, env);
 }
 
 CORBA_DynAny_ptr
 CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_any (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_any (tc, env);
 }
 
 CORBA_DynStruct_ptr
 CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_struct (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_struct (tc, env);
 }
 
 CORBA_DynSequence_ptr
 CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_sequence (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_sequence (tc, env);
 }
 
 CORBA_DynArray_ptr
 CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_array (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_array (tc, env);
 }
 
 CORBA_DynUnion_ptr
 CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_union (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_union (tc, env);
 }
 
 CORBA_DynEnum_ptr
 CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 CORBA::Environment& env)
 {
-  return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
+  return TAO_DynAny_i::create_dyn_enum (tc, env);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -1120,8 +961,11 @@ CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
 
 CORBA_String_var::~CORBA_String_var (void)
 {
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = 0;
+  if (this->ptr_ != 0)
+    {
+      CORBA::string_free (this->ptr_);
+      this->ptr_ = 0;
+    }
 }
 
 CORBA_String_var &
@@ -1129,7 +973,8 @@ CORBA_String_var::operator= (char *p)
 {
   if (this->ptr_ != p)
     {
-      CORBA::string_free (this->ptr_);
+      if (this->ptr_ != 0)
+        CORBA::string_free (this->ptr_);
       this->ptr_ = p;
     }
   return *this;
@@ -1138,7 +983,8 @@ CORBA_String_var::operator= (char *p)
 CORBA_String_var &
 CORBA_String_var::operator= (const char *p)
 {
-  CORBA::string_free (this->ptr_);
+  if (this->ptr_ != 0)
+    CORBA::string_free (this->ptr_);
 
   this->ptr_ = CORBA::string_dup (p);
   return *this;
@@ -1149,7 +995,8 @@ CORBA_String_var::operator= (const CORBA_String_var& r)
 {
   if (this != &r)
     {
-      CORBA::string_free (this->ptr_);
+      if (this->ptr_ != 0)
+        CORBA::string_free (this->ptr_);
       this->ptr_ = CORBA::string_dup (r.ptr_);
     }
   return *this;
@@ -1172,8 +1019,11 @@ CORBA_WString_var::CORBA_WString_var (const CORBA_WString_var& r)
 
 CORBA_WString_var::~CORBA_WString_var (void)
 {
-  CORBA::wstring_free (this->ptr_);
-  this->ptr_ = 0;
+  if (this->ptr_ != 0)
+    {
+      CORBA::wstring_free (this->ptr_);
+      this->ptr_ = 0;
+    }
 }
 
 CORBA_WString_var &
@@ -1181,7 +1031,8 @@ CORBA_WString_var::operator= (CORBA::WChar *p)
 {
   if (this->ptr_ != p)
     {
-      CORBA::wstring_free (this->ptr_);
+      if (this->ptr_ != 0)
+        CORBA::wstring_free (this->ptr_);
       this->ptr_ = p;
     }
   return *this;
@@ -1190,7 +1041,8 @@ CORBA_WString_var::operator= (CORBA::WChar *p)
 CORBA_WString_var &
 CORBA_WString_var::operator= (const CORBA::WChar *p)
 {
-  CORBA::wstring_free (this->ptr_);
+  if (this->ptr_ != 0)
+    CORBA::wstring_free (this->ptr_);
 
   this->ptr_ = CORBA::wstring_dup (p);
   return *this;
@@ -1201,7 +1053,8 @@ CORBA_WString_var::operator= (const CORBA_WString_var& r)
 {
   if (this != &r)
     {
-      CORBA::wstring_free (this->ptr_);
+      if (this->ptr_ != 0)
+        CORBA::wstring_free (this->ptr_);
       this->ptr_ = CORBA::wstring_dup (r.ptr_);
     }
   return *this;
@@ -1220,10 +1073,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
   if (CORBA_ORB::orb_init_count_ == 0)
     {
-#if defined(ACE_HAS_EXCEPTIONS)
-      set_unexpected (CORBA_ORB::_tao_unexpected_exception);
-#endif /* ACE_HAS_EXCEPTIONS */
-
       // initialize the system TypeCodes
       TAO_TypeCodes::init ();
 
@@ -1272,18 +1121,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
     }
   CORBA_ORB::orb_init_count_++;
 }
-
-void CORBA_ORB::_tao_unexpected_exception (void)
-{
-#if defined(ACE_HAS_EXCEPTIONS)
-  throw CORBA::UNKNOWN ();
-#else
-  // Nothing to do, this will be handled by the ORB core when sending
-  // the exception back to the client...
-#endif /* ACE_HAS_EXCEPTIONS */
-}
-
-// ****************************************************************
 
 // ORB initialisation, per OMG document 94-9-46.
 //
@@ -1387,8 +1224,10 @@ CORBA::ORB_init (int &argc,
 // Objref stringification.
 CORBA::String
 CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
+  env.clear ();
+
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1400,6 +1239,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
+      // @@ Is BUFSIZ the right size here?
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
       (void) ACE_OS::memset (buf, '\0', sizeof(buf));
@@ -1450,10 +1290,22 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
     }
   else
     {
-      if (obj->_stubobj () == 0)
-        ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+      // The "internet" ORB uses readable URL style objrefs, as used
+      // in the World Wide Web.
+      //
+      // This only works for IIOP objrefs.  If we're handed an objref
+      // that's not an IIOP objref, fail -- application must use an
+      // ORB that's configured differently.  @@ Is this true? FRED
+      // @@ Need to fix!!
 
-      return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      if (obj->_stubobj () == 0)
+        return CORBA::string_copy ("iiop:");
+        // @@ This should be some sort of default prefix, not
+        // hardcoded to IIOP!! FRED
+
+      CORBA::String buf =
+        obj->_stubobj ()->profile_in_use ()->to_string (env);
+      return buf;
     }
 }
 
@@ -1464,18 +1316,53 @@ CORBA::Object_ptr
 CORBA_ORB::string_to_object (const char *str,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
-    return this->file_string_to_object (str + sizeof file_prefix - 1,
-                                        ACE_TRY_ENV);
+    obj = this->file_string_to_object (str + sizeof file_prefix - 1,
+                                       ACE_TRY_ENV);
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
-    return this->ior_string_to_object (str + sizeof ior_prefix - 1,
-                                       ACE_TRY_ENV);
+    obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
+                                      ACE_TRY_ENV);
   else
-    return this->url_ior_string_to_object (str, ACE_TRY_ENV);
+    {
+      TAO_MProfile mprofile (0);
+      // It is safe to declare this on the stack since the contents of
+      // mprofile get copied.  No memory is allocated for profile storage
+      // here.  The Connector Registry will determine the exact number
+      // of profiles and tell the MProfile object to allocate enough memory
+      // to hold them all.
+
+      if (this->orb_core_->connector_registry ()->make_mprofile (str,
+                                                                 mprofile,
+                                                                 ACE_TRY_ENV)
+          != 0)
+        {
+          ACE_THROW_RETURN (CORBA::INITIALIZE (), CORBA::Object::_nil ());
+        }
+
+      // Now make the TAO_Stub.
+      TAO_Stub *data;
+      ACE_NEW_RETURN (data,
+                      TAO_Stub ((char *) 0, mprofile, this->orb_core_),
+                      CORBA::Object::_nil ());
+
+      // Create the CORBA level proxy.
+      TAO_ServantBase *servant = this->_get_collocated_servant (data);
+
+      // This will increase the ref_count on data by one
+      ACE_NEW_RETURN (obj,
+                      CORBA_Object (data,
+                                    servant,
+                                    servant != 0),
+                      CORBA::Object::_nil ());
+    }
+
+  return obj;
 }
 
 // ****************************************************************
@@ -1614,67 +1501,6 @@ CORBA_ORB::file_string_to_object (const char* filename,
   return object;
 }
 
-// Convert an URL style IOR in an object
-
-CORBA::Object_ptr
-CORBA_ORB::url_ior_string_to_object (const char* str,
-                                     CORBA::Environment& ACE_TRY_ENV)
-{
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  TAO_MProfile mprofile;
-  // It is safe to declare this on the stack since the contents of
-  // mprofile get copied.  No memory is allocated for profile storage
-  // here.  The Connector Registry will determine the exact number
-  // of profiles and tell the MProfile object to allocate enough memory
-  // to hold them all.
-
-  int retv =
-    this->orb_core_->connector_registry ()->make_mprofile (str,
-                                                           mprofile,
-                                                           ACE_TRY_ENV);
-
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
-
-  if (retv != 0)
-    {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        CORBA::Object::_nil ());
-    }
-
-  // Now make the TAO_Stub.
-  TAO_Stub *data = 0;
-  ACE_NEW_THROW_EX (data,
-                    TAO_Stub ((char *) 0, mprofile, this->orb_core_),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // Figure out if the servant is collocated.
-  TAO_ServantBase *servant = 0;
-  TAO_SERVANT_LOCATION servant_location =
-    this->_get_collocated_servant (data,
-                                   servant);
-
-  int collocated = 0;
-  if (servant_location != TAO_SERVANT_NOT_FOUND)
-    collocated = 1;
-
-  // Create the CORBA level proxy.  This will increase the ref_count
-  // on data by one
-  ACE_NEW_THROW_EX (obj,
-                    CORBA_Object (data,
-                                  servant,
-                                  collocated),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return obj;
-}
-
 // ****************************************************************
 
 void
@@ -1689,17 +1515,20 @@ CORBA_ORB::_optimize_collocation_objects (void) const
   return this->orb_core_->optimize_collocation_objects ();
 }
 
-TAO_SERVANT_LOCATION
-CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
-                                    TAO_ServantBase *&servant)
+TAO_ServantBase *
+CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 {
+  // ACE_DEBUG ((LM_DEBUG, "CORBA_ORB: get_collocated_servant\n"));
+
   if (sobj == 0 || !this->_optimize_collocation_objects ())
-    return TAO_SERVANT_NOT_FOUND;
+    return 0;
+
+  // @@EXC@@ We should receive the <env> from the command line.
 
   // @@ What about forwarding.  Which this approach we are never forwarded
   //    when we use collocation!
 
-  const TAO_MProfile &mprofile = sobj->get_base_profiles ();
+  CORBA::Environment ACE_TRY_ENV;
 
   if (this->orb_core_->use_global_collocation ())
     {
@@ -1708,82 +1537,92 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
       //    then we need to use that lock in the ORB_init() function.
 
       ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                                *ACE_Static_Object_Lock::instance (), TAO_SERVANT_NOT_FOUND));
+                                *ACE_Static_Object_Lock::instance (), 0));
 
-      TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-      TAO_ORB_Table::Iterator end = table->end ();
+      TAO_ORB_Table* table = TAO_ORB_Table::instance ();
+      TAO_ORB_Table::Iterator end =
+        table->end ();
       for (TAO_ORB_Table::Iterator i = table->begin ();
            i != end;
            ++i)
         {
-          TAO_SERVANT_LOCATION servant_location =
-            this->_find_collocated_servant (sobj,
-                                            (*i).int_id_,
-                                            servant,
-                                            mprofile);
-          if (servant_location != TAO_SERVANT_NOT_FOUND)
-            return servant_location;
-        }
 
-      // If we don't find one by this point, we return 0.
-      return TAO_SERVANT_NOT_FOUND;
+          const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+          if ((*i).int_id_->is_collocated (mprofile) == 0)
+            continue;
+
+          TAO_Object_Adapter *oa = (*i).int_id_->object_adapter ();
+
+          for (TAO_PHandle j = 0;
+               j != mprofile.profile_count ();
+               ++j)
+            {
+              const TAO_Profile* profile = mprofile.get_profile (j);
+              TAO_ObjectKey_var objkey = profile->_key ();
+              ACE_CHECK_RETURN (0);
+
+              ACE_TRY
+                {
+                  PortableServer::Servant servant =
+                    oa->find_servant (objkey.in (), ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+
+                  // Found collocated object.  Perhaps we can get around by simply
+                  // setting the servant_orb, but let get this to work first.
+                  sobj->servant_orb (CORBA::ORB::_duplicate ((*i).int_id_->orb ()));
+                  return servant;
+                }
+              ACE_CATCHANY
+                {
+                  // Ignore the exception and continue with the
+                  // next one.
+                }
+              ACE_ENDTRY;
+            }
+        }
     }
   else
     {
-      return this->_find_collocated_servant (sobj,
-                                             this->orb_core_,
-                                             servant,
-                                             mprofile);
-    }
-}
+      const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+      if (!this->orb_core_->is_collocated (mprofile))
+        return 0;
 
-TAO_SERVANT_LOCATION
-CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
-                                     TAO_ORB_Core *orb_core,
-                                     TAO_ServantBase *&servant,
-                                     const TAO_MProfile &mprofile)
-{
-  if (!orb_core->is_collocated (mprofile))
-    return TAO_SERVANT_NOT_FOUND;
+      // @@ Ossama: there is repeated code here, could you please
+      // move it to a routine....
 
-  TAO_Object_Adapter *oa = orb_core->object_adapter ();
+      TAO_Object_Adapter *oa = this->orb_core_->object_adapter ();
 
-  for (TAO_PHandle j = 0;
-       j != mprofile.profile_count ();
-       ++j)
-    {
-      const TAO_Profile *profile = mprofile.get_profile (j);
-      TAO_ObjectKey_var objkey = profile->_key ();
-
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      for (TAO_PHandle j = 0;
+           j != mprofile.profile_count ();
+           ++j)
         {
-          TAO_SERVANT_LOCATION servant_location =
-            oa->find_servant (objkey.in (),
-                              servant,
-                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          const TAO_Profile* profile = mprofile.get_profile (j);
+          TAO_ObjectKey_var objkey = profile->_key ();
+          ACE_CHECK_RETURN (0);
 
-          if (servant_location != TAO_SERVANT_NOT_FOUND)
+          ACE_TRY_EX(LOCAL_ORB)
             {
-              // Found collocated object.  Perhaps we can get around
-              // by simply setting the servant_orb, but let get this
-              // to work first.
+              PortableServer::Servant servant =
+                oa->find_servant (objkey.in (), ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX(LOCAL_ORB);
+
+              // Found collocated object.  Perhaps we can get around by simply
+              // setting the servant_orb, but let get this to work first.
 
               // There could only be one ORB which is us.
-              sobj->servant_orb (CORBA::ORB::_duplicate (orb_core->orb ()));
-
-              return servant_location;
+              sobj->servant_orb (CORBA::ORB::_duplicate (this));
+              return servant;
             }
+          ACE_CATCHANY
+            {
+              // Ignore the exception and continue with the
+              // next one.
+            }
+          ACE_ENDTRY;
         }
-      ACE_CATCHANY
-        {
-          // Ignore the exception and continue with the next one.
-        }
-      ACE_ENDTRY;
     }
 
-  return TAO_SERVANT_NOT_FOUND;
+  return 0;
 }
 
 // ****************************************************************
@@ -1921,7 +1760,7 @@ CORBA_ORB::unregister_value_factory (const char * /* repository_id */,
 
 CORBA::ValueFactory_ptr
 CORBA_ORB::lookup_value_factory (const char *repository_id,
-                                 CORBA_Environment &)
+                                 CORBA_Environment &ACE_TRY_ENV)
 {
 // %! guard
 // do _add_ref here not in map->find

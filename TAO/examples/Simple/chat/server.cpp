@@ -22,34 +22,35 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  CORBA::Environment TAO_TRY_ENV;
+
+  TAO_TRY
     {
       Server_i server_i;
 
-      if (server_i.init (argc, argv, ACE_TRY_ENV) != 0)
+      if (server_i.init (argc, argv, TAO_TRY_ENV) != 0)
 	{
-	  ACE_TRY_CHECK;
+	  TAO_CHECK_ENV;
 
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "\n error in init.\n"),
 			    1);
 	}
-      if (server_i.run (ACE_TRY_ENV) != 0)
+      if (server_i.run (TAO_TRY_ENV) != 0)
 	{
-	  ACE_TRY_CHECK;
+	  TAO_CHECK_ENV;
 
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "\n error in run.\n"),
 			    1);
 	}
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server::main\t\n");
+      TAO_TRY_ENV.print_exception ("server::main\t\n");
       return 1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

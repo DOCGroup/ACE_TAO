@@ -104,8 +104,7 @@ TAO_IIOP_Connector::close (void)
 
 int
 TAO_IIOP_Connector::connect (TAO_Profile *profile,
-                             TAO_Transport *& transport,
-                             ACE_Time_Value *max_wait_time)
+                             TAO_Transport *& transport)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return -1;
@@ -118,13 +117,6 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 
   const ACE_INET_Addr &oa = iiop_profile->object_addr ();
 
-  ACE_Synch_Options synch_options;
-  if (max_wait_time != 0)
-    {
-      synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
-                         *max_wait_time);
-    }
-
   TAO_IIOP_Client_Connection_Handler* result;
 
   // the connect call will set the hint () stored in the Profile
@@ -134,8 +126,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   errno = 0;
   if (this->base_connector_.connect (iiop_profile->hint (),
                                      result,
-                                     oa,
-                                     synch_options) == -1)
+                                     oa) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
@@ -307,26 +298,26 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
+int
 TAO_IIOP_Connector::make_profile (const char *endpoint,
                                   TAO_Profile *&profile,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //
-  //    N.n@host:port/object_key
+  //    N.n//host:port/object_key
   //
   // or:
   //
-  //    host:port/object_key
+  //    //host:port/object_key
 
-  ACE_NEW_THROW_EX (profile,
-                    TAO_IIOP_Profile (endpoint,
-                                      this->orb_core_,
-                                      ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+  ACE_NEW_RETURN (profile,
+                  TAO_IIOP_Profile (endpoint,
+                                    this->orb_core_,
+                                    ACE_TRY_ENV),
+                  -1);
 
-  ACE_CHECK;
+  return 0;  // Success
 }
 
 

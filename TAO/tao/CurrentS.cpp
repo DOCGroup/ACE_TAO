@@ -27,12 +27,12 @@ POA_CORBA::Current::~Current (void)
 
 CORBA::Boolean POA_CORBA::Current::_is_a (
     const char* value,
-    CORBA::Environment &
+    CORBA::Environment &_tao_environment
   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
       return 1;
     else
       return 0;
@@ -42,7 +42,7 @@ void* POA_CORBA::Current::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Current:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/Current:1.0") == 0)
     return ACE_static_cast (POA_CORBA::Current_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -51,7 +51,7 @@ void* POA_CORBA::Current::_downcast (
 
 const char* POA_CORBA::Current::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA/Current:1.0";
+  return "IDL:CORBA/Current:1.0";
 }
 
 POA_CORBA::_tao_collocated_Current::_tao_collocated_Current (
@@ -71,20 +71,21 @@ POA_CORBA::Current_ptr POA_CORBA::_tao_collocated_Current::_get_servant (void) c
 
 CORBA::Boolean POA_CORBA::_tao_collocated_Current::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &_tao_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      ACE_TRY_ENV
+      _tao_environment
     );
 }
 
 
 CORBA::Current*
-POA_CORBA::Current::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_CORBA::Current::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
+    return 0;
   return new POA_CORBA::_tao_collocated_Current (this, stub);
 }

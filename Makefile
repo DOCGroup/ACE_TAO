@@ -30,7 +30,6 @@
 #----------------------------------------------------------------------------
 
 INFO    = README \
-          THANKS \
           VERSION
 
 DIRS    = ace \
@@ -38,8 +37,7 @@ DIRS    = ace \
           tests \
           apps \
           examples \
-          performance-tests \
-          websvcs
+          performance-tests
 
 CLONE   = Makefile \
           ace \
@@ -51,8 +49,7 @@ CLONE   = Makefile \
           netsvcs \
           performance-tests \
           TAO \
-          tests \
-          websvcs
+          tests
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -79,7 +76,6 @@ CONTROLLED_FILES = \
         ACE-INSTALL.html \
         ACE-install.sh \
         ASNMP \
-        AUTHORS \
         BIBLIOGRAPHY \
         COPYING \
         ChangeLog \
@@ -96,36 +92,19 @@ CONTROLLED_FILES = \
         Makefile \
         PROBLEM-REPORT-FORM \
         README \
-        THANKS \
         VERSION \
-        WindozeCE \
-        acconfig.h \
-        aclocal.m4 \
         ace \
-        ace-config.1.in \
-        ace-config.in \
-        aceConf.sh.in \
         apps \
         bin \
-        config.guess \
-        config.sub \
-        configure \
-        configure.in \
         docs \
         etc \
         examples \
         include \
-        install-sh \
-        ltconfig \
-        ltmain.sh \
-        m4 \
-        missing \
-        mkinstalldirs \
         netsvcs \
         os-patches \
         performance-tests \
         tests \
-        websvcs
+        WindozeCE
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
@@ -142,10 +121,8 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/bin \
         ACE_wrappers/etc \
         ACE_wrappers/include \
-        ACE_wrappers/m4 \
         ACE_wrappers/netsvcs \
-        ACE_wrappers/tests \
-        ACE_wrappers/websvcs
+        ACE_wrappers/tests
 
 .PHONY: release releasetao releaseall
 

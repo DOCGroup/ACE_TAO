@@ -153,8 +153,7 @@ ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
 inline
 ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   ACE_recursive_thread_mutex_t &m)
-   : lock_ (m),
-     owner_ (-1)
+   : lock_ (m)
 {
   acquire ();
 }
@@ -230,7 +229,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 //
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
-const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = ACE_INT64_LITERAL (0x19db1ded53e8000);
+const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = 0x19db1ded53e8000i64;
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
@@ -248,7 +247,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = long ((long (_100ns.QuadPart) % long (10000 * 1000)) / 10);
+  this->tv_.tv_usec = long ((_100ns.QuadPart % (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -457,23 +456,9 @@ ACE_OS::uname (struct utsname *name)
   ::GetVersionEx (&vinfo);
 
   SYSTEM_INFO sinfo;
-#   if defined (ACE_HAS_PHARLAP)
-  // PharLap doesn't do GetSystemInfo.  What's really wanted is the CPU
-  // architecture, so we can get that with EtsGetSystemInfo. Fill in what's
-  // wanted in the SYSTEM_INFO structure, and carry on. Note that the
-  // CPU type values in EK_KERNELINFO have the same values are the ones
-  // defined for SYSTEM_INFO.
-  EK_KERNELINFO ets_kern;
-  EK_SYSTEMINFO ets_sys;
-  EtsGetSystemInfo (&ets_kern, &ets_sys);
-  sinfo.wProcessorLevel = ACE_static_cast (WORD, ets_kern.CpuType);
-  sinfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_INTEL;
-  sinfo.dwProcessorType = ets_kern.CpuType * 100 + 86;
-#   else
   ::GetSystemInfo(&sinfo);
 
   ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
-#   endif /* ACE_HAS_PHARLAP */
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
@@ -846,11 +831,7 @@ ACE_OS::fopen (const char *filename, const char *mode)
       int fd = _open_osfhandle ((long) handle, hmode);
       if (fd != -1)
         {
-#   if defined(__BORLANDC__)
-          FILE *fp = _fdopen (fd, ACE_const_cast (char *, mode));
-#   else /* defined(__BORLANDC__) */
           FILE *fp = _fdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
             return fp;
           _close (fd);
@@ -881,11 +862,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
       int fd = _open_osfhandle ((long) handle, hmode);
       if (fd != -1)
         {
-#   if defined(__BORLANDC__)
-          FILE *fp = _wfdopen (fd, ACE_const_cast (wchar_t *, mode));
-#   else /* defined(__BORLANDC__) */
           FILE *fp = _wfdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
             return fp;
           _close (fd);
@@ -1357,17 +1334,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
 
 # elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  // PharLap ETS can act on the current thread - it can set the quantum also,
-  // unlike Win32. All this only works on the RT version.
-#   if defined (ACE_HAS_PHARLAP_RT)
-  if (id != ACE_SELF)
-    ACE_NOTSUP_RETURN (-1);
-
-  if (sched_params.quantum() != ACE_Time_Value::zero)
-    EtsSetTimeSlice (sched_params.quantum().msec());
-
-#   else
   ACE_UNUSED_ARG (id);
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
@@ -1389,7 +1355,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     {
       return -1;
     }
-#   endif /* ACE_HAS_PHARLAP_RT */
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
@@ -1849,9 +1814,9 @@ ACE_TSS_Cleanup::instance (void)
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
       if (ACE_TSS_Cleanup::instance_ == 0)
-        ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_,
-                        ACE_TSS_Cleanup,
-                        0);
+        {
+          ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
+        }
     }
 
   return ACE_TSS_Cleanup::instance_;
@@ -2005,14 +1970,11 @@ ACE_TSS_Cleanup::tss_keys ()
 
   if (ts_keys == 0)
     {
-      ACE_NEW_RETURN (ts_keys,
-                      ACE_TSS_Keys,
-                      0);
+      ACE_NEW_RETURN (ts_keys, ACE_TSS_Keys, 0);
       // Store the dynamically allocated pointer in thread-specific
       // storage.
       if (ACE_OS::thr_setspecific (in_use_,
-            ACE_reinterpret_cast (void *,
-                                  ts_keys)) == -1)
+            ACE_reinterpret_cast (void *, ts_keys)) == -1)
         {
           delete ts_keys;
           return 0; // Major problems, this should *never* happen!
@@ -2091,19 +2053,15 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN (ts_storage,
-                        void*[ACE_TSS_THREAD_KEYS_MAX],
-                        0);
+        ACE_NEW_RETURN (ts_storage, void*[ACE_TSS_THREAD_KEYS_MAX], 0);
 
         // Zero the entire TSS array.  Do it manually instead of using
-        // memset, for optimum speed.  Though, memset may be faster
-        // :-)
+        // memset, for optimum speed.  Though, memset may be faster :-)
         void **tss_base_p = ts_storage;
-
-        for (u_int i = 0;
-             i < ACE_TSS_THREAD_KEYS_MAX;
-             ++i)
-          *tss_base_p++ = 0;
+        for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
+          {
+            *tss_base_p = 0;
+          }
       }
 
      // Store the pointer in thread-specific storage.  It gets deleted
@@ -2261,16 +2219,6 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
 
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ()
-#define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beginthreadex (STACK, (void *) STACKSIZE, (unsigned int) ENTRYPOINT, (unsigned int *) THR_ID)
-#else
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-#define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
-
 void *
 ACE_Thread_Adapter::invoke (void)
 {
@@ -2403,7 +2351,7 @@ ACE_Thread_Adapter::invoke (void)
           if (using_afx)
             ::AfxEndThread ((DWORD)status);
           else
-            ACE_ENDTHREADEX (status);
+            ::_endthreadex ((DWORD) status);
         }
       else
         {
@@ -2414,13 +2362,12 @@ ACE_Thread_Adapter::invoke (void)
           CWinThread *pThread = ::AfxGetThread ();
 
           if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ACE_ENDTHREADEX (status);
+            ::_endthreadex ((DWORD) status);
           else
             ::AfxEndThread ((DWORD)status);
         }
 #   else
-
-      ACE_ENDTHREADEX (status);
+      ::_endthreadex ((DWORD) status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 # endif /* ACE_WIN32 */
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
@@ -3159,12 +3106,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         // thread in a suspended mode.
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
-      *thr_handle = (void *) ACE_BEGINTHREADEX (0,
-                                                stacksize,
-                                                thread_args->entry_point (),
-                                                thread_args,
-                                                flags,
-                                                thr_id);
+      *thr_handle = (void *) ::_beginthreadex
+        (0,
+         stacksize,
+         (unsigned (__stdcall *) (void *)) thread_args->entry_point (),
+         thread_args,
+         flags,
+         (unsigned int *) thr_id);
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
         {
@@ -3406,7 +3354,7 @@ ACE_TRACE ("ACE_OS::thr_exit");
         if (using_afx)
           ::AfxEndThread ((DWORD)status);
         else
-          ACE_ENDTHREADEX (status);
+          ::_endthreadex ((DWORD) status);
       }
     else
       {
@@ -3416,12 +3364,12 @@ ACE_TRACE ("ACE_OS::thr_exit");
         // know to cause some problem.
         CWinThread *pThread = ::AfxGetThread ();
         if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-          ACE_ENDTHREADEX (status);
+          ::_endthreadex ((DWORD) status);
         else
           ::AfxEndThread ((DWORD)status);
       }
 #     else
-    ACE_ENDTHREADEX (status);
+    ::_endthreadex ((DWORD) status);
 #     endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 #   elif defined (VXWORKS)
@@ -4022,7 +3970,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
       startup_info.cb = sizeof startup_info;
 
       if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
+                           (LPTSTR) ACE_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
@@ -4033,7 +3981,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            &process_info))
 #   else
       if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
+                           (LPTSTR) buf,
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE
@@ -4201,9 +4149,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -4247,9 +4193,7 @@ ACE_TRACE ("readv");
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_OS::read_n (handle, buf, length);
@@ -5186,28 +5130,19 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 # endif /* ACE_LACKS_DIFFTIME */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   if defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
 wchar_t *
 ACE_OS::ctime (const time_t *t)
 {
   wchar_t buf[26];              // 26 is a "magic number" ;)
   return ACE_OS::ctime_r (t, buf, 26);
 }
-#   endif /* ACE_HAS_WINCE */
 
 wchar_t *
 ACE_OS::ctime_r (const time_t *clock,
                  wchar_t *buf,
                  int buflen)
 {
-#if !defined (ACE_HAS_WINCE)
-  wchar_t *result;
-  ACE_OSCALL (::_wctime (clock), wchar_t *, 0, result);
-  if (result != 0)
-    ::wcsncpy (buf, result, buflen);
-  return buf;
-#else
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
     return 0;
@@ -5239,9 +5174,8 @@ ACE_OS::ctime_r (const time_t *clock,
                    systime.wSecond,
                    systime.wYear);
   return buf;
-#endif /* ACE_HAS_WINCE */
 }
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* ACE_HAS_WINCE */
 
 # if !defined (ACE_HAS_WINCE)
 time_t
@@ -6299,9 +6233,7 @@ ACE_OS_Object_Manager::instance (void)
     {
       ACE_OS_Object_Manager *instance_pointer;
 
-      ACE_NEW_RETURN (instance_pointer,
-                      ACE_OS_Object_Manager,
-                      0);
+      ACE_NEW_RETURN (instance_pointer, ACE_OS_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
@@ -6366,7 +6298,7 @@ ACE_OS_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return 1;
+      return -1;
     }
 }
 
@@ -6380,7 +6312,7 @@ ACE_OS_Object_Manager::fini (void)
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    return -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.

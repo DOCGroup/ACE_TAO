@@ -41,14 +41,7 @@
 #include "pccTimer.h"
 #endif /* CHORUS */
 
-#if defined(ACE_HAS_EXCEPTIONS)
-// Some plaforms define an exception structure in math.h...
-#define exception _math_exception
-#include /**/ <math.h>
-#undef exception
-#else
-#include /**/ <math.h>
-#endif /* ACE_HAS_EXCEPTIONS */
+#include <math.h>
 
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.

@@ -58,7 +58,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 // Frame input events and notify <Consumers>.
 
 int
-Supplier_Input_Handler::handle_input (ACE_HANDLE)
+Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 {
   char buf[BUFSIZ];
 
@@ -113,7 +113,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
         }
       ACE_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected Error\n");
+          ACE_TRY_ENV.print_exception ("Unexpected Error\n");
         }
       ACE_ENDTRY;
     }

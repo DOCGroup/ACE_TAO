@@ -81,10 +81,6 @@ CXX      = $(CC)
 CCFLAGS  += $(CFLAGS) --no_rtti -tnone
 DCFLAGS  += -g
 DLD      = $(CXX)
-#### Set INCLDIRS, so that wrapper_macros.GNU doesn't insert -I.
-#### Otherwise, with GHS on NT host, ACE's Signal.h gets #included
-#### instead of VxWorks' signal.h by target/h/private/sigLibP.h.
-INCLDIRS = -I$(ACE_ROOT)
 LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
 OCFLAGS  += -OL -OM

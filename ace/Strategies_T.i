@@ -1,6 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
+template<class ADDR_T> ASYS_INLINE
+ACE_Hash_Addr<ADDR_T>::~ACE_Hash_Addr (void)
+{
+}
+
 template<class SVC_HANDLER> ASYS_INLINE
 ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy (void)
 {
@@ -125,8 +130,8 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 
   if (this->open (reactor, mask, flags) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
+    ACE_ERROR ((LM_ERROR, "%p\n",
+                "ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -153,9 +158,8 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 
   if (this->open (thr_mgr, thr_flags, n_threads, flags) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
+    ACE_ERROR ((LM_ERROR, "%p\n",
+                "ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -376,6 +380,48 @@ ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
     return 0;
   else
     return this->t_ == rhs;
+}
+
+template<class ADDR_T> ASYS_INLINE
+ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (void)
+  : hash_value_ (0)
+{
+}
+
+template<class ADDR_T> ASYS_INLINE
+ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a)
+  : hash_value_ (0),
+    addr_ (a)
+{
+  this->hash ();
+}
+
+template<class ADDR_T> ASYS_INLINE u_long
+ACE_Hash_Addr<ADDR_T>::hash (void) const
+{
+  // In doing the check below, we take chance of paying a performance
+  // price when the hash value is zero.  But, that will (hopefully)
+  // happen far less often than a non-zero value, so this caching
+  // strategy should pay off, esp. if hash computation is expensive
+  // relative to the simple comparison.
+
+  if (this->hash_value_ == 0)
+    ((ACE_Hash_Addr<ADDR_T> *) this)->hash_value_ = this->hash_i (addr_);
+
+  return this->hash_value_;
+}
+
+template<class ADDR_T> ASYS_INLINE u_long
+ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
+{
+  ACE_UNUSED_ARG (b);
+  return 0;
+}
+
+template<class ADDR_T> ASYS_INLINE int
+ACE_Hash_Addr<ADDR_T>::operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const
+{
+  return this->addr_ == rhs.addr_;
 }
 
 template <class SVC_HANDLER> ASYS_INLINE int
