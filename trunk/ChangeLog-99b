@@ -1,3 +1,11 @@
+Tue Jul 27 16:18:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated note about shared libraries
+          on VxWorks.  In particular, they don't provide copies
+          of global (static) variables in the library.  So, "programs"
+          that share a library will also share the static variables in
+          the library.
+
 Tue Jul 27 14:26:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_Dgram: Removed the QoS_Params from open() and 
