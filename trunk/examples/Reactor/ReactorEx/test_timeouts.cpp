@@ -52,7 +52,7 @@ private:
 };
 
 int
-main (int, char *[])
+main (void)
 {
   Timeout_Handler handler;
 

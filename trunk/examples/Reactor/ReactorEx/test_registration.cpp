@@ -136,7 +136,7 @@ worker (void)
 }
 
 int 
-main ()
+main (void)
 {
   ACE_ASSERT (reactorEx.register_handler (&simple_handler, 
 					  simple_handler.event1_.handle ()) == 0);
