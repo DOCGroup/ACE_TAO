@@ -122,7 +122,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
         BOUNDED_TSTRING_ANY_IMPL;
 
       TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
-        dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
+        ACE_dynamic_cast (BOUNDED_TSTRING_ANY_IMPL *, impl);
 
       if (narrow_impl != 0)
         {

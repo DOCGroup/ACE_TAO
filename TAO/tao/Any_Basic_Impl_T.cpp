@@ -68,7 +68,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       if (mb == 0)
         {
           TAO::Any_Basic_Impl_T<T> *narrow_impl =
-            dynamic_cast <TAO::Any_Basic_Impl_T<T> *> (impl);
+            ACE_dynamic_cast (TAO::Any_Basic_Impl_T<T> *, impl);
 
           if (narrow_impl == 0)
             {

@@ -79,7 +79,7 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
       if (mb == 0)
         {
           TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> *narrow_impl =
-            dynamic_cast <UNSIGNED_CHAR_ANY_IMPL *> (impl);
+            ACE_dynamic_cast (UNSIGNED_CHAR_ANY_IMPL *, impl);
 
           if (narrow_impl == 0)
             {
