@@ -1,3 +1,8 @@
+Mon Jul  2 08:59:16 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Makefile.bor
+        Added BCB makefile
+
 Mon Jul  2 23:13:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h
@@ -9,7 +14,7 @@ Mon Jul  2 23:13:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.bor
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.bor
-  
+
         Added more linker flags to fix Borland DLL builds.
 
 Mon Jul  2 19:32:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -24,7 +29,7 @@ Mon Jul  2 17:06:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Initialization of the transport_cache ()
 	  should preceed the preconnects (). Thanks to Irfan for pointing
-	  this out.  
+	  this out.
 
 Mon Jul  2 15:53:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
