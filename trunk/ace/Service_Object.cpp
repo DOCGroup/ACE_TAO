@@ -19,9 +19,9 @@ ACE_Service_Type::dump (void) const
 }
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
-				    ACE_Service_Type_Impl *t,
-				    const ACE_SHLIB_HANDLE h,
-				    int active)
+                                    ACE_Service_Type_Impl *t,
+                                    const ACE_SHLIB_HANDLE h,
+                                    int active)
   : name_ (0),
     type_ (t),
     handle_ (h),
@@ -93,4 +93,13 @@ ACE_Service_Object::resume (void)
 {
   ACE_TRACE ("ACE_Service_Object::resume");
   return 0;
+}
+
+void
+ACE_Service_Type::name (const ACE_TCHAR *n)
+{
+  ACE_TRACE ("ACE_Service_Type::name");
+
+  delete [] (ACE_TCHAR *) this->name_;
+  this->name_ = ACE::strnew (n);
 }

@@ -1,3 +1,19 @@
+Thu May  2 00:29:34 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/TLI_Stream: Uninlined a methods that needed access to the
+	  ACE class.
+
+	* ace/Service_Object: Uninlined ACE_Service_Type::name().
+	
+	* ace/Malloc_T.cpp: 
+	* ace/Process_Mutex.cpp:
+	* ace/SOCK_Dgram_Bcast.cpp:
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Connector.cpp:
+	* ace/TLI_Stream.cpp:
+	
+	  Added #include "ace/ACE.h".
+
 Wed May  1 21:07:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-win32-msvc-6.h:
