@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   for (char readback = 'x'; readback != 'q'; )  
     {
       ssize_t bytes_read =
-        read_dev.recv_n ((void *) &readback, 1);
+        read_dev.recv ((void *) &readback, 1);
 
       if (bytes_read == 1)
 	ACE_DEBUG ((LM_DEBUG,
