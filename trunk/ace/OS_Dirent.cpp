@@ -19,6 +19,12 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
   ACE_DIR *dir;
   ACE_TCHAR extra[3] = {0,0,0};
 
+   // Check if filename is a directory.
+   DWORD fileAttribute = ::GetFileAttributes (filename);
+   if (fileAttribute == INVALID_FILE_ATTRIBUTES 
+       || !(fileAttribute & FILE_ATTRIBUTE_DIRECTORY))
+     return 0;
+
 /*
   Note: the semantics of the win32 function FindFirstFile take the
   basename(filename) as a pattern to be matched within the dirname(filename).

@@ -1,3 +1,9 @@
+Fri May 23 09:13:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp (opendir_emulation): Added a check to see
+	  if the file is infact a directory.  Thanks to Udo Berninger
+ 	  <udo.berninger@siemens.com> for reporting this fix.
+
 Fri May 23 10:46:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Carsten Madsen <com@navicon.dk>
