@@ -1,3 +1,10 @@
+Tue Apr 11 16:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/orbconf.h: Commented out AMI aupport as default thus
+	  rectifying the mistake I committed when testing out the AMI and
+	  Smart Proxies combination. Thanks to Carlos O' Ryan
+	  <coryan@cs.wustl.edu> for pointing this out.
+		
 Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/AVStreams/benchmark/run_test.pl
