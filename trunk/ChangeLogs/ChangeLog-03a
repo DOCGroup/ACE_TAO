@@ -1,3 +1,9 @@
+Mon Oct 28 12:48:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/PerlACE/Process_Unix.pm (Spawn): Return 0 when the function
+	  complete successfully.  Thanks to Charles F. Frasch
+	  <cfrasch@spawar.navy.mil> for reporting and suggesting the fix.
+
 Sun Oct 27 07:44:32 2002  John Aughey  <jha@aughey.com>
 
 	* ace/INET_Addr.cpp: Changed the default constructor to only
