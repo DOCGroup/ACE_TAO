@@ -1,3 +1,8 @@
+Tue Aug 10 15:26:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (strptime): removed unreachable break after
+          return statement, in default case of switch statement.
+
 Tue Aug 10 14:46:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},README: Changed support for ACE_OS::strptime ()

@@ -6914,7 +6914,6 @@ ACE_OS::strptime (char *buf,
 
             default:                        /* unrecognised */
               return buf + bi;
-              break;
             } /* switch (format[fi]) */
 
         }
