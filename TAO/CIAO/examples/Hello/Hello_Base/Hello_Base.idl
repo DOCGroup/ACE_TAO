@@ -1,6 +1,6 @@
 //$Id$:
 /**
- *  @file Hello.idl
+ *  @file Hello_Base.idl
  *  Definition of common interfaces used by the Hello example
  *
  *  @auther Tao Lu <lu@dre.vanderbilt.edu>
