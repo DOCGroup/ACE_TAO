@@ -88,7 +88,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
   this->validate_properties (type, type_struct,
-			     (CosTrading::PropertySeq) properties, _env);
+			     (CosTrading::PropertySeq&) properties, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
   offer.reference = (reference->_duplicate (reference));
