@@ -1609,12 +1609,10 @@ ACE_Unbounded_Set_Iterator<T>::dump (void) const
 
 template <class T>
 ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end)
-    : current_ (s.head_->next_),
+    : current_ (end == 0 ? s.head_->next_ : s.head_ ),
       set_ (&s)
 {
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
-  if (end != 0)
-    this->current_ = s.head_;
 }
 
 template <class T> int
