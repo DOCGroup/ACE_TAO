@@ -1,3 +1,20 @@
+Wed Nov 12 15:42:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-macosx.h:
+          Added #define ACE_LACKS_SEARCH_H.
+
+        * ace/config-vxworks5.x.h:
+          Added #define ACE_LACKS_WCHAR_H and ACE_LACKS_PWD_H.
+
+        * ace/OS_NS_unistd.inl:
+          Added #include OS_NS_stdio.h if ACE_LACKS_ACCESS is defined.
+          Added #include os_unistd.h if VXWORKS or ACE_HAS_WINCE is
+          define.
+
+        * ace/OS_NS_sys_time.inl:
+          Added #include OS_NS_time.h if VXWORKS, CHORUS, or ACE_PSOS is
+          defined.
+
 Wed Nov 12 09:30:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.h:

@@ -187,6 +187,8 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_WCHAR_H
+#define ACE_LACKS_PWD_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H
