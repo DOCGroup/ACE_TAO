@@ -78,13 +78,13 @@ TAO_MProfile::set (CORBA::ULong sz)
   this->current_ = 0;
 
 #if 0
-  // @@ Fred: this does *not* work, the literal 0 is the null pointer, 
+  // @@ Fred: this does *not* work, the literal 0 is the null pointer,
   //    but the bit representation may be something else.
   ACE_OS::memset (this->pfiles_,
                   0,
                   sizeof (TAO_Profile_ptr) * sz);
 #else
-  for (int i = 0; i != this->size_; ++i)
+  for (TAO_PHandle i = 0; i != this->size_; ++i)
     this->pfiles_[i] = 0;
 #endif
 
@@ -122,7 +122,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 
   //
   // @@ Fred: here was a gross violation of the invariants for this
-  //    class: if the forward_from_ is owned by us (we call delete all 
+  //    class: if the forward_from_ is owned by us (we call delete all
   //    the time on it) we cannot share it with mprofile.
   //
   // if (mprofile->forward_from_)
