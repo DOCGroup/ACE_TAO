@@ -2239,8 +2239,6 @@ namespace
          << "      POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
          << "    " << "> (exe, c)" << endl
          << "{"
