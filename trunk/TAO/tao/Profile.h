@@ -102,7 +102,7 @@ public:
    */
   CORBA::Short addressing_mode (void) const;
 
-  /// @@ deprecated. return a reference to the Object Key.
+  /// @deprecated Return a reference to the Object Key.
   const TAO::ObjectKey &object_key (void) const;
 
   /// Obtain the object key, return 0 if the profile cannot be parsed.
@@ -180,8 +180,6 @@ public:
   virtual void addressing_mode (CORBA::Short addr_mode
                                 ACE_ENV_ARG_DECL);
 
-
-
   /// The object key delimiter.
   virtual char object_key_delimiter (void) const = 0;
 
@@ -220,7 +218,7 @@ public:
    * @see do_is_equivalent_i()
    * @see is_equivalent_hook()
    *
-   * @return @c true if this profile is equivalent to @c other_profile.  
+   * @return @c true if this profile is equivalent to @c other_profile.
    */
   CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
 

@@ -674,7 +674,7 @@ namespace CORBA
     /// The ORB_Core that created us....
     TAO_ORB_Core *orb_core_;
 
-    /// @@NOTE: No freaking clue why this is in the ORB??
+    /// @note No freaking clue why this is in the ORB??
 #if 0
     /// If non-0 then this is the Factory for OBV unmarshaling
     TAO_ValueFactory_Map *valuetype_factory_map_;
