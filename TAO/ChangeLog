@@ -1,3 +1,23 @@
+Fri Jul 26 21:07:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.cpp (policies):
+
+	  Verify that the Messaging::TAG_POLICIES tagged component was
+	  successfully extracted from the CDR stream before continuing.
+
+	* tao/MProfile.i (~TAO_MProfile):
+
+	  Added missing emulated exception argument to Policy::destroy()
+	  call.  Removes unnecessary TSS accesses in emulated exception
+	  builds.
+
+	* tao/DynamicInterface/Server_Request.cpp (arguments, set_result):
+	* tao/PortableServer/POA.cpp (activate_object_with_id_i):
+	
+	  Logically "ORed" BAD_INV_ORDER minor code with TAO_OMG_VMCID.
+	  Standard OMG exception minor codes must be logically "ORed" with
+	  the OMG VMCID constant.
+
 Fri Jul 26 17:07:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (decode):
