@@ -596,7 +596,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             }
         }
     }
-  TAO_CATCH (CORBA_Exception, ex)
+  TAO_CATCHANY                  // Only CORBA exceptions are caught here.
     {
       if (response_required)
         this->send_error (request_id, &ex);
@@ -614,7 +614,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         }
       return result;
     }
-  TAO_CATCHANY
+  TAO_CATCHALL
     {
       // @@ TODO some c++ exception or another, but what do we do with
       // it? BTW, this cannot be detected if using the <env> mapping.
@@ -774,7 +774,7 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
                                    sizeof ignored,
                                    MSG_PEEK);
   switch (ret)
-    {      
+    {
     case 0:
     case -1:
       // 0 is a graceful shutdown
