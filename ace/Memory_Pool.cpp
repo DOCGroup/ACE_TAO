@@ -20,7 +20,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, Memory_Pool, "Memory_Pool.cpp,v 4.79 2001/09/02 22:33:16 schmidt Exp")
+ACE_RCSID(ace, Memory_Pool, $Id$)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 
@@ -285,6 +285,10 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                            this->backing_store_name_),
                           -1);
     }
+
+#if defined (ACE_OPENVMS)
+  ::fsync(this->mmap_.handle());
+#endif
 
   // Increment by one to put us at the beginning of the next chunk...
   map_size++;

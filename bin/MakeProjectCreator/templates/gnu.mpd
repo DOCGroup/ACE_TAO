@@ -14,7 +14,7 @@
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_file%>
 <%if(exename)%>
-BIN_UNCHECKED    = <%exename%>
+BIN_UNCHECKED    = <%exename%>$(EXEEXT)
 <%endif%>
 <%if(staticname)%>
 

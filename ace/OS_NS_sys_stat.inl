@@ -50,6 +50,9 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
 # elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
 # else
+#  if defined (ACE_OPENVMS)
+    ::fsync(handle);
+#  endif
     ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */
 #endif /* ACE_PSOS_LACKS_PHILE */

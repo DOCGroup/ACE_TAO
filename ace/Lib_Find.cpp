@@ -14,8 +14,16 @@
 #  include "ace/OS_NS_strings.h"
 #endif /* ACE_WIN32 */
 
-ACE_RCSID(ace, Lib_Find, "$Id$")
+#if defined (ACE_OPENVMS)
+#include "descrip.h"
+#include "chfdef.h"
+#include "stsdef.h"
+#include "libdef.h"
 
+extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
+#endif
+
+ACE_RCSID(ace, Lib_Find, $Id$)
 
 #if ! defined (ACE_PSOS_DIAB_MIPS)
 int
@@ -24,6 +32,76 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                       size_t maxpathnamelen)
 {
   ACE_TRACE ("ACE_Lib_Find::ldfind");
+#if defined (ACE_OPENVMS)
+  if (strlen(filename) >= maxpathnamelen)
+  {
+    errno = ENOMEM;
+    return -1;
+  }
+
+  dsc$descriptor nameDsc;
+  nameDsc.dsc$b_class = DSC$K_CLASS_S;
+  nameDsc.dsc$b_dtype = DSC$K_DTYPE_T;
+  nameDsc.dsc$w_length = strlen(filename);
+  nameDsc.dsc$a_pointer = (char*)filename;
+
+  char symbol[] = "NULL";
+  dsc$descriptor symbolDsc;
+  symbolDsc.dsc$b_class = DSC$K_CLASS_S;
+  symbolDsc.dsc$b_dtype = DSC$K_DTYPE_T;
+  symbolDsc.dsc$w_length = strlen(symbol);
+  symbolDsc.dsc$a_pointer = symbol;
+
+  int symbolValue;
+  int result;
+  try
+  {
+    result = LIB$FIND_IMAGE_SYMBOL(&nameDsc, &symbolDsc, &symbolValue, 0, 0);
+  }
+  catch (chf$signal_array& sig)
+  {
+    result = sig.chf$l_sig_name;
+  }
+
+  int severity = result & STS$M_SEVERITY;
+  int conditionId = result & STS$M_COND_ID;
+  if (severity == STS$K_SUCCESS || severity == STS$K_WARNING || severity == STS$K_INFO ||
+      (severity == STS$K_ERROR && conditionId == (LIB$_KEYNOTFOU & STS$M_COND_ID)))
+  {
+    strcpy(pathname, filename);
+    return 0;
+  }
+
+  if (strlen(filename) + strlen(ACE_DLL_PREFIX) >= maxpathnamelen)
+  {
+    errno = ENOMEM;
+    return -1;
+  }
+
+
+  strcpy(pathname, ACE_DLL_PREFIX);
+  strcat(pathname, filename);
+  nameDsc.dsc$w_length = strlen(pathname);
+  nameDsc.dsc$a_pointer = pathname;
+  try
+  {
+    result = LIB$FIND_IMAGE_SYMBOL(&nameDsc, &symbolDsc, &symbolValue, 0, 0);
+  }
+  catch (chf$signal_array& sig)
+  {
+    result = sig.chf$l_sig_name;
+  }
+
+  severity = result & STS$M_SEVERITY;
+  conditionId = result & STS$M_COND_ID;
+  if (severity == STS$K_SUCCESS || severity == STS$K_WARNING || severity == STS$K_INFO ||
+      (severity == STS$K_ERROR && conditionId == (LIB$_KEYNOTFOU & STS$M_COND_ID)))
+  {
+    return 0;
+  }
+  errno = ENOENT;
+  return -1;
+#endif /* ACE_OPENVMS */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
     !defined (ACE_HAS_PHARLAP)
@@ -434,7 +512,10 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
                   0);
 
   ACE_OS::strcpy (new_name, entry_point);
-
+#if defined (ACE_OPENVMS)
+  if (size > 32)
+    new_name[31] = '\000';
+#endif
   return new_name;
 #endif /* ACE_NEEDS_DL_UNDERSCORE */
 }

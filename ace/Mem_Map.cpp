@@ -252,6 +252,8 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 
 #if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
+#elif defined (ACE_OPENVMS)
+  ACE_OSCALL (::open (file_name, flags, mode, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
 #else
   this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
 #endif /* CHORUS */
