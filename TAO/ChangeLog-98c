@@ -25,8 +25,9 @@ Thu Jun 18 09:34:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/util/utl_scope.cpp (UTL_Scope ctor): removed
           extraneous ; following the function definition.
 
-        * orbsvcs/Event_Service/Event_Service.cpp (main): added filename
-          to debug messages.
+        * orbsvcs/Event_Service/Event_Service.cpp (main),
+          orbsvcs/Scheduling_Service/Scheduling_Service.cpp (main):
+          added filename to debug messages.
 
 Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
