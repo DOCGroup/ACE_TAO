@@ -651,7 +651,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
       return -1;
     }
 
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_WIN32) && defined (_DEBUG) && defined (ACE_USE_DEBUG_DLL_CHECK)
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
   searchfilename [len_searchfilename] = 'd';
   searchfilename [len_searchfilename+1] = 0;
@@ -661,7 +661,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
       if (tag == 0)
         searchfilename [len_searchfilename] = 0;
 
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
+#endif /* ACE_WIN32 && _DEBUG && ACE_USE_DEBUG_DLL_CHECK */
   // Use absolute pathname if there is one.
   if (ACE_OS::strlen (searchpathname) > 0)
     {
@@ -789,9 +789,9 @@ ACE::ldfind (const ASYS_TCHAR filename[],
           return result;
         }
     }
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_WIN32) && defined (_DEBUG) && defined (ACE_USE_DEBUG_DLL_CHECK)
     }
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
+#endif /* ACE_WIN32 && _DEBUG && !ACE_USE_DEBUG_DLL_CHECK */
 
   errno = ENOENT;
   return -1;
