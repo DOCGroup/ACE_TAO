@@ -26,10 +26,12 @@
 
 #include "ace/os_include/os_stddef.h"
 
-//  The is for backward compatibility and needs to be fixed in the config files.
-#if !defined (ACE_HAS_STRINGS)
-#  define ACE_LACKS_STRINGS_H
-#endif /* !ACE_HAS_STRINGS */
+//  The is for backward compatibility and needs to be fixed in the
+// config files. This is wrong, so I've commented it out and will fix in the
+// config files as needed.
+//#if !defined (ACE_HAS_STRINGS)
+//#  define ACE_LACKS_STRINGS_H
+//#endif /* !ACE_HAS_STRINGS */
 
 #if !defined (ACE_LACKS_STRINGS_H)
 #  include /**/ <strings.h>

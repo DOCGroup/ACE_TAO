@@ -23,6 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// By default we perform no tracing on the OS layer, otherwise the
+// coupling between the OS layer and Log_Msg is too tight.  But the
+// application can override the default if they wish to.
+# if !defined(ACE_OS_TRACE)
+#  define ACE_OS_TRACE(X)
+# endif /* ACE_OS_TRACE */
+
 #define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
 
 #if !defined (ACE_OSTREAM_TYPE)

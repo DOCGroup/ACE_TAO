@@ -33,6 +33,14 @@ ACE_RCSID(ace, Log_Msg, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
+// only used here...  dhinton
+#if defined (ACE_HAS_SYS_SIGLIST)
+# if !defined (_sys_siglist)
+#   define _sys_siglist sys_siglist
+# endif /* !defined (sys_siglist) */
+//extern char **_sys_siglist;
+#endif /* ACE_HAS_SYS_SIGLIST */
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int ACE_Log_Msg::key_created_ = 0;
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \

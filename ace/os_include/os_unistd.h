@@ -52,6 +52,55 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if (!defined (_BSD_SOURCE) && \
+    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
+    || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
+
+# if defined (ACE_LACKS_SETREUID_PROTOTYPE)
+  extern int setreuid (uid_t ruid, uid_t euid);
+# endif /* ACE_LACKS_SETREUID_PROTOTYPE */
+
+# if defined (ACE_LACKS_SETREGID_PROTOTYPE)
+  extern int setregid (gid_t rgid, gid_t egid);
+# endif /* ACE_LACKS_SETREGID_PROTOTYPE */
+#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
+           || _XOPEN_SOURCE && __GNUC__ */
+
+# if !defined (_SC_TIMER_MAX)
+#   define _SC_TIMER_MAX 44
+# endif /* _SC_TIMER_MAX */
+
+// Default number of <ACE_Event_Handler>s supported by
+// <ACE_Timer_Heap>.
+# if !defined (ACE_DEFAULT_TIMERS)
+#   define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
+# endif /* ACE_DEFAULT_TIMERS */
+
+  // for use by access()
+# if !defined (R_OK)
+#   define R_OK    04      /* Test for Read permission. */
+# endif /* R_OK */
+
+# if !defined (W_OK)
+#   define W_OK    02      /* Test for Write permission. */
+# endif /* W_OK */
+
+# if !defined (X_OK)
+#   define X_OK    01      /* Test for eXecute permission. */
+# endif /* X_OK */
+
+# if !defined (F_OK)
+#   define F_OK    0       /* Test for existence of File. */
+# endif /* F_OK */
+
+#if defined (CHORUS)
+  int      getgid          __((void));
+  int      getuid          __((void));
+  char*    getcwd          __((char* buf, size_t size));
+  int      pipe            __((int* fildes));
+  int      gethostname     __((char*, size_t));
+#endif /* CHORUS */
+
 #if defined (ACE_LACKS_UALARM_PROTOTYPE)
    u_int ualarm (u_int usecs, u_int interval);
 #endif /* ACE_LACKS_UALARM_PROTOTYPE */
@@ -110,6 +159,20 @@ extern "C"
    int getopt(int, char *const *, const char *);
    int isatty (int h);
 #endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
+# if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
+
+  ssize_t read_timedwait (ACE_HANDLE handle,
+                          char *buf,
+                          size_t n,
+                          struct timespec *timeout);
+
+  ssize_t write_timedwait (ACE_HANDLE handle,
+                           const void *buf,
+                           size_t n,
+                           struct timespec *timeout);
+
+# endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
 #ifdef __cplusplus
 }

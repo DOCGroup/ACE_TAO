@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/types.h"
+#include "ace/os_include/sys/os_types.h"
 
 #if !defined (ACE_LACKS_SYS_TIMES_H)
 #  include /**/ <sys/times.h>

@@ -2,9 +2,9 @@
 // $Id$
 
 ACE_INLINE int
-ACE_OS_TLI::t_accept (ACE_HANDLE handle, 
-                      ACE_HANDLE reshandle,
-                      struct t_call *call)
+ACE_OS::t_accept (ACE_HANDLE handle, 
+                  ACE_HANDLE reshandle,
+                  struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_accept (handle, reshandle, call), int, -1);
@@ -18,8 +18,8 @@ ACE_OS_TLI::t_accept (ACE_HANDLE handle,
 }
 
 ACE_INLINE char *
-ACE_OS_TLI::t_alloc (ACE_HANDLE handle, int struct_type,
-                     int fields)
+ACE_OS::t_alloc (ACE_HANDLE handle, int struct_type,
+                 int fields)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_alloc (handle, struct_type, fields),
@@ -34,8 +34,8 @@ ACE_OS_TLI::t_alloc (ACE_HANDLE handle, int struct_type,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_bind (ACE_HANDLE handle, struct t_bind *req,
-                    struct t_bind *ret)
+ACE_OS::t_bind (ACE_HANDLE handle, struct t_bind *req,
+                struct t_bind *ret)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_bind (handle, req, ret), int, -1);
@@ -49,7 +49,7 @@ ACE_OS_TLI::t_bind (ACE_HANDLE handle, struct t_bind *req,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_close (ACE_HANDLE handle)
+ACE_OS::t_close (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_close (handle), int, -1);
@@ -61,9 +61,9 @@ ACE_OS_TLI::t_close (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_connect(ACE_HANDLE fildes,
-                      struct t_call *sndcall,
-                      struct t_call *rcvcall)
+ACE_OS::t_connect(ACE_HANDLE fildes,
+                  struct t_call *sndcall,
+                  struct t_call *rcvcall)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_connect (fildes, sndcall, rcvcall), int, -1);
@@ -77,7 +77,7 @@ ACE_OS_TLI::t_connect(ACE_HANDLE fildes,
 }
 
 ACE_INLINE void
-ACE_OS_TLI::t_error (const char *errmsg)
+ACE_OS::t_error (const char *errmsg)
 {
 #if defined (ACE_HAS_TLI)
 #if defined (ACE_HAS_BROKEN_T_ERROR)
@@ -91,7 +91,7 @@ ACE_OS_TLI::t_error (const char *errmsg)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_free (char *ptr, int struct_type)
+ACE_OS::t_free (char *ptr, int struct_type)
 {
 #if defined (ACE_HAS_TLI)
   if (ptr == 0)
@@ -106,7 +106,7 @@ ACE_OS_TLI::t_free (char *ptr, int struct_type)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_getinfo (ACE_HANDLE handle, struct t_info *info)
+ACE_OS::t_getinfo (ACE_HANDLE handle, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_getinfo (handle, info), int, -1);
@@ -119,9 +119,9 @@ ACE_OS_TLI::t_getinfo (ACE_HANDLE handle, struct t_info *info)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_getname (ACE_HANDLE handle,
-                       struct netbuf *namep,
-                       int type)
+ACE_OS::t_getname (ACE_HANDLE handle,
+                   struct netbuf *namep,
+                   int type)
 {
 #if defined (ACE_HAS_SVR4_TLI)
   ACE_OSCALL_RETURN (::t_getname (handle, namep, type), int, -1);
@@ -135,7 +135,7 @@ ACE_OS_TLI::t_getname (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_getstate (ACE_HANDLE handle)
+ACE_OS::t_getstate (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_getstate (handle), int, -1);
@@ -147,7 +147,7 @@ ACE_OS_TLI::t_getstate (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_listen (ACE_HANDLE handle, struct t_call *call)
+ACE_OS::t_listen (ACE_HANDLE handle, struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_listen (handle, call), int, -1);
@@ -160,7 +160,7 @@ ACE_OS_TLI::t_listen (ACE_HANDLE handle, struct t_call *call)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_look (ACE_HANDLE handle)
+ACE_OS::t_look (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_look (handle), int, -1);
@@ -172,7 +172,7 @@ ACE_OS_TLI::t_look (ACE_HANDLE handle)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS_TLI::t_open (char *path, int oflag, struct t_info *info)
+ACE_OS::t_open (char *path, int oflag, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_open (path, oflag, info), ACE_HANDLE, ACE_INVALID_HANDLE);
@@ -186,9 +186,9 @@ ACE_OS_TLI::t_open (char *path, int oflag, struct t_info *info)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_optmgmt (ACE_HANDLE handle,
-                       struct t_optmgmt *req,
-                       struct t_optmgmt *ret)
+ACE_OS::t_optmgmt (ACE_HANDLE handle,
+                   struct t_optmgmt *req,
+                   struct t_optmgmt *ret)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_optmgmt (handle, req, ret), int, -1);
@@ -202,10 +202,10 @@ ACE_OS_TLI::t_optmgmt (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_rcv (ACE_HANDLE handle,
-                   char *buf,
-                   unsigned int nbytes,
-                   int *flags)
+ACE_OS::t_rcv (ACE_HANDLE handle,
+               char *buf,
+               unsigned int nbytes,
+               int *flags)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_rcv (handle, buf, nbytes, flags),
@@ -221,7 +221,7 @@ ACE_OS_TLI::t_rcv (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_rcvdis (ACE_HANDLE handle, struct t_discon *discon)
+ACE_OS::t_rcvdis (ACE_HANDLE handle, struct t_discon *discon)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_rcvdis (handle, discon), int, -1);
@@ -234,7 +234,7 @@ ACE_OS_TLI::t_rcvdis (ACE_HANDLE handle, struct t_discon *discon)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_rcvrel (ACE_HANDLE handle)
+ACE_OS::t_rcvrel (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_rcvrel (handle), int, -1);
@@ -246,9 +246,9 @@ ACE_OS_TLI::t_rcvrel (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_rcvudata (ACE_HANDLE handle,
-                        struct t_unitdata *unitdata,
-                        int *flags)
+ACE_OS::t_rcvudata (ACE_HANDLE handle,
+                    struct t_unitdata *unitdata,
+                    int *flags)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_rcvudata (handle, unitdata, flags),
@@ -263,7 +263,7 @@ ACE_OS_TLI::t_rcvudata (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
+ACE_OS::t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_rcvuderr (handle, uderr), int, -1);
@@ -276,10 +276,10 @@ ACE_OS_TLI::t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_snd (ACE_HANDLE handle,
-                   const char *buf,
-                   unsigned int nbytes,
-                   int flags)
+ACE_OS::t_snd (ACE_HANDLE handle,
+               const char *buf,
+               unsigned int nbytes,
+               int flags)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_snd (handle, (char *) buf, nbytes, flags), int, -1);
@@ -294,7 +294,7 @@ ACE_OS_TLI::t_snd (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_snddis (ACE_HANDLE handle, struct t_call *call)
+ACE_OS::t_snddis (ACE_HANDLE handle, struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_snddis (handle, call), int, -1);
@@ -307,7 +307,7 @@ ACE_OS_TLI::t_snddis (ACE_HANDLE handle, struct t_call *call)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_sndrel (ACE_HANDLE handle)
+ACE_OS::t_sndrel (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_sndrel (handle), int, -1);
@@ -319,7 +319,7 @@ ACE_OS_TLI::t_sndrel (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_sync (ACE_HANDLE handle)
+ACE_OS::t_sync (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_sync (handle), int, -1);
@@ -331,7 +331,7 @@ ACE_OS_TLI::t_sync (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_unbind (ACE_HANDLE handle)
+ACE_OS::t_unbind (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_unbind (handle), int, -1);

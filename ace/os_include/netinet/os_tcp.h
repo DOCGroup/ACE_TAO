@@ -24,9 +24,23 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// @todo: remove this, and fix references when you get a chance... dhinton
+#if defined (ACE_LACKS_TCP_H)
+#  define ACE_LACKS_NETINET_TCP_H
+#endif /* ACE_LACKS_TCP_H */
+
 #if !defined (ACE_LACKS_NETINET_TCP_H)
 # include /**/ <netinet/tcp.h>
 #endif /* !ACE_LACKS_NETIINET_TCP_H */
+
+#if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
+#  if defined(TCP_NODELAY)
+#    undef TCP_NODELAY
+#  endif
+#  if defined(TCP_MAXSEG)
+#    undef TCP_MAXSEG
+#  endif
+#endif /* ACE_HAS_CONFLICTING_XTI_MACROS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

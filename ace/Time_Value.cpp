@@ -199,3 +199,17 @@ ACE_Time_Value::normalize (void)
       this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
 }
+
+/*****************************************************************************/
+
+ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
+  : max_wait_time_ (max_wait_time),
+    stopped_ (0)
+{
+  this->start ();
+}
+
+ACE_Countdown_Time::~ACE_Countdown_Time (void)
+{
+  this->stop ();
+}

@@ -362,8 +362,7 @@ extern "C" pthread_t pthread_self (void);
  */
 class ACE_OS_Export ACE_sema_t
 {
-friend class ACE_OS;
-protected:
+public:
   /// Serialize access to internal state.
   ACE_mutex_t lock_;
 

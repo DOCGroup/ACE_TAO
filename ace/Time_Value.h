@@ -321,6 +321,50 @@ private:
   timeval tv_;
 };
 
+/**
+ * @class ACE_Countdown_Time
+ *
+ * @brief Keeps track of the amount of elapsed time.
+ *
+ * This class has a side-effect on the <max_wait_time> -- every
+ * time the <stop> method is called the <max_wait_time> is
+ * updated.
+ */
+class ACE_OS_Export ACE_Countdown_Time
+{
+public:
+  // = Initialization and termination methods.
+  /// Cache the <max_wait_time> and call <start>.
+  ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
+
+  /// Call <stop>.
+  ~ACE_Countdown_Time (void);
+
+  /// Cache the current time and enter a start state.
+  int start (void);
+
+  /// Subtract the elapsed time from max_wait_time_ and enter a stopped
+  /// state.
+  int stop (void);
+
+  /// Calls stop and then start.  max_wait_time_ is modified by the
+  /// call to stop.
+  int update (void);
+
+  /// Returns 1 if we've already been stopped, else 0.
+  int stopped (void) const;
+
+private:
+  /// Maximum time we were willing to wait.
+  ACE_Time_Value *max_wait_time_;
+
+  /// Beginning of the start time.
+  ACE_Time_Value start_time_;
+
+  /// Keeps track of whether we've already been stopped.
+  int stopped_;
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
