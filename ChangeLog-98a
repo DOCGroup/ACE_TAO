@@ -1,3 +1,11 @@
+Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an
+ 	  ACE_DEBUG statement to make it consistent.
+
+	* tests/IOStream_Test.cpp (spawn): Revised the test so that it
+ 	  prints data correctly to the child processes.
+
 Sat Dec 20 09:42:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: changed ACE_SEH_FINALLY to be if (1) on Unix, not

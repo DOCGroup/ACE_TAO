@@ -90,7 +90,7 @@ main (int argc, char *argv[])
     {      
       ACE_APPEND_LOG ("Process_Mutex_Test-children");      
       acquire_release ();
-      ACE_END_LOG;      
+      ACE_END_LOG;
     }
   else
     {
