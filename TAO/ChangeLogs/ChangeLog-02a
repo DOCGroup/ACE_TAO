@@ -1,3 +1,9 @@
+Sat Feb  2 20:45:08 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:  Do not use ACE_CHECK or
+	  ACE_CHECK_RETURN macros if ACE_ENV_ARG_DECL_NOT_USED macro
+	  is defined, otherwise it messes up build which define exceptions=0. 
+
 Sat Feb  2 12:36:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
@@ -20,6 +26,9 @@ Fri Feb  1 23:25:39 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 	
 Fri Feb  1 22:00:00 2002  Rob Ruff  <rruff@scires.com> 
                           Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTP.h (TAO_AV_RTP_Object::connection_gone_):
+	  Added.
 
 	* orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object::handle_input): 
 	  Check errno to see if remote peer has disappeared.
