@@ -614,6 +614,7 @@ template class ACE_Unbounded_Set<ACE_Event_Handler*>;
 template class ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>;
 template class ACE_Node<ACE_Event_Handler*>;
 
+template class TAO_Condition<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
   // Instantiations for the Hash Map
@@ -628,4 +629,5 @@ template class ACE_Node<ACE_Event_Handler*>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
 #pragma instantiate ACE_Node<ACE_Event_Handler*>
 
+#pragma instantiate TAO_Condition<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
