@@ -44,13 +44,13 @@ public:
   ~TAO_ORB_Manager (void);
   // Destructor.
 
-  int init (int& argc,
+  int init (int &argc,
             char *argv[],
             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Initialize the ORB/root POA, using the supplied command line
   // arguments or the default ORB components.  Returns -1 on failure.
 
-  int init_child_poa (int& argc,
+  int init_child_poa (int &argc,
                       char *argv[],
                       char *poa_name,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
