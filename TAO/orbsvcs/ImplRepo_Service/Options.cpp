@@ -26,18 +26,19 @@ const ACE_TCHAR *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
  * Default Constructor.  Assigns default values to all the member variables.
  */
 Options::Options ()
-  : service_ (0)
+  : config_ (0)
   , debug_ (1)
   , ior_output_file_ (0)
-  , config_ (0)
-  , startup_timeout_ (5)
+  , multicast_ (1)
   , ping_interval_ (0, 200)
+  , service_ (0)
+  , startup_timeout_ (5)
 {
 }
 
 
 /**
- * Destructor.  Just delete this->config_.
+ * Destructor.  Just deletes this->config_.
  */
 Options::~Options ()
 {
@@ -91,6 +92,20 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
 
           this->debug_ = ACE_OS::atoi (shifter.get_current ());
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+                                   ACE_TEXT ("-m")) == 0)
+        {
+          // multicast?
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -m option requires 1/0\n"));
+              return -1;
+            }
+
+          this->multicast_ = ACE_OS::atoi (shifter.get_current ());
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (), 
                                    ACE_TEXT ("-o")) == 0)
@@ -270,11 +285,12 @@ Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR, 
               "Usage:\n"
               "\n"
-              "ImplRepo_Service [-c cmd] [-d lvl] [-l] [-o file] [-r|-p file]"
-              " [-r] [-s] [-t secs]\n"
+              "ImplRepo_Service [-c cmd] [-d lvl] [-l] [-m 0/1] [-o file]"
+              " [-r|-p file] [-r] [-s] [-t secs]\n"
               "\n"
               "  -c command  Runs service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level\n"
+              "  -m [0/1]    Turn on(1)/off(0) multicast (default: 1)\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -p file     Use file for storing/loading settings\n"
               "  -r          Use the registry for storing/loading settings\n"
@@ -631,6 +647,18 @@ Options::orb (void) const
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }
+
+
+/**
+ * @retval 0 Do not listen for multicast location requests.
+ * @retval 1 Do Listen.
+ */
+int 
+Options::multicast (void) const
+{
+  return this->multicast_;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Options, ACE_Null_Mutex>;

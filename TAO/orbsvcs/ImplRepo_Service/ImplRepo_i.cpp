@@ -864,67 +864,9 @@ ImplRepo_i::init (CORBA::Environment &ACE_TRY_ENV)
       // Init the Process Manager.
       this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor);
 
-#if defined (ACE_HAS_IP_MULTICAST)
-
-      // Install ior multicast handler.
-
-      // See if the -ORBMulticastDiscoveryEndpoint option was specified.
-      ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()->mcast_discovery_endpoint ());
-
-      // First, see if the user has given us a multicast port number
-      // on the command-line;
-      u_short port =
-        TAO_ORB_Core_instance ()->orb_params ()->service_port (IMPLREPOSERVICE);
-
-      if (port == 0)
-        {
-          // Check environment var. for multicast port.
-          const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
-
-          if (port_number != 0)
-            port = ACE_OS::atoi (port_number);
-        }
-
-      // Port wasn't specified on the command-line or in environment -
-      // use the default.
-      if (port == 0)
-        port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
-
-      // Instantiate a handler which will handle client requests for
-      // the ImplRepoService ior, received on the multicast port.
-      ACE_NEW_RETURN (this->ior_multicast_, TAO_IOR_Multicast (), -1);
-
-      if (mde.length () != 0)
-        {
-          if (this->ior_multicast_->init (this->imr_ior_.in (),
-                                          mde.c_str (),
-                                          TAO_SERVICEID_IMPLREPOSERVICE) == -1)
-            return -1;
-        }
-      else
-        {
-          if (this->ior_multicast_->init (this->imr_ior_.in (),
-                                          port,
-                                          ACE_DEFAULT_MULTICAST_ADDR,
-                                          TAO_SERVICEID_IMPLREPOSERVICE) == -1)
-            return -1;
-        }
-
-      // Register event handler for the ior multicast.
-      if (reactor->register_handler (this->ior_multicast_,
-                                     ACE_Event_Handler::READ_MASK) == -1)
-        {
-          if (OPTIONS::instance ()->debug () > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Implementation Repository: cannot register Event handler\n"));
-          return -1;
-        }
-
-      if (OPTIONS::instance ()->debug () > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Implementation Repository: The multicast server setup is done.\n"));
-
-#endif /* ACE_HAS_IP_MULTICAST */
+      // Set up multicast.
+      if (this->setup_multicast (reactor) != 0)
+        return -1;
 
       // Initialize the persistent storage
       if (this->repository_.init ())
@@ -939,6 +881,104 @@ ImplRepo_i::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (-1);
   return 0;
 }
+
+
+
+/**
+ * First, figure out if we should set up a multicast handler (based on command
+ * line settings) and which port to set it up (based on the environment, 
+ * command line, or the default IMPLREPOSERVICE port).  Then register the
+ * handler with the @param reactor.
+ *
+ * @retval  0 ok
+ * @retval -1 failed
+ */
+int
+ImplRepo_i::setup_multicast (ACE_Reactor *reactor)
+{
+  ACE_ASSERT (reactor);
+#if defined (ACE_HAS_IP_MULTICAST)
+  if (!OPTIONS::instance ()->multicast ()) 
+    {
+      if (OPTIONS::instance ()->debug () > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Implementation Repository: "
+                    "Multicast Handler disabled.\n"));
+
+      return 0;
+    }
+
+  // Install ior multicast handler.
+
+  TAO_ORB_Parameters *tao_params = TAO_ORB_Core_instance ()->orb_params ();
+
+  // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+  ACE_CString mde (tao_params->mcast_discovery_endpoint ());
+
+  // First, see if the user has given us a multicast port number
+  // on the command-line;
+  u_short port = tao_params->service_port (IMPLREPOSERVICE);
+
+  if (port == 0)
+    {
+      // Check environment var. for multicast port.
+      const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
+
+      if (port_number != 0)
+        port = ACE_OS::atoi (port_number);
+    }
+
+  // Port wasn't specified on the command-line or in environment -
+  // use the default.
+  if (port == 0)
+    port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+
+  // Instantiate a handler which will handle client requests for
+  // the ImplRepoService ior, received on the multicast port.
+  ACE_NEW_RETURN (this->ior_multicast_, TAO_IOR_Multicast (), -1);
+
+  if (mde.length () != 0)
+    {
+      if (this->ior_multicast_->init (this->imr_ior_.in (),
+                                      mde.c_str (),
+                                      TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+        return -1;
+    }
+  else
+    {
+      if (this->ior_multicast_->init (this->imr_ior_.in (),
+                                      port,
+                                      ACE_DEFAULT_MULTICAST_ADDR,
+                                      TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+        return -1;
+    }
+
+  // Register event handler for the ior multicast.
+  if (reactor->register_handler (this->ior_multicast_,
+                                 ACE_Event_Handler::READ_MASK) == -1)
+    {
+      if (OPTIONS::instance ()->debug () > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Implementation Repository: "
+                    "cannot register Event handler\n"));
+      return -1;
+    }
+
+  if (OPTIONS::instance ()->debug () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "Implementation Repository: Multicast Handler enabled.\n"));
+
+  return 0;
+#else /* ACE_HAS_IP_MULTICAST */
+  if (OPTIONS::instance ()->multicast ())
+    ACE_ERROR ((LM_ERROR,
+                "Implementation Repository: "
+                "ACE_HAS_IP_MULTICAST not defined, multicast disabled.\n"));
+
+  return 0;
+#endif /* ACE_HAS_IP_MULTICAST */
+}
+
 
 int
 ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
