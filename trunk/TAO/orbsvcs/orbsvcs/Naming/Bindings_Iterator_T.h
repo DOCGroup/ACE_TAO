@@ -16,7 +16,7 @@
 #ifndef TAO_BINDINGS_ITERATOR_T_H
 #define TAO_BINDINGS_ITERATOR_T_H
 
-#include "orbsvcs/CosNamingS.h"
+#include "Hash_Naming_Context.h"
 
 template <class ITERATOR, class TABLE_ENTRY>
 class TAO_Bindings_Iterator : public virtual PortableServer::RefCountServantBase,
@@ -33,7 +33,8 @@ class TAO_Bindings_Iterator : public virtual PortableServer::RefCountServantBase
   //     deallocates hash map iterator.
 public:
   // = Intialization and termination methods.
-  TAO_Bindings_Iterator (ITERATOR *hash_iter,
+  TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
+                         ITERATOR *hash_iter,
                          PortableServer::POA_ptr poa,
                          ACE_SYNCH_RECURSIVE_MUTEX &lock);
   // Constructor.
@@ -58,7 +59,6 @@ public:
 
   void destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
   // This operation destroys the iterator.
 
   // = Helper method.
@@ -72,6 +72,11 @@ public:
 
 private:
   int destroyed_;
+
+  TAO_Hash_Naming_Context *context_;
+  // Pointer to the Naming Context we are iterating over.  We need
+  // this pointer to make sure the context is still valid before
+  // iterating, and to decrement its reference count once we are <destroyed>.
 
   ITERATOR *hash_iter_;
   // A pointer to the hash map iterator.

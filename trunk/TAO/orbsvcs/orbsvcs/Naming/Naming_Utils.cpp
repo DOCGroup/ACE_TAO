@@ -175,6 +175,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                           TAO_Naming_Context (context_impl),
                           -1);
 
+          // Let <implementation> know about it's <interface>.
+          context_impl->interface (context);
+
           // Change what we hold in auto pointer.
           temp.release ();
           ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);

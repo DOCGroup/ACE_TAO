@@ -95,13 +95,26 @@ public:
                            const char *poa_id);
   // Constructor.
 
+  void interface (TAO_Naming_Context *i);
+  // Set our <interface_> pointer.
+
   virtual ~TAO_Hash_Naming_Context (void);
   // Destructor.
 
-  // = CosNaming::NamingContext idl interface methods.
+  // = Accessors.
+
+  TAO_Naming_Context *interface (void);
+  // Get the pointer to our <interface>.
 
   int root (void);
-  //
+  // Returns true if this Naming Context is a root Naming Context for
+  // the server, and false otherwise.
+
+  int destroyed (void);
+  // Returns true if this context had <destroy> operation invoked on
+  // it, and false otherwise.
+
+  // = CosNaming::NamingContext idl interface methods.
 
   virtual void bind (const CosNaming::Name &n,
                      CORBA::Object_ptr obj,
@@ -183,6 +196,12 @@ protected:
   // Pointer to the data structure used to store this Naming Context's
   // bindings.  <context_> is initialized with a concrete data
   // structure by subclasses, which know which data structure to use.
+
+  TAO_Naming_Context *interface_;
+  // Pointer to the <interface> object for which we serve as a
+  // <concrete implementation>, i.e., the object that delegates to us
+  // all client CosNaming::NamingContext CORBA calls.
+  // We need this pointer for reference counting.
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   // Lock used to serialize access to the underlying data structure.
