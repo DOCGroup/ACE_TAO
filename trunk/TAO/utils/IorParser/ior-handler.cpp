@@ -6,84 +6,57 @@ IorHandler::IorHandler (void)
 {
 }
 
-// @@ Priya, can you please see if you can replace this function with
-// the ACE::hex2byte() method?
-
-int 
-IorHandler::hexChar2int (char thisChar)
-{
-  switch (thisChar)
-    {
-    case '0': return (0);
-    case '1': return (1);
-    case '2': return (2);
-    case '3': return (3);
-    case '4': return (4);
-    case '5': return (5);
-    case '6': return (6);
-    case '7': return (7);
-    case '8': return (8);
-    case '9': return (9);
-    case 'a': return (10);
-    case 'b': return (11);
-    case 'c': return (12);
-    case 'd': return (13);
-    case 'e': return (14);
-    case 'f': return (15);
-    }
-
-  return 0;
-}
-
 u_long
 IorHandler::getOctet8Field (char *readPtr, int *hexCharsRead)
 {
   char octet8Holder[8];
-  u_long value;
-  int i;
  
-  for (i = 0; i < 8; i++)
-    octet8Holder[i] = * (readPtr + i);
+  for (int i = 0; i < 8; i++)
+    octet8Holder[i] = readPtr[i];
 
-  *hexCharsRead = 8;
+  hexCharsRead[0] = 8;
 
-  value = 16*hexChar2int (octet8Holder[6]) + hexChar2int (octet8Holder[7]);
-  return (value);
+  u_long value = 
+    16 * ACE::hex2byte (octet8Holder[6]) 
+    + ACE::hex2byte (octet8Holder[7]);
+
+  return value;
 }
 
 u_long
 IorHandler::getOctet4Field (char *readPtr, int *hexCharsRead)
 {
   char octet4Holder[4];
-  u_long value;
-  int i;
 
-  for (i = 0; i < 4; i++)
-    octet4Holder[i] = * (readPtr + i);
+  for (int i = 0; i < 4; i++)
+    octet4Holder[i] = readPtr[i];
 
-  *hexCharsRead = 4;
+  hexCharsRead[0] = 4;
 
-  value = 16*16*16* hexChar2int (octet4Holder[0]) +
-    16*16* hexChar2int (octet4Holder[1]) +
-    16* hexChar2int (octet4Holder[2]) + 
-    hexChar2int (octet4Holder[3]);
-  return (value);
+  u_long value =
+    16 * 16 * 16 * ACE::hex2byte (octet4Holder[0]) 
+    + 16 * 16 * ACE::hex2byte (octet4Holder[1]) 
+    + 16 * ACE::hex2byte (octet4Holder[2]) 
+    + ACE::hex2byte (octet4Holder[3]);
+
+  return value;
 }
 
 u_long
 IorHandler::getOctet2Field (char *readPtr, int *hexCharsRead)
 {
   char octet2Holder[2];
-  u_long value;
-  int i;
 
-  for (i = 0; i < 2; i++)
-    octet2Holder[i] = * (readPtr + i);
+  for (int i = 0; i < 2; i++)
+    octet2Holder[i] = readPtr[i];
 
-  *hexCharsRead = 2;
+  hexCharsRead[0] = 2;
 
-  value = 16 * hexChar2int (octet2Holder[0]) +  hexChar2int (octet2Holder[1]);
-  return (value);
+  u_long value = 
+    16 * ACE::hex2byte (octet2Holder[0]) 
+    + ACE::hex2byte (octet2Holder[1]);
+
+  return value;
 }
 
 void
@@ -92,7 +65,7 @@ IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead)
   char nullOctet[2];
   int offset;
 
-  *hexCharsRead = 0;
+  hexCharsRead[0] = 0;
   offset = 0;
 
   // There sometimes occurs a null padding of 2 octets after strings
@@ -100,42 +73,47 @@ IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead)
 
   while (1)
     {
-      nullOctet[0] = * (readPtr + offset);
-      nullOctet[1] = * (readPtr + offset + 1);
-      if ((nullOctet[0] == '0') && (nullOctet[1] == '0'))
+      nullOctet[0] = readPtr[offset];
+      nullOctet[1] = readPtr[offset + 1];
+      if (nullOctet[0] == '0' && nullOctet[1] == '0')
 	offset += 2;  
       else
 	break;
     }
 
-  *hexCharsRead = offset;
+  hexCharsRead[0] = offset;
 }
 
 char *
 IorHandler::getString (char *readPtr, int givenLen)
 {
-  char octetPair[2];
-  char parsedOctetPair[2];
-  int intEquiv;
-  int i = 0;
+  char parsedStr[MAX_IOR_FIELD_LEN];
   int j = 0;
  
   // i indexes hexChars while j indexes octet pairs
 
-  while (i <= (givenLen - 2))
+  for (int i = 0;
+       i <= givenLen - 2;
+       i += 2)
     {
-      octetPair[0] = * (readPtr + i);
-      octetPair[1] = * (readPtr + i + 1);
+      char octetPair[2];
+      octetPair[0] = readPtr[i];
+      octetPair[1] = readPtr[i + 1];
 
-      intEquiv = 16*hexChar2int (octetPair[0]) + hexChar2int (octetPair[1]);
-      sprintf (parsedOctetPair, "%c", intEquiv);
+      int intEquiv = 
+        16 * ACE::hex2byte (octetPair[0]) 
+        + ACE::hex2byte (octetPair[1]);
+
+      char parsedOctetPair[2];
+      sprintf (parsedOctetPair,
+               "%c",
+               intEquiv);
+
       parsedStr[j] = parsedOctetPair[0];
-      j ++;
-      
-      i += 2;
+      j++;      
     }
 
-  return (parsedStr);
+  return parsedStr;
 }
 
 void
@@ -160,7 +138,7 @@ IorHandler::prettyPrintIOR (struct IOR thisIor)
               "HostName\t: %s\n",
               thisIor.HostName));
   ACE_DEBUG ((LM_DEBUG,
-              "Port Number\t: %lu\n",
+              "Port Number\t: %d\n",
               thisIor.portNum));
   ACE_DEBUG ((LM_DEBUG,
               "ObjectKeyLen\t: %lu bytes\n",
@@ -174,6 +152,7 @@ void
 IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 {
   int numCharsToSkip;
+  char nullOctet[2];
 
   // Skip the prefix "IOR:" 
   int numHexCharsRead = 4;
@@ -330,7 +309,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
   numHexCharsRead += numCharsToSkip;  
   thisIorInfo->portNum = ulongValue;  
   ACE_DEBUG ((LM_DEBUG,
-              "    Port Number: %lu\n",
+              "    Port Number: %d\n",
               thisIorInfo->portNum));
 
   skipNullOctets ((char *) (thisIor + numHexCharsRead),
@@ -369,13 +348,14 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 char *
 IorHandler::getIdlInterface (char *typeId)
 {
+  char idlInterface[MAX_TYPE_ID_LEN];
   int lenInterface;
 
   char *readStart = strchr (typeId, ':');
 
-  // A sample type_id for an IDL interface name "EchoTests" is
-  // IDL:EchoTests:1.0 => the trick is to isolate the parts between
-  // the two colons.
+   // A sample type_id for an IDL interface name "EchoTests" is
+   // IDL:EchoTests:1.0 => the trick is to isolate the parts between
+   // the two colons.
 
   if (readStart == NULL)
     {
@@ -397,8 +377,8 @@ IorHandler::getIdlInterface (char *typeId)
   lenInterface = readEnd - readStart - 1;
 
   // Copy the IDL interface part of the type_id.
-  ACE_OS::strncpy ((char *)idlInterface,
-                   readStart+1,
+  ACE_OS::strncpy ((char *) idlInterface,
+                   readStart + 1,
                    lenInterface);
   idlInterface[lenInterface] = '\0';
   
