@@ -117,6 +117,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
     }
 
   sh = svc_handler;
+  sh->reactor (this->reactor ());
   return 0;
 }
 
