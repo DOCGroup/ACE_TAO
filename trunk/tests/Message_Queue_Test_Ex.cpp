@@ -84,6 +84,24 @@ single_thread_performance_test (int queue_type = 0)
     ACE_NEW_RETURN (msgq,
                     QUEUE,
                     -1);
+#if defined (VXWORKS)
+  else
+    {
+      ACE_NEW_RETURN (msgq,
+                      ACE_Message_Queue_Vx (max_messages,
+                                            MAX_MESSAGE_SIZE),
+                      -1);
+      message = "ACE_Message_Queue_Vx, single thread test";
+    }
+#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+  else
+    {
+      ACE_NEW_RETURN (msgq,
+                      ACE_Message_Queue_NT,
+                      -1);
+      message = ACE_TEXT ("ACE_Message_Queue_NT, single thread test");
+    }
+#endif /* VXWORKS */
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
