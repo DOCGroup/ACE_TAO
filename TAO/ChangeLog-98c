@@ -1,11 +1,17 @@
+Sat Sep 26 09:24:10 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Object_Table.i (TAO_Dynamic_Hash_ObjTable_Iterator):
+          moved this constructor up in the file, to avoid use
+          before definition.
+
 Sat Sep 26 00:07:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Object_Table.i: 
-	* tao/Object_Table.cpp: 
-	  Optimized object id parsing for the active demultiplexing object
-	  table.
-	  Moved the TAO_Object_Table constructor to the .cpp file, EGCS
-	  did not like it there.
+        * tao/Object_Table.i:
+        * tao/Object_Table.cpp:
+          Optimized object id parsing for the active demultiplexing object
+          table.
+          Moved the TAO_Object_Table constructor to the .cpp file, EGCS
+          did not like it there.
 
 Fri Sep 25 22:00:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
