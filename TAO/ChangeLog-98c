@@ -1425,7 +1425,7 @@ Tue Jul 14 12:30:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
           removed dependence on local context_switch on platforms that don't
           have ACE_HAS_PRUSAGE_T and ACE_HAS_GETRUSAGE.  Thanks to
-          Arturo Montes" <mitosys@colomsat.net.co> for reporting this.  Also,
+          Arturo Montes <mitosys@colomsat.net.co> for reporting this.  Also,
           removed csw on those platforms, because it was no longer being used.
 
 Tue Jul 14 11:48:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
