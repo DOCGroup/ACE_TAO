@@ -197,8 +197,14 @@ sub check_log ($)
     my $program = shift;
 
     ### Check the logs
-
-    local $log = "log/".$program.".log";
+    local $log_suffix;
+    if (defined $ENV{"ACE_WINCE_TEST_CONTROLLER"}) {
+        $log_suffix = ".txt";
+    }
+    else {
+        $log_suffix = ".log";
+    }
+    local $log = "log/".$program.$log_suffix;
 
     if (-e "core") {
         print STDERR "Error: $program dumped core\n";
@@ -266,7 +272,7 @@ sub check_log ($)
             # Now check for any sub-logs. If either the main log or a
             # sub-log has an error, print the sub-log.
             opendir (THISDIR, "log");
-            local $sublognames = "$program\-.*\.log";
+            local $sublognames = "$program\-.*".$log_suffix;
             @sublogs = grep (/$sublognames/, readdir (THISDIR));
             closedir (THISDIR);
             foreach $log (@sublogs) {

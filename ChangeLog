@@ -1,8 +1,14 @@
+Wed Dec 29 18:53:12 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/run_test.pl: If running a WinCE test, the log file has a
+	  .txt suffix, not .log. If it's .log, there's no (easy) way to look
+	  at the file on the device itself, so they're named .txt.
+
 Tue Dec 28 19:45:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
 
-	  Added .png to te list of files that needs to be omitted from
+	  Added .png to the list of files that needs to be omitted from
 	  LF->CRLF conversions. Thanks to Johnny for pointing this out.
 
 Sat Dec 25 20:58:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
