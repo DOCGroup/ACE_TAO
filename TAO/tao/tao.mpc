@@ -478,7 +478,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Ref_Table.h
     Object_T.h
     Objref_VarOut_T.h
-    OBV_Constants.h
     OctetSeqC.h
     OctetSeqS.h
     operation_details.h
