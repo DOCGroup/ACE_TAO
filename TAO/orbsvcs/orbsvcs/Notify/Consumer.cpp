@@ -361,7 +361,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
 }
 
 void
-TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (DEBUG_LEVEL  > 5) ACE_DEBUG ( (LM_DEBUG,
     ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %d\n"),
