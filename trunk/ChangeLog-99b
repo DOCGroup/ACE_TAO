@@ -1,3 +1,10 @@
+Thu Apr 15 16:50:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated discussion of "dir unexpected"
+          error when building for VxWorks on NT.  Thanks to
+          Dave Steele <Dave_Steele@Mitel.COM> for providing the
+          insight.
+
 Thu Apr 15 14:04:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.lib.GNU: don't call $(RANLIB)
