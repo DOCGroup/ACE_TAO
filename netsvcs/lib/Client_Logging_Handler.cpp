@@ -310,8 +310,8 @@ ACE_Client_Logging_Acceptor::fini (void)
   ACE_OS::unlink (this->logger_key_);
 
   // This memory was allocated by <ACE_OS::strdup>.
-  ACE_OS::free (this->logger_key_);
-  ACE_OS::free (this->server_host_);
+  ACE_OS::free ((void *) this->logger_key_);
+  ACE_OS::free ((void *) this->server_host_);
 
   return 0;
 }
