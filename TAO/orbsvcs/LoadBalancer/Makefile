@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif
 
 
-BIN = LoadManager LoadMonitor
+
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -28,6 +28,9 @@ include $(TAO_ROOT)/rules.tao.GNU
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 
 ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
+
+  BIN = LoadManager LoadMonitor
+
 # The Load Balancer requires AMI.
   ifeq ($(ami),0)
     BIN =
@@ -36,6 +39,7 @@ ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
   ifeq ($(interceptors),0)
     BIN =
   endif  # !interceptors
+
 endif  # CosLoadBalancing
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -54,7 +58,7 @@ LoadManager:
 LoadMonitor:
 	$(MAKE) -f Makefile.LoadMonitor
 
-idl_stubs realclean depend:
+realclean depend:
 	@for m in Makefile.LoadManager Makefile.LoadMonitor; do \
           $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
 	done
