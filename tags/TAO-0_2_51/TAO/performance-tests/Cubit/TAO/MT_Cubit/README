@@ -1,0 +1,222 @@
+// $Id$
+
+THE MT_CUBIT EXAMPLE
+--------------------
+
+This directory contains the source code for the TAO "MT_Cubit"
+benchmark, which enables us to measure the real-time performance of
+TAO.  MT_Cubit measures the latency,jitter, determinism, CPU
+utilization, and degree of priority inversion incurred by TAO twoway
+operations invoked under different workloads and priorities.  For
+more information and empirical results, please see
+
+http://www.cs.wustl.edu/~schmidt/RT-perf.ps.gz
+http://www.cs.wustl.edu/~schmidt/RT-OS.ps.gz
+
+COMPILING
+---------
+
+Makefile is provided.  Use make to compile.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+OPTIONS
+-------
+Options are case sensitive, e.g., "-U" has a different meaning than "-u".
+
+(1) server:
+
+./server [-p <port_num>]                // starting port
+         [-h <my_hostname>]             // IP address to use
+         [-t <number_of_servants>]      // # of servant threads to create
+         [-f <ior_file> ]               // specify a file to output all ior's
+         [-m ]                          // Use multiple priorities for threads
+         [-r ]                          // Run the thread-per-rate test
+
+[-p <port_num>] is the port number at which the server will start the
+  first (and highest priority) servant. Successive servants will be
+  created starting at (port_num+1). The -t parameter specifies the total
+  number of servants.
+
+        Default Value: ACE_DEFAULT_SERVER_PORT  /* see $ACE/ace/OS.h for actual number value */
+
+[-h <my_hostname>] indicates the IP address the ORB should bind to.
+  This is useful when a machine has more than one network interface.
+
+        Default Value: Whatever ACE_OS::hostname () returns, which depends on the platform.
+
+[-t <number_of_servants>] tells the server how many servants to create.
+
+        Default Value: 2
+
+[-f <ior_file> ] Use to specify a file to write all the iors from the
+  different servants out to disk.
+
+        Default Value: nil, which means not to write the iors to disk.
+
+[-m ] For the 1 to n low priority servants, this parameter indicates
+  the use of a range of priorities for the threads.
+
+        Default Value: Disabled.  One priority will be used for the
+                       low priority threads.
+
+[-r] turn on the thread-per-rate tests.  (Priority inversion tests)
+
+        Default Value: Disabled.
+
+The server will print the IOR of the servants, but it is not required
+by the client.
+
+(2) client:
+
+./client [<ORB OPTIONS>]        // ORB options, e.g., "-ORBobjrefstyle url"
+         [-d <datatype>]        // what datatype to use for calls
+         [-n <num_calls>]       // number of CORBA calls to make.
+         [-t <num_of_clients>]  // number of client threads to create
+         [-f <ior_file>]        // specify the file from which we read the object references (iors), if any.
+         [-r]                   // run thread-per-rate test.
+         [-o]                   // makes client use oneway calls.  By default, twoway calls are used.
+         [-x]                   // makes a call to servant to shutdown
+         [-u <requests> ]       // run the client utilization test for a number of <requests>.
+         [-1]                   // run the one-to-n test.
+         [-g <granularity>]     // choose the granularity of the timing of CORBA calls
+         [-c]                   // run the number of context switches test.
+         [-m]                   // use multiple priorities for the low priority clients.
+
+[-d <datatype>]  <datatype> is one of the following:
+
+   0 Octet
+   1 Short
+   2 Long
+   3 Struct of the above 3 types
+
+        Default Value: 0
+
+[-n <num_calls>] is the number of CORBA twoway calls to be made
+
+        Default Value: 1000
+
+[-t <num_of_clients>] is the total number of concurrent clients to be
+   created. The clients will have successively decreasing
+   priorities if "-m" is specified.
+
+        Default Value: 2
+
+[-f <ior_file> ] Use to specify a file to read the object references (iors) of the
+  different servants from disk.
+
+        Default Value: nil, which means not to read the iors from disk.
+
+[-r] run the thread-per-rate test.  (Priority inversion tests)
+
+        Default Value: Disabled.
+
+[-o] enables oneway calls instead of two-way calls.  The oneway call
+   is a noop call (for now).
+
+        Default Value: Disabled
+
+[-x] makes the client call the shutdown() method on the servant which in turn
+   invokes the shutdown() method on the ORB and causes it to exit gracefully.
+
+        Default Value: Disabled
+
+[-u <seconds>] runs the client/server utilization test for a number of <requests>.  
+        The output is the number of seconds for the test to make such number of requests.  
+        Now run the same test but with the -l option to make the same number of requests,
+        this time not using CORBA, instead directly making function calls.  The difference 
+        in time for each test to make the same number of requests is the utilization of
+        the OS/ORB combined.
+     (Note: This option overrides any specified "-t" option)
+
+        Default Value: Disabled
+
+[-1] runs one-to-n test.  One servant services all low priority clients.
+
+        Default Value: Disabled
+
+[-g <granularity>] choose the granularity of timing the CORBA calls.
+  This option should disappear sometime in the future, together with
+  all the modifications done to support this.
+
+  What happens when this options is not used, is that (1) we start a
+  timer, (2) invoke the CORBA call, (3) stop the timer after call
+  returns.  Some platforms have a very coarse grain timer (e.g. 10
+  msec) and timing individual calls does not report very accurate
+  latency results.
+
+  This option enables a way to (1) start the timer, (2) invoke
+  <granularity> calls, and (3) stop the timer.  This way, we get a
+  better sense of the average latency of the CORBA calls.
+
+  The downside is that the mechanism to enforce the frequency of calls
+  (i.e., 20 Hz, 10Hz, etc) is in conflict with this option.  Such
+  mechanism depends on the individual time for each call to enforce
+  the calling frequency.
+
+        Default Value: 1  (time each CORBA call)
+
+[-c] Obtain number of context switches.
+
+        Default Value: Disabled
+
+[-m] Use multiple priorities for the low priority client
+
+        Default Value: Disabled.  Will use one priority for all low priority clients.
+
+Running on VxWorks
+------------------
+
+A typical run of the server and client on a single VxWorks target:
+
+  -> iam "<your login>"
+  -> ld < server
+  -> ld < client
+  -> spa server, "-f", "ior.txt", "-t", "2"
+  -> spa client, "-f", "ior.txt", "-t", "2", "-n", "1000"
+
+RESULTS
+-------
+
+The client prints the latency observed by the high priority client,
+and the average latency observed by the low priority clients. Jitter
+(standard deviation of the latency) is also printed by the client.
+
+
+Running MT_Cubit on CHORUS:
+--------------------------
+
+1.You should make sure that you set the HOST environment variable on the
+Chorus VME Board to the IP address of that Board before you run
+MT_Cubit test.
+
+e.g
+$rsh tambora1 setenv HOST 128.252.165.82
+
+2. You should make sure that the path to IOR file has write permission
+for ALL.
+
+server:
+------
+$rsh host_name arun path_to_server -h DOTTED_DECIMAL_ADDRESS
+ -f path_to_ior_file -ORBdotteddecimaladdresses 1 <server_options> 
+
+Since Chorus doesn't support DNS, you should pass
+dotted_decimal_address of the server machine to -h option.
+
+You DONT have to use -ORBdotteddecimaladdresses 1 if you have
+TAO_USE_DOTTED_DECIMAL_ADDRESSES defined in your config.h file. 
+
+e.g
+$rsh tambora1 arun /MT_Cubit/server -h 128.252.165.82 -f /ior
+-ORBdotteddecimaladdresses 1 -t 10 -ORBobjrefstyle url
+
+client:
+-------
+
+$rsh host_name arun  path_to_client -f path_to_ior_file <client_options>
+
+e.g
+
+$rsh tambora2 arun /MT_Cubit/client -f /ior -t 10 -n 300
