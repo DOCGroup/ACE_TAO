@@ -1,4 +1,4 @@
-Fri Aug 23 09:45:05 2002  Mayur Deshpande  <coryan@uci.edu>
+Fri Aug 23 09:45:05 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp
 	(TAO_AMH_Response_Handler):
