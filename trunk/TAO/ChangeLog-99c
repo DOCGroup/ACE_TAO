@@ -1,3 +1,10 @@
+Mon May 24 17:56:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	  Removed '.in ()' and '.out ()' from pseudo-object
+	  implementations of << and >> respectively. Pseudo-
+	  objects are declared in unions as _ptr, not as _var.
+
 Mon May 24 16:28:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Policy_Manager.cpp (implementation): Moved a couple of
