@@ -43,8 +43,6 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               bool )
 {
   // Macros to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (n_threads);
-  ACE_UNUSED_ARG (force_active);
   ACE_UNUSED_ARG (thread_handles);
 
   // Make sure that we only allow a single thread to be spawned for
