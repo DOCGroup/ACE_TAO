@@ -7394,6 +7394,7 @@ ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
   this->buf = sb.buf;
 }
 
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
 ACE_INLINE size_t
 ACE_OS::strlen (const wchar_t *s)
 {
@@ -7433,6 +7434,7 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 #  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #endif /* ACE_HAS_UNICODE */
 }
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if defined (ACE_HAS_UNICODE)
 
