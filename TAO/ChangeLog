@@ -1,3 +1,8 @@
+Mon Aug  5 15:49:45 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* TAO/TAO-INSTALL.html: Added an entry explaining how to 
+	  get information on subsetting the TAO ORB services.
+  
 Wed Aug  7 16:12:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	
 	* tests/RTCORBA/Diffserv/Makefile:
