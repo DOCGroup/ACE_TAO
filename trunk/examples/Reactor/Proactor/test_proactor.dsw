@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "test_post_completion"=.\test_post_completion.dsp - Package Owner=<4>
+Project: "test_post_completion"=.\post_completions.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
