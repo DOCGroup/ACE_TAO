@@ -1,3 +1,8 @@
+Tue Apr  3 08:08:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IFR_Client/Makefile: Added guards for minimum corba. The IFR
+	  shouldn't be compiled for minimum corba. 
+
 Tue Apr  3 07:58:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:

@@ -14,12 +14,13 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 ACE_SHLIBS = -lTAO -lACE
 
-
+ifeq ($(minimum_corba),0)
 CPP_SRCS += IFR_BaseC \
             IFR_BasicC \
             IFR_ExtendedC \
             IFR_ComponentsC \
             IFR_Client_Adapter_Impl
+endif # minimum_corba ==0
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
