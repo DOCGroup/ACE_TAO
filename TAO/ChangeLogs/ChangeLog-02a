@@ -1,3 +1,11 @@
+Mon Aug 28 16:19:16 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IOP.pidl (TaggedComponentList):
+
+	  Added this typedef.  It is a sequence of TaggedComponents.  The
+	  SecurityReplaceable module from the CORBA Security Service needs
+	  this typedef.
+
 Mon Aug 28 17:41:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* test/Exposed_Policies/Counter_i.h
