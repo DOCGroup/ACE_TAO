@@ -229,8 +229,9 @@ spawn (void)
 	  switch (ACE_OS::fork ("child"))
 	    {
 	    case -1:
-	      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	      /* NOTREACHED */
+	      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "fork failed"));
+	      i = ACE_MAX_CLIENTS;	// Break out of 'for' loop
+	      break;
 	    case 0: 
 	      client (&server_addr);
 	      exit (0);
