@@ -1912,8 +1912,7 @@ ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
-  : table_ ()
-  , in_use_ (ACE_OS::NULL_key)
+  : in_use_ (ACE_OS::NULL_key)
 #if defined (ACE_HAS_TSS_EMULATION)
     // ACE_TSS_Emulation::total_keys () provides the value of the next
     // key to be created.
@@ -3289,8 +3288,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
     {
       CWinThread *cwin_thread =
-        ::AfxBeginThread ((AFX_THREADPROC) &thread_args->entry_point (),
-                          thread_args, priority, 0,
+        ::AfxBeginThread ((AFX_THREADPROC) thread_args->entry_point (),
+                          thread_args,
+                          priority,
+                          0,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
