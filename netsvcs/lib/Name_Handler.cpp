@@ -517,7 +517,7 @@ ACE_Name_Handler::lists_entries (void)
   ACE_WString pattern (this->name_request_.name (),
                        this->name_request_.name_len () / sizeof (ACE_USHORT16));
 
-  int (ACE_Naming_Context::*ptmf) (ACE_BINDING_SET &, const ACE_WString &);
+  int result = -1;
 
   const ACE_Name_Request::Constants msg_type =
     ACE_static_cast (ACE_Name_Request::Constants,
@@ -526,36 +526,32 @@ ACE_Name_Handler::lists_entries (void)
   // NOTE:  This multi-branch conditional statement used to be
   // (and should be) a switch statement.  However, it caused
   // Internal compiler error 980331 with egcs 1.1 (2.91.57).
+  // So, the pointer-to-member-function temporary has been removed.
   if (msg_type == ACE_Name_Request::LIST_NAME_ENTRIES)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_NAME_ENTRIES \n"));
-      ptmf = &ACE_Naming_Context::list_name_entries;
+      result = NAMING_CONTEXT::instance ()->
+        ACE_Naming_Context::list_name_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_VALUE_ENTRIES)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_VALUE_ENTRIES \n"));
-      ptmf = &ACE_Naming_Context::list_value_entries;
+      result = NAMING_CONTEXT::instance ()->
+        ACE_Naming_Context::list_value_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_TYPE_ENTRIES)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_TYPE_ENTRIES \n"));
-      ptmf = &ACE_Naming_Context::list_type_entries;
+      result = NAMING_CONTEXT::instance ()->
+        ACE_Naming_Context::list_type_entries (set, pattern);
     }
   else
     return -1;
 
-  if ((NAMING_CONTEXT::instance ()->*ptmf) (set, pattern) != 0)
-    {
-      // None found so send blank request back.
-      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
-
-      if (this->send_request (end_rq) == -1)
-        return -1;
-    }
-  else
+  if (result == 0)
     {
       ACE_Name_Binding *one_entry = 0;
 
@@ -581,6 +577,15 @@ ACE_Name_Handler::lists_entries (void)
       if (this->send_request (nrq) == -1)
         return -1;
     }
+  else
+    {
+      // None found so send blank request back.
+      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
+
+      if (this->send_request (end_rq) == -1)
+        return -1;
+    }
+
   return 0;
 }
 
