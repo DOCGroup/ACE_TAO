@@ -88,6 +88,11 @@ ifeq ($(PACE_SYSNAME),AIX)
   CFLAGS += -DPACE_HAS_POSIX -D_REENTRANT
 endif
 
+ifeq ($(PACE_SYSNAME),HP-UX)
+  VPATH := .:posix:$(VPATH)
+  CFLAGS += -DPACE_HAS_POSIX -D_REENTRANT
+endif
+
 ifeq ($(debug),)
   ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
     CCFLAGS += -DPACE_NDEBUG
