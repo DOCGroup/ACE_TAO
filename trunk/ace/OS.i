@@ -1342,8 +1342,8 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
     {
     case USYNC_PROCESS:
       ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (m->proc_mutex_),
-                                           ace_result_),
-                         int, -1);
+                                              ace_result_),
+                            int, -1);
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_destroy (&m->thr_mutex_);
     default:
@@ -1577,8 +1577,8 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
     {
     case USYNC_PROCESS:
       ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseMutex (m->proc_mutex_),
-                                           ace_result_),
-                         int, -1);
+                                              ace_result_),
+                            int, -1);
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_unlock (&m->thr_mutex_);
     default:
@@ -1673,8 +1673,14 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   return ACE_OS::mutex_trylock (m);
 #elif defined (ACE_HAS_WTHREADS)
 #if defined (ACE_HAS_WIN32_TRYLOCK)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TryEnterCriticalSection (m), ace_result_),
-                     int, -1) ;
+  BOOL result = ::TryEnterCriticalSection (m);
+  if (result == TRUE) 
+    return 0;
+  else
+    {
+      errno = EBUSY;
+      return -1;
+    }    
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2067,8 +2073,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
   return result;
 #elif defined (ACE_HAS_WTHREADS)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0),
-                                       ace_result_),
-                     int, -1);
+                                          ace_result_),
+                        int, -1);
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -2084,7 +2090,7 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 #if defined (ACE_WIN32)
   // Win32 supports this natively.
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 #else
   // On POSIX platforms we need to emulate this ourselves.
   for (size_t i = 0; i < release_count; i++)
@@ -2426,9 +2432,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the semaphore.
     ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
-                                                         cv->sema_, INFINITE, FALSE),
-                                  result),
-                int, -1, result);
+                                                            cv->sema_, INFINITE, FALSE),
+                                     result),
+                   int, -1, result);
   else
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
     {
@@ -2461,10 +2467,10 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
         // until it can acquire the mutex.  This is important to prevent
         // unfairness.
         ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
-                                                             external_mutex->proc_mutex_,
-                                                             INFINITE, FALSE),
-                                      result),
-                    int, -1, result);
+                                                                external_mutex->proc_mutex_,
+                                                                INFINITE, FALSE),
+                                         result),
+                       int, -1, result);
       else
         // We must always regain the external mutex, even when errors
         // occur because that's the guarantee that we give to our
@@ -2610,10 +2616,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         // until it can acquire the mutex.  This is important to prevent
         // unfairness.
         ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
-                                                             external_mutex->proc_mutex_,
-                                                             INFINITE, FALSE),
-                                      result),
-                    int, -1, result);
+                                                                external_mutex->proc_mutex_,
+                                                                INFINITE, FALSE),
+                                         result),
+                       int, -1, result);
       else
         // We must always regain the external mutex, even when errors
         // occur because that's the guarantee that we give to our
@@ -4909,8 +4915,8 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 # endif /* ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio),
-                                       ace_result_),
-                     int, -1);
+                                          ace_result_),
+                        int, -1);
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio),
                                        ace_result_),
@@ -5492,7 +5498,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   // ACE_TRACE ("ACE_OS::hostname");
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #else /* !ACE_WIN32 */
@@ -5920,12 +5926,12 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 
   FILETIME dummy_1, dummy_2;
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetProcessTimes (::GetCurrentProcess(),
-                                                          &dummy_1,   // start
-                                                          &dummy_2,     // exited
-                                                          &ru->ru_stime,
-                                                          &ru->ru_utime),
-                                       ace_result_),
-                     int, -1);
+                                                             &dummy_1,   // start
+                                                             &dummy_2,     // exited
+                                                             &ru->ru_stime,
+                                                             &ru->ru_utime),
+                                          ace_result_),
+                        int, -1);
 #else
   ACE_OSCALL_RETURN (::getrusage (who, ru), int, -1);
 #endif /* ACE_WIN32 */
@@ -6526,7 +6532,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -6553,7 +6559,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -6579,8 +6585,11 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_),
-                                       ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
+                                                        LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 
+                                                        0, len, 0, 
+                                                        &lock->overlapped_),
+                                          ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -6613,8 +6622,11 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY, 0, len, 0, &lock->overlapped_),
-                                       ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
+                                                        LOCKFILE_FAIL_IMMEDIATELY, 
+                                                        0, len, 0, 
+                                                        &lock->overlapped_),
+                                          ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -6648,7 +6660,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -7592,7 +7604,7 @@ ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 {
   // ACE_TRACE ("ACE_OS::hostname");
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)),
-                                       ace_result_), int, -1);
+                                          ace_result_), int, -1);
 }
 
 ACE_INLINE ACE_HANDLE
