@@ -414,7 +414,7 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
           }
         default: break;
         }
-      
+
       if (address != 0)
         {
           if (this->get_acceptor (entry->flowname ())!= 0)
@@ -704,6 +704,52 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       this->flow_protocol_factories_.insert (sfp_item);
     }
   return 0;
+}
+
+/* static */
+int
+TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
+{
+  // Because of reference counting, the POA will automatically delete
+  // the servant when all pending requests on this servant are
+  // complete.
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      PortableServer::POA_var poa = servant->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var id = poa->servant_to_id (servant,
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (),
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "deactivate_servant");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  return 0;
+}
+
+/* static */
+char *
+TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
+{
+  ACE_CString flow_spec_entry (flow_spec_entry_str);
+  int slash_pos = flow_spec_entry.find ('\\');
+  ACE_CString flow_name;
+  if (slash_pos != flow_spec_entry.npos)
+    flow_name = flow_spec_entry.substring (0, slash_pos);
+  else
+    flow_name = flow_spec_entry_str;
+  return CORBA::string_dup (flow_name.c_str ());
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

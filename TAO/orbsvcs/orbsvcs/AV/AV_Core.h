@@ -106,7 +106,10 @@ public:
   void orb (CORBA::ORB_ptr orb_);
   PortableServer::POA_ptr poa (void);
   void poa (PortableServer::POA_ptr poa_);
-  
+
+  static int deactivate_servant (PortableServer::Servant servant);
+  static char *get_flowname (const char *flow_spec_entry_str);
+
 protected:
   TAO_AV_Connector_Registry *connector_registry_;
   // The connector registry which all active connecters must register
