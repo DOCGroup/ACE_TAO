@@ -67,8 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXPRESSION_AST_EXPRESSION_HH
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
-#include "ace/CDR_Stream.h"
-
 // Representation of expression values
 
 /*
@@ -128,30 +126,25 @@ public:
     , EV_none                   // Expression value is missing
   };
 
-  // Structure to describe value of constant expression and its type
+  // Structure to descrive value of constant expression and its type
   struct AST_ExprValue {
     union {
-      short               sval;     // Contains short expression value
-      unsigned short      usval;    // Contains unsigned short expr value
-      long                lval;     // Contains long expression value
-      unsigned long       ulval;    // Contains unsigned long expr value
-      unsigned long       bval;     // Contains boolean expression value
-#if ! defined (ACE_LACKS_LONGLONG_T)
-      ACE_CDR::LongLong   llval;   // Contains long long expr value
-      ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-      float               fval;     // Contains 32-bit float expr value
-      double              dval;     // Contains 64-bit float expr value
-      char                cval;     // Contains char expression value
-      ACE_CDR::WChar      wcval;    // Contains wchar expression value
-      unsigned char       oval;     // Contains unsigned char expr value
-      String              *strval;  // Contains String * expr value
-      unsigned long       eval;     // Contains enumeration value
+      short             sval;   // Contains short expression value
+      unsigned short    usval;  // Contains unsigned short expr value
+      long              lval;   // Contains long expression value
+      unsigned long     ulval;  // Contains unsigned long expr value
+      unsigned long     bval;   // Contains boolean expression value
+      float             fval;   // Contains 32-bit float expr value
+      double            dval;   // Contains 64-bit float expr value
+      char              cval;   // Contains char expression value
+      unsigned char     oval;   // Contains unsigned char expr value
+      String            *strval; // Contains String * expr value
+      unsigned long     eval;   // Contains enumeration value
     } u;
     ExprType et;
   };
 
- // Operations
+  // Operations
 
   // Constructor(s)
   AST_Expression(AST_Expression *v, ExprType t);
@@ -166,7 +159,6 @@ public:
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);
-  AST_Expression(ACE_CDR::WChar wc);
   AST_Expression(unsigned char  uc);
   AST_Expression(String         *s);
   AST_Expression(UTL_ScopedName *n);

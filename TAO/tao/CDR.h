@@ -47,8 +47,6 @@
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
 
-class TAO_ORB_Core;
-
 class TAO_Export TAO_OutputCDR : public ACE_OutputCDR
 {
   //
@@ -107,7 +105,7 @@ public:
 
   CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
       TAO_InputCDR *src,
-      CORBA_Environment &ACE_TRY_ENV =
+      CORBA_Environment &TAO_IN_ENV =
         CORBA::default_environment ());
   // Append the contents of the CDR stream based on information
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
@@ -120,7 +118,7 @@ public:
   CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
       const void *data,
       const void *,
-      CORBA_Environment &ACE_TRY_ENV =
+      CORBA_Environment &TAO_IN_ENV =
         CORBA::default_environment ());
   // Marshalls the contents of <data> as described by the TypeCode in
   // <tc>. Any errors are reported though the <TAO_IN_ENV> parameter.
@@ -159,26 +157,22 @@ public:
 
   TAO_InputCDR (const char* buf,
                 size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                TAO_ORB_Core* orb_core = 0);
+                int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
 
   TAO_InputCDR (size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                TAO_ORB_Core* orb_core = 0);
+                int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an empty input stream. The caller is responsible for
   // putting the right data and providing the right alignment.
 
   TAO_InputCDR (const ACE_Message_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                TAO_ORB_Core* orb_core = 0);
+                int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an input stream from an ACE_Message_Block
 
   TAO_InputCDR (ACE_Data_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                TAO_ORB_Core* orb_core = 0);
+                int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an input stream from an ACE_Data_Block
 
   TAO_InputCDR (const TAO_InputCDR& rhs);
@@ -204,8 +198,7 @@ public:
 
   TAO_InputCDR (const TAO_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
-                ACE_Allocator* data_block_allocator = 0,
-                TAO_ORB_Core* orb_core = 0);
+                ACE_Allocator* data_block_allocator = 0);
   // Create an input CDR from an output CDR.
 
   ~TAO_InputCDR (void);
@@ -217,24 +210,17 @@ public:
       CORBA::TypeCode_ptr tc,
       const void *data,
       const void *,
-      CORBA_Environment &ACE_TRY_ENV =
+      CORBA_Environment &TAO_IN_ENV =
         CORBA::default_environment ());
   // Demarshall the contents of the CDR stream into <data> as
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
 
   CORBA::TypeCode::traverse_status skip (
       CORBA::TypeCode_ptr tc,
-      CORBA_Environment &ACE_TRY_ENV =
+      CORBA_Environment &TAO_IN_ENV =
         CORBA::default_environment ());
   // Skip the contents of the CDR stream based on information
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
-
-  TAO_ORB_Core* orb_core (void) const;
-  // Accessor
-
-private:
-  TAO_ORB_Core* orb_core_;
-  // The ORB_Core, required to extract object references.
 };
 
 // This operators are too complex to be inline....

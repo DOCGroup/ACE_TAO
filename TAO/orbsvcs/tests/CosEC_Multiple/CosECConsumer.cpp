@@ -108,10 +108,7 @@ CosECConsumer::push (const CORBA::Any &data,
               "Event count = %d\n",
               this->event_count_));
 
-  this->event_count_ = this->event_count_ - 1;
-  // decrement the count
-
-  if (this->event_count_ == 0)
+  if (--this->event_count_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):%s\n",
@@ -146,7 +143,7 @@ CosECConsumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 int
 CosECConsumer::init_Consumer (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
   ACE_TRY
    {
       this->open (this->cos_ec_,

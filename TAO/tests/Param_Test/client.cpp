@@ -89,7 +89,7 @@ Param_Test_Client<T>::run_sii_test (void)
 
           // stop the timer.
           this->results_.stop_timer ();
-
+          
           // now check if the values returned are as expected
           if (opt->debug ())
             {
@@ -99,7 +99,7 @@ Param_Test_Client<T>::run_sii_test (void)
         }
       ACE_CATCHANY
         {
-
+           
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, opname);
           ACE_ERROR ((LM_ERROR,
@@ -107,7 +107,7 @@ Param_Test_Client<T>::run_sii_test (void)
                       "run_sii_test exception in iteration %d",
                       i));
           goto loop_around;
-
+              
         }
       ACE_ENDTRY;
 
@@ -116,7 +116,7 @@ Param_Test_Client<T>::run_sii_test (void)
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) client.cpp - run_sii_test: "
-                      "Invalid results in iteration %d\n",
+                      "Invalid results in iteration %d - ",
                       i));
           continue;
         }
@@ -187,10 +187,10 @@ Param_Test_Client<T>::run_dii_test (void)
       // then the result holder (length 1 because value is *replaced*)
       CORBA::NVList_var retval;
       this->orb_->create_list (1, retval.out ());
-
+      
       // create the request
       CORBA::Request_var req;
-
+                  
       ACE_TRY
         {
           // add arguments and typecode for return valueto the NVList
@@ -202,7 +202,7 @@ Param_Test_Client<T>::run_dii_test (void)
           CORBA::NamedValue_ptr result =
             CORBA::NamedValue::_duplicate (retval->item (0, ACE_TRY_ENV));
           ACE_TRY_CHECK;
-
+          
           this->param_test_->_create_request (CORBA_Context::_nil (),
                                               opname,
                                               nvlist,
@@ -215,10 +215,10 @@ Param_Test_Client<T>::run_dii_test (void)
           // values for ret, inout, and out parameters are all owned by
           // the ORB and hence we must not free them explicitly.
           ACE_TRY_CHECK;
-
+          
           if (opt->debug ())
             ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-
+          
           // Make the invocation, verify the result.
           this->test_object_->dii_req_invoke (req, ACE_TRY_ENV);
           ACE_TRY_CHECK;

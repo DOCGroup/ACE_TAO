@@ -6,12 +6,6 @@
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/Pluggable.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(tao, Pluggable, "$Id$")
-
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : iiop_connector_ (0)
 {
@@ -92,9 +86,9 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
   return result;
 }
 
-int
-TAO_Connector_Registry::connect (TAO_Stub *&obj,
-                                 TAO_Transport *&transport)
+TAO_Transport *
+TAO_Connector_Registry::connect (STUB_Object *&obj,
+                                 CORBA::Environment &env)
 {
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;
   TAO_Profile *profile = obj->profile_in_use ();
@@ -102,7 +96,9 @@ TAO_Connector_Registry::connect (TAO_Stub *&obj,
   // @@ And the profile selection policy is .... ONLY IIOP, and the
   // @@ first one found!
   if (profile->tag () != req_tag)
-    return -1;
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 
   // here is where we get the appropriate connector object but we are
   // the Connector Registry so call get_connector(tag)
@@ -110,7 +106,11 @@ TAO_Connector_Registry::connect (TAO_Stub *&obj,
   TAO_Connector *connector =
     this->get_connector (req_tag);
 
-  return connector->connect (profile, transport);
+  TAO_Transport *transport =
+    connector->connect (profile, env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+
+  return transport;
 }
 
 TAO_IOP_Version::~TAO_IOP_Version (void)

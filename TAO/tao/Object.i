@@ -51,7 +51,7 @@ CORBA::is_nil (CORBA::Object_ptr obj)
   return obj == 0;
 }
 
-ACE_INLINE TAO_Stub *
+ACE_INLINE STUB_Object *
 CORBA_Object::_stubobj (void) const
 {
   return this->protocol_proxy_;

@@ -31,12 +31,12 @@
 #  include "tao/corbafwd.h"
 
 // Forward Decls
+class TAO_OA_Parameters;
 class TAO_Transport;
 class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;
 class TAO_IIOP_Server_Transport;
 class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -48,9 +48,6 @@ public:
   TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
   virtual TAO_Transport *transport (void) = 0;
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
 };
 
 class TAO_Export TAO_Client_Connection_Handler : public TAO_IIOP_Handler_Base
@@ -111,36 +108,12 @@ protected:
   // when <expecting_response_> is non-zero.
 };
 
-class TAO_Export TAO_RW_Client_Connection_Handler : public TAO_Client_Connection_Handler
-{
-public:
-  TAO_RW_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
-
-  virtual ~TAO_RW_Client_Connection_Handler (void);
-
-  virtual int send_request (TAO_ORB_Core* orb_core,
-                            TAO_OutputCDR &stream,
-                            int is_twoway);
-  // Send the request in <stream>.  Since this class simply
-  // reads/writes from a socket (and does not handle nested upcalls),
-  // there is no need to register with a reactor.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
-
-protected:
-
-};
-
 class TAO_Export TAO_ST_Client_Connection_Handler : public TAO_Client_Connection_Handler
 {
 public:
   TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
 
   virtual ~TAO_ST_Client_Connection_Handler (void);
-
-  virtual int open (void *);
-  // Initialize the handler.
 
   virtual int send_request (TAO_ORB_Core* orb_core,
                             TAO_OutputCDR &stream,
@@ -153,9 +126,6 @@ public:
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Called when a a response from a twoway invocation is available.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
 
 protected:
 
@@ -168,9 +138,6 @@ public:
 
   virtual ~TAO_MT_Client_Connection_Handler (void);
 
-  virtual int open (void *);
-  // Initialize the handler.
-
   virtual int send_request (TAO_ORB_Core* orb_core,
                             TAO_OutputCDR &stream,
                             int is_twoway);
@@ -183,21 +150,13 @@ public:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Called when a a response from a twoway invocation is available.
 
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
-
 protected:
-  ACE_SYNCH_CONDITION* cond_response_available (TAO_ORB_Core* orb_core);
-  // Return the cond_response_available, initializing it if necessary.
 
   ACE_thread_t calling_thread_;
   // the thread ID of the thread we were running in.
 
   ACE_SYNCH_CONDITION* cond_response_available_;
   // wait on reponse if the leader-follower model is active
-
-  TAO_ORB_Core* orb_core_;
-  // The ORB core where we are executing a request.
 };
 
 // ****************************************************************
@@ -283,10 +242,7 @@ protected:
   // Perform appropriate closing.
 
   TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
+  // Cache the ORB Core to minimize
 };
 
 #if defined (__ACE_INLINE__)

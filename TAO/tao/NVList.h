@@ -58,12 +58,6 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_NamedValue_ptr _ptr_type;
-  typedef CORBA_NamedValue_var _var_type;
-#endif /* __GNUC__ */
-
 private:
   CORBA::ULong refcount_;
   // maintains how many references exist to this object
@@ -88,6 +82,8 @@ private:
   friend class CORBA_NVList;
   friend class CORBA_Request;
 };
+
+typedef CORBA_NamedValue* CORBA_NamedValue_ptr;
 
 class TAO_Export CORBA_NamedValue_var
 {
@@ -221,12 +217,6 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_NVList_ptr _ptr_type;
-  typedef CORBA_NVList_var _var_type;
-#endif /* __GNUC__ */
-
 private:
   CORBA_NVList (void);
   // constructor - cannot be instantiated directly other than through the
@@ -251,6 +241,8 @@ private:
   friend class CORBA_ORB;
   friend class CORBA_Request;
 };
+
+typedef CORBA_NVList* CORBA_NVList_ptr;
 
 class TAO_Export CORBA_NVList_var
 {

@@ -43,7 +43,7 @@ public:
   TAO_Default_Server_Strategy_Factory (void);
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 
-  virtual int open (TAO_ORB_Core*);
+  virtual int open (void);
   // Call <open> for our strategies.
 
   // = Server-side ORB Strategy Factory Methods.
@@ -52,8 +52,17 @@ public:
 
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual int enable_poa_locking (void);
-  // Enable POA locking?
+  virtual ACE_Lock *create_poa_lock (void);
+  // Creates and returns a lock for POA based on the setting for
+  // <-ORBpoalock>.  A setting of <thread> returns an
+  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
+  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
+
+  virtual ACE_Lock *create_poa_mgr_lock (void);
+  // Creates and returns a lock for a POA Manager based on the setting
+  // for <-ORBpoamgrlock>.  A setting of <thread> returns an
+  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
+  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
 
   virtual ACE_Lock *create_servant_lock (void);
   // Creates and returns a lock for servants based on the setting of
@@ -158,7 +167,10 @@ protected:
 # include "tao/default_server.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 ACE_STATIC_SVC_DECLARE (TAO_Default_Server_Strategy_Factory)
+#endif /* TAO_USE_STATIC_SERVICE || TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */

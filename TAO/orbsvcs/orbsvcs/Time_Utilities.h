@@ -17,7 +17,7 @@
 #ifndef ORBSVCS_TIME_UTILITIES_H
 #define ORBSVCS_TIME_UTILITIES_H
 
-#include "orbsvcs/TimeBaseC.h"
+#include "orbsvcs/CosTimeBaseC.h"
 #include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ORBSVCS_Time
@@ -34,7 +34,7 @@ class TAO_ORBSVCS_Export ORBSVCS_Time
   //   nanoseconds as time units (i.e. 1 second is 10^7 TimeT units).
 public:
   // = A helper constant, IDL does not have constant for structures.
-  static TimeBase::TimeT zero ();
+  static TimeBase::TimeT zero;
 
   // = ACE_hrtime_t conversion routines.
 

@@ -17,13 +17,104 @@
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
-#include "tao/Key_Adapters.h"
-#include "tao/Server_Strategy_Factory.h"
+#include "tao/corbafwd.h"
 #include "tao/Servant_Base.h"
+#include "ace/Map.h"
+#include "tao/Server_Strategy_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Incremental_Key_Generator
+{
+  // = TITLE
+  //     Defines a key generator.
+  //
+  // = DESCRIPTION
+  //     This class is used in adapters of maps that do not produce keys.
+public:
+
+  TAO_Incremental_Key_Generator (void);
+
+  int operator() (PortableServer::ObjectId &id);
+
+protected:
+
+  CORBA::ULong counter_;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Export TAO_ObjectId_Hash
+{
+  // = TITLE
+  //     Hashing class for Object Ids.
+  //
+  // = DESCRIPTION
+  //     Define the hash() method for Object Ids.
+public:
+
+  u_long operator () (const PortableServer::ObjectId &id) const;
+  // Returns hash value.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Ignore_Original_Key_Adapter
+{
+  // = TITLE
+  //     A key adapter (encode/decode) class.
+  //
+  // = DESCRIPTION
+  //     Define the encoding and decoding methods for converting
+  //     between Object Ids and active keys.  This class ignores the
+  //     <original_key> passed to it.
+public:
+
+  int encode (const PortableServer::ObjectId &original_key,
+              const ACE_Active_Map_Manager_Key &active_key,
+              PortableServer::ObjectId &modified_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              ACE_Active_Map_Manager_Key &active_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              PortableServer::ObjectId &original_key);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Preserve_Original_Key_Adapter
+{
+  // = TITLE
+  //     A key adapter (encode/decode) class.
+  //
+  // = DESCRIPTION
+  //     Define the encoding and decoding methods for converting
+  //     between Object Ids and active keys.  This class remembers the
+  //     <original_key> passed to it.
+public:
+
+  int encode (const PortableServer::ObjectId &original_key,
+              const ACE_Active_Map_Manager_Key &active_key,
+              PortableServer::ObjectId &modified_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              ACE_Active_Map_Manager_Key &active_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              PortableServer::ObjectId &original_key);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Comparison of Object Ids. Defined in Stub.cpp for TAO_opaque (an
+// alias of PortableServer::ObjectId).
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+                                  const PortableServer::ObjectId &r);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -42,32 +133,10 @@ class TAO_Active_Object_Map
   //     Implementation to be used by the POA.
 public:
 
-  struct Map_Entry
-  {
-    // = TITLE
-    //     Value field of the active object map.
-    //
-    // = DESCRIPTION
-    //
-    //     We need a mapping from and to all of the following fields:
-    //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
-    //     all the fields together in the map.
-
-    Map_Entry (void);
-    // Default constructor.
-
-    PortableServer::ObjectId user_id_;
-    PortableServer::ObjectId system_id_;
-    PortableServer::Servant servant_;
-    CORBA::UShort reference_count_;
-    CORBA::Boolean deactivated_;
-  };
-
   TAO_Active_Object_Map (int user_id_policy,
                          int unique_id_policy,
                          int persistent_id_policy,
-                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
-                         CORBA_Environment &ACE_TRY_ENV);
+                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
   // Constructor.
 
   ~TAO_Active_Object_Map (void);
@@ -100,8 +169,7 @@ public:
 
   int rebind_using_user_id_and_system_id (PortableServer::Servant servant,
                                           const PortableServer::ObjectId &user_id,
-                                          const PortableServer::ObjectId &system_id,
-                                          TAO_Active_Object_Map::Map_Entry *&entry);
+                                          const PortableServer::ObjectId &system_id);
   // Can be used with any policy.
 
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
@@ -123,10 +191,8 @@ public:
   // Can be used with any policy. With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
-  int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                const PortableServer::ObjectId &user_id,
-                                                PortableServer::Servant &servant,
-                                                TAO_Active_Object_Map::Map_Entry *&entry);
+  int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                    PortableServer::Servant &servant);
   // Can be used with any policy.
 
   int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
@@ -135,33 +201,29 @@ public:
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is identical to <system_id>.
 
-  int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
-                                                TAO_Active_Object_Map::Map_Entry *&entry);
-  // Can be used with any policy.  With the SYSTEM_ID policy,
-  // <user_id> is identical to <system_id>.
-
   int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                     PortableServer::ObjectId_out user_id);
   // Can be used with any policy.  When the SYSTEM_ID policy is used,
   // the <system_id> is identical to <user_id>.
 
-  int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
-                                    PortableServer::ObjectId &user_id);
-  // Can be used with any policy.  When the SYSTEM_ID policy is used,
-  // the <system_id> is identical to <user_id>.
-
-  CORBA::Boolean remaining_activations (PortableServer::Servant servant);
-  // Are there any remaining activations of <servant> in the active
-  // object map?  Can be used with any policy.
-
-  size_t current_size (void);
-  // Size of the map.
-
-  static size_t system_id_size (void);
+  size_t system_id_size (void);
   // Can be used with any policy.
 
-  static void set_system_id_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
-  // Set the system id size.
+  struct Map_Entry
+  {
+    // = TITLE
+    //     Value field of the active object map.
+    //
+    // = DESCRIPTION
+    //
+    //     We need a mapping from and to all of the following fields:
+    //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
+    //     all the fields together in the map.
+
+    PortableServer::ObjectId user_id_;
+    PortableServer::ObjectId system_id_;
+    PortableServer::Servant servant_;
+  };
 
   typedef ACE_Map<
   PortableServer::ObjectId,
@@ -225,7 +287,7 @@ public:
   TAO_Id_Hint_Strategy *id_hint_strategy_;
   // Id hint strategy.
 
-  static size_t system_id_size_;
+  size_t system_id_size_;
   // Size of the system id produced by the map.
 };
 
@@ -267,11 +329,7 @@ public:
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
-  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant) = 0;
-  // Are there any remaining activations of <servant> in the active
-  // object map?  Can be used with any policy.
-
-  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
@@ -313,10 +371,6 @@ public:
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
-
-  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
-  // Are there any remaining activations of <servant> in the active
-  // object map?  Can be used with any policy.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -352,10 +406,6 @@ public:
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
-
-  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
-  // Are there any remaining activations of <servant> in the active
-  // object map?  Can be used with any policy.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -373,13 +423,11 @@ public:
   virtual ~TAO_Lifespan_Strategy (void);
   // Virtual destructor.
 
-  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                        const PortableServer::ObjectId &user_id,
-                                                        PortableServer::Servant &servant,
-                                                        TAO_Active_Object_Map::Map_Entry *&entry) = 0;
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant) = 0;
   // Can be used with any policy.
 
-  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
@@ -399,10 +447,8 @@ class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the TRANSIENT policy.
 public:
 
-  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                        const PortableServer::ObjectId &user_id,
-                                                        PortableServer::Servant &servant,
-                                                        TAO_Active_Object_Map::Map_Entry *&entry);
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant);
   // Can be used with any policy.
 };
 
@@ -417,10 +463,8 @@ class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the PERSISTENT policy.
 public:
 
-  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                        const PortableServer::ObjectId &user_id,
-                                                        PortableServer::Servant &servant,
-                                                        TAO_Active_Object_Map::Map_Entry *&entry);
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant);
   // Can be used with any policy.
 
 };
@@ -444,7 +488,7 @@ public:
                                     TAO_Active_Object_Map::Map_Entry *&entry) = 0;
   // Must be used with SYSTEM_ID policy.
 
-  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
@@ -543,8 +587,6 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
   //     Strategy for adding active hints to ids.
 public:
 
-  TAO_Active_Hint_Strategy (CORBA::ULong map_size);
-
   virtual ~TAO_Active_Hint_Strategy (void);
   // Virtual destructor.
 
@@ -607,4 +649,4 @@ public:
 # include "tao/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_ACTIVE_OBJECT_MAP_H */
+#endif /* TAO_ACTIVE_OBJECT_MAP_T_H */
