@@ -1,3 +1,16 @@
+Sat Feb  8 17:13:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+
+	  Changed some generated CORBA_Anys to CORBA::Any.
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+
+	  When marshaling an interface union member, replaced a
+	  generated call to the virtual marshal() method with a
+	  call to the global <flat_name>_marshal() method, if 
+	  the interface is not yet defined when it is referenced.
+
 Sat Feb  8 13:15:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/structure.cpp:
