@@ -1,3 +1,15 @@
+Wed Jan 19 15:44:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Uninlined union destructor. In certain cases
+	  where the union in nested inside other structs
+	  and/or unions, Dec Unix picks up on the fact that
+	  the inner union's destructor is called before
+	  it is declared inline. Although he didn't report
+	  this bug, thanks to Hugh Arnold <harnold@itginc.com>
+	  for sending in the example IDL file.
+
 Wed Jan 19 12:07:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
