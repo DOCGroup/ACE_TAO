@@ -76,6 +76,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 COPYING \
                 ChangeLog \
 		ChangeLog-98a \
+		ChangeLog-98b \
 		ChangeLog-97b \
                 ChangeLog-97a \
                 ChangeLog-96b \
