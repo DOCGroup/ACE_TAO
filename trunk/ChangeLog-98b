@@ -1,7 +1,11 @@
 Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: default VERSION
-          to 3.0.0.  We no longer build/test for LynxOS 2.5.0.
+          to 3.0.0.  We no longer build/test for LynxOS 2.5.0.  Added
+          usage comments.
+
+        * ACE-INSTALL.html: for LynxOS, added link to platform_lynxos.GNU
+          file, for usage information.
 
 Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
