@@ -27,8 +27,10 @@ Fri Oct 24 17:11:14 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	Added this method to access the thread ID of this task.
 
 	* Timer_Queue_Adapters.i (activate):
-	Call ACE_Task_Base::activate () with n_threafds = 1 to ensure that a 
+	Call ACE_Task_Base::activate () with n_threads = 1 to ensure that a 
 	single thread is spawned.
+	Added ACE_UNUSED_ARG macros to avoid "warning: unused parameter" 
+	type warning.
 	
 Fri Oct 24 10:00:02 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
