@@ -5,6 +5,9 @@ Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.cpp: added undef ACE_HAS_TEMPLATE_SPECIALIZATION
           for LynxOS 3.0.0.
 
+        * ace/Hash_Map_Manager.cpp,Map_Manager.cpp: replaced bare explicit
+          destructor calls with ACE_DES_FREE_TEMPLATE macro invocations.
+
 Thu May 28 07:47:41 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Changed the "should succeed" test
