@@ -67,7 +67,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
 #if defined (ACE_HAS_NEW_NOTHROW)
 template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n,
-                                                       const ACE_nothrow_t&)
+                                                       const ACE_nothrow_t&) throw()
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new(nothrow)");
 
