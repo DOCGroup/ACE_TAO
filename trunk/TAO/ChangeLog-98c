@@ -1,5 +1,11 @@
 Sun Nov  9 16:05:56 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: *
+ 	tests/Cubit/TAO/DII_Cubit/clnt.h: Added clnt.h and restructured
+ 	the code so it is similar to the IDL_Cubit example.  It doesn't,
+ 	however, have the same options because the DII example uses an ior
+ 	as input.
+
 	* tao/debug.cpp: Added dummy function to get rid of
  	"'debug_stream' defined but not used" warning.
 
