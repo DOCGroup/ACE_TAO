@@ -12,9 +12,8 @@ const unsigned int ACE_INT2BIT[32] =
 // **************************************************
 
 ACE_INLINE RtecEventChannelAdmin::ProxyPushConsumer_ptr
-ACE_Push_Supplier_Proxy::get_ref (void)
+ACE_Push_Supplier_Proxy::get_ref (CORBA::Environment &env)
 {
-  CORBA::Environment env;
   return this->_this (env);
 }
 
@@ -52,9 +51,8 @@ ACE_Push_Supplier_Proxy::source_id (void)
 // **************************************************
 
 ACE_INLINE RtecEventChannelAdmin::ProxyPushSupplier_ptr
-ACE_Push_Consumer_Proxy::get_ref (void)
+ACE_Push_Consumer_Proxy::get_ref (CORBA::Environment &env)
 {
-  CORBA::Environment env;
   return this->_this (env);
 }
 
@@ -67,7 +65,7 @@ ACE_Push_Consumer_Proxy::qos (void)
 ACE_INLINE int
 ACE_Push_Consumer_Proxy::connected (void)
 {
-  return !CORBA::is_nil(push_consumer_);
+  return !CORBA::is_nil(push_consumer_.in ());
 }
 
 ACE_INLINE ACE_ES_Consumer_Correlation &
@@ -77,38 +75,35 @@ ACE_Push_Consumer_Proxy::correlation (void)
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
-ACE_ES_Consumer_Module::get_ref (void)
+ACE_ES_Consumer_Module::get_ref (CORBA::Environment &env)
 {
-  CORBA::Environment env;
   return this->_this (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
-ACE_ES_Supplier_Module::get_ref (void)
+ACE_ES_Supplier_Module::get_ref (CORBA::Environment &env)
 {
-  CORBA::Environment env;
   return this->_this (env);
 }
 
 // **************************************************
 
 ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr
-ACE_EventChannel::get_ref (void)
+ACE_EventChannel::get_ref (CORBA::Environment &env)
 {
-  CORBA::Environment env;
   return this->_this (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
-ACE_EventChannel::for_suppliers (CORBA::Environment &)
+ACE_EventChannel::for_suppliers (CORBA::Environment &env)
 {
-  return supplier_module_->get_ref ();
+  return supplier_module_->get_ref (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
-ACE_EventChannel::for_consumers (CORBA::Environment &)
+ACE_EventChannel::for_consumers (CORBA::Environment &env)
 {
-  return consumer_module_->get_ref ();
+  return consumer_module_->get_ref (env);
 }
 
 ACE_INLINE ACE_ES_Priority_Timer *

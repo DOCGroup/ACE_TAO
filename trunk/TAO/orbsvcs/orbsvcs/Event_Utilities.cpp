@@ -23,6 +23,7 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (void)
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   qos_.dependencies[l].event.type_ = ACE_ES_CONJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].rt_info = 0;
   // TODO: qos_.dependencies[l].event.data_.lval (0);
   designator_set_ = 1;
   return 0;
@@ -34,6 +35,7 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (void)
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   qos_.dependencies[l].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].rt_info = 0;
   // TODO: qos_.dependencies[l].event.data_.lval (0);
   designator_set_ = 1;
   return 0;
@@ -48,9 +50,11 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
     {
       int l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
+      qos_.dependencies[l].rt_info = 0;
       qos_.dependencies[l].event.type_ = ACE_ES_GLOBAL_DESIGNATOR;
+
       // TODO: IDL union qos_.dependencies[l].event.data_.lval (0);
-      designator_set_ = 1;
+      this->designator_set_ = 1;
     }
 
   int l = qos_.dependencies.length ();

@@ -82,6 +82,7 @@ TAO_EC_Gateway_IIOP::open (const RtecEventChannelAdmin::ConsumerQOS& sub,
 {
   TAO_TRY
     {
+      // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Open gateway\n"));
       if (CORBA::is_nil (this->lcl_ec_.in ())
 	  || CORBA::is_nil (this->rmt_ec_.in ()))
 	return;
@@ -141,6 +142,7 @@ TAO_EC_Gateway_IIOP::open (const RtecEventChannelAdmin::ConsumerQOS& sub,
 void
 TAO_EC_Gateway_IIOP::close (CORBA::Environment &env)
 {
+  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_proxy_.in ()))
     return;

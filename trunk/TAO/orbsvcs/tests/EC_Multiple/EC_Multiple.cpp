@@ -26,6 +26,8 @@ Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (0),
     scheduling_type_ (Test_ECG::ss_runtime),
+    consumer_disconnects_ (0),
+    supplier_disconnects_ (0),
     short_circuit_ (0),
     hp_suppliers_ (1),
     hp_consumers_ (1),
@@ -148,6 +150,8 @@ Test_ECG::run (int argc, char* argv[])
                   "  lcl name = <%s>\n"
                   "  rmt name = <%s>\n"
                   "  scheduler type = <%d>\n"
+                  "  consumer disconnects = <%d>\n"
+                  "  supplier disconnects = <%d>\n"
                   "  short circuit EC = <%d>\n"
                   "  HP suppliers = <%d>\n"
                   "  HP consumers = <%d>\n"
@@ -172,6 +176,8 @@ Test_ECG::run (int argc, char* argv[])
                   this->lcl_name_?this->lcl_name_:"nil",
                   this->rmt_name_?this->rmt_name_:"nil",
                   this->scheduling_type_,
+		  this->consumer_disconnects_,
+		  this->supplier_disconnects_,
                   this->short_circuit_,
 
                   this->hp_suppliers_,
@@ -353,6 +359,7 @@ Test_ECG::run (int argc, char* argv[])
         orb->object_to_string (ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
 
       ACE_OS::strcpy (buf, "EventChannel@");
@@ -386,6 +393,16 @@ Test_ECG::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
+
+      for (int sd = 0; sd < this->supplier_disconnects_; ++sd)
+	{
+	  this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  this->disconnect_suppliers (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  ACE_OS::sleep (5);
+	  ACE_DEBUG ((LM_DEBUG, "Supplier disconnection %d\n", sd));
+	}
 
       this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -437,6 +454,15 @@ Test_ECG::run (int argc, char* argv[])
 	  ec_impl.add_gateway (&this->ecg_);
         }
 
+      for (int cd = 0; cd < this->consumer_disconnects_; ++cd)
+	{
+	  this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  this->disconnect_consumers (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  ACE_OS::sleep (5);
+	  ACE_DEBUG ((LM_DEBUG, "Consumer disconnection %d\n", cd));
+	}
       this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -451,8 +477,7 @@ Test_ECG::run (int argc, char* argv[])
 
       // Acquire the mutex for the ready mutex, blocking any supplier
       // that may start after this point.
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon,
-                        this->ready_mtx_, 1);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
       this->ready_ = 1;
       this->test_start_ = ACE_OS::gethrtime ();
       ready_mon.release ();
@@ -548,6 +573,16 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 }
 
 void
+Test_ECG::disconnect_suppliers (CORBA::Environment &_env)
+{
+  for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
+    {
+      this->suppliers_[i]->close (_env);
+      if (_env.exception () != 0) return;
+    }
+}
+
+void
 Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                              CORBA::Environment &_env)
 {
@@ -606,6 +641,16 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_RETHROW;
     }
   TAO_ENDTRY;
+}
+
+void
+Test_ECG::disconnect_consumers (CORBA::Environment &_env)
+{
+  for (int i = 0; i < this->hp_consumers_ + this->lp_consumers_; ++i)
+    {
+      this->consumers_[i]->close (_env);
+      if (_env.exception () != 0) return;
+    }
 }
 
 void
@@ -996,7 +1041,7 @@ Test_ECG::local_source (RtecEventComm::EventSourceID id) const
 int
 Test_ECG::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:r:s:xh:w:p:d:");
+  ACE_Get_Opt get_opt (argc, argv, "l:r:s:i:xh:w:p:d:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -1006,9 +1051,11 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'l':
           this->lcl_name_ = get_opt.optarg;
           break;
+
         case 'r':
           this->rmt_name_ = get_opt.optarg;
           break;
+
         case 's':
           if (ACE_OS::strcasecmp (get_opt.optarg, "global") == 0)
             {
@@ -1031,9 +1078,20 @@ Test_ECG::parse_args (int argc, char *argv [])
               this->scheduling_type_ = Test_ECG::ss_local;
             }
           break;
+
         case 'x':
           this->short_circuit_ = 1;
           break;
+
+	case 'i':
+	  {
+            char* aux;
+	    char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+	    this->consumer_disconnects_ = ACE_OS::atoi (arg);
+	    arg = ACE_OS::strtok_r (0, ",", &aux);
+	    this->supplier_disconnects_ = ACE_OS::atoi (arg);
+	  }
+	  break;
 
         case 'h':
           {
@@ -1100,6 +1158,7 @@ Test_ECG::parse_args (int argc, char *argv [])
                       "-l <local_name> "
                       "-r <remote_name> "
                       "-s <global|local|runtime> "
+		      "-i <consumer disc.,supplier disc.> "
                       "-x (short circuit EC) "
                       "-h <high priority args> "
                       "-w <low priority args> "
@@ -1238,6 +1297,18 @@ Test_Supplier::open (const char* name,
 }
 
 void
+Test_Supplier::close (CORBA::Environment &_env)
+{
+  if (CORBA::is_nil (this->consumer_proxy_.in ()))
+    return;
+
+  this->consumer_proxy_->disconnect_push_consumer (_env);
+  if (_env.exception () != 0) return;
+
+  this->consumer_proxy_ = 0;
+}
+
+void
 Test_Supplier::activate (const char* name,
                          const RtecScheduler::Period& rate,
                          RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -1339,6 +1410,8 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
       const RtecEventComm::Event& e = events[i];
       if (e.type_ != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         continue;
+
+      // ACE_DEBUG ((LM_DEBUG, "Test_Supplier - timeout (%t)\n"));
 
       RtecEventComm::Event& s = sent[i];
       s.source_ = this->supplier_id_;
@@ -1462,6 +1535,18 @@ Test_Consumer::open (const char* name,
       TAO_RETHROW;
     }
   TAO_ENDTRY;
+}
+
+void
+Test_Consumer::close (CORBA::Environment &_env)
+{
+  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+    return;
+
+  this->supplier_proxy_->disconnect_push_supplier (_env);
+  if (_env.exception () != 0) return;
+
+  this->supplier_proxy_ = 0;
 }
 
 void
