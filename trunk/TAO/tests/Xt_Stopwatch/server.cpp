@@ -2,8 +2,12 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Xt_Stopwatch, server, "$Id$")
+ACE_RCSID (Xt_Stopwatch,
+           server,
+           "$Id$")
+
 
 #if !defined (ACE_HAS_XT)
 
