@@ -18,6 +18,7 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     orb_core_ (orb_core),
     wait_strategy_ (0),
     reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                0,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,

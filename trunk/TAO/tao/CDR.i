@@ -55,11 +55,13 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
 
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
+                            ACE_Message_Block::Message_Flags flag,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (data,
+                  flag,
                   byte_order,
                   major_version,
                   minor_version),
@@ -71,6 +73,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
+                            ACE_Message_Block::Message_Flags flag,
                             size_t rd_pos,
                             size_t wr_pos,
                             int byte_order,
@@ -78,6 +81,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (data,
+                  flag,
                   rd_pos,
                   wr_pos,
                   byte_order,
@@ -295,4 +299,3 @@ operator>> (TAO_InputCDR &strm, CORBA::ParameterMode &_tao_enumval)
 
   return _tao_result;
 }
-

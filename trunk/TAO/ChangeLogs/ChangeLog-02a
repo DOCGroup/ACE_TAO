@@ -1,3 +1,17 @@
+Sat Jun 16 10:25:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/CDR.h:
+	* tao/CDR.i: Added an extra flag argument to the constructor to
+	  keep up with the changes in ACE.
+	
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Added the extra
+	  flag to the places where the message blocks are constructed.
+
 Fri Jun 15 23:52:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
