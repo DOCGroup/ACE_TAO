@@ -735,6 +735,15 @@ extern "C" {
 }
 # endif /* DIGITAL_UNIX */
 
+// VAC++ doesn't correctly grok the ::getpwnam_r - the function is redefined
+// in pwd.h, and that redefinition is used here
+# if defined (_AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+extern "C" {
+  extern int _posix_getpwnam_r(const char *, struct passwd *, char *,
+			       int, struct passwd **);
+	   }
+#endif /* AIX and VAC++ 4 */
+
 ACE_INLINE int
 ACE_OS::rand_r (ACE_RANDR_TYPE &seed)
 {
@@ -6404,7 +6413,13 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #       if defined (DIGITAL_UNIX)
   ::_Pgetpwnam_r (name, pwent, buffer, buflen, &result);
 #       else
+  // VAC++ doesn't correctly grok the ::getpwnam_r - the function is redefined
+  // in pwd.h, and that redefinition is used here
+#         if defined (__IBMCPP__) && (__IBMCPP__ >= 400)   /* VAC++ 4 */
+  status = _posix_getpwnam_r (name, pwent, buffer, buflen, &result);
+#         else
   status = ::getpwnam_r (name, pwent, buffer, buflen, &result);
+#         endif /* __IBMCPP__ && (__IBMCPP__ >= 400) */
   if (status != 0)
     {
       errno = status;
