@@ -156,8 +156,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 #endif /*TAO_MEASURE_STATS*/
       // Remote call
       object_group =
-        factory->resolve (ACE_const_cast (const Load_Balancer::Group_ID,
-                                          group_name)
+        factory->resolve (group_name
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 

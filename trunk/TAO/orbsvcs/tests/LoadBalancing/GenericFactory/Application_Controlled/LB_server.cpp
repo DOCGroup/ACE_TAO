@@ -139,7 +139,7 @@ LB_server::create_object_group (void)
 {
   ACE_TRY_NEW_ENV
     {
-      const PortableGroup::GroupDomainId repository_id = "IDL:Test/Basic:1.0";
+      const char *repository_id = "IDL:Test/Basic:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -154,12 +154,10 @@ LB_server::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
-      this->object_group_ = 
-        this->lm_->create_object (ACE_const_cast (PortableGroup::TypeId,
-                                                  repository_id),
-                                  criteria,
-                                  this->fcid_.out ()
-                                  ACE_ENV_ARG_PARAMETER);
+      this->object_group_ = this->lm_->create_object (repository_id,
+                                                      criteria,
+                                                      this->fcid_.out ()
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

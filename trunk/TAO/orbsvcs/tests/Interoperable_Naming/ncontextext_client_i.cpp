@@ -170,11 +170,8 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
         {
           // Resolve the name using the stringified form of the name
           factory_object =
-            this->naming_context_->resolve_str (
-                ACE_const_cast (const CosNaming::NamingContextExt::StringName,
-                               str_name.in ())
-                ACE_ENV_ARG_PARAMETER
-              );
+            this->naming_context_->resolve_str (str_name.in ()
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (InnerBlock);
         }
       ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
@@ -184,8 +181,7 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
-        Web_Server::Iterator_Factory::_narrow (factory_object.in () 
-                                               ACE_ENV_ARG_PARAMETER);
+        Web_Server::Iterator_Factory::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK_EX (OuterBlock);
 
@@ -202,11 +198,8 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
-        this->naming_context_->to_name (
-            ACE_const_cast (const CosNaming::NamingContextExt::StringName,
-                            str_name.in ())
-            ACE_ENV_ARG_PARAMETER
-          );
+        this->naming_context_->to_name (str_name.in ()
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       // Declare a CosNaming::Name variable and assign length to it.
@@ -230,13 +223,9 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::String_var obj_name = get_name ();
 
       CORBA::String_var url_string =
-        this->naming_context_->to_url (
-            ACE_const_cast (const CosNaming::NamingContextExt::Address,
-                            address.in ()),
-            ACE_const_cast (const CosNaming::NamingContextExt::StringName,
-                            obj_name.in ())
-            ACE_ENV_ARG_PARAMETER
-          );
+        this->naming_context_->to_url (address.in (),
+                                       obj_name.in()
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       if (this->view_ == 0)

@@ -47,7 +47,7 @@ Object_Group_Factory_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_round_robin (const Load_Balancer::Group_ID id
+Object_Group_Factory_i::make_round_robin (const char * id
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
@@ -78,7 +78,7 @@ Object_Group_Factory_i::make_round_robin (const Load_Balancer::Group_ID id
 }
 
 void
-Object_Group_Factory_i::unbind_round_robin (const Load_Balancer::Group_ID id
+Object_Group_Factory_i::unbind_round_robin (const char * id
                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
@@ -119,7 +119,7 @@ Object_Group_Factory_i::unbind_round_robin (const Load_Balancer::Group_ID id
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_random (const Load_Balancer::Group_ID id
+Object_Group_Factory_i::make_random (const char * id
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
@@ -151,7 +151,7 @@ Object_Group_Factory_i::make_random (const Load_Balancer::Group_ID id
 
 
 void
-Object_Group_Factory_i::unbind_random (const Load_Balancer::Group_ID id
+Object_Group_Factory_i::unbind_random (const char * id
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
@@ -192,7 +192,7 @@ Object_Group_Factory_i::unbind_random (const Load_Balancer::Group_ID id
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_group (int random,
-                                    const Load_Balancer::Group_ID id
+                                    const char * id
                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
@@ -308,7 +308,7 @@ Object_Group_Factory_i::make_group (int random,
 
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::resolve (const Load_Balancer::Group_ID id
+Object_Group_Factory_i::resolve (const char * id
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
@@ -698,7 +698,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
 }
 
 void
-Object_Group_i::unbind (const Load_Balancer::Member_ID id
+Object_Group_i::unbind (const char * id
                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
@@ -752,7 +752,7 @@ Object_Group_i::unbind (const Load_Balancer::Member_ID id
 }
 
 char *
-Object_Group_i::resolve_with_id (const Load_Balancer::Member_ID id
+Object_Group_i::resolve_with_id (const char * id
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
@@ -948,7 +948,7 @@ RR_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RR_Object_Group::unbind (const Load_Balancer::Member_ID id
+RR_Object_Group::unbind (const char *id
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))

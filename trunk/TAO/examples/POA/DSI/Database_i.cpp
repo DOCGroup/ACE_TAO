@@ -149,7 +149,7 @@ DatabaseImpl::Agent::~Agent (void)
 
 Database::Entry_ptr
 DatabaseImpl::Agent::create_entry (const char *key,
-                                   const Database::Identifier entry_type,
+                                   const char *entry_type,
                                    const Database::NVPairSequence &initial_attributes
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -219,7 +219,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
 
 Database::Entry_ptr
 DatabaseImpl::Agent::find_entry (const char *key,
-                                 const Database::Identifier entry_type
+                                 const char *entry_type
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Database::Unknown_Type,
@@ -275,7 +275,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
 
 void
 DatabaseImpl::Agent::destroy_entry (const char *key,
-                                    const Database::Identifier entry_type
+                                    const char *entry_type
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Database::Unknown_Type,

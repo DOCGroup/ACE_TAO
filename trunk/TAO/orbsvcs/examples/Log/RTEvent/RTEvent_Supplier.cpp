@@ -213,10 +213,7 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
       DsLogAdmin::Iterator_var iter_out;
       DsLogAdmin::RecordList_var rec_list =
-        event_log->query (QUERY_LANG, 
-                          ACE_const_cast (const DsLogAdmin::Constraint,
-                                          QUERY_1), 
-                          iter_out);
+        event_log->query (QUERY_LANG, QUERY_1, iter_out);
 
       CORBA::ULong j = 0;
       for (; j < rec_list->length();++j)  
@@ -233,10 +230,7 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Deleting records... \n"));
 
-      retval = event_log->delete_records (QUERY_LANG, 
-                                          ACE_const_cast (const DsLogAdmin::Constraint,
-                                                          QUERY_2)
-                                          ACE_ENV_ARG_PARAMETER);
+      retval = event_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

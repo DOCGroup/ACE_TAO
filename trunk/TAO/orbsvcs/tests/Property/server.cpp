@@ -75,8 +75,7 @@ main (int argc, char ** argv)
       //                  ACE_ENV_ARG_PARAMETER);
       // ACE_TRY_CHECK;
 
-      propsetdef_impl->define_property_with_mode (ACE_const_cast (CosPropertyService::PropertyName,
-                                                                  "PropertySetDef_IOR"),
+      propsetdef_impl->define_property_with_mode ("PropertySetDef_IOR",
                                                   any_val,
                                                   CosPropertyService::fixed_readonly
                                                   ACE_ENV_ARG_PARAMETER);

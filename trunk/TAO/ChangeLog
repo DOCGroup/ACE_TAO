@@ -1,3 +1,20 @@
+Thu Oct 24 19:32:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Reverted the changes made in the following entries:
+	Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 10:39:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 09:29:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 16:32:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+	Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>. 
+	  Basically the changes made were not right. Hence the need for
+	  reversion to yesterday mornings status. 
+	 
+	
 Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * examples/Load_Balancing/Identity_Server.cpp:

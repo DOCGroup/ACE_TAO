@@ -253,25 +253,35 @@ int be_visitor_args_request_info_sh::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  switch (this->direction ())
+  if (node->width () == 1)
     {
-    case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
-      break;
-    case AST_Argument::dir_INOUT:
-      *os << this->type_name (node) << " &";
-      break;
-    case AST_Argument::dir_OUT:
-      if (node->width () == (long) sizeof (char))
+      switch (this->direction ())
         {
+        case AST_Argument::dir_IN:
+          *os << "const char *";
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << "char *&";
+          break;
+        case AST_Argument::dir_OUT:
           *os << "CORBA::String_out ";
+          break;
         }
-      else
+    }
+  else
+    {
+      switch (this->direction ())
         {
-          *os << "CORBA::WString_out ";
+        case AST_Argument::dir_IN:
+          *os << "const CORBA::WChar *";
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << "CORBA::WChar *&";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << "CORBA::WString_out";
+          break;
         }
-
-      break;
     }
 
   return 0;

@@ -436,8 +436,7 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
 {
   // Get the stream controller for this endpoint.
   CORBA::Any_var streamctrl_any =
-    endpoint->get_property_value (ACE_const_cast (CosPropertyService::PropertyName,
-                                                  "Related_StreamCtrl")
+    endpoint->get_property_value ("Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
