@@ -15,7 +15,6 @@
 
 #include "tao_util.h"
 
-
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr root_poa,
@@ -29,6 +28,7 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 // Initialize the ORB, using the supplied command line arguments.  the
 // poa_name is a user-supplied string that is used to name the POA
 // created.
+
 int
 TAO_ORB_Manager::init (int argc,
                        char **argv,
@@ -50,9 +50,9 @@ TAO_ORB_Manager::init (int argc,
         this->orb_->resolve_initial_references ("RootPOA");
       
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ( (LM_ERROR,
-                            " (%P|%t) Unable to initialize the POA.\n"),
-                           1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
       
       // Get the POA object.
       this->root_poa_ =
@@ -74,12 +74,12 @@ TAO_ORB_Manager::init (int argc,
   return 0;
 }
 
-// activate servant in the poa
+// Activate servant in the POA.
+
 CORBA::String
 TAO_ORB_Manager::activate (PortableServer::Servant servant,
                            CORBA_Environment &env)
 {
-
   PortableServer::ObjectId_var id =
     this->root_poa_->activate_object (servant,
                                       env);
@@ -98,7 +98,8 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
   return str;
 }
 
-// enter the orb event loop
+// Enter the orb event loop.
+
 int
 TAO_ORB_Manager::run (CORBA_Environment &env,
                       ACE_Time_Value *tv)
