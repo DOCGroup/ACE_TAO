@@ -1,14 +1,29 @@
+Wed May 17 13:34:22 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Pool_Reactor_Test.cpp: Added a little more diagnostic
+          info that was useful in diagnosing a previous problem in the
+          ACE_TP_Reactor.
+
 Wed May 17 12:48:24 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/CDR_File_Test.cpp:
 	  More workarounds for compiler bugs, this time egcs-1.1.1 is at
 	  fault.
 
-Wed May 17 09:02:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+Wed May 17 10:58:23 2000  Steve Huston  <shuston@riverace.com>
 
-        * tests/CDR_Array_Test.cpp:
-          Workaround problems with old versions of g++, in some cases it
-          gets confused with sizeof(T) inside a template.
+        * ace/WFMO_Reactor.(cpp h): Changed complex_dispatch_handler() and
+          upcall() to redo upcall(s) when the handler returns 1. This adds
+          ACE_WFMO_Reactor functionality equivalent to the ACE_Select_Reactor
+          family. To do this, the upcall() function's signature was changed
+          to accept a WSANETWORKEVENTS structure by reference. upcall()
+          updates the lNetworkEvents flags to indicate which requested a
+          callback. If the handler is not marked for deletion, the upcall
+          is done again. To properly support this, the call to
+          WSAEnumNetworkEvents is done once in complex_dispatch_handler and
+          the events flags are updated on each call to upcall().
+          Thanks to Irfan Pyarali <irfan@cs.wustl.edu> for his guidance
+          in designing this change.
 
 Wed May 17 10:54:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -32,6 +47,12 @@ Wed May 17 10:54:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Chris Hafey's ACE_Configuration viewer/editor for vxWindows.
 	  For details, see the README file or email Chris at
 	  <chris@stentorsoft.com>.
+
+Wed May 17 09:02:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CDR_Array_Test.cpp:
+          Workaround problems with old versions of g++, in some cases it
+          gets confused with sizeof(T) inside a template.
 
 Tue May 16 12:01:56 2000  Darrell Brunsch <brunsch@uci.edu>
 
