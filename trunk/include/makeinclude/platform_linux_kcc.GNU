@@ -16,6 +16,9 @@ endif
 ifeq (,$(optimize))
   optimize=1
 endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 CC      = KCC
 CXX     = $(CC)
@@ -24,17 +27,27 @@ CFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
 
 CCFLAGS += $(CFLAGS) -DNULL=0
 DCFLAGS += +K0 -g
+OCFLAGS += +K3 -O --one_instantiation_per_object
 DLD     = $(CC)
 LD      = $(CC)
-LIBS    += -Bdynamic -ldl -lpthread -lm
+# Using just -ldl results in a very annoying warning (nm: no symbols),
+# because the prelinker searches for missing templates in the libdl
+# library.  Passing the option directly to the linker fixes the
+# warning.
+LIBS    += -Wl,-ldl
 
 ifeq (,$(exceptions))
   exceptions=0
 endif # exceptions
 
 ifeq ($(exceptions),0)
-  EXCEPTION = --no_exceptions
+  CCFLAGS += --no_exceptions
 endif # ! exceptions
+
+ifeq ($(threads),1)
+  CFLAGS += --thread_safe
+  LDFLAGS += --thread_safe
+endif # threads
 
 # KCC allows suppresion of warnings and errors.
 # Warning #280 declaration of a member with the same name as its class
@@ -59,13 +72,11 @@ ifneq ($(static_libs),0)
   LIBS      += -lc -Bstatic
 endif
 
-OCFLAGS += +K3 -O --one_instantiation_per_object $(EXCEPTION)
 PIC     = -fPIC
 AR      = $(CC)
-ARFLAGS = $(EXCEPTION) -Bstatic -o
+ARFLAGS = $(CCFLAGS) $(CPPFLAGS) -Bstatic -o
 RANLIB  = @true
-SOFLAGS = $(EXCEPTION)
-SOBUILD = $(COMPILE.cc) $(PIC) $(EXCEPTION) -o $(VSHDIR)$*.o $<
+SOFLAGS = $(PIC) $(CCFLAGS) $(CPPFLAGS)
+SOBUILD = $(COMPILE.cc) $(SOFLAGS) -o $(VSHDIR)$*.o $<
 PRELIB  = @true
 PRELIB_USES_OBJ_ONLY = 1
-
