@@ -198,7 +198,7 @@ extern "C"
 // = Proactor stuff
 
 // Aio works on lynx
-// #define ACE_HAS_AIO_CALLS
+#define ACE_HAS_AIO_CALLS
 
 // AIOCB Proactor works on Lynx. But it is not
 // multi-threaded.
