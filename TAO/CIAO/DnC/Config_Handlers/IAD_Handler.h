@@ -108,6 +108,16 @@ namespace CIAO
       /// parse a document
       DOMDocument* create_document (const char *url);
 
+      /// process attributes for deploy requirement
+      void process_attributes_for_deploy_requirement (DOMNamedNodeMap* nm,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::Requirement& req);
+
+      /// process IDREFS
+      void process_refs (DOMNamedNodeMap* named_node_map);
+
       private:
 
       typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
