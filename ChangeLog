@@ -1,3 +1,8 @@
+Tue Jun 18 12:17:58 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+	  Added the $Id$ symbol.
+
 Tue Jun 18 12:41:15 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.i (adjust): Added a check for pointer overflow
