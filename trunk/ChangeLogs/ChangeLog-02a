@@ -1,3 +1,10 @@
+Tue Dec 26 14:45:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added TAO's "Dynamic" and "IORInterceptor" PortableInterceptor
+	  tests to the list of tests to run.
+
 Tue Dec 26 11:49:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/IPC_SAP/SPIPE_SAP/server.cpp: Fixed a statement not
@@ -5,10 +12,10 @@ Tue Dec 26 11:49:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Dec 23 18:11:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SString.cpp: Enhanced the implementation so that it works correctly
-	  when binary data (i.e., data that may contain NUL characters) is
- 	  stored in a string.  Thanks to Michael Lindner <mikel@att.net>
- 	  for reporting this.
+	* ace/SString.cpp: Enhanced the implementation so that it works
+	  correctly when binary data (i.e., data that may contain NUL
+	  characters) is stored in a string.  Thanks to Michael Lindner
+	  <mikel@att.net> for reporting this.
 
 Fri Dec 22 15:18:49 2000  Steve Huston  <shuston@riverace.com>
 
