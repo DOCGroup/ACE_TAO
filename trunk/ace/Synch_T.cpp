@@ -66,10 +66,10 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
 }
 
 template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (TYPE c) 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c) 
+  : value_ (c)
 { 
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
-  this->value_ = c; 
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Guard)

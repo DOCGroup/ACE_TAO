@@ -97,7 +97,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (int)
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (const TYPE i)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+=");
   ACE_Guard<ACE_LOCK> m (this->lock_);
@@ -121,7 +121,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (int)
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE i)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-=");
   ACE_Guard<ACE_LOCK> m (this->lock_);
@@ -129,7 +129,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE i)
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE i) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator==");
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
@@ -137,7 +137,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE i) const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE i) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>=");
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
@@ -145,7 +145,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE i) const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE rhs) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>");
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
@@ -153,7 +153,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE rhs) const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE rhs) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<=");
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
@@ -161,7 +161,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE rhs) const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE rhs) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<");
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
@@ -189,12 +189,13 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE () const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE i)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator=");
   ACE_Guard<ACE_LOCK> m (this->lock_);
   this->value_ = i;
 }
+
 #if defined (ACE_HAS_THREADS)
 
 template<class MUTEX> ACE_INLINE int

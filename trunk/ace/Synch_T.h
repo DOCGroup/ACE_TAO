@@ -129,7 +129,7 @@ public:
   ACE_Atomic_Op (void);
   // Initialize <count_> to 0.
 
-  ACE_Atomic_Op (TYPE c);
+  ACE_Atomic_Op (const TYPE &c);
   // Initialize <count_> to c.
 
   // = Accessors.
@@ -140,7 +140,7 @@ public:
   TYPE operator++ (int);
   // Atomically post-increment <count_>.
 
-  TYPE operator+= (const TYPE i);
+  TYPE operator+= (const TYPE &i);
   // Atomically increment <count_> by inc.
 
   TYPE operator-- (void);
@@ -149,25 +149,25 @@ public:
   TYPE operator-- (int);
   // Atomically post-decrement <count_>.
 
-  TYPE operator-= (const TYPE i);
+  TYPE operator-= (const TYPE &i);
   // Atomically decrement <count_> by dec.
 
-  TYPE operator== (const TYPE i) const;
+  TYPE operator== (const TYPE &i) const;
   // Atomically compare <count_> with rhs.
 
-  TYPE operator>= (const TYPE i) const;
+  TYPE operator>= (const TYPE &i) const;
   // Atomically check if <count_> greater than or equal to rhs.
 
-  TYPE operator> (const TYPE rhs) const;
+  TYPE operator> (const TYPE &rhs) const;
   // Atomically check if <count_> greater than rhs.
 
-  TYPE operator<= (const TYPE rhs) const;
+  TYPE operator<= (const TYPE &rhs) const;
   // Atomically check if <count_> less than or equal to rhs.
 
-  TYPE operator< (const TYPE rhs) const;
+  TYPE operator< (const TYPE &rhs) const;
   // Atomically check if <count_> less than rhs.
 
-  void operator= (const TYPE i);
+  void operator= (const TYPE &i);
   // Atomically assign rhs to <count_>.
 
   void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);

@@ -943,6 +943,55 @@ ACE_Static_Object_Lock::instance (void)
   return ACE_Static_Object_Lock::mutex_;
 }
 
+// These specializations have been added to ACE_Atomic_Op to make the
+// implementation faster on Win32 that has OS support for doing this
+// quickly through methods like InterlockedIncrement and
+// InterlockedDecrement
+
+#if defined (ACE_WIN32)
+
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
+{
+  return ::InterlockedIncrement (&this->value_);
+}
+
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
+{
+  return ::InterlockedDecrement (&this->value_);
+}
+
+ACE_INLINE void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
+{
+  ::InterlockedExchange (&this->value_,
+			 i);
+}
+
+ACE_INLINE void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
+{
+  // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
+  // of <rhs> is acquired atomically.
+  ::InterlockedExchange (&this->value_,
+			 rhs);
+}
+
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (const long &i)
+{
+  return ::InterlockedExchangeAdd (&this->value_, i);
+}
+
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (const long &i)
+{
+  return ::InterlockedExchangeAdd (&this->value_, -i);
+}
+
+#endif /* ACE_WIN32 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only specialized with ACE_HAS_THREADS.
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
