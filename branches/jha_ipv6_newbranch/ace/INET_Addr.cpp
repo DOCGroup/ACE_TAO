@@ -299,9 +299,6 @@ int ACE_INET_Addr::set_usinggetaddrinfo (u_short port_number,
       break;
     } else if(res->ai_addrlen == sizeof(sockaddr_in6)) {
       sockaddr_in6 *addr = (sockaddr_in6*)res->ai_addr;
-      printf("ipv6 address\n");
-      printf("scope_id = %d\n",addr->sin6_scope_id);
-      printf("port = %d\n",addr->sin6_port);
       this->set_addr((void*)res->ai_addr,res->ai_addrlen);
       this->set_port_number(port_number,encode);
       ret = 0;
