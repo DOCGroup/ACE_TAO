@@ -27,29 +27,33 @@ class AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
   , public virtual PortableServer::RefCountServantBase
 {
- public:
-    AMH_Servant (CORBA::ORB_ptr orb);
+public:
+  AMH_Servant (CORBA::ORB_ptr orb);
 
-    /// parse arguments from command line for sleep time
-    virtual int parse_args (int* argc, char **argv);
+  /// parse arguments from command line for sleep time
+  virtual int parse_args (int* argc, char **argv);
 
-    // = The skeleton methods
-    virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                             ACE_ENV_ARG_DECL_NOT_USED)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
+  // = The skeleton methods
+  // @@ Mayur, why doesn't the skeleton use
+  //    ACE_ENV_ARG_DECL_WITH_DEFAULTS?  The AMH skeleton code's
+  //    emulated exception support isn't consistent with the rest of
+  //    the emulated exception support in the stubs/skeletons.
+  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
                            ACE_ENV_ARG_DECL_NOT_USED)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                              Test::Timestamp send_time
-                              ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
+                         ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
- protected:
-    CORBA::ORB_ptr orb_;
-    int sleep_time_;
+  virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                            Test::Timestamp send_time
+                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+  CORBA::ORB_ptr orb_;
+  int sleep_time_;
 };
 
 #include "ace/post.h"
