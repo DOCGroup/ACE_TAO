@@ -14,8 +14,11 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_FILES = test
-IDL_SRC = testC.cpp testS.cpp
+IDL_FILES = test ServerRequestInterceptor
+IDL_SRC = \
+  testC.cpp \
+  testS.cpp \
+  ServerRequestInterceptorC.cpp
 BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) test_i Client_Request_Interceptor Client_ORBInitializer Server_ORBInitializer Server_Request_Interceptor) $(IDL_SRC)
