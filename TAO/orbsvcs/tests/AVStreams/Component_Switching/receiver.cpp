@@ -278,7 +278,7 @@ Receiver::shut_down (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Receiver::unbind");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Receiver::shut_down");
     }
   ACE_ENDTRY;
 

@@ -50,19 +50,18 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 void
-Sender::shutdown (void)
+Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   // File reading is complete, destroy the stream.
   AVStreams::flowSpec stop_spec;
   this->streamctrl_->destroy (stop_spec
                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
       // Shut the orb down.
   TAO_AV_CORE::instance ()->orb ()->shutdown (0
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
 }
 
@@ -350,7 +349,8 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 
         } // end while
 
-      this->shutdown ();
+      this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
