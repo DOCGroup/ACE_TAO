@@ -31,18 +31,6 @@
 
 // ****************************************************************
 
-class TAO_Default_Reactor : public ACE_Reactor
-{
-  // = TITLE
-  //
-  //   Force TAO to use Select Reactor.
-public:
-  TAO_Default_Reactor (int nolock = 0);
-  virtual ~TAO_Default_Reactor (void);
-};
-
-// ****************************************************************
-
 class TAO_Export TAO_Allocated_Resources
 {
   // = TITLE
@@ -84,7 +72,7 @@ public:
   TAO_Connector_Registry cr_;
   // The Connector Registry!
 
-  TAO_Default_Reactor *r_;
+  ACE_Reactor *r_;
   // The Reactor.
 
   TAO_Object_Adapter *object_adapter_;
@@ -143,8 +131,12 @@ public:
   // = Type of Reactor
   enum
   {
-    TAO_TOKEN,     // Use ACE_Token as Select_Reactor's internal lock
-    TAO_NULL_LOCK  // Use ACE_Noop_Token as Select_Reactor's internal lock
+    TAO_REACTOR_SELECT_MT, // Use ACE_Token
+    TAO_REACTOR_SELECT_ST, // Use ACE_Noop_Token
+    TAO_REACTOR_FL,
+    TAO_REACTOR_XT,
+    TAO_REACTOR_WFMO,
+    TAO_REACTOR_MSGWFMO
   };
 
   // = Range of values for <{resource source specifier}>.
@@ -173,12 +165,15 @@ public:
   virtual TAO_POA *get_root_poa (void);
   virtual TAO_Object_Adapter *object_adapter (void);
   virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
-  virtual int reactor_lock (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
+
+protected:
+  ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  // Obtain the reactor implementation
 
 protected:
 
@@ -196,9 +191,8 @@ protected:
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
 
-  int reactor_lock_;
-  // Flag indicating wether we should provide a lock-freed reactor
-  // or not.
+  int reactor_type_;
+  // Flag indicating which kind of reactor we should use.
 
   int cdr_allocator_source_;
   // The source for the CDR allocator. Even with a TSS resource

@@ -2,6 +2,10 @@
 
 #include "tao/default_resource.h"
 #include "ace/Select_Reactor.h"
+#include "ace/XtReactor.h"
+#include "ace/FlReactor.h"
+#include "ace/WFMO_Reactor.h"
+#include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Arg_Shifter.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
@@ -16,7 +20,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
     collocation_table_source_ (TAO_GLOBAL),
-    reactor_lock_ (TAO_TOKEN),
+    reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_source_ (TAO_GLOBAL)
 {
 }
@@ -79,17 +83,71 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBreactorlock") == 0)
       {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Default_Resource obsolete -ORBreactorlock "
+                    "option, please use -ORBreactortype\n"));
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "null") == 0)
-              reactor_lock_ = TAO_NULL_LOCK;
+              reactor_type_ = TAO_REACTOR_SELECT_MT;
             else if (ACE_OS::strcasecmp (name, "token") == 0)
-              reactor_lock_= TAO_TOKEN;
+              reactor_type_= TAO_REACTOR_SELECT_ST;
           }
       }
+
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBreactortype") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "select_mt") == 0)
+              reactor_type_ = TAO_REACTOR_SELECT_MT;
+            else if (ACE_OS::strcasecmp (name, "select_st") == 0)
+              reactor_type_ = TAO_REACTOR_SELECT_ST;
+            else if (ACE_OS::strcasecmp (name, "fl_reactor") == 0)
+#if ACE_HAS_FL
+              reactor_type_ = TAO_REACTOR_FL;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - FlReactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_HAS_FL */
+            else if (ACE_OS::strcasecmp (name, "xt_reactor") == 0)
+#if ACE_HAS_XT
+              reactor_type_ = TAO_REACTOR_XT;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - XtReactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_HAS_XT */
+            else if (ACE_OS::strcasecmp (name, "WFMO") == 0)
+#if ACE_WIN32
+              reactor_type_ = TAO_REACTOR_WFMO;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - WFMO Reactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_WIN32 */
+            else if (ACE_OS::strcasecmp (name, "MsgWFMO") == 0)
+#if ACE_WIN32
+              reactor_type_ = TAO_REACTOR_MSGWFMO;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - MsgWFMO Reactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_WIN32 */
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBreactorytype\n", name));
+          }
+      }
+
     else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
       {
         curarg++;
@@ -166,6 +224,48 @@ IMPLEMENT_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY 
 //    Allocated_Resources structure, but without any locks?
 //    It seems to be done all over the place.
 
+ACE_Reactor_Impl*
+TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
+{
+  ACE_Reactor_Impl *impl = 0;
+  switch (this->reactor_type_)
+    {
+    default:
+    case TAO_REACTOR_SELECT_MT:
+      ACE_NEW_RETURN (impl, TAO_REACTOR, 0);
+      break;
+
+    case TAO_REACTOR_SELECT_ST:
+      ACE_NEW_RETURN (impl, TAO_NULL_LOCK_REACTOR, 0);
+      break;
+
+    case TAO_REACTOR_FL:
+#if defined(ACE_HAS_FL)
+      ACE_NEW_RETURN (impl, ACE_FlReactor, 0);
+#endif /* ACE_HAS_FL */
+      break;
+
+    case TAO_REACTOR_XT:
+#if defined(ACE_HAS_XT)
+      ACE_NEW_RETURN (impl, ACE_XtReactor, 0);
+#endif /* ACE_HAS_FL */
+      break;
+
+    case TAO_REACTOR_WFMO:
+#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
+      ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+      break;
+
+    case TAO_REACTOR_MSGWFMO:
+#if defined(ACE_WIN32)
+      ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+      break;
+    }
+  return impl;
+}
+
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor (void)
 {
@@ -175,7 +275,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
       if (GLOBAL_ALLOCATED::instance ()->r_ == 0)
         {
           ACE_NEW_RETURN (GLOBAL_ALLOCATED::instance ()->r_,
-                          TAO_Default_Reactor (this->reactor_lock ()),
+                          ACE_Reactor (this->allocate_reactor_impl ()),
                           0);
         }
       return GLOBAL_ALLOCATED::instance ()->r_;
@@ -184,7 +284,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
       if (TSS_ALLOCATED::instance ()->r_ == 0)
         {
           ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->r_,
-                          TAO_Default_Reactor (this->reactor_lock ()),
+                          ACE_Reactor (this->allocate_reactor_impl ()),
                           0);
         }
       return TSS_ALLOCATED::instance ()->r_;
@@ -457,20 +557,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   this->c_.close ();
 
   delete this->r_;
-}
-
-// ****************************************************************
-
-TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
-  : ACE_Reactor ((nolock ?
-                  (ACE_Reactor_Impl*) new TAO_NULL_LOCK_REACTOR :
-                  (ACE_Reactor_Impl*) new TAO_REACTOR),
-                 1)
-{
-}
-
-TAO_Default_Reactor::~TAO_Default_Reactor (void)
-{
 }
 
 // ****************************************************************

@@ -109,12 +109,6 @@ TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
   return 0;
 }
 
-int
-TAO_Resource_Factory::reactor_lock (void)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
