@@ -1,3 +1,34 @@
+Thu Jun 15 17:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+	* docs/releasenotes/index.html:
+	* docs/compiler.html:
+
+	  It was reported by Lorin Hochstein <lmh@xiphos.ca> that, with some
+	  tools (UML reverse engineering, documentation generation), the
+	  preprocessor is not smart enough to handle ACE_THROW_SPEC. So
+	  a new option -Ge 2 has been added to the IDL compiler, which
+	  generates the raw 'throw' keyword instead of ACE_THROW_SPEC,
+	  ACE_THROW, and ACE_RETHROW. Since the expansion of
+	  ACE_THROW_RETURN is platform-dependent, and 
+	  TAO_INTERCEPTOR_THROW may expand to ACE_THROW_RETURN,
+	  these two macros were left unchanged. Documentation was added to the
+	  appropriate files.
+
+	  Also, an extra set of parentheses was removed around two instances of
+	  CDR extraction in operation_ss.cpp.
+
 Thu Jun 15 16:23:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
