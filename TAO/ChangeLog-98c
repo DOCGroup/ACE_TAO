@@ -1,5 +1,8 @@
 Mon Dec  8 13:11:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
+	* orbsvcs/bin/Naming_Service/svc.conf: 
+	  Removed some foreign ^M from the file.
+
 	* tao/Makefile: 
 	* tao/connect.cpp: 
 	* tao/giop.cpp: 
