@@ -424,9 +424,10 @@ typedef unsigned __int64 ACE_UINT64;
 // At least for Win32 - MSVC compiler (ver. 5)
 #define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
 
-/*
- * Borland Compilers.
- */
-#include <ace/config-win32-borland.h>
+// Borland C++ compiler.
+#include /**/ <ace/config-win32-borland.h>
+
+// IBM VisualAge C++ compiler.
+#include /**/ <ace/config-win32-visualage.h>
 
 #endif /* ACE_WIN32_COMMON_H */

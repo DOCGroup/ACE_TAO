@@ -355,8 +355,13 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 // 64-bit literals require special marking on some platforms.
 # if defined (ACE_WIN32)
+#   if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#     define ACE_UINT64_LITERAL(n) n ## LL
+#     define ACE_INT64_LITERAL(n) n ## LL
+#else
 #   define ACE_UINT64_LITERAL(n) n ## ui64
 #   define ACE_INT64_LITERAL(n) n ## i64
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 # elif defined (ACE_LACKS_LONGLONG_T)
     // Can only specify 32-bit arguments.
 #   define ACE_UINT64_LITERAL(n) (ACE_U_LongLong (n))

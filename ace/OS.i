@@ -787,7 +787,11 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_TRACE ("ACE_OS::chdir");
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+#else
+  ACE_OSCALL_RETURN (::_chdir ((char *) path), int, -1);
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 }
 
 #   if !defined (ACE_LACKS_MKTEMP)
@@ -843,9 +847,11 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
-# if !defined (ACE_HAS_WINCE)
+# if !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__) //VisualAge C++ 4.0 does not support this
   ACE_TRACE ("ACE_OS::pipe");
-  ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0), int, -1);   // Use default mode
+  ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0),
+                     int,
+                     -1);   // Use default mode
 # else
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_WINCE */
@@ -1107,11 +1113,11 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
 #else
 #if defined (ACE_WIN32)
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || (__IBMCPP__)
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
 #     else
   ACE_OSCALL_RETURN (::_tempnam (dir, pfx), char *, 0);
-#     endif /* __BORLANDC__ */
+#     endif /* __BORLANDC__ || __IBMCPP__ */
 #   else
   ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
 #   endif /* WIN32 */
@@ -10072,7 +10078,11 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 # if defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
+#else
   ACE_OSCALL_RETURN (::_mkdir (path), int, -1);
+ #endif /* __IBMCPP__ */
 # elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (mode);

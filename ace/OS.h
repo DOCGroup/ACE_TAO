@@ -7014,7 +7014,6 @@ private:
             } \
         } \
      while (0)
-
 #   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7028,7 +7027,17 @@ private:
             } \
         } \
      while (0)
-
+#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+#   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~T_CLASS T_PARAMETER (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7038,7 +7047,7 @@ private:
             } \
         } \
      while (0)
-
+#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
 #   define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7053,7 +7062,17 @@ private:
             } \
         } \
      while (0)
-
+#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~T_CLASS <T_PARAM1, T_PARAM2> (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
 #   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -7063,7 +7082,7 @@ private:
             } \
         } \
      while (0)
-
+#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
 #   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
      do { \
           if (POINTER) \
@@ -7073,7 +7092,6 @@ private:
             } \
         } \
      while (0)
-
 #   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
      do { \
           if (POINTER) \
@@ -7083,7 +7101,6 @@ private:
             } \
         } \
      while (0)
- 
 #   define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -7098,7 +7115,6 @@ private:
             } \
         } \
      while (0)
-
 # else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      do { \
@@ -7108,7 +7124,6 @@ private:
             } \
         } \
      while (0)
-
 #   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -7122,7 +7137,6 @@ private:
             } \
         } \
      while (0)
-
 #   if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
   // LynxOS 3.0.0's g++ has trouble with the real versions of these.
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
@@ -7141,7 +7155,6 @@ private:
               } \
           } \
        while (0)
-
 #     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
        do { \
             if (POINTER) \
@@ -7156,7 +7169,6 @@ private:
               } \
           } \
        while (0)
-
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
        do { \
             if (POINTER) \
@@ -7166,7 +7178,6 @@ private:
               } \
           } \
        while (0)
-
 #     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
        do { \
             if (POINTER) \
@@ -7176,7 +7187,6 @@ private:
               } \
           } \
        while (0)
-
 #     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
        do { \
             if (POINTER) \
@@ -7186,7 +7196,6 @@ private:
               } \
           } \
        while (0)
-
 #     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
        do { \
             if (POINTER) \
@@ -7201,7 +7210,6 @@ private:
               } \
           } \
        while (0)
-
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
@@ -7687,24 +7695,23 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
   // lack them.
 
   // Evaluates to a non-zero value if status was returned for a child
-  // process that terminated normally.
-  // 0 means status wasn't returned.
+  // process that terminated normally.  0 means status wasn't
+  // returned.
 #if !defined (WIFEXITED)
 #   define WIFEXITED(stat) 0
 #endif /* WIFEXITED */
 
-  // If the  value  of  WIFEXITED(stat)  is non-zero,  this macro
-  // evaluates to the exit  code  that  the  child process exit(3C),
-  // or the value that the  child process returned from main.
-  // Peaceful exit code is 0.
+  // If the value of WIFEXITED(stat) is non-zero, this macro evaluates
+  // to the exit code that the child process exit(3C), or the value
+  // that the child process returned from main.  Peaceful exit code is
+  // 0.
 #if !defined (WEXITSTATUS)
 #   define WEXITSTATUS(stat) 0
 #endif /* WEXITSTATUS */
 
-  // Evaluates  to  a  non-zero  value   if status  was  returned for
-  // a child process  that  terminated  due   to   the receipt of a
-  // signal.
-  // 0 means status wasnt returned.
+  // Evaluates to a non-zero value if status was returned for a child
+  // process that terminated due to the receipt of a signal.  0 means
+  // status wasnt returned.
 #if !defined (WIFSIGNALED)
 #   define WIFSIGNALED(stat) 0
 #endif /* WIFSIGNALED */
