@@ -141,6 +141,46 @@ in the &quot;nestea_server&quot; server.</p>
 
 <hr>
 
+<h4>Persistent Implementation Repository</h4>
+
+<p>Tao's Implementation Repository can be made persistent by doing two things:</p>
+
+<ul>
+<li>
+Always start up the Implementation Repository on the same port. This ensures that
+the Implementation Repository will not have to re-IMR-ify the IORs of every server
+registered to it each time it starts up. The way to accomplish this is to add<br>
+<blockquote>
+-ORBEndpoint iiop://(hostname):(portnumber)<br>
+</blockquote>
+ to the IMR's startup command line. The host
+name can be obtained portably in C++ code with the lines<br>
+<blockquote>
+	ACE_INET_addr ad;<br>
+	char *hostname = ad.get_host_name ();<br>
+</blockquote>
+or in a Perl script by adding<br>
+<blockquote>
+	use Sys::Hostname;<br>
+	$hostname = hostname();<br>
+</blockquote>
+There are even specific port numbers, assigned to the OMG by the IANA, which can be used for
+this purpose. They are 683 (for IIOP) and 684 (for IIOP SSL). For more information about this,
+see <a href="http://www.iana.org/">http://www.iana.org/</a> and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
+http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.
+</li>
+<br><br>
+<li>
+Pass the IMR a filename to use for the backing store, specified by the command line option<br>
+<blockquote>
+-p (filename)<br>
+</blockquote>
+This option must be used the first and every subsequent time the persistent IMR is started up.
+</li>
+</ul>
+
+<hr>
+
 <p>Last update to this document: $Date$</p>
 
 <p>Back to <a href="index.html">Implementation Repository</a></p>
