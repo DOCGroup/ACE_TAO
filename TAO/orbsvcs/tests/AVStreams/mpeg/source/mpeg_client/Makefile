@@ -44,12 +44,12 @@ FILES= 24bit            \
        Command_Handler
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
-CPPFLAGS += -I$(MPEG_ROOT)
+CPPFLAGS += -I$(MPEG_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-##LIBS 	+= -lTAO -lACE
+LIBS 	+= -lTAO -lACE -lorbsvcs
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
