@@ -1,4 +1,9 @@
-Tue Oct  5 15:35:25 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+Wed Oct  6 07:23:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/client.cpp,
+	  tests/AMI/simple_client.cpp: Cosmetic changes.
+
+Wed Oct  6 07:00:25 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* Reformatted some of the ORB code to make it correspond to
 	  ACE+TAO programming conventions.
