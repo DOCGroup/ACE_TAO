@@ -61,7 +61,7 @@ project (FTRT_EventChannel) :  orbsvcslib, ftrtevent {
 
   Source_Files  (ORBSVCS_COMPONENTS) {
     FTRT_EventChannel {
-      PortableGroup_DSC.cpp
+      PortableGroup_Simple_DSC.cpp
       FtRtEvent/EventChannel
     }
   }
