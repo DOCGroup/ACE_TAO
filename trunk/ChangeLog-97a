@@ -3,6 +3,10 @@ Tue Feb 18 11:43:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Log_Msg.cpp: removed destructor because it's not declared
 	  and it's empty.
 
+	* ace/OS.i (thr_setprio): added another case (that is NOTSUP)
+	  for platforms with Pthreads and with LACK_SETSCHED.  Thanks to
+	  Chuck Gehr <gehr@sweng.stortek.com> for pointing this out.
+
 	* tests/Reactor_Notify_Test.cpp (main): added shutdown flag so
 	  that normal termination reaches ACE_END_TEST.
 
