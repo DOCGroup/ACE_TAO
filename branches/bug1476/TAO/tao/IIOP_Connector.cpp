@@ -55,7 +55,7 @@ int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   // @@todo: The functionality of the following two statements could
-  // be  done in the constructor, but that involves changing the
+  // be done in the constructor, but that involves changing the
   // interface of the pluggable transport factory.
 
   // Set the ORB Core
@@ -296,11 +296,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so. If registeration is required and it succeeds,
-  // #REFCOUNT# becomes two.
   if (transport->is_connected())
     {
+      // If the wait strategy wants us to be registered with the reactor
+      // then we do so. If registeration is required and it succeeds,
+      // #REFCOUNT# becomes two.
       retval = transport->wait_strategy ()->register_handler ();
 
       // Registration failures.
@@ -330,7 +330,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 TAO_Profile *
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->orb_core ()),
                   0);

@@ -1,3 +1,27 @@
+Tue Jul 27 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.{h,cpp}:
+          Added virtual close_handler() method, this will be called the the
+          Transport_Connector and derived classes if they want to close the
+          connection_handler, the default implementation changes the LF state
+          to closed and removes a reference from the transport
+
+        * tao/IIOP_Connection_Handler.cpp (close):
+          Instead of modifing the LF state and removing a reference from the
+          transport, just call this->close_handler(), this calls the
+          Connection_Handler::close_handler().
+
+          With this we can close handlers in a generic way from the
+          Transport_Connectors.
+
+          When we would move a template class between
+          the ACE_Svc_Handler template and the derived connection handlers,
+          this extra template could implement the close method in a generic
+          way, this would reduce the footprint a little.
+
+        * tao/IIO_Connector.cpp:
+          Moved docu to the correct place
+
 Tue Jul 27 17:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp:

@@ -371,3 +371,11 @@ void
 TAO_Connection_Handler::pos_io_hook (int & )
 {
 }
+
+int
+TAO_Connection_Handler::close_handler (void)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
+}
