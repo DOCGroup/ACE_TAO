@@ -58,8 +58,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::InterfaceNotFound));
 
-  /// Register a load monitor with the load balancer
-  /// ReplicationManager.
+  /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
       LoadBalancing::LoadMonitor_ptr load_monitor,
       const LoadBalancing::Location & the_location,
@@ -69,6 +68,14 @@ public:
 
   /// Return a reference to the load monitor at the given location.
   virtual LoadBalancing::LoadMonitor_ptr get_load_monitor (
+      const LoadBalancing::Location & the_location,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     LoadBalancing::LocationNotFound));
+
+  /// Remove a load monitor at the given location from the load
+  /// balancer.
+  virtual void remove_load_monitor (
       const LoadBalancing::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -318,6 +325,9 @@ private:
     LoadBalancing::FactoryInfos &factory_infos) const;
 
 private:
+
+  /// Pseudo-reference to the ORB.
+  CORBA::ORB_var orb_;
 
   /// The POA that dispatches requests to the ReplicaLocator.
   PortableServer::POA_var poa_;
