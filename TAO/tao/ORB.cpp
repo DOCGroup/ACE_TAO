@@ -69,7 +69,7 @@ static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
   0,                      // member count
 };
 
-static CORBA::TypeCode _tc__tc_CORBA_ORB_InconsistentTypeCode (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_InconsistentTypeCode (
     CORBA::tk_except,
     sizeof (_oc_CORBA_ORB_InconsistentTypeCode),
     (char *) &_oc_CORBA_ORB_InconsistentTypeCode,
@@ -86,7 +86,7 @@ CORBA::ORB_ptr CORBA::instance_ = 0;
 
 // ORB exception typecode initialization.
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
-  &_tc__tc_CORBA_ORB_InconsistentTypeCode;
+  &_tc_TAO_tc_CORBA_ORB_InconsistentTypeCode;
 
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)

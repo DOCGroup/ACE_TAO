@@ -232,7 +232,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
   // Typecode kind.
   CORBA::ULong kind;
 
-  static CORBA::TypeCode_ptr __tc_consts [CORBA::TC_KIND_COUNT] =
+  static CORBA::TypeCode_ptr tc_consts [CORBA::TC_KIND_COUNT] =
   {
     CORBA::_tc_null,
     CORBA::_tc_void,
@@ -288,9 +288,9 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
       if (kind < CORBA::TC_KIND_COUNT
-          && (*tcp = __tc_consts [(u_int) kind]) != 0)
+          && (*tcp = tc_consts [(u_int) kind]) != 0)
         // parent is ignored
-        *tcp = CORBA::TypeCode::_duplicate (__tc_consts [(u_int) kind]);
+        *tcp = CORBA::TypeCode::_duplicate (tc_consts [(u_int) kind]);
       else if (kind == ~0u || kind < CORBA::TC_KIND_COUNT)
         {
           // Either a non-constant typecode or an indirected typecode.
