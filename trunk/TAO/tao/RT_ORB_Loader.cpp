@@ -6,9 +6,7 @@
 
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (TAO,
-           RT_ORB_Loader,
-           "$Id$")
+ACE_RCSID (TAO, RT_ORB_Loader, "$Id$")
 
 TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
 {
@@ -19,7 +17,7 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
                                   int,
                                   char *[],
                                   CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// Return RT_ORB
   CORBA::Object_ptr rt_orb;
@@ -46,7 +44,7 @@ TAO_RT_ORB_Loader::set_objects (TAO_ORB_Core *orb_core,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Setup the RT_Current object in the ORB
-  
+
   CORBA::Object_ptr current;
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb_core),
