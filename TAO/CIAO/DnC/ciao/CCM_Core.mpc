@@ -94,7 +94,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
 
   IDL_Files {
      Deployment.idl
-     NodeApplication_CallBack.idl 
+     NodeApplication_CallBack.idl
   }
 
   Source_Files {

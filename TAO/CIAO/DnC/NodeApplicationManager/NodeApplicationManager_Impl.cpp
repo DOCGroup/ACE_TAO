@@ -15,7 +15,8 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 CIAO::NodeApplicationManager_Impl *
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
-      CORBA::ULong delay
+      CORBA::ULong delay,
+      const Deployment::DeploymentPlan & plan
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::InvalidProperty))
@@ -28,6 +29,9 @@ init (const char *nodeapp_location,
 
   this->nodeapp_path_.set (nodeapp_location);
   this->spawn_delay_ = delay;
+
+  // Make a copy of the plan for later usage.
+  this->plan_ =  plan;
 
   PortableServer::POAManager_var mgr
     = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -171,8 +175,8 @@ create_node_application (const ACE_CString & options
         }
 
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-
+        //ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+	//@@ No Duplication here! so becareful.
         this->nodeapp_ = retval.in ();
       }
     }
@@ -246,7 +250,6 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       retv[len].endpoint = CORBA::Object::_duplicate (consumers[i]->consumer ());
       ++len;
     }
-
   }
   return retv._retn ();
 }
@@ -271,6 +274,51 @@ startLaunch (const Deployment::Properties & configProperty,
    *  5. get the provided connection endpoints back and return them.
    */
 
+  Deployment::ImplementationInfos infos;
+
+  if (!(infos << this->plan_))
+  {
+    ACE_DEBUG ((LM_DEBUG, "Failed to create Component Implementation Infos!\n"));
+    ACE_THROW_RETURN (Deployment::StartError (), 0);
+  } //@@ I am not sure about which exception to throw. I will come back to this.
+
+  // Now spawn the NodeApplication process.
+  ACE_CString cmd_option;
+  create_node_application (cmd_option ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // This is what we will get back, a sequence of compoent object refs.
+  Deployment::ComponentInfos_var comp_info;
+
+  ///////////////////////////////////////////////////////////////////
+  for (CORBA::ULong i = 0; i < infos.length (); ++i)
+    {
+      // Add the names and entry points of each of the DLLs
+      ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+		  infos[i].component_instance_name.in (),
+		  infos[i].executor_dll.in (),
+		  infos[i].executor_entrypt.in (),
+		  infos[i].servant_dll.in (),
+		  infos[i].servant_entrypt.in () ));
+    }
+  ///////////////////////////////////////////////////////////////////
+
+  // This will install all homes and components.
+  comp_info = this->nodeapp_->install (infos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Now fill in the map we have for the components.
+  for (CORBA::ULong len = 0;
+       len < comp_info->length ();
+       ++len)
+  {
+    //Since we know the type ahead of time...narrow is omitted here.
+    //I might have to come back to this.
+    if (this->component_map_.
+	bind (comp_info[len].component_instance_name.in(),
+	      Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
+      ACE_THROW_RETURN (Deployment::StartError (), 0);
+  }
 
   providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);

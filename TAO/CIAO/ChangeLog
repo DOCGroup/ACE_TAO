@@ -1,3 +1,13 @@
+Mon Jun  7 21:22:03 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	  Finished this interface implementation.
+
+	* DnC/ciao/ImplementationInfo.h:
+	  Added this file containing the templated helper operators.
+
 Mon Jun  7 15:44:51 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/ExecutionManager/Execution_Manager.cpp:
