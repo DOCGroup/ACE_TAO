@@ -1,3 +1,11 @@
+Tue Apr 10 10:53:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MT_Timeout/client.cpp:
+        * tests/MT_Timeout/server.cpp:
+        * tests/MT_Timeout/Sleep_Service.cpp:
+          Improve debugging messages, and force the client to get back in
+          sync with the server before attempting a shutdown.
+
 Tue Apr 10 10:45:26 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.i (send_request, receive_reply,
@@ -129,29 +137,29 @@ Tue Apr 10 12:13:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Apr 10 09:14:37 2001  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Temporarily removed this file.  It was a source of confusion for
- 	  those attempting to use TAO's configure script support.
-  	  Autoconf support in TAO has not been fully integrated.  Thanks
- 	  to Stephen Torri <s.torri@lancaster.ac.uk> for motivating this.
+          Temporarily removed this file.  It was a source of confusion for
+          those attempting to use TAO's configure script support.
+          Autoconf support in TAO has not been fully integrated.  Thanks
+          to Stephen Torri <s.torri@lancaster.ac.uk> for motivating this.
 
 Tue Apr 10 09:06:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/PluggableUDP/tests/Makefile:
+        * examples/PluggableUDP/tests/Makefile:
 
-	  Somehow this Makefile was removed.  Installed a new one to
-	  correct Makefile recursion errors.
+          Somehow this Makefile was removed.  Installed a new one to
+          correct Makefile recursion errors.
 
 Tue Apr 10 08:42:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.h:
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Profile.h:
-	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.h:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
 
-	  Forgot to commit the profile constructor changes in these
-	  files.
+          Forgot to commit the profile constructor changes in these
+          files.
 
 Tue Apr 10 11:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -169,20 +177,20 @@ Tue Apr 10 11:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Apr 10 02:19:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
-	* tests/RTCORBA/Client_Protocol/run_test.pl:
-	* tests/RTCORBA/Explicit_Binding/run_test.pl:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
-	* tests/RTCORBA/Server_Protocol/run_test.pl:
-	  Changed to use the nw <PerlACE::check_n_cleanup_files> so that
-	  we not only removed unwanted mmap files but also noticed that
-	  they are not being cleaned up.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+          Changed to use the nw <PerlACE::check_n_cleanup_files> so that
+          we not only removed unwanted mmap files but also noticed that
+          they are not being cleaned up.
 
 Tue Apr 10 01:27:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
-	  SHMIOP cleanup code was mysteriously removed.  Added it back.
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
+          SHMIOP cleanup code was mysteriously removed.  Added it back.
 
 Tue Apr  10 07:58:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -246,125 +254,125 @@ Mon Apr  9 21:05:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr  9 18:20:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Makefile (DIRS)
-	* tests/Portable_Interceptors/Makefile.bor (DIRS):
+        * tests/Portable_Interceptors/Makefile (DIRS)
+        * tests/Portable_Interceptors/Makefile.bor (DIRS):
 
-	  Added the Request_Interceptor_Flow test directory to the list of
-	  directories to recurse into.
+          Added the Request_Interceptor_Flow test directory to the list of
+          directories to recurse into.
 
 Mon Apr  9 18:17:14 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Profile.h (parse_string):
-	* tao/Pluggable.h (make_profile):
-	* tao/Pluggable.cpp (make_mprofile):
-	* tao/IIOP_Connector.h (make_profile):
-	* tao/IIOP_Connector.cpp (make_profile):
-	* tao/IIOP_Profile.h (TAO_IIOP_Profile):
-	* tao/IIOP_Profile.cpp (TAO_IIOP_Profile):
-	* tao/Strategies/SHMIOP_Connector.cpp (make_profile):
-	* tao/Strategies/SHMIOP_Connector.h (make_profile):
-	* tao/Strategies/SHMIOP_Profile.cpp (TAO_SHMIOP_Profile):
-	* tao/Strategies/SHMIOP_Profile.h (TAO_SHMIOP_Profile):
-	* tao/Strategies/UIOP_Connector.cpp (make_profile):
-	* tao/Strategies/UIOP_Connector.h (make_profile):
-	* tao/Strategies/UIOP_Profile.cpp (TAO_UIOP_Profile):
-	* tao/Strategies/UIOP_Profile.h (TAO_UIOP_Profile):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (make_profile):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (make_profile):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Connector.h (make_profile):
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp (make_profile):
-	* tao/Strategies/UIOP_Profile.cpp (TAO_DIOP_Profile):
-	* tao/Strategies/UIOP_Profile.h (TAO_DIOP_Profile):
+        * tao/Profile.h (parse_string):
+        * tao/Pluggable.h (make_profile):
+        * tao/Pluggable.cpp (make_mprofile):
+        * tao/IIOP_Connector.h (make_profile):
+        * tao/IIOP_Connector.cpp (make_profile):
+        * tao/IIOP_Profile.h (TAO_IIOP_Profile):
+        * tao/IIOP_Profile.cpp (TAO_IIOP_Profile):
+        * tao/Strategies/SHMIOP_Connector.cpp (make_profile):
+        * tao/Strategies/SHMIOP_Connector.h (make_profile):
+        * tao/Strategies/SHMIOP_Profile.cpp (TAO_SHMIOP_Profile):
+        * tao/Strategies/SHMIOP_Profile.h (TAO_SHMIOP_Profile):
+        * tao/Strategies/UIOP_Connector.cpp (make_profile):
+        * tao/Strategies/UIOP_Connector.h (make_profile):
+        * tao/Strategies/UIOP_Profile.cpp (TAO_UIOP_Profile):
+        * tao/Strategies/UIOP_Profile.h (TAO_UIOP_Profile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (make_profile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (make_profile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h (make_profile):
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp (make_profile):
+        * tao/Strategies/UIOP_Profile.cpp (TAO_DIOP_Profile):
+        * tao/Strategies/UIOP_Profile.h (TAO_DIOP_Profile):
 
-	  The endpoint string is no longer passed to Profile
-	  constructors.  Previously, this string was passed to the
-	  Profile's constructor at which point TAO_Profile::parse_string()
-	  was called from within that constructor.  However,
-	  parse_string() can throw an exception.  Since emulated
-	  exceptions cannot reproduce the semantics of throwing an
-	  exception within a constructor, it is a very bad idea to invoke
-	  such a method within a constructor.  TAO's pluggable protocol
-	  framework now invokes the parse_string() method directly.  This
-	  change has the added benefit of allowing the removal of one
-	  constructor.  There are way too many to begin with.
+          The endpoint string is no longer passed to Profile
+          constructors.  Previously, this string was passed to the
+          Profile's constructor at which point TAO_Profile::parse_string()
+          was called from within that constructor.  However,
+          parse_string() can throw an exception.  Since emulated
+          exceptions cannot reproduce the semantics of throwing an
+          exception within a constructor, it is a very bad idea to invoke
+          such a method within a constructor.  TAO's pluggable protocol
+          framework now invokes the parse_string() method directly.  This
+          change has the added benefit of allowing the removal of one
+          constructor.  There are way too many to begin with.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
 
-	  Fixed "better conversion" warnings.
+          Fixed "better conversion" warnings.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
 
-	  Added missing type in constant declaration.
+          Added missing type in constant declaration.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
 
-	  Added missing template instantiations.
+          Added missing template instantiations.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
 
-	  Added missing Request_Interceptor.* source file to the list of
-	  files to compile and link into the binaries.
+          Added missing Request_Interceptor.* source file to the list of
+          files to compile and link into the binaries.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
 
-	  Corrected comment.
+          Corrected comment.
 
 Mon Apr  9 16:40:24 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORBInitInfo.h:
+        * tao/ORBInitInfo.h:
 
-	  Updated register_initial_reference() comment to better explain
-	  its behavior.
+          Updated register_initial_reference() comment to better explain
+          its behavior.
 
-	* tao/ORBInitInfo.cpp (register_initial_reference):
+        * tao/ORBInitInfo.cpp (register_initial_reference):
 
-	  This method is only valid during pre_init(), i.e. only before
-	  TAO_ORB_Core::init() has been called.  The ORB Core starts out
-	  in the "shutdown" state, so checking if it is in that state
-	  would indicate that the ORB hasn't been initalized yet, at least
-	  partially, meaning that initial reference registration can
-	  proceed.
+          This method is only valid during pre_init(), i.e. only before
+          TAO_ORB_Core::init() has been called.  The ORB Core starts out
+          in the "shutdown" state, so checking if it is in that state
+          would indicate that the ORB hasn't been initalized yet, at least
+          partially, meaning that initial reference registration can
+          proceed.
 
-	* tao/ORB_Core.cpp (list_initial_references):
+        * tao/ORB_Core.cpp (list_initial_references):
 
-	  Comment correction/update.
+          Comment correction/update.
 
 Mon Apr 09 16:02:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.h:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/README:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/README:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.h:
 
-	  New test that verifies request interceptor flow is correct under
-	  various canned scenarios.  These canned scenarios correspond to
-	  the ones described in the Portable Interceptor specification.
-	  Currently this test relies on visual inspection to determine if
-	  a problem exists, rather than automatically.
+          New test that verifies request interceptor flow is correct under
+          various canned scenarios.  These canned scenarios correspond to
+          the ones described in the Portable Interceptor specification.
+          Currently this test relies on visual inspection to determine if
+          a problem exists, rather than automatically.
 
 Mon Apr  9 17:38:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

@@ -94,6 +94,10 @@ main (int argc, char *argv[])
         }
       ACE_Thread_Manager::instance ()->wait ();
 
+      // Get back in sync with the server..
+      sleep_service->go_to_sleep (0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       sleep_service->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
