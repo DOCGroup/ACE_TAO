@@ -1,3 +1,9 @@
+Mon Nov 24 14:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/ComponentsS.h:
+        
+          Removed unneeded inclusion of ComponentsS_T.h.
+
 Mon Nov 24 14:41:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Assembly_Deployer/Assembly_Manager.cpp:
