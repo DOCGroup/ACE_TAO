@@ -39,11 +39,11 @@ ECFL_Peer::init (PortableServer::POA_ptr root_poa,
          );
 
   ec_impl->activate (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   this->event_channel_ =
     ec_impl->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
@@ -87,7 +87,7 @@ ECFL_Peer::setup_loopback (CORBA::Long experiment_id,
   loopback->init (experiment_id,
                   this->event_channel_.in (),
                   ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (Control::Loopback::_nil ());
 
   return loopback->_this (ACE_TRY_ENV);
 }
@@ -144,10 +144,10 @@ ECFL_Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_channel_->destroy (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   this->orb_->shutdown (0, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
