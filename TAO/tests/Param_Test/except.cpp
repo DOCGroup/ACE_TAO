@@ -87,7 +87,7 @@ Test_Exception::dii_req_invoke (CORBA::Request *req)
     {
       TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
                                    " unexpected exception\n");
-      TAO_RETHROW_RETURN_VOID;
+      TAO_RETHROW_SAME_ENV_RETURN_VOID;
     }
   TAO_ENDTRY;
 }
