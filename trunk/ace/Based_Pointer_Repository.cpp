@@ -7,13 +7,13 @@
 // Useful typedefs.
 typedef ACE_Map_Manager <void *, size_t *, ACE_Null_Mutex> MAP_MANAGER;
 typedef ACE_Map_Iterator < void *, size_t *, ACE_Null_Mutex> MAP_ITERATOR;
-typedef ACE_Map_Entry <void *, size_t *> MAP_ENTRY; 
+typedef ACE_Map_Entry <void *, size_t *> MAP_ENTRY;
 
 class ACE_Based_Pointer_Repository_Rep
 {
   // = TITLE
   //   Implementation for the <ACE_Based_Pointer_Repository>.
-  // 
+  //
   // = DESCRIPTION
   //   Every memory pool in ACE binds it's mapping base address and
   //   the mapped size to this repository every time it maps/remaps a
@@ -50,7 +50,7 @@ ACE_Based_Pointer_Repository::find (void *addr,
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
   MAP_ENTRY *ce = 0;
 
-  for (MAP_ITERATOR iter = this->rep_->addr_map_;
+  for (MAP_ITERATOR iter (this->rep_->addr_map_);
        iter.next (ce) != 0;
        iter.advance ())
     // Check to see if <addr> is within any of the regions.
@@ -71,7 +71,7 @@ ACE_Based_Pointer_Repository::find (void *addr,
 // existing entry.
 
 int
-ACE_Based_Pointer_Repository::bind (void *addr, 
+ACE_Based_Pointer_Repository::bind (void *addr,
                                     size_t size)
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::bind");
@@ -106,7 +106,7 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
 
   // Search for service handlers that requested notification.
 
-  for (MAP_ITERATOR iter = this->rep_->addr_map_;
+  for (MAP_ITERATOR iter (this->rep_->addr_map_);
        iter.next (ce) != 0;
        iter.advance ())
     {
