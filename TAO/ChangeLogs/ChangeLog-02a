@@ -1,3 +1,9 @@
+Wed Nov 28 13:40:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/SmartProxies/SmartProxies.dsp:
+
+          Fixed an incorrect setting in the release version.
+
 Mon Nov 26 13:45:19 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
