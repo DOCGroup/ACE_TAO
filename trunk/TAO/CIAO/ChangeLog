@@ -1,3 +1,17 @@
+Tue Mar  2 15:08:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed code generation in the body of an operation. This 
+          body just delegates to the executor, so we have to
+          generate the argument list again (just the names, not
+          the types), but we don't have to generate the raises
+          list again. The front end Traversal raises() method
+          was getting executed, no code generated, but it was
+          picking up the overridden comma() method used for the
+          arg list. So we had to override raises() itself to
+          do nothing. Thanks to Boris for his help with this.
+
 Tue Mar  2 01:34:18 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * DnC/Node:
