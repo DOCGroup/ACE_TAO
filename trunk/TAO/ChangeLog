@@ -1,3 +1,9 @@
+Wed Aug 27 14:57:06 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/fe/y.tab.cpp (tao_yydestruct):
+
+	  Silence an "unused variable" warning.
+
 Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ClientRequestInfo_i.h:
