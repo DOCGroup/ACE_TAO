@@ -175,7 +175,7 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
   MKLIST += Makefile.SSLIOP
 endif
 ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.FaultTolerance
+  MKLIST += Makefile.FTORB Makefile.FaultTolerance 
 endif
 
 #----------------------------------------------------------------------------

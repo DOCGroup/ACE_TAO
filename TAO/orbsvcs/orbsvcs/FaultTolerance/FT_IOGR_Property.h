@@ -32,7 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IORManipulation/IORManip_Loader.h"
-#include "orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
 
 #if defined(_MSC_VER)
@@ -45,7 +45,7 @@
 class TAO_Profile;
 
 class TAO_FT_Export TAO_FT_IOGR_Property  : public TAO_IOP::TAO_IOR_Property,
-                                         public CORBA::LocalObject
+                                            public CORBA::LocalObject
 {
   // = TITLE
   //   TAO_FT_IOGR_Property

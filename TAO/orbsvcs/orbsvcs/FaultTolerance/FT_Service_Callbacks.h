@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Service_Callbacks.h"
-#include "orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 class TAO_Profile;
 class TAO_MProfile;

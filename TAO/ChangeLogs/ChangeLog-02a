@@ -1,3 +1,38 @@
+Sat Jan 12 21:14:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: A new file that contains
+	  additions only to the ORB core. This would be good for a variety
+	  of reasons. Some point in time, users would like to have only
+	  the FT ORB features loaded without the service layer. This
+	  should be useful for such cases. An excellent example is when
+	  the Heartbeats are going to be implemented. Regular users may
+	  need that without any extra stuff, like Notification, DynamicAny
+	  etc. 
+	  
+	* orbsvcs/orbsvcs/FT_CORBA.idl: Has only the service layer
+	  interfaces. 
+
+	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB 
+	  library. 
+	
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file. 
+
+	* orbsvcs/orbsvcs/Makefile: Added the new Makefile.
+	
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Included
+	  FT_CORBA_ORBC.h.
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile: Updated
+	  the file to include the TAO_FTORB library. 
+
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Used the new library
+	  to load.
+
 Sat Jan 12 10:46:47 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Two_Objects/worker.h: 
