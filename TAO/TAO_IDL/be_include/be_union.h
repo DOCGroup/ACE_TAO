@@ -59,9 +59,6 @@ public:
                             char *full_name = 0);
   // Generate the _out implementation.
 
-  virtual int default_index (void);
-  // Return the default index used.
-
   virtual idl_bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?
 
@@ -79,10 +76,6 @@ public:
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
-
-private:
-  int compute_default_index (void);
-  // Count the default index.
 };
 
 #endif
