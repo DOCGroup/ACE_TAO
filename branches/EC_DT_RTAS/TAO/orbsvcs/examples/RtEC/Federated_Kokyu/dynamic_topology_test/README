@@ -1,0 +1,30 @@
+I've got the test set up like so: A single Client (Supplier) with two
+modes: NORMAL and FAULT_TOLERANT (FT). Every timeout, it does work then,
+when in NORMAL mode, it pushes events to only the Middle1 process; when
+in FT mode, it pushes events to both Middle processes. Currently, I have
+it start in NORMAL and switch to FT after the first time the task
+executes. There are 2 middle processes, Middle1 and Middle2. They simply
+receive events, do work, and, based on the mode of the Client (they can
+tell from the event type), push events in the same mode to the Server.
+The Server subscribes to events from both Middle processes. If the
+events indicate NORMAL mode, the Server performs work every time it
+receives an event. If the events indicate FT mode, the Server performs
+work only after it receives an FT event from both the Middle1 and the
+Middle2 processes.
+
+Thus, we have a single task with 3 subtasks: T1_1 is executed in the
+Client. T1_2 is executed in Middle1 and if in FT mode in Middle2. T1_3
+is executed in the Server when Middle1 is done (in NORMAL mode) or when
+both Middle1 and Middle2 are done (in FT mode).
+
+Here's how to run it: I have provided scripts (Client, Server, Middle1,
+and Middle2) to run the processes. You need to run the Client first,
+then the Middle processes (any order), then the Server. The Middle
+processes run their ORB for 305 seconds and the Server runs its ORB for
+310 seconds to accommodate the delay between starting each process.
+
+Here's were to run it on the cluster:
+Server (Ron)
+Middle1 (Harry)
+Middle2 (Hermione)
+Client (Norbert)
