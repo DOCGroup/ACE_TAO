@@ -1,3 +1,7 @@
+Tue Mar 13 15:23:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Manager.cpp (list_services): Fixed Unicode bugs.
+
 Tue Mar 13 15:13:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp: Fixed Unicode related bugs.
