@@ -593,15 +593,15 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
     return 0;
 
   // Start at the end and work backwards over all whitespace.
-  for (cp = src + ACE_OS::strlen (src) - 1;
+  for (cp = src + ACE_OS_String::strlen (src) - 1;
        cp != src;
        --cp)
-    if (!isspace (*cp))
+    if (!ACE_OS_String::ace_isspace (*cp))
       break;
   cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
-  for (cp = src; isspace (*cp); ++cp)
+  for (cp = src; ACE_OS_String::ace_isspace (*cp); ++cp)
     continue;
 
   return cp;
