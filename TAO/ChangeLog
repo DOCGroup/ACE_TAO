@@ -1,3 +1,10 @@
+Tue May  6 10:42:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+          Put back some project dependencies that inadvertently got lost as 
+          the result of a conflict update.
+
 Tue May  6 08:54:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Default_ORTC.h: Removed an extra include of
