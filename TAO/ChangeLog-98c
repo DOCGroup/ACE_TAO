@@ -1,3 +1,12 @@
+Wed Oct 07 00:07:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Param_Test/server.cpp: 
+	* performance-tests/Thruput/TAO/server.cpp: 
+	* orbsvcs/tests/Simulator/DOVEMIB/svr.cpp: 
+
+	  Changed "RootPOA_is_BAD" to "child_poa".  It was sending
+ 	  negative POA vibes ;-)
+
 Tue Oct 06 22:49:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connect.cpp (handle_close): Replaced this->shutdown() with
