@@ -58,11 +58,6 @@ public:
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
 
-  typedef ACE_Strategy_Acceptor<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_DIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_DIOP_Connection_Handler> TAO_DIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_DIOP_Connection_Handler> TAO_DIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_DIOP_ACCEPT_STRATEGY;
-
   /**
    * The TAO_Acceptor methods, check the documentation in
    * Pluggable.h for details.
@@ -175,15 +170,6 @@ protected:
   CORBA::Boolean lite_flag_;
 
 private:
-
-  /// the concrete acceptor, as a pointer to it's base class.
-  TAO_DIOP_BASE_ACCEPTOR base_acceptor_;
-
-  /// Acceptor strategies.
-  TAO_DIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_DIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_DIOP_ACCEPT_STRATEGY *accept_strategy_;
-
   // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_;
 

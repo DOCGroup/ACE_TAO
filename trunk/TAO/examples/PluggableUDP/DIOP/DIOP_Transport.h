@@ -154,8 +154,6 @@ private:
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
-
-  ACE_Message_Block local_buffer_;
 };
 
 #if defined (__ACE_INLINE__)
