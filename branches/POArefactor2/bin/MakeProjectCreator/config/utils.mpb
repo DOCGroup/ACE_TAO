@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver {
+  after += Utils
+  libs  += TAO_Utils
+}

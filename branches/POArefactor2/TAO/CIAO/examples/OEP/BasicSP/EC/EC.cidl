@@ -1,0 +1,21 @@
+//$Id$
+
+#ifndef EC_CIDL
+#define EC_CIDL
+
+#include "EC.idl"
+
+composition session EC_Impl
+{
+  home executor ECHome_Exec
+  {
+    implements BasicSP::ECHome;
+    manages EC_Exec;
+  };
+};
+
+#endif /* EC_CIDL */
+
+
+
+
