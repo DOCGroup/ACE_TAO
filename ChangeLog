@@ -1,3 +1,12 @@
+Fri Nov 10 12:28:42 2000  Johnny Willemsen <jwillemsen@remedy.nl?
+
+        * examples/log_msg/makefile.bor:
+        * examples/map_manager/makefile.bor:
+        * examples/makefile.bor:
+        * performance-tests/makefile.bor:
+        * performance-tests/Server_Concurrency/makefile.bor:
+          New Borland makefiles for ACE
+
 Thu Nov  9 18:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-sunos5.5.h:
@@ -14,7 +23,7 @@ Thu Nov  9 17:47:37 2000  Carlos O'Ryan  <coryan@uci.edu>
           Tru64 does not like the convertion from ACE_hthread_t to
           unsigned long.  I'm trying with a reinterpret_cast, but I don't
           have much hope for it.
-        
+
         * examples/Service_Configurator/IPC-tests/server/Makefile:
         * examples/Service_Configurator/Misc/Makefile:
         * examples/Timer_Queue/Makefile:
@@ -55,11 +64,11 @@ Thu Nov  9 15:10:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Nov  9 12:11:52 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * ace/Makefile (UTILS_FILES): 
+        * ace/Makefile (UTILS_FILES):
           Modified the Makefile to help when building subsetted shared
           libraries. Specifically, moved Addr, INET_Addr, and Sock_Connect
           into the Sockets component.  That removes the dependancy of the
-          Utilities and Sockets components on the non-socket IPC component.  
+          Utilities and Sockets components on the non-socket IPC component.
 
        Committing on behalf of Phil Mesnier <mesnier_p@ociweb.com>
 
