@@ -11,6 +11,8 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
         * tests/Basic_Types_Test.cpp (main): replaced #ifdef VXWORKS && ghs
           with !ifdef ACE_HAS_WCHAR_TYPEDEFS_CHAR.
 
+        * ace/Map_Manager.cpp (operator*): fixed typo in "ACE_Map_Entry".
+
 Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
