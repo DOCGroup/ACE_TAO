@@ -1,4 +1,4 @@
-project: namingexe {
+project(MFC Server): namingexe {
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
 

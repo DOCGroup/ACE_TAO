@@ -1,4 +1,4 @@
-project: server, strategies {
+project(*server): taoserver, strategies {
   idlflags += -Sp -Sd
 
   Source_Files {
@@ -8,7 +8,7 @@ project: server, strategies {
   }
 }
 
-project(client): server, strategies {
+project(*client): taoserver, strategies {
   idlflags += -Sp -Sd
   exename   = client
 

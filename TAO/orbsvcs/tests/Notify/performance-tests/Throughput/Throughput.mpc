@@ -1,5 +1,3 @@
-project(Throughput): notifytest, strategies {
-  depends += Messaging
-  libs    += TAO_Messaging
+project(*notify perf Throughput): notifytest, strategies, messaging {
   exename  = Throughput
 }

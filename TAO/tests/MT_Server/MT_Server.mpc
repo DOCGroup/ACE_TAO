@@ -1,11 +1,11 @@
-project(MT Server Server): server {
+project(*Server): taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(MT Server Client): client {
+project(*Client): taoclient {
   Source_Files {
     testC.cpp
     client.cpp

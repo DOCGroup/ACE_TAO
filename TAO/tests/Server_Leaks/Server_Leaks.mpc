@@ -1,11 +1,11 @@
-project(Server Leaks Server): server {
+project(*Server): taoserver {
   Source_Files {
     Ping_Service.cpp
     server.cpp
   }
 }
 
-project(Server Leaks Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

@@ -1,7 +1,6 @@
-project : acelib, core {
-  depends     = ace
-  sharedname  = ACE_QoS
-  dllflags    = ACE_QoS_BUILD_DLL
-  libout      = ..
-  include_dir = ace/QoS
+project(QoS) : acelib, core {
+  requires    += qos
+  sharedname   = ACE_QoS
+  dynamicflags = ACE_QoS_BUILD_DLL
+  include_dir  = ace/QoS
 }

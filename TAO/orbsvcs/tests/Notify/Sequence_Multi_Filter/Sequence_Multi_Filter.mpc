@@ -1,4 +1,4 @@
-project(Sequence Supplier): notifytest {
+project(*Notify Sequence Supplier): notifytest {
   exename = Sequence_Supplier
 
   Source_Files {
@@ -6,7 +6,7 @@ project(Sequence Supplier): notifytest {
   }
 }
 
-project(Sequence Consumer): notifytest {
+project(*Notify Sequence Consumer): notifytest {
   exename = Sequence_Consumer
 
   Source_Files {

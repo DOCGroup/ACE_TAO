@@ -1,11 +1,15 @@
-project(OBV Any Server): server {
+project(*Server): taoserver {
+  idlflags += -Gv
+
   Source_Files {
     AnyS_impl.cpp
     server.cpp
   }
 }
 
-project(OBV Any Client): client {
+project(*Client): taoclient {
+  idlflags += -Gv
+
   Source_Files {
     AnyC.cpp
     client.cpp

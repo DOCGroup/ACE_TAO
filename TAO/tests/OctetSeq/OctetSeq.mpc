@@ -1,18 +1,18 @@
-project(OctetSeq Server): server {
+project(*Server): taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(OctetSeq Client): client {
+project(*Client): taoclient {
   Source_Files {
     testC.cpp
     client.cpp
   }
 }
 
-project(OctetSeq OctetSeq): taoexe {
+project(*OctetSeq): taoexe {
   exename = OctetSeq
 
   Source_Files {

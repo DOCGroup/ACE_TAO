@@ -1,7 +1,7 @@
-workspace (ACEXML) {
-  common
+workspace {
   parser
+  common
   apps
-  examples
   tests
+  examples
 }

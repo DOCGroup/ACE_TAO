@@ -1,18 +1,12 @@
-project(BiDirectional Server): server, minimum_corba {
-  depends += BiDir_GIOP
-  libs    += TAO_BiDirGIOP
-
+project(*Server): taoserver, minimum_corba, bidir_giop {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(BiDirectional Client): server, minimum_corba {
-  depends += BiDir_GIOP
-  libs    += TAO_BiDirGIOP
+project(*Client): taoserver, minimum_corba, bidir_giop {
   exename  = client
-
   Source_Files {
     test_i.cpp
     client.cpp

@@ -1,11 +1,11 @@
-project: server, strategies {
+project(* sequence server): server, strategies {
   Source_Files {
     Roundtrip.cpp
     server.cpp
   }
 }
 
-project: client, strategies {
+project(* sequence client): client, strategies {
   Source_Files {
     TestC.cpp
     Client_Task.cpp

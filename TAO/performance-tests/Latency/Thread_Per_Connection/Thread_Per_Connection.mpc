@@ -1,11 +1,11 @@
-project: server, strategies {
+project(*server): taoserver, strategies {
   Source_Files {
     Roundtrip.cpp
     server.cpp
   }
 }
 
-project: client, strategies {
+project(*client) : taoclient, strategies {
   Source_Files {
     TestC.cpp
     Client_Task.cpp

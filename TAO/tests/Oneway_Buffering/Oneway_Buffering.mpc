@@ -1,11 +1,11 @@
-project(Oneway Buffering Server): messaging, corba_messaging {
+project(*Server): messaging, taoserver, corba_messaging {
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
   }  
 }
  
-project(Oneway Buffering Client): messaging, corba_messaging {
+project(*Client): messaging, taoserver, corba_messaging {
   exename   = client
 
   Source_Files {
@@ -14,7 +14,7 @@ project(Oneway Buffering Client): messaging, corba_messaging {
   }  
 }
 
-project(Oneway Buffering Admin): messaging, corba_messaging {
+project(*Admin): messaging, taoserver, corba_messaging {
   exename   = admin
 
   Source_Files {

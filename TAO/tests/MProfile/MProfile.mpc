@@ -1,17 +1,11 @@
-project(MProfile Server): server {
-  depends += IORManipulation
-  libs    += TAO_IORManip
-
+project(*Server): taoserver, iormanip {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(MProfile Client): client {
-  depends += IORManipulation
-  libs    += TAO_IORManip
-
+project(*Client): taoclient, iormanip {
   Source_Files {
     testC.cpp
     client.cpp

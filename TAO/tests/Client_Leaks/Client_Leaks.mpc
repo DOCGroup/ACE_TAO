@@ -1,4 +1,4 @@
-project(Client Leaks Server): server {
+project(*Server): taoserver {
   Source_Files {
     Process_Factory.cpp
     Startup_Callback.cpp
@@ -7,7 +7,7 @@ project(Client Leaks Server): server {
   }
 }
 
-project(Client Leaks Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
@@ -15,7 +15,7 @@ project(Client Leaks Client): client {
   }
 }
 
-project(Client Leaks Child): server {
+project(*Child): taoserver {
   exename = child
   Source_Files {
     Process.cpp

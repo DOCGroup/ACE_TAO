@@ -1,8 +1,8 @@
-project(Assembly_Manager): ciao_server, acexml {
+project(Assembly_Manager): ciao_server, acexml, iortable {
 
-  libs += TAO_IORTable CIAO_XML_Helpers
-  libpaths += $(TAO_ROOT)/tao/IORTable ../XML_Helpers
-  depends += XML_Helpers
+  libs += CIAO_XML_Helpers
+  libpaths += ../XML_Helpers
+  after += XML_Helpers
 
   Source_Files {
     Assembly_ServiceC.cpp

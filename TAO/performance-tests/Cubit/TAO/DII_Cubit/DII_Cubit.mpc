@@ -1,7 +1,7 @@
-project(client): server, strategies {
+project(*client): taoserver, strategies, dynamicinterface {
   exename   = client
-  depends  += IDL_Cubit_Server DynamicInterface
-  libs     += TAO_DynamicInterface
+  after    += IDL_Cubit_Server_Exe 
+  libs     += 
   idlflags += -Gd
 
   Source_Files {

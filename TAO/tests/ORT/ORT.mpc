@@ -1,4 +1,4 @@
-project(ORT Server): server {
+project(*Server): taoserver {
   requires += interceptors
   idlflags += -I$(TAO_ROOT) -Gv
 
@@ -15,7 +15,7 @@ project(ORT Server): server {
   }
 }
 
-project(ORT Client): client {
+project(*Client): taoclient {
   requires += interceptors
   idlflags += -I$(TAO_ROOT) -Gv
 

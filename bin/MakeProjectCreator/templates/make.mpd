@@ -106,7 +106,7 @@ $(BIN): $(OBJS)
 
 <%endif%>
 <%if(sharedname)%>
-all: $(SHLIB) <%if(install)%>install<%endif%>
+all: $(SHLIB) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 
 $(SHLIB): $(OBJS)
 	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
@@ -123,7 +123,15 @@ $(LIB): $(OBJS)
 <%if(install)%>
 <%if(exename)%>
 INSTARGET = $(BIN)
+install:
+	@echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"
+	@mkdir -p "<%install%>"
+	@$(RM) "<%install%>/$(INSTARGET)"
+	@ln -s "$(PWD)/$(INSTARGET)" "<%install%>"
+
+<%endif%>
 <%else%>
+<%if(!exename)%>
 <%if(sharedname)%>
 INSTARGET = $(SHLIB)
 <%else%>
@@ -131,13 +139,11 @@ INSTARGET = $(SHLIB)
 INSTARGET = $(LIB)
 <%endif%>
 <%endif%>
-<%endif%>
 install:
-	@echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"
-	@mkdir -p "<%install%>"
-	@$(RM) "<%install%>/$(INSTARGET)"
-	@ln -s "$(PWD)/$(INSTARGET)" "<%install%>"
-
+	@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+	@$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"
+	@ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+<%endif%>
 <%endif%>
 clean:
 	-$(RM) $(OBJS)

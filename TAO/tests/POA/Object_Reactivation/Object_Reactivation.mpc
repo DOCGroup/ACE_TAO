@@ -1,3 +1,3 @@
-project(POA Object Reactivation): server {
+project(POA Object Reactivation): taoserver {
   exename = Object_Reactivation
 }

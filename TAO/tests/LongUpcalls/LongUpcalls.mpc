@@ -1,4 +1,4 @@
-project(Long Upcalls Server): messaging {
+project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = blocking_server
@@ -9,7 +9,7 @@ project(Long Upcalls Server): messaging {
   }  
 }
 
-project(Long Upcalls Client): messaging {
+project(*Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = blocking_client
@@ -20,7 +20,7 @@ project(Long Upcalls Client): messaging {
   }  
 }
 
-project(Long Upcalls AMI Server): messaging {
+project(*AMI Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = ami_server
@@ -31,7 +31,7 @@ project(Long Upcalls AMI Server): messaging {
   }  
 }
 
-project(Long Upcalls AMI Client): messaging {
+project(*AMI Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = ami_client

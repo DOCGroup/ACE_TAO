@@ -333,13 +333,18 @@ sub Kill ()
     $self->{RUNNING} = 0;
 }
 
-sub Wait ()
+# Wait until a process exits.
+# return -1 if the process is still alive.
+sub Wait ($)
 {
     my $self = shift;
-
+    my $timeout = shift;
+    if (!defined $timeout || $timeout < 0) {
     waitpid ($self->{PROCESS}, 0);
+    } else {
+      return TimedWait($self, $timeout);
+    }
 
-    $self->{RUNNING} = 0;
 }
 
 sub TimedWait ($)

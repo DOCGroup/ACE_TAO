@@ -1,4 +1,4 @@
-project(Redundant Naming Client) : namingexe {
+project(*Client) : namingexe {
   exename  = client
 }
 

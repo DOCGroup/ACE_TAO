@@ -1,8 +1,6 @@
-project(DLL ORB Test Client Module): taolib_with_idl {
-  sharedname = Test_Client_Module
-  libs      += TAO
-  idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-  dllflags   = TEST_CLIENT_MODULE_BUILD_DLL
+project(*Test Client Module): taolib_with_idl {
+  sharedname    = Test_Client_Module
+  dynamicflags  = TEST_CLIENT_MODULE_BUILD_DLL
 
   Source_Files {
     TestC.cpp
@@ -10,12 +8,9 @@ project(DLL ORB Test Client Module): taolib_with_idl {
   }  
 }
 
-project(DLL ORB Test Server Module) : taolib_with_idl {
-  depends   += PortableServer
-  sharedname = Test_Server_Module
-  libs      += TAO_PortableServer TAO
-  idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-  dllflags   = TEST_SERVER_MODULE_BUILD_DLL
+project(*Test Server Module) : taolib_with_idl, portableserver {
+  sharedname   = Test_Server_Module
+  dynamicflags = TEST_SERVER_MODULE_BUILD_DLL
 
   Source_Files {
     Test_Server_Module.cpp
@@ -23,7 +18,7 @@ project(DLL ORB Test Server Module) : taolib_with_idl {
   }
 }
 
-project(DLL ORB Server) : taoexe {
+project(*Server) : taoexe {
   exename = server
   IDL_Files {
   }
@@ -33,7 +28,7 @@ project(DLL ORB Server) : taoexe {
   }
 }
 
-project(DLL ORB Client): client {
+project(*Client): taoclient {
   IDL_Files {
   }
 

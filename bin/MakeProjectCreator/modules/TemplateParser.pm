@@ -834,7 +834,7 @@ sub collect_data {
   $prjc->update_project_info($self, 0, ['project_name']);
 
   ## This is for all projects
-  $prjc->update_project_info($self, 1, ['depends']);
+  $prjc->update_project_info($self, 1, ['after']);
 
   ## VC7 Projects need to know the GUID.
   ## We need to save this value in our known values

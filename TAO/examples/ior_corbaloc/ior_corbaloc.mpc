@@ -1,11 +1,11 @@
-project: namingexe {
+project(*server): namingexe {
   Source_Files {
     status_i.cpp
     server.cpp
   }
 }
 
-project(client): namingexe {
+project(*client): namingexe {
   exename  = client
 
   Source_Files {
@@ -14,7 +14,7 @@ project(client): namingexe {
   }
 }
 
-project(corbaname client): server {
+project(*corbaname client): namingexe {
   exename = corbaname_client
 
   Source_Files {

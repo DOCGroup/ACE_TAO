@@ -1,4 +1,4 @@
-project(Xt Stopwatch Server): server {
+project(*Server): taoserver {
   Source_Files {
     test_i.cpp
     Stopwatch_display.cpp
@@ -7,7 +7,7 @@ project(Xt Stopwatch Server): server {
   }
 }
 
-project(Xt Stopwatch Client): client {
+project(*Client): taoclient {
   Source_Files {
     testC.cpp
     Control.cpp

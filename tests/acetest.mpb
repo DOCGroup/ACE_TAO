@@ -1,0 +1,10 @@
+project : aceexe {
+  Header_Files {
+  }
+  Resource_Files {
+  }
+  Documentation_Files {
+  }
+  Inline_Files {
+  }
+}

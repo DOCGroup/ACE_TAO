@@ -1,4 +1,4 @@
-project(Portable Interceptors IORInterceptor Server): server {
+project(*Server): taoserver {
   requires += interceptors
   idlflags += -I$(TAO_ROOT)
 
@@ -10,7 +10,7 @@ project(Portable Interceptors IORInterceptor Server): server {
   }
 }
 
-project(Portable Interceptors IORInterceptor Client): client {
+project(*Client): taoclient {
   requires += interceptors
   idlflags += -I$(TAO_ROOT)
 

@@ -1,3 +1,2 @@
 project: aceexe {
-  install = $(ACE_ROOT)/bin
 }

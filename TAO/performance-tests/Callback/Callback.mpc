@@ -1,4 +1,4 @@
-project: messaging, strategies {
+project(*server): messaging, server, strategies {
   requires += corba_messaging
 
   Source_Files {
@@ -8,7 +8,7 @@ project: messaging, strategies {
 }
 
 
-project(client): messaging, strategies {
+project(*client): messaging, server, strategies {
   exename  = client
   requires += corba_messaging
 

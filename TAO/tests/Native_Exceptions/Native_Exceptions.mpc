@@ -1,4 +1,4 @@
-project(Native Exceptions Server): server {
+project(*Server): taoserver {
   idlflags  = -Ge 0 -Sc
   requires += exceptions
 
@@ -8,7 +8,7 @@ project(Native Exceptions Server): server {
   }
 }
 
-project(Native Exceptions Client): client {
+project(*Client): taoclient {
   idlflags  = -Ge 0 -Sc
   requires += exceptions
 

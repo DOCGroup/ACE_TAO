@@ -1,18 +1,12 @@
-project: server, orbsvcsexe {
+project(*security server): taoserver, orbsvcsexe, ssl, security {
   ssl       = 1
-  depends  += Security SSL
-  libs     += TAO_Security
-  requires += ssl
   Source_Files {
     SLevel1_Test_i.cpp
     server.cpp
   }
 }
 
-project: client, orbsvcsexe {
-  depends  += Security SSL
-  libs     += TAO_Security
-  requires += ssl
+project(*security client): taoclient, orbsvcsexe, ssl, security {
   Source_Files {
     SLevel1_TestC.cpp
     client.cpp

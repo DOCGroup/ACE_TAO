@@ -1,10 +1,9 @@
-project(RTSchedEvent) : orbsvcslib, core {
-  depends    += RTEvent RTSched CosNaming Svc_Utils PortableServer
-  sharedname  = TAO_RTSchedEvent
-  libs       += TAO_RTEvent TAO_RTSched TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
-  dllflags    = TAO_RTSCHEDEVENT_BUILD_DLL
-  tagchecks   = RTSchedEvent
-  include_dir = orbsvcs
+project(RTSchedEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, portableserver {
+  sharedname   = TAO_RTSchedEvent
+  dynamicflags = TAO_RTSCHEDEVENT_BUILD_DLL
+  tagchecks    = RTSchedEvent
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
   }

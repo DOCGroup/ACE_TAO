@@ -1,6 +1,5 @@
 project: acedefaults, aceversion {
-  depends  += ace
-  includes += $(ACE_ROOT)
-  libpaths += $(ACE_ROOT)/ace
-  libflags += ACE_AS_STATIC_LIBS
+  after    += ACE
+  libs     += ACE
+  libout    = $(ACE_ROOT)/lib 
 }

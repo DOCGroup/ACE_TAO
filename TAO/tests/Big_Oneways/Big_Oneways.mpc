@@ -1,4 +1,4 @@
-project(Big Oneways Server): server {
+project(*Server): taoserver {
   Source_Files {
     Coordinator.cpp
     Session_Control.cpp
@@ -6,7 +6,7 @@ project(Big Oneways Server): server {
   }
 }
 
-project(Big Oneways Client): server {
+project(*Client): taoserver {
   exename = client
   Source_Files {
     Peer.cpp

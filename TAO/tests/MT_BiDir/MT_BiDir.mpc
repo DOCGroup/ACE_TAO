@@ -1,6 +1,4 @@
-project(MT BiDir Server): server, minimum_corba {
-  depends += BiDir_GIOP
-  libs    += TAO_BiDirGIOP
+project(*Server): taoserver, minimum_corba, bidir_giop {
   Source_Files {
     ReceiverC.cpp
     SenderC.cpp
@@ -11,9 +9,7 @@ project(MT BiDir Server): server, minimum_corba {
   }
 }
 
-project(MT BiDir Client): server, minimum_corba {
-  depends += BiDir_GIOP
-  libs    += TAO_BiDirGIOP
+project(*Client): taoserver, minimum_corba, bidir_giop {
   exename  = client
   Source_Files {
     SenderC.cpp

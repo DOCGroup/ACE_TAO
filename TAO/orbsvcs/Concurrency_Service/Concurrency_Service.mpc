@@ -1,5 +1,3 @@
-project : orbsvcsexe, core {
-  depends += CosConcurrency CosNaming Svc_Utils IORTable PortableServer
+project : orbsvcsexe, core, concurrency, naming {
   exename  = Concurrency_Service
-  libs    += TAO_CosConcurrency TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
 }

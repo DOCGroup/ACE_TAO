@@ -1,8 +1,5 @@
-project : objreftemplate, iorinterceptor, taolib, core {
-  depends    += Valuetype IORInterceptor ObjRefTemplate
-  sharedname  = TAO_PortableServer
-  libs       += TAO TAO_IORInterceptor TAO_ObjRefTemplate TAO_Valuetype
-  dllflags    = TAO_PORTABLESERVER_BUILD_DLL
-  libout      = ..
-  include_dir = tao/PortableServer
+project : taolib, core {
+  sharedname   = TAO_PortableServer
+  dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
+  include_dir  = tao/PortableServer
 }

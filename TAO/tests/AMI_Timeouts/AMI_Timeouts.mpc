@@ -1,4 +1,4 @@
-project(AMI Timeouts Server): messaging {
+project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
 
@@ -9,7 +9,7 @@ project(AMI Timeouts Server): messaging {
   }  
 }
  
-project(AMI Timeouts Client): messaging {
+project(*Client): messaging, taoserver {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC

@@ -1,5 +1,5 @@
 project {
-  depends += Messaging
+  after += Messaging
   libs    += TAO_Messaging
   libpaths += $(TAO_ROOT)/tao/Messaging
 }

@@ -1,14 +1,15 @@
-project(OBV TC Alignment Server): server {
+project(*Server): taoserver {
   exename = server
 
   Source_Files {
     testS.cpp
+    testC.cpp
     test_i.cpp
     server.cpp
   }
 }
 
-project(OBV TC Alignment Client): client {
+project(*Client): taoclient {
   exename = client
 
   Source_Files {

@@ -1,15 +1,12 @@
-project(Param Test Server): messaging, minimum_corba {
+project(*Server): messaging, taoserver, minimum_corba {
   Source_Files {
-    param_testC.cpp
-    param_testS.cpp
     param_test_i.cpp
+    tmplinst.cpp
     server.cpp
   }
 }
 
-project(Param Test Client): messaging, minimum_corba {
-  depends += DynamicInterface
-  libs    += TAO_DynamicInterface
+project(*Client): messaging, taoserver, minimum_corba, dynamicinterface {
   exename  = client
 
   Source_Files {
@@ -18,6 +15,7 @@ project(Param Test Client): messaging, minimum_corba {
     options.cpp
     results.cpp
     helper.cpp
+    tmplinst.cpp
     any.cpp
     bd_long_seq.cpp
     bd_short_seq.cpp
@@ -58,7 +56,7 @@ project(Param Test Client): messaging, minimum_corba {
   }
 }
 
-project(Param Test Anyop): messaging, minimum_corba {
+project(*Anyop): messaging, taoserver, minimum_corba {
   exename = anyop
 
   Source_Files {

@@ -1,20 +1,14 @@
-project(sender): avstreamsexe {
-  depends  += QoS
+project(*sender): avstreamsexe, qos {
   requires += rapi
-  libs     += ACE_QoS
   exename   = sender
-
   Source_Files {
     sender.cpp
   }
 }
 
-project(receiver): avstreamsexe {
-  depends  += QoS
+project(*receiver): avstreamsexe, qos {
   requires += rapi
-  libs     += ACE_QoS
   exename   = receiver
-
   Source_Files {
     receiver.cpp
   }

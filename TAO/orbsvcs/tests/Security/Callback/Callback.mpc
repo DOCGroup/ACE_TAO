@@ -1,7 +1,4 @@
-project: server {
-  depends  += SSL
-  requires += ssl
-
+project(*security server): taoserver, ssl {
   IDL_Files {
     server.idl
     client.idl
@@ -16,10 +13,8 @@ project: server {
   }
 }
 
-project(client): server {
+project(*security client): taoserver, ssl {
   exename   = client
-  depends  += SSL
-  requires += ssl
 
   IDL_Files {
     server.idl

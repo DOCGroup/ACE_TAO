@@ -1,4 +1,4 @@
-project(IDL Cubit Server): server, strategies {
+project(*Server): taoserver, strategies {
   idlflags += -Gd
 
   Source_Files {
@@ -11,7 +11,7 @@ project(IDL Cubit Server): server, strategies {
   }
 }
 
-project(client): server, strategies {
+project(*client): taoserver, strategies {
   exename   = client
   idlflags += -Gd
 
@@ -23,7 +23,7 @@ project(client): server, strategies {
   }
 }
 
-project(collocation): server, strategies {
+project(*collocation): taoserver, strategies {
   exename   = collocation/collocation_test
   idlflags += -Gd
 

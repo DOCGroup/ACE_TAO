@@ -1,4 +1,4 @@
-project(Structured Supplier): notifytest {
+project(*notify perf Structured Supplier): notifytest {
   exename = Structured_Supplier
 
   Source_Files {
@@ -6,7 +6,7 @@ project(Structured Supplier): notifytest {
   }
 }
 
-project(Structured Consumer): notifytest {
+project(*notify perf Structured Consumer): notifytest {
   exename = Structured_Consumer
 
   Source_Files {
@@ -17,7 +17,7 @@ project(Structured Consumer): notifytest {
   }
 }
 
-project(Sequence Supplier): notifytest {
+project(*notify perf Sequence Supplier): notifytest {
   exename = Sequence_Supplier
 
   Source_Files {
@@ -25,7 +25,7 @@ project(Sequence Supplier): notifytest {
   }
 }
 
-project(Sequence Consumer): notifytest {
+project(*notify perf Sequence Consumer): notifytest {
   exename = Sequence_Consumer
 
   Source_Files {

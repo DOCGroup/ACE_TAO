@@ -1,10 +1,6 @@
 // $Id$
 
-project(ComponentServer): ciao_server {
-
-  libs += TAO_IORTable
-  libpaths += $(TAO_ROOT)/tao/IORTable
-
+project(ComponentServer): ciao_server, iortable {
   Source_Files {
     ComponentServer.cpp
   }

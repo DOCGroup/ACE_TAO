@@ -1,11 +1,11 @@
-project(Cache Growth Test Server): server {
+project(*Server): taoserver {
   Source_Files {
     Hello.cpp
     server.cpp
   }
 }
 
-project(Cache Growth Test Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

@@ -1,11 +1,10 @@
-project(DsLogAdmin) : orbsvcslib, core {
-  depends    += ETCL CosTrading IORTable CosNaming Svc_Utils DynamicAny PortableServer
-  sharedname  = TAO_DsLogAdmin
-  libs       += TAO_ETCL TAO_CosTrading TAO_IORTable TAO_CosNaming TAO_Svc_Utils TAO_DynamicAny TAO_PortableServer TAO
-  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h
-  dllflags    = TAO_LOG_BUILD_DLL
-  tagchecks   = Log
-  include_dir = orbsvcs
+project(DsLogAdmin) : orbsvcslib, core, etcl, naming, svc_utils, dynamicany {
+  sharedname   = TAO_DsLogAdmin
+  idlflags    += -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h
+  dynamicflags = TAO_LOG_BUILD_DLL
+  tagchecks    = Log
+  pch_header   =
+  pch_source   =
 
   IDL_Files {
     DsLogAdmin.idl

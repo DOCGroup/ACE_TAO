@@ -1,11 +1,11 @@
-project(Connect Strategy Test Server): server {
+project(*Server): taoserver {
   Source_Files {
     Hello.cpp
     server.cpp
   }
 }
 
-project(Connect Strategy Test Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

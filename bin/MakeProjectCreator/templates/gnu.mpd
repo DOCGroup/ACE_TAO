@@ -24,6 +24,7 @@ endif
 <%endif%>
 <%if(idl_files)%>
 
+TAO_IDL = <%idl_compiler%>
 IDL_FILES =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
@@ -194,6 +195,7 @@ ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 endif
 <%endfor%>
 <%endif%>
+ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -208,10 +210,18 @@ else
   INSBIN  = $(INSTALL_CHECK)
   INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
 <%endif%>
-<%if(sharedname)%>
-  INSLIB  = $(INSTALL_CHECK)
-<%endif%>
 endif
+<%else%>
+<%if(!exename)%>
+
+INSTALL_CHECK = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+ifeq ($(INSTALL_CHECK),.)
+  INSLIB = $(PWD)
+else
+  INSLIB  = $(INSTALL_CHECK)
+endif
+<%endif%>
+
 <%endif%>
 <%if(sharedname)%>
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
@@ -238,17 +248,17 @@ else
   CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(subst \,\,$(TAO_IDL_PREPROCESSOR))\"
 endif
 <%endif%>
-<%if(dllflags)%>
+<%if(dynamicflags)%>
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
-    CPPFLAGS +=<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
+    CPPFLAGS +=<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
   endif
 endif
 <%endif%>
-<%if(libflags)%>
+<%if(staticflags)%>
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
-    CPPFLAGS +=<%foreach(libflags)%> -D<%libflag%><%endfor%>
+    CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
   endif
 endif
 <%endif%>

@@ -100,9 +100,10 @@ Project Keywords
 exename		Specifies the name of the executable that will be created
 sharedname	Specifies the name of the shared library that will be created
 staticname	Specifies the name of the static library that will be created
-dllout		(Windows Only) Specifies where the dll will be placed
-libout		(Windows Only) Specifies where the lib will be placed
-install		Specifies where the executable (or library non-Windows) will go
+dllout		If defined, specifies where the dynamic libraries will be
+                placed.  This overrides libout in the dynamic case.
+libout		Specifies where the dynamic and static libraries will be placed
+install		Specifies where executables will be installed
 idlflags	Specifies the idl flags to be used when processing idl files
 idlgendir       Specifies the output directory for idl generated files.
                 If a listed idl file has a directory as part of the name,
@@ -119,9 +120,10 @@ libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files
 libs		Specifies 1 or more libraries to link into the exe or library
 defaultlibs	Specifies 1 or more default libraries to link in
-depends         Specifies 1 or more project names upon which this project depends
-dllflags	Specifies preprocessor flags needed for dll's
-libflags	Specifies preprocessor flags needed for lib's
+after           Specifies that this project must be built after 1 or more
+                project names listed.
+dynamicflags	Specifies preprocessor flags needed for dynamic libraries
+staticflags	Specifies preprocessor flags needed for static libraries
 
 verbatim        This allows arbitrary information to be place in a generated
                 project file.  The syntax is as follows:

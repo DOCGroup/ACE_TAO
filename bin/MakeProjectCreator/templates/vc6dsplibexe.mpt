@@ -1,34 +1,37 @@
+conditional_include "idl_compiler_win32"
+
 type_description      = "Console Application"
 type_code             = 0x0103
-configurations        = "Static Release" "Static Debug"
-default_configuration = "Static Debug"
+configurations        = Release Debug
+default_configuration = Debug
 type_is_binary        = 1
 common_defines        = WIN32 _CONSOLE
 subsystem             = console
 ssl_libs              = libeay32 ssleay32
 zzip_libs             = z zzip
-need_libflags         = 1
+need_staticflags         = 1
 pdb                   = 1
 
-Static Release {
+
+Release {
   use_debug_libraries   = 0
   compile_flags         = /W3 /GX /O2 /MD /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   lib_modifier          = s
-  output_dir            = Static_Release
-  intermediate_dir      = Static_Release
+  output_dir            = Release
+  intermediate_dir      = Release
   debug_switch          =
 }
 
-Static Debug {
+Debug {
   use_debug_libraries   = 1
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /YX
   lib_modifier          = sd
-  output_dir            = Static_Debug
-  intermediate_dir      = Static_Debug
+  output_dir            = Debug
+  intermediate_dir      = Debug
 }
 
 MFC Release {

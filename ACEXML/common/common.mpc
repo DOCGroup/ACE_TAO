@@ -1,4 +1,4 @@
 project(ACEXML): acelib {
-  sharedname = ACEXML
-  dllflags  += ACEXML_BUILD_DLL
+  sharedname    = ACEXML
+  dynamicflags += ACEXML_BUILD_DLL
 }

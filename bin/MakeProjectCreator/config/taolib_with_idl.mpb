@@ -1,4 +1,4 @@
 project : taolib {
-  depends += TAO_IDL_EXE
-  idlflags = -Ge 1 -Sc
+  after    += TAO_IDL_EXE
+  idlflags += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h 
 }

@@ -1,9 +1,8 @@
-project : acelib, taoversion, core {
-  includes   += $(TAO_ROOT) $(TAO_ROOT)/tao
-  sharedname  = TAO
-  libflags   += TAO_AS_STATIC_LIBS
-  dllflags    = TAO_BUILD_DLL
-  include_dir = tao
+project(TAO) : acelib, taoversion, core, tao_output {
+  includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
+  sharedname   = TAO
+  dynamicflags = TAO_BUILD_DLL
+  include_dir  = tao
 
   // Override the defaults due to the
   // existence of orb.idl
@@ -78,6 +77,7 @@ project : acelib, taoversion, core {
       Environment.cpp
       Object.cpp
       LocalObject.cpp
+      ObjectIDList.cpp
       ORB.cpp
       corbafwd.cpp
       Policy_ForwardC.cpp
@@ -96,6 +96,10 @@ project : acelib, taoversion, core {
       MProfile.cpp
       Stub.cpp
       Typecode.cpp
+      AbstractBase.cpp
+      ValueBase.cpp
+      ValueFactory.cpp
+      ValueFactory_Map.cpp
       CDR.cpp
       Client_Strategy_Factory.cpp
       debug.cpp
@@ -111,6 +115,7 @@ project : acelib, taoversion, core {
       ClientRequestInfo_i.cpp
       RequestInfo_Util.cpp
       ClientInterceptorAdapter.cpp
+      ObjectReferenceTemplateC.cpp
       PortableInterceptorC.cpp
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
@@ -120,7 +125,6 @@ project : acelib, taoversion, core {
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp
       ORB_Core.cpp
-      ORB_Core_Auto_Ptr.cpp
       Collocation_Resolver.cpp
       Default_Collocation_Resolver.cpp
       Stub_Factory.cpp
@@ -218,8 +222,9 @@ project : acelib, taoversion, core {
       Policy_Manager.cpp
       Buffering_Constraint_Policy.cpp
       Messaging_PolicyValueC.cpp
-      ServicesC.cpp
+      Services.cpp
       NVList.cpp
+      IFR_TypeCodes.cpp
       Dynamic_Adapter.cpp
     }
   }

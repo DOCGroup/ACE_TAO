@@ -1,6 +1,2 @@
-project : server {
-  depends  += RTPortableServer RTCORBA
-  libs     += TAO_RTCORBA TAO_RTPortableServer
-  requires += rt_corba
-  libpaths += $(TAO_ROOT)/tao/RTCORBA $(TAO_ROOT)/tao/RTPortableServer
+project : taoserver, rtportableserver, rtcorba {
 }

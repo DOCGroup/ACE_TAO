@@ -1,8 +1,5 @@
-project(Bug 1393 Client): client {
-   depends += IFR_Client
-   exename = client
-   libpaths += $(TAO_ROOT)/tao/IFR_Client
-   libs    += TAO_IFR_Client
+project(*Client): taoclient, ifr_client {
+  exename = client
   Source_Files  {
     client.cpp
   }

@@ -5,7 +5,7 @@ project(BasicSP_stub): ciao_client {
 
   sharedname = BasicSP_stub
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export -Wb,stub_export_include=BasicSP_stub_export.h -Wb,skel_export_macro=BASICSP_SVNT_Export -Wb,skel_export_include=BasicSP_svnt_export.h
-  dllflags   = BASICSP_STUB_BUILD_DLL
+  dynamicflags   = BASICSP_STUB_BUILD_DLL
 
   IDL_Files {
     BasicSP.idl
@@ -17,12 +17,12 @@ project(BasicSP_stub): ciao_client {
 }
 
 project(BasicSP_svnt) : ciao_servant {
-  depends +=  BasicSP_stub
+  after +=  BasicSP_stub
   sharedname = BasicSP_svnt
   libs    += BasicSP_stub
 
   idlflags  +=  -Wb,export_macro=BASICSP_SVNT_Export -Wb,export_include=BasicSP_svnt_export.h
-  dllflags = BASICSP_SVNT_BUILD_DLL
+  dynamicflags = BASICSP_SVNT_BUILD_DLL
 
   IDL_Files {
     BasicSPE.idl

@@ -1,4 +1,4 @@
-project: messaging, strategies {
+project(*latency server): messaging, taoserver, strategies {
   idlflags -= -Sc
   idlflags += -GC
   requires += ami
@@ -10,7 +10,7 @@ project: messaging, strategies {
   }  
 }
  
-project(client): messaging, strategies {
+project(*latency client): messaging, taoserver, strategies {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC

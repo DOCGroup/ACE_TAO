@@ -1,10 +1,10 @@
-project(RTCORBA Client Propagated Server): rt_server {
+project(*Server): rt_server {
   Source_Files {
     server.cpp
   }
 }
 
-project(RTCORBA Client Propagated Client): rt_client {
+project(*Client): rt_client {
   Source_Files {
     testC.cpp
     interceptors.cpp
