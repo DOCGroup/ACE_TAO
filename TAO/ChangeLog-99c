@@ -1,3 +1,26 @@
+Sat Oct  2 18:14:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* param_test.idl:
+	* param_test_i.h:
+	* param_test_i.cpp:
+	* client.dsp:
+	* Makefile:
+	* driver.cpp:
+	* options.h:
+	* options.cpp:
+	* tests.h:
+	* run_test.pl:
+	  Changes for new recursive union test.
+
+	* recursive_union.h:
+	* recursive_union.cpp:
+	  New files added for recursive union test.
+
+	* recursive_struct.h:
+	* recursive_struct.cpp:
+	* bd_array_sequence.cpp:
+	  Cosmetic changes. 
+
 Sat Oct  2 17:56:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
