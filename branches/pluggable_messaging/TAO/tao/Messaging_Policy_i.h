@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 //
 // ============================================================================
 //
@@ -22,7 +23,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/MessagingS.h"
 
@@ -33,8 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public TAO_RefCountServantBase,
-                                                        public POA_Messaging::RelativeRoundtripTimeoutPolicy
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy : public TAO_RefCountServantBase,
+                                                      public POA_Messaging::RelativeRoundtripTimeoutPolicy
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -44,42 +45,36 @@ class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public TAO_RefCountServa
   //   request.
   //
 public:
-  TAO_RelativeRoundtripTimeoutPolicy_i (PortableServer::POA_ptr poa,
-                                        const TimeBase::TimeT& relative_expiry);
+  TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
+                                      const TimeBase::TimeT& relative_expiry);
   // Constructor.
 
-  TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs);
+  TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (
-      PortableServer::POA_ptr poa,
-      const CORBA::Any& val,
-      CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()
-    );
+  static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
+                                   const CORBA::Any& val,
+                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
-  virtual TAO_RelativeRoundtripTimeoutPolicy_i *clone (void) const;
+  virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
   // Returns a copy of <this>.
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::Environment::default_environment ()
-    );
-  virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
-  virtual CORBA::Policy_ptr copy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
-  virtual void destroy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
-  virtual PortableServer::POA_ptr _default_POA (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
+  virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+  virtual TimeBase::TimeT relative_expiry (void);
+
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  void set_time_value (ACE_Time_Value &time_value);
+  // Change the CORBA representation to the ACE representation.
 
 private:
   PortableServer::POA_var poa_;
@@ -149,6 +144,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_MESSAGING_POLICY_I_H */

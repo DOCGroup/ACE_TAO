@@ -1,4 +1,6 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
 
 // ============================================================================
 //
@@ -33,7 +35,7 @@
 
 
 
-# if defined (TAO_HAS_UIOP)
+# if TAO_HAS_UIOP == 1
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
@@ -69,6 +71,7 @@ public:
   virtual ACE_HANDLE handle (void);
   virtual ACE_Event_Handler *event_handler (void);
   virtual ssize_t send (TAO_Stub *stub,
+                        int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
@@ -211,6 +214,6 @@ public:
   // This would be server side messaging protocol  
 };
 
-# endif  /* TAO_HAS_UIOP */
+# endif  /* TAO_HAS_UIOP == 1 */
 
 #endif  /* TAO_UIOP_TRANSPORT_H */

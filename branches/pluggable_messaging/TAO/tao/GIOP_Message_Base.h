@@ -61,7 +61,8 @@ public:
   int send_message (TAO_Transport *transport,
                     TAO_OutputCDR &stream,
                     ACE_Time_Value *max_wait_time = 0,
-                    TAO_Stub *stub = 0);
+                    TAO_Stub *stub = 0,
+                    int two_way = 1);
   // Sends the encapsulated stream in <stream> on to the transport
   
   virtual int parse_reply (TAO_Message_State_Factory &mesg_state,

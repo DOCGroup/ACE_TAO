@@ -13,7 +13,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/TimeBaseS.h"
 #include "tao/POA_CORBA.h"
@@ -204,10 +204,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual Messaging::SyncScope synchronization (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+    virtual Messaging::SyncScope synchronization (void);
 
   private:
     SyncScopePolicy_ptr servant_;
@@ -247,10 +245,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    Messaging::SyncScope synchronization (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+    Messaging::SyncScope synchronization (void);
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -1019,10 +1015,11 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV) = 0;
+    // Hacky TAO extension to reduce call to
+    // CORBA::Environment::default_environment () since this method
+    // will never raise exceptions.
+    virtual TimeBase::TimeT relative_expiry (void) = 0;
 
     Messaging::RelativeRequestTimeoutPolicy *_this (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1051,10 +1048,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+    virtual TimeBase::TimeT relative_expiry (void);
 
   private:
     RelativeRequestTimeoutPolicy_ptr servant_;
@@ -1094,10 +1089,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+    TimeBase::TimeT relative_expiry (void);
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -1140,10 +1133,11 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV) = 0;
+    // Hacky TAO extension to reduce call to
+    // CORBA::Environment::default_environment () since this method
+    // will never raise exceptions.
+    virtual TimeBase::TimeT relative_expiry (void) = 0;
 
     Messaging::RelativeRoundtripTimeoutPolicy *_this (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1172,10 +1166,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+    virtual TimeBase::TimeT relative_expiry (void);
 
   private:
     RelativeRoundtripTimeoutPolicy_ptr servant_;
@@ -1215,10 +1207,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    TimeBase::TimeT relative_expiry (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+    TimeBase::TimeT relative_expiry (void);
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -1606,7 +1596,7 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if defined (TAO_HAS_AMI_CALLBACK)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
@@ -1745,9 +1735,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_AMI_CALLBACK */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
-#if defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -1897,12 +1887,6 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
   };
 
   class TAO_Export _tao_collocated_Poller     : public virtual Messaging::Poller,
@@ -2036,7 +2020,7 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 }
 TAO_NAMESPACE_CLOSE
@@ -2051,6 +2035,6 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_IDL_MESSAGINGS_H */

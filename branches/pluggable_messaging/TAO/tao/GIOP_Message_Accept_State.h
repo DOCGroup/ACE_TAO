@@ -9,7 +9,7 @@
 //     GIOP_Message_Acceptors.h
 //
 // = DESCRIPTION
-//     
+//   Interface for the different accept states     
 //
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
@@ -23,8 +23,13 @@
 class TAO_GIOP_Message_Accept_State
 {
   // = TITLE
+  //   TAO_GIOP_Message_Accept_State
+  //
   // = DESCRIPTION
- public:
+  //   An abstract base class for different versions of GIOP. This is
+  //   similar to the base class in the strategy pattern
+  //  
+public:
 
   virtual int parse_request_header (TAO_GIOP_ServerRequest &) = 0;
   // Parse the Request Header from the incoming stream. This will do a
@@ -32,6 +37,7 @@ class TAO_GIOP_Message_Accept_State
   
   virtual CORBA::Boolean write_reply_header (TAO_OutputCDR &output,
                                              CORBA::ULong request_id) = 0;
+  // Write the reply header in to <output>
 
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0; 
   // Parse the Loacte Request Header from the incoming stream. This will do a
@@ -41,18 +47,22 @@ class TAO_GIOP_Message_Accept_State
   write_locate_reply_mesg (TAO_OutputCDR &output,
                            CORBA::ULong request_id,
                            TAO_GIOP_Locate_Status_Msg &status) = 0;
+  // Writes the locate _reply message in to the <output>
   
   virtual CORBA::Octet major_version (void) = 0;
   virtual CORBA::Octet minor_version (void) = 0;
+  // Our versions
+
  private:
-  
 };
 
 class TAO_GIOP_Message_Accept_State_11 :
   public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
+  //   TAO_GIOP_Message_Accept_State_11
   // = DESCRIPTION
+  //   
   
 public:
   virtual int parse_request_header (TAO_GIOP_ServerRequest &);
@@ -62,6 +72,7 @@ public:
 
   virtual CORBA::Boolean  write_reply_header (TAO_OutputCDR &output,
                                               CORBA::ULong request_id);
+  // Write the version specific reply header in to <output>
   
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
   // Parse the Loacte Request Header from the incoming stream. This will do a
@@ -71,10 +82,12 @@ public:
   write_locate_reply_mesg (TAO_OutputCDR &output,
                            CORBA::ULong request_id,
                            TAO_GIOP_Locate_Status_Msg &status);
+  // Writes the locate reply message in to <output>
   
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
-  
+  // Our versions
+
 private:
 
 };
