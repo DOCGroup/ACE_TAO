@@ -94,8 +94,15 @@ Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 	  New file for the DII (deferred) invocations.  This decouples
 	  other components in the ORB from the DII support.
 
-        * tao/Transport_Mux_Strategy.cpp:
         * tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Mux_Strategy.cpp:
+        * Exclusive_TMS.h:
+        * Exclusive_TMS.cpp:
+        * Muxed_TMS.h:
+        * Muxed_TMS.cpp:
+	  Moved the transport muxing strategies to their own files.
+	  The muxing strategy propagate the connection_closed() message to
+	  all the reply dispatchers waiting on that connection.
 
         * tao/Wait_Strategy.h:
         * tao/Wait_Strategy.cpp:
