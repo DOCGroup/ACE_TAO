@@ -79,7 +79,7 @@ ACE_Config_Scheduler::lookup (const char * entry_point,
     {
     case ACE_Scheduler::SUCCEEDED:
       return rt_info->handle;
-      break;
+      ACE_NOTREACHED (break);
     case ACE_Scheduler::FAILED:
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
@@ -107,7 +107,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
         ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
         return copy;
       }
-      break;
+      ACE_NOTREACHED (break);
     case ACE_Scheduler::FAILED:
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
