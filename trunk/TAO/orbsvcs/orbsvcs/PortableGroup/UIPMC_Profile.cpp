@@ -700,15 +700,15 @@ TAO_UIPMC_Profile::supports_multicast (void) const
 }
 
 void
-TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr
+TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode
                                     ACE_ENV_ARG_DECL)
 {
   // ** See race condition note about addressing mode in Profile.h **
-  switch (addr)
+  switch (addr_mode)
     {
     case TAO_Target_Specification::Profile_Addr:
     case TAO_Target_Specification::Reference_Addr:
-      this->addressing_mode_ = addr;
+      this->addressing_mode_ = addr_mode;
       break;
 
     case TAO_Target_Specification::Key_Addr:
