@@ -35,7 +35,7 @@ public:
 };
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Timer_Queue_Test");
 

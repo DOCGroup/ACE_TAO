@@ -22,7 +22,7 @@
 #include "test_config.h"
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Time_Value_Test");
 

@@ -304,14 +304,14 @@ public:
   // makes it possible to free up the memory and avoid memory leaks.
 
   // = Event loop drivers. 
-  virtual int handle_events (ACE_Time_Value *how_long = 0);
-  // Main event loop driver that blocks for <how_long> before
+  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
+  // Main event loop driver that blocks for <max_wait_time> before
   // returning (will return earlier if I/O or signal events occur).
-  // Note that <how_long> can be 0, in which case this method blocks
+  // Note that <max_wait_time> can be 0, in which case this method blocks
   // until I/O events or signals occur.
 
-  virtual int handle_events (ACE_Time_Value &how_long);
-  // Main event loop driver that blocks for <how_long> before
+  virtual int handle_events (ACE_Time_Value &max_wait_time);
+  // Main event loop driver that blocks for <max_wait_time> before
   // returning (will return earlier if I/O or signal events occur).
 
   // = Register and remove Handlers. 
@@ -639,10 +639,6 @@ protected:
 #endif /* ACE_USE_POLL */
 
 private:
-  ACE_Time_Value timer_skew_;
-  // Adjusts for skew that occurs in certain OS timers (e.g.,
-  // Solaris).
-
   // Deny access since member-wise won't work...
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);

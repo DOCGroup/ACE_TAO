@@ -103,7 +103,7 @@ spawn (void)
 }
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Mutex_Test");
 

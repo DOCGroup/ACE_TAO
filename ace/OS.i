@@ -3368,10 +3368,10 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 {
 // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_IRIX62_THREADS)
-  self = ::pthread_self ();
-#elif defined (ACE_HAS_DCETHREADS)
+#if defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
+#elif defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_SETKIND_NP)
+  self = ::pthread_self ();
 #elif defined (ACE_HAS_STHREADS)
   self = ::thr_self ();
 #elif defined (ACE_HAS_WTHREADS)
@@ -3380,7 +3380,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   self = ::taskIdSelf ();
 #endif /* ACE_HAS_STHREADS */
 #else
-  self = 1; // Might as well make it the first thread ;-)
+  self = 1; // Might as well make it the main thread ;-)
 #endif /* ACE_HAS_THREADS */		     
 }
 

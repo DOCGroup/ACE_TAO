@@ -8,26 +8,26 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN     = test_auto_event \
-	  test_barrier1 \
-	  test_barrier2 \
-	  test_future1 \
-	  test_future2 \
-	  test_manual_event \
-	  test_process_mutex \
-	  test_process_semaphore \
-	  test_reader_writer \
-	  test_recursive_mutex \
-	  test_task_one \
-	  test_task_two \
-	  test_task_three \
-	  test_task_four \
-	  test_thread_manager \
-	  test_thread_pool \
-	  test_thread_specific \
-	  test_tss1 \
-	  test_tss2 \
-	  test_token
+BIN     = auto_event \
+	  barrier1 \
+	  barrier2 \
+	  future1 \
+	  future2 \
+	  manual_event \
+	  process_mutex \
+	  process_semaphore \
+	  reader_writer \
+	  recursive_mutex \
+	  task_one \
+	  task_two \
+	  task_three \
+	  task_four \
+	  thread_manager \
+	  thread_pool \
+	  thread_specific \
+	  tss1 \
+	  tss2 \
+	  token
 
 LSRC    = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
@@ -57,7 +57,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/test_auto_event.o .shobj/test_auto_event.so: test_auto_event.cpp \
+.obj/auto_event.o .shobj/auto_event.so: auto_event.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -110,7 +110,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Singleton.h
-.obj/test_barrier1.o .shobj/test_barrier1.so: test_barrier1.cpp \
+.obj/barrier1.o .shobj/barrier1.so: barrier1.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -162,7 +162,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_barrier2.o .shobj/test_barrier2.so: test_barrier2.cpp \
+.obj/barrier2.o .shobj/barrier2.so: barrier2.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -218,45 +218,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_future1.o .shobj/test_future1.so: test_future1.cpp \
- $(WRAPPER_ROOT)/ace/Task.h \
- $(WRAPPER_ROOT)/ace/Service_Object.h \
- $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
- $(WRAPPER_ROOT)/ace/Future.h \
- $(WRAPPER_ROOT)/ace/Method_Object.h \
- $(WRAPPER_ROOT)/ace/Activation_Queue.h \
- $(WRAPPER_ROOT)/ace/Auto_Ptr.h
-.obj/test_future2.o .shobj/test_future2.so: test_future2.cpp \
+.obj/future1.o .shobj/future1.so: future1.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -294,7 +256,45 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Method_Object.h \
  $(WRAPPER_ROOT)/ace/Activation_Queue.h \
  $(WRAPPER_ROOT)/ace/Auto_Ptr.h
-.obj/test_manual_event.o .shobj/test_manual_event.so: test_manual_event.cpp \
+.obj/future2.o .shobj/future2.so: future2.cpp \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Future.h \
+ $(WRAPPER_ROOT)/ace/Method_Object.h \
+ $(WRAPPER_ROOT)/ace/Activation_Queue.h \
+ $(WRAPPER_ROOT)/ace/Auto_Ptr.h
+.obj/manual_event.o .shobj/manual_event.so: manual_event.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -346,7 +346,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_process_mutex.o .shobj/test_process_mutex.so: test_process_mutex.cpp \
+.obj/process_mutex.o .shobj/process_mutex.so: process_mutex.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -367,7 +367,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h
-.obj/test_process_semaphore.o .shobj/test_process_semaphore.so: test_process_semaphore.cpp \
+.obj/process_semaphore.o .shobj/process_semaphore.so: process_semaphore.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -388,7 +388,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h
-.obj/test_reader_writer.o .shobj/test_reader_writer.so: test_reader_writer.cpp \
+.obj/reader_writer.o .shobj/reader_writer.so: reader_writer.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -410,7 +410,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h
-.obj/test_recursive_mutex.o .shobj/test_recursive_mutex.so: test_recursive_mutex.cpp \
+.obj/recursive_mutex.o .shobj/recursive_mutex.so: recursive_mutex.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -463,7 +463,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h
-.obj/test_task_one.o .shobj/test_task_one.so: test_task_one.cpp \
+.obj/task_one.o .shobj/task_one.so: task_one.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -519,7 +519,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_task_two.o .shobj/test_task_two.so: test_task_two.cpp \
+.obj/task_two.o .shobj/task_two.so: task_two.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -575,7 +575,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_task_three.o .shobj/test_task_three.so: test_task_three.cpp \
+.obj/task_three.o .shobj/task_three.so: task_three.cpp \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -631,7 +631,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task_T.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h
-.obj/test_task_four.o .shobj/test_task_four.so: test_task_four.cpp \
+.obj/task_four.o .shobj/task_four.so: task_four.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -687,7 +687,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_thread_manager.o .shobj/test_thread_manager.so: test_thread_manager.cpp \
+.obj/thread_manager.o .shobj/thread_manager.so: thread_manager.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -739,7 +739,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_thread_pool.o .shobj/test_thread_pool.so: test_thread_pool.cpp \
+.obj/thread_pool.o .shobj/thread_pool.so: thread_pool.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -795,7 +795,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_thread_specific.o .shobj/test_thread_specific.so: test_thread_specific.cpp \
+.obj/thread_specific.o .shobj/thread_specific.so: thread_specific.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -847,7 +847,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/test_tss1.o .shobj/test_tss1.so: test_tss1.cpp \
+.obj/tss1.o .shobj/tss1.so: tss1.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -903,7 +903,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task_T.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h
-.obj/test_tss2.o .shobj/test_tss2.so: test_tss2.cpp \
+.obj/tss2.o .shobj/tss2.so: tss2.cpp \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -938,7 +938,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Token.h
-.obj/test_token.o .shobj/test_token.so: test_token.cpp \
+.obj/token.o .shobj/token.so: token.cpp \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \

@@ -27,7 +27,7 @@
 #include "ace/Process.h"
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Time_Service_Test");
 

@@ -95,7 +95,7 @@ child (char *shm)
 #endif /* ACE_HAS_SYSV_IPC */
 
 int
-main (int, char * /* argv */[])
+main (int, char *[])
 {
   ACE_START_TEST ("SV_Shared_Memory_Test");
 

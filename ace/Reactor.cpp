@@ -417,7 +417,6 @@ ACE_Reactor::dump (void) const
   this->token_.dump ();
 #endif /* ACE_MT_SAFE */
 
-  this->timer_skew_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
@@ -881,9 +880,8 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
     requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
 #if defined (ACE_MT_SAFE)
-    token_ (*this),
+    token_ (*this)
 #endif /* ACE_MT_SAFE */
-    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
   if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh, tq))
@@ -901,9 +899,8 @@ ACE_Reactor::ACE_Reactor (size_t size,
     requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
 #if defined (ACE_MT_SAFE)
-    token_ (*this),
+    token_ (*this)
 #endif /* ACE_MT_SAFE */
-    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
 
@@ -1028,30 +1025,15 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *handler,
     (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
 }
 
-// Main event loop driver that blocks for <how_long> before returning
-// (will return earlier if I/O or signal events occur).
+// Main event loop driver that blocks for <max_wait_time> before
+// returning (will return earlier if I/O or signal events occur).
 
 int 
 ACE_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Reactor::handle_events");
 
-  // Stash the current time.
-  ACE_Time_Value prev_time = ACE_OS::gettimeofday ();
-
-  int result = this->handle_events (&max_wait_time);
-
-  // Compute the time while the Reactor is processing.
-  ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time; 
-
-  if (max_wait_time > elapsed_time)
-    max_wait_time = max_wait_time - elapsed_time;
-  else
-    {
-      max_wait_time = ACE_Time_Value::zero; // Used all of timeout.
-      errno = ETIME;
-    }
-  return result;
+  return this->handle_events (&max_wait_time);
 }
 
 int
@@ -1447,9 +1429,7 @@ ACE_Reactor::dispatch (int nfound,
   // Handle timers first since they may have higher latency
   // constraints... 
 
-  if (!this->timer_queue_->is_empty ())
-    // Fudge factor accounts for problems with Solaris timers...
-    this->timer_queue_->expire (ACE_OS::gettimeofday () + this->timer_skew_);
+  this->timer_queue_->expire ();
 
 #if defined (ACE_MT_SAFE)
   // Check to see if the notify ACE_HANDLE is enabled.  If so, it
@@ -1531,6 +1511,11 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   if (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_) == 0)
     return -1;
 #endif /* ACE_MT_SAFE */
+
+  // Stash the current time -- the destructor of this object will
+  // automatically compute how much time elpased since this method was
+  // called.
+  ACE_Countdown_Time countdown (max_wait_time);
 
   ACE_Handle_Set rmask;
   ACE_Handle_Set wmask;

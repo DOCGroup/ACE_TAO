@@ -197,7 +197,7 @@ Consumer::svc (void)
 // Main driver function.
 
 int 
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Buffer_Stream_Test");
 

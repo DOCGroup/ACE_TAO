@@ -25,23 +25,10 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
 }
 
-// Return the thread descriptor (indexed by ACE_thread_t).
-
-int 
-ACE_Thread_Manager::thread_descriptor_i (ACE_thread_t thr_id,
-					 ACE_Thread_Descriptor &descriptor)
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::thread_descriptor_i");
-
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (ACE_OS::thr_equal (thr_id, this->thr_table_[i].thr_id_))
-      {
-	descriptor = this->thr_table_[i];
-	return 0;
-      }
-
-  return -1;
-}
+// The following macro simplifies subsequence code.
+#define ACE_FIND(OP,INDEX) \
+  int INDEX = OP; \
+  if (INDEX == -1) return -1
 
 int 
 ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id,
@@ -50,26 +37,11 @@ ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id,
   ACE_TRACE ("ACE_Thread_Descriptor::thread_descriptor");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  return this->thread_descriptor_i (thr_id, descriptor);
+  ACE_FIND (this->find_thread (thr_id), index);
+  descriptor = this->thr_table_[index];
+  return 0;
 }
 
-// Return the thread descriptor (indexed by ACE_hthread_t).
-
-int 
-ACE_Thread_Manager::hthread_descriptor_i (ACE_hthread_t thr_handle, 
-					  ACE_Thread_Descriptor &descriptor)
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::hthread_descriptor_i");  
-
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (ACE_OS::thr_cmp (thr_handle, this->thr_table_[i].thr_handle_))
-      {
-	descriptor = this->thr_table_[i];
-	return 0;
-      }
-
-  return -1;
-}
 
 int 
 ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle, 
@@ -78,7 +50,9 @@ ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle,
   ACE_TRACE ("ACE_Thread_Descriptor::hthread_descriptor");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  return this->hthread_descriptor_i (thr_handle, descriptor);
+  ACE_FIND (this->find_hthread (thr_handle), index);
+  descriptor = this->thr_table_[index];
+  return 0;
 }
 
 // Return the thread descriptor (indexed by ACE_hthread_t).
@@ -95,13 +69,10 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
   // Wasn't in the cache, so we'll have to look it up and cache it.
   if (handle == 0) 
     { 
-      ACE_Thread_Descriptor td;
       ACE_thread_t id = ACE_OS::thr_self ();
       
-      if (this->thread_descriptor_i (id, td) == -1)
-	return -1;
-
-      handle = &td.thr_handle_;
+      ACE_FIND (this->find_thread (id), index);
+      handle = &this->thr_table_[index].thr_handle_;
 
       // Update the TSS cache. 
       ACE_LOG_MSG->thr_handle (handle);
@@ -346,6 +317,35 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
     }
 }
 
+// Return the thread descriptor (indexed by ACE_hthread_t).
+
+int 
+ACE_Thread_Manager::find_hthread (ACE_hthread_t h_id)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::find_hthread");  
+
+  for (size_t i = 0; i < this->current_count_; i++)
+    if (ACE_OS::thr_cmp (h_id, this->thr_table_[i].thr_handle_))
+      return i;
+
+  return -1;
+}
+
+// Locate the index in the table associated with <t_id>.  Must be
+// called with the lock held.
+
+int 
+ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
+{
+  ACE_TRACE ("ACE_Thread_Manager::find_thread");
+
+  for (size_t i = 0; i < this->current_count_; i++)
+    if (ACE_OS::thr_equal (t_id, this->thr_table_[i].thr_id_))
+      return i;
+
+  return -1;    
+}
+
 // Insert a thread into the pool (checks for duplicates and doesn't
 // allow them to be inserted twice).
 
@@ -359,7 +359,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
 
   // Check for duplicates and bail out if they're already
   // registered...
-  if (this->find (t_id) != -1)
+  if (this->find_thread (t_id) != -1)
     return -1;
 
   if (grp_id == -1)
@@ -451,26 +451,10 @@ ACE_Thread_Manager::kill_thr (int i, int signum)
     return 0; 
 }
 
-// Locate the index in the table associated with <t_id>.  Must be
-// called with the lock held.
-
-int 
-ACE_Thread_Manager::find (ACE_thread_t t_id)
-{
-  ACE_TRACE ("ACE_Thread_Manager::find");
-
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (ACE_OS::thr_equal (t_id, this->thr_table_[i].thr_id_))
-      return i;
-
-  return -1;    
-}
-
 #define ACE_EXECUTE_OP(OP) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
-  int i = this->find (t_id); \
-  if (i == -1) return -1; \
-  return OP (i);
+  ACE_FIND (this->find_thread (t_id), index); \
+  return OP (index);
 
 // Suspend a single thread.
 
@@ -527,11 +511,8 @@ ACE_Thread_Manager::check_state (ACE_Thread_State state,
   // Wasn't in the cache, so we'll have to look it up.
   if (thr_state == 0) 
     { 
-      int i = this->find (id);
-
-      if (i == -1) 
-	return -1; 
-      thr_state = &this->thr_table_[i].thr_state_;
+      ACE_FIND (this->find_thread (id), index);
+      thr_state = &this->thr_table_[index].thr_state_;
 
       if (self_check) // Update the TSS cache. 
 	ACE_LOG_MSG->thr_state (thr_state); 
@@ -539,11 +520,8 @@ ACE_Thread_Manager::check_state (ACE_Thread_State state,
 #else
    // Turn off caching for the time being until we figure out 
    // how to do it correctly in the face of deletions...
-   int i = this->find (id);
-
-   if (i == -1) 
-     return -1; 
-   thr_state = &this->thr_table_[i].thr_state_;
+  ACE_FIND (this->find_thread (id), index);
+  thr_state = &this->thr_table_[index].thr_state_;
 #endif /* 0 */
   return *thr_state == state;
 }
@@ -583,10 +561,8 @@ ACE_Thread_Manager::get_grp (ACE_thread_t t_id, int &grp_id)
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int i = this->find (t_id);
-  if (i == -1)
-    return -1;
-  grp_id = this->thr_table_[i].grp_id_;
+  ACE_FIND (this->find_thread (t_id), index);
+  grp_id = this->thr_table_[index].grp_id_;
   return 0;
 }
 
@@ -598,10 +574,8 @@ ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int i = this->find (t_id);
-  if (i == -1)
-    return -1;
-  this->thr_table_[i].grp_id_ = grp_id;
+  ACE_FIND (this->find_thread (t_id), index);
+  this->thr_table_[index].grp_id_ = grp_id;
   return 0;
 }
 
@@ -717,7 +691,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   ACE_TRACE ("ACE_Thread_Manager::exit");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  int i = this->find (ACE_Thread::self ());
+  int i = this->find_thread (ACE_Thread::self ());
 
   // Locate thread id.
   if (i != -1)
@@ -993,12 +967,8 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int i = this->find_task (task);
-
-  if (i == -1)
-    return -1;
-
-  grp_id = this->thr_table_[i].grp_id_;
+  ACE_FIND (this->find_task (task), index);
+  grp_id = this->thr_table_[index].grp_id_;
   return 0;
 }
 

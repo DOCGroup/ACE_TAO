@@ -1,29 +1,17 @@
+// This test program illustrates how the ACE barrier synchronization
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-// 
-// = FILENAME
-//    Task_Test.cpp
-//
-// = DESCRIPTION
-//      This test program illustrates how the ACE barrier
-//      synchronization mechanisms work in conjunction with the
-//      ACE_Task and the ACE_Thread_Manager.
-//
-// = AUTHOR
-//    Prashant Jain and Doug C. Schmidt
-// 
-// ============================================================================
+// mechanisms work in conjunction with the ACE_Task and the
+// ACE_Thread_Manager.  It is instructive to compare this with the
+// test_barrier.cpp test to see how they differ.
 
-
-#include "ace/Service_Config.h"
 #include "ace/Task.h"
-#include "test_config.h"
+#include "ace/Service_Config.h"
+
 
 #if defined (ACE_HAS_THREADS)
+
+#include "ace/Task.h"
 
 class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -70,7 +58,6 @@ Barrier_Task::svc (void)
 {  
   // Note that the ACE_Task::svc_run() method automatically adds us to
   // the Thread_Manager when the thread begins.
-  ACE_NEW_THREAD;
 
   for (int iterations = 1; 
        iterations <= this->n_iterations_;
@@ -88,16 +75,14 @@ Barrier_Task::svc (void)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+// Default number of threads to spawn.
+static const int DEFAULT_ITERATIONS = 5;
 
 int 
-main (int, char *[])
+main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Task_Test");
-
-#if defined (ACE_HAS_THREADS)
-  int n_threads = ACE_MAX_THREADS;
-  int n_iterations = ACE_MAX_ITERATIONS;
+  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
+  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   Barrier_Task barrier_task (ACE_Service_Config::thr_mgr (), 
 			     n_threads, 
@@ -105,9 +90,15 @@ main (int, char *[])
 
   // Wait for all the threads to reach their exit point.
   ACE_Service_Config::thr_mgr ()->wait ();
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-  ACE_END_TEST;
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
   return 0;
 }
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */

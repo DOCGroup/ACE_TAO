@@ -286,9 +286,13 @@ private:
 	       ACE_Task_Base *task = 0);
   // Create a new thread (must be called with locks held).
 
-  int find (ACE_thread_t t_id);
+  int find_thread (ACE_thread_t t_id);
   // Locate the index of the table slot occupied by <t_id>.  Returns
   // -1 if <t_id> is not in the table doesn't contain <t_id>.
+
+  int find_hthread (ACE_hthread_t h_id);
+  // Locate the index of the table slot occupied by <h_id>.  Returns
+  // -1 if <h_id> is not in the table doesn't contain <h_id>.
 
   int find_task (ACE_Task_Base *task, int index = -1);
   // Locate the index of the table slot occupied by <task>.  Returns
@@ -306,18 +310,6 @@ private:
 
   void remove_thr (int i);	
   // Remove thread from the table. 
-
-  int thread_descriptor_i (ACE_thread_t, ACE_Thread_Descriptor &);
-  // Implements the lookup function for the <thread_descriptor>.  Note
-  // that this version assumes that the lock is held.  We need this to
-  // avoid intra-class method deadlock on systems that lack recursive
-  // mutexes.
-
-  int hthread_descriptor_i (ACE_hthread_t, ACE_Thread_Descriptor &);
-  // Implements the lookup function for the <hthread_descriptor>.
-  // Note that this version assumes that the lock is held.  We need
-  // this to avoid intra-class method deadlock on systems that lack
-  // recursive mutexes.
 
   // = The following four methods implement a simple scheme for operating on a collection of threads atomically.
   typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);

@@ -120,7 +120,7 @@ spawn (void)
 }
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("MM_Shared_Memory_Test");
 
