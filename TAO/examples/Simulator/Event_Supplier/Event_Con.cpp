@@ -22,15 +22,17 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-#include "ace/Profile_Timer.h"
+#include "Event_Con.h"
+#include "NavWeapC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Con.h"
-#include "NavWeapC.h"
+
+#include "tao/ORB_Core.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+#include "ace/Profile_Timer.h"
 
 #include <limits.h>
 

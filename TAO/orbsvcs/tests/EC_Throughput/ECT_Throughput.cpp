@@ -1,11 +1,7 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
-#include "ace/High_Res_Timer.h"
+#include "ECT_Throughput.h"
 
-#include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -16,7 +12,14 @@
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "ECT_Throughput.h"
+
+#include "tao/Timeprobe.h"
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
+#include "ace/High_Res_Timer.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
 

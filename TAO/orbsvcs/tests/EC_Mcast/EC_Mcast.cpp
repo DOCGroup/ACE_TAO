@@ -1,9 +1,6 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
-#include "ace/Read_Buffer.h"
+#include "EC_Mcast.h"
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -12,7 +9,12 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-#include "EC_Mcast.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
+#include "ace/Read_Buffer.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.i"

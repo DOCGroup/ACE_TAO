@@ -5,7 +5,6 @@
 #if (TAO_HAS_RT_CORBA == 1)
 
 #include "Direct_Priority_Mapping.h"
-#include "tao/debug.h"
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)

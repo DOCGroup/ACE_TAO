@@ -4,7 +4,6 @@
 
 #include "tao/LocalObject.h"
 #include "tao/Stub.h"
-#include "tao/debug.h"
 #include "tao/IFR_Client_Adapter.h"
 
 #include "ace/Auto_Ptr.h"

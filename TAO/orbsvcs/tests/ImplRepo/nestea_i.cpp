@@ -2,6 +2,7 @@
 
 #include "nestea_i.h"
 #include "tao/corba.h"
+#include "tao/debug.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
@@ -16,7 +17,7 @@ ACE_RCSID(ImplRepo, nestea_i, "$Id$")
 : cans_ (0)
 {
   this->data_filename_ = ACE::strnew (filename);
-  
+
   // @@ This should probably be called from somewhere else
   this->load_data ();
 }
@@ -32,7 +33,7 @@ Nestea_i::~Nestea_i (void)
 
 // Add <cans> number of cans to the bookshelf.
 
-void 
+void
 Nestea_i::drink (CORBA::Long cans,
                  CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -48,7 +49,7 @@ Nestea_i::drink (CORBA::Long cans,
 
 // Removes <cans> number of cans from the bookshelf.
 
-void 
+void
 Nestea_i::crush (CORBA::Long cans,
                  CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -60,14 +61,14 @@ Nestea_i::crush (CORBA::Long cans,
     this->cans_ = 0;
   else
     this->cans_ -= cans;
-  
+
   this->save_data ();
 }
 
 
 // Returns the number of cans in the bookshelf.
 
-CORBA::Long 
+CORBA::Long
 Nestea_i::bookshelf_size (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -101,7 +102,7 @@ Nestea_i::get_praise (CORBA::Environment &)
 
 // Saves bookshelf data to a file.
 
-int 
+int
 Nestea_i::save_data (void)
 {
   ACE_FILE_IO file;
@@ -111,10 +112,10 @@ Nestea_i::save_data (void)
                          ACE_FILE_Addr (this->data_filename_),
                          0,
                          ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n to %s", 
-                       "connect", 
-                       this->data_filename_), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n to %s",
+                       "connect",
+                       this->data_filename_),
                       -1);
 
   char str[MAX_UINT32_STR_LEN];
@@ -127,7 +128,7 @@ Nestea_i::save_data (void)
 
 // Loads bookshelf data from a file.
 
-int 
+int
 Nestea_i::load_data (void)
 {
   ACE_FILE_IO file;
@@ -137,10 +138,10 @@ Nestea_i::load_data (void)
                          ACE_FILE_Addr (this->data_filename_),
                          0,
                          ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n to %s", 
-                       "connect", 
-                       this->data_filename_), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n to %s",
+                       "connect",
+                       this->data_filename_),
                       -1);
 
   char str[MAX_UINT32_STR_LEN];

@@ -19,11 +19,14 @@
 #include "MCast.h"
 #include "RTCP.h"
 
-ACE_RCSID(AV, AVStreams_i, "$Id$")
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(AV, AVStreams_i, "$Id$")
 
 //------------------------------------------------------------
 // TAO_AV_Qos

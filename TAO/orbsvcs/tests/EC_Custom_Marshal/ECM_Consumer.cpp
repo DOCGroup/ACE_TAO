@@ -7,7 +7,9 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
+
 #include "tao/Timeprobe.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"

@@ -2,6 +2,8 @@
 
 #include "test_i.h"
 
+#include "tao/ORB_Core.h"
+
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */

@@ -1,10 +1,15 @@
+// $Id$
+
 #include "FT_Service_Callbacks.h"
+#include "FT_Policy_i.h"
+
 #include "tao/MProfile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
-#include "FT_Policy_i.h"
+
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "FT_Service_Callbacks.i"

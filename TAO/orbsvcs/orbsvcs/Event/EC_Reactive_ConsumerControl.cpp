@@ -5,6 +5,9 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
+
+#include "tao/ORB_Core.h"
+
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)

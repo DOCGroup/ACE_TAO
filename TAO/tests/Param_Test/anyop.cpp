@@ -17,8 +17,9 @@
 
 #include "param_testCli.h"
 #include "tao/corba.h"
+#include "tao/debug.h"
+#include "tao/Stub.h"
 #include "ace/Get_Opt.h"
-
 
 ACE_RCSID(Param_Test, anyop, "$Id$")
 

@@ -2,6 +2,9 @@
 
 #include "Persistent_Context_Index.h"
 #include "Persistent_Naming_Context.h"
+
+#include "tao/debug.h"
+
 #include "ace/Auto_Ptr.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

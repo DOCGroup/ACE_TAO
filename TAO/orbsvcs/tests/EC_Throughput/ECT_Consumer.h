@@ -21,6 +21,7 @@
 
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer

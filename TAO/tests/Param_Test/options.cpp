@@ -16,9 +16,10 @@
 //
 // ============================================================================
 
+#include "options.h"
+#include "tao/debug.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "options.h"
 
 ACE_RCSID(Param_Test, options, "$Id$")
 

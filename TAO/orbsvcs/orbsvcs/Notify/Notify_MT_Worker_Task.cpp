@@ -5,6 +5,8 @@
 #include "Notify_AdminProperties.h"
 #include "Notify_Buffering_Strategy.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_MT_Worker_Task, "$Id$")
 
 TAO_Notify_MT_Worker_Task::TAO_Notify_MT_Worker_Task (int n_threads, long flags, int force_active, long priority)

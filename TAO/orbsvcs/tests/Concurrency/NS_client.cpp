@@ -19,7 +19,8 @@
 // ============================================================================
 
 #include "NS_client.h"
-#include "stdio.h"
+#include "tao/debug.h"
+#include <stdio.h>
 
 ACE_RCSID(Concurrency, NS_client, "$Id$")
 

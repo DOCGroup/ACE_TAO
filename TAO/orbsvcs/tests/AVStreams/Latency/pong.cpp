@@ -2,8 +2,9 @@
 
 #include "pong.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
-#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/corba.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"

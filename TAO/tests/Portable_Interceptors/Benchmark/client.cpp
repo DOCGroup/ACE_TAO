@@ -5,6 +5,7 @@
 #include "marker.h"
 #include "Client_ORBInitializer.h"
 #include "Interceptor_Type.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 

@@ -13,16 +13,17 @@
 #ifndef ECT_CONSUMER_DRIVER_H
 #define ECT_CONSUMER_DRIVER_H
 
-#include "ace/Task.h"
+#include "ECT_Driver.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/High_Res_Timer.h"
-#include "orbsvcs/Channel_Clients_T.h"
-#include "ECT_Driver.h"
 #include "ECT_Consumer.h"
+#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "ace/Task.h"
+#include "ace/High_Res_Timer.h"
 
 class ECT_Consumer_Driver : public ECT_Driver
 {

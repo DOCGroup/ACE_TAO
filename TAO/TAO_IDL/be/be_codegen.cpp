@@ -83,8 +83,8 @@ TAO_CodeGen::upcase (const char *str)
 {
   static char upcase_str [NAMEBUFSIZE];
 
-  ACE_OS::memset (upcase_str, 
-                  '\0', 
+  ACE_OS::memset (upcase_str,
+                  '\0',
                   NAMEBUFSIZE);
 
   // Convert letters in str to upper case.
@@ -290,7 +290,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
-            BE_GlobalData::be_get_client_hdr (&idl_name_str, 
+            BE_GlobalData::be_get_client_hdr (&idl_name_str,
                                               1);
 
           // Sanity check and then print.
@@ -340,7 +340,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       *this->client_header_ << "#endif /* _MSC_VER */\n\n";
 
-      *this->client_header_ 
+      *this->client_header_
           << "#if defined (__BORLANDC__)\n"
           << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
           << "#endif /* __BORLANDC__ */\n\n";
@@ -392,6 +392,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#include \""
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"\n\n";
+
+  *this->client_stubs_ << "#include \"tao/Stub.h\"\n"
+                       << "#include \"tao/Invocation.h\"\n"
+                       << "\n";
 
   // Include the RequestInfo_Util utility header.  Used by the
   // PortableInterceptor::RequestInfo subclasses.
@@ -625,7 +629,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       *this->server_header_ << "#endif /* _MSC_VER */\n\n";
 
-      *this->server_header_ 
+      *this->server_header_
           << "#if defined (__BORLANDC__)\n"
           << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
           << "#endif /* __BORLANDC__ */\n\n";
@@ -745,8 +749,8 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  if (this->server_skeletons_->open (fname, 
-                                     TAO_OutStream::TAO_SVR_IMPL) 
+  if (this->server_skeletons_->open (fname,
+                                     TAO_OutStream::TAO_SVR_IMPL)
         == -1)
     {
       return -1;
@@ -776,6 +780,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << "\"\n"
     << "#include \"tao/PortableServer/Object_Adapter.h\"\n"
     << "#include \"tao/PortableServer/Operation_Table.h\"\n"
+    << "#include \"tao/TAO_Server_Request.h\"\n"
+    << "#include \"tao/ORB_Core.h\"\n"
+    << "#include \"tao/Stub.h\"\n"
     << "\n";
 
   // Include the RequestInfo_Util utility header.  Used by the
@@ -934,7 +941,7 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
       return -1;
     }
 
-  if (this->server_template_inline_->open (fname, 
+  if (this->server_template_inline_->open (fname,
                                            TAO_OutStream::TAO_SVR_INL)
        == -1)
     {
@@ -1048,7 +1055,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       const char* impl_hdr =
         BE_GlobalData::be_get_implementation_hdr_fname ();
 
-      this->implementation_skeleton_->print ("#include \"%s\"\n\n", 
+      this->implementation_skeleton_->print ("#include \"%s\"\n\n",
                                              impl_hdr);
 
       return 0;
@@ -1143,8 +1150,8 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 {
   static char macro_name [NAMEBUFSIZE];
 
-  ACE_OS::memset (macro_name, 
-                  '\0', 
+  ACE_OS::memset (macro_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   const char *suffix = ACE_OS::strrchr (fname, '.');
@@ -1181,11 +1188,11 @@ TAO_CodeGen::end_implementation_header (const char *fname)
         }
     }
 
-  ACE_OS::strcat (macro_name, 
+  ACE_OS::strcat (macro_name,
                   "_H_");
 
   // Code to put the last #endif.
-  this->implementation_header_->print ("\n#endif /* %s  */\n", 
+  this->implementation_header_->print ("\n#endif /* %s  */\n",
                                        macro_name);
   return 0;
 }
@@ -1340,8 +1347,8 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 {
   static char macro_name [NAMEBUFSIZE];
 
-  ACE_OS::memset (macro_name, 
-                  '\0', 
+  ACE_OS::memset (macro_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   const char *extension = ACE_OS::strrchr (fname, '.');
@@ -1377,9 +1384,9 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
   ACE_OS::strcat (macro_name, suffix);
 
   // Generate the #ifndef ... #define statements.
-  stream->print ("#ifndef %s\n", 
+  stream->print ("#ifndef %s\n",
                  macro_name);
-  stream->print ("#define %s\n\n", 
+  stream->print ("#define %s\n\n",
                  macro_name);
 }
 

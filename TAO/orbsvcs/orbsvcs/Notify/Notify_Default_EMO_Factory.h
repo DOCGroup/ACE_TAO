@@ -23,7 +23,9 @@
 
 #include "notify_export.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
+
 #include "ace/Service_Config.h"
+#include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

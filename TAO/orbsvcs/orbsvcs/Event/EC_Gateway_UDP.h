@@ -52,16 +52,19 @@
 #define TAO_EC_GATEWAY_UDP_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_CODgram.h"
+#include "orbsvcs/RtecUDPAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Dgram_Mcast.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/RtecUDPAdminS.h"
+
 #include "orbsvcs/Event/event_export.h"
+
+#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_CODgram.h"
+#include "ace/Hash_Map_Manager.h"
 
 class TAO_ECG_UDP_Out_Endpoint;
 

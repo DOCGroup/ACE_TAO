@@ -148,7 +148,7 @@ TAO_SSLIOP_Connection_Handler::activate (long flags,
                                          size_t stack_size[],
                                          ACE_thread_t  thread_names[])
 {
-  if (TAO_orbdebug)
+  if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) ")
                  ACE_TEXT ("SSLIOP_Connection_Handler::activate %d ")
@@ -194,7 +194,7 @@ int
 TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  if (TAO_orbdebug)
+  if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
                  "TAO (%P|%t) SSLIOP_Server_Connection_Handler::handle_close "
                  "(%d, %d)\n",

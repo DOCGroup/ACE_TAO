@@ -4,6 +4,8 @@
 
 #include "SSLIOP_Transport.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Transport,
            "$Id$")

@@ -22,9 +22,9 @@
 #ifndef UDP_I_H
 #define UDP_I_H
 
-#include "ace/Synch.h"
-
 #include "UDPS.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Synch.h"
 
 class UDP_i: public POA_UDP
 {
@@ -70,5 +70,3 @@ private:
 };
 
 #endif /* UDP_I_H */
-
-

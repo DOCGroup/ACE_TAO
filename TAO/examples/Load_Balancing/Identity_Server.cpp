@@ -13,8 +13,9 @@
 // ============================================================================
 
 #include "Identity_Server.h"
-#include "ace/Get_Opt.h"
 #include "Identity_i.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 
 Identity_Server::Identity_Server (void)
   : group_factory_ior_ (0),

@@ -21,6 +21,7 @@
 #define TAO_ORBSVCS_LOGGER_I_H
 
 #include "LoggerS.h"
+#include "ace/Hash_Map_Manager.h"
 
 class Logger_i : public virtual POA_Logger
 {
@@ -52,7 +53,7 @@ public:
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
-  
+
   virtual void logv2 (const Logger::Log_Record &log_rec,
                       Logger::Verbosity_Level verbosity,
                       CORBA::Environment & ACE_TRY_ENV=
@@ -61,7 +62,7 @@ public:
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
-   void verbosity (Logger::Verbosity_Level level, 
+   void verbosity (Logger::Verbosity_Level level,
                   CORBA::Environment &ACE_TRY_ENV =
                   TAO_default_environment ())
     ACE_THROW_SPEC (());
@@ -104,7 +105,7 @@ public:
   // This function returns a logger with name <name>. If <name> is
   // unique, a new logger is created; else, a previously created
   // logger of name <name> is returned
-  
+
 private:
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
   // Calls to <make_logger> will create a new instance of <Logger> and

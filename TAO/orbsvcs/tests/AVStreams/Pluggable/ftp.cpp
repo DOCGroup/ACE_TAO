@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ftp.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
@@ -131,7 +132,7 @@ Client::bind_to_server (CORBA::Environment &ACE_TRY_ENV)
 		       " (%P|%t) Unable to initialize "
 		       "the TAO_Naming_Client. \n"),
 		      -1);
-  
+
   CosNaming::Name server_mmdevice_name (1);
   server_mmdevice_name.length (1);
   server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
@@ -141,7 +142,7 @@ Client::bind_to_server (CORBA::Environment &ACE_TRY_ENV)
     my_naming_client_->resolve (server_mmdevice_name,
 				ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   this->server_mmdevice_ =
     AVStreams::MMDevice::_narrow (server_mmdevice_obj.in (),
 				  ACE_TRY_ENV);
@@ -151,7 +152,7 @@ Client::bind_to_server (CORBA::Environment &ACE_TRY_ENV)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Could not resolve Server_MMdevice in Naming service <%s>\n"),
 		      -1);
- 
+
   return 0;
 }
 
@@ -162,18 +163,18 @@ Client::init (int argc,
 {
   this->argc_ = argc;
   this->argv_ = argv;
-  
+
   CORBA::String_var ior;
-  
+
   // Initialize the endpoint strategy with the orb and poa.
-  this->endpoint_strategy_.init(TAO_AV_CORE::instance ()->orb (), 
+  this->endpoint_strategy_.init(TAO_AV_CORE::instance ()->orb (),
                                 TAO_AV_CORE::instance ()->poa ());
 
   // Parse the command line arguments
-  this->parse_args (argc, 
+  this->parse_args (argc,
 		    argv);
 
-  
+
   // Open file to read.
   this->fp_ = ACE_OS::fopen (this->filename_,
 			     "r");
@@ -182,13 +183,13 @@ Client::init (int argc,
 		       "Cannot open output file %s\n",
 		       this->filename_),
 		      -1);
-  
+
   // Resolve the object reference of the server from the Naming Service.
   if (this->bind_to_server (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-  
+
   // Create the Flow protocol name
   char flow_protocol_str [BUFSIZ];
   if (this->use_sfp_)
@@ -197,22 +198,22 @@ Client::init (int argc,
   else
     ACE_OS::strcpy (flow_protocol_str,
 		    "");
-  
+
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
-  
+
   // Set the address of the ftp client.
   ACE_INET_Addr addr (this->address_);
-  
+
   // Initialize the flowname
   ACE_NEW_RETURN (this->flowname_,
 		  char [BUFSIZ],
 		  0);
-  
+
   ACE_OS::sprintf (this->flowname_,
 		   "Data_%s",
 		   this->protocol_);
-  
+
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry (this->flowname_,
 				    "IN",
@@ -220,11 +221,11 @@ Client::init (int argc,
 				    flow_protocol_str,
 				    this->protocol_,
 				    &addr);
-  
+
   AVStreams::flowSpec flow_spec (1);
   flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
   flow_spec.length (1);
-  
+
   // Bind/Connect  the client and server MMDevices.
   CORBA::Boolean result =
     this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
@@ -233,10 +234,10 @@ Client::init (int argc,
 				 flow_spec,
 				 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   if (result == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
-  
+
   return 0;
 }
 
@@ -247,10 +248,10 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
 
   // Rate at which frames of data need to be sent.
   this->frame_rate_ = CLIENT::instance ()->frame_rate ();
-  
+
   // Time within which a frame should be sent.
   double frame_time = 1/ (double) this->frame_rate_;
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Time ONE = %f\n Frame Rate = %d\n",
@@ -259,32 +260,32 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
 
   // The time between two consecutive frames.
   inter_frame_time.set (frame_time);
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Inter Frame Time = %d\n",
                 inter_frame_time.msec ()));
-  
+
   ACE_TRY
     {
-      
+
       // Continue to send data till the file is read to the end.
       while (1)
 	{
           // Count the frames sent.
 	  count_++;
-          
+
           // Read from the file into a message block.
 	  int n = ACE_OS::fread(this->mb.rd_ptr (),
 				1,
 				this->mb.size (),
 				CLIENT::instance ()->file ());
-	  
+
 	  if (n < 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "FTP_Client_Flow_Handler::fread end of file\n"),
 			      -1);
-	  
+
 	  if (n == 0)
 	    {
 	      if (feof (CLIENT::instance ()->file ()))
@@ -294,9 +295,9 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
                     ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
                   break;
                 }
-	      
+
 	    }
-	  
+
 	  this->mb.wr_ptr (n);
 
 	  if ( this->count_ > 1)
@@ -314,7 +315,7 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
                 ACE_DEBUG ((LM_DEBUG,
                             "Elapsed Time = %d\n",
                             tv.msec ()));
-              
+
               // Check to see if the inter frame time has elapsed.
 	      if (tv < inter_frame_time)
 		{
@@ -327,17 +328,17 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
                     ACE_DEBUG ((LM_DEBUG,
                                 "Wait Time = %d\n",
                                 wait_time.msec ()));
-                  
+
                   // run the orb for the wait time so the client can continue other orb requests.
 		  TAO_AV_CORE::instance ()->orb ()->run (wait_time,
 							 ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 		}
 	    }
-          
+
           // Start timer before sending the frame.
 	  last_frame_sent_time.start ();
-	  
+
           // Send frame.
           int result = this->protocol_object_->send_frame (&this->mb);
 	  if (result < 0)
@@ -345,22 +346,22 @@ Client::pace_data (CORBA::Environment& ACE_TRY_ENV)
 			       "send failed:%p","FTP_Client_Flow_Handler::send\n"),
 			      -1);
           ACE_DEBUG ((LM_DEBUG,"Client::pace_data buffer sent succesfully\n"));
-          
+
           // Reset the mb.
           this->mb.reset ();
-          
+
 	} // end while
-      
+
       // Since the file is read stop the stream.
       AVStreams::flowSpec stop_spec (1);
       CLIENT::instance ()->streamctrl ()->destroy (stop_spec,
 						   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
       ACE_TRY_CHECK;
-      
+
     }
   ACE_CATCHANY
     {
@@ -416,7 +417,7 @@ main (int argc,
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
 			   "client::init failed\n"),1);
-      
+
       // Start sending data.
       result = CLIENT::instance ()->pace_data (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -448,4 +449,3 @@ TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_M
 #pragma instantiate
 TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

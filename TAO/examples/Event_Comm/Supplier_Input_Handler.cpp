@@ -3,6 +3,7 @@
 #include "Event_Comm_i.h"
 #include "Notifier_Handler.h"
 #include "Supplier_Input_Handler.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 

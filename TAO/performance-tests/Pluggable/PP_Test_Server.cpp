@@ -2,6 +2,7 @@
 
 #include "PP_Test_Server.h"
 #include "tao/TAO_Internal.h"
+#include "tao/debug.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 
@@ -27,7 +28,7 @@ PP_Test_Server::parse_args (void)
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), 
+                             get_opts.optarg),
                             -1);
         break;
       case '?':

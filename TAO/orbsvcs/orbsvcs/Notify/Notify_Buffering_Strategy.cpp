@@ -1,8 +1,11 @@
 // $Id$
 
 #include "Notify_Buffering_Strategy.h"
-#include "orbsvcs/CosNotificationC.h"
 #include "Notify_Command.h"
+
+#include "orbsvcs/CosNotificationC.h"
+
+#include "tao/debug.h"
 
 ACE_RCSID(Notify, Notify_Buffering_Strategy, "$Id$")
 

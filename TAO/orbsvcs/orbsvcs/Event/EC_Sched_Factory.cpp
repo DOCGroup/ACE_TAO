@@ -176,7 +176,7 @@ TAO_EC_Sched_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 {
   if (this->filtering_ == 3)
     return new TAO_EC_Sched_Filter_Builder (ec);
-    
+
   return this->TAO_EC_Default_Factory::create_filter_builder (ec);
 }
 

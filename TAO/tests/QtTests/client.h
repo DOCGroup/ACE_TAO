@@ -20,6 +20,7 @@
 
 #if defined (ACE_HAS_QT)
 
+#include "tao/qt_resource.h"
 #include <qapplication.h>
 #include <qvbox.h>
 #include <qslider.h>

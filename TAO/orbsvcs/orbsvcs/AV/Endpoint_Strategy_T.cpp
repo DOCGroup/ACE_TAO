@@ -4,6 +4,9 @@
 #define TAO_AV_ENDPOINT_STRATEGY_T_C
 
 #include "Endpoint_Strategy_T.h"
+
+#include "tao/debug.h"
+
 #include "ace/Process_Semaphore.h"
 
 // ----------------------------------------------------------------------

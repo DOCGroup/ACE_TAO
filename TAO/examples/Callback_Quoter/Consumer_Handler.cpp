@@ -18,8 +18,12 @@
 // ===========================================================
 
 #include "Consumer_Handler.h"
-#include "ace/Read_Buffer.h"
+
 #include "tao/ORB.h"
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
+
+#include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS.h"

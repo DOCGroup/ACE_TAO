@@ -26,7 +26,7 @@
 #include "ace/pre.h"
 
 // -- TAO Include --
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Broker.h"
 #include "tao/ORB_Core.h"
 
@@ -48,13 +48,13 @@ public:
 
 private:
 
-  void create_proxy (TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+  void create_proxy (int collocation_strategy,
                      CORBA::Environment &ACE_TRY_ENV);
 
 private:
 
   TAO_Object_Proxy_Impl
-  *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
 
   TAO_SYNCH_MUTEX mutex_;
 };

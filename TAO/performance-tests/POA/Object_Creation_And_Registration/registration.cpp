@@ -19,6 +19,8 @@
 // ================================================================
 
 #include "testS.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 

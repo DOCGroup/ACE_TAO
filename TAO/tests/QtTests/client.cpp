@@ -17,7 +17,6 @@ main (int, char *[])
 
 #else
 #include "client.h"
-#include "tao/qt_resource.h"
 
 int
 main (int argc, char *argv[])

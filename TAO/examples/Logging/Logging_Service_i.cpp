@@ -1,13 +1,14 @@
 // $Id$
 
 #include "Logging_Service_i.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Logging_Service, Logging_Service_i, "$Id$")
 
 Logger_Server::Logger_Server (void)
   :service_name_ (ACE_const_cast (char *,"LoggingService"))
 {
-  // Do nothing 
+  // Do nothing
 }
 
 int
@@ -58,7 +59,7 @@ Logger_Server::init (int argc,
 		       "%p\n",
 		       "init_child_poa"),
 		      -1);
-  
+
   ACE_CHECK_RETURN (-1);
 
   this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
@@ -119,7 +120,7 @@ Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
 			       factory.in (),
 			       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
 

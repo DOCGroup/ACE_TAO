@@ -4,6 +4,7 @@
 #define TAO_AV_FLOWS_T_C
 
 #include "Flows_T.h"
+#include "tao/debug.h"
 
 
 // ------------------------------------------------------------

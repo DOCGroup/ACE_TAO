@@ -18,6 +18,7 @@
 
 #include "helper.h"
 #include "any.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Param_Test, any, "$Id$")
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "testC.h"
+#include "tao/RT_CORBA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-#include "tao/debug.h"
 
 ACE_RCSID(MT_Client, test_i, "$Id$")
 

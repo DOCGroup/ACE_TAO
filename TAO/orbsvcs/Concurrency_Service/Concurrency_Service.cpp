@@ -18,6 +18,8 @@
 
 #include "Concurrency_Service.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Concurrency_Service, Concurrency_Service, "$Id$")
 
 // Default Constructor.

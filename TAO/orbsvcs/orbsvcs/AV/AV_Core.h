@@ -24,6 +24,8 @@
 #include "orbsvcs/AVStreamsC.h"
 #include "AV_export.h"
 
+#include "ace/Singleton.h"
+
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
 class TAO_AV_Acceptor_Registry;

@@ -18,8 +18,9 @@
 // ===========================================================
 
 #include "Client_i.h"
-#include "ace/Read_Buffer.h"
 #include "tao/ORB.h"
+#include "tao/ORB_Core.h"
+#include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
 Client_i::Client_i ()

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Server_i.h"
+#include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 
 // Constructor.

@@ -157,16 +157,16 @@ _TAO_IRObject_Strategized_Proxy_Broker::the_TAO_IRObject_Strategized_Proxy_Broke
 
 _TAO_IRObject_Strategized_Proxy_Broker::_TAO_IRObject_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 _TAO_IRObject_Strategized_Proxy_Broker::~_TAO_IRObject_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_IRObject_Proxy_Impl&
@@ -175,32 +175,32 @@ _TAO_IRObject_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 _TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_IRObject_ThruPOA_Proxy_Impl,
@@ -208,8 +208,8 @@ _TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -218,9 +218,9 @@ _TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -241,17 +241,17 @@ int
 _TAO_IRObject_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_IRObject_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_IRObject_Proxy_Broker_Factory_function_pointer =
     _TAO_IRObject_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_IRObject_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_IRObject_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_IRObject_Proxy_Broker_Factory_Initializer (
       ACE_reinterpret_cast (
-          long, 
+          long,
           _TAO_IRObject_Proxy_Broker_Factory_Initializer
         )
     );
@@ -266,7 +266,7 @@ _TAO_IRObject_ThruPOA_Proxy_Impl::_TAO_IRObject_ThruPOA_Proxy_Impl (void)
 
 // ThruPOA Implementation of the IDL interface methods
 
-IR_DefinitionKind 
+IR_DefinitionKind
 _TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
@@ -298,7 +298,7 @@ _TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
       );
 }
 
-void 
+void
 _TAO_IRObject_ThruPOA_Proxy_Impl::destroy (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
@@ -365,25 +365,25 @@ void POA_CORBA_IRObject::_get_def_kind_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->def_kind (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_DefinitionKind _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -393,7 +393,7 @@ void POA_CORBA_IRObject::_get_def_kind_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -414,11 +414,11 @@ void POA_CORBA_IRObject::_get_def_kind_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -438,31 +438,31 @@ void POA_CORBA_IRObject::destroy_skel (
   POA_CORBA_IRObject *_tao_impl = (POA_CORBA_IRObject *)_tao_object_reference;
 
   _tao_server_request.argument_flag (0);
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_destroy ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->destroy (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -470,7 +470,7 @@ void POA_CORBA_IRObject::destroy_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -491,9 +491,9 @@ void POA_CORBA_IRObject::destroy_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -577,14 +577,14 @@ POA_CORBA_IRObject::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return ::CORBA::IRObject::_unchecked_narrow (obj.in ());
 }
@@ -607,7 +607,7 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::arguments
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -619,11 +619,11 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::exception
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -632,11 +632,11 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::result (C
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -658,7 +658,7 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::target_is
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_def_kind_get::result (IR::DefinitionKind result)
 {
   // Update the result.
@@ -682,7 +682,7 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_destroy::arguments (COR
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -694,11 +694,11 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_destroy::exceptions (CO
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_destroy::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -707,7 +707,7 @@ POA_CORBA_IRObject::TAO_ServerRequestInfo_CORBA_IRObject_destroy::result (CORBA:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -880,16 +880,16 @@ POA_IR::_TAO_Contained_Strategized_Proxy_Broker *the_TAO_Contained_Strategized_P
 
 POA_IR::_TAO_Contained_Strategized_Proxy_Broker::_TAO_Contained_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_Contained_Strategized_Proxy_Broker::~_TAO_Contained_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_Contained_Proxy_Impl&
@@ -898,32 +898,32 @@ POA_IR::_TAO_Contained_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_Contained_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               POA_IR::_TAO_Contained_ThruPOA_Proxy_Impl,
@@ -931,8 +931,8 @@ POA_IR::_TAO_Contained_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -941,9 +941,9 @@ POA_IR::_TAO_Contained_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -964,14 +964,14 @@ int
 _TAO_Contained_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_Contained_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_Contained_Proxy_Broker_Factory_function_pointer =
     _TAO_Contained_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_Contained_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_Contained_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_Contained_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_Contained_Proxy_Broker_Factory_Initializer));
 
 
@@ -1370,25 +1370,25 @@ void POA_IR::Contained::_get_id_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->id (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       char * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -1399,7 +1399,7 @@ void POA_IR::Contained::_get_id_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1420,11 +1420,11 @@ void POA_IR::Contained::_get_id_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -1457,27 +1457,27 @@ void POA_IR::Contained::_set_id_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_set ri (
       _tao_server_request,
       _tao_impl,
       id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->id (
           id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -1485,7 +1485,7 @@ void POA_IR::Contained::_set_id_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1506,9 +1506,9 @@ void POA_IR::Contained::_set_id_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1529,25 +1529,25 @@ void POA_IR::Contained::_get_name_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->name (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       char * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -1558,7 +1558,7 @@ void POA_IR::Contained::_get_name_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1579,11 +1579,11 @@ void POA_IR::Contained::_get_name_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -1616,27 +1616,27 @@ void POA_IR::Contained::_set_name_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_set ri (
       _tao_server_request,
       _tao_impl,
       name.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->name (
           name.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -1644,7 +1644,7 @@ void POA_IR::Contained::_set_name_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1665,9 +1665,9 @@ void POA_IR::Contained::_set_name_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1688,25 +1688,25 @@ void POA_IR::Contained::_get_version_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->version (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       char * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -1717,7 +1717,7 @@ void POA_IR::Contained::_get_version_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1738,11 +1738,11 @@ void POA_IR::Contained::_get_version_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -1775,27 +1775,27 @@ void POA_IR::Contained::_set_version_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_set ri (
       _tao_server_request,
       _tao_impl,
       version.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->version (
           version.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -1803,7 +1803,7 @@ void POA_IR::Contained::_set_version_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1824,9 +1824,9 @@ void POA_IR::Contained::_set_version_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1847,25 +1847,25 @@ void POA_IR::Contained::_get_defined_in_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->defined_in (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Container_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -1876,7 +1876,7 @@ void POA_IR::Contained::_get_defined_in_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1897,11 +1897,11 @@ void POA_IR::Contained::_get_defined_in_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -1927,25 +1927,25 @@ void POA_IR::Contained::_get_absolute_name_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->absolute_name (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       char * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -1956,7 +1956,7 @@ void POA_IR::Contained::_get_absolute_name_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -1977,11 +1977,11 @@ void POA_IR::Contained::_get_absolute_name_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -2007,25 +2007,25 @@ void POA_IR::Contained::_get_containing_repository_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->containing_repository (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Repository_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -2036,7 +2036,7 @@ void POA_IR::Contained::_get_containing_repository_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -2057,11 +2057,11 @@ void POA_IR::Contained::_get_containing_repository_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -2087,25 +2087,25 @@ void POA_IR::Contained::describe_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->describe (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Contained::Description * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -2116,7 +2116,7 @@ void POA_IR::Contained::describe_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -2137,11 +2137,11 @@ void POA_IR::Contained::describe_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -2178,7 +2178,7 @@ void POA_IR::Contained::move_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_move ri (
       _tao_server_request,
       _tao_impl,
@@ -2187,14 +2187,14 @@ void POA_IR::Contained::move_skel (
       new_version.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->move (
           new_container.in (),
           new_name.in (),
@@ -2202,7 +2202,7 @@ void POA_IR::Contained::move_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -2210,7 +2210,7 @@ void POA_IR::Contained::move_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -2231,9 +2231,9 @@ void POA_IR::Contained::move_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -2320,14 +2320,14 @@ POA_IR::Contained::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_Contained::_unchecked_narrow (obj.in ());
 }
@@ -2350,7 +2350,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::arguments (CORBA::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2362,11 +2362,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::exceptions (CORBA:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2375,11 +2375,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::result (CORBA::Env
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2401,7 +2401,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_get::result (char * result)
 {
   // Update the result.
@@ -2427,14 +2427,14 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_set::arguments (CORBA::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -2446,11 +2446,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_set::exceptions (CORBA:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2459,7 +2459,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_id_set::result (CORBA::Env
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -2498,7 +2498,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2510,11 +2510,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2523,11 +2523,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2549,7 +2549,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_get::result (char * result)
 {
   // Update the result.
@@ -2575,14 +2575,14 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_set::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -2594,11 +2594,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_set::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2607,7 +2607,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_name_set::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -2646,7 +2646,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2658,11 +2658,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2671,11 +2671,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2697,7 +2697,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_get::result (char * result)
 {
   // Update the result.
@@ -2723,14 +2723,14 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_set::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -2742,11 +2742,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_set::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2755,7 +2755,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_version_set::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -2794,7 +2794,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2806,11 +2806,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2819,11 +2819,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2845,7 +2845,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_defined_in_get::result (IR::Container_ptr result)
 {
   // Update the result.
@@ -2869,7 +2869,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2881,11 +2881,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2894,11 +2894,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2920,7 +2920,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_absolute_name_get::result (char * result)
 {
   // Update the result.
@@ -2944,7 +2944,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -2956,11 +2956,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2969,11 +2969,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -2995,7 +2995,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get:
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_containing_repository_get::result (IR::Repository_ptr result)
 {
   // Update the result.
@@ -3019,7 +3019,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -3031,11 +3031,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -3044,11 +3044,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -3070,7 +3070,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_describe::result (IR::Contained::Description * result)
 {
   // Update the result.
@@ -3100,25 +3100,25 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_move::arguments (CORBA::En
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_new_container = parameter_list->length ();
   parameter_list->length (length_new_container + 1);
   (*parameter_list)[length_new_container].argument <<=  this->new_container_;
-  
+
   (*parameter_list)[length_new_container].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_new_name = parameter_list->length ();
   parameter_list->length (length_new_name + 1);
   (*parameter_list)[length_new_name].argument <<= new_name_;
   (*parameter_list)[length_new_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_new_version = parameter_list->length ();
   parameter_list->length (length_new_version + 1);
   (*parameter_list)[length_new_version].argument <<= new_version_;
   (*parameter_list)[length_new_version].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -3130,11 +3130,11 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_move::exceptions (CORBA::E
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_move::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -3143,7 +3143,7 @@ POA_IR::Contained::TAO_ServerRequestInfo_IR_Contained_move::result (CORBA::Envir
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -3320,16 +3320,16 @@ POA_IR::_TAO_Container_Strategized_Proxy_Broker *POA_IR::_TAO_Container_Strategi
 
 POA_IR::_TAO_Container_Strategized_Proxy_Broker::_TAO_Container_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_Container_Strategized_Proxy_Broker::~_TAO_Container_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_Container_Proxy_Impl&
@@ -3338,32 +3338,32 @@ POA_IR::_TAO_Container_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_Container_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_Container_ThruPOA_Proxy_Impl,
@@ -3371,8 +3371,8 @@ POA_IR::_TAO_Container_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -3381,9 +3381,9 @@ POA_IR::_TAO_Container_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -3404,14 +3404,14 @@ int
 _TAO_Container_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_Container_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_Container_Proxy_Broker_Factory_function_pointer =
     _TAO_Container_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_Container_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_Container_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_Container_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_Container_Proxy_Broker_Factory_Initializer));
 
 
@@ -4056,27 +4056,27 @@ void POA_IR::Container::lookup_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup ri (
       _tao_server_request,
       _tao_impl,
       search_name.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->lookup (
           search_name.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Contained_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4087,7 +4087,7 @@ void POA_IR::Container::lookup_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4108,11 +4108,11 @@ void POA_IR::Container::lookup_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4146,7 +4146,7 @@ void POA_IR::Container::contents_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents ri (
       _tao_server_request,
       _tao_impl,
@@ -4154,21 +4154,21 @@ void POA_IR::Container::contents_skel (
       exclude_inherited,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->contents (
           limit_type,
           exclude_inherited,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ContainedSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4179,7 +4179,7 @@ void POA_IR::Container::contents_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4200,11 +4200,11 @@ void POA_IR::Container::contents_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4242,7 +4242,7 @@ void POA_IR::Container::lookup_name_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name ri (
       _tao_server_request,
       _tao_impl,
@@ -4252,14 +4252,14 @@ void POA_IR::Container::lookup_name_skel (
       exclude_inherited,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->lookup_name (
           search_name.in (),
           levels_to_search,
@@ -4268,7 +4268,7 @@ void POA_IR::Container::lookup_name_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ContainedSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4279,7 +4279,7 @@ void POA_IR::Container::lookup_name_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4300,11 +4300,11 @@ void POA_IR::Container::lookup_name_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4340,7 +4340,7 @@ void POA_IR::Container::describe_contents_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents ri (
       _tao_server_request,
       _tao_impl,
@@ -4349,14 +4349,14 @@ void POA_IR::Container::describe_contents_skel (
       max_returned_objs,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->describe_contents (
           limit_type,
           exclude_inherited,
@@ -4364,7 +4364,7 @@ void POA_IR::Container::describe_contents_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Container::DescriptionSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4375,7 +4375,7 @@ void POA_IR::Container::describe_contents_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4396,11 +4396,11 @@ void POA_IR::Container::describe_contents_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4436,7 +4436,7 @@ void POA_IR::Container::create_module_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module ri (
       _tao_server_request,
       _tao_impl,
@@ -4445,14 +4445,14 @@ void POA_IR::Container::create_module_skel (
       version.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_module (
           id.in (),
           name.in (),
@@ -4460,7 +4460,7 @@ void POA_IR::Container::create_module_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ModuleDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4471,7 +4471,7 @@ void POA_IR::Container::create_module_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4492,11 +4492,11 @@ void POA_IR::Container::create_module_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4536,7 +4536,7 @@ void POA_IR::Container::create_constant_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant ri (
       _tao_server_request,
       _tao_impl,
@@ -4547,14 +4547,14 @@ void POA_IR::Container::create_constant_skel (
       value,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_constant (
           id.in (),
           name.in (),
@@ -4564,7 +4564,7 @@ void POA_IR::Container::create_constant_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ConstantDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4575,7 +4575,7 @@ void POA_IR::Container::create_constant_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4596,11 +4596,11 @@ void POA_IR::Container::create_constant_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4638,7 +4638,7 @@ void POA_IR::Container::create_struct_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct ri (
       _tao_server_request,
       _tao_impl,
@@ -4648,14 +4648,14 @@ void POA_IR::Container::create_struct_skel (
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_struct (
           id.in (),
           name.in (),
@@ -4664,7 +4664,7 @@ void POA_IR::Container::create_struct_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_StructDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4675,7 +4675,7 @@ void POA_IR::Container::create_struct_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4696,11 +4696,11 @@ void POA_IR::Container::create_struct_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4740,7 +4740,7 @@ void POA_IR::Container::create_union_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union ri (
       _tao_server_request,
       _tao_impl,
@@ -4751,14 +4751,14 @@ void POA_IR::Container::create_union_skel (
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_union (
           id.in (),
           name.in (),
@@ -4768,7 +4768,7 @@ void POA_IR::Container::create_union_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_UnionDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4779,7 +4779,7 @@ void POA_IR::Container::create_union_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4800,11 +4800,11 @@ void POA_IR::Container::create_union_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4842,7 +4842,7 @@ void POA_IR::Container::create_enum_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum ri (
       _tao_server_request,
       _tao_impl,
@@ -4852,14 +4852,14 @@ void POA_IR::Container::create_enum_skel (
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_enum (
           id.in (),
           name.in (),
@@ -4868,7 +4868,7 @@ void POA_IR::Container::create_enum_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_EnumDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4879,7 +4879,7 @@ void POA_IR::Container::create_enum_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -4900,11 +4900,11 @@ void POA_IR::Container::create_enum_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -4942,7 +4942,7 @@ void POA_IR::Container::create_alias_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias ri (
       _tao_server_request,
       _tao_impl,
@@ -4952,14 +4952,14 @@ void POA_IR::Container::create_alias_skel (
       original_type.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_alias (
           id.in (),
           name.in (),
@@ -4968,7 +4968,7 @@ void POA_IR::Container::create_alias_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_AliasDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -4979,7 +4979,7 @@ void POA_IR::Container::create_alias_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5000,11 +5000,11 @@ void POA_IR::Container::create_alias_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5046,7 +5046,7 @@ void POA_IR::Container::create_interface_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface ri (
       _tao_server_request,
       _tao_impl,
@@ -5058,14 +5058,14 @@ void POA_IR::Container::create_interface_skel (
       is_local,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_interface (
           id.in (),
           name.in (),
@@ -5076,7 +5076,7 @@ void POA_IR::Container::create_interface_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -5087,7 +5087,7 @@ void POA_IR::Container::create_interface_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5108,11 +5108,11 @@ void POA_IR::Container::create_interface_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5162,7 +5162,7 @@ void POA_IR::Container::create_value_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value ri (
       _tao_server_request,
       _tao_impl,
@@ -5178,14 +5178,14 @@ void POA_IR::Container::create_value_skel (
       initializers,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_value (
           id.in (),
           name.in (),
@@ -5200,7 +5200,7 @@ void POA_IR::Container::create_value_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -5211,7 +5211,7 @@ void POA_IR::Container::create_value_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5232,11 +5232,11 @@ void POA_IR::Container::create_value_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5274,7 +5274,7 @@ void POA_IR::Container::create_value_box_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box ri (
       _tao_server_request,
       _tao_impl,
@@ -5284,14 +5284,14 @@ void POA_IR::Container::create_value_box_skel (
       original_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_value_box (
           id.in (),
           name.in (),
@@ -5300,7 +5300,7 @@ void POA_IR::Container::create_value_box_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueBoxDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -5311,7 +5311,7 @@ void POA_IR::Container::create_value_box_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5332,11 +5332,11 @@ void POA_IR::Container::create_value_box_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5374,7 +5374,7 @@ void POA_IR::Container::create_exception_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception ri (
       _tao_server_request,
       _tao_impl,
@@ -5384,14 +5384,14 @@ void POA_IR::Container::create_exception_skel (
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_exception (
           id.in (),
           name.in (),
@@ -5400,7 +5400,7 @@ void POA_IR::Container::create_exception_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ExceptionDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -5411,7 +5411,7 @@ void POA_IR::Container::create_exception_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5432,11 +5432,11 @@ void POA_IR::Container::create_exception_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5472,7 +5472,7 @@ void POA_IR::Container::create_native_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native ri (
       _tao_server_request,
       _tao_impl,
@@ -5481,14 +5481,14 @@ void POA_IR::Container::create_native_skel (
       version.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_native (
           id.in (),
           name.in (),
@@ -5496,7 +5496,7 @@ void POA_IR::Container::create_native_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_NativeDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -5507,7 +5507,7 @@ void POA_IR::Container::create_native_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -5528,11 +5528,11 @@ void POA_IR::Container::create_native_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -5624,14 +5624,14 @@ POA_IR::Container::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_Container::_unchecked_narrow (obj.in ());
 }
@@ -5656,14 +5656,14 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::arguments (CORBA::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_search_name = parameter_list->length ();
   parameter_list->length (length_search_name + 1);
   (*parameter_list)[length_search_name].argument <<= search_name_;
   (*parameter_list)[length_search_name].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -5675,11 +5675,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::exceptions (CORBA:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -5688,11 +5688,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::result (CORBA::Env
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -5714,7 +5714,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup::result (IR::Contained_ptr result)
 {
   // Update the result.
@@ -5742,20 +5742,20 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_limit_type = parameter_list->length ();
   parameter_list->length (length_limit_type + 1);
   (*parameter_list)[length_limit_type].argument <<=  this->limit_type_;
-  
+
   (*parameter_list)[length_limit_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exclude_inherited = parameter_list->length ();
   parameter_list->length (length_exclude_inherited + 1);
   (*parameter_list)[length_exclude_inherited].argument <<= CORBA::Any::from_boolean (this->exclude_inherited_);
   (*parameter_list)[length_exclude_inherited].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -5767,11 +5767,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -5780,11 +5780,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -5806,7 +5806,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents::result (IR::ContainedSeq * result)
 {
   // Update the result.
@@ -5838,30 +5838,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_search_name = parameter_list->length ();
   parameter_list->length (length_search_name + 1);
   (*parameter_list)[length_search_name].argument <<= search_name_;
   (*parameter_list)[length_search_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_levels_to_search = parameter_list->length ();
   parameter_list->length (length_levels_to_search + 1);
   (*parameter_list)[length_levels_to_search].argument <<= levels_to_search_;
   (*parameter_list)[length_levels_to_search].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_limit_type = parameter_list->length ();
   parameter_list->length (length_limit_type + 1);
   (*parameter_list)[length_limit_type].argument <<=  this->limit_type_;
-  
+
   (*parameter_list)[length_limit_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exclude_inherited = parameter_list->length ();
   parameter_list->length (length_exclude_inherited + 1);
   (*parameter_list)[length_exclude_inherited].argument <<= CORBA::Any::from_boolean (this->exclude_inherited_);
   (*parameter_list)[length_exclude_inherited].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -5873,11 +5873,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -5886,11 +5886,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -5912,7 +5912,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_lookup_name::result (IR::ContainedSeq * result)
 {
   // Update the result.
@@ -5942,25 +5942,25 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_limit_type = parameter_list->length ();
   parameter_list->length (length_limit_type + 1);
   (*parameter_list)[length_limit_type].argument <<=  this->limit_type_;
-  
+
   (*parameter_list)[length_limit_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exclude_inherited = parameter_list->length ();
   parameter_list->length (length_exclude_inherited + 1);
   (*parameter_list)[length_exclude_inherited].argument <<= CORBA::Any::from_boolean (this->exclude_inherited_);
   (*parameter_list)[length_exclude_inherited].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_max_returned_objs = parameter_list->length ();
   parameter_list->length (length_max_returned_objs + 1);
   (*parameter_list)[length_max_returned_objs].argument <<= max_returned_objs_;
   (*parameter_list)[length_max_returned_objs].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -5972,11 +5972,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -5985,11 +5985,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6011,7 +6011,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_describe_contents::result (IR::Container::DescriptionSeq * result)
 {
   // Update the result.
@@ -6041,24 +6041,24 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6070,11 +6070,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6083,11 +6083,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6109,7 +6109,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_module::result (IR::ModuleDef_ptr result)
 {
   // Update the result.
@@ -6143,35 +6143,35 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::arguments
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_type = parameter_list->length ();
   parameter_list->length (length_type + 1);
   (*parameter_list)[length_type].argument <<=  this->type_;
-  
+
   (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_value = parameter_list->length ();
   parameter_list->length (length_value + 1);
   (*parameter_list)[length_value].argument <<= value_;
   (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6183,11 +6183,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::exception
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6196,11 +6196,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::result (C
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6222,7 +6222,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::target_is
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_constant::result (IR::ConstantDef_ptr result)
 {
   // Update the result.
@@ -6254,30 +6254,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6289,11 +6289,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6302,11 +6302,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6328,7 +6328,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_struct::result (IR::StructDef_ptr result)
 {
   // Update the result.
@@ -6362,36 +6362,36 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_discriminator_type = parameter_list->length ();
   parameter_list->length (length_discriminator_type + 1);
   (*parameter_list)[length_discriminator_type].argument <<=  this->discriminator_type_;
-  
+
   (*parameter_list)[length_discriminator_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6403,11 +6403,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6416,11 +6416,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6442,7 +6442,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union::result (IR::UnionDef_ptr result)
 {
   // Update the result.
@@ -6474,30 +6474,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6509,11 +6509,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6522,11 +6522,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6548,7 +6548,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_enum::result (IR::EnumDef_ptr result)
 {
   // Update the result.
@@ -6580,30 +6580,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_original_type = parameter_list->length ();
   parameter_list->length (length_original_type + 1);
   (*parameter_list)[length_original_type].argument <<=  this->original_type_;
-  
+
   (*parameter_list)[length_original_type].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6615,11 +6615,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6628,11 +6628,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6654,7 +6654,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_alias::result (IR::AliasDef_ptr result)
 {
   // Update the result.
@@ -6690,40 +6690,40 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_base_interfaces = parameter_list->length ();
   parameter_list->length (length_base_interfaces + 1);
   (*parameter_list)[length_base_interfaces].argument <<=  this->base_interfaces_;
-  
+
   (*parameter_list)[length_base_interfaces].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_abstract = parameter_list->length ();
   parameter_list->length (length_is_abstract + 1);
   (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
   (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_local = parameter_list->length ();
   parameter_list->length (length_is_local + 1);
   (*parameter_list)[length_is_local].argument <<= CORBA::Any::from_boolean (this->is_local_);
   (*parameter_list)[length_is_local].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6735,11 +6735,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6748,11 +6748,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6774,7 +6774,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_interface::result (IR::InterfaceDef_ptr result)
 {
   // Update the result.
@@ -6818,63 +6818,63 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_custom = parameter_list->length ();
   parameter_list->length (length_is_custom + 1);
   (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
   (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_abstract = parameter_list->length ();
   parameter_list->length (length_is_abstract + 1);
   (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
   (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_base_value = parameter_list->length ();
   parameter_list->length (length_base_value + 1);
   (*parameter_list)[length_base_value].argument <<=  this->base_value_;
-  
+
   (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_truncatable = parameter_list->length ();
   parameter_list->length (length_is_truncatable + 1);
   (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
   (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_abstract_base_values = parameter_list->length ();
   parameter_list->length (length_abstract_base_values + 1);
   (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
-  
+
   (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_supported_interfaces = parameter_list->length ();
   parameter_list->length (length_supported_interfaces + 1);
   (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
+
   (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_initializers = parameter_list->length ();
   parameter_list->length (length_initializers + 1);
   (*parameter_list)[length_initializers].argument <<=  this->initializers_;
-  
+
   (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6886,11 +6886,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6899,11 +6899,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -6925,7 +6925,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value::result (IR::ValueDef_ptr result)
 {
   // Update the result.
@@ -6957,30 +6957,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_original_type_def = parameter_list->length ();
   parameter_list->length (length_original_type_def + 1);
   (*parameter_list)[length_original_type_def].argument <<=  this->original_type_def_;
-  
+
   (*parameter_list)[length_original_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -6992,11 +6992,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -7005,11 +7005,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -7031,7 +7031,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_value_box::result (IR::ValueBoxDef_ptr result)
 {
   // Update the result.
@@ -7063,30 +7063,30 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -7098,11 +7098,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -7111,11 +7111,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -7137,7 +7137,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_exception::result (IR::ExceptionDef_ptr result)
 {
   // Update the result.
@@ -7167,24 +7167,24 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -7196,11 +7196,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -7209,11 +7209,11 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -7235,7 +7235,7 @@ POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_native::result (IR::NativeDef_ptr result)
 {
   // Update the result.
@@ -7363,16 +7363,16 @@ POA_IR::_TAO_IDLType_Strategized_Proxy_Broker *POA_IR::_TAO_IDLType_Strategized_
 
 POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::_TAO_IDLType_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::~_TAO_IDLType_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_IDLType_Proxy_Impl&
@@ -7381,32 +7381,32 @@ POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_IDLType_ThruPOA_Proxy_Impl,
@@ -7414,8 +7414,8 @@ POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -7424,9 +7424,9 @@ POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -7447,14 +7447,14 @@ int
 _TAO_IDLType_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_IDLType_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_IDLType_Proxy_Broker_Factory_function_pointer =
     _TAO_IDLType_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_IDLType_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_IDLType_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_IDLType_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_IDLType_Proxy_Broker_Factory_Initializer));
 
 
@@ -7535,25 +7535,25 @@ void POA_IR::IDLType::_get_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -7564,7 +7564,7 @@ void POA_IR::IDLType::_get_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -7585,11 +7585,11 @@ void POA_IR::IDLType::_get_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -7681,14 +7681,14 @@ POA_IR::IDLType::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_IDLType::_unchecked_narrow (obj.in ());
 }
@@ -7711,7 +7711,7 @@ POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::arguments (CORBA::En
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -7723,11 +7723,11 @@ POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::exceptions (CORBA::E
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -7736,11 +7736,11 @@ POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::result (CORBA::Envir
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -7762,7 +7762,7 @@ POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::IDLType::TAO_ServerRequestInfo_IR_IDLType_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -7935,16 +7935,16 @@ POA_IR::_TAO_Repository_Strategized_Proxy_Broker *POA_IR::_TAO_Repository_Strate
 
 POA_IR::_TAO_Repository_Strategized_Proxy_Broker::_TAO_Repository_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_Repository_Strategized_Proxy_Broker::~_TAO_Repository_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_Repository_Proxy_Impl&
@@ -7953,32 +7953,32 @@ POA_IR::_TAO_Repository_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_Repository_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_Repository_ThruPOA_Proxy_Impl,
@@ -7986,8 +7986,8 @@ POA_IR::_TAO_Repository_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -7996,9 +7996,9 @@ POA_IR::_TAO_Repository_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -8019,14 +8019,14 @@ int
 _TAO_Repository_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_Repository_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_Repository_Proxy_Broker_Factory_function_pointer =
     _TAO_Repository_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_Repository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_Repository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_Repository_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_Repository_Proxy_Broker_Factory_Initializer));
 
 
@@ -8353,27 +8353,27 @@ void POA_IR::Repository::lookup_id_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id ri (
       _tao_server_request,
       _tao_impl,
       search_id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->lookup_id (
           search_id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_Contained_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8384,7 +8384,7 @@ void POA_IR::Repository::lookup_id_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8405,11 +8405,11 @@ void POA_IR::Repository::lookup_id_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8441,27 +8441,27 @@ void POA_IR::Repository::get_canonical_typecode_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode ri (
       _tao_server_request,
       _tao_impl,
       tc.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->get_canonical_typecode (
           tc.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8472,7 +8472,7 @@ void POA_IR::Repository::get_canonical_typecode_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8493,11 +8493,11 @@ void POA_IR::Repository::get_canonical_typecode_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8529,27 +8529,27 @@ void POA_IR::Repository::get_primitive_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive ri (
       _tao_server_request,
       _tao_impl,
       kind,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->get_primitive (
           kind,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PrimitiveDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8560,7 +8560,7 @@ void POA_IR::Repository::get_primitive_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8581,11 +8581,11 @@ void POA_IR::Repository::get_primitive_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8617,27 +8617,27 @@ void POA_IR::Repository::create_string_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string ri (
       _tao_server_request,
       _tao_impl,
       bound,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_string (
           bound,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_StringDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8648,7 +8648,7 @@ void POA_IR::Repository::create_string_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8669,11 +8669,11 @@ void POA_IR::Repository::create_string_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8705,27 +8705,27 @@ void POA_IR::Repository::create_wstring_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring ri (
       _tao_server_request,
       _tao_impl,
       bound,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_wstring (
           bound,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_WstringDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8736,7 +8736,7 @@ void POA_IR::Repository::create_wstring_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8757,11 +8757,11 @@ void POA_IR::Repository::create_wstring_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8795,7 +8795,7 @@ void POA_IR::Repository::create_sequence_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence ri (
       _tao_server_request,
       _tao_impl,
@@ -8803,21 +8803,21 @@ void POA_IR::Repository::create_sequence_skel (
       element_type.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_sequence (
           bound,
           element_type.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_SequenceDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8828,7 +8828,7 @@ void POA_IR::Repository::create_sequence_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8849,11 +8849,11 @@ void POA_IR::Repository::create_sequence_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8887,7 +8887,7 @@ void POA_IR::Repository::create_array_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array ri (
       _tao_server_request,
       _tao_impl,
@@ -8895,21 +8895,21 @@ void POA_IR::Repository::create_array_skel (
       element_type.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_array (
           length,
           element_type.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ArrayDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -8920,7 +8920,7 @@ void POA_IR::Repository::create_array_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -8941,11 +8941,11 @@ void POA_IR::Repository::create_array_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -8979,7 +8979,7 @@ void POA_IR::Repository::create_fixed_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed ri (
       _tao_server_request,
       _tao_impl,
@@ -8987,21 +8987,21 @@ void POA_IR::Repository::create_fixed_skel (
       scale,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_fixed (
           digits,
           scale,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_FixedDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -9012,7 +9012,7 @@ void POA_IR::Repository::create_fixed_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -9033,11 +9033,11 @@ void POA_IR::Repository::create_fixed_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -9132,14 +9132,14 @@ POA_IR::Repository::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_Repository::_unchecked_narrow (obj.in ());
 }
@@ -9164,14 +9164,14 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_search_id = parameter_list->length ();
   parameter_list->length (length_search_id + 1);
   (*parameter_list)[length_search_id].argument <<= search_id_;
   (*parameter_list)[length_search_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9183,11 +9183,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9196,11 +9196,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9222,7 +9222,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_lookup_id::result (IR::Contained_ptr result)
 {
   // Update the result.
@@ -9248,14 +9248,14 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_tc = parameter_list->length ();
   parameter_list->length (length_tc + 1);
   (*parameter_list)[length_tc].argument <<= tc_;
   (*parameter_list)[length_tc].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9267,11 +9267,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9280,11 +9280,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9306,7 +9306,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_canonical_typecode::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -9332,15 +9332,15 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::arguments
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_kind = parameter_list->length ();
   parameter_list->length (length_kind + 1);
   (*parameter_list)[length_kind].argument <<=  this->kind_;
-  
+
   (*parameter_list)[length_kind].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9352,11 +9352,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::exception
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9365,11 +9365,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::result (C
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9391,7 +9391,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::target_is
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_get_primitive::result (IR::PrimitiveDef_ptr result)
 {
   // Update the result.
@@ -9417,14 +9417,14 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::arguments
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9436,11 +9436,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::exception
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9449,11 +9449,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::result (C
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9475,7 +9475,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::target_is
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_string::result (IR::StringDef_ptr result)
 {
   // Update the result.
@@ -9501,14 +9501,14 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9520,11 +9520,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9533,11 +9533,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9559,7 +9559,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_wstring::result (IR::WstringDef_ptr result)
 {
   // Update the result.
@@ -9587,20 +9587,20 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_element_type = parameter_list->length ();
   parameter_list->length (length_element_type + 1);
   (*parameter_list)[length_element_type].argument <<=  this->element_type_;
-  
+
   (*parameter_list)[length_element_type].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9612,11 +9612,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9625,11 +9625,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9651,7 +9651,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_sequence::result (IR::SequenceDef_ptr result)
 {
   // Update the result.
@@ -9679,20 +9679,20 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_length = parameter_list->length ();
   parameter_list->length (length_length + 1);
   (*parameter_list)[length_length].argument <<= length_;
   (*parameter_list)[length_length].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_element_type = parameter_list->length ();
   parameter_list->length (length_element_type + 1);
   (*parameter_list)[length_element_type].argument <<=  this->element_type_;
-  
+
   (*parameter_list)[length_element_type].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9704,11 +9704,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9717,11 +9717,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9743,7 +9743,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_array::result (IR::ArrayDef_ptr result)
 {
   // Update the result.
@@ -9771,19 +9771,19 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_digits = parameter_list->length ();
   parameter_list->length (length_digits + 1);
   (*parameter_list)[length_digits].argument <<= digits_;
   (*parameter_list)[length_digits].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_scale = parameter_list->length ();
   parameter_list->length (length_scale + 1);
   (*parameter_list)[length_scale].argument <<= scale_;
   (*parameter_list)[length_scale].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -9795,11 +9795,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9808,11 +9808,11 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -9834,7 +9834,7 @@ POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::Repository::TAO_ServerRequestInfo_IR_Repository_create_fixed::result (IR::FixedDef_ptr result)
 {
   // Update the result.
@@ -10007,16 +10007,16 @@ POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker *POA_IR::_TAO_Componen
 
 POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::_TAO_ComponentRepository_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::~_TAO_ComponentRepository_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ComponentRepository_Proxy_Impl&
@@ -10025,32 +10025,32 @@ POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ComponentRepository_ThruPOA_Proxy_Impl,
@@ -10058,8 +10058,8 @@ POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -10068,9 +10068,9 @@ POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -10091,14 +10091,14 @@ int
 _TAO_ComponentRepository_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer =
     _TAO_ComponentRepository_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ComponentRepository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ComponentRepository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ComponentRepository_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ComponentRepository_Proxy_Broker_Factory_Initializer));
 
 
@@ -10248,7 +10248,7 @@ void POA_IR::ComponentRepository::create_component_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_component ri (
       _tao_server_request,
       _tao_impl,
@@ -10259,14 +10259,14 @@ void POA_IR::ComponentRepository::create_component_skel (
       supports_interfaces,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_component (
           id.in (),
           name.in (),
@@ -10276,7 +10276,7 @@ void POA_IR::ComponentRepository::create_component_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ComponentDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -10287,7 +10287,7 @@ void POA_IR::ComponentRepository::create_component_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -10308,11 +10308,11 @@ void POA_IR::ComponentRepository::create_component_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -10354,7 +10354,7 @@ void POA_IR::ComponentRepository::create_home_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_home ri (
       _tao_server_request,
       _tao_impl,
@@ -10366,14 +10366,14 @@ void POA_IR::ComponentRepository::create_home_skel (
       primary_key.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_home (
           id.in (),
           name.in (),
@@ -10384,7 +10384,7 @@ void POA_IR::ComponentRepository::create_home_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_HomeDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -10395,7 +10395,7 @@ void POA_IR::ComponentRepository::create_home_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -10416,11 +10416,11 @@ void POA_IR::ComponentRepository::create_home_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -10518,14 +10518,14 @@ POA_IR::ComponentRepository::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ComponentRepository::_unchecked_narrow (obj.in ());
 }
@@ -10558,36 +10558,36 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_base_component = parameter_list->length ();
   parameter_list->length (length_base_component + 1);
   (*parameter_list)[length_base_component].argument <<=  this->base_component_;
-  
+
   (*parameter_list)[length_base_component].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_supports_interfaces = parameter_list->length ();
   parameter_list->length (length_supports_interfaces + 1);
   (*parameter_list)[length_supports_interfaces].argument <<=  this->supports_interfaces_;
-  
+
   (*parameter_list)[length_supports_interfaces].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -10599,11 +10599,11 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_component::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -10612,11 +10612,11 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -10638,7 +10638,7 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_component::result (IR::ComponentDef_ptr result)
 {
   // Update the result.
@@ -10674,42 +10674,42 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_base_home = parameter_list->length ();
   parameter_list->length (length_base_home + 1);
   (*parameter_list)[length_base_home].argument <<=  this->base_home_;
-  
+
   (*parameter_list)[length_base_home].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_managed_component = parameter_list->length ();
   parameter_list->length (length_managed_component + 1);
   (*parameter_list)[length_managed_component].argument <<=  this->managed_component_;
-  
+
   (*parameter_list)[length_managed_component].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_primary_key = parameter_list->length ();
   parameter_list->length (length_primary_key + 1);
   (*parameter_list)[length_primary_key].argument <<=  this->primary_key_;
-  
+
   (*parameter_list)[length_primary_key].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -10721,11 +10721,11 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_home::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -10734,11 +10734,11 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -10760,7 +10760,7 @@ POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentRepository::TAO_ServerRequestInfo_IR_ComponentRepository_create_home::result (IR::HomeDef_ptr result)
 {
   // Update the result.
@@ -10934,16 +10934,16 @@ POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker *POA_IR::_TAO_ModuleDef_Strategi
 
 POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::_TAO_ModuleDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::~_TAO_ModuleDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ModuleDef_Proxy_Impl&
@@ -10952,32 +10952,32 @@ POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ModuleDef_ThruPOA_Proxy_Impl,
@@ -10985,8 +10985,8 @@ POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -10995,9 +10995,9 @@ POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -11018,14 +11018,14 @@ int
 _TAO_ModuleDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ModuleDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ModuleDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ModuleDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ModuleDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ModuleDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ModuleDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ModuleDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -11149,14 +11149,14 @@ POA_IR::ModuleDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ModuleDef::_unchecked_narrow (obj.in ());
 }
@@ -11318,16 +11318,16 @@ POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker *POA_IR::_TAO_ConstantDef_Stra
 
 POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::_TAO_ConstantDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::~_TAO_ConstantDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ConstantDef_Proxy_Impl&
@@ -11336,32 +11336,32 @@ POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ConstantDef_ThruPOA_Proxy_Impl,
@@ -11369,8 +11369,8 @@ POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -11379,9 +11379,9 @@ POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -11402,14 +11402,14 @@ int
 _TAO_ConstantDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ConstantDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ConstantDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ConstantDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ConstantDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ConstantDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ConstantDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ConstantDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -11617,25 +11617,25 @@ void POA_IR::ConstantDef::_get_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -11646,7 +11646,7 @@ void POA_IR::ConstantDef::_get_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -11667,11 +11667,11 @@ void POA_IR::ConstantDef::_get_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -11697,25 +11697,25 @@ void POA_IR::ConstantDef::_get_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -11726,7 +11726,7 @@ void POA_IR::ConstantDef::_get_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -11747,11 +11747,11 @@ void POA_IR::ConstantDef::_get_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -11782,27 +11782,27 @@ void POA_IR::ConstantDef::_set_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->type_def (
           type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -11810,7 +11810,7 @@ void POA_IR::ConstantDef::_set_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -11831,9 +11831,9 @@ void POA_IR::ConstantDef::_set_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -11854,25 +11854,25 @@ void POA_IR::ConstantDef::_get_value_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->value (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Any * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -11883,7 +11883,7 @@ void POA_IR::ConstantDef::_get_value_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -11904,11 +11904,11 @@ void POA_IR::ConstantDef::_get_value_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -11939,27 +11939,27 @@ void POA_IR::ConstantDef::_set_value_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_set ri (
       _tao_server_request,
       _tao_impl,
       value,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->value (
           value,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -11967,7 +11967,7 @@ void POA_IR::ConstantDef::_set_value_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -11988,9 +11988,9 @@ void POA_IR::ConstantDef::_set_value_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -12080,14 +12080,14 @@ POA_IR::ConstantDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ConstantDef::_unchecked_narrow (obj.in ());
 }
@@ -12110,7 +12110,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -12122,11 +12122,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -12135,11 +12135,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -12161,7 +12161,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -12185,7 +12185,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -12197,11 +12197,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -12210,11 +12210,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -12236,7 +12236,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -12262,15 +12262,15 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_set::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_type_def = parameter_list->length ();
   parameter_list->length (length_type_def + 1);
   (*parameter_list)[length_type_def].argument <<=  this->type_def_;
-  
+
   (*parameter_list)[length_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -12282,11 +12282,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_set::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -12295,7 +12295,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_type_def_set::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -12334,7 +12334,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -12346,11 +12346,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -12359,11 +12359,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -12385,7 +12385,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_get::result (CORBA::Any * result)
 {
   // Update the result.
@@ -12411,14 +12411,14 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_set::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_value = parameter_list->length ();
   parameter_list->length (length_value + 1);
   (*parameter_list)[length_value].argument <<= value_;
   (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -12430,11 +12430,11 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_set::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -12443,7 +12443,7 @@ POA_IR::ConstantDef::TAO_ServerRequestInfo_IR_ConstantDef_value_set::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -12617,16 +12617,16 @@ POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker *POA_IR::_TAO_TypedefDef_Strate
 
 POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::_TAO_TypedefDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::~_TAO_TypedefDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_TypedefDef_Proxy_Impl&
@@ -12635,32 +12635,32 @@ POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_TypedefDef_ThruPOA_Proxy_Impl,
@@ -12668,8 +12668,8 @@ POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -12678,9 +12678,9 @@ POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -12701,14 +12701,14 @@ int
 _TAO_TypedefDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_TypedefDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_TypedefDef_Proxy_Broker_Factory_function_pointer =
     _TAO_TypedefDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_TypedefDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_TypedefDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_TypedefDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_TypedefDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -12832,14 +12832,14 @@ POA_IR::TypedefDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_TypedefDef::_unchecked_narrow (obj.in ());
 }
@@ -13015,16 +13015,16 @@ POA_IR::_TAO_StructDef_Strategized_Proxy_Broker *POA_IR::_TAO_StructDef_Strategi
 
 POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::_TAO_StructDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::~_TAO_StructDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_StructDef_Proxy_Impl&
@@ -13033,32 +13033,32 @@ POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_StructDef_ThruPOA_Proxy_Impl,
@@ -13066,8 +13066,8 @@ POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -13076,9 +13076,9 @@ POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -13099,14 +13099,14 @@ int
 _TAO_StructDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_StructDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_StructDef_Proxy_Broker_Factory_function_pointer =
     _TAO_StructDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_StructDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_StructDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_StructDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_StructDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -13223,25 +13223,25 @@ void POA_IR::StructDef::_get_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->members (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_StructMemberSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -13252,7 +13252,7 @@ void POA_IR::StructDef::_get_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -13273,11 +13273,11 @@ void POA_IR::StructDef::_get_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -13308,27 +13308,27 @@ void POA_IR::StructDef::_set_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_set ri (
       _tao_server_request,
       _tao_impl,
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->members (
           members,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -13336,7 +13336,7 @@ void POA_IR::StructDef::_set_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -13357,9 +13357,9 @@ void POA_IR::StructDef::_set_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13458,14 +13458,14 @@ POA_IR::StructDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_StructDef::_unchecked_narrow (obj.in ());
 }
@@ -13488,7 +13488,7 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -13500,11 +13500,11 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -13513,11 +13513,11 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -13539,7 +13539,7 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_get::result (IR::StructMemberSeq * result)
 {
   // Update the result.
@@ -13565,15 +13565,15 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_set::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -13585,11 +13585,11 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_set::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -13598,7 +13598,7 @@ POA_IR::StructDef::TAO_ServerRequestInfo_IR_StructDef_members_set::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -13794,16 +13794,16 @@ POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker *POA_IR::_TAO_UnionDef_Strategize
 
 POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::_TAO_UnionDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::~_TAO_UnionDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_UnionDef_Proxy_Impl&
@@ -13812,32 +13812,32 @@ POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_UnionDef_ThruPOA_Proxy_Impl,
@@ -13845,8 +13845,8 @@ POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -13855,9 +13855,9 @@ POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -13878,14 +13878,14 @@ int
 _TAO_UnionDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_UnionDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_UnionDef_Proxy_Broker_Factory_function_pointer =
     _TAO_UnionDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_UnionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_UnionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_UnionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_UnionDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -14096,25 +14096,25 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get ri (
       _tao_server_request,
       _tao_impl ,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->discriminator_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -14125,7 +14125,7 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -14146,11 +14146,11 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -14176,25 +14176,25 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->discriminator_type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -14205,7 +14205,7 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -14226,11 +14226,11 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -14261,27 +14261,27 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       discriminator_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->discriminator_type_def (
           discriminator_type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -14289,7 +14289,7 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -14310,9 +14310,9 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -14333,25 +14333,25 @@ void POA_IR::UnionDef::_get_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->members (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_UnionMemberSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -14362,7 +14362,7 @@ void POA_IR::UnionDef::_get_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -14383,11 +14383,11 @@ void POA_IR::UnionDef::_get_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -14418,27 +14418,27 @@ void POA_IR::UnionDef::_set_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_set ri (
       _tao_server_request,
       _tao_impl,
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->members (
           members,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -14446,7 +14446,7 @@ void POA_IR::UnionDef::_set_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -14467,9 +14467,9 @@ void POA_IR::UnionDef::_set_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -14568,14 +14568,14 @@ POA_IR::UnionDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_UnionDef::_unchecked_narrow (obj.in ());
 }
@@ -14598,7 +14598,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -14610,11 +14610,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14623,11 +14623,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -14649,7 +14649,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::targ
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -14673,7 +14673,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -14685,11 +14685,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14698,11 +14698,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -14724,7 +14724,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -14750,15 +14750,15 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_discriminator_type_def = parameter_list->length ();
   parameter_list->length (length_discriminator_type_def + 1);
   (*parameter_list)[length_discriminator_type_def].argument <<=  this->discriminator_type_def_;
-  
+
   (*parameter_list)[length_discriminator_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -14770,11 +14770,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14783,7 +14783,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_discriminator_type_def_set::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -14822,7 +14822,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -14834,11 +14834,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14847,11 +14847,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -14873,7 +14873,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_get::result (IR::UnionMemberSeq * result)
 {
   // Update the result.
@@ -14899,15 +14899,15 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_set::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -14919,11 +14919,11 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_set::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14932,7 +14932,7 @@ POA_IR::UnionDef::TAO_ServerRequestInfo_IR_UnionDef_members_set::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -15108,16 +15108,16 @@ POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker *POA_IR::_TAO_EnumDef_Strategized_
 
 POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::_TAO_EnumDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::~_TAO_EnumDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_EnumDef_Proxy_Impl&
@@ -15126,32 +15126,32 @@ POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_EnumDef_ThruPOA_Proxy_Impl,
@@ -15159,8 +15159,8 @@ POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -15169,9 +15169,9 @@ POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -15192,14 +15192,14 @@ int
 _TAO_EnumDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_EnumDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_EnumDef_Proxy_Broker_Factory_function_pointer =
     _TAO_EnumDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_EnumDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_EnumDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_EnumDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_EnumDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -15315,25 +15315,25 @@ void POA_IR::EnumDef::_get_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->members (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_EnumMemberSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -15344,7 +15344,7 @@ void POA_IR::EnumDef::_get_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -15365,11 +15365,11 @@ void POA_IR::EnumDef::_get_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -15400,27 +15400,27 @@ void POA_IR::EnumDef::_set_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_set ri (
       _tao_server_request,
       _tao_impl,
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->members (
           members,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -15428,7 +15428,7 @@ void POA_IR::EnumDef::_set_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -15449,9 +15449,9 @@ void POA_IR::EnumDef::_set_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -15547,14 +15547,14 @@ POA_IR::EnumDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_EnumDef::_unchecked_narrow (obj.in ());
 }
@@ -15577,7 +15577,7 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -15589,11 +15589,11 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -15602,11 +15602,11 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -15628,7 +15628,7 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_get::result (IR::EnumMemberSeq * result)
 {
   // Update the result.
@@ -15654,15 +15654,15 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_set::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -15674,11 +15674,11 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_set::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -15687,7 +15687,7 @@ POA_IR::EnumDef::TAO_ServerRequestInfo_IR_EnumDef_members_set::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -15863,16 +15863,16 @@ POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker *POA_IR::_TAO_AliasDef_Strategize
 
 POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::_TAO_AliasDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::~_TAO_AliasDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_AliasDef_Proxy_Impl&
@@ -15881,32 +15881,32 @@ POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_AliasDef_ThruPOA_Proxy_Impl,
@@ -15914,8 +15914,8 @@ POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -15924,9 +15924,9 @@ POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -15947,14 +15947,14 @@ int
 _TAO_AliasDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_AliasDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_AliasDef_Proxy_Broker_Factory_function_pointer =
     _TAO_AliasDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_AliasDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_AliasDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_AliasDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_AliasDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -16070,25 +16070,25 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->original_type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -16099,7 +16099,7 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -16120,11 +16120,11 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -16155,27 +16155,27 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       original_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->original_type_def (
           original_type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -16183,7 +16183,7 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -16204,9 +16204,9 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -16302,14 +16302,14 @@ POA_IR::AliasDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_AliasDef::_unchecked_narrow (obj.in ());
 }
@@ -16332,7 +16332,7 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::argum
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -16344,11 +16344,11 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::excep
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16357,11 +16357,11 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::resul
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -16383,7 +16383,7 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::targe
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -16409,15 +16409,15 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set::argum
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_original_type_def = parameter_list->length ();
   parameter_list->length (length_original_type_def + 1);
   (*parameter_list)[length_original_type_def].argument <<=  this->original_type_def_;
-  
+
   (*parameter_list)[length_original_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -16429,11 +16429,11 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set::excep
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16442,7 +16442,7 @@ POA_IR::AliasDef::TAO_ServerRequestInfo_IR_AliasDef_original_type_def_set::resul
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -16616,16 +16616,16 @@ POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker *POA_IR::_TAO_NativeDef_Strategi
 
 POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::_TAO_NativeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::~_TAO_NativeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_NativeDef_Proxy_Impl&
@@ -16634,32 +16634,32 @@ POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_NativeDef_ThruPOA_Proxy_Impl,
@@ -16667,8 +16667,8 @@ POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -16677,9 +16677,9 @@ POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -16700,14 +16700,14 @@ int
 _TAO_NativeDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_NativeDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_NativeDef_Proxy_Broker_Factory_function_pointer =
     _TAO_NativeDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_NativeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_NativeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_NativeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_NativeDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -16835,14 +16835,14 @@ POA_IR::NativeDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_NativeDef::_unchecked_narrow (obj.in ());
 }
@@ -16970,16 +16970,16 @@ POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker *POA_IR::_TAO_PrimitiveDef_St
 
 POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::_TAO_PrimitiveDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::~_TAO_PrimitiveDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_PrimitiveDef_Proxy_Impl&
@@ -16988,32 +16988,32 @@ POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_PrimitiveDef_ThruPOA_Proxy_Impl,
@@ -17021,8 +17021,8 @@ POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -17031,9 +17031,9 @@ POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -17054,14 +17054,14 @@ int
 _TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer =
     _TAO_PrimitiveDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_PrimitiveDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_PrimitiveDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -17143,25 +17143,25 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->kind (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PrimitiveKind _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -17171,7 +17171,7 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -17192,11 +17192,11 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -17291,14 +17291,14 @@ POA_IR::PrimitiveDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_PrimitiveDef::_unchecked_narrow (obj.in ());
 }
@@ -17321,7 +17321,7 @@ POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -17333,11 +17333,11 @@ POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17346,11 +17346,11 @@ POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -17372,7 +17372,7 @@ POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::PrimitiveDef::TAO_ServerRequestInfo_IR_PrimitiveDef_kind_get::result (IR::PrimitiveKind result)
 {
   // Update the result.
@@ -17521,16 +17521,16 @@ POA_IR::_TAO_StringDef_Strategized_Proxy_Broker *POA_IR::_TAO_StringDef_Strategi
 
 POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::_TAO_StringDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::~_TAO_StringDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_StringDef_Proxy_Impl&
@@ -17539,32 +17539,32 @@ POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_StringDef_ThruPOA_Proxy_Impl,
@@ -17572,8 +17572,8 @@ POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -17582,9 +17582,9 @@ POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -17605,14 +17605,14 @@ int
 _TAO_StringDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_StringDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_StringDef_Proxy_Broker_Factory_function_pointer =
     _TAO_StringDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_StringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_StringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_StringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_StringDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -17726,25 +17726,25 @@ void POA_IR::StringDef::_get_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->bound (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::ULong _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -17754,7 +17754,7 @@ void POA_IR::StringDef::_get_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -17775,11 +17775,11 @@ void POA_IR::StringDef::_get_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -17810,27 +17810,27 @@ void POA_IR::StringDef::_set_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_set ri (
       _tao_server_request,
       _tao_impl,
       bound,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->bound (
           bound,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -17838,7 +17838,7 @@ void POA_IR::StringDef::_set_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -17859,9 +17859,9 @@ void POA_IR::StringDef::_set_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -17951,14 +17951,14 @@ POA_IR::StringDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_StringDef::_unchecked_narrow (obj.in ());
 }
@@ -17981,7 +17981,7 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -17993,11 +17993,11 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -18006,11 +18006,11 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -18032,7 +18032,7 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_get::result (CORBA::ULong result)
 {
   // Update the result.
@@ -18058,14 +18058,14 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_set::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -18077,11 +18077,11 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_set::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -18090,7 +18090,7 @@ POA_IR::StringDef::TAO_ServerRequestInfo_IR_StringDef_bound_set::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -18254,16 +18254,16 @@ POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker *POA_IR::_TAO_WstringDef_Strate
 
 POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::_TAO_WstringDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::~_TAO_WstringDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_WstringDef_Proxy_Impl&
@@ -18272,32 +18272,32 @@ POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_WstringDef_ThruPOA_Proxy_Impl,
@@ -18305,8 +18305,8 @@ POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -18315,9 +18315,9 @@ POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -18338,14 +18338,14 @@ int
 _TAO_WstringDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_WstringDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_WstringDef_Proxy_Broker_Factory_function_pointer =
     _TAO_WstringDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_WstringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_WstringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_WstringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_WstringDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -18459,25 +18459,25 @@ void POA_IR::WstringDef::_get_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->bound (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::ULong _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -18487,7 +18487,7 @@ void POA_IR::WstringDef::_get_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -18508,11 +18508,11 @@ void POA_IR::WstringDef::_get_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -18543,27 +18543,27 @@ void POA_IR::WstringDef::_set_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_set ri (
       _tao_server_request,
       _tao_impl,
       bound,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->bound (
           bound,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -18571,7 +18571,7 @@ void POA_IR::WstringDef::_set_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -18592,9 +18592,9 @@ void POA_IR::WstringDef::_set_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -18684,14 +18684,14 @@ POA_IR::WstringDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_WstringDef::_unchecked_narrow (obj.in ());
 }
@@ -18714,7 +18714,7 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -18726,11 +18726,11 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -18739,11 +18739,11 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -18765,7 +18765,7 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_get::result (CORBA::ULong result)
 {
   // Update the result.
@@ -18791,14 +18791,14 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_set::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -18810,11 +18810,11 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_set::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -18823,7 +18823,7 @@ POA_IR::WstringDef::TAO_ServerRequestInfo_IR_WstringDef_bound_set::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -18989,16 +18989,16 @@ POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker *POA_IR::_TAO_FixedDef_Strategize
 
 POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::_TAO_FixedDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::~_TAO_FixedDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_FixedDef_Proxy_Impl&
@@ -19007,32 +19007,32 @@ POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_FixedDef_ThruPOA_Proxy_Impl,
@@ -19040,8 +19040,8 @@ POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -19050,9 +19050,9 @@ POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -19073,14 +19073,14 @@ int
 _TAO_FixedDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_FixedDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_FixedDef_Proxy_Broker_Factory_function_pointer =
     _TAO_FixedDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_FixedDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_FixedDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_FixedDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_FixedDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -19257,25 +19257,25 @@ void POA_IR::FixedDef::_get_digits_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->digits (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::UShort _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -19285,7 +19285,7 @@ void POA_IR::FixedDef::_get_digits_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -19306,11 +19306,11 @@ void POA_IR::FixedDef::_get_digits_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -19341,27 +19341,27 @@ void POA_IR::FixedDef::_set_digits_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_set ri (
       _tao_server_request,
       _tao_impl,
       digits,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->digits (
           digits,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -19369,7 +19369,7 @@ void POA_IR::FixedDef::_set_digits_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -19390,9 +19390,9 @@ void POA_IR::FixedDef::_set_digits_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -19413,25 +19413,25 @@ void POA_IR::FixedDef::_get_scale_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->scale (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Short _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -19441,7 +19441,7 @@ void POA_IR::FixedDef::_get_scale_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -19462,11 +19462,11 @@ void POA_IR::FixedDef::_get_scale_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -19497,27 +19497,27 @@ void POA_IR::FixedDef::_set_scale_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_set ri (
       _tao_server_request,
       _tao_impl,
       scale,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->scale (
           scale,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -19525,7 +19525,7 @@ void POA_IR::FixedDef::_set_scale_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -19546,9 +19546,9 @@ void POA_IR::FixedDef::_set_scale_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -19638,14 +19638,14 @@ POA_IR::FixedDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_FixedDef::_unchecked_narrow (obj.in ());
 }
@@ -19668,7 +19668,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -19680,11 +19680,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -19693,11 +19693,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -19719,7 +19719,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_get::result (CORBA::UShort result)
 {
   // Update the result.
@@ -19745,14 +19745,14 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_set::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_digits = parameter_list->length ();
   parameter_list->length (length_digits + 1);
   (*parameter_list)[length_digits].argument <<= digits_;
   (*parameter_list)[length_digits].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -19764,11 +19764,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_set::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -19777,7 +19777,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_digits_set::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -19816,7 +19816,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -19828,11 +19828,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -19841,11 +19841,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -19867,7 +19867,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_get::result (CORBA::Short result)
 {
   // Update the result.
@@ -19893,14 +19893,14 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_set::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_scale = parameter_list->length ();
   parameter_list->length (length_scale + 1);
   (*parameter_list)[length_scale].argument <<= scale_;
   (*parameter_list)[length_scale].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -19912,11 +19912,11 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_set::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -19925,7 +19925,7 @@ POA_IR::FixedDef::TAO_ServerRequestInfo_IR_FixedDef_scale_set::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -20092,16 +20092,16 @@ POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker *POA_IR::_TAO_SequenceDef_Stra
 
 POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::_TAO_SequenceDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::~_TAO_SequenceDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_SequenceDef_Proxy_Impl&
@@ -20110,32 +20110,32 @@ POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_SequenceDef_ThruPOA_Proxy_Impl,
@@ -20143,8 +20143,8 @@ POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -20153,9 +20153,9 @@ POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -20176,14 +20176,14 @@ int
 _TAO_SequenceDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_SequenceDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_SequenceDef_Proxy_Broker_Factory_function_pointer =
     _TAO_SequenceDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_SequenceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_SequenceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_SequenceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_SequenceDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -20391,25 +20391,25 @@ void POA_IR::SequenceDef::_get_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->bound (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::ULong _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -20419,7 +20419,7 @@ void POA_IR::SequenceDef::_get_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -20440,11 +20440,11 @@ void POA_IR::SequenceDef::_get_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -20475,27 +20475,27 @@ void POA_IR::SequenceDef::_set_bound_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_set ri (
       _tao_server_request,
       _tao_impl,
       bound,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->bound (
           bound,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -20503,7 +20503,7 @@ void POA_IR::SequenceDef::_set_bound_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -20524,9 +20524,9 @@ void POA_IR::SequenceDef::_set_bound_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -20547,25 +20547,25 @@ void POA_IR::SequenceDef::_get_element_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->element_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -20576,7 +20576,7 @@ void POA_IR::SequenceDef::_get_element_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -20597,11 +20597,11 @@ void POA_IR::SequenceDef::_get_element_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -20627,25 +20627,25 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->element_type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -20656,7 +20656,7 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -20677,11 +20677,11 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -20712,27 +20712,27 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       element_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->element_type_def (
           element_type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -20740,7 +20740,7 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -20761,9 +20761,9 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -20853,14 +20853,14 @@ POA_IR::SequenceDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_SequenceDef::_unchecked_narrow (obj.in ());
 }
@@ -20883,7 +20883,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -20895,11 +20895,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -20908,11 +20908,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -20934,7 +20934,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_get::result (CORBA::ULong result)
 {
   // Update the result.
@@ -20960,14 +20960,14 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_set::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_bound = parameter_list->length ();
   parameter_list->length (length_bound + 1);
   (*parameter_list)[length_bound].argument <<= bound_;
   (*parameter_list)[length_bound].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -20979,11 +20979,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_set::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -20992,7 +20992,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_bound_set::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -21031,7 +21031,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -21043,11 +21043,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -21056,11 +21056,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -21082,7 +21082,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::targ
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -21106,7 +21106,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -21118,11 +21118,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -21131,11 +21131,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -21157,7 +21157,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -21183,15 +21183,15 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_element_type_def = parameter_list->length ();
   parameter_list->length (length_element_type_def + 1);
   (*parameter_list)[length_element_type_def].argument <<=  this->element_type_def_;
-  
+
   (*parameter_list)[length_element_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -21203,11 +21203,11 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -21216,7 +21216,7 @@ POA_IR::SequenceDef::TAO_ServerRequestInfo_IR_SequenceDef_element_type_def_set::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -21383,16 +21383,16 @@ POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker *POA_IR::_TAO_ArrayDef_Strategize
 
 POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::_TAO_ArrayDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::~_TAO_ArrayDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ArrayDef_Proxy_Impl&
@@ -21401,32 +21401,32 @@ POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ArrayDef_ThruPOA_Proxy_Impl,
@@ -21434,8 +21434,8 @@ POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -21444,9 +21444,9 @@ POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -21467,14 +21467,14 @@ int
 _TAO_ArrayDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ArrayDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ArrayDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ArrayDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ArrayDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ArrayDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ArrayDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ArrayDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -21682,25 +21682,25 @@ void POA_IR::ArrayDef::_get_length_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->length (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::ULong _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -21710,7 +21710,7 @@ void POA_IR::ArrayDef::_get_length_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -21731,11 +21731,11 @@ void POA_IR::ArrayDef::_get_length_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -21766,27 +21766,27 @@ void POA_IR::ArrayDef::_set_length_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_set ri (
       _tao_server_request,
       _tao_impl,
       length,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->length (
           length,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -21794,7 +21794,7 @@ void POA_IR::ArrayDef::_set_length_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -21815,9 +21815,9 @@ void POA_IR::ArrayDef::_set_length_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -21838,25 +21838,25 @@ void POA_IR::ArrayDef::_get_element_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->element_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -21867,7 +21867,7 @@ void POA_IR::ArrayDef::_get_element_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -21888,11 +21888,11 @@ void POA_IR::ArrayDef::_get_element_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -21918,25 +21918,25 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->element_type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -21947,7 +21947,7 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -21968,11 +21968,11 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -22003,27 +22003,27 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       element_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->element_type_def (
           element_type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -22031,7 +22031,7 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -22052,9 +22052,9 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -22144,14 +22144,14 @@ POA_IR::ArrayDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ArrayDef::_unchecked_narrow (obj.in ());
 }
@@ -22174,7 +22174,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -22186,11 +22186,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -22199,11 +22199,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -22225,7 +22225,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_get::result (CORBA::ULong result)
 {
   // Update the result.
@@ -22251,14 +22251,14 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_set::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_length = parameter_list->length ();
   parameter_list->length (length_length + 1);
   (*parameter_list)[length_length].argument <<= length_;
   (*parameter_list)[length_length].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -22270,11 +22270,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_set::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -22283,7 +22283,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_length_set::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -22322,7 +22322,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -22334,11 +22334,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -22347,11 +22347,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -22373,7 +22373,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -22397,7 +22397,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -22409,11 +22409,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -22422,11 +22422,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -22448,7 +22448,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -22474,15 +22474,15 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_element_type_def = parameter_list->length ();
   parameter_list->length (length_element_type_def + 1);
   (*parameter_list)[length_element_type_def].argument <<=  this->element_type_def_;
-  
+
   (*parameter_list)[length_element_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -22494,11 +22494,11 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -22507,7 +22507,7 @@ POA_IR::ArrayDef::TAO_ServerRequestInfo_IR_ArrayDef_element_type_def_set::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -22699,16 +22699,16 @@ POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker *POA_IR::_TAO_ExceptionDef_St
 
 POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::_TAO_ExceptionDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::~_TAO_ExceptionDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ExceptionDef_Proxy_Impl&
@@ -22717,32 +22717,32 @@ POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ExceptionDef_ThruPOA_Proxy_Impl,
@@ -22750,8 +22750,8 @@ POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -22760,9 +22760,9 @@ POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -22783,14 +22783,14 @@ int
 _TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ExceptionDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ExceptionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ExceptionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ExceptionDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -22936,25 +22936,25 @@ void POA_IR::ExceptionDef::_get_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -22965,7 +22965,7 @@ void POA_IR::ExceptionDef::_get_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -22986,11 +22986,11 @@ void POA_IR::ExceptionDef::_get_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -23016,25 +23016,25 @@ void POA_IR::ExceptionDef::_get_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->members (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_StructMemberSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -23045,7 +23045,7 @@ void POA_IR::ExceptionDef::_get_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -23066,11 +23066,11 @@ void POA_IR::ExceptionDef::_get_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -23101,27 +23101,27 @@ void POA_IR::ExceptionDef::_set_members_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_set ri (
       _tao_server_request,
       _tao_impl,
       members,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->members (
           members,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -23129,7 +23129,7 @@ void POA_IR::ExceptionDef::_set_members_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -23150,9 +23150,9 @@ void POA_IR::ExceptionDef::_set_members_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -23258,7 +23258,7 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -23270,11 +23270,11 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -23283,11 +23283,11 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -23309,7 +23309,7 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -23333,7 +23333,7 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -23345,11 +23345,11 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -23358,11 +23358,11 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -23384,7 +23384,7 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_get::result (IR::StructMemberSeq * result)
 {
   // Update the result.
@@ -23410,15 +23410,15 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_set::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_members = parameter_list->length ();
   parameter_list->length (length_members + 1);
   (*parameter_list)[length_members].argument <<=  this->members_;
-  
+
   (*parameter_list)[length_members].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -23430,11 +23430,11 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_set::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -23443,7 +23443,7 @@ POA_IR::ExceptionDef::TAO_ServerRequestInfo_IR_ExceptionDef_members_set::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -23621,16 +23621,16 @@ POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker *POA_IR::_TAO_AttributeDef_St
 
 POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::_TAO_AttributeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::~_TAO_AttributeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_AttributeDef_Proxy_Impl&
@@ -23639,32 +23639,32 @@ POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_AttributeDef_ThruPOA_Proxy_Impl,
@@ -23672,8 +23672,8 @@ POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -23682,9 +23682,9 @@ POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -23705,14 +23705,14 @@ int
 _TAO_AttributeDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_AttributeDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_AttributeDef_Proxy_Broker_Factory_function_pointer =
     _TAO_AttributeDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_AttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_AttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_AttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_AttributeDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -23920,25 +23920,25 @@ void POA_IR::AttributeDef::_get_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -23949,7 +23949,7 @@ void POA_IR::AttributeDef::_get_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -23970,11 +23970,11 @@ void POA_IR::AttributeDef::_get_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -24000,25 +24000,25 @@ void POA_IR::AttributeDef::_get_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -24029,7 +24029,7 @@ void POA_IR::AttributeDef::_get_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -24050,11 +24050,11 @@ void POA_IR::AttributeDef::_get_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -24085,27 +24085,27 @@ void POA_IR::AttributeDef::_set_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->type_def (
           type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -24113,7 +24113,7 @@ void POA_IR::AttributeDef::_set_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -24134,9 +24134,9 @@ void POA_IR::AttributeDef::_set_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -24157,25 +24157,25 @@ void POA_IR::AttributeDef::_get_mode_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->mode (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_AttributeMode _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -24185,7 +24185,7 @@ void POA_IR::AttributeDef::_get_mode_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -24206,11 +24206,11 @@ void POA_IR::AttributeDef::_get_mode_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -24241,27 +24241,27 @@ void POA_IR::AttributeDef::_set_mode_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_set ri (
       _tao_server_request,
       _tao_impl,
       mode,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->mode (
           mode,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -24269,7 +24269,7 @@ void POA_IR::AttributeDef::_set_mode_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -24290,9 +24290,9 @@ void POA_IR::AttributeDef::_set_mode_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -24382,14 +24382,14 @@ POA_IR::AttributeDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_AttributeDef::_unchecked_narrow (obj.in ());
 }
@@ -24412,7 +24412,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -24424,11 +24424,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -24437,11 +24437,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -24463,7 +24463,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -24487,7 +24487,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -24499,11 +24499,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -24512,11 +24512,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -24538,7 +24538,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -24564,15 +24564,15 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_set::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_type_def = parameter_list->length ();
   parameter_list->length (length_type_def + 1);
   (*parameter_list)[length_type_def].argument <<=  this->type_def_;
-  
+
   (*parameter_list)[length_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -24584,11 +24584,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_set::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -24597,7 +24597,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_type_def_set::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -24636,7 +24636,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -24648,11 +24648,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -24661,11 +24661,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -24687,7 +24687,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_get::result (IR::AttributeMode result)
 {
   // Update the result.
@@ -24713,15 +24713,15 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_set::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -24733,11 +24733,11 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_set::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -24746,7 +24746,7 @@ POA_IR::AttributeDef::TAO_ServerRequestInfo_IR_AttributeDef_mode_set::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -24979,16 +24979,16 @@ POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker *POA_IR::_TAO_OperationDef_St
 
 POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::_TAO_OperationDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::~_TAO_OperationDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_OperationDef_Proxy_Impl&
@@ -24997,32 +24997,32 @@ POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_OperationDef_ThruPOA_Proxy_Impl,
@@ -25030,8 +25030,8 @@ POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -25040,9 +25040,9 @@ POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -25063,14 +25063,14 @@ int
 _TAO_OperationDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_OperationDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_OperationDef_Proxy_Broker_Factory_function_pointer =
     _TAO_OperationDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_OperationDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_OperationDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_OperationDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_OperationDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -25467,25 +25467,25 @@ void POA_IR::OperationDef::_get_result_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->result (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -25496,7 +25496,7 @@ void POA_IR::OperationDef::_get_result_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25517,11 +25517,11 @@ void POA_IR::OperationDef::_get_result_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -25547,25 +25547,25 @@ void POA_IR::OperationDef::_get_result_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->result_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -25576,7 +25576,7 @@ void POA_IR::OperationDef::_get_result_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25597,11 +25597,11 @@ void POA_IR::OperationDef::_get_result_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -25632,27 +25632,27 @@ void POA_IR::OperationDef::_set_result_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_set ri (
       _tao_server_request,
       _tao_impl,
       result_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->result_def (
           result_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -25660,7 +25660,7 @@ void POA_IR::OperationDef::_set_result_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25681,9 +25681,9 @@ void POA_IR::OperationDef::_set_result_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -25704,25 +25704,25 @@ void POA_IR::OperationDef::_get_params_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get ri (
       _tao_server_request,
       _tao_impl ,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->params (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ParDescriptionSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -25733,7 +25733,7 @@ void POA_IR::OperationDef::_get_params_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25754,11 +25754,11 @@ void POA_IR::OperationDef::_get_params_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -25789,27 +25789,27 @@ void POA_IR::OperationDef::_set_params_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_set ri (
       _tao_server_request,
       _tao_impl,
       params,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->params (
           params,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -25817,7 +25817,7 @@ void POA_IR::OperationDef::_set_params_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25838,9 +25838,9 @@ void POA_IR::OperationDef::_set_params_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -25861,25 +25861,25 @@ void POA_IR::OperationDef::_get_mode_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->mode (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_OperationMode _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -25889,7 +25889,7 @@ void POA_IR::OperationDef::_get_mode_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25910,11 +25910,11 @@ void POA_IR::OperationDef::_get_mode_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -25945,27 +25945,27 @@ void POA_IR::OperationDef::_set_mode_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_set ri (
       _tao_server_request,
       _tao_impl,
       mode,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->mode (
           mode,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -25973,7 +25973,7 @@ void POA_IR::OperationDef::_set_mode_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -25994,9 +25994,9 @@ void POA_IR::OperationDef::_set_mode_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -26017,25 +26017,25 @@ void POA_IR::OperationDef::_get_contexts_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->contexts (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ContextIdSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -26046,7 +26046,7 @@ void POA_IR::OperationDef::_get_contexts_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -26067,11 +26067,11 @@ void POA_IR::OperationDef::_get_contexts_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -26102,27 +26102,27 @@ void POA_IR::OperationDef::_set_contexts_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_set ri (
       _tao_server_request,
       _tao_impl,
       contexts,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->contexts (
           contexts,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -26130,7 +26130,7 @@ void POA_IR::OperationDef::_set_contexts_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -26151,9 +26151,9 @@ void POA_IR::OperationDef::_set_contexts_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -26174,25 +26174,25 @@ void POA_IR::OperationDef::_get_exceptions_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->exceptions (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ExceptionDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -26203,7 +26203,7 @@ void POA_IR::OperationDef::_get_exceptions_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -26224,11 +26224,11 @@ void POA_IR::OperationDef::_get_exceptions_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -26259,27 +26259,27 @@ void POA_IR::OperationDef::_set_exceptions_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_set ri (
       _tao_server_request,
       _tao_impl,
       exceptions,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->exceptions (
           exceptions,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -26287,7 +26287,7 @@ void POA_IR::OperationDef::_set_exceptions_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -26308,9 +26308,9 @@ void POA_IR::OperationDef::_set_exceptions_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -26400,14 +26400,14 @@ POA_IR::OperationDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_OperationDef::_unchecked_narrow (obj.in ());
 }
@@ -26430,7 +26430,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -26442,11 +26442,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26455,11 +26455,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -26481,7 +26481,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -26505,7 +26505,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -26517,11 +26517,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26530,11 +26530,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -26556,7 +26556,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::targ
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -26582,15 +26582,15 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_set::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_result_def = parameter_list->length ();
   parameter_list->length (length_result_def + 1);
   (*parameter_list)[length_result_def].argument <<=  this->result_def_;
-  
+
   (*parameter_list)[length_result_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -26602,11 +26602,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_set::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26615,7 +26615,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_result_def_set::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -26654,7 +26654,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -26666,11 +26666,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26679,11 +26679,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -26705,7 +26705,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_get::result (IR::ParDescriptionSeq * result)
 {
   // Update the result.
@@ -26731,15 +26731,15 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_set::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_params = parameter_list->length ();
   parameter_list->length (length_params + 1);
   (*parameter_list)[length_params].argument <<=  this->params_;
-  
+
   (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -26751,11 +26751,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_set::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26764,7 +26764,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_params_set::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -26803,7 +26803,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -26815,11 +26815,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26828,11 +26828,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -26854,7 +26854,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_get::result (IR::OperationMode result)
 {
   // Update the result.
@@ -26880,15 +26880,15 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_set::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -26900,11 +26900,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_set::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26913,7 +26913,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_mode_set::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -26952,7 +26952,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -26964,11 +26964,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26977,11 +26977,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -27003,7 +27003,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_get::result (IR::ContextIdSeq * result)
 {
   // Update the result.
@@ -27029,15 +27029,15 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_set::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_contexts = parameter_list->length ();
   parameter_list->length (length_contexts + 1);
   (*parameter_list)[length_contexts].argument <<=  this->contexts_;
-  
+
   (*parameter_list)[length_contexts].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -27049,11 +27049,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_set::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -27062,7 +27062,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_contexts_set::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -27101,7 +27101,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -27113,11 +27113,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -27126,11 +27126,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -27152,7 +27152,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::targ
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_get::result (IR::ExceptionDefSeq * result)
 {
   // Update the result.
@@ -27178,15 +27178,15 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_set::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_exceptions = parameter_list->length ();
   parameter_list->length (length_exceptions + 1);
   (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
+
   (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -27198,11 +27198,11 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_set::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -27211,7 +27211,7 @@ POA_IR::OperationDef::TAO_ServerRequestInfo_IR_OperationDef_exceptions_set::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -27411,16 +27411,16 @@ POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker *POA_IR::_TAO_InterfaceDef_St
 
 POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::_TAO_InterfaceDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::~_TAO_InterfaceDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_InterfaceDef_Proxy_Impl&
@@ -27429,32 +27429,32 @@ POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_InterfaceDef_ThruPOA_Proxy_Impl,
@@ -27462,8 +27462,8 @@ POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -27472,9 +27472,9 @@ POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -27495,14 +27495,14 @@ int
 _TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer =
     _TAO_InterfaceDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_InterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_InterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_InterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -27869,25 +27869,25 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->base_interfaces (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -27898,7 +27898,7 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -27919,11 +27919,11 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -27954,27 +27954,27 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set ri (
       _tao_server_request,
       _tao_impl,
       base_interfaces,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->base_interfaces (
           base_interfaces,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -27982,7 +27982,7 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28003,9 +28003,9 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -28026,25 +28026,25 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_abstract (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -28054,7 +28054,7 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28075,11 +28075,11 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -28110,27 +28110,27 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set ri (
       _tao_server_request,
       _tao_impl,
       is_abstract,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->is_abstract (
           is_abstract,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -28138,7 +28138,7 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28159,9 +28159,9 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -28182,25 +28182,25 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_local (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -28210,7 +28210,7 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28231,11 +28231,11 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -28266,27 +28266,27 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set ri (
       _tao_server_request,
       _tao_impl,
       is_local,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->is_local (
           is_local,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -28294,7 +28294,7 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28315,9 +28315,9 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -28344,27 +28344,27 @@ void POA_IR::InterfaceDef::is_a_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a ri (
       _tao_server_request,
       _tao_impl,
       interface_id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_a (
           interface_id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -28374,7 +28374,7 @@ void POA_IR::InterfaceDef::is_a_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28395,11 +28395,11 @@ void POA_IR::InterfaceDef::is_a_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -28443,7 +28443,7 @@ void POA_IR::InterfaceDef::create_attribute_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute ri (
       _tao_server_request,
       _tao_impl,
@@ -28456,14 +28456,14 @@ void POA_IR::InterfaceDef::create_attribute_skel (
       put_exceptions,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_attribute (
           id.in (),
           name.in (),
@@ -28475,7 +28475,7 @@ void POA_IR::InterfaceDef::create_attribute_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_AttributeDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -28486,7 +28486,7 @@ void POA_IR::InterfaceDef::create_attribute_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28507,11 +28507,11 @@ void POA_IR::InterfaceDef::create_attribute_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -28557,7 +28557,7 @@ void POA_IR::InterfaceDef::create_operation_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation ri (
       _tao_server_request,
       _tao_impl,
@@ -28571,14 +28571,14 @@ void POA_IR::InterfaceDef::create_operation_skel (
       contexts,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_operation (
           id.in (),
           name.in (),
@@ -28591,7 +28591,7 @@ void POA_IR::InterfaceDef::create_operation_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_OperationDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -28602,7 +28602,7 @@ void POA_IR::InterfaceDef::create_operation_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -28623,11 +28623,11 @@ void POA_IR::InterfaceDef::create_operation_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -28728,14 +28728,14 @@ POA_IR::InterfaceDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_InterfaceDef::_unchecked_narrow (obj.in ());
 }
@@ -28758,7 +28758,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -28770,11 +28770,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -28783,11 +28783,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -28809,7 +28809,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get:
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_get::result (IR::InterfaceDefSeq * result)
 {
   // Update the result.
@@ -28835,15 +28835,15 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_base_interfaces = parameter_list->length ();
   parameter_list->length (length_base_interfaces + 1);
   (*parameter_list)[length_base_interfaces].argument <<=  this->base_interfaces_;
-  
+
   (*parameter_list)[length_base_interfaces].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -28855,11 +28855,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -28868,7 +28868,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_base_interfaces_set:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -28907,7 +28907,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::arg
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -28919,11 +28919,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::exc
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -28932,11 +28932,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::res
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -28958,7 +28958,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::tar
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -28984,14 +28984,14 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set::arg
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_is_abstract = parameter_list->length ();
   parameter_list->length (length_is_abstract + 1);
   (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
   (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -29003,11 +29003,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set::exc
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29016,7 +29016,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_abstract_set::res
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -29055,7 +29055,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -29067,11 +29067,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29080,11 +29080,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -29106,7 +29106,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -29132,14 +29132,14 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_is_local = parameter_list->length ();
   parameter_list->length (length_is_local + 1);
   (*parameter_list)[length_is_local].argument <<= CORBA::Any::from_boolean (this->is_local_);
   (*parameter_list)[length_is_local].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -29151,11 +29151,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29164,7 +29164,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_local_set::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -29205,14 +29205,14 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::arguments (COR
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_interface_id = parameter_list->length ();
   parameter_list->length (length_interface_id + 1);
   (*parameter_list)[length_interface_id].argument <<= interface_id_;
   (*parameter_list)[length_interface_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -29224,11 +29224,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::exceptions (CO
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29237,11 +29237,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::result (CORBA:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -29263,7 +29263,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_is_a::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -29301,48 +29301,48 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_type = parameter_list->length ();
   parameter_list->length (length_type + 1);
   (*parameter_list)[length_type].argument <<=  this->type_;
-  
+
   (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_get_exceptions = parameter_list->length ();
   parameter_list->length (length_get_exceptions + 1);
   (*parameter_list)[length_get_exceptions].argument <<=  this->get_exceptions_;
-  
+
   (*parameter_list)[length_get_exceptions].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_put_exceptions = parameter_list->length ();
   parameter_list->length (length_put_exceptions + 1);
   (*parameter_list)[length_put_exceptions].argument <<=  this->put_exceptions_;
-  
+
   (*parameter_list)[length_put_exceptions].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -29354,11 +29354,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29367,11 +29367,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -29393,7 +29393,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_attribute::result (IR::AttributeDef_ptr result)
 {
   // Update the result.
@@ -29433,54 +29433,54 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_result = parameter_list->length ();
   parameter_list->length (length_result + 1);
   (*parameter_list)[length_result].argument <<=  this->result_;
-  
+
   (*parameter_list)[length_result].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_params = parameter_list->length ();
   parameter_list->length (length_params + 1);
   (*parameter_list)[length_params].argument <<=  this->params_;
-  
+
   (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exceptions = parameter_list->length ();
   parameter_list->length (length_exceptions + 1);
   (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
+
   (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_contexts = parameter_list->length ();
   parameter_list->length (length_contexts + 1);
   (*parameter_list)[length_contexts].argument <<=  this->contexts_;
-  
+
   (*parameter_list)[length_contexts].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -29492,11 +29492,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29505,11 +29505,11 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -29531,7 +29531,7 @@ POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::InterfaceDef::TAO_ServerRequestInfo_IR_InterfaceDef_create_operation::result (IR::OperationDef_ptr result)
 {
   // Update the result.
@@ -29694,16 +29694,16 @@ POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker *POA_IR::_TAO_ValueMemberDe
 
 POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::_TAO_ValueMemberDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::~_TAO_ValueMemberDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ValueMemberDef_Proxy_Impl&
@@ -29712,32 +29712,32 @@ POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ValueMemberDef_ThruPOA_Proxy_Impl,
@@ -29745,8 +29745,8 @@ POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -29755,9 +29755,9 @@ POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -29778,14 +29778,14 @@ int
 _TAO_ValueMemberDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ValueMemberDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ValueMemberDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ValueMemberDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ValueMemberDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ValueMemberDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -29993,25 +29993,25 @@ void POA_IR::ValueMemberDef::_get_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::TypeCode_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -30022,7 +30022,7 @@ void POA_IR::ValueMemberDef::_get_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -30043,11 +30043,11 @@ void POA_IR::ValueMemberDef::_get_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -30073,25 +30073,25 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -30102,7 +30102,7 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -30123,11 +30123,11 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -30158,27 +30158,27 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->type_def (
           type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -30186,7 +30186,7 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -30207,9 +30207,9 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -30230,25 +30230,25 @@ void POA_IR::ValueMemberDef::_get_access_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->access (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Visibility _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -30258,7 +30258,7 @@ void POA_IR::ValueMemberDef::_get_access_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -30279,11 +30279,11 @@ void POA_IR::ValueMemberDef::_get_access_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -30314,27 +30314,27 @@ void POA_IR::ValueMemberDef::_set_access_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_set ri (
       _tao_server_request,
       _tao_impl ,
       access,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->access (
           access,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -30342,7 +30342,7 @@ void POA_IR::ValueMemberDef::_set_access_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -30363,9 +30363,9 @@ void POA_IR::ValueMemberDef::_set_access_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -30455,14 +30455,14 @@ POA_IR::ValueMemberDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ValueMemberDef::_unchecked_narrow (obj.in ());
 }
@@ -30485,7 +30485,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -30497,11 +30497,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -30510,11 +30510,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -30536,7 +30536,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_get::result (CORBA::TypeCode_ptr result)
 {
   // Update the result.
@@ -30560,7 +30560,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -30572,11 +30572,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -30585,11 +30585,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -30611,7 +30611,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -30637,15 +30637,15 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_type_def = parameter_list->length ();
   parameter_list->length (length_type_def + 1);
   (*parameter_list)[length_type_def].argument <<=  this->type_def_;
-  
+
   (*parameter_list)[length_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -30657,11 +30657,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -30670,7 +30670,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_type_def_set::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -30709,7 +30709,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -30721,11 +30721,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -30734,11 +30734,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -30760,7 +30760,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::targ
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_get::result (CORBA::Visibility result)
 {
   // Update the result.
@@ -30786,14 +30786,14 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_set::argu
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_access = parameter_list->length ();
   parameter_list->length (length_access + 1);
   (*parameter_list)[length_access].argument <<= access_;
   (*parameter_list)[length_access].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -30805,11 +30805,11 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_set::exce
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -30818,7 +30818,7 @@ POA_IR::ValueMemberDef::TAO_ServerRequestInfo_IR_ValueMemberDef_access_set::resu
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -31029,16 +31029,16 @@ POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker *POA_IR::_TAO_ValueDef_Strategize
 
 POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::_TAO_ValueDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::~_TAO_ValueDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ValueDef_Proxy_Impl&
@@ -31047,32 +31047,32 @@ POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ValueDef_ThruPOA_Proxy_Impl,
@@ -31080,8 +31080,8 @@ POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -31090,9 +31090,9 @@ POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -31113,14 +31113,14 @@ int
 _TAO_ValueDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ValueDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ValueDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ValueDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ValueDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ValueDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ValueDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ValueDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -31780,25 +31780,25 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->supported_interfaces (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -31809,7 +31809,7 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -31830,11 +31830,11 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -31865,27 +31865,27 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set ri (
       _tao_server_request,
       _tao_impl,
       supported_interfaces,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->supported_interfaces (
           supported_interfaces,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -31893,7 +31893,7 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -31914,9 +31914,9 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -31937,25 +31937,25 @@ void POA_IR::ValueDef::_get_initializers_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->initializers (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InitializerSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -31966,7 +31966,7 @@ void POA_IR::ValueDef::_get_initializers_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -31987,11 +31987,11 @@ void POA_IR::ValueDef::_get_initializers_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -32022,27 +32022,27 @@ void POA_IR::ValueDef::_set_initializers_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_set ri (
       _tao_server_request,
       _tao_impl,
       initializers,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->initializers (
           initializers,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32050,7 +32050,7 @@ void POA_IR::ValueDef::_set_initializers_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32071,9 +32071,9 @@ void POA_IR::ValueDef::_set_initializers_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32094,25 +32094,25 @@ void POA_IR::ValueDef::_get_base_value_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->base_value (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -32123,7 +32123,7 @@ void POA_IR::ValueDef::_get_base_value_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32144,11 +32144,11 @@ void POA_IR::ValueDef::_get_base_value_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -32179,27 +32179,27 @@ void POA_IR::ValueDef::_set_base_value_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_set ri (
       _tao_server_request,
       _tao_impl,
       base_value.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->base_value (
           base_value.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32207,7 +32207,7 @@ void POA_IR::ValueDef::_set_base_value_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32228,9 +32228,9 @@ void POA_IR::ValueDef::_set_base_value_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32251,25 +32251,25 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->abstract_base_values (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -32280,7 +32280,7 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32301,11 +32301,11 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -32336,27 +32336,27 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set ri (
       _tao_server_request,
       _tao_impl,
       abstract_base_values,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->abstract_base_values (
           abstract_base_values,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32364,7 +32364,7 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32385,9 +32385,9 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32408,25 +32408,25 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_abstract (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -32436,7 +32436,7 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32457,11 +32457,11 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -32492,27 +32492,27 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set ri (
       _tao_server_request,
       _tao_impl,
       is_abstract,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->is_abstract (
           is_abstract,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32520,7 +32520,7 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32541,9 +32541,9 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32564,25 +32564,25 @@ void POA_IR::ValueDef::_get_is_custom_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_custom (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -32592,7 +32592,7 @@ void POA_IR::ValueDef::_get_is_custom_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32613,11 +32613,11 @@ void POA_IR::ValueDef::_get_is_custom_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -32648,27 +32648,27 @@ void POA_IR::ValueDef::_set_is_custom_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_set ri (
       _tao_server_request,
       _tao_impl,
       is_custom,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->is_custom (
           is_custom,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32676,7 +32676,7 @@ void POA_IR::ValueDef::_set_is_custom_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32697,9 +32697,9 @@ void POA_IR::ValueDef::_set_is_custom_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32720,25 +32720,25 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_truncatable (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -32748,7 +32748,7 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32769,11 +32769,11 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -32804,27 +32804,27 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set ri (
       _tao_server_request,
       _tao_impl,
       is_truncatable,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->is_truncatable (
           is_truncatable,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -32832,7 +32832,7 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32853,9 +32853,9 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -32882,27 +32882,27 @@ void POA_IR::ValueDef::is_a_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a ri (
       _tao_server_request,
       _tao_impl,
       id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_a (
           id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -32912,7 +32912,7 @@ void POA_IR::ValueDef::is_a_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -32933,11 +32933,11 @@ void POA_IR::ValueDef::is_a_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -32977,7 +32977,7 @@ void POA_IR::ValueDef::create_value_member_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member ri (
       _tao_server_request,
       _tao_impl,
@@ -32988,14 +32988,14 @@ void POA_IR::ValueDef::create_value_member_skel (
       access,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_value_member (
           id.in (),
           name.in (),
@@ -33005,7 +33005,7 @@ void POA_IR::ValueDef::create_value_member_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueMemberDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -33016,7 +33016,7 @@ void POA_IR::ValueDef::create_value_member_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -33037,11 +33037,11 @@ void POA_IR::ValueDef::create_value_member_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -33085,7 +33085,7 @@ void POA_IR::ValueDef::create_attribute_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute ri (
       _tao_server_request,
       _tao_impl,
@@ -33098,14 +33098,14 @@ void POA_IR::ValueDef::create_attribute_skel (
       put_exceptions,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_attribute (
           id.in (),
           name.in (),
@@ -33117,7 +33117,7 @@ void POA_IR::ValueDef::create_attribute_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_AttributeDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -33128,7 +33128,7 @@ void POA_IR::ValueDef::create_attribute_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -33149,11 +33149,11 @@ void POA_IR::ValueDef::create_attribute_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -33199,7 +33199,7 @@ void POA_IR::ValueDef::create_operation_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation ri (
       _tao_server_request,
       _tao_impl,
@@ -33213,14 +33213,14 @@ void POA_IR::ValueDef::create_operation_skel (
       contexts,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_operation (
           id.in (),
           name.in (),
@@ -33233,7 +33233,7 @@ void POA_IR::ValueDef::create_operation_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_OperationDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -33244,7 +33244,7 @@ void POA_IR::ValueDef::create_operation_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -33265,11 +33265,11 @@ void POA_IR::ValueDef::create_operation_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -33370,14 +33370,14 @@ POA_IR::ValueDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ValueDef::_unchecked_narrow (obj.in ());
 }
@@ -33400,7 +33400,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -33412,11 +33412,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33425,11 +33425,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -33451,7 +33451,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_get::result (IR::InterfaceDefSeq * result)
 {
   // Update the result.
@@ -33477,15 +33477,15 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_supported_interfaces = parameter_list->length ();
   parameter_list->length (length_supported_interfaces + 1);
   (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
+
   (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -33497,11 +33497,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33510,7 +33510,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_supported_interfaces_set::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -33549,7 +33549,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -33561,11 +33561,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33574,11 +33574,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -33600,7 +33600,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_get::result (IR::InitializerSeq * result)
 {
   // Update the result.
@@ -33626,15 +33626,15 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_set::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_initializers = parameter_list->length ();
   parameter_list->length (length_initializers + 1);
   (*parameter_list)[length_initializers].argument <<=  this->initializers_;
-  
+
   (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -33646,11 +33646,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_set::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33659,7 +33659,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_initializers_set::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -33698,7 +33698,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -33710,11 +33710,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33723,11 +33723,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -33749,7 +33749,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_get::result (IR::ValueDef_ptr result)
 {
   // Update the result.
@@ -33775,15 +33775,15 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_set::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_base_value = parameter_list->length ();
   parameter_list->length (length_base_value + 1);
   (*parameter_list)[length_base_value].argument <<=  this->base_value_;
-  
+
   (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -33795,11 +33795,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_set::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33808,7 +33808,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_base_value_set::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -33847,7 +33847,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -33859,11 +33859,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33872,11 +33872,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -33898,7 +33898,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_get::result (IR::ValueDefSeq * result)
 {
   // Update the result.
@@ -33924,15 +33924,15 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_abstract_base_values = parameter_list->length ();
   parameter_list->length (length_abstract_base_values + 1);
   (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
-  
+
   (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -33944,11 +33944,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -33957,7 +33957,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_abstract_base_values_set::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -33996,7 +33996,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -34008,11 +34008,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34021,11 +34021,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34047,7 +34047,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::target_is_a
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -34073,14 +34073,14 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set::arguments (
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_is_abstract = parameter_list->length ();
   parameter_list->length (length_is_abstract + 1);
   (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
   (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34092,11 +34092,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set::exceptions 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34105,7 +34105,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_abstract_set::result (COR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -34144,7 +34144,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -34156,11 +34156,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34169,11 +34169,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34195,7 +34195,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -34221,14 +34221,14 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_set::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_is_custom = parameter_list->length ();
   parameter_list->length (length_is_custom + 1);
   (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
   (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34240,11 +34240,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_set::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34253,7 +34253,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_custom_set::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -34292,7 +34292,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -34304,11 +34304,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34317,11 +34317,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34343,7 +34343,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::target_i
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -34369,14 +34369,14 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set::argument
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_is_truncatable = parameter_list->length ();
   parameter_list->length (length_is_truncatable + 1);
   (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
   (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34388,11 +34388,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set::exceptio
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34401,7 +34401,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_truncatable_set::result (
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -34442,14 +34442,14 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::arguments (CORBA::Envi
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34461,11 +34461,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::exceptions (CORBA::Env
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34474,11 +34474,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::result (CORBA::Environ
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34500,7 +34500,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_is_a::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -34534,35 +34534,35 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_type = parameter_list->length ();
   parameter_list->length (length_type + 1);
   (*parameter_list)[length_type].argument <<=  this->type_;
-  
+
   (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_access = parameter_list->length ();
   parameter_list->length (length_access + 1);
   (*parameter_list)[length_access].argument <<= access_;
   (*parameter_list)[length_access].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34574,11 +34574,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34587,11 +34587,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34613,7 +34613,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_value_member::result (IR::ValueMemberDef_ptr result)
 {
   // Update the result.
@@ -34651,48 +34651,48 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_type = parameter_list->length ();
   parameter_list->length (length_type + 1);
   (*parameter_list)[length_type].argument <<=  this->type_;
-  
+
   (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_get_exceptions = parameter_list->length ();
   parameter_list->length (length_get_exceptions + 1);
   (*parameter_list)[length_get_exceptions].argument <<=  this->get_exceptions_;
-  
+
   (*parameter_list)[length_get_exceptions].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_put_exceptions = parameter_list->length ();
   parameter_list->length (length_put_exceptions + 1);
   (*parameter_list)[length_put_exceptions].argument <<=  this->put_exceptions_;
-  
+
   (*parameter_list)[length_put_exceptions].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34704,11 +34704,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34717,11 +34717,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34743,7 +34743,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_attribute::result (IR::AttributeDef_ptr result)
 {
   // Update the result.
@@ -34783,54 +34783,54 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_result = parameter_list->length ();
   parameter_list->length (length_result + 1);
   (*parameter_list)[length_result].argument <<=  this->result_;
-  
+
   (*parameter_list)[length_result].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_mode = parameter_list->length ();
   parameter_list->length (length_mode + 1);
   (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
+
   (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_params = parameter_list->length ();
   parameter_list->length (length_params + 1);
   (*parameter_list)[length_params].argument <<=  this->params_;
-  
+
   (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exceptions = parameter_list->length ();
   parameter_list->length (length_exceptions + 1);
   (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
+
   (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_contexts = parameter_list->length ();
   parameter_list->length (length_contexts + 1);
   (*parameter_list)[length_contexts].argument <<=  this->contexts_;
-  
+
   (*parameter_list)[length_contexts].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -34842,11 +34842,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -34855,11 +34855,11 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -34881,7 +34881,7 @@ POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueDef::TAO_ServerRequestInfo_IR_ValueDef_create_operation::result (IR::OperationDef_ptr result)
 {
   // Update the result.
@@ -35042,16 +35042,16 @@ POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker *POA_IR::_TAO_ValueBoxDef_Stra
 
 POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::_TAO_ValueBoxDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::~_TAO_ValueBoxDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ValueBoxDef_Proxy_Impl&
@@ -35060,32 +35060,32 @@ POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ValueBoxDef_ThruPOA_Proxy_Impl,
@@ -35093,8 +35093,8 @@ POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -35103,9 +35103,9 @@ POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -35126,14 +35126,14 @@ int
 _TAO_ValueBoxDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ValueBoxDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ValueBoxDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ValueBoxDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ValueBoxDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ValueBoxDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -35249,25 +35249,25 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->original_type_def (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_IDLType_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -35278,7 +35278,7 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -35299,11 +35299,11 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -35334,27 +35334,27 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set ri (
       _tao_server_request,
       _tao_impl,
       original_type_def.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->original_type_def (
           original_type_def.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -35362,7 +35362,7 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -35383,9 +35383,9 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -35481,14 +35481,14 @@ POA_IR::ValueBoxDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ValueBoxDef::_unchecked_narrow (obj.in ());
 }
@@ -35511,7 +35511,7 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -35523,11 +35523,11 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -35536,11 +35536,11 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -35562,7 +35562,7 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get:
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_get::result (IR::IDLType_ptr result)
 {
   // Update the result.
@@ -35588,15 +35588,15 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_original_type_def = parameter_list->length ();
   parameter_list->length (length_original_type_def + 1);
   (*parameter_list)[length_original_type_def].argument <<=  this->original_type_def_;
-  
+
   (*parameter_list)[length_original_type_def].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -35608,11 +35608,11 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -35621,7 +35621,7 @@ POA_IR::ValueBoxDef::TAO_ServerRequestInfo_IR_ValueBoxDef_original_type_def_set:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -35795,16 +35795,16 @@ POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker *POA_IR::_TAO_ProvidesDef_Stra
 
 POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::_TAO_ProvidesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::~_TAO_ProvidesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ProvidesDef_Proxy_Impl&
@@ -35813,32 +35813,32 @@ POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ProvidesDef_ThruPOA_Proxy_Impl,
@@ -35846,8 +35846,8 @@ POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -35856,9 +35856,9 @@ POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -35879,14 +35879,14 @@ int
 _TAO_ProvidesDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ProvidesDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ProvidesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ProvidesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ProvidesDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ProvidesDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -35968,25 +35968,25 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->interface_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -35997,7 +35997,7 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -36018,11 +36018,11 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -36117,14 +36117,14 @@ POA_IR::ProvidesDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ProvidesDef::_unchecked_narrow (obj.in ());
 }
@@ -36147,7 +36147,7 @@ POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -36159,11 +36159,11 @@ POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -36172,11 +36172,11 @@ POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -36198,7 +36198,7 @@ POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ProvidesDef::TAO_ServerRequestInfo_IR_ProvidesDef_interface_type_get::result (IR::InterfaceDef_ptr result)
 {
   // Update the result.
@@ -36358,16 +36358,16 @@ POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker *POA_IR::_TAO_UsesDef_Strategized_
 
 POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::_TAO_UsesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::~_TAO_UsesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_UsesDef_Proxy_Impl&
@@ -36376,32 +36376,32 @@ POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_UsesDef_ThruPOA_Proxy_Impl,
@@ -36409,8 +36409,8 @@ POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -36419,9 +36419,9 @@ POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -36442,14 +36442,14 @@ int
 _TAO_UsesDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_UsesDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_UsesDef_Proxy_Broker_Factory_function_pointer =
     _TAO_UsesDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_UsesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_UsesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_UsesDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_UsesDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -36562,25 +36562,25 @@ void POA_IR::UsesDef::_get_interface_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->interface_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -36591,7 +36591,7 @@ void POA_IR::UsesDef::_get_interface_type_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -36612,11 +36612,11 @@ void POA_IR::UsesDef::_get_interface_type_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -36642,25 +36642,25 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_multiple (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -36670,7 +36670,7 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -36691,11 +36691,11 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -36790,14 +36790,14 @@ POA_IR::UsesDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_UsesDef::_unchecked_narrow (obj.in ());
 }
@@ -36820,7 +36820,7 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -36832,11 +36832,11 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -36845,11 +36845,11 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -36871,7 +36871,7 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_interface_type_get::result (IR::InterfaceDef_ptr result)
 {
   // Update the result.
@@ -36895,7 +36895,7 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -36907,11 +36907,11 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -36920,11 +36920,11 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -36946,7 +36946,7 @@ POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::UsesDef::TAO_ServerRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -37106,16 +37106,16 @@ POA_IR::_TAO_EventDef_Strategized_Proxy_Broker *POA_IR::_TAO_EventDef_Strategize
 
 POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::_TAO_EventDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::~_TAO_EventDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_EventDef_Proxy_Impl&
@@ -37124,32 +37124,32 @@ POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_EventDef_ThruPOA_Proxy_Impl,
@@ -37157,8 +37157,8 @@ POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -37167,9 +37167,9 @@ POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -37190,14 +37190,14 @@ int
 _TAO_EventDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_EventDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_EventDef_Proxy_Broker_Factory_function_pointer =
     _TAO_EventDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_EventDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_EventDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_EventDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_EventDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -37318,27 +37318,27 @@ void POA_IR::EventDef::is_a_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a ri (
       _tao_server_request,
       _tao_impl,
       event_id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_a (
           event_id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -37348,7 +37348,7 @@ void POA_IR::EventDef::is_a_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -37369,11 +37369,11 @@ void POA_IR::EventDef::is_a_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -37399,25 +37399,25 @@ void POA_IR::EventDef::_get_event_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->event (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -37428,7 +37428,7 @@ void POA_IR::EventDef::_get_event_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -37449,11 +37449,11 @@ void POA_IR::EventDef::_get_event_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -37548,14 +37548,14 @@ POA_IR::EventDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_EventDef::_unchecked_narrow (obj.in ());
 }
@@ -37580,14 +37580,14 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::arguments (CORBA::Envi
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_event_id = parameter_list->length ();
   parameter_list->length (length_event_id + 1);
   (*parameter_list)[length_event_id].argument <<= event_id_;
   (*parameter_list)[length_event_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -37599,11 +37599,11 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::exceptions (CORBA::Env
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -37612,11 +37612,11 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::result (CORBA::Environ
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -37638,7 +37638,7 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_is_a::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -37662,7 +37662,7 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -37674,11 +37674,11 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -37687,11 +37687,11 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -37713,7 +37713,7 @@ POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::EventDef::TAO_ServerRequestInfo_IR_EventDef_event_get::result (IR::ValueDef_ptr result)
 {
   // Update the result.
@@ -37873,16 +37873,16 @@ POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker *POA_IR::_TAO_EmitsDef_Strategize
 
 POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::_TAO_EmitsDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::~_TAO_EmitsDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_EmitsDef_Proxy_Impl&
@@ -37891,32 +37891,32 @@ POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_EmitsDef_ThruPOA_Proxy_Impl,
@@ -37924,8 +37924,8 @@ POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -37934,9 +37934,9 @@ POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -37957,14 +37957,14 @@ int
 _TAO_EmitsDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_EmitsDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_EmitsDef_Proxy_Broker_Factory_function_pointer =
     _TAO_EmitsDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_EmitsDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_EmitsDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_EmitsDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_EmitsDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -38088,14 +38088,14 @@ POA_IR::EmitsDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_EmitsDef::_unchecked_narrow (obj.in ());
 }
@@ -38254,16 +38254,16 @@ POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker *POA_IR::_TAO_PublishesDef_St
 
 POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::_TAO_PublishesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::~_TAO_PublishesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_PublishesDef_Proxy_Impl&
@@ -38272,32 +38272,32 @@ POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_PublishesDef_ThruPOA_Proxy_Impl,
@@ -38305,8 +38305,8 @@ POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -38315,9 +38315,9 @@ POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -38338,14 +38338,14 @@ int
 _TAO_PublishesDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_PublishesDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_PublishesDef_Proxy_Broker_Factory_function_pointer =
     _TAO_PublishesDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_PublishesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_PublishesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_PublishesDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_PublishesDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -38469,14 +38469,14 @@ POA_IR::PublishesDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_PublishesDef::_unchecked_narrow (obj.in ());
 }
@@ -38635,16 +38635,16 @@ POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker *POA_IR::_TAO_ConsumesDef_Stra
 
 POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::_TAO_ConsumesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::~_TAO_ConsumesDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ConsumesDef_Proxy_Impl&
@@ -38653,32 +38653,32 @@ POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ConsumesDef_ThruPOA_Proxy_Impl,
@@ -38686,8 +38686,8 @@ POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -38696,9 +38696,9 @@ POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -38719,14 +38719,14 @@ int
 _TAO_ConsumesDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ConsumesDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ConsumesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ConsumesDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ConsumesDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ConsumesDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -38850,14 +38850,14 @@ POA_IR::ConsumesDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ConsumesDef::_unchecked_narrow (obj.in ());
 }
@@ -39056,16 +39056,16 @@ POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker *POA_IR::_TAO_ComponentDef_St
 
 POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::_TAO_ComponentDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::~_TAO_ComponentDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_ComponentDef_Proxy_Impl&
@@ -39074,32 +39074,32 @@ POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_ComponentDef_ThruPOA_Proxy_Impl,
@@ -39107,8 +39107,8 @@ POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -39117,9 +39117,9 @@ POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -39140,14 +39140,14 @@ int
 _TAO_ComponentDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_ComponentDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_ComponentDef_Proxy_Broker_Factory_function_pointer =
     _TAO_ComponentDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_ComponentDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_ComponentDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_ComponentDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_ComponentDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -39678,25 +39678,25 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->supported_interfaces (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_InterfaceDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -39707,7 +39707,7 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -39728,11 +39728,11 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -39763,27 +39763,27 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set ri (
       _tao_server_request,
       _tao_impl,
       supported_interfaces,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->supported_interfaces (
           supported_interfaces,
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -39791,7 +39791,7 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -39812,9 +39812,9 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -39835,25 +39835,25 @@ void POA_IR::ComponentDef::_get_base_component_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->base_component (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ComponentDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -39864,7 +39864,7 @@ void POA_IR::ComponentDef::_get_base_component_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -39885,11 +39885,11 @@ void POA_IR::ComponentDef::_get_base_component_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -39915,25 +39915,25 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->provides_interfaces (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ProvidesDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -39944,7 +39944,7 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -39965,11 +39965,11 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -39995,25 +39995,25 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->uses_interfaces (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_UsesDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40024,7 +40024,7 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40045,11 +40045,11 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40075,25 +40075,25 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->emits_events (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_EmitsDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40104,7 +40104,7 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40125,11 +40125,11 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40155,25 +40155,25 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->publishes_events (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PublishesDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40184,7 +40184,7 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40205,11 +40205,11 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40235,25 +40235,25 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->consumes_events (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ConsumesDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40264,7 +40264,7 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40285,11 +40285,11 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40315,25 +40315,25 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_basic (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -40343,7 +40343,7 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40364,11 +40364,11 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -40406,7 +40406,7 @@ void POA_IR::ComponentDef::create_provides_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides ri (
       _tao_server_request,
       _tao_impl,
@@ -40416,14 +40416,14 @@ void POA_IR::ComponentDef::create_provides_skel (
       interface_type.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_provides (
           id.in (),
           name.in (),
@@ -40432,7 +40432,7 @@ void POA_IR::ComponentDef::create_provides_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ProvidesDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40443,7 +40443,7 @@ void POA_IR::ComponentDef::create_provides_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40464,11 +40464,11 @@ void POA_IR::ComponentDef::create_provides_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40508,7 +40508,7 @@ void POA_IR::ComponentDef::create_uses_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses ri (
       _tao_server_request,
       _tao_impl,
@@ -40519,14 +40519,14 @@ void POA_IR::ComponentDef::create_uses_skel (
       is_multiple,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_uses (
           id.in (),
           name.in (),
@@ -40536,7 +40536,7 @@ void POA_IR::ComponentDef::create_uses_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_UsesDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40547,7 +40547,7 @@ void POA_IR::ComponentDef::create_uses_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40568,11 +40568,11 @@ void POA_IR::ComponentDef::create_uses_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40610,7 +40610,7 @@ void POA_IR::ComponentDef::create_emits_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits ri (
       _tao_server_request,
       _tao_impl,
@@ -40620,14 +40620,14 @@ void POA_IR::ComponentDef::create_emits_skel (
       value.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_emits (
           id.in (),
           name.in (),
@@ -40636,7 +40636,7 @@ void POA_IR::ComponentDef::create_emits_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_EmitsDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40647,7 +40647,7 @@ void POA_IR::ComponentDef::create_emits_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40668,11 +40668,11 @@ void POA_IR::ComponentDef::create_emits_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40710,7 +40710,7 @@ void POA_IR::ComponentDef::create_publishes_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes ri (
       _tao_server_request,
       _tao_impl,
@@ -40720,14 +40720,14 @@ void POA_IR::ComponentDef::create_publishes_skel (
       value.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_publishes (
           id.in (),
           name.in (),
@@ -40736,7 +40736,7 @@ void POA_IR::ComponentDef::create_publishes_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PublishesDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40747,7 +40747,7 @@ void POA_IR::ComponentDef::create_publishes_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40768,11 +40768,11 @@ void POA_IR::ComponentDef::create_publishes_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40810,7 +40810,7 @@ void POA_IR::ComponentDef::create_consumes_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes ri (
       _tao_server_request,
       _tao_impl,
@@ -40820,14 +40820,14 @@ void POA_IR::ComponentDef::create_consumes_skel (
       value.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_consumes (
           id.in (),
           name.in (),
@@ -40836,7 +40836,7 @@ void POA_IR::ComponentDef::create_consumes_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ConsumesDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -40847,7 +40847,7 @@ void POA_IR::ComponentDef::create_consumes_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -40868,11 +40868,11 @@ void POA_IR::ComponentDef::create_consumes_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -40976,14 +40976,14 @@ POA_IR::ComponentDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_ComponentDef::_unchecked_narrow (obj.in ());
 }
@@ -41006,7 +41006,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41018,11 +41018,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41031,11 +41031,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41057,7 +41057,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_get::result (IR::InterfaceDefSeq * result)
 {
   // Update the result.
@@ -41083,15 +41083,15 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_supported_interfaces = parameter_list->length ();
   parameter_list->length (length_supported_interfaces + 1);
   (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
+
   (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -41103,11 +41103,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41116,7 +41116,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_supported_interfaces
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -41155,7 +41155,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41167,11 +41167,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41180,11 +41180,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41206,7 +41206,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_base_component_get::result (IR::ComponentDef_ptr result)
 {
   // Update the result.
@@ -41230,7 +41230,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41242,11 +41242,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41255,11 +41255,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41281,7 +41281,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_provides_interfaces_get::result (IR::ProvidesDefSeq * result)
 {
   // Update the result.
@@ -41305,7 +41305,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41317,11 +41317,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41330,11 +41330,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41356,7 +41356,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get:
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_uses_interfaces_get::result (IR::UsesDefSeq * result)
 {
   // Update the result.
@@ -41380,7 +41380,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41392,11 +41392,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41405,11 +41405,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41431,7 +41431,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_emits_events_get::result (IR::EmitsDefSeq * result)
 {
   // Update the result.
@@ -41455,7 +41455,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41467,11 +41467,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41480,11 +41480,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41506,7 +41506,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_publishes_events_get::result (IR::PublishesDefSeq * result)
 {
   // Update the result.
@@ -41530,7 +41530,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41542,11 +41542,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get:
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41555,11 +41555,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41581,7 +41581,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get:
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_consumes_events_get::result (IR::ConsumesDefSeq * result)
 {
   // Update the result.
@@ -41605,7 +41605,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -41617,11 +41617,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41630,11 +41630,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41656,7 +41656,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -41688,30 +41688,30 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::arg
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_interface_type = parameter_list->length ();
   parameter_list->length (length_interface_type + 1);
   (*parameter_list)[length_interface_type].argument <<=  this->interface_type_;
-  
+
   (*parameter_list)[length_interface_type].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -41723,11 +41723,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::exc
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41736,11 +41736,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::res
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41762,7 +41762,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::tar
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_provides::result (IR::ProvidesDef_ptr result)
 {
   // Update the result.
@@ -41796,35 +41796,35 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_interface_type = parameter_list->length ();
   parameter_list->length (length_interface_type + 1);
   (*parameter_list)[length_interface_type].argument <<=  this->interface_type_;
-  
+
   (*parameter_list)[length_interface_type].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_is_multiple = parameter_list->length ();
   parameter_list->length (length_is_multiple + 1);
   (*parameter_list)[length_is_multiple].argument <<= CORBA::Any::from_boolean (this->is_multiple_);
   (*parameter_list)[length_is_multiple].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -41836,11 +41836,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41849,11 +41849,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41875,7 +41875,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_uses::result (IR::UsesDef_ptr result)
 {
   // Update the result.
@@ -41907,30 +41907,30 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::argume
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_value = parameter_list->length ();
   parameter_list->length (length_value + 1);
   (*parameter_list)[length_value].argument <<=  this->value_;
-  
+
   (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -41942,11 +41942,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::except
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -41955,11 +41955,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::result
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -41981,7 +41981,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::target
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_emits::result (IR::EmitsDef_ptr result)
 {
   // Update the result.
@@ -42013,30 +42013,30 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::ar
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_value = parameter_list->length ();
   parameter_list->length (length_value + 1);
   (*parameter_list)[length_value].argument <<=  this->value_;
-  
+
   (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -42048,11 +42048,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::ex
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42061,11 +42061,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::re
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -42087,7 +42087,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::ta
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_publishes::result (IR::PublishesDef_ptr result)
 {
   // Update the result.
@@ -42119,30 +42119,30 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::arg
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_value = parameter_list->length ();
   parameter_list->length (length_value + 1);
   (*parameter_list)[length_value].argument <<=  this->value_;
-  
+
   (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -42154,11 +42154,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::exc
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42167,11 +42167,11 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::res
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -42193,7 +42193,7 @@ POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::tar
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::ComponentDef::TAO_ServerRequestInfo_IR_ComponentDef_create_consumes::result (IR::ConsumesDef_ptr result)
 {
   // Update the result.
@@ -42353,16 +42353,16 @@ POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker *POA_IR::_TAO_PrimaryKeyDef_
 
 POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::~_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_PrimaryKeyDef_Proxy_Impl&
@@ -42371,32 +42371,32 @@ POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl,
@@ -42404,8 +42404,8 @@ POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -42414,9 +42414,9 @@ POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -42437,14 +42437,14 @@ int
 _TAO_PrimaryKeyDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer =
     _TAO_PrimaryKeyDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_PrimaryKeyDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_PrimaryKeyDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_PrimaryKeyDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_PrimaryKeyDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -42565,27 +42565,27 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a ri (
       _tao_server_request,
       _tao_impl,
       primary_key_id.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_a (
           primary_key_id.in (),
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -42595,7 +42595,7 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -42616,11 +42616,11 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -42646,25 +42646,25 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->primary_key (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ValueDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -42675,7 +42675,7 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -42696,11 +42696,11 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -42795,14 +42795,14 @@ POA_IR::PrimaryKeyDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_PrimaryKeyDef::_unchecked_narrow (obj.in ());
 }
@@ -42827,14 +42827,14 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::arguments (C
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_primary_key_id = parameter_list->length ();
   parameter_list->length (length_primary_key_id + 1);
   (*parameter_list)[length_primary_key_id].argument <<= primary_key_id_;
   (*parameter_list)[length_primary_key_id].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -42846,11 +42846,11 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::exceptions (
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42859,11 +42859,11 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::result (CORB
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -42885,7 +42885,7 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::target_is_a 
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -42909,7 +42909,7 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::a
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -42921,11 +42921,11 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::e
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42934,11 +42934,11 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::r
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -42960,7 +42960,7 @@ POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::t
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::PrimaryKeyDef::TAO_ServerRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (IR::ValueDef_ptr result)
 {
   // Update the result.
@@ -43178,16 +43178,16 @@ POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker *POA_IR::_TAO_FactoryDef_Strate
 
 POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::_TAO_FactoryDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::~_TAO_FactoryDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_FactoryDef_Proxy_Impl&
@@ -43196,32 +43196,32 @@ POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_FactoryDef_ThruPOA_Proxy_Impl,
@@ -43229,8 +43229,8 @@ POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -43239,9 +43239,9 @@ POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -43262,14 +43262,14 @@ int
 _TAO_FactoryDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_FactoryDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_FactoryDef_Proxy_Broker_Factory_function_pointer =
     _TAO_FactoryDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_FactoryDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_FactoryDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_FactoryDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_FactoryDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -43393,14 +43393,14 @@ POA_IR::FactoryDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_FactoryDef::_unchecked_narrow (obj.in ());
 }
@@ -43617,16 +43617,16 @@ POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker *POA_IR::_TAO_FinderDef_Strategi
 
 POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::_TAO_FinderDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::~_TAO_FinderDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_FinderDef_Proxy_Impl&
@@ -43635,32 +43635,32 @@ POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_FinderDef_ThruPOA_Proxy_Impl,
@@ -43668,8 +43668,8 @@ POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -43678,9 +43678,9 @@ POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -43701,14 +43701,14 @@ int
 _TAO_FinderDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_FinderDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_FinderDef_Proxy_Broker_Factory_function_pointer =
     _TAO_FinderDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_FinderDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_FinderDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_FinderDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_FinderDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -43832,14 +43832,14 @@ POA_IR::FinderDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_FinderDef::_unchecked_narrow (obj.in ());
 }
@@ -44034,16 +44034,16 @@ POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker *POA_IR::_TAO_HomeDef_Strategized_
 
 POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::_TAO_HomeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::~_TAO_HomeDef_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 _TAO_HomeDef_Proxy_Impl&
@@ -44052,32 +44052,32 @@ POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               _TAO_HomeDef_ThruPOA_Proxy_Impl,
@@ -44085,8 +44085,8 @@ POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -44095,9 +44095,9 @@ POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -44118,14 +44118,14 @@ int
 _TAO_HomeDef_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_HomeDef_Proxy_Broker_Factory_function_pointer = 
+
+  _TAO_HomeDef_Proxy_Broker_Factory_function_pointer =
     _TAO_HomeDef_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int _TAO_HomeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_HomeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   _TAO_HomeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_HomeDef_Proxy_Broker_Factory_Initializer));
 
 
@@ -44486,25 +44486,25 @@ void POA_IR::HomeDef::_get_base_home_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->base_home (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_HomeDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -44515,7 +44515,7 @@ void POA_IR::HomeDef::_get_base_home_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44536,11 +44536,11 @@ void POA_IR::HomeDef::_get_base_home_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -44566,25 +44566,25 @@ void POA_IR::HomeDef::_get_managed_component_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->managed_component (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_ComponentDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -44595,7 +44595,7 @@ void POA_IR::HomeDef::_get_managed_component_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44616,11 +44616,11 @@ void POA_IR::HomeDef::_get_managed_component_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -44646,25 +44646,25 @@ void POA_IR::HomeDef::_get_primary_key_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->primary_key (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PrimaryKeyDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -44675,7 +44675,7 @@ void POA_IR::HomeDef::_get_primary_key_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44696,11 +44696,11 @@ void POA_IR::HomeDef::_get_primary_key_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -44726,25 +44726,25 @@ void POA_IR::HomeDef::_get_factories_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->factories (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_FactoryDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -44755,7 +44755,7 @@ void POA_IR::HomeDef::_get_factories_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44776,11 +44776,11 @@ void POA_IR::HomeDef::_get_factories_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -44806,25 +44806,25 @@ void POA_IR::HomeDef::_get_finders_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->finders (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_FinderDefSeq * _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -44835,7 +44835,7 @@ void POA_IR::HomeDef::_get_finders_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44856,11 +44856,11 @@ void POA_IR::HomeDef::_get_finders_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -44886,25 +44886,25 @@ void POA_IR::HomeDef::_get_is_basic_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get ri (
       _tao_server_request,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->is_basic (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::Boolean _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
@@ -44914,7 +44914,7 @@ void POA_IR::HomeDef::_get_is_basic_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -44935,11 +44935,11 @@ void POA_IR::HomeDef::_get_is_basic_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval))
     ))
@@ -44977,7 +44977,7 @@ void POA_IR::HomeDef::create_primary_key_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key ri (
       _tao_server_request,
       _tao_impl,
@@ -44987,14 +44987,14 @@ void POA_IR::HomeDef::create_primary_key_skel (
       primary_key.in (),
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_primary_key (
           id.in (),
           name.in (),
@@ -45003,7 +45003,7 @@ void POA_IR::HomeDef::create_primary_key_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_PrimaryKeyDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -45014,7 +45014,7 @@ void POA_IR::HomeDef::create_primary_key_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -45035,11 +45035,11 @@ void POA_IR::HomeDef::create_primary_key_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -45079,7 +45079,7 @@ void POA_IR::HomeDef::create_factory_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory ri (
       _tao_server_request,
       _tao_impl,
@@ -45090,14 +45090,14 @@ void POA_IR::HomeDef::create_factory_skel (
       exceptions,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_factory (
           id.in (),
           name.in (),
@@ -45107,7 +45107,7 @@ void POA_IR::HomeDef::create_factory_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_FactoryDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -45118,7 +45118,7 @@ void POA_IR::HomeDef::create_factory_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -45139,11 +45139,11 @@ void POA_IR::HomeDef::create_factory_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -45183,7 +45183,7 @@ void POA_IR::HomeDef::create_finder_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder ri (
       _tao_server_request,
       _tao_impl,
@@ -45194,14 +45194,14 @@ void POA_IR::HomeDef::create_finder_skel (
       exceptions,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->create_finder (
           id.in (),
           name.in (),
@@ -45211,7 +45211,7 @@ void POA_IR::HomeDef::create_finder_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       IR_FinderDef_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
@@ -45222,7 +45222,7 @@ void POA_IR::HomeDef::create_finder_skel (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri.forward_reference (exc); 
+      ri.forward_reference (exc);
       _tao_vfr.send_other (
         &ri,
         ACE_TRY_ENV
@@ -45243,11 +45243,11 @@ void POA_IR::HomeDef::create_finder_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -45351,14 +45351,14 @@ POA_IR::HomeDef::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return IR_HomeDef::_unchecked_narrow (obj.in ());
 }
@@ -45381,7 +45381,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45393,11 +45393,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45406,11 +45406,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45432,7 +45432,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_base_home_get::result (IR::HomeDef_ptr result)
 {
   // Update the result.
@@ -45456,7 +45456,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::argumen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45468,11 +45468,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::excepti
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45481,11 +45481,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::result 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45507,7 +45507,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::target_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_managed_component_get::result (IR::ComponentDef_ptr result)
 {
   // Update the result.
@@ -45531,7 +45531,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::arguments (CO
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45543,11 +45543,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::exceptions (C
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45556,11 +45556,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::result (CORBA
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45582,7 +45582,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_primary_key_get::result (IR::PrimaryKeyDef_ptr result)
 {
   // Update the result.
@@ -45606,7 +45606,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45618,11 +45618,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45631,11 +45631,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45657,7 +45657,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_factories_get::result (IR::FactoryDefSeq * result)
 {
   // Update the result.
@@ -45681,7 +45681,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45693,11 +45693,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45706,11 +45706,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45732,7 +45732,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_finders_get::result (IR::FinderDefSeq * result)
 {
   // Update the result.
@@ -45756,7 +45756,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -45768,11 +45768,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45781,11 +45781,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45807,7 +45807,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Boolean result)
 {
   // Update the result.
@@ -45839,30 +45839,30 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::arguments 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_primary_key = parameter_list->length ();
   parameter_list->length (length_primary_key + 1);
   (*parameter_list)[length_primary_key].argument <<=  this->primary_key_;
-  
+
   (*parameter_list)[length_primary_key].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -45874,11 +45874,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::exceptions
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45887,11 +45887,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::result (CO
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -45913,7 +45913,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::target_is_
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_primary_key::result (IR::PrimaryKeyDef_ptr result)
 {
   // Update the result.
@@ -45947,36 +45947,36 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::arguments (COR
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_params = parameter_list->length ();
   parameter_list->length (length_params + 1);
   (*parameter_list)[length_params].argument <<=  this->params_;
-  
+
   (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exceptions = parameter_list->length ();
   parameter_list->length (length_exceptions + 1);
   (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
+
   (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -45988,11 +45988,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::exceptions (CO
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -46001,11 +46001,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::result (CORBA:
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -46027,7 +46027,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_factory::result (IR::FactoryDef_ptr result)
 {
   // Update the result.
@@ -46061,36 +46061,36 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::arguments (CORB
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
+
   CORBA::ULong length_id = parameter_list->length ();
   parameter_list->length (length_id + 1);
   (*parameter_list)[length_id].argument <<= id_;
   (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_name = parameter_list->length ();
   parameter_list->length (length_name + 1);
   (*parameter_list)[length_name].argument <<= name_;
   (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_version = parameter_list->length ();
   parameter_list->length (length_version + 1);
   (*parameter_list)[length_version].argument <<= version_;
   (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_params = parameter_list->length ();
   parameter_list->length (length_params + 1);
   (*parameter_list)[length_params].argument <<=  this->params_;
-  
+
   (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
+
   CORBA::ULong length_exceptions = parameter_list->length ();
   parameter_list->length (length_exceptions + 1);
   (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
+
   (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -46102,11 +46102,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::exceptions (COR
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -46115,11 +46115,11 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::result (CORBA::
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -46141,7 +46141,7 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::result (IR::FinderDef_ptr result)
 {
   // Update the result.
@@ -46151,4 +46151,3 @@ POA_IR::HomeDef::TAO_ServerRequestInfo_IR_HomeDef_create_finder::result (IR::Fin
 #endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* ifndef TAO_IDL_INTERFACES_CPP */
-

@@ -3,10 +3,9 @@
 // $Id$
 
 #include "SSLIOP_Current.h"
+#include "tao/debug.h"
 
-ACE_RCSID (TAO_SSLIOP,
-           SSLIOP_Current,
-           "$Id$")
+ACE_RCSID (TAO_SSLIOP, SSLIOP_Current, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Current.inl"

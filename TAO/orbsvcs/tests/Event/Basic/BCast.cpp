@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
+#include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
 
 ACE_RCSID(EC_Tests_Basic, BCast, "$Id$")

@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "ace/Read_Buffer.h"
 #include "local_server.h"
+#include "tao/debug.h"
+#include "ace/Read_Buffer.h"
 
 ACE_RCSID(MT_Client_Test, local_server, "$Id$")
 

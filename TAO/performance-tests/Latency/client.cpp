@@ -1,11 +1,12 @@
 // $Id$
 
+#include "testC.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-#include "testC.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
