@@ -177,15 +177,25 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
    if (result == -1 && errno == EWOULDBLOCK)
      {
-       if (TAO_debug_level)
+       if (TAO_debug_level > 2)
          ACE_DEBUG ((LM_DEBUG,
                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
                      "going to wait for connection completion on local"
                      "handle [%d]\n",
                      svc_handler->get_handle ()));
+
        result =
          this->active_connect_strategy_->wait (svc_handler,
                                                max_wait_time);
+
+       if (TAO_debug_level > 2)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       "TAO (%P|%t) - IIOP_Connector::make_connection"
+                       "wait done for handle[%d], result = %d\n",
+                       svc_handler->get_handle (), result));
+         }
+
      }
 
    int status =

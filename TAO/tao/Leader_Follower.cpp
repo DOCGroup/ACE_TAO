@@ -181,7 +181,15 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   // For some cases the transport may dissappear like when waiting for
   // connection to be initiated or closed. So cache the id.
-  int t_id = transport->id ();
+  // @@ NOTE: This is not completely safe either. We will be fine for
+  // cases that dont access the id ie. when debug level is off but
+  // with debugging level on we are on a sticky wicket. Hopefully none
+  // of our users should run TAO with debugging enabled like they did
+  // in PathFinder
+  int t_id = 0;
+
+  if (TAO_debug_level)
+    t_id = transport->id ();
 
   {
     // Calls this->set_client_thread () on construction and
