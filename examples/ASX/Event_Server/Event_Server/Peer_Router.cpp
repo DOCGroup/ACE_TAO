@@ -93,7 +93,7 @@ Peer_Router_Context::~Peer_Router_Context (void)
 {
   // Free up the handle and close down the listening socket.
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) closing down Peer_Router_Context"));
+	      "(%t) closing down Peer_Router_Context\n"));
 
   // Close down the Acceptor and take ourselves out of the Reactor.
   this->handle_close ();
