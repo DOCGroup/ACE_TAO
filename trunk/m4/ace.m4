@@ -316,6 +316,55 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_THREADS], [test X$ace_user_enable_threads = Xyes])
 
+ AC_ARG_ENABLE([pthreads],
+  AS_HELP_STRING(--enable-pthreads,enable POSIX thread (Pthreads) support [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_pthreads=yes
+      ;;
+    no)
+      ace_user_enable_pthreads=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-pthreads])
+      ;;
+   esac
+  ],
+  [
+    ace_user_enable_pthreads=yes
+  ])
+
+ AC_ARG_ENABLE([uithreads],
+  AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_uithreads=yes
+      ;;
+    no)
+      ace_user_enable_uithreads=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-uithreads])
+      ;;
+   esac
+  ],
+  [
+    dnl The default is to disable UI threads. However, on Solaris, we
+    dnl enable it by default since it's functionality is very useful and
+    dnl has traditionally been enabled in ACE.
+    case "$host" in
+      *solaris2*)
+        ace_user_enable_uithreads=yes
+        AC_MSG_NOTICE([[--enable-uithreads enabled by default for Solaris; use --enable-uithreads=no to disable it.]])
+        ;;
+      *)
+        ace_user_enable_uithreads=no
+        ;;
+    esac
+  ])
+
  AC_ARG_ENABLE([verb-not-sup],
   AS_HELP_STRING(--enable-verb-not-sup,enable verbose ENOTSUP reports [[[no]]]),
   [
