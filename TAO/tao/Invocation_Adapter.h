@@ -42,7 +42,7 @@ namespace TAO
   class Argument;
 
   class Collocation_Proxy_Broker;
-
+  class Profile_Transport_Resolver;
 
   /**
    * @class Invocation_Adapter
@@ -113,10 +113,9 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    void invoke (TAO_Exception_Data *ex,
-                 unsigned long ex_count
-                 ACE_ENV_ARG_DECL);
-
+    virtual void invoke (TAO_Exception_Data *ex,
+                         unsigned long ex_count
+                         ACE_ENV_ARG_DECL);
   protected:
 
     /// Make a collocated call.
@@ -160,10 +159,39 @@ namespace TAO
      *
      * - Handles forward location replies that could be received from
      *   the target
+     *
      */
     virtual void invoke_remote (TAO_Stub *,
                                 TAO_Operation_Details &op
                                 ACE_ENV_ARG_DECL);
+
+    /// Actual implementation of the invoke_remote () call.
+    /**
+     * This is actually a helper function.
+     *
+     * @param effective_target, is the target on which the present
+     * invocation is on.
+     */
+    virtual Invocation_Status invoke_remote_i (
+        TAO_Stub *,
+        TAO_Operation_Details &op,
+        CORBA::Object *&effective_target,
+        ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL);
+
+    virtual Invocation_Status invoke_twoway (
+        TAO_Operation_Details &op,
+        CORBA::Object *&effective_target,
+        Profile_Transport_Resolver &r,
+        ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL);
+
+    virtual Invocation_Status invoke_oneway (
+        TAO_Operation_Details &op,
+        CORBA::Object *&effective_target,
+        Profile_Transport_Resolver &r,
+        ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL);
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
@@ -200,20 +228,6 @@ namespace TAO
     Invocation_Mode mode_;
 
   private:
-
-    /// Actual implementation of the invoke_remote () call.
-    /**
-     * This is actually a helper function.
-     *
-     * @param effective_target, is the target on which the present
-     * invocation is on.
-     */
-    Invocation_Status invoke_remote_i (TAO_Stub *,
-                                       TAO_Operation_Details &op,
-                                       CORBA::Object *&effective_target,
-                                       ACE_Time_Value *&max_wait_time
-                                       ACE_ENV_ARG_DECL);
-
     /// Dont allow default initializations
     ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter (void));
 

@@ -53,8 +53,13 @@ namespace TAO
 
     virtual void interceptor_result (CORBA::Any *);
 
+    int byte_order (void) const;
+
   private:
     CORBA::NamedValue_ptr x_;
+
+    /// Byte order that the Request class will use
+    int byte_order_;
   };
 
   /**
@@ -66,7 +71,8 @@ namespace TAO
   class NVList_Argument : public Argument
   {
   public:
-    NVList_Argument (CORBA::NVList_ptr);
+    NVList_Argument (CORBA::NVList_ptr,
+                     bool lazy_eval);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
@@ -78,6 +84,8 @@ namespace TAO
 
   private:
     CORBA::NVList_ptr x_;
+
+    bool lazy_evaluation_;
   };
 }
 

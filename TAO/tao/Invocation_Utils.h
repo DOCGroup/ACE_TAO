@@ -47,7 +47,10 @@ namespace TAO
     /// Asynchronous twoway with poller model for collecting the
     /// replies.
     /// @NOTE: This is not supported in TAO now
-    TAO_ASYNCHRONOUS_POLLER_INVOCATION
+    TAO_ASYNCHRONOUS_POLLER_INVOCATION,
+    ///
+    TAO_DII_INVOCATION,
+    TAO_DII_DEFERRED_INVOCATION
   };
 };
 

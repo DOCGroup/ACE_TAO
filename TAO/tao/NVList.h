@@ -200,7 +200,7 @@ namespace CORBA
      */
     void _tao_incoming_cdr (TAO_InputCDR & cdr,
                             int flag,
-                            int & lazy_evaluation
+                            bool &lazy_evaluation
                             ACE_ENV_ARG_DECL);
 
     /// Encode the NVList into the CDR stream. <flag> masks the type of

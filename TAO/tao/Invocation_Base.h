@@ -165,7 +165,11 @@ namespace TAO
     char *operation_name (void);
 
     /// Return the list of arguments as a ParameterList
-    Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
+    /**
+     * It is declared virtual so that the DynamicInterface can use its
+     * own way of creating the ParameterList.
+     */
+    virtual Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Return the list of exceptions declared  as a ExceptionList

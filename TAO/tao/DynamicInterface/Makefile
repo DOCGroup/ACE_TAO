@@ -24,8 +24,9 @@ include $(TAO_ROOT)/rules.tao.GNU
 CPP_SRCS += \
 	Context \
 	DII_Invocation \
+	DII_Invocation_Adapter \
+	DII_Arguments \
 	DII_Reply_Dispatcher \
-        DII_ClientRequestInfo \
 	Dynamic_Adapter_Impl \
 	Dynamic_Implementation \
 	ExceptionList \

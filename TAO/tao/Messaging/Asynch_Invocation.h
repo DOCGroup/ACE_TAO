@@ -26,7 +26,7 @@
 class TAO_Operation_Details;
 class TAO_InputCDR;
 class ACE_Time_Value;
-class TAO_Asynch_Reply_Dispatcher;
+class TAO_Asynch_Reply_Dispatcher_Base;
 
 namespace CORBA
 {
@@ -37,22 +37,22 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Messaging_Export Asynch_Remote_Invocation 
+  class TAO_Messaging_Export Asynch_Remote_Invocation
     : protected Synch_Twoway_Invocation
   {
   public:
     Asynch_Remote_Invocation (CORBA::Object_ptr otarget,
                               Profile_Transport_Resolver &resolver,
                               TAO_Operation_Details &detail,
-                              TAO_Asynch_Reply_Dispatcher *rd,
+                              TAO_Asynch_Reply_Dispatcher_Base *rd,
                               bool response_expected = true);
 
     Invocation_Status remote_invocation (ACE_Time_Value *value
                                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::Exception));
 
-  private:
-    TAO_Asynch_Reply_Dispatcher *rd_;
+  protected:
+    TAO_Asynch_Reply_Dispatcher_Base *rd_;
   };
 }
 
