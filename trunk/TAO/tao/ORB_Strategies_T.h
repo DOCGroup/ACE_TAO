@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //     TAO
-// 
+//
 // = FILENAME
 //     ORB_Strategies_T.h
 //
@@ -22,12 +22,20 @@
 template <class SH>
 class TAO_Reactive_Strategy : public ACE_Reactive_Strategy<SH>
 {
-  // @@ Please document me.
+  // = TITLE
+  //   TAO_Reactive_Strategy
+  //
+  // = DESCRIPTION
+  //   The ORB uses this reactive strategy for demultiplexing the endpoints.
 public:
   TAO_Reactive_Strategy (void);
+  // constructor
+
   ~TAO_Reactive_Strategy (void);
+  // destructor
 
   virtual int activate_svc_handler (SH *sh, void *arg);
+  // activate the service handler using this reactive strategy
 };
 
 #if defined (__ACE_INLINE__)

@@ -74,8 +74,11 @@ CORBA_ORB::~CORBA_ORB (void)
 
   if (CORBA_ORB::orb_init_count_ == 0)
     {
-      // Other <fini> stuff should go here...
+      // free up all the ORB owned Exceptions
       TAO_Exceptions::fini ();
+
+      // free up all the ORB owned TypeCodes
+      TAO_TypeCodes::fini ();
     }
 }
 
@@ -613,9 +616,14 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &env)
 
   if (CORBA_ORB::orb_init_count_ == 0)
     {
+      // initialize the system TypeCodes
+      TAO_TypeCodes::init ();
+      // initialize the factory for marshaling
       TAO_Marshal::init ();
-      TAO_Exceptions::init (env);
+      // initialize the interpreter
       TAO_IIOP_Interpreter::init ();
+      // initialize the system exceptions
+      TAO_Exceptions::init (env);
     }
   CORBA_ORB::orb_init_count_++;
 }

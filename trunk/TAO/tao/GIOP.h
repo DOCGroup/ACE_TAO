@@ -184,7 +184,7 @@ public:
 typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
         TAO_GIOP_ServiceContextList;
 
-extern CORBA::TypeCode TC_ServiceContextList;
+extern CORBA::TypeCode_ptr TC_ServiceContextList;
 
 // = Request, Reply headers
 

@@ -318,7 +318,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
           }
 
         // ... and object key.
-        if (str.skip (&TC_opaque,
+        if (str.skip (TC_opaque,
                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
           {
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
@@ -722,6 +722,10 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
+
+  // skip the Repository ID
+  if (!stream->skip_string ())
+    return CORBA::TypeCode::TRAVERSE_STOP;
 
   // Number of fields in the exception
   int member_count = tc->member_count (env);

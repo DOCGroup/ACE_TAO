@@ -24,8 +24,6 @@
 
 #include "tao/corba.h"
 
-extern CORBA::TypeCode TC_opaque;
-
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,
 // the TypeCode interpreter is used to recursively encode its
@@ -348,7 +346,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       stream->write_ushort (profile->port);
 
       // OCTET SEQUENCE for object key
-      stream->encode (&TC_opaque, &profile->object_key, 0, env);
+      stream->encode (TC_opaque, &profile->object_key, 0, env);
 
 #if 0
       // This is good for debugging the computation of the key

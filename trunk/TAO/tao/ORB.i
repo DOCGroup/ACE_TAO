@@ -162,6 +162,10 @@ CORBA::release (CORBA::ORB_ptr obj)
     obj->Release ();
 }
 
+// ---------------------------------------------------------------------------
+//  ORB specific
+// ---------------------------------------------------------------------------
+
 ACE_INLINE ULONG
 CORBA_ORB::AddRef (void)
 {
@@ -197,6 +201,12 @@ CORBA_ORB::work_pending (void)
 {
   // There's ALWAYS work to do ;-)
   return CORBA::B_TRUE;
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA_ORB::orb_free_resources (void)
+{
+  return CORBA_ORB::orb_init_count_;
 }
 
 // *************************************************************

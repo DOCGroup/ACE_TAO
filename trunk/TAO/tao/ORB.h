@@ -876,6 +876,10 @@ public:
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 
+  static CORBA::Boolean orb_free_resources (void);
+  // indicates if we have reached a point where all ORB owned resources will be
+  // deallocated
+
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (void);
@@ -898,9 +902,11 @@ private:
                                          u_short port);
   // Resolve the refernce of a service of type <name>.
 
-  // @@ Please document me.
   ACE_SYNCH_MUTEX lock_;
+  // lock required for mutual exclusion between multiple threads.
+
   u_int refcount_;
+  // maintains a reference count of number of instantiations of the ORB
 
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> open_called_;
   // Flag which denotes that the open method was called.

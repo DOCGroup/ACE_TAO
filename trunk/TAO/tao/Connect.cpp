@@ -300,7 +300,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
   TAO_GIOP::start_message (TAO_GIOP_Reply, response);
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);
-  response.encode (&TC_ServiceContextList,
+  response.encode (TC_ServiceContextList,
                    &resp_ctx,
                    0,
                    env);

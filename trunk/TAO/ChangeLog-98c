@@ -1,3 +1,73 @@
+Tue Apr 28 13:02:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation.cpp: The tables for Param_Data
+	and Call_Data in the stubs and skeletons are now generated inside
+	the stub/skeleton instead of being global. This change was
+	necessitated since we removed all statics from the TAO library.
+
+	* TAO_IDL/be/be_visitor_structure.cpp: Some trivial indentation
+	changes and moved code a bit so that related code gets generated
+	near each other.
+
+	* tao/Exception.cpp: Got rid of all static typecodes for system
+	exceptions. In addition, there was an error in
+	"make_standard_typecode" where we were creating a new
+	ExceptionList for every call to make_standard_typecode. This is
+	now moved to the init method.
+
+	A few TypeCode definitions have been moved to
+	Typecode_Constants.cpp since these were owned by the ORB.
+
+	* tao/Exception.h:(make_standard_typecode): The first parameter
+	now takes a reference to TypeCode_ptr.
+
+	* tao/{Connect, GIOP, Server_Request}.cpp: Use the new TC_opaque
+	and TC_ServiceContextList typecode pointers rather than the
+	previous static TypeCode object.
+
+	* tao/Marshal.cpp: Removed a lot of commented out code.
+
+	* tao/Marshal.h: Added some documentation.
+
+	* tao/ORB.cpp: Added a call to TAO_TypeCodes::init in the
+	init_orb_globals method.
+
+	* tao/ORB.{h,i}: Missing documentation added. Added a new method
+	that returns a boolean value indicating if the ORB's reference
+	count for its globals has reached 0. The TypeCode destructor uses
+	this to get rid of ORB owned typecodes.
+
+	* tao/Object_Key.idl: Added missing documentation.
+
+	* tao/Sequence_T.h: Added missing documentation.
+
+	* tao/Typecode.{h, cpp}: Refined the destructor such that ORB
+	owned typecodes are now destroyed once the reference count for
+	globals has reached 0.
+
+	Added a new class called "TAO_Typecodes". It provides a namespace
+	to defined some static methods for initialization and finalization
+	of ORB owned typecodes.
+
+	* tao/Typecode_Constants.cpp: Lots of changes. All typecodes are
+	now dynamically allocated. All the static allocation is removed.
+
+	* tao/{append, skip}.cpp: In the respective append and skip
+	methods for Exceptions, we had forgotten to append/skip the
+	repository ID for the exception. In addition, we now use TC_opaque
+	pointer rather than the static object.
+
+	* tao/decode.cpp: The static table __tc_consts had to be moved
+	inside the TypeCode::decode method since the typecodes are no more
+	static. Also, we use the newly defined TC_opaque typecode pointer.
+
+	* tao/{encode, deep_copy, deep_free}.cpp: Used the TC_opaque
+	pointer instead of the static object TC_opaque that we previously
+	had.
+
+	* tests/CDR/tc.cpp: Moved the static table of typecodes inside the
+	function since the typecodes are no more static.
+
 Mon Apr 27 16:46:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/*.cpp: put in RT class if running

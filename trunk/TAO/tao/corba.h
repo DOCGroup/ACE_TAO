@@ -163,7 +163,7 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include "tao/ORB.h"
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
-extern CORBA::TypeCode TC_opaque;
+extern CORBA::TypeCode_ptr TC_opaque;
 
 #include "tao/Exception.h"
 #include "tao/Any.h"

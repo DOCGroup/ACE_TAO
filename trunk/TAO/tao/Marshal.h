@@ -83,9 +83,12 @@ class TAO_Export TAO_Marshal
   //    initialize, etc.
 public:
   static void init (void);
-  // @@ Please document me...
+  // initializaton method to initialize all the marshaling objects and
+  // populating them in the Factory.
 
   static TAO_Marshal_Factory* DEFAULT_MARSHAL_FACTORY;
+  // default marshaling factory that uses the interpretive marshaling engine of
+  // TAO.
 };
 
 class TAO_Export TAO_Marshal_Object

@@ -21,8 +21,6 @@
 
 #include "tao/corba.h"
 
-extern CORBA::TypeCode TC_opaque;
-
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,
 // the TypeCode interpreter is used to recursively encode its
@@ -183,7 +181,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             case CORBA::tk_except:
               {
                 // write the encapsulation i.e., octet sequence
-                retval = dest->append (&TC_opaque, src, env);
+                retval = dest->append (TC_opaque, src, env);
               }
             } // end of switch
         }
@@ -215,7 +213,7 @@ TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
                                CORBA::Environment &env)
 {
   // write the octet sequence representing the Principal
-  return dest->append (&TC_opaque, src, env);
+  return dest->append (TC_opaque, src, env);
 }
 
 CORBA::TypeCode::traverse_status
@@ -269,7 +267,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       // isn't part of it any more.
 
       // ProfileData is encoded as an encapsulated sequence of octets.
-      continue_append = (dest->append (&TC_opaque, src, env) ==
+      continue_append = (dest->append (TC_opaque, src, env) ==
                          CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
     }
 
@@ -680,6 +678,9 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_append = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
+
+  // first append the RepositoryID
+  continue_append = dest->append_string (*src);
 
   // Number of fields in the struct.
   int member_count = tc->member_count (env);

@@ -19,8 +19,10 @@
 CORBA::TypeCode_ptr
 TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
 
-// @@ Somehow, we need to make sure this is destroyed...
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
+
+// TAO specific typecode
+extern CORBA::TypeCode_ptr TC_completion_status;
 
 void
 CORBA_Environment::exception (CORBA::Exception *ex)
@@ -247,7 +249,7 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
 // then overwritten.
 
 void
-TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
+TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                        const char *name,
                                        char *buffer,
                                        size_t buflen,
@@ -256,29 +258,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // This function must only be called ONCE, and with a global lock
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
   // this.
-  ACE_NEW (TAO_Exceptions::system_exceptions,
-           CORBA::ExceptionList);
-
   static const char *minor = "minor";
   static const char *completion = "completion";
-
-  static const CORBA::ULong oc_completion_status [] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order flag, tricky
-    0, 0,                 // type ID omitted
-    3,                    // three members
-    0, 0,                 // ... whose names are all omitted
-    0, 0,
-    0, 0
-  };
-  static CORBA::TypeCode
-    tc_completion_status (CORBA::tk_enum,
-                          sizeof oc_completion_status,
-                          (char *) &oc_completion_status,
-                          CORBA::B_FALSE);
-
-  static const CORBA::TypeCode_ptr completion_status =
-    &tc_completion_status;
 
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
@@ -320,7 +301,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
                        &completion, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
-                       &completion_status, 0,
+                       &TC_completion_status, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE) {
     env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
     return;
@@ -331,13 +312,12 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  CORBA::ULong l = TAO_Exceptions::system_exceptions->count ();
-  TAO_Exceptions::system_exceptions->add
-    (new (tcp) CORBA::TypeCode (CORBA::tk_except,
-                                stream.length (),
-                                stream.buffer (),
-                                CORBA::B_FALSE));
+  tcp = new CORBA::TypeCode (CORBA::tk_except,
+                             stream.length (),
+                             stream.buffer (),
+                             CORBA::B_TRUE);
 
+  TAO_Exceptions::system_exceptions->add (tcp);
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
   return;
 }
@@ -383,19 +363,23 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
 
 #define TAO_SYSTEM_EXCEPTION(name) \
     static CORBA::Long tc_buf_ ## name [TAO_Exceptions::TC_BUFLEN / sizeof (long)]; \
-    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except); \
-    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
+    CORBA::TypeCode_ptr CORBA::_tc_ ## name;
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+
+//    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except);
+//    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 
 void
 TAO_Exceptions::init (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when unmarshaling.
+  ACE_NEW (TAO_Exceptions::system_exceptions,
+           CORBA::ExceptionList);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
-    TAO_Exceptions::make_standard_typecode (&tc_std_ ## name, #name, \
+    TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, #name, \
                                            (char *) tc_buf_ ## name, \
                                            sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST
@@ -430,56 +414,6 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #undef  STANDARD_EXCEPTION_LIST
-
-// Static initialization of the two user-defined exceptions that
-// are part of the ORB.
-
-static char tc_buf_Bounds [] =
-{
-  0, 0, 0, 0,           // big endian, padded
-  0, 0, 0, 38,  // strlen (id) + 1
-  'I', 'D', 'L', ':',
-  'o', 'm', 'g', '.',
-  'o', 'r', 'g', '/',
-  'C', 'O', 'R', 'B',
-  'A', '/', 'T', 'y',
-  'p', 'e', 'C', 'o',
-  'd', 'e', '/', 'B',
-  'o', 'u', 'n', 'd',
-  's', ':', '1', '.',
-  '0', '\0', 0, 0,
-  0, 0, 0, 0            // no members to this typecode
-};
-
-static CORBA::TypeCode tc_std_Bounds (CORBA::tk_except,
-                                      sizeof tc_buf_Bounds,
-                                      tc_buf_Bounds,
-                                      CORBA::B_FALSE);
-
-CORBA::TypeCode_ptr CORBA::_tc_Bounds = &tc_std_Bounds;
-
-static char tc_buf_BadKind [] =
-{
-  0, 0, 0, 0,           // big endian, padded
-  0, 0, 0, 39,  // strlen (id) + 1
-  'I', 'D', 'L', ':',
-  'o', 'm', 'g', '.',
-  'o', 'r', 'g', '/',
-  'C', 'O', 'R', 'B',
-  'A', '/', 'T', 'y',
-  'p', 'e', 'C', 'o',
-  'd', 'e', '/', 'B',
-  'a', 'd', 'K', 'i',
-  'n', 'd', ':', '1',
-  '.', '0', '\0', 0,
-  0, 0, 0, 0            // no members to this typecode
-};
-
-static CORBA::TypeCode tc_std_BadKind (CORBA::tk_except,
-                                       sizeof tc_buf_BadKind,
-                                       tc_buf_BadKind,
-                                       CORBA::B_FALSE);
-CORBA::TypeCode_ptr CORBA::_tc_BadKind = &tc_std_BadKind;
 
 // Convenience -- say if the exception is a system exception or not.
 
