@@ -147,11 +147,15 @@ HTTP_Headers::value_reset (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_RB_Tree<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<int, const HTTP_Hdr_Node *>;
+template class ACE_RB_Tree_Iterator_Base<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Reverse_Iterator<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_RB_Tree<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<int, const HTTP_Hdr_Node *>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Iterator<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

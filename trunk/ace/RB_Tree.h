@@ -49,7 +49,7 @@ template <class EXT_ID, class INT_ID>
 class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
 {
   // = TITLE
-  //   Implements a node in a Red-Black Tree ADT.  
+  //   Implements a node in a Red-Black Tree ADT.
   //
 public:
 
@@ -121,9 +121,9 @@ class ACE_RB_Tree
   //     1990, MIT, chapter 14.
   //
   // = Description
-  //     A number of Changes have been made to this class template 
-  //     in order to conform to the ACE_Hash_Map_Manager_Ex 
-  //     interface.  All previously supported public methods are 
+  //     A number of Changes have been made to this class template
+  //     in order to conform to the ACE_Hash_Map_Manager_Ex
+  //     interface.  All previously supported public methods are
   //     still part of this class. However, these are marked as
   //     DEPRECATED and will be removed from this class in
   //     a future version of ACE.  Please migrate your code
@@ -365,26 +365,26 @@ protected:
   void RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
   // Method for restoring Red-Black properties after deletion.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * 
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *
     RB_tree_successor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const;
   // Method to find the successor node of the given node in the tree.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * 
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *
     RB_tree_predecessor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const;
   // Method to find the predecessor node of the given node in the
   // tree.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * 
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *
     RB_tree_minimum (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const;
   // Method to find the minimum node of the subtree rooted at the
   // given node.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * 
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *
     RB_tree_maximum (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const;
   // Method to find the maximum node of the subtree rooted at the
   // given node.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * 
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *
     find_node (const EXT_ID &k, RB_SearchResult &result);
   // Returns a pointer to a matching node if there is one, a pointer
   // to the node under which to insert the item if the tree is not
@@ -478,8 +478,8 @@ public:
   // STL-like iterator dereference operator: returns a reference
   // to the node underneath the iterator.
 
-  ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree (void);
-  // Returns a reference to the tree over which we're iterating.
+  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree (void);
+  // Returns a const reference to the tree over which we're iterating.
 
   int operator== (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
   // Comparison operator: returns 1 if both iterators point to the same position, otherwise 0.
@@ -513,16 +513,6 @@ protected:
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
   // Pointer to the node currently under the iterator.
 
-private:
-
-  // = Declare private and do not define.
-
-  // Explicitly prevent assignment and copy construction of iterators.
-  ACE_UNIMPLEMENTED_FUNC (
-    ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (
-    void operator = (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
-
 };
 
 
@@ -533,7 +523,9 @@ class ACE_RB_Tree_Iterator :
 {
   // = TITLE
   //   Implements an iterator for a Red-Black Tree ADT.
+
 public:
+
   // = Initialization and termination methods.
   ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                         int set_first = 1);
@@ -602,24 +594,17 @@ public:
   // node, returns 1 if not.
   // DEPRECATED: use the base class done () method instead.
 
-private:
-  // = Declare private and do not define.
-
-  // Explicitly prevent assignment and copy construction of iterators.
-  ACE_UNIMPLEMENTED_FUNC (
-    ACE_RB_Tree_Iterator (const ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (
-    void operator = (const ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
-
 };
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-class ACE_RB_Tree_Reverse_Iterator : 
+class ACE_RB_Tree_Reverse_Iterator :
   public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
 {
   // = TITLE
   //   Implements a reverse iterator for a Red-Black Tree ADT.
+
 public:
+
   // = Initialization and termination methods.
   ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                                 int set_last = 1);
@@ -657,14 +642,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
-  // = Declare private and do not define.
-
-  // Explicitly prevent assignment and copy construction of iterators.
-  ACE_UNIMPLEMENTED_FUNC (
-    ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (
-    void operator = (const ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &))
 };
 
 #if defined (__ACE_INLINE__)

@@ -62,7 +62,7 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::~ACE_RB_Tree_Node ()
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator *alloc)
   : allocator_ (alloc),
-    root_ (0), 
+    root_ (0),
     current_size_ (0)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::"
@@ -76,13 +76,13 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator 
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
-  : allocator_ (rbt.allocator_), 
+  : allocator_ (rbt.allocator_),
     root_ (0),
     current_size_ (0)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::"
              "ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   // Make a deep copy of the passed tree.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
@@ -111,7 +111,7 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator =");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   // Clear out the existing tree.
   close_i ();
@@ -245,8 +245,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup");
 
-  while (x && 
-         x->parent () && 
+  while (x &&
+         x->parent () &&
          x->color () == ACE_RB_Tree_Node_Base::BLACK)
   {
     if (x == x->parent ()->left ())
@@ -260,8 +260,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
         w = x->parent ()->right ();
       }
       // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-      if ((w) && 
-          (!w->left () || 
+      if ((w) &&
+          (!w->left () ||
            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
           (!w->right () ||
            w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
@@ -272,8 +272,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
       else
       {
         // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-        if (w && 
-            (!w->right () || 
+        if (w &&
+            (!w->right () ||
              w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
         {
           w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -299,7 +299,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
         w = x->parent ()->left ();
       }
       // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-      if ((!w->left () || 
+      if ((!w->left () ||
            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
           (!w->right () ||
            w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
@@ -310,7 +310,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
       else
       {
         // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-        if (!w->left () || 
+        if (!w->left () ||
             w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
         {
           w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -404,7 +404,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_N
 
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *y = 0;
 
-  while (x && 
+  while (x &&
          x->parent () &&
          x->parent ()->color () == ACE_RB_Tree_Node_Base::RED)
   {
@@ -553,7 +553,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_maximum (ACE_RB_Tre
 // Close down an RB_Tree.  this method should
 // only be called with locks already held.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close_i ()
 {
@@ -566,7 +566,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close_i ()
   return 0;
 }
 
-// Returns a pointer to the item corresponding to the given key, 
+// Returns a pointer to the item corresponding to the given key,
 // or 0 if it cannot find the key in the tree.  This method should
 // only be called with locks already held.
 
@@ -897,4 +897,3 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tr
 
 
 #endif /* !defined (ACE_RB_TREE_C) */
-

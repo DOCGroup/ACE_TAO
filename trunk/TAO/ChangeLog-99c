@@ -1,3 +1,8 @@
+Sat May 08 08:42:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: added missing
+          template instantiation for ACE_RB_Tree_Reverse_Iterator.
+
 Sat May 08 08:20:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
