@@ -37,8 +37,8 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "ace - Win32 Unicode Release"
-RSC=rc.exe
 MTL=mktyplib.exe
+RSC=rc.exe
 CPP=cl.exe
 
 !IF  "$(CFG)" == "ace - Win32 Release"
@@ -209,8 +209,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
-LINK32_FLAGS=wsock32.lib /nologo /subsystem:windows /dll /incremental:no\
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
+LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:no\
  /pdb:"$(OUTDIR)/ace-r.pdb" /machine:I386 /out:"$(OUTDIR)/ace-r.dll"\
  /implib:"$(OUTDIR)/ace-r.lib" 
 LINK32_OBJS= \
@@ -515,8 +515,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=wsock32.lib /nologo /subsystem:windows /dll /incremental:yes\
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386
+LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/ace.pdb" /debug /machine:I386 /out:"$(OUTDIR)/ace.dll"\
  /implib:"$(OUTDIR)/ace.lib" 
 LINK32_OBJS= \
@@ -821,8 +821,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"aceu.dll"
-LINK32_FLAGS=wsock32.lib /nologo /subsystem:windows /dll /incremental:yes\
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"aceu.dll"
+LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/aceu.pdb" /debug /machine:I386 /out:"$(OUTDIR)/aceu.dll"\
  /implib:"$(OUTDIR)/aceu.lib" 
 LINK32_OBJS= \
@@ -1123,8 +1123,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"aceu-r.dll"
-LINK32_FLAGS=wsock32.lib /nologo /subsystem:windows /dll /incremental:no\
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"aceu-r.dll"
+LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:no\
  /pdb:"$(OUTDIR)/aceu-r.pdb" /machine:I386 /out:"$(OUTDIR)/aceu-r.dll"\
  /implib:"$(OUTDIR)/aceu-r.lib" 
 LINK32_OBJS= \
@@ -1414,15 +1414,12 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -1442,29 +1439,25 @@ DEP_CPP_UPIPE=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
 !ENDIF 
@@ -1591,15 +1584,12 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -1621,29 +1611,25 @@ DEP_CPP_UPIPE_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -1771,15 +1757,12 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -1801,29 +1784,25 @@ DEP_CPP_UPIPE_A=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ENDIF 
@@ -2033,15 +2012,12 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -2060,29 +2036,25 @@ DEP_CPP_TOKEN=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
 !ENDIF 
@@ -2189,15 +2161,12 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -2216,29 +2185,25 @@ DEP_CPP_TOKEN_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -2345,15 +2310,12 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -2372,29 +2334,25 @@ DEP_CPP_TOKEN_C=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
 
 
 !ENDIF 
@@ -3181,15 +3139,12 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -3206,29 +3161,25 @@ DEP_CPP_SVC_C=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
 !ENDIF 
@@ -3355,15 +3306,12 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -3380,29 +3328,25 @@ DEP_CPP_SVC_CO=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
 
 !ENDIF 
@@ -3768,15 +3712,12 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -3793,29 +3734,25 @@ DEP_CPP_SSTRI=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
 !ENDIF 
@@ -4957,15 +4894,12 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -4982,29 +4916,25 @@ DEP_CPP_SERVI=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
 !ENDIF 
@@ -5127,15 +5057,12 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -5152,29 +5079,25 @@ DEP_CPP_SERVIC=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
 !ENDIF 
@@ -5360,15 +5283,12 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -5385,29 +5305,25 @@ DEP_CPP_SERVICE_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -5514,15 +5430,12 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -5539,29 +5452,25 @@ DEP_CPP_SERVICE_M=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
 
 
 !ENDIF 
@@ -5701,15 +5610,12 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -5726,29 +5632,25 @@ DEP_CPP_SERVICE_C=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
 
 !ENDIF 
@@ -5862,15 +5764,12 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -5889,29 +5788,25 @@ DEP_CPP_REMOT=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
 
 
 !ENDIF 
@@ -6024,15 +5919,12 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -6049,29 +5941,25 @@ DEP_CPP_REMOTE=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
 
 
 !ENDIF 
@@ -6180,15 +6068,12 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -6205,29 +6090,25 @@ DEP_CPP_READ_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -6338,15 +6219,12 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -6363,29 +6241,25 @@ DEP_CPP_REACT=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
 !ENDIF 
@@ -6700,15 +6574,12 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -6725,29 +6596,25 @@ DEP_CPP_PARSE=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
 
 !ENDIF 
@@ -6995,15 +6862,12 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -7021,29 +6885,25 @@ DEP_CPP_NAMIN=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
 !ENDIF 
@@ -7155,15 +7015,12 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -7180,29 +7037,25 @@ DEP_CPP_NAME_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -7364,15 +7217,12 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -7389,29 +7239,25 @@ DEP_CPP_NAME_P=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
 
 
 !ENDIF 
@@ -7531,15 +7377,12 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -7556,29 +7399,25 @@ DEP_CPP_MULTI=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
 
 !ENDIF 
@@ -7685,15 +7524,12 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -7710,29 +7546,25 @@ DEP_CPP_MESSA=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
 !ENDIF 
@@ -8563,15 +8395,12 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -8590,29 +8419,25 @@ DEP_CPP_LOCAL=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
 
 
 !ENDIF 
@@ -8728,15 +8553,12 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -8753,29 +8575,25 @@ DEP_CPP_LOCAL_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -10153,15 +9971,12 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -10178,29 +9993,25 @@ DEP_CPP_CORBA=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
 
 
 !ENDIF 
@@ -10412,15 +10223,12 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -10437,29 +10245,25 @@ DEP_CPP_ACE_C=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
 
 
 !ENDIF 
@@ -10685,15 +10489,12 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -10710,29 +10511,25 @@ DEP_CPP_PROAC=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
 
 
 !ENDIF 
@@ -10839,15 +10636,12 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -10864,29 +10658,25 @@ DEP_CPP_REACTO=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
 !ENDIF 
@@ -10993,15 +10783,12 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -11020,29 +10807,25 @@ DEP_CPP_TOKEN_I=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
 
 
 !ENDIF 
@@ -11266,15 +11049,12 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -11291,29 +11071,25 @@ DEP_CPP_ACTIV=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
 
 
 !ENDIF 
@@ -11542,15 +11318,12 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -11567,29 +11340,25 @@ DEP_CPP_TASK_=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
 !ENDIF 
@@ -11696,15 +11465,12 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -11721,29 +11487,25 @@ DEP_CPP_STRAT=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
 !ENDIF 
@@ -11866,15 +11628,12 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -11892,29 +11651,25 @@ DEP_CPP_REGIST=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ENDIF 
@@ -12072,15 +11827,12 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_List_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
@@ -12097,29 +11849,25 @@ DEP_CPP_ASYNC=\
 !IF  "$(CFG)" == "ace - Win32 Release"
 
 
-"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Debug"
 
 
-"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
 
-"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
 
-"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"\
- {$(INCLUDE)}"\.\Timer_Queue.cpp"
+"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
 
 
 !ENDIF 
@@ -12129,7 +11877,59 @@ DEP_CPP_ASYNC=\
 # Begin Source File
 
 SOURCE=.\Timer_Queue.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
 DEP_CPP_TIMER=\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Containers.cpp"\
+	{$(INCLUDE)}"\.\Containers.h"\
+	{$(INCLUDE)}"\.\Containers.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Free_List.cpp"\
+	{$(INCLUDE)}"\.\Free_List.h"\
+	{$(INCLUDE)}"\.\Free_List.i"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	
+
+"$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
+DEP_CPP_TIMER=\
+	".\Timer_Hash_T.cpp"\
+	".\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
@@ -12165,8 +11965,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Hash_T.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
 	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
@@ -12181,26 +11979,119 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
-!IF  "$(CFG)" == "ace - Win32 Release"
-
-
-"$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
-
-
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
 
+DEP_CPP_TIMER=\
+	".\Timer_Hash_T.cpp"\
+	".\Timer_Hash_T.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Containers.cpp"\
+	{$(INCLUDE)}"\.\Containers.h"\
+	{$(INCLUDE)}"\.\Containers.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Free_List.cpp"\
+	{$(INCLUDE)}"\.\Free_List.h"\
+	{$(INCLUDE)}"\.\Free_List.i"\
+	{$(INCLUDE)}"\.\High_Res_Timer.h"\
+	{$(INCLUDE)}"\.\High_Res_Timer.i"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_List_T.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
 
+DEP_CPP_TIMER=\
+	".\Timer_Hash_T.cpp"\
+	".\Timer_Hash_T.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Containers.cpp"\
+	{$(INCLUDE)}"\.\Containers.h"\
+	{$(INCLUDE)}"\.\Containers.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\Free_List.cpp"\
+	{$(INCLUDE)}"\.\Free_List.h"\
+	{$(INCLUDE)}"\.\Free_List.i"\
+	{$(INCLUDE)}"\.\High_Res_Timer.h"\
+	{$(INCLUDE)}"\.\High_Res_Timer.i"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\.\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_List_T.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
