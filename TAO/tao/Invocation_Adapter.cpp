@@ -56,6 +56,8 @@ namespace TAO
     // @@ NOTE: Leak if forwarded
     CORBA::Object *effective_target = this->target_;
 
+    CORBA::Object_var tmp_mem;
+
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
@@ -103,6 +105,8 @@ namespace TAO
           {
             details.reset_request_service_info ();
             details.reset_reply_service_info ();
+
+            tmp_mem = effective_target;
 
             if (TAO_debug_level > 2)
               {
