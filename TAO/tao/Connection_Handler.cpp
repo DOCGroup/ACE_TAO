@@ -188,6 +188,17 @@ TAO_Connection_Handler::decr_refcount (void)
   }
 
   ACE_ASSERT(this->reference_count_ == 0);
+
+
+  int r = this->release_os_resources ();
+
+  if (r == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "TAO (%P|%t) - Connection_Handler::"
+                  "decr_refcount, release_os_resources() failed %p\n"));
+    }
+
   delete this;
 
   return 0;
@@ -449,17 +460,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
     //    find out if a handle is registered...
     this->transport ()->wait_strategy ()->is_registered (0);
 
-    r = this->release_os_resources ();
 
-    if (r == -1 && TAO_debug_level)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                    "close_connection, release_os_resources() failed %p\n",
-                    handle, ""));
-      }
 
-    ACE_ASSERT (eh->get_handle() == ACE_INVALID_HANDLE);
   }
 
   ACE_ASSERT (this->transport () != 0);

@@ -1,3 +1,13 @@
+Wed Nov 13 17:18:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp: Release the OS resources only when
+	  the reference count reaches zero. There may be lot of
+	  furore over this decision. But doing this would help to
+	  circumvent BUG 1294 and BUG 1361. The solution in BUG 1294, is
+	  not scalable to situations explained in BUG 1361 which leads to
+	  crashes. The only way to circumvent that is to release the OS
+	  resources at the end of the lifetime of the handler.
+
 Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
