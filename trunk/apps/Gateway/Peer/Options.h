@@ -17,7 +17,7 @@
 #if !defined (OPTIONS_H)
 #define OPTIONS_H
 
-#include "Event.h"
+#include "../Gateway/Event.h"
 
 class ACE_Svc_Export Options
   // = TITLE
