@@ -668,7 +668,7 @@ be_interface::gen_client_inline (void)
   *ci << "ACE_INLINE" << nl;
   *ci << this->name () << "::" << this->local_name () <<
     " (STUB_Object *objref) // constructor" << nl;
-  *ci << "\t: CORBA::Object (objref)" << nl;
+  *ci << "\t: ACE_CORBA_1 (Object) (objref)" << nl;
   *ci << "{}" << nl << nl;
 
   *ci << "ACE_INLINE" << nl;
