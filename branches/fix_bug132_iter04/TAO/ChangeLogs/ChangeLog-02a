@@ -1,3 +1,11 @@
+Mon Apr 23 11:54:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/AMI_Buffering.dsw:
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/AMI_Buffering/client.dsp:
+        * tests/AMI_Buffering/server.dsp:
+          Add MSVC project files for this test
+
 Mon Apr 23 11:47:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/Client_Task.h:
