@@ -335,7 +335,7 @@ If you use the GNU GCC C++ compiler please note the following: <P>
              on Solaris you are probably using the GNU linker.  Try using
               the Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc
             first looks for the GNU linker if it is installed along
-            with gcc.  The only way to not use the GNU linker is to 
+            with gcc.  The only way to not use the GNU linker is to
             delete it from the installation or to build your own
             compiler with no linker. Be aware that you still need the
             libraries and includes of gcc.<P>
@@ -685,6 +685,15 @@ But, that will make repeated testing more difficult on VxWorks.
 You'd either have to call static constructors and destructors
 manually or unload/load the program between runs.<p>
 
+<strong><blink>WARNING:</blink></strong> ACE on VxWorks assumes that
+your <code>main</code> function is named <code>main</code> when using
+ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Any violation of this assumption is
+at your peril.  If you really need to call your entry point something
+other than <code>main</code>, you'll need to construct an
+ACE_Object_Manager.  Please see the <code>#define</code> of <code>main
+(int, char *[])</code> in <code>ace/OS.h</code> to see how ACE does
+that for entry points named <code>main</code>.
+
 You can spawn a new task to run <code>ace_main</code>, using either
 VxWorks <code>sp</code>, or ACE'S <A NAME="spa"><code>spa</code></A>.
 <code>spa</code> can be used from the VxWorks shell to pass arguments
@@ -695,7 +704,6 @@ to <code>ace_main</code>.  Its usage is:
 </code></pre>
 
 All arguments must be quoted, even numbers.<p>
-
 
 <HR>
 <H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
