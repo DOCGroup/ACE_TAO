@@ -21,9 +21,9 @@
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-
 #include "tao/Pluggable.h"
+
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
@@ -40,7 +40,8 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler);
+  TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
+                      TAO_ORB_Core *orb_core);
   // Base object's creator method.
 
   ~TAO_UIOP_Transport (void);
@@ -101,11 +102,9 @@ public:
                 ACE_Time_Value *s = 0);
   //  Read received data into the iovec buffers.
 
-  // @@ Fred, why is this method defined inline?  It should be defined
-  // in the *.cpp file!
-  virtual int send_request (TAO_ORB_Core *  /* orb_core */,
-                            TAO_OutputCDR & /* stream   */,
-                            int             /* twoway   */) { return -1; };
+  virtual int send_request (TAO_ORB_Core *orb_core,
+                            TAO_OutputCDR &stream,
+                            int twoway);
   // Default action to be taken for send request.
 
 protected:
@@ -123,7 +122,8 @@ class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler);
+  TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
+                             TAO_ORB_Core *orb_core);
   // Constructor.  Note, TAO_UIOP_Handler_Base is the base class for
   // both TAO_UIOP_Client_Connection_Handler and
   // TAO_UIOP_Server_Connection_Handler.
@@ -142,10 +142,37 @@ public:
   // concurrency strategies, typically using the leader-follower
   // pattern.
 
+  int handle_client_input (int block = 0);
+  // Read and handle the reply. Returns 0 when there is Short Read on
+  // the connection. Returns 1 when the full reply is read and
+  // handled. If <block> is 1, then reply is read in a blocking
+  // manner.
+
+  virtual int register_handler (void);
+  // Register the handler with the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy.
+
+  virtual int suspend_handler (void);
+  // Suspend the handler from the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy.
+
+  virtual int resume_handler (void);
+  // Resume the handler from the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy.
+
+  virtual int handle_close (void);
+  // The connection was closed, let everybody know about it....
+
+protected:
+  int check_unexpected_data (void);
+  // This method checks for unexpected data.
+
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_UIOP_Server_Transport : public TAO_UIOP_Transport
 {

@@ -572,8 +572,8 @@ GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
-                                             *this->outgoing_,
-                                             this->orb_core_);
+                           *this->outgoing_,
+                           this->orb_core_);
 
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);

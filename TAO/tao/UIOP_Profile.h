@@ -21,9 +21,10 @@
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
 
+#include "ace/Synch.h"
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Synch.h"
 #include "ace/UNIX_Addr.h"
 
 #include "tao/Pluggable.h"

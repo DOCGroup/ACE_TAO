@@ -31,6 +31,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/GIOP.h"
 #include "tao/Any.h"
+#include "tao/Reply_Dispatcher.h"
 
 struct TAO_Exception_Data;
 class TAO_Profile;
@@ -151,7 +152,7 @@ protected:
   const char *opname_;
   // Name of the operation being invoked.
 
-  CORBA::ULong my_request_id_;
+  CORBA::ULong request_id_;
   // Request ID of this operation.
 
   char buffer [ACE_CDR::DEFAULT_BUFSIZE];
@@ -227,7 +228,10 @@ private:
 
 private:
   TAO_InputCDR inp_stream_;
-  // Stream into which the request is placed.
+  // Stream into which the reply is placed.
+
+  TAO_Synch_Reply_Dispatcher rd_;
+  // Reply dispatcher for the current synchronous invocation.
 };
 
 class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation

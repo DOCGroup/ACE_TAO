@@ -9,13 +9,25 @@ unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 
-$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                       "");
+$file="test.ior";
 
-sleep ($ACE::sleeptime);
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+                       "-o $file");
+
+ACE::waitforfile ($file);
 
 $status  = system ($EXEPREFIX."client".$Process::EXE_EXT.
-                   " -x ");
+                   "-x -k file://$file");
+
+$SV->Wait ();
+
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+                       "-o $file");
+
+ACE::waitforfile ($file);
+
+$status  = system ($EXEPREFIX."mt_client".$Process::EXE_EXT.
+                   "-x -k file://$file -ORBsvcconf svc.mt.conf");
 
 $SV->Wait ();
 
