@@ -1,0 +1,103 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Makefile for the TAO IDL compiler front end library
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
+VPATH = .:fe:ast:util:narrow
+
+LIBNAME = libTAO_IDL_FE_DLL
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
+
+FILES = fe/fe_declarator \
+        fe/fe_lookup    \
+        fe/fe_private \
+        fe/fe_init \
+        fe/fe_extern \
+	fe/fe_global \
+        fe/fe_interface_header \
+        fe/y.tab \
+        fe/lex.yy \
+        ast/ast_array \
+        ast/ast_argument \
+        ast/ast_attribute \
+        ast/ast_check \
+        ast/ast_concrete_type \
+        ast/ast_constant \
+        ast/ast_decl \
+        ast/ast_enum \
+        ast/ast_enum_val \
+        ast/ast_exception \
+        ast/ast_expression \
+        ast/ast_field \
+        ast/ast_interface \
+        ast/ast_interface_fwd \
+        ast/ast_module \
+        ast/ast_native \
+        ast/ast_operation \
+        ast/ast_predefined_type \
+        ast/ast_root \
+        ast/ast_sequence \
+        ast/ast_string \
+        ast/ast_structure \
+        ast/ast_type \
+        ast/ast_typedef \
+        ast/ast_union \
+        ast/ast_union_branch \
+        ast/ast_union_label \
+        ast/ast_generator \
+        ast/ast_redef \
+        ast/ast_recursive \
+        util/utl_scope \
+        util/utl_stack \
+        util/utl_string \
+        util/utl_decllist \
+        util/utl_labellist \
+        util/utl_namelist \
+        util/utl_exceptlist \
+        util/utl_strlist \
+        util/utl_list \
+        util/utl_exprlist \
+        util/utl_err \
+        util/utl_indenter \
+        util/utl_identifier \
+        util/utl_idlist \
+        util/utl_global \
+        narrow/narrow
+
+LSRC = $(addsuffix .cpp, $(FILES))
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+CPPFLAGS += -Iinclude -Ife
+
+realclean: clean
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+

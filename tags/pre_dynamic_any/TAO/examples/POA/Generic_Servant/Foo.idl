@@ -1,0 +1,26 @@
+// $Id$
+// ================================================================
+//
+// = FILENAME
+//     Foo.idl
+//
+// ================================================================
+
+// IDL
+
+interface Foo
+{
+  long doit ();
+  // A simple twoway operation, the idea is to verify that the server
+  // can be located.
+
+  oneway void simply_doit ();
+  // A simple oneway operation, the idea is to measure any differences
+  // to the previous one.
+
+  void timed_operation (in unsigned long timeout);
+  // A timed operation.
+
+  void shutdown ();
+  // Shutdown the server.
+};
