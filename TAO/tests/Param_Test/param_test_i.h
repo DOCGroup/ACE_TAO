@@ -185,6 +185,20 @@ public:
             CORBA::Environment &env);
   // test for Anys
 
+  virtual Param_Test::Fixed_Array_slice *
+  test_fixed_array (const Param_Test::Fixed_Array a1,
+                    Param_Test::Fixed_Array a2,
+                    Param_Test::Fixed_Array_out a3,
+                    CORBA::Environment &env);
+  // test for fixed size arrays
+
+  virtual Param_Test::Var_Array_slice *
+  test_var_array (const Param_Test::Var_Array a1,
+                  Param_Test::Var_Array a2,
+                  Param_Test::Var_Array_out a3,
+                  CORBA::Environment &env);
+  // test for arrays of variable types
+
   void shutdown (CORBA::Environment &env);
 
 private:

@@ -484,9 +484,40 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   return ret;
 }
 
+// test for fixed arrays
+Param_Test::Fixed_Array_slice *
+Param_Test_i::test_fixed_array (const Param_Test::Fixed_Array a1,
+                                Param_Test::Fixed_Array a2,
+                                Param_Test::Fixed_Array_out a3,
+                                CORBA::Environment &env)
+{
+  Param_Test::Fixed_Array_slice *ret;
+  ACE_UNUSED_ARG (env);
+
+  Param_Test::Fixed_Array_copy (a2, a1);
+  Param_Test::Fixed_Array_copy (a3, a1);
+  ret = Param_Test::Fixed_Array_dup (a1);
+  return ret;
+}
+
+// test for var arrays
+Param_Test::Var_Array_slice *
+Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
+                              Param_Test::Var_Array a2,
+                              Param_Test::Var_Array_out a3,
+                              CORBA::Environment &env)
+{
+  Param_Test::Var_Array_slice *ret;
+  ACE_UNUSED_ARG (env);
+
+  Param_Test::Var_Array_copy (a2, a1);
+  a3 = Param_Test::Var_Array_dup (a1);
+  ret = Param_Test::Var_Array_dup (a1);
+  return ret;
+}
+
 void
 Param_Test_i::shutdown (CORBA::Environment &)
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
-

@@ -1,37 +1,102 @@
+Fri Jun 26 14:22:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tests/Param_Test:
+
+	The ever increasing tests.{h, cpp} files have been broken down
+	into the following files to make modifications and adding new
+	tests simpler. The tests.cpp file is removed. Any new tests that
+	are added will have their individual *.h and *.cpp files.
+
+	We now keep a tests.h file that includes all the individual *.h
+	files for each test. This way, we just need to include the tests.h
+	file. Individual files for different tests are given below.
+
+	any.h
+	bd_long_seq.h
+	bd_short_seq.h
+	bd_str_seq.h
+	bd_struct_seq.h
+	fixed_array.h
+	fixed_struct.h
+	nested_struct.h
+	objref.h
+	short.h
+	typecode.h
+	ub_any_seq.h
+	ub_long_seq.h
+	ub_objref_seq.h
+	ub_short_seq.h
+	ub_str_seq.h
+	ub_string.h
+	ub_struct_seq.h
+	var_array.h
+	var_struct.h
+
+	These are the different *.cpp files implementing various tests.
+
+	any.cpp
+	bd_long_seq.cpp
+	bd_short_seq.cpp
+	bd_str_seq.cpp
+	bd_struct_seq.cpp
+	fixed_array.cpp
+	fixed_struct.cpp
+	nested_struct.cpp
+	objref.cpp
+	short.cpp
+	typecode.cpp
+	ub_any_seq.cpp
+	ub_long_seq.cpp
+	ub_objref_seq.cpp
+	ub_short_seq.cpp
+	ub_str_seq.cpp
+	ub_string.cpp
+	ub_struct_seq.cpp
+	var_array.cpp
+	var_struct.cpp
+
+	We use the bd_* convention for the bounded sequences/strings tests
+	and the ub_* convention for the unbounded cases.
+
+	*NEW TESTS* :
+
+	Tests for arrays of fixed and varying sizes are included in this
+	release.
+
 Fri Jun 26 14:20:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.h: 
-	* tao/Sequence.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
+	* tao/Sequence.h:
+	* tao/Sequence.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 	  TAO provides an extension for octet sequences: a constructor
 	  taking a Message_Block.
 
-	* TAO_IDL/be_include/be_array.h: 
-	* TAO_IDL/be_include/be_enum.h: 
-	* TAO_IDL/be_include/be_exception.h: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be_include/be_interface_fwd.h: 
-	* TAO_IDL/be_include/be_native.h: 
-	* TAO_IDL/be_include/be_predefined_type.h: 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be_include/be_string.h: 
-	* TAO_IDL/be_include/be_structure.h: 
-	* TAO_IDL/be_include/be_type.h: 
-	* TAO_IDL/be_include/be_typedef.h: 
-	* TAO_IDL/be_include/be_union.h: 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_native.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_native.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
 	  Removed a method that was not used anymore.
 
 Fri Jun 26 12:54:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
