@@ -114,11 +114,7 @@ public:
   // A list of bindings
   typedef ACE_Unbounded_Set<Binding> Binding_List;
 
-  /**
-   * @class Binding_Iterator;
-   *
-   * Forward declaration of iterator
-   */
+  // Forward declaration of iterator
   class Binding_Iterator;
 
   /**
@@ -455,13 +451,15 @@ public:
     // This should really be private
     // But the compiler is broken
 
-/**
- * @class Iteration_State
- Base class for state
- */
+    /**
+     * @class Iteration_State
+     *
+     * Base class for state
+     */
     class ACE_Export Iteration_State
       {
       public:
+        /// Constructor
         Iteration_State (Binding_Iterator &iterator);
 
         /// Next <how_many> entries
