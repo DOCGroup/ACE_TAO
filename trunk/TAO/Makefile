@@ -90,7 +90,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
                    if ( ! $$message_printed++ ) { print "$$message\n"; } \
                    print; } ' $$CHANGELOG; \
               cvs commit -m"$$TAO_VERSION" VERSION $$CHANGELOG; \
-              chmod 644 VERSION) &&
+              chmod 644 VERSION $$CHANGELOG) &&
 else
   TIMESTAMP =
 endif
