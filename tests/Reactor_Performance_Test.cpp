@@ -78,7 +78,7 @@ Read_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%t) Read_Handler::open, cannot set non blocking mode\n"), -1);
   
-  if (reactor ()->register_handler (this, READ_MASK | CLOSE_MASK) == -1)
+  if (reactor ()->register_handler (this, READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%t) Read_Handler::open, cannot register handler\n"), -1);
   
@@ -117,16 +117,16 @@ Read_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (close_mask);
-
+  
   // Reduce count
   waiting_--;
-
+  
   // If no connections are open
   if (waiting_ == 0)
     {
       ACE_Reactor::instance ()->end_event_loop ();
     }
-      
+  
   ACE_DEBUG ((LM_DEBUG, 
               "(%t) Read_Handler::handle_close closing down\n"));
   

@@ -55,7 +55,6 @@ public:
     TIMER_MASK = (1 << 5),
     QOS_MASK = (1 << 6),
     GROUP_QOS_MASK = (1 << 7),
-    CLOSE_MASK = (1 << 8),
     ALL_EVENTS_MASK = READ_MASK | 
                       WRITE_MASK | 
                       EXCEPT_MASK | 
@@ -63,8 +62,7 @@ public:
                       CONNECT_MASK | 
                       TIMER_MASK | 
                       QOS_MASK | 
-                      GROUP_QOS_MASK | 
-                      CLOSE_MASK,
+                      GROUP_QOS_MASK,
     RWE_MASK = READ_MASK | 
                WRITE_MASK | 
                EXCEPT_MASK,
