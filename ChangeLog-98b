@@ -1,127 +1,133 @@
+Mon Jun 22 09:04:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: removed suppression
+          of warnig 340, used reference to copied (temporary) value,
+          because it's no longer needed.
+
 Mon Jun 22 04:49:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* man/windex: Removed ACE_Service_Record from all the
-	  documentation since it is no longer relevant.  Thanks
-	  to Ivan Murphy for reporting this.	
+        * man/windex: Removed ACE_Service_Record from all the
+          documentation since it is no longer relevant.  Thanks
+          to Ivan Murphy for reporting this.
 
 Mon Jun 22 02:59:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.cpp (setenv_i): Nedd to adjust the memory size to
- 	  the actual string size.
+        * ace/Process.cpp (setenv_i): Nedd to adjust the memory size to
+          the actual string size.
 
 Mon Jun 22 02:32:56 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/Thread_Manager.h: 
-	* ace/Thread_Manager.cpp: 
-	* ace/Thread_Manager.i: 
-	* ace/OS.cpp (uname): 
-	Moved a few things (comparison operators) from
-	ACE_Thread_Descriptor to ACE_Thread_Descriptor_Base, to satisfy
-	Borland compilers.
-	Enabled a conditional compilation for all Borland compilers.
- 	Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for pointing
-	these things out.
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.i:
+        * ace/OS.cpp (uname):
+        Moved a few things (comparison operators) from
+        ACE_Thread_Descriptor to ACE_Thread_Descriptor_Base, to satisfy
+        Borland compilers.
+        Enabled a conditional compilation for all Borland compilers.
+        Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for pointing
+        these things out.
 
 Mon Jun 22 01:14:36 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/ACE.bpg: 
-	* ace/ACED.bpr: 
-	* ace/ACER.bpr: 
-	Contained ^M characters.
-	I also made sure there were no absolute paths pointing to "gonzo"
-	directories...
+        * ace/ACE.bpg:
+        * ace/ACED.bpr:
+        * ace/ACER.bpr:
+        Contained ^M characters.
+        I also made sure there were no absolute paths pointing to "gonzo"
+        directories...
 
- 	* ace/ACED.cpp: 
-	* ace/ACER.cpp: 
-	Added Stats.cpp as a module in the right place.
+        * ace/ACED.cpp:
+        * ace/ACER.cpp:
+        Added Stats.cpp as a module in the right place.
 
-	* ace/OS.h: 
-	Added a ACE_NOOP macro to avoid compilation warnings when "if" is
-	used as a noop in certain macros.
+        * ace/OS.h:
+        Added a ACE_NOOP macro to avoid compilation warnings when "if" is
+        used as a noop in certain macros.
 
-	* ace/Hash_Map_Manager.cpp: 
-	* ace/Map_Manager.cpp: 
-	Replaced the use of "if" as a noop with ACE_NOOP.
+        * ace/Hash_Map_Manager.cpp:
+        * ace/Map_Manager.cpp:
+        Replaced the use of "if" as a noop with ACE_NOOP.
 
-	* ace/Signal.cpp: 
-	For some obscure reason, Borland needs a blank line between the
-	#if and the extern "C" void ace_sig_handler_dispatch()
-	definition. Don't ask...
+        * ace/Signal.cpp:
+        For some obscure reason, Borland needs a blank line between the
+        #if and the extern "C" void ace_sig_handler_dispatch()
+        definition. Don't ask...
 
-	* ace/Asynch_IO.h: 
-	Changed (again) inheritance for ACE_Asynch_Result from protected
-	to public.
+        * ace/Asynch_IO.h:
+        Changed (again) inheritance for ACE_Asynch_Result from protected
+        to public.
 
-	* tests/Aio_Platform_Test.bpr: 
-	* tests/Atomic_Op_Test.bpr: 
-	* tests/Barrier_Test.bpr: 
-	* tests/Basic_Types_Test.bpr: 
-	* tests/Buffer_Stream_Test.bpr: 
-	* tests/Conn_Test.bpr: 
-	* tests/Enum_Interfaces_Test.bpr: 
-	* tests/Env_Value_Test.bpr: 
-	* tests/Future_Test.bpr: 
-	* tests/Handle_Set_Test.bpr: 
-	* tests/Hash_Map_Manager_Test.bpr: 
-	* tests/IOStream_Test.bpr: 
-	* tests/MM_Shared_Memory_Test.bpr: 
-	* tests/MT_Reactor_Timer_Test.bpr: 
-	* tests/MT_SOCK_Test.bpr: 
-	* tests/Map_Manager_Test.bpr: 
-	* tests/Mem_Map_Test.bpr: 
-	* tests/Message_Block_Test.bpr: 
-	* tests/Message_Queue_Notifications_Test.bpr: 
-	* tests/Message_Queue_Test.bpr: 
-	* tests/Naming_Test.bpr: 
-	* tests/Notify_Performance_Test.bpr: 
-	* tests/OrdMultiSet_Test.bpr: 
-	* tests/Pipe_Test.bpr: 
-	* tests/Priority_Buffer_Test.bpr: 
-	* tests/Priority_Reactor_Test.bpr: 
-	* tests/Priority_Task_Test.bpr: 
-	* tests/Process_Mutex_Test.bpr: 
-	* tests/Process_Strategy_Test.bpr: 
-	* tests/Reactor_Exceptions_Test.bpr: 
-	* tests/Reactor_Notify_Test.bpr: 
-	* tests/Reactor_Performance_Test.bpr: 
-	* tests/Reactor_Timer_Test.bpr: 
-	* tests/Reactors_Test.bpr: 
-	* tests/Reader_Writer_Test.bpr: 
-	* tests/Recursive_Mutex_Test.bpr: 
-	* tests/SOCK_Connector_Test.bpr: 
-	* tests/SOCK_Test.bpr: 
-	* tests/SPIPE_Test.bpr: 
-	* tests/SString_Test.bpr: 
-	* tests/SV_Shared_Memory_Test.bpr: 
-	* tests/Semaphore_Test.bpr: 
-	* tests/Service_Config_Test.bpr: 
-	* tests/Sigset_Ops_Test.bpr: 
-	* tests/Simple_Message_Block_Test.bpr: 
-	* tests/TSS_Test.bpr: 
-	* tests/Task_Test.bpr: 
-	* tests/Thread_Manager_Test.bpr: 
-	* tests/Thread_Mutex_Test.bpr: 
-	* tests/Thread_Pool_Test.bpr: 
-	* tests/Time_Service_Test.bpr: 
-	* tests/Time_Value_Test.bpr: 
-	* tests/Timer_Queue_Test.bpr: 
-	* tests/Tokens_Test.bpr: 
-	* tests/UPIPE_SAP_Test.bpr: 
-	* tests/tests.bpg: 
-	Contained ^M characters.
-	I also made sure there were no absolute paths pointing to "gonzo"
-	directories...
-	
+        * tests/Aio_Platform_Test.bpr:
+        * tests/Atomic_Op_Test.bpr:
+        * tests/Barrier_Test.bpr:
+        * tests/Basic_Types_Test.bpr:
+        * tests/Buffer_Stream_Test.bpr:
+        * tests/Conn_Test.bpr:
+        * tests/Enum_Interfaces_Test.bpr:
+        * tests/Env_Value_Test.bpr:
+        * tests/Future_Test.bpr:
+        * tests/Handle_Set_Test.bpr:
+        * tests/Hash_Map_Manager_Test.bpr:
+        * tests/IOStream_Test.bpr:
+        * tests/MM_Shared_Memory_Test.bpr:
+        * tests/MT_Reactor_Timer_Test.bpr:
+        * tests/MT_SOCK_Test.bpr:
+        * tests/Map_Manager_Test.bpr:
+        * tests/Mem_Map_Test.bpr:
+        * tests/Message_Block_Test.bpr:
+        * tests/Message_Queue_Notifications_Test.bpr:
+        * tests/Message_Queue_Test.bpr:
+        * tests/Naming_Test.bpr:
+        * tests/Notify_Performance_Test.bpr:
+        * tests/OrdMultiSet_Test.bpr:
+        * tests/Pipe_Test.bpr:
+        * tests/Priority_Buffer_Test.bpr:
+        * tests/Priority_Reactor_Test.bpr:
+        * tests/Priority_Task_Test.bpr:
+        * tests/Process_Mutex_Test.bpr:
+        * tests/Process_Strategy_Test.bpr:
+        * tests/Reactor_Exceptions_Test.bpr:
+        * tests/Reactor_Notify_Test.bpr:
+        * tests/Reactor_Performance_Test.bpr:
+        * tests/Reactor_Timer_Test.bpr:
+        * tests/Reactors_Test.bpr:
+        * tests/Reader_Writer_Test.bpr:
+        * tests/Recursive_Mutex_Test.bpr:
+        * tests/SOCK_Connector_Test.bpr:
+        * tests/SOCK_Test.bpr:
+        * tests/SPIPE_Test.bpr:
+        * tests/SString_Test.bpr:
+        * tests/SV_Shared_Memory_Test.bpr:
+        * tests/Semaphore_Test.bpr:
+        * tests/Service_Config_Test.bpr:
+        * tests/Sigset_Ops_Test.bpr:
+        * tests/Simple_Message_Block_Test.bpr:
+        * tests/TSS_Test.bpr:
+        * tests/Task_Test.bpr:
+        * tests/Thread_Manager_Test.bpr:
+        * tests/Thread_Mutex_Test.bpr:
+        * tests/Thread_Pool_Test.bpr:
+        * tests/Time_Service_Test.bpr:
+        * tests/Time_Value_Test.bpr:
+        * tests/Timer_Queue_Test.bpr:
+        * tests/Tokens_Test.bpr:
+        * tests/UPIPE_SAP_Test.bpr:
+        * tests/tests.bpg:
+        Contained ^M characters.
+        I also made sure there were no absolute paths pointing to "gonzo"
+        directories...
+
 Mon Jun 22 01:33:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_SYNCH_{1,2}): These two macros were added back for
-	  backward compatibility.
+        * ace/OS.h (ACE_SYNCH_{1,2}): These two macros were added back for
+          backward compatibility.
 
 Mon Jun 22 01:12:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (dlerror): Just use FormatMessageA instead of
- 	  FormatMessage.  The you don't have to worry about UNICODE being
- 	  turned on.
+        * ace/OS.i (dlerror): Just use FormatMessageA instead of
+          FormatMessage.  The you don't have to worry about UNICODE being
+          turned on.
 
 Mon Jun 22 00:01:02 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -129,103 +135,103 @@ Mon Jun 22 00:01:02 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jun 21 23:54:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Defined
-	  ACE_LACKS_MUTEXATTR_PSHARED and ACE_LACKS_CONDATTR_PSHARED.
+        * ace/config-freebsd-pthread.h: Defined
+          ACE_LACKS_MUTEXATTR_PSHARED and ACE_LACKS_CONDATTR_PSHARED.
 
 Sun Jun 21 10:14:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (server): Fixed
- 	  another ambiguity caused by the recent SOCK_IO changes.  Thanks
- 	  to David for pointing this out.
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (server): Fixed
+          another ambiguity caused by the recent SOCK_IO changes.  Thanks
+          to David for pointing this out.
 
 Sun Jun 21 00:16:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (dlerror): Have to treat UNICODE differently because
-	  FormatMessage takes wchar when UNICODE is defined.
+        * ace/OS.i (dlerror): Have to treat UNICODE differently because
+          FormatMessage takes wchar when UNICODE is defined.
 
-	* ace/WFMO_Reactor.{h,i,cpp}: Changed the parent class of
-	  ACE_WFMO_Reactor_Notify from ACE_Event_Handler to
-	  ACE_Reactor_Notify.
-	  (dump): Added this virtual function implementation for
-	  ACE_WFMO_Reactor_Notify.
+        * ace/WFMO_Reactor.{h,i,cpp}: Changed the parent class of
+          ACE_WFMO_Reactor_Notify from ACE_Event_Handler to
+          ACE_Reactor_Notify.
+          (dump): Added this virtual function implementation for
+          ACE_WFMO_Reactor_Notify.
 
-	* Ace/Proactor.cpp (timeout): Fixed a typo.
+        * Ace/Proactor.cpp (timeout): Fixed a typo.
 
 Sat Jun 20 16:51:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Reactor*: Made a slew of changes to the Reactor and it's
- 	  associated implementations so that we can integrate it
- 	  seamlessly with Chorus ClassiX IPC.  Thanks to Wei Chiang for
- 	  these changes.
+        * ace/Reactor*: Made a slew of changes to the Reactor and it's
+          associated implementations so that we can integrate it
+          seamlessly with Chorus ClassiX IPC.  Thanks to Wei Chiang for
+          these changes.
 
-	* ace/Acceptor.cpp: Added a flag that keeps track of whether we should
-	  use select() in the Acceptor.  This makes it easier to integrate
-	  this stuff with Chorus IPC.  Thanks to Wei Chiang for this.
+        * ace/Acceptor.cpp: Added a flag that keeps track of whether we should
+          use select() in the Acceptor.  This makes it easier to integrate
+          this stuff with Chorus IPC.  Thanks to Wei Chiang for this.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Removed the trailing
- 	  0 to the send() operation to (1) avoid overload ambiguity and
- 	  (2) to use write() rather than send()!  Thanks to Chris Healey
- 	  for reporting this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Removed the trailing
+          0 to the send() operation to (1) avoid overload ambiguity and
+          (2) to use write() rather than send()!  Thanks to Chris Healey
+          for reporting this.
 
-	* ace/ACE: The default condition in the select switch in the
- 	  enter_*_timed_wait functions assumed that all values returned
- 	  from select if not 0 or 1 will be -1.  This is true in those
- 	  functions due to only 1 file descriptor flag being set.  Thanks
- 	  to Chris Healey for generalizing this a bit...
+        * ace/ACE: The default condition in the select switch in the
+          enter_*_timed_wait functions assumed that all values returned
+          from select if not 0 or 1 will be -1.  This is true in those
+          functions due to only 1 file descriptor flag being set.  Thanks
+          to Chris Healey for generalizing this a bit...
 
-	* ace/SOCK_IO: Added the wrappers for the "non-flags" version of
- 	  timed send()/recv().  Thanks to Chris Healey for this.
+        * ace/SOCK_IO: Added the wrappers for the "non-flags" version of
+          timed send()/recv().  Thanks to Chris Healey for this.
 
-	* ace/FILE_Addr.cpp: Cleaned up the code a bit to be more
- 	  consistent.  Thanks to Chris Healey for suggesting this.
+        * ace/FILE_Addr.cpp: Cleaned up the code a bit to be more
+          consistent.  Thanks to Chris Healey for suggesting this.
 
-	* ace/FILE_Addr.cpp (ACE_FILE_Addr): Removed the memset() in the
- 	  constructor since this is overkill...
+        * ace/FILE_Addr.cpp (ACE_FILE_Addr): Removed the memset() in the
+          constructor since this is overkill...
 
-	* ace/ACE.cpp (send_n): Fixed a dump cut&paste bug in the timed
- 	  version of send_n().  Thanks to Chris Healey
- 	  <chealey@entera.com> for reporting this.
+        * ace/ACE.cpp (send_n): Fixed a dump cut&paste bug in the timed
+          version of send_n().  Thanks to Chris Healey
+          <chealey@entera.com> for reporting this.
 
 Sat Jun 20 14:58:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/indent_macros.perl: Instead of hardcoding perl's location in
-	  the script, it now invokes perl according to user's environment
-	  setting.  Thanks to David for providing the improvement.
+        * bin/indent_macros.perl: Instead of hardcoding perl's location in
+          the script, it now invokes perl according to user's environment
+          setting.  Thanks to David for providing the improvement.
 
 Sat Jun 20 01:24:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd_pthread.GNU: Changed to use
-	  -Wall to report all warnings.
+        * include/makeinclude/platform_freebsd_pthread.GNU: Changed to use
+          -Wall to report all warnings.
 
-	* ace/OS.cpp (thr_create): Specify <priority> as an unused
-	  argument when ACE_LACKS_SETSCHED.
+        * ace/OS.cpp (thr_create): Specify <priority> as an unused
+          argument when ACE_LACKS_SETSCHED.
 
-	* ace/OS.{h,i,cpp}: Rearrange macro indentations.
+        * ace/OS.{h,i,cpp}: Rearrange macro indentations.
 
-	* bin/indent_macros.perl: This little perl script rearrange the
-	  indentation of macros so they are a bit easier to debug.
+        * bin/indent_macros.perl: This little perl script rearrange the
+          indentation of macros so they are a bit easier to debug.
 
-	* ace/config-freebsd-pthread.h: Defined ACE_LACKS_PTHREAD_CANCEL.
+        * ace/config-freebsd-pthread.h: Defined ACE_LACKS_PTHREAD_CANCEL.
 
 Sat Jun 20 00:14:07 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor_with_aio.cpp: Test
-	program for the Asynch_Transmit_File, Asynch_Read_File,
-	Asynch_Read_Stream, Asynch_Write_File and Asynch_Write_Stream.
+        * examples/Reactor/Proactor/test_proactor_with_aio.cpp: Test
+        program for the Asynch_Transmit_File, Asynch_Read_File,
+        Asynch_Read_Stream, Asynch_Write_File and Asynch_Write_Stream.
 
 Fri Jun 19 23:58:35 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
-	* ace/Proactor.h    :
-	* ace/Proactor.cpp  :
-	* ace/Asynch_IO.h   :
-	* ace/Asynch_IO.cpp :
-		- Implemented Asynch_Transmit_File for POSIX4 systems.
-		- Added a new class "ACE_Asynch_Transmit_Handler", which is
-		an auxillary handler class for Asynch_Transmit_File. This
-		does the actual transmission doing file read and stream
-		write asynchronously and finally calling the
- 		transmit_handler in the application.
-		- Aiocb list is now of size RTSIG_MAX, the maximum number
-		of RT signals that can be queued in a process at a time.
+        * ace/Proactor.h    :
+        * ace/Proactor.cpp  :
+        * ace/Asynch_IO.h   :
+        * ace/Asynch_IO.cpp :
+                - Implemented Asynch_Transmit_File for POSIX4 systems.
+                - Added a new class "ACE_Asynch_Transmit_Handler", which is
+                an auxillary handler class for Asynch_Transmit_File. This
+                does the actual transmission doing file read and stream
+                write asynchronously and finally calling the
+                transmit_handler in the application.
+                - Aiocb list is now of size RTSIG_MAX, the maximum number
+                of RT signals that can be queued in a process at a time.
 
 Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
