@@ -758,7 +758,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
 void 
 ACE_WFMO_Reactor_Handler_Repository::dump (void) const
 {
-  int i = 0;
+  size_t i = 0;
 
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::dump");
 
