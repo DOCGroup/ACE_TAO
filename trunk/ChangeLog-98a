@@ -1,5 +1,11 @@
 Fri Feb 13 19:25:55 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Log_Record.cpp (ACE_Log_Record): Changed the "set" method
+ 	  for priority() so that it doesn't convert the priority into the
+ 	  base two logarithm of the parameter.  Instead, this is handled
+ 	  by the "get" method of priority().  Thanks to Eric C. Newton
+ 	  <ecn@smart.net> for reporting this.
+
 	* ace/OS.h: Added a new #define called ACE_MAX_DGRAM_SIZE, which
  	  is set to 8k by default.  Naturally, this can be overwritten in
  	  platform-specific config.h files.

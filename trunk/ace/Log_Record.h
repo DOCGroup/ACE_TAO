@@ -89,8 +89,7 @@ public:
 
   void priority (u_long num);
   // Set the priority of the <Log_Record> <type_> (which must be a
-  // power of 2, as defined by the enums in <ACE_Log_Priority>).  This
-  // <type_> is stored as the base 2 logarithm of <num>.
+  // power of 2, as defined by the enums in <ACE_Log_Priority>).
 
   long length (void) const;
   // Get the length of the <Log_Record>.
