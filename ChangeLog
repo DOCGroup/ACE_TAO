@@ -1,3 +1,9 @@
+Wed Oct 16 16:52:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.cpp (close_shm_malloc): Fixed a memory leak that I
+	  added last time when I fixed a race condition in removing mmap
+	  file.
+
 Wed Oct 16 15:35:22 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/SPIPE_Test.cpp: Fixed compile error.
@@ -9,7 +15,7 @@ Wed Oct 16 14:02:27 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
 
 	  forward and reverse partial tree traversal.
 	  Changed the find_i method.
-	
+
 Wed Oct 16 12:18:03 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* examples/C++v1/Makefile:
