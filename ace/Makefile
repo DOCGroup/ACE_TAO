@@ -187,6 +187,7 @@ TEMPLATE_FILES = \
            Acceptor \
            Active_Map_Manager_T \
            Asynch_Acceptor \
+           Auto_IncDec_T \
            Auto_Ptr \
            Based_Pointer_T \
            Connector \
