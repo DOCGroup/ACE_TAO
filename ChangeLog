@@ -1,3 +1,9 @@
+Wed May  3 15:08:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_freebsd.GNU: Changed to set
+	  versioned_so only when building on version 2 of FreeBSD.  Thanks
+	  to Henrik Kai <hka@ddk.de> for pointing this out.
+
 Wed May  3 12:31:32 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (INLINE_FILES):
