@@ -124,7 +124,7 @@ private:
 // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define SYSEX(name) \
-extern CORBA_TypeCode_ptr		_tc_CORBA_ ## name ; \
+extern ACE_Svc_Export CORBA_TypeCode_ptr		_tc_CORBA_ ## name ; \
 class ACE_Svc_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
   CORBA_ ## name (CORBA_CompletionStatus completed, \
