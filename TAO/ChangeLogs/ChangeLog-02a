@@ -1,3 +1,10 @@
+Mon Nov 12 09:59:50 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
+	  (dispatch_event_i):
+
+	  Added missing ACE_TRY_CHECK;
+
 Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/Exposed_Policies/Policy_Tester.cpp:
