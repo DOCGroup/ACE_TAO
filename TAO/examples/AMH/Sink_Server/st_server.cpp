@@ -5,10 +5,13 @@
 #include "Base_Server.h"
 
 
-char *
-usage ()
+void
+usage (char *message)
 {
-  return "invoke as: st_server -o <ior_output_file> \n -s <sleep_time (in microseconds)> \n";
+  static const char * usage = 
+    "invoke as: st_server -o <ior_output_file> \n -s <sleep_time (in microseconds)> \n";
+
+  ACE_ERROR ((LM_ERROR, "%s : %s", message, usage));
 }
 
 int
@@ -20,20 +23,20 @@ main (int argc, char *argv[])
 
   if (amh_server.parse_args () != 1)
     {
-        ACE_ERROR ((LM_ERROR, "%s : %s", "IOR file missing", usage ()));
-        ACE_OS::exit (1);
+      usage (ACE_const_cast (char *, "IOR file missing \n"));
+      ACE_OS::exit (1);
     }
 
-  AMH_Servant *servant = new AMH_Servant (amh_server.orb ());
-
-  if (servant->parse_args (&argc, argv) != 1)
+  AMH_Servant servant (amh_server.orb ());
+  
+  if (servant.parse_args (&argc, argv) != 1)
     {
-        ACE_ERROR ((LM_ERROR, "%s : %s", "sleep time unspecified", usage ()));
-        ACE_OS::exit (1);
+      usage (ACE_const_cast (char *, "Sleep time unspecified \n"));
+      ACE_OS::exit (1);
     }
 
-  // Server takes over memory responsibility for servant,
-  // no need to deallocate it at the end
-  amh_server.register_servant (servant);
+  amh_server.register_servant (&servant);
   amh_server.run_event_loop ();
+
+  return 0;
 }

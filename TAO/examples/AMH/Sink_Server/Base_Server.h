@@ -32,40 +32,40 @@ class AMH_Servant;
  */
 class Base_Server
 {
- public:
-    Base_Server (int *argc, char **argv);
-    virtual ~Base_Server ();
-
-    // Just parse the command line for the output-file (-o) option.
-    // return -1 if -o option is not present
-    virtual int parse_args (void);
-
-    /// try and schedule using FIFO
-    void try_RT_scheduling (void);
-
-    /// ORB inititalisation stuff
-    int start_orb_and_poa (void);
-
-    /// register the servant with the poa
-    virtual void register_servant (AMH_Servant *servant);
-
-    /// orb-perform_work () abstraction
-    virtual void run_event_loop ();
-
- public:
-    /// Accesor method (for servants) to the initialised ORB
-    CORBA::ORB_ptr orb () { return this->orb_.in (); }
-
- protected:
+public:
+  Base_Server (int *argc, char **argv);
+  virtual ~Base_Server ();
+  
+  // Just parse the command line for the output-file (-o) option.
+  // return -1 if -o option is not present
+  virtual int parse_args (void);
+  
+  /// try and schedule using FIFO
+  void try_RT_scheduling (void);
+  
+  /// ORB inititalisation stuff
+  int start_orb_and_poa (void);
+  
+  /// register the servant with the poa
+  virtual void register_servant (AMH_Servant *servant);
+  
+  /// orb-perform_work () abstraction
+  virtual void run_event_loop ();
+  
+public:
+  /// Accesor method (for servants) to the initialised ORB
+  CORBA::ORB_ptr orb () { return this->orb_.in (); }
+  
+protected:
   int *argc_;
   char **argv_;
   char *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
-
- private:
-    /// Write servant IOR to file specified with the '-o' option
-    int write_ior_to_file (CORBA::String_var ior);
+  
+private:
+  /// Write servant IOR to file specified with the '-o' option
+  int write_ior_to_file (CORBA::String_var ior);
 };
 
 #include "ace/post.h"

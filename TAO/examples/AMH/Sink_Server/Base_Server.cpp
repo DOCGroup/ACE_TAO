@@ -13,8 +13,8 @@
 Base_Server::Base_Server (int* argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_("test.ior")
 {
+  this->ior_output_file_ = ACE_const_cast (char*, "test.ior");
 }
 
 Base_Server::~Base_Server ()
