@@ -145,15 +145,10 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
                 cdr.length (),
                 encap_len));
 
-#if (TAO_HAS_RT_CORBA == 1)
-  // This protection is here not for correctness but for efficiency.
-  // Currently there are > 1 endpoint per profile only with RTCORBA.
-
-  // Decode endpoints, if any.
+  // Decode any additional endpoints per profile.  (At the present,
+  // only RTCORBA takes advantage of this feature.)
   if (this->decode_endpoints () == -1)
     return -1;
-
-#endif  /* TAO_HAS_RT_CORBA == 1 */
 
   if (cdr.good_bit ())
     {
@@ -437,6 +432,8 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core ()->output_cdr_dblock_allocator (),
                        this->orb_core ()->output_cdr_msgblock_allocator (),
                        this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                       TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR,
                        this->orb_core ()->to_iso8859 (),
                        this->orb_core ()->to_unicode ());
 
@@ -469,6 +466,8 @@ TAO_IIOP_Profile::create_tagged_profile (void)
                            this->orb_core ()->output_cdr_dblock_allocator (),
                            this->orb_core ()->output_cdr_msgblock_allocator (),
                            this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
                            this->orb_core ()->to_iso8859 (),
                            this->orb_core ()->to_unicode ());
 
