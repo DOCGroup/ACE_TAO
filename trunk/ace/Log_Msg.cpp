@@ -388,6 +388,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+                     *ACE_Log_Msg_Manager::get_lock ()));
   ++instance_count_;
 }
 
