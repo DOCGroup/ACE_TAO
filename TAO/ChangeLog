@@ -1,3 +1,9 @@
+Tue Nov 18 07:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
+
+	  Removed the pragma message.
+
 Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
