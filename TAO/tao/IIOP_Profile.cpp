@@ -282,9 +282,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
     {
       // The port is specified:
       cp = (const char *)cp_pos;
+
       length =
         ACE_OS::strlen (cp.in ())
         - ACE_OS::strlen ((const char *)okd) + 1;
+
       length_host =
         ACE_OS::strlen ((const char *)start)
         - ACE_OS::strlen (cp.in ());
@@ -301,9 +303,6 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   ACE_OS::strncpy (tmp.inout (), start, length_host);
   tmp[length_host] = '\0';
-
-  ACE_OS::strncpy (tmp.inout (), start, length);
-  tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
