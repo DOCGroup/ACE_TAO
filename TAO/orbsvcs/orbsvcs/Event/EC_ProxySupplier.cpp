@@ -11,6 +11,8 @@
 
 ACE_RCSID(Event, EC_ProxySupplier, "$Id$")
 
+typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
+
 TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec)
   : event_channel_ (ec),
     refcount_ (1),
@@ -263,11 +265,10 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
   RtecEventComm::PushConsumer_var consumer =
     RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
   {
-    ACE_Reverse_Lock<ACE_Lock> reverse_lock (*this->lock_);
+    TAO_EC_Unlock reverse_lock (*this->lock_);
 
-    ACE_GUARD_THROW_EX (
-            ACE_Reverse_Lock<ACE_Lock>, ace_mon, reverse_lock,
-            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
+                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
     consumer->push (event, ACE_TRY_ENV);
   }
