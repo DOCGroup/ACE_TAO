@@ -1,3 +1,8 @@
+Sun Mar 30 07:39:25 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Cubit/TAO/IDL-Cubit/Makefile: Updated
+	  dependencies.
+
 Sat Mar 29 21:59:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/orbconf.h: Commented out portions that were connected to
