@@ -74,8 +74,8 @@ ACE_TLI::~ACE_TLI (void)
 ACE_TLI::ACE_TLI (const char device[], int oflag, struct t_info *info)
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
-  if (this->open (device, oflag, info) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_TLI::ACE_TLI")));
+  if (this->open (device, oflag, info) == ACE_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_TLI::ACE_TLI")));
 }
 
 int
@@ -103,7 +103,7 @@ int
 ACE_TLI::close (void)
 {
   ACE_TRACE ("ACE_TLI::close");
-  ACE_HANDLE result = 0;
+  int result = 0; // Geisler: result must be int
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {

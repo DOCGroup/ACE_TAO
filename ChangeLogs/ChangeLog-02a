@@ -1,3 +1,8 @@
+Mon Jun 25 15:36:55 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-sunos5.7.h: Added support for GCC 3.0.  Thanks to
+	  Craig Ching <cching@mqsoftware.com> for contributing this.
+
 Mon Jun 25 12:18:41 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/aix_shr:

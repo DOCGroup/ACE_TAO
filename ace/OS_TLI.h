@@ -7,8 +7,6 @@
  *  $Id$
  *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
- *  @author Jesper S. M|ller<stophph@diku.dk>
- *  @author and a cast of thousands...
  */
 //=============================================================================
 
@@ -24,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if defined (ACE_WIN32)
-// Win32 dummies to help compilation.
+# if !defined (ACE_HAS_TLI)
+// Dummies to help compilation.
 struct rlimit { };
 struct t_call { };
 struct t_bind { };
@@ -142,7 +140,7 @@ public:
                      struct
                      t_bind *ret);
   static int t_close (ACE_HANDLE fildes);
-  static int t_connect(int fildes,
+  static int t_connect(ACE_HANDLE fildes,
                        struct t_call *sndcall,
                        struct t_call *rcvcall);
   static void t_error (const char *errmsg);
