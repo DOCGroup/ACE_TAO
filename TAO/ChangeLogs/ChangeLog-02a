@@ -1,3 +1,24 @@
+Fri Nov 10 18:24:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Server_Declared/server.conf: 
+	* tests/RTCORBA/Client_Protocol/svc.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server.conf: 
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: 
+
+	  Updated to load the advanced startegies dynamically.
+	
+	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile: 
+	* tests/RTCORBA/Server_Protocol/Makefile: 
+	* tests/RTCORBA/Server_Declared/Makefile : 
+	* tests/RTCORBA/Client_Propagated/Makefile : 
+	* tests/RTCORBA/Client_Protocol/Makefile: 
+	  Updated to link TAO_Strategies.
+	
 Fri Nov 10 17:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connect.cpp:
