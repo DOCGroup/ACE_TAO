@@ -1,3 +1,9 @@
+Tue Jan 27 08:28:34 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: Simplified and changed so that the config.h file
+	  can pre-specify the ACE_SIZEOF_* macros in case the preprocessor
+	  has trouble calculating them.
+
 Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IOStream/server/iostream_server.cpp: for egcs, use
