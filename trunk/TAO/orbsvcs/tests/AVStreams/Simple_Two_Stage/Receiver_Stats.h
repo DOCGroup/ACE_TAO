@@ -80,5 +80,9 @@ private:
   ACE_UINT64 sum2_;
 };
 
+#if defined (__ACE_INLINE__)
+#include "Receiver_Stats.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 #endif /* RECEIVER_STATS_H */
