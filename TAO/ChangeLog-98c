@@ -1,3 +1,16 @@
+Mon Aug 17 15:10:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_context.h: 
+	* TAO_IDL/be/be_visitor_context.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/tie_si.h: 
+	* TAO_IDL/be_include/be_visitor_interface/tie_sh.h: 
+	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
+	* TAO_IDL/be/be_visitor_interface/tie_si.cpp: 
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp: 
+	  The _tie classes did not override the methods of the base
+	  classes, thus, some _tie classes were abstract and thus
+	  useless.
+
 Mon Aug 17 15:27:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/ec.html: 

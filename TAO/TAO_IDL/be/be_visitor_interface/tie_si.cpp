@@ -171,13 +171,12 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "}" << be_uidt
       << "}\n\n";
 
-  // generate code for the operations in the scope
-  if (this->visit_scope (node) ==  -1)
+  if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_si::"
+                         "be_visitor_interface_tie_sh_ss::"
                          "visit_interface - "
-                         "codegen for scope failed\n"),
+                         "traversal of inhertance graph failed\n"),
                         -1);
     }
 
@@ -188,3 +187,26 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int
+be_visitor_interface_tie_si::method_helper (be_interface *derived,
+					    be_interface *node,
+					    TAO_OutStream *os)
+{
+  be_visitor_context ctx;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+  ctx.interface (derived);
+  ctx.stream (os);
+
+  be_visitor* visitor = tao_cg->make_visitor (&ctx);
+  if (visitor == 0 || visitor->visit_scope (node) == -1)
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "be_visitor_interface_tie_sh::"
+			 "method_helper\n"), -1);
+    }
+  delete visitor;
+  return 0;
+}
+

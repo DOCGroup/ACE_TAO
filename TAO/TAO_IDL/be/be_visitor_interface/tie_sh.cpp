@@ -116,13 +116,12 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA (CORBA::Environment &env);\n";
 
-  // generate code for the operations in the scope
-  if (this->visit_scope (node) ==  -1)
+  if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_sh::"
+                         "be_visitor_interface_tie_sh_ss::"
                          "visit_interface - "
-                         "codegen for scope failed\n"),
+                         "traversal of inhertance graph failed\n"),
                         -1);
     }
 
@@ -142,3 +141,24 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int
+be_visitor_interface_tie_sh::method_helper (be_interface *,
+					    be_interface *node,
+					    TAO_OutStream *os)
+{
+  be_visitor_context ctx;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+  ctx.stream (os);
+  be_visitor* visitor = tao_cg->make_visitor (&ctx);
+  if (visitor == 0 || visitor->visit_scope (node) == -1)
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "be_visitor_interface_tie_sh::"
+			 "method_helper\n"), -1);
+    }
+  delete visitor;
+  return 0;
+}
+
