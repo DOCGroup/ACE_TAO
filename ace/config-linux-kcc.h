@@ -120,7 +120,7 @@
 
 // TDN - adapted from file for SunOS4 platforms using the GNU g++ compiler
 // Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
+//#define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
