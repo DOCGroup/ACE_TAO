@@ -1,3 +1,9 @@
+Tue Nov 18 22:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB.cpp:
+
+	  Cosmetic fixes.
+
 Tue Nov 18 12:11:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/LoadBalancer/Makefile.LoadManager:
