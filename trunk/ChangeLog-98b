@@ -1,3 +1,9 @@
+Sun Sep 20 20:30:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* ace/OS.h : added ACE_GUARD_THROW, ACE_GUARD_THROW_RETURN,
+	ACE_NEW_TRY_THROW, ACE_NEW_TRY_THROW_RETURN macros to utilize new
+	exceptions macros.
+
 Sun Sep 20 19:18:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
