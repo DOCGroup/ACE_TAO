@@ -167,6 +167,7 @@ run OrdMultiSet_Test                    # tests ACE_Ordered_MultiSet
 # Mem_Map_Test: UNICOS fails due to feature not supported
 test $chorus || test $Unicos || run Mem_Map_Test        # tests ACE_Mem_Map
 
+run Malloc_Test # tests ACE_Malloc with ACE_MMAP_Memory_Pool and ACE_Process_Mutex
 # SV_Shared_Memory_Test: UNICOS fails due to feature not supported
 test $Unicos || run SV_Shared_Memory_Test               # tests ACE_SV_Shared_Memory, fork
 # MM_Shared_Memory_Test: UNICOS fails due to feature not supported

@@ -42,11 +42,11 @@ myallocator ()
   return myallocator;
 }
 
-const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
-const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
+static const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
+static const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 
-const int SHMSZ = 27;
-const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
+static const int SHMSZ = 27;
+static const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
 static int
 parent (char *shm)
@@ -69,20 +69,25 @@ parent (char *shm)
     shm[i] = SHMDATA[i];
 
   if (mutex.release () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"),
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P) %p"),
                 ASYS_TEXT ("parent mutex.release")));
   else if (synch.acquire () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"),
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P) %p"),
                 ASYS_TEXT ("parent synch.acquire")));
 
   if (myallocator ().remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent allocator.remove")));
   if (mutex.remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent mutex.remove")));
   if (synch.remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P) %p\n"),
                 ASYS_TEXT ("parent synch.remove")));
   return 0;
 }
@@ -111,16 +116,20 @@ child (char *shm)
   // semaphore wrappers.
   while (mutex.tryacquire () == -1)
     if (errno == EAGAIN)
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P) spinning in child!\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P) spinning in child!\n")));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P) child mutex.tryacquire")), 1);
+                         ASYS_TEXT ("(%P) child mutex.tryacquire")),
+                        1);
 
   for (int i = 0; i < SHMSZ; i++)
     ACE_ASSERT (SHMDATA[i] == shm[i]);
 
   if (synch.release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P) child synch.release")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("(%P) child synch.release")),
+                      1);
   return 0;
 }
 
@@ -143,12 +152,14 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
     !defined(ACE_LACKS_SYSV_SHMEM)
-  char *shm = (char *) myallocator ().malloc (27);
+  char *shm = (char *) myallocator ().malloc (SHMSZ);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P) fork failed\n")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%P) fork failed\n")),
+                        -1);
       /* NOTREACHED */
     case 0:
       child (shm);

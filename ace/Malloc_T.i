@@ -192,3 +192,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr,
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (addr, len, flags);
 }
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE ACE_LOCK &
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::mutex (void)
+{
+  return this->lock_;
+}

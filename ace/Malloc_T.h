@@ -376,6 +376,10 @@ public:
   // Dump statistics of how malloc is behaving.
 #endif /* ACE_HAS_MALLOC_STATS */
 
+  ACE_LOCK &mutex (void);
+  // Returns a pointer to the lock used to provide mutual exclusion to
+  // an <ACE_Malloc> allocator.
+
   void dump (void) const;
   // Dump the state of an object.
 
