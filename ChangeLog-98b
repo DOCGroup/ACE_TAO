@@ -1,3 +1,9 @@
+Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Queue_T.h: Improved the documentation of the low
+ 	  water mark and high water marks.  Thanks to Umar for encouraging
+ 	  this.
+
 Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
@@ -25,7 +31,6 @@ Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	
 	* ace/Message_Queue_T.cpp: Fixed a bunch of code to use the
           ACE_NEW_RETURN macro to ensure that errno is set correctly.
-
 
 	* ace/Message_Queue.h: Changed the DEFAULT_LWM to be the same as
  	  the DEFAULT_HWM since that's the "Right Way"[TM] to handle
