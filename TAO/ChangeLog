@@ -1,3 +1,13 @@
+Sat Dec 14 09:19:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp: #included Reactor.h. No
+	  reason to do this,but this change in ACE makes us do this
+	  "Fri Dec 13 16:05:05 2002  Douglas C. Schmidt
+	  <schmidt@ace.cs.wustl.edu>" 
+
+	  The above change just couples the Reactor and the timerqueue
+	  code. 
+
 Fri Dec 13 17:37:25 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
