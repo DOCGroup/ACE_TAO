@@ -18,7 +18,7 @@
 #define QOS_SIGNAL_HANDLER_H
 
 #include "ace/Event_Handler.h"
-#include "ace/QoS_Session.h"
+#include "ace/QoS/QoS_Session.h"
 
 class QoS_Signal_Handler : public ACE_Event_Handler
 {
