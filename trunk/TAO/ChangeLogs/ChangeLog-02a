@@ -1,3 +1,29 @@
+Tue Apr 10 17:25:18 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* tao/Resource_Factory.cpp:
+	* tao/Resource_Factory.h:
+	* tao/default_resource.cpp:
+	* tao/default_resource.h:
+	* tao/Strategies/advanced_resource.cpp:
+	* tao/Strategies/advanced_resource.h:
+	  Added an accessor method "input_cdr_allocator_type_locked
+	  (void);" to return the type of allocator used for CDR input steams.
+	  Once the type is known, we can safely turn on lock free
+	  allocators as the default.
+
+	* tao/OctetSeqC.cpp:
+	  Modified the >> operator to perform zero copy octet
+	  optimization, only if the input CDR uses a locked allocator.
+
+	* tests/OctetSeq/run_test1.pl:
+	* tests/OctetSeq/run_test2.pl:
+	  Added 2 configurations to test the change to OctetSeqC
+	* tests/OctetSeq/svc1.conf:
+	* tests/OctetSeq/svc2.conf:
+	  svc1.conf uses global resources and a null InputCDRAllocator.
+	  svc2.conf uses tss resources and a null InputCDRAllocator.
+	  note that the default is global, locked InputCDRAllocator.
+
 Tue Apr 10 16:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
