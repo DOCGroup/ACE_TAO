@@ -7,9 +7,17 @@ ifeq ($(VERSION),2)
 versioned_so = 1
 endif
 
-optimize = 1
-
-debug = 1
+ifndef exceptions
+  exceptions = 1
+endif
+ 
+ifeq (,$(debug))
+  debug = 1
+endif
+ 
+ifeq (,$(optimize))
+  optimize = 1
+endif
 
 CC              = gcc
 CXX             = g++
