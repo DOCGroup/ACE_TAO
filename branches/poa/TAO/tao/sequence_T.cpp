@@ -144,8 +144,6 @@ void TAO_Bounded_Sequence<T,MAX>::_deallocate_buffer (void)
 template <class T>
 TAO_Object_Manager<T>::~TAO_Object_Manager (void)
 {
-  if (this->release_)
-    T::_release (*(this->ptr_));
 }
 
 template <class T>
@@ -162,10 +160,15 @@ TAO_Object_Manager<T>::operator= (const TAO_Object_Manager<T> &rhs)
   if (this == &rhs)
     return *this;
 
-  if (this->release_) // need to free old one
-    CORBA::release (*this->ptr_);
-
-  this->ptr_ = rhs.ptr_;
+  if (this->release_)
+    {
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = T::_duplicate (*rhs.ptr_);
+    }
+  else
+    {
+      this->ptr_ = rhs.ptr_;
+    }
   return *this;
 }
 
@@ -221,6 +224,13 @@ TAO_Unbounded_Object_Sequence (const TAO_Unbounded_Object_Sequence<T> &seq)
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
     tmp1 [i] = T::_duplicate (tmp2 [i]);
+  this->release_ = 1;
+}
+
+template<class T>
+TAO_Unbounded_Object_Sequence<T>::~TAO_Unbounded_Object_Sequence (void)
+{
+  this->_deallocate_buffer ();
 }
 
 // assignment operator
@@ -255,6 +265,7 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &seq)
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
     tmp1 [i] = T::_duplicate (tmp2 [i]);
+  this->release_ = 1;
   return *this;
 }
 
