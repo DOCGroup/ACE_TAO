@@ -12,6 +12,11 @@ Thu Jan 07 09:05:27 1999  David L. Levine  <levine@cs.wustl.edu>
           default.  Thanks to Neil Cohen <nbc@aikisoft.com> for
           reporting this.
 
+        * ACE-INSTALL.html: added ACE_HAS_REGEX #undef suggestion for
+          shared lib link problems with egcs 1.1.x on Solaris 2.5.x.
+          Thanks to Bob McWhirter <bob@werken.com> for reporting this
+          problem.
+
 Thu Jan 07 04:45:36 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.12 released.
