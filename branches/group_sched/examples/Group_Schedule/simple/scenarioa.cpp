@@ -70,8 +70,6 @@ void child_process(SchedGroup& grp, const char* process_name)
   return;   		
 }
 
-extern void init_group();
-
 int main(int argc, char **argv){
 	int pid=0, num_processes=0;
 
