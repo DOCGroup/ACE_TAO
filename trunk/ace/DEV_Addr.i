@@ -12,7 +12,7 @@ ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 
   this->ACE_Addr::base_set
     (AF_DEV, ACE_static_cast (int, ACE_OS::strlen (devname)));
-  ACE_OS::strsncpy (this->devname_, devname, MAXNAMLEN);
+  ACE_OS::strsncpy (this->devname_, devname, MAXPATHLEN);
 }
 
 // Transform the current address into string format.

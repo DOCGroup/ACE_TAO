@@ -179,7 +179,7 @@ private:
   ACE_Task<ACE_SYNCH_USE> *q_pair_[2];
 
   /// Name of the ACE_Module.
-  ACE_TCHAR name_[MAXNAMLEN + 1];
+  ACE_TCHAR name_[MAXPATHLEN + 1];
 
   /// Next ACE_Module in the stack.
   ACE_Module<ACE_SYNCH_USE> *next_;

@@ -74,7 +74,7 @@ public:
 
 private:
   /// Name of the device.
-  ACE_TCHAR devname_[MAXNAMLEN + 1];
+  ACE_TCHAR devname_[MAXPATHLEN + 1];
 };
 
 #if defined (__ACE_INLINE__)

@@ -3,13 +3,12 @@
 # QNX/RTP hosted, using gcc-2.95.2
 
 nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
-CCFLAGS += -DACE_NTO_VERS=$(nto_version)
-CFLAGS += -DACE_NTO_VERS=$(nto_version)
+
 inline = 1
 debug ?= 1
 optimize ?= 1
 exceptions ?= 1
-
+threads ?= 1
 ifeq ($(exceptions),1)
   CCFLAGS += -fexceptions
   LDFLAGS += -fexceptions
@@ -24,17 +23,23 @@ else
   CCFLAGS += -fno-inline
 endif # inline
 
+ifeq ($(debug),1)
+	DCFLAGS += -gdwarf-2
+endif #debug
+
+ifeq ($(optimize),1)
+	OCFLAGS += -O3
+endif #optimize
+
 CC      = gcc
 CXX     = g++
 
-DCFLAGS += -gdwarf-2
-
-CFLAGS  += -pipe -W -Wall -Wpointer-arith
+CFLAGS  += -pipe -W -Wall -Wpointer-arith -DACE_NTO_VERS=$(nto_version)
 
 DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -lsocket -lstdc++ -lm
-OCFLAGS += -O3
+
 PIC     = -fPIC
 AR      = ar
 ARFLAGS = ruv
