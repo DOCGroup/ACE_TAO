@@ -9,7 +9,7 @@
 //     ValueBase.cpp
 //
 // = AUTHOR
-//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//     Torsten Kuepper <kuepper2@lfa.uni-wuppertal.de>
 //
 // ============================================================================
 
@@ -27,6 +27,16 @@
 ACE_RCSID (tao,
            ValueBase,
            "$Id$")
+
+namespace CORBA
+{
+  // These valuetype-related type codes are set to 0 here for linking,
+  // then initialized for real in the Value_Adapter_Impl constructor,
+  // which is called at library load time.
+  TypeCode_ptr _tc_ValueBase = TypeCode::_nil ();
+  TypeCode_ptr _tc_Visibility = TypeCode::_nil ();
+  TypeCode_ptr _tc_ValueModifier = TypeCode::_nil ();
+}
 
 // Static operations in namespace CORBA.
 
