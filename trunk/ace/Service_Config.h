@@ -317,6 +317,19 @@ protected:
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
   // program name.
 
+  // The arguments that are valid in a call to this method are 
+  // '-b' - Option to indicate that we should be a daemon
+  // '-d' - Turn on debugging mode
+  // '-f' - Option to read in the list of svc.conf file names
+  // '-k' - Option to read a wide string where in the logger output can 
+  //        be written 
+  // '-y' - Turn on the flag for a  repository of statically 
+  //        linked services
+  // '-n' - Need not have a repository of statically linked services
+  // '-S' - Option to read in the list of services on the command-line
+  //        Please observe the difference between options '-f' that looks
+  //        for a list of files and here a list of services.
+  
   static int start_daemon (void);
   // Become a daemon.
 
