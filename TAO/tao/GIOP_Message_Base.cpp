@@ -320,7 +320,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Create a message block by stealing the data block
   ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
-  ACE_CDR::mb_align (&msg_block);
+  // ACE_CDR::mb_align (&msg_block);
 
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
@@ -374,23 +374,22 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Create a message block by stealing the data block
   ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
-  ACE_CDR::mb_align (&msg_block);
+  // ACE_CDR::mb_align (&msg_block);
 
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
-  // size_t n = this->message_handler_.message_state ().message_size;
-  msg_block.wr_ptr (this->message_handler_.wr_pos ());
-  msg_block.rd_ptr (this->message_handler_.rd_pos ());
-  //msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
-  //msg_block.rd_ptr (0);
-
+  size_t n = this->message_handler_.message_state ().message_size;
+  // msg_block.wr_ptr (this->message_handler_.wr_pos ());
+  // msg_block.rd_ptr (this->message_handler_.rd_pos ());
+  msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
+  msg_block.rd_ptr ((u_int) 0);
 
   // Steal the input CDR from the message block
   int byte_order = this->message_handler_.message_state ().byte_order;
   TAO_InputCDR input_cdr (&msg_block, byte_order);
 
-  // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
+  input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
