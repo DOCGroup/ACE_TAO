@@ -552,11 +552,6 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
   ACE_NOTSUP_RETURN (-1);
 }
 
-int
-TAO_Transport::reactor_signalling (void)
-{
-  return 0;
-}
 
 void
 TAO_Transport::connection_handler_closing (void)
@@ -716,6 +711,7 @@ TAO_Transport::recv (char *buffer,
   // now call the template method
   return this->recv_i (buffer, len, timeout);
 }
+
 
 int
 TAO_Transport::generate_locate_request (

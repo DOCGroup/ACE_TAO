@@ -535,14 +535,6 @@ protected:
   virtual void transition_handler_state_i (void) = 0;
 
 public:
-  /// Indicates whether the reactor is used by the protocol for
-  /// signalling.
-  /**
-   * @todo: This method needs to go. This is part of the hack for
-   * making SHMIOP work at the last minute for TAO 1.1.13
-   */
-  virtual int reactor_signalling (void);
-
   /// Method for the connection handler to signify that it
   /// is being closed and destroyed.
   virtual void connection_handler_closing (void);

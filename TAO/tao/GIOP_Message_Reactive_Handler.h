@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // ===================================================================
 /**
- *  @file   GIOP_Message_Handler.h
+ *  @file   GIOP_Message_Reactive_Handler.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  **/
 // ===================================================================
 
-#ifndef TAO_GIOP_MESSAGE_HANDLER_H
-#define TAO_GIOP_MESSAGE_HANDLER_H
+#ifndef TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H
+#define TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H
 #include "ace/pre.h"
 #include "ace/Message_Block.h"
 
@@ -38,24 +38,31 @@ enum TAO_GIOP_Message_Status
 };
 
 /**
- * @class TAO_GIOP_Message_Handler
+ * @class TAO_GIOP_Message_Reactive_Handler
  *
- * @brief GIOP specific message handler class
+ * @brief GIOP specific reactive message handler class
  *
- * This class does some of the message handling for GIOP. This class
+ * This class does some of the message handling for GIOP. The class
+ * is reactive. It relies on the reactor to call this class whenever
+ * data appears or is left over in the socket. The class tries to read
+ * whatever data is available for it to be read and expects the
+ * reactor to call back if some data appears in the socket. In short,
+ * the read has no notion of GIOP message details. Hence this class
  * reads the message from the socket, splits the messages to create a
  * CDR stream out of it and passes that to the higher layers of the ORB.
  * The read from the socket is done using a single 'read' instead of
  * reading the header and the payload seperately.
  */
 
-class TAO_GIOP_Message_Handler
+class TAO_Export TAO_GIOP_Message_Reactive_Handler
 {
 public:
+
   /// Ctor
-  TAO_GIOP_Message_Handler (TAO_ORB_Core *orb_core,
-                            TAO_GIOP_Message_Base *base,
-                            size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
+  TAO_GIOP_Message_Reactive_Handler (
+      TAO_ORB_Core *orb_core,
+      TAO_GIOP_Message_Base *base,
+      size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
 
   /// Reads the message from the <transport> and sets the <wr_ptr> of
@@ -100,21 +107,33 @@ public:
   /// Return the position of the write pointer in the <current_buffer_>
   size_t wr_pos (void) const;
 
-private:
+protected:
 
-  /// Actually parses the header information from the
-  /// <current_buffer_>.
-  int parse_message_header_i (void);
+  /// Actually parses the header information
+  int parse_message_header_i (char* buf);
+
+  /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
+  /// stream.
+  ///   - returns 1 on sucessful parsing,
+  ///   - returns 0 if not found
+  ///   - returns -1 if there is an error
+  int parse_fragment_header (char *buf,
+                             size_t length);
+
+  /// GIOP 1.2 has a MESSAGE_FRAGMENT_HEADER. This flag indicates
+  /// whether the MESSAGE_FRAGMENT_HEADER appeared while parsing the
+  /// header of the message
+private:
 
   /// Validates the first 4 bytes that contain the magic word
   /// "GIOP". Also calls the validate_version () on the incoming
   /// stream.
-  int parse_magic_bytes (void);
+  int parse_magic_bytes (char *buf);
 
   /// Gets the size of the payload from the <current_buffer_>. If the
   /// size of the current buffer is less than the payload size, the
   /// size of the buffer is increased.
-  CORBA::ULong get_payload_size (void);
+  CORBA::ULong get_payload_size (char *buf);
 
   /// Extract a CORBA::ULong from the <current_buffer_>
   CORBA::ULong read_ulong (const char *buf);
@@ -122,6 +141,11 @@ private:
   /// Get the next message from the <supp_buffer_> in to the
   /// <current_buffer_>
   int get_message (void);
+
+protected:
+  /// The message state. It represents the status of the messages that
+  /// have been read from the current_buffer_
+  TAO_GIOP_Message_State message_state_;
 
 private:
 
@@ -148,13 +172,6 @@ private:
   /// the <current_buffer_> is taken and filled in this buffer, which
   /// is then sent to the higher layers of the ORB.
   ACE_Message_Block supp_buffer_;
-
-  /// The message state. It represents the status of the messages that
-  /// have been read from the current_buffer_
-  TAO_GIOP_Message_State message_state_;
-
-  /// Our copy the ORB_Core
-  TAO_ORB_Core *orb_core_;
 };
 
 
@@ -167,8 +184,8 @@ const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Handler.inl"
+# include "tao/GIOP_Message_Reactive_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_HANDLER_H*/
+#endif /*TAO_GIOP_MESSAGE_REACTIVE_HANDLER_H*/
