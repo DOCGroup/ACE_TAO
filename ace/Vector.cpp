@@ -31,7 +31,7 @@ ACE_Vector<T>::ACE_Vector (size_t size,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (size != 0)
+  if (size > 0)
     {
       ACE_NEW_MALLOC (this->vector_,
                       (T *) this->allocator_->malloc (size * sizeof (T)),
@@ -54,7 +54,7 @@ ACE_Vector<T>::ACE_Vector (size_t size,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (size != 0)
+  if (size > 0)
     {
       ACE_NEW_MALLOC (this->vector_,
                       (T *) this->allocator_->malloc (size * sizeof (T)),
@@ -82,6 +82,37 @@ ACE_Vector<T>::ACE_Vector (const ACE_Vector<T> &s)
 
   for (size_t i = 0; i < this->capacity (); ++i)
     new (&this->vector_[i]) T (s.vector_[i]);
+}
+
+template <class T>
+ACE_Vector<T>::ACE_Vector (ACE_Vector<T>::iterator first,
+                           ACE_Vector<T>::iterator last,
+                           ACE_Allocator *alloc)
+  : size_ (0),
+    capacity_ (0),
+    allocator_ (alloc)
+{
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+
+  const size_t size = last - first;
+
+  if (size > 0)
+    {
+      ACE_NEW_MALLOC (this->vector_,
+                      (T *) this->allocator_->malloc (size * sizeof (T)),
+                      T);
+
+      T* temp = this->vector_;
+
+      for (ACE_Vector<T>::iterator i = first; i != last; ++i)
+          new (temp++) T (*i);
+
+      this->size_ = size;
+      this->capacity_ = size;
+    }
+  else
+    this->vector_ = 0;
 }
 
 template <class T> void
@@ -129,11 +160,142 @@ ACE_Vector<T>::swap (ACE_Vector<T>& v)
       this->pop_back ();
 }
 
+template <class T> ACE_Vector<T>::iterator
+ACE_Vector<T>::insert (ACE_Vector<T>::iterator pos, const T& x)
+{
+  size_t diff = pos - this->begin ();
+
+  if (diff >= 0 && diff < this->size_)
+    {
+      this->grow ();  // Only grows when necessary
+
+      // If memory was reallocated then the pos iterator that was
+      // passed in is no longer valid, so recompute it.
+      pos = this->begin () + diff;
+
+      // Move all elements after pos - 1;
+      for (ACE_Vector<T>::iterator i = this->end ();
+           i != pos;
+           *(i--) = *i)
+        continue;
+
+      ++(this->size_);
+
+      // Now do the insertion
+      *pos = x;
+    }
+
+  return this->begin () + diff;
+}
+
+template <class T> void
+ACE_Vector<T>::insert (ACE_Vector<T>::iterator pos,
+                       ACE_Vector<T>::iterator first,
+                       ACE_Vector<T>::iterator last)
+{
+  size_t diff  = pos - this->begin ();
+  size_t range = last - first;
+
+  if (range > 0 && diff >= 0 && diff < this->size_)
+    {
+      this->grow (range);  // Only grows when necessary
+
+      // If memory was reallocated then the pos iterator that was
+      // passed in is no longer valid, so recompute it.
+      pos = this->begin () + diff;
+
+      // Move all elements after pos - 1;
+      for (ACE_Vector<T>::iterator i = this->end () + range - 1;
+           i != pos;
+           --i)
+        *i = *(i - range);
+
+      this->size_ += range;
+
+      // Now do the insertion
+      for (ACE_Vector<T>::iterator j = pos; j != pos + range; ++j, ++first)
+        *j = *first;
+    }
+}
+
+template <class T> void
+ACE_Vector<T>::insert (ACE_Vector<T>::iterator pos, 
+                       size_t range,
+                       const T& x)
+{
+  size_t diff  = pos - this->begin ();
+
+  if (range > 0 && diff >= 0 && diff < this->size_)
+    {
+      this->grow (range);  // Only grows when necessary
+
+      // If memory was reallocated then the pos iterator that was
+      // passed in is no longer valid, so recompute it.
+      pos = this->begin () + diff;
+
+      // Move all elements after pos - 1;
+      for (ACE_Vector<T>::iterator i = this->end () + range - 1;
+           i != pos;
+           --i)
+        *i = *(i - range);
+
+      this->size_ += range;
+
+      // Now do the insertion
+      for (ACE_Vector<T>::iterator j = pos; j != pos + range; ++j)
+        *j = x;
+    }
+}
+
+template <class T> ACE_Vector<T>::iterator
+ACE_Vector<T>::erase (ACE_Vector<T>::iterator pos)
+{
+  size_t diff  = pos - this->begin ();
+
+  if (diff >= 0 && diff < this->size_)
+    {
+      // Move all elements after pos - 1;
+      for (ACE_Vector<T>::iterator i = pos; i != this->end (); *(i++) = *i)
+        continue;
+
+      --(this->size_);
+    }
+
+  return pos;
+}
+
+template <class T> ACE_Vector<T>::iterator
+ACE_Vector<T>::erase (ACE_Vector<T>::iterator first,
+                      ACE_Vector<T>::iterator last)
+{
+  size_t diff  = first - this->begin ();
+  size_t range = last - first;
+
+  if (range > 0 && diff >= 0 && diff < this->size_)
+    {
+      // Move all elements after pos - 1;
+      for (ACE_Vector<T>::iterator i = first; i + range != this->end (); ++i)
+        *i = *(i + range);
+
+      this->size_ -= range;
+    }
+
+  return first;
+}
+
 template <class T> int
 ACE_Vector<T>::reserve (size_t new_size)
 {
   if (new_size > this->capacity_)
     {
+      if (this->capacity_ > 0)
+        {
+          // Make sure growth is proportional to the capacity.
+          const size_t remainder = new_size % this->capacity_;
+          if (remainder != 0)
+            new_size += this->capacity_ - remainder;
+        }
+
       T *tmp;
 
       ACE_NEW_MALLOC_RETURN (tmp,
@@ -142,12 +304,12 @@ ACE_Vector<T>::reserve (size_t new_size)
                              T,
                              -1);
 
-      for (size_t i = 0; i < this->capacity_; ++i)
+      for (size_t i = 0; i < this->size_; ++i)
          new (&tmp[i]) T (this->vector_[i]);
 
       // Initialize the new portion of the array that exceeds the
       // previously allocated section.
-      for (size_t j = this->capacity_; j < new_size; ++j)
+      for (size_t j = this->size_; j < new_size; ++j)
         new (&tmp[j]) T;
 
       ACE_DES_ARRAY_FREE (this->vector_,

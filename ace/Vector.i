@@ -38,19 +38,18 @@ ACE_Vector<T>::back (void) const
 template <class T> ACE_INLINE void
 ACE_Vector<T>::push_back (const T& value)
 {
-  if (this->size_ == this->capacity_)
-    this->reserve (this->capacity_ + ACE_DEFAULT_VECTOR_BLOCK_SIZE);
+  this->grow (); // Only grows when necessary
 
   this->vector_[this->size_] = value;
 
-  (this->size_)++;
+  ++(this->size_);
 }
 
 template <class T> ACE_INLINE void
 ACE_Vector<T>::pop_back (void)
 {
   // The capacity will remain unchanged.
-  (this->size_)--;
+  --(this->size_);
 }
 
 template <class T> ACE_INLINE ACE_Vector<T>::iterator
@@ -68,13 +67,13 @@ ACE_Vector<T>::begin (void) const
 template <class T> ACE_INLINE ACE_Vector<T>::iterator
 ACE_Vector<T>::end (void)
 {
-  return this->vector_ + size_;
+  return this->vector_ + this->size_;
 }
 
 template <class T> ACE_INLINE const ACE_Vector<T>::iterator
 ACE_Vector<T>::end (void) const
 {
-  return this->vector_ + size_;
+  return this->vector_ + this->size_;
 }
 
 template <class T> ACE_INLINE size_t
@@ -118,4 +117,44 @@ template <class T> ACE_INLINE int
 ACE_Vector<T>::operator!= (const ACE_Vector<T> &rhs) const
 {
   return !(*this == rhs);
+}
+
+template <class T> ACE_INLINE void
+ACE_Vector<T>::grow (void)
+{
+  // ACE_Vector growth will always be proportional to the current
+  // capacity.  Unless specified by using ACE_Vector<T>::reserve(),
+  // the capacity will automatically grow by:
+  //
+  //     ACE_DEFAULT_VECTOR_GROWTH_FACTOR * ACE_Vector::capacity()
+  //
+  // In order to ensure insertion of a series of elements into a
+  // vector is a linear time operation growth must be proportionall to 
+  // the current capacity.  Otherwise, if growth is not proportional
+  // to the current capacity, and instead grows by a constant amount,
+  // insertion becomes a quadratic time operation.
+
+  // Only grow when necessary
+  if (this->size_ == this->capacity_)
+    this->reserve (this->capacity_ * ACE_DEFAULT_VECTOR_GROWTH_FACTOR);
+}
+
+template <class T> ACE_INLINE void
+ACE_Vector<T>::grow (size_t amount)
+{
+  // ACE_Vector growth will always be proportional to the current
+  // capacity.  Unless specified by using ACE_Vector<T>::reserve(),
+  // the capacity will automatically grow by:
+  //
+  //     ACE_DEFAULT_VECTOR_GROWTH_FACTOR * ACE_Vector::capacity()
+  //
+  // In order to ensure insertion of a series of elements into a
+  // vector is a linear time operation growth must be proportionall to 
+  // the current capacity.  Otherwise, if growth is not proportional
+  // to the current capacity, and instead grows by a constant amount,
+  // insertion becomes a quadratic time operation.
+
+  // Only grow when necessary
+  if (this->size_ + amount >= this->capacity_)
+      this->reserve (this->size_ + amount);
 }
