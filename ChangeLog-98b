@@ -1,20 +1,25 @@
+Wed Jun 24 16:20:02 1998  James CE Johnson  <jcej@lads.com>
+
+        * ace/IOStream.cpp (underflow,overflow): added protection against
+          errors, when get/put buffers can be set to 0.
+
 Wed Jun 24 14:42:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Queue.{cpp,h}: added =TITLE/=DESCRIPTION
-	  and method comments to ACE_Message_Queue_Factory
-	
+        * ace/Message_Queue.{cpp,h}: added =TITLE/=DESCRIPTION
+          and method comments to ACE_Message_Queue_Factory
+
         * ace/Message_Block.h: fixed comment in ACE_Laxity_Message_Strategy
-	
+
 Wed Jun 24 13:35:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Queue.{cpp,h,i}
+        * ace/Message_Queue.{cpp,h,i}
           ace/Message_Block.{cpp,h,i}: Fixed ACE_UNIMPLEMENTED_FUNC
-	  declarations in ACE_Dynamic_Message_Queue, moved the
-	  ACE_Dynamic_Message_Strategy, ACE_Laxity_Message_Strategy,
-	  and ACE_Deadline_Message_Strategy classes from the 
-	  Message_Queue.* files into the respective Message_Block.*
-	  files (fixes link errors on platforms such as NT which
-	  require template source).
+          declarations in ACE_Dynamic_Message_Queue, moved the
+          ACE_Dynamic_Message_Strategy, ACE_Laxity_Message_Strategy,
+          and ACE_Deadline_Message_Strategy classes from the
+          Message_Queue.* files into the respective Message_Block.*
+          files (fixes link errors on platforms such as NT which
+          require template source).
 
 Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
