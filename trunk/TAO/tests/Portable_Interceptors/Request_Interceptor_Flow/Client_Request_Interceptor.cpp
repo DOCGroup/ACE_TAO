@@ -110,6 +110,8 @@ Client_Request_Interceptor::receive_reply (
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
 
+  this->ending_interception_point_count_++;
+
   ACE_DEBUG ((LM_INFO,
               "%s.receive_reply",
               this->name_.in ()));
@@ -151,8 +153,6 @@ Client_Request_Interceptor::receive_reply (
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
-
-  this->ending_interception_point_count_++;
 }
 
 void
@@ -170,6 +170,8 @@ Client_Request_Interceptor::receive_exception (
 
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
+
+  this->ending_interception_point_count_++;
 
   ACE_DEBUG ((LM_INFO,
               "%s.receive_exception",
@@ -236,8 +238,6 @@ Client_Request_Interceptor::receive_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
-
-  this->ending_interception_point_count_++;
 }
 
 void
@@ -256,11 +256,11 @@ Client_Request_Interceptor::receive_other (
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
 
+  this->ending_interception_point_count_++;
+
   ACE_DEBUG ((LM_INFO,
               "%s.receive_other\n",
               this->name_.in ()));
-
-  this->ending_interception_point_count_++;
 }
 
 CORBA::Boolean
