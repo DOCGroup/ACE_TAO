@@ -1,3 +1,8 @@
+Mon Jun 28 15:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Config/HA_Status.cpp:
+          Fixed compile error in unicode build
+
 Mon Jun 28 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/imore.cpp:
