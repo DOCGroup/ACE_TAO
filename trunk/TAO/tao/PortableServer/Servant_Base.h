@@ -72,16 +72,6 @@ public:
                                     TAO_default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
-protected:
-  TAO_ServantBase (void);
-  // Default constructor, only derived classes can be created.
-
-  TAO_ServantBase (const TAO_ServantBase &);
-  // Copy constructor, protected so no instances can be created.
-
-  TAO_ServantBase &operator= (const TAO_ServantBase &);
-  // assignment operator.
-
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *context,
                           CORBA_Environment &ACE_TRY_ENV =
@@ -91,6 +81,15 @@ protected:
   // the request and finally invokes the operation, storing the
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
+protected:
+  TAO_ServantBase (void);
+  // Default constructor, only derived classes can be created.
+
+  TAO_ServantBase (const TAO_ServantBase &);
+  // Copy constructor, protected so no instances can be created.
+
+  TAO_ServantBase &operator= (const TAO_ServantBase &);
+  // assignment operator.
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *context,

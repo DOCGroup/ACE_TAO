@@ -418,12 +418,6 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  friend class TAO_Object_Adapter::Priority_Model_Processing;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   typedef ACE_CString String;
 
   PortableServer::POA_ptr create_POA (const char *adapter_name,

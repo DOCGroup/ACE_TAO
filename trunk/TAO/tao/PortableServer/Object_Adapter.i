@@ -289,15 +289,3 @@ TAO_POA_Current_Impl::priority (void) const
   return this->priority_;
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE
-TAO_Object_Adapter::Priority_Model_Processing::Priority_Model_Processing
-(TAO_POA &poa)
-  : state_ (NO_ACTION_REQUIRED),
-    poa_ (poa),
-    original_priority_ (0)
-{
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */

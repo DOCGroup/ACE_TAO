@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\PortableServer"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\PortableServer"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -185,6 +185,10 @@ SOURCE=.\Default_Acceptor_Filter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Servant_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
@@ -257,11 +261,19 @@ SOURCE=.\RT_Acceptor_Filters.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Servant_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Servant_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Dispatcher.h
 # End Source File
 # Begin Source File
 
@@ -290,6 +302,10 @@ SOURCE=.\Collocated_Object.cpp
 # Begin Source File
 
 SOURCE=.\Default_Acceptor_Filter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
@@ -349,11 +365,19 @@ SOURCE=.\RT_Acceptor_Filters.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Servant_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Servant_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
