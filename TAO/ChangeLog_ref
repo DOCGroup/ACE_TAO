@@ -1,3 +1,24 @@
+Wed Sep 24 20:02:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PolicyC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+
+          Hand-added #ifdef (_MSC_VER) guards around Objref_Traits<>
+          specializations that I had missed before. These are only
+          what's needed for now so that other compilers (other than
+          MSVC) see someting consistent. The guards will all be
+          there the next time we regenerate the hand-crafted files.
+
 Wed Sep 24 17:33:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

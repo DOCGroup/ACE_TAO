@@ -100,6 +100,8 @@ namespace TAO
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTPortableServer::POA.
 
 RTPortableServer::POA_ptr
@@ -132,6 +134,8 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

@@ -181,6 +181,8 @@ namespace TAO
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for PortableInterceptor::IORInfo.
 
 PortableInterceptor::IORInfo_ptr
@@ -213,6 +215,8 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker * 
@@ -292,6 +296,8 @@ PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for PortableInterceptor::IORInterceptor.
 
 PortableInterceptor::IORInterceptor_ptr
@@ -324,6 +330,8 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker * 

@@ -2398,6 +2398,7 @@ namespace TAO
 };
 
 #endif /* _MSC_VER */
+
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
 

@@ -252,6 +252,8 @@ namespace TAO
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTScheduling::ThreadAction.
 
 RTScheduling::ThreadAction_ptr
@@ -284,6 +286,8 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -400,6 +404,8 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTScheduling::DistributableThread.
 
 RTScheduling::DistributableThread_ptr
@@ -432,6 +438,8 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -551,6 +559,8 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTScheduling::Current.
 
 RTScheduling::Current_ptr
@@ -583,6 +593,8 @@ TAO::Objref_Traits<RTScheduling::Current>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1002,6 +1014,8 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTScheduling::ResourceManager.
 
 RTScheduling::ResourceManager_ptr
@@ -1034,6 +1048,8 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1155,6 +1171,8 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTScheduling::Scheduler.
 
 RTScheduling::Scheduler_ptr
@@ -1187,6 +1205,8 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

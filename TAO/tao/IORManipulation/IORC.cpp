@@ -809,6 +809,8 @@ namespace TAO_IOP
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for TAO_IOP::TAO_IOR_Property.
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -841,6 +843,8 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -971,6 +975,8 @@ namespace TAO_IOP
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for TAO_IOP::TAO_IOR_Manipulation.
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -1003,6 +1009,8 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

@@ -2031,27 +2031,6 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-/*
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<PortableInterceptor::IORInterceptor>
-  {
-    static PortableInterceptor::IORInterceptor_ptr tao_duplicate (
-        PortableInterceptor::IORInterceptor_ptr
-      );
-    static void tao_release (
-        PortableInterceptor::IORInterceptor_ptr
-      );
-    static PortableInterceptor::IORInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        PortableInterceptor::IORInterceptor_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO__TRAITS_CH_
