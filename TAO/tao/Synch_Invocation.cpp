@@ -81,10 +81,9 @@ namespace TAO
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-#endif /*TAO_HAS_INTERCEPTORS */
-
     if (s != TAO_INVOKE_SUCCESS)
       return s;
+#endif /*TAO_HAS_INTERCEPTORS */
 
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
