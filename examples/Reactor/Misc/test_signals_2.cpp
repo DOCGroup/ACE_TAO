@@ -213,7 +213,9 @@ main (int argc, char *)
   for (;;)
     {
       ACE_DEBUG ((LM_DEBUG, "\nwaiting for SIGINT or SIGQUIT\n"));
-      reactor.handle_events ();
+
+      if (reactor.handle_events () == -1)
+	ACE_ERROR ((LM_ERROR, "%p\n", "handle_events"));
     }
   return 0;
 }

@@ -1,3 +1,12 @@
+Mon Feb 17 00:07:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor: Finished rewriting and testing the new dispatching
+ 	  logic of the Reactor.  The new implementation guards against
+ 	  pathological cases where ACE_Event_Handler::handle_*() methods
+ 	  remove registered ACE_Event_Handler objects whose handles are
+ 	  pending in the dispatch_set.  Previously there was no good way
+ 	  to guard against this.  Now, it should be handled automatically.
+
 Sun Feb 16 12:23:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor.cpp: Totally rewrote the ACE_Reactor's dispatching

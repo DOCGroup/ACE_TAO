@@ -191,7 +191,8 @@ run_svc (ACE_HANDLE handle)
   // Main event loop (one per process).
 
   while (callback.is_set () == 0)
-    reactor.handle_events ();
+    if (reactor.handle_events () == -1)
+      ACE_ERROR ((LM_ERROR, "%p\n", "handle_events"));
 }
 
 int 

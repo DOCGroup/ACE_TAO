@@ -72,12 +72,14 @@ Supplier_Task::open (void *)
 {
   if (this->pipe_.open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open failed"), -1);
+  else if (this->activate (THR_BOUND))
+    // Make this an Active Object.
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "activate failed"), -1);
   else if (ACE_Service_Config::reactor ()->register_handler 
       (this->pipe_.write_handle (), this, ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler failed"), -1);
   else
-    // Make this an Active Object.
-    return this->activate (THR_BOUND);
+    return 0;
 }
 
 int
@@ -99,7 +101,7 @@ Supplier_Task::~Supplier_Task (void)
 int 
 Supplier_Task::svc (void)
 {
-  //  ACE_NEW_THREAD;
+  ACE_NEW_THREAD;
 
   size_t i;
 
@@ -167,7 +169,7 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 int 
 main (int, char *[])
 {
-  //  ACE_START_TEST ("Reactors_Test");
+  ACE_START_TEST ("Reactors_Test");
 
 #if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon; 
@@ -182,7 +184,7 @@ main (int, char *[])
     {
       ACE_Time_Value timeout (2);
 
-      for (;;)
+      for (int iteration = 1;; iteration++)
 	{
 	  // Use a timeout to inform the Reactor when to shutdown.
 	  switch (ACE_Service_Config::reactor ()->handle_events (timeout))
@@ -193,12 +195,15 @@ main (int, char *[])
 	    case 0:
 	      ACE_ERROR_RETURN ((LM_ERROR, "(%t) timeout\n"), 0);
 	      /* NOTREACHED */
+	    default:
+	      // ACE_DEBUG ((LM_DEBUG, "(%t) done dispatching %d\n", iteration));
+	      ;
 	    }
 	}
     }
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
-  // ACE_END_TEST;
+  ACE_END_TEST;
   return 0;
 }
