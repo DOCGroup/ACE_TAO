@@ -5,7 +5,8 @@
 #include "ace/Synch.h"
 #include "Baseline_Test.h"
 
-class ACE_Svc_Export Baseline_Mutex_Test : public Baseline_Test_Base
+template<class LOCK>
+class ACE_Svc_Export Baseline_Lock_Test : public Baseline_Test_Base
 {
 public:
   virtual int acquire ();
@@ -17,25 +18,24 @@ public:
   // Real test methods.
 
 private:
-  ACE_Thread_Mutex lock_;
+  LOCK lock_;
   //
 };
-ACE_SVC_FACTORY_DECLARE (Baseline_Mutex_Test)
 
-int
-Baseline_Mutex_Test::acquire ()
+template<class LOCK> int
+Baseline_Lock_Test<LOCK>::acquire ()
 {
   return this->lock_.acquire ();
 }
 
-int
-Baseline_Mutex_Test::release ()
+template<class LOCK> int
+Baseline_Lock_Test<LOCK>::release ()
 {
   return this->lock_.release ();
 }
 
-int
-Baseline_Mutex_Test::test_acquire_release ()
+template<class LOCK> int
+Baseline_Lock_Test<LOCK>::test_acquire_release ()
 {
   ACE_Profile_Timer ptimer;
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -58,8 +58,8 @@ Baseline_Mutex_Test::test_acquire_release ()
   return 0;
 }
 
-int
-Baseline_Mutex_Test::test_try_lock ()
+template<class LOCK> int
+Baseline_Lock_Test<LOCK>::test_try_lock ()
 {
   ACE_Profile_Timer ptimer;
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -79,4 +79,12 @@ Baseline_Mutex_Test::test_try_lock ()
   return 0;
 }
 
+typedef Baseline_Lock_Test<ACE_Thread_Mutex> Baseline_Mutex_Test;
+
+ACE_SVC_FACTORY_DECLARE (Baseline_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Mutex_Test)
+
+typedef Baseline_Lock_Test<ACE_Recursive_Thread_Mutex> Baseline_Recursive_Mutex_Test;
+
+ACE_SVC_FACTORY_DECLARE (Baseline_Recursive_Mutex_Test)
+ACE_SVC_FACTORY_DEFINE (Baseline_Recursive_Mutex_Test)
