@@ -1,4 +1,4 @@
-Mon Jul 24 14:04:39 2000  Luther J Baker  <luther@cs.wustl.edu>
+Mon Jul 24 14:19:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ACE_wrappers/PACE/docs/PACE_POSIX_support.txt:
 
@@ -21,3 +21,7 @@ Mon Jul 24 14:04:39 2000  Luther J Baker  <luther@cs.wustl.edu>
         * ACE_wrappers/PACE/Makefile
 
           4. Get the makefile to build PACE on win32
+
+        * ACE_wrappers/ace
+
+          5. Get the ACE libs to build with PACE??
