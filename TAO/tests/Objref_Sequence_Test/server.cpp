@@ -111,7 +111,7 @@ void
 ServerServant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }
 
 /******************************************************/
