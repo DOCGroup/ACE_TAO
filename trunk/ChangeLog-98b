@@ -1,7 +1,6 @@
-Sat Dec 12 07:44:02 1998  David L. Levine  <levine@cs.wustl.edu>
+Sat Dec 12 07:44:02 1998  John Lindal <jafl@cco.caltech.edu>
 
-        * ace/config-mklinux.h: added.  Thanks to
-          John Lindal <jafl@cco.caltech.edu> for sending it.
+        * ace/config-mklinux.h: added.
 
 Fri Dec 11 23:26:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
