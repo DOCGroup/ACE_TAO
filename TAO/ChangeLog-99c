@@ -1,3 +1,15 @@
+Wed Sep  9 10:35:12 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/Makefile,
+          tests/AMI/simple_client.cpp,
+	  tests/AMI/ami_test_i.cpp: Introduced ACE_UNUSED_ARG
+	  to make compilers happy about unused arguments.
+
+	* tests/AMI/client.muxed.conf
+	  tests/AMI/simple_client_exclusive.conf
+	  tests/AMI/simple_client_muxed.conf: Removed these files 
+	  because they got replaced by new ones.
+
 Wed Sep  8 14:58:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
