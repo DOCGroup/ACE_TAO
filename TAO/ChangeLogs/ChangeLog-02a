@@ -1,3 +1,23 @@
+Mon Apr  9 16:40:24 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.h:
+
+	  Updated register_initial_reference() comment to better explain
+	  its behavior.
+
+	* tao/ORBInitInfo.cpp (register_initial_reference):
+
+	  This method is only valid during pre_init(), i.e. only before
+	  TAO_ORB_Core::init() has been called.  The ORB Core starts out
+	  in the "shutdown" state, so checking if it is in that state
+	  would indicate that the ORB hasn't been initalized yet, at least
+	  partially, meaning that initial reference registration can
+	  proceed.
+
+	* tao/ORB_Core.cpp (list_initial_references):
+
+	  Comment correction/update.
+
 Mon Apr 09 16:02:31 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
