@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // SOCK_Stream.i
@@ -33,8 +33,9 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   // No send flags are supported in SSL.
   if (flags) ACE_NOTSUP_RETURN (-1);
   else
-    return ((ssl_ && SSL_is_init_finished (ssl_)) ?
-            ::SSL_write (ssl_, ACE_static_cast (const char*, buf), n) : -1);
+    return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
+            ::SSL_write (this->ssl_,
+                         ACE_static_cast (const char*, buf), n) : -1);
 }
 
 ASYS_INLINE ssize_t
@@ -43,15 +44,16 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            int flags) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
-   if (flags)
-     {
-       if ((flags | MSG_PEEK) == MSG_PEEK)
-         return ::SSL_peek (ssl_, ACE_static_cast (char*, buf), n);
-       else
-         ACE_NOTSUP_RETURN (-1);
-     }
-  return ((ssl_ && SSL_is_init_finished(ssl_)) ?
-	  SSL_read (ssl_, ACE_static_cast (char *, buf), n) :
+
+  if (flags)
+    {
+      if ((flags | MSG_PEEK) == MSG_PEEK)
+        return ::SSL_peek (this->ssl_, ACE_static_cast (char*, buf), n);
+      else
+        ACE_NOTSUP_RETURN (-1);
+    }
+  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
+	  ::SSL_read (this->ssl_, ACE_static_cast (char *, buf), n) :
 	  -1);
 }
 
@@ -60,8 +62,8 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
-  return ((ssl_ && SSL_is_init_finished(ssl_)) ?
-	  SSL_write (ssl_, ACE_static_cast (const char *, buf), n) :
+  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
+	  ::SSL_write (this->ssl_, ACE_static_cast (const char *, buf), n) :
 	  -1);
 }
 
@@ -70,8 +72,8 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
-  return ((ssl_ && SSL_is_init_finished(ssl_)) ?
-	  SSL_read (ssl_, ACE_static_cast (char*, buf), n) :
+  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
+	  ::SSL_read (this->ssl_, ACE_static_cast (char*, buf), n) :
 	  -1);
 }
 
@@ -111,14 +113,14 @@ ASYS_INLINE int
 ACE_SSL_SOCK_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_reader");
-  return stream_.close_reader ();
+  return this->stream_.close_reader ();
 }
 
 ASYS_INLINE int
 ACE_SSL_SOCK_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_writer");
-  return stream_.close_writer ();
+  return this->stream_.close_writer ();
 }
 
 ASYS_INLINE int
@@ -128,27 +130,27 @@ ACE_SSL_SOCK_Stream::close (void)
 
   this->ssl_close ();
 
-  return stream_.close ();
+  return this->stream_.close ();
 }
 
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::dump (void) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::dump");
-  stream_.dump ();
+  this->stream_.dump ();
 }
 
 ASYS_INLINE ACE_SOCK_Stream&
 ACE_SSL_SOCK_Stream::peer () {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::peer");
-  return stream_;
+  return this->stream_;
 }
 
 ASYS_INLINE int
 ACE_SSL_SOCK_Stream::control (int cmd, void* dummy) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::control");
-  return stream_.control (cmd, dummy);
+  return this->stream_.control (cmd, dummy);
 }
 
 ASYS_INLINE int
@@ -158,45 +160,45 @@ ACE_SSL_SOCK_Stream::set_option (int level,
                                     int optlen) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::set_option");
-  return stream_.set_option (level, option, optval, optlen);
+  return this->stream_.set_option (level, option, optval, optlen);
 }
 
 ASYS_INLINE int
 ACE_SSL_SOCK_Stream::get_option (int level,
-                                    int option,
-                                    void *optval,
-                                    int *optlen) const
+                                 int option,
+                                 void *optval,
+                                 int *optlen) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::get_option");
-  return stream_.get_option (level, option, optval, optlen);
+  return this->stream_.get_option (level, option, optval, optlen);
 }
 
 ASYS_INLINE int
 ACE_SSL_SOCK_Stream::get_local_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::get_local_addr");
-  return stream_.get_local_addr (addr);
+  return this->stream_.get_local_addr (addr);
 }
 
 ASYS_INLINE int
 ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::get_remote_addr");
-  return stream_.get_remote_addr (addr);
+  return this->stream_.get_remote_addr (addr);
 }
 
 ASYS_INLINE ACE_HANDLE
 ACE_SSL_SOCK_Stream::get_handle (void) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::get_handle");
-  return stream_.get_handle ();
+  return this->stream_.get_handle ();
 }
 
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::set_handle");
-  stream_.set_handle (handle);
+  this->stream_.set_handle (handle);
 }
 
 #endif /* ACE_HAS_SSL */
