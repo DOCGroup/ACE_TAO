@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(Plan_Launcher): ciao_deployment_stub, naming, xerces, taoexe {
+  exename = plan_launcher
+  requires += exceptions
+  after += Config_Handlers ExecutionManager_stub NodeDaemon_stub
+  libs     += XSC_Config_Handlers
+  libs     += ExecutionManager_stub
+  after    += Config_Handlers
+
+  Source_Files {
+    Plan_Launcher.cpp
+  }
+}
