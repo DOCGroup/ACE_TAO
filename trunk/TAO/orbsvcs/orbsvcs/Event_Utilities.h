@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -13,7 +12,6 @@
 // = AUTHOR
 //    Tim Harrison (harrison@cs.wustl.edu)
 //
-// = DESCRIPTION
 // ============================================================================
 
 #ifndef ACE_EVENT_UTILITIES_H
@@ -24,96 +22,96 @@
 #include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ACE_ConsumerQOS_Factory
-// = TITLE
-//    Consumer QOS Factory
-//
-// = DESCRIPTION
-//
-//    This class allows easy (free from CORBA IDL constraints)
-//    construction of RtecEventChannelAdmin::ConsumerQOS structures.
-//
-// = CORRELATIONS
-//
-//    ACE_ConsumerQOS_Factory separates subscriptions into conjunction
-//    and disjunction groups.  A group can be thought of as a set of
-//    events inside parenthesis: (A+B+C), where A,B, and C are
-//    events.
-//
-//    The following code would be used to represent (A+B) | (B+C):
-//
-//    ACE_ConsumerQOS_Factor factory;
-//    factory.start_conjunction_group ();
-//    factory.insert (A);
-//    factory.insert (B);
-//    factory.start_conjunction_group ();
-//    factory.insert (B);
-//    factory.insert (C);
-//
-//    The following code would be used to represent (A|B) | (B|C):
-//
-//    ACE_ConsumerQOS_Factor factory;
-//    factory.start_disjunction_group ();
-//    factory.insert (A);
-//    factory.insert (B);
-//    factory.start_disjunction_group ();
-//    factory.insert (B);
-//    factory.insert (C);
-//
-//    First, this may not seem to be initially useful, as (A|B) |
-//    (B|C) seems the same as A|B|C.  However, this form does have a
-//    significant use when deadline timers are specified (described
-//    below). Note that groups end with the next call to
-//    start_XX_group.  Groups are always OR'd together.  That is,
-//    there is no way to directly build (A|B|C) + (D|E|F).  You can
-//    always expand the previous statement to the OR of multiple ANDs.
-//
-// = TIMEOUTS
-//
-//    There are two types of timeout types defined in
-//    Event_Service_Constants.h.
-//
-//    ACE_ES_EVENT_INTERVAL_TIMEOUT - the consumer wants to receive a
-//    timeout every N seconds.
-//
-//    ACE_ES_EVENT_DEADLINE_TIMEOUT - the consumer wants the timeout
-//    if and only if some dependencies are not resolved first.
-//
-//    Using these timeouts with the correlations discussed above, we
-//    can construct four different timer semantics: Interval Timer,
-//    Deadline Timer, Interval Correlation, Deadline Correlation:
-//
-//    Interval Timer:
-//
-//      (A+B+C) | (D+E+F) | (G+H+I) | IntervalTimeout
-//
-//      This registers to receive an interval timeout regardless of
-//      other dependencies.  Event if events occur, the interval
-//      timeout will still be sent.
-//
-//    Deadline Timer:
-//
-//      (A+B+C) | (D+E+F) | (G+H+I) | DeadlineTimeout
-//
-//      This registers to receive the deadline timeout ONLY if no
-//      other events occur.  If a single event is sent to the
-//      consumer, the timer is cancelled and rescheduled.
-//
-//    Deadline Correlation:
-//
-//      (A+B+C) | (D+E+F) | (G+H+DeadlineTimeout)
-//
-//      If G and H do not occur within DeadlineTimeout time, a
-//      deadline timeout is sent.  It is cancelled and rescheduled if G
-//      and H occur.
-//
-//    Interval Correlation:
-//
-//      (A+B+C) | (D+E+F) | (G+H+IntervalTimeout)
-//
-//      G+H+IntervalTimeout are sent ONLY after all have occurred.  If
-//      G+H occur, they are queued until IntervalTimeout occurs.  If
-//      IntervalTimeout occurs, it is queued until G+H occur.
 {
+  // = TITLE
+  //    Consumer QOS Factory.
+  //
+  // = DESCRIPTION
+  //
+  //    This class allows easy (free from CORBA IDL constraints)
+  //    construction of RtecEventChannelAdmin::ConsumerQOS structures.
+  //
+  // = CORRELATIONS
+  //
+  //    ACE_ConsumerQOS_Factory separates subscriptions into conjunction
+  //    and disjunction groups.  A group can be thought of as a set of
+  //    events inside parenthesis: (A+B+C), where A,B, and C are
+  //    events.
+  //
+  //    The following code would be used to represent (A+B) | (B+C):
+  //
+  //    ACE_ConsumerQOS_Factor factory;
+  //    factory.start_conjunction_group ();
+  //    factory.insert (A);
+  //    factory.insert (B);
+  //    factory.start_conjunction_group ();
+  //    factory.insert (B);
+  //    factory.insert (C);
+  //
+  //    The following code would be used to represent (A|B) | (B|C):
+  //
+  //    ACE_ConsumerQOS_Factor factory;
+  //    factory.start_disjunction_group ();
+  //    factory.insert (A);
+  //    factory.insert (B);
+  //    factory.start_disjunction_group ();
+  //    factory.insert (B);
+  //    factory.insert (C);
+  //
+  //    First, this may not seem to be initially useful, as (A|B) |
+  //    (B|C) seems the same as A|B|C.  However, this form does have a
+  //    significant use when deadline timers are specified (described
+  //    below). Note that groups end with the next call to
+  //    start_XX_group.  Groups are always OR'd together.  That is,
+  //    there is no way to directly build (A|B|C) + (D|E|F).  You can
+  //    always expand the previous statement to the OR of multiple ANDs.
+  //
+  // = TIMEOUTS
+  //
+  //    There are two types of timeout types defined in
+  //    Event_Service_Constants.h.
+  //
+  //    ACE_ES_EVENT_INTERVAL_TIMEOUT - the consumer wants to receive a
+  //    timeout every N seconds.
+  //
+  //    ACE_ES_EVENT_DEADLINE_TIMEOUT - the consumer wants the timeout
+  //    if and only if some dependencies are not resolved first.
+  //
+  //    Using these timeouts with the correlations discussed above, we
+  //    can construct four different timer semantics: Interval Timer,
+  //    Deadline Timer, Interval Correlation, Deadline Correlation:
+  //
+  //    Interval Timer:
+  //
+  //      (A+B+C) | (D+E+F) | (G+H+I) | IntervalTimeout
+  //
+  //      This registers to receive an interval timeout regardless of
+  //      other dependencies.  Event if events occur, the interval
+  //      timeout will still be sent.
+  //
+  //    Deadline Timer:
+  //
+  //      (A+B+C) | (D+E+F) | (G+H+I) | DeadlineTimeout
+  //
+  //      This registers to receive the deadline timeout ONLY if no
+  //      other events occur.  If a single event is sent to the
+  //      consumer, the timer is cancelled and rescheduled.
+  //
+  //    Deadline Correlation:
+  //
+  //      (A+B+C) | (D+E+F) | (G+H+DeadlineTimeout)
+  //
+  //      If G and H do not occur within DeadlineTimeout time, a
+  //      deadline timeout is sent.  It is cancelled and rescheduled if G
+  //      and H occur.
+  //
+  //    Interval Correlation:
+  //
+  //      (A+B+C) | (D+E+F) | (G+H+IntervalTimeout)
+  //
+  //      G+H+IntervalTimeout are sent ONLY after all have occurred.  If
+  //      G+H occur, they are queued until IntervalTimeout occurs.  If
+  //      IntervalTimeout occurs, it is queued until G+H occur.
 public:
   ACE_ConsumerQOS_Factory (void);
   // Default construction.

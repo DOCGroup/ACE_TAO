@@ -38,36 +38,38 @@ class TAO_ORBSVCS_Export TAO_IOR_Multicast : public ACE_Event_Handler
   // make sure that all the comments for each method go underneath the
   // method name?
 public:
-
+  // = Initialization and termination methods.
   TAO_IOR_Multicast (void);
-  // Default constructor
+  // Constructor.
 
   TAO_IOR_Multicast (const char *ior,
                      u_short port,
                      const char *mcast_addr,
                      TAO_Service_ID service_id);
+  // Constructor.
 
   int init (const char *ior,
             u_short port,
             const char *mcast_addr,
             TAO_Service_ID service_id);
+  // Initialization method.
 
-  // destructor
   ~TAO_IOR_Multicast (void);
+  // Destructor.
 
-  // call back when input is received on the handle.
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE n);
+  // Callback when input is received on the handle.
 
-  // callback when a timeout has occurred.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
+  // Callback when a timeout has occurred.
 
-  // returns the internal handle used to receive multicast
   virtual ACE_HANDLE get_handle (void) const;
+  // Returns the internal handle used to receive multicast.
 
 private:
   char buf_[BUFSIZ];
-  // temporary buffer
+  // temporary buffer.
 
   TAO_Service_ID service_id_;
   // Service id that we're waiting for.

@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -30,12 +30,12 @@
 
 template <class TARGET>
 class ACE_PushConsumer_Adapter : public POA_RtecEventComm::PushConsumer
-// = TITLE
-//    ACE Push Consumer Adapter
-//
-// = DESCRIPTION
-//    Forwards all calls to the owner_.
 {
+  // = TITLE
+  //    ACE Push Consumer Adapter
+  //
+  // = DESCRIPTION
+  //    Forwards all calls to the owner_.
 public:
   ACE_PushConsumer_Adapter (TARGET *target);
   // Forwards all calls to <owner>.
@@ -52,18 +52,18 @@ private:
 
   // g++ 2.7.2.3 on Solaris needs this copy constructor declaration:
   ACE_UNIMPLEMENTED_FUNC (ACE_PushConsumer_Adapter (const ACE_PushConsumer_Adapter &))
-};
+    };
 
 // ************************************************************
 
 template <class TARGET>
 class ACE_PushSupplier_Adapter : public POA_RtecEventComm::PushSupplier
-// = TITLE
-//    ACE Push Supplier Adapter
-//
-// = DESCRIPTION
-//    Forwards all calls to disconnect_push_supplier the target_.
 {
+  // = TITLE
+  //    ACE Push Supplier Adapter
+  //
+  // = DESCRIPTION
+  //    Forwards all calls to disconnect_push_supplier the target_.
 public:
   ACE_PushSupplier_Adapter (TARGET *target);
   // Forwards all calls to <owner>.
