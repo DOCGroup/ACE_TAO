@@ -1,3 +1,12 @@
+Tue Jul 19 09:30:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp (make_queued_data): Created a data block for
+	  the size that is required instead of the size of the incoming
+	  data block. This should fix the lingering problems with
+	  Single_Read tests in our daily builds.
+
+	* tao/GIOP_Message_Base.cpp: Added some comments.
+
 Tue Jul 19 09:34:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.bor:

@@ -1393,22 +1393,30 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
   else
     {
       // As we are in CORBA mode, all the data blocks would be aligned
-      // on an 8 byte boundary
-      ACE_Message_Block msgb (incoming,
-                              ACE_CDR::MAX_ALIGNMENT);
+      // on an 8 byte boundary. Hence create a data block for more
+      // than the actual length
+      ACE_Data_Block *db =
+        this->orb_core_->data_block_for_message_block (incoming.length ()+
+                                                       ACE_CDR::MAX_ALIGNMENT);
 
-      qd->msg_block_ = ACE_Message_Block::duplicate (&msgb);
+      // Get the allocator..
+      ACE_Allocator *alloc =
+        this->orb_core_->message_block_msgblock_allocator ();
 
-      // Get the base pointer of the incoming message block
-      char *start = ACE_ptr_align_binary (incoming.base (),
-                                          ACE_CDR::MAX_ALIGNMENT);
+      // Make message block..
+      ACE_Message_Block mb (db,
+                            0,
+                            alloc);
 
-      // Get the read and write displacements in the incoming stream
-      size_t rd_pos = incoming.rd_ptr () - start;
-      size_t wr_pos = incoming.wr_ptr () - start;
+      // Duplicate the block..
+      qd->msg_block_ = mb.duplicate ();
 
-      qd->msg_block_->rd_ptr (rd_pos);
-      qd->msg_block_->wr_ptr (wr_pos);
+      // Align the message block
+      ACE_CDR::mb_align (qd->msg_block_);
+
+      // Copy the data..
+      qd->msg_block_->copy (incoming.rd_ptr (),
+                            incoming.length ());
     }
 
 
