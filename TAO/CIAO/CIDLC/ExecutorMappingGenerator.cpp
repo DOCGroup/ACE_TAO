@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "ExecutorMappingGenerator.hpp"
+#include "Literals.hpp"
 
 #include <set>
 #include <ostream>
@@ -1523,6 +1524,10 @@ generate (CommandLine const& cl,
   ostream& os = ofs.is_open ()
     ? static_cast<ostream&> (ofs)
     : static_cast<ostream&> (std::cout);
+
+  // Dump file header.
+  //
+  os << StringLiterals::COPYRIGHT;
 
   // Set auto-indentation for os.
   //

@@ -1,4 +1,4 @@
-<!--$Id$-->
+<!--$Id: CIDLC.vcproj,v 1.14 2004/02/10 22:46:57 lut Exp $-->
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
@@ -133,6 +133,9 @@
 			</File>
 			<File
 				RelativePath=".\ExecutorMappingGenerator.cpp">
+			</File>
+			<File
+				RelativePath=".\Literals.cpp">
 			</File>
 			<File
 				RelativePath=".\RepositoryIdGenerator.cpp">
