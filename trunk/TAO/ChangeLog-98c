@@ -1,3 +1,8 @@
+Mon Aug 24 09:47:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Makefile: 
+	  More dependencies were outdated.
+
 Sun Aug 23 18:37:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs: Changed all occurrences of *_Impl to *_i to be more
