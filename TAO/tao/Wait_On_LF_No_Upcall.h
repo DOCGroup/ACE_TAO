@@ -13,7 +13,7 @@
 
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Wait_On_Leader_Follower.h"
 
@@ -47,5 +47,5 @@ public:
                     TAO_Synch_Reply_Dispatcher &rd);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_WAIT_ON_LF_NO_UPCALL_H */
