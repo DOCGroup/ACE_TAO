@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.73 $)dnl
+AC_REVISION($Revision 0.74 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -1468,6 +1468,7 @@ fi dnl test "$ace_has_tli_funcs" = yes
 
 AC_CHECK_HEADER(sys/time.h, dnl
   [
+   dnl This is a weak test.
    AC_EGREP_HEADER(sys/time.h, time.h,
      ,
       [
@@ -3353,36 +3354,36 @@ ACE_CACHE_CHECK(for template typedefs,
 #define TYPENAME
 #endif
 
-                     class Bar
-                     {
-                     public:
-                       typedef int Y;
-                       Bar(int bar) : bar_(bar) {}
-                       int value() const { return bar_; }
-                     private:
-                       int bar_;
-                     };
+class Bar
+{
+public:
+  typedef int Y;
+  Bar(int bar) : bar_(bar) {}
+  int value() const { return bar_; }
+private:
+  int bar_;
+};
 
-                     template <class T>
-                     class Foo
-                     {
-                     public:
-                       typedef TYPENAME T::Y Y;
-                       Foo(T* foo) : foo_(foo) {}
-                       void print(Y y);
-                     private:
-                       T* foo_;
-                     };
+template <class T>
+class Foo
+{
+public:
+  typedef TYPENAME T::Y Y;
+  Foo(T* foo) : foo_(foo) {}
+  void print(Y y);
+private:
+  T* foo_;
+};
 
-                     template <class T>
-                     void Foo<T>::print(TYPENAME T::Y y)
-                     {
-                     }
+template <class T>
+void Foo<T>::print(TYPENAME T::Y y)
+{
+}
                    ],
                    [
-                     Bar bar(15);
-                     Foo<Bar> foo(&bar);
-                     foo.print(11);
+Bar bar(15);
+Foo<Bar> foo(&bar);
+foo.print(11);
                    ],
                    [
                     ace_cv_feature_posix_template_typedefs=yes
@@ -3396,14 +3397,14 @@ dnl Check if platform supports static data member templates
 ACE_CACHE_CHECK(for static data member templates,
   ace_cv_feature_posix_static_data_member_templates,[
     AC_TRY_COMPILE([
-                     template <class T>
-                     class Foo
-                     {
-                     public:
-                       static T* sdm;
-                     };
+template <class T>
+class Foo
+{
+public:
+  static T* sdm;
+};
 
-                     template <class T> T* Foo<T>::sdm = 0;
+template <class T> T* Foo<T>::sdm = 0;
                    ],
                    [
                     /* No body */
@@ -3488,16 +3489,16 @@ if test "$ace_user_enable_exceptions" = yes; then
     ace_cv_feature_posix_exceptions,[
       AC_TRY_COMPILE(,
                      [
-                       int ret = 0;
-                       class ACE {};
-                       try
-                         {
-                           throw ACE();
-                         }
-                       catch (ACE)
-                         {
-                           ret = 1;
-                         }
+  int ret = 0;
+  class ACE {};
+  try
+    {
+      throw ACE();
+    }
+  catch (ACE)
+    {
+      ret = 1;
+    }
                      ],
                      [
                       ace_cv_feature_posix_exceptions=yes
@@ -4277,9 +4278,13 @@ dnl name.
     ,
     AC_DEFINE(ACE_LACKS_SETDETACH))
 
-  AC_CHECK_FUNC(pthread_attr_setsched,, dnl
+  dnl ACE currently doesn't provide enoug fine grained control over
+  dnl these functions so both must be present in order to prevent
+  dnl ACE_LACKS_SETSCHED from being defined.
+  AC_CHECK_FUNC(sched_setscheduler, dnl
     AC_CHECK_FUNC(pthread_attr_setschedpolicy,,
-      AC_DEFINE(ACE_LACKS_SETSCHED)))
+      AC_CHECK_FUNC(pthread_attr_setsched,,
+        AC_DEFINE(ACE_LACKS_SETSCHED))))
 
   AC_CHECK_FUNC(pthread_attr_setscope, dnl
     ,
@@ -5018,9 +5023,9 @@ ACE_CACHE_CHECK(if select takes a const fifth argument,
       ],
       [
        int n = 0;
-       fd_set *readfds;
-       fd_set *writefds;
-       fd_set *exceptfds;
+       fd_set *readfds = 0;
+       fd_set *writefds = 0;
+       fd_set *exceptfds = 0;
        const struct timeval* timeout = 0;
        select(n, readfds, writefds, exceptfds, timeout);
       ],
@@ -5120,9 +5125,9 @@ ACE_CACHE_CHECK(if socket size is denoted by size_t,
 #include <sys/socket.h>
      ],
      [
-      int s;
-      struct sockaddr* addr;
-      int* addrlen;
+      int s = 0;
+      struct sockaddr* addr = 0;
+      int* addrlen = 0;
       accept(s, addr, addrlen);
      ],
      [
@@ -5138,9 +5143,9 @@ dnl Now see if it really does take a size_t socket size
 #include <sys/socket.h>
         ],
         [
-         int s;
-         struct sockaddr* addr;
-         size_t* addrlen;
+         int s = 0;
+         struct sockaddr* addr = 0;
+         size_t* addrlen = 0;
          accept(s, addr, addrlen);
         ],
         [
@@ -5192,14 +5197,14 @@ ACE_CACHE_CHECK(if setsockopt() takes a char* fourth argument,
 #include <sys/socket.h>
       ],
       [
-       int s;
-       int level;
-       int optname;
-       char* optval;
+       int s = 0;
+       int level = 0;
+       int optname = 0;
+       char* optval = 0;
 #if defined(ACE_HAS_SIZET_SOCKET_LEN)
-       size_t* optlen;
+       size_t* optlen = 0;
 #else
-       int* optlen;
+       int* optlen = 0;
 #endif
        setsockopt(s, level, optname, optval, optlen);
       ],
@@ -5224,14 +5229,14 @@ ACE_CACHE_CHECK(if setsockopt() takes a void* fourth argument,
 #include <sys/socket.h>
       ],
       [
-       int s;
-       int level;
-       int optname;
-       void* optval;
+       int s = 0;
+       int level = 0;
+       int optname = 0;
+       void* optval = 0;
 #if defined(ACE_HAS_SIZET_SOCKET_LEN)
-       size_t* optlen;
+       size_t* optlen = 0;
 #else
-       int* optlen;
+       int* optlen = 0;
 #endif
        setsockopt(s, level, optname, optval, optlen);
       ],
@@ -5259,12 +5264,12 @@ ACE_CACHE_CHECK(if mmap() takes a void* first argument,
 #include <sys/mman.h>
       ],
       [
-       void *start;
-       size_t length;
-       int prot;
-       int flags;
-       int fd;
-       off_t offset;
+       void *start = 0;
+       size_t length = 0;
+       int prot = 0;
+       int flags = 0;
+       int fd = 0;
+       off_t offset = 0;
 
        void *result = 0;
 
@@ -5283,7 +5288,7 @@ dnl Check if msync is broken, i.e. doesn't accept third "sync" argument.
 dnl This test should come after the test for checking if mmap takes a void*
 dnl argument since we need the ACE_MMAP_TYPE type for this test.
 if test "$ac_cv_func_msync" = yes; then
-ACE_CACHE_CHECK(if msync accepts a third "sync" argument,
+ACE_CACHE_CHECK(if msync accepts a third \"sync\" argument,
   ace_cv_lib_broken_msync,
   [
    AC_TRY_COMPILE(
@@ -5783,10 +5788,10 @@ ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second argument,
 #endif
       ],
       [
-       int msqid;
+       int msqid = 0;
        struct msgbuf* msgp = 0;
-       int msgsz;
-       int msgflg;
+       int msgsz = 0;
+       int msgflg = 0;
        msgsnd(msqid, msgp, msgsz, msgflg);
       ],
       [
@@ -5814,10 +5819,10 @@ ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second argument,
 #endif
          ],
          [
-          int msqid;
+          int msqid = 0;
           const void* msgp = 0;
-          int msgsz;
-          int msgflg;
+          int msgsz = 0;
+          int msgflg = 0;
           msgsnd(msqid, msgp, msgsz, msgflg);
          ],
          [
@@ -5859,11 +5864,11 @@ AC_CACHE_CHECK(if msgrcv() takes a void* second argument,
 #endif
       ],
       [
-       int msqid;
-       void* msgp;
-       int msgsz;
-       long msgtyp;
-       int msgflg;
+       int msqid = 0;
+       void* msgp = 0;
+       int msgsz = 0;
+       long msgtyp = 0;
+       int msgflg = 0;
        msgrcv(msqid, msgp, msgsz, msgtyp, msgflg);
       ],
       [
@@ -5894,9 +5899,10 @@ AC_CACHE_CHECK(if shmat() takes a void* second argument,
 # include <sys/ipc.h>
 # include <sys/shm.h>
       ],
-      [int shmid;
-       void* shmaddr;
-       int shmflg;
+      [
+       int shmid = 0;
+       void* shmaddr = 0;
+       int shmflg = 0;
        shmat(shmid, shmaddr, shmflg);
       ],
       [
@@ -5924,9 +5930,9 @@ AC_CACHE_CHECK(if sigaction() takes a const* second argument,
 #include <signal.h>
       ],
       [
-       int signum;
+       int signum = 0;
        const struct sigaction* act = 0;
-       struct sigaction* oldact;
+       struct sigaction* oldact = 0;
        sigaction(signum, act, oldact);
       ],
       [
@@ -5947,8 +5953,8 @@ ACE_CACHE_CHECK(if wait() takes a (union wait *) rather than int *,
 #include <sys/wait.h>
        ],
        [
-        int* status;
-        int result;
+        int* status = 0;
+        int result = 0;
         result=wait(status);
        ],
        [
@@ -5960,8 +5966,8 @@ ACE_CACHE_CHECK(if wait() takes a (union wait *) rather than int *,
 #include <sys/wait.h>
           ],
           [
-           union wait* status;
-           int result;
+           union wait* status = 0;
+           int result = 0;
            result=wait(status);
           ],
           [
