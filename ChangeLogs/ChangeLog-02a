@@ -1,3 +1,10 @@
+Wed Sep 20 12:10:41 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h:
+
+	  Made inclusion of <sys/types.h> conditional on definition of
+	  ACE_LACKS_SYS_TYPES_H macro.
+
 Wed Sep 20 12:00:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:

@@ -34,6 +34,7 @@ option
                  source type(cpp) "Asynch_IO.cpp"
                  source type(cpp) "Asynch_IO_Impl.cpp"
                  source type(cpp) "Basic_Types.cpp"
+                 source type(cpp) "CDR_Base.cpp"
                  source type(cpp) "CDR_Stream.cpp"
                  source type(cpp) "Containers.cpp"
                  source type(cpp) "CORBA_Handler.cpp"
