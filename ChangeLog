@@ -16,9 +16,9 @@ Wed Oct  2 10:50:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux.h:
 
-	  If ACE_HAS_PTHREADS_UNIX98_EXT is not defined, define
+	  If ACE_HAS_PTHREADS_UNIX98_EXT is not defined, do not define
 	  ACE_LACKS_RWLOCK_T.  Addresses a compile-time issue when
-	  _XOPEN_SOURCE is not set to value >= 600.
+	  _XOPEN_SOURCE is not set to a value >= 600.
 
 	* ace/config-linux-common.h:
 
