@@ -1,3 +1,14 @@
+Wed Nov 20 20:44:56 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/Mem_Map_Stream.cpp (grow_file_and_remap):
+
+          Fixed bug where we were trying to remap two different files at
+          the same location without closing the first.
+
+        * common/HttpCharStream.cpp (get_url):
+
+          Don't try to parse an empty file. Removes a nasty SIGSEGV.
+
 Wed Nov 20 01:06:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * common/Mem_Map_Stream.cpp:
