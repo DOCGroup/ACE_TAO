@@ -65,6 +65,9 @@ TAO_DIOP_Acceptor::create_mprofile (const TAO_ObjectKey & object_key,
   // @@ RTCORBA_SUBSETTING
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This method is deprecated for RTCORBA, \ncreate_endpoint_for_mprofile should be called instead")));
+
+  ACE_UNUSED_ARG (object_key);
+  ACE_UNUSED_ARG (mprofile);
   // This method should not be called anymore
   return -1;
 
