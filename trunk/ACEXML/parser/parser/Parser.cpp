@@ -1642,7 +1642,7 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
             {
               ACE_NEW_NORETURN (exception,
                                 ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Unexpecting keyword NDATA in PEDecl.")));
+                                (ACE_LIB_TEXT ("Unexpected keyword NDATA in PEDecl.")));
               xmlenv.exception (exception);
               this->report_fatal_error (*exception, xmlenv);
               return -1;
