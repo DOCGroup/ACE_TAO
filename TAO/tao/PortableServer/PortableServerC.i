@@ -1203,7 +1203,7 @@ CORBA::Boolean TAO_PortableServer_Export operator>> (
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ForwardRequest &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
   {
     // now marshal the members (if any)
     if (
@@ -1235,7 +1235,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,PortableServer::Forward
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::NotAGroupObject &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;

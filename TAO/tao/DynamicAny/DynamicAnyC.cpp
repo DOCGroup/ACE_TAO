@@ -342,7 +342,10 @@ const char* DynamicAny::DynAny::_interface_repository_id (void) const
 
 // Default constructor.
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
-  : CORBA_UserException ("IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0",
+        "InvalidValue"
+      )
 {
 }
 
@@ -353,7 +356,10 @@ DynamicAny::DynAny::InvalidValue::~InvalidValue (void)
 
 // Copy constructor.
 DynamicAny::DynAny::InvalidValue::InvalidValue (const ::DynamicAny::DynAny::InvalidValue &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -368,7 +374,7 @@ DynamicAny::DynAny::InvalidValue::operator= (const ::DynamicAny::DynAny::Invalid
 DynamicAny::DynAny::InvalidValue *
 DynamicAny::DynAny::InvalidValue::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidValue *, exc);
     }
@@ -420,7 +426,10 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 // Default constructor.
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
-  : CORBA_UserException ("IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0",
+        "TypeMismatch"
+      )
 {
 }
 
@@ -431,7 +440,10 @@ DynamicAny::DynAny::TypeMismatch::~TypeMismatch (void)
 
 // Copy constructor.
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (const ::DynamicAny::DynAny::TypeMismatch &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -446,7 +458,7 @@ DynamicAny::DynAny::TypeMismatch::operator= (const ::DynamicAny::DynAny::TypeMis
 DynamicAny::DynAny::TypeMismatch *
 DynamicAny::DynAny::TypeMismatch::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (TypeMismatch *, exc);
     }
@@ -3653,7 +3665,10 @@ const char* DynamicAny::DynAnyFactory::_interface_repository_id (void) const
 
 // Default constructor.
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (void)
-  : CORBA_UserException ("IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0",
+        "InconsistentTypeCode"
+      )
 {
 }
 
@@ -3664,7 +3679,10 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::~InconsistentTypeCode (void)
 
 // Copy constructor.
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (const ::DynamicAny::DynAnyFactory::InconsistentTypeCode &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -3679,7 +3697,7 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::operator= (const ::DynamicAny::
 DynamicAny::DynAnyFactory::InconsistentTypeCode *
 DynamicAny::DynAnyFactory::InconsistentTypeCode::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InconsistentTypeCode *, exc);
     }

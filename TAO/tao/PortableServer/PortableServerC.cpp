@@ -297,7 +297,10 @@ TAO_NAMESPACE_END
 
 // Default constructor.
 PortableServer::ForwardRequest::ForwardRequest (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/ForwardRequest:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/ForwardRequest:1.0",
+        "ForwardRequest"
+      )
 {
 }
 
@@ -308,7 +311,10 @@ PortableServer::ForwardRequest::~ForwardRequest (void)
 
 // Copy constructor.
 PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardRequest &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
   this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
 }
@@ -331,7 +337,7 @@ void PortableServer::ForwardRequest::_tao_any_destructor (void *_tao_void_pointe
 PortableServer::ForwardRequest *
 PortableServer::ForwardRequest::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/ForwardRequest:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/ForwardRequest:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ForwardRequest *, exc);
     }
@@ -394,7 +400,10 @@ void PortableServer::ForwardRequest::_tao_decode (
 PortableServer::ForwardRequest::ForwardRequest (
     const CORBA::Object_ptr  _tao_forward_reference
   )
-  : CORBA_UserException ("IDL:omg.org/PortableServer/ForwardRequest:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/ForwardRequest:1.0",
+        "ForwardRequest"
+      )
 {
   this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
 }
@@ -471,7 +480,10 @@ CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
 
 // Default constructor.
 PortableServer::NotAGroupObject::NotAGroupObject (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/NotAGroupObject:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/NotAGroupObject:1.0",
+        "NotAGroupObject"
+      )
 {
 }
 
@@ -482,7 +494,10 @@ PortableServer::NotAGroupObject::~NotAGroupObject (void)
 
 // Copy constructor.
 PortableServer::NotAGroupObject::NotAGroupObject (const ::PortableServer::NotAGroupObject &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -503,7 +518,7 @@ void PortableServer::NotAGroupObject::_tao_any_destructor (void *_tao_void_point
 PortableServer::NotAGroupObject *
 PortableServer::NotAGroupObject::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/NotAGroupObject:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/NotAGroupObject:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NotAGroupObject *, exc);
     }
@@ -3663,7 +3678,10 @@ const char* PortableServer::POAManager::_interface_repository_id (void) const
 
 // Default constructor.
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POAManager/AdapterInactive:1.0",
+        "AdapterInactive"
+      )
 {
 }
 
@@ -3674,7 +3692,10 @@ PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
 
 // Copy constructor.
 PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -3689,7 +3710,7 @@ PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::
 PortableServer::POAManager::AdapterInactive *
 PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (AdapterInactive *, exc);
     }
@@ -5273,7 +5294,10 @@ const char* PortableServer::POA::_interface_repository_id (void) const
 
 // Default constructor.
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:1.0",
+        "AdapterAlreadyExists"
+      )
 {
 }
 
@@ -5284,7 +5308,10 @@ PortableServer::POA::AdapterAlreadyExists::~AdapterAlreadyExists (void)
 
 // Copy constructor.
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (const ::PortableServer::POA::AdapterAlreadyExists &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5299,7 +5326,7 @@ PortableServer::POA::AdapterAlreadyExists::operator= (const ::PortableServer::PO
 PortableServer::POA::AdapterAlreadyExists *
 PortableServer::POA::AdapterAlreadyExists::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (AdapterAlreadyExists *, exc);
     }
@@ -5351,7 +5378,10 @@ void PortableServer::POA::AdapterAlreadyExists::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/AdapterNonExistent:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/AdapterNonExistent:1.0",
+        "AdapterNonExistent"
+      )
 {
 }
 
@@ -5362,7 +5392,10 @@ PortableServer::POA::AdapterNonExistent::~AdapterNonExistent (void)
 
 // Copy constructor.
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (const ::PortableServer::POA::AdapterNonExistent &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5377,7 +5410,7 @@ PortableServer::POA::AdapterNonExistent::operator= (const ::PortableServer::POA:
 PortableServer::POA::AdapterNonExistent *
 PortableServer::POA::AdapterNonExistent::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterNonExistent:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterNonExistent:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (AdapterNonExistent *, exc);
     }
@@ -5429,7 +5462,10 @@ void PortableServer::POA::AdapterNonExistent::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::InvalidPolicy::InvalidPolicy (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0",
+        "InvalidPolicy"
+      )
 {
 }
 
@@ -5440,7 +5476,10 @@ PortableServer::POA::InvalidPolicy::~InvalidPolicy (void)
 
 // Copy constructor.
 PortableServer::POA::InvalidPolicy::InvalidPolicy (const ::PortableServer::POA::InvalidPolicy &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
   this->index = _tao_excp.index;
 }
@@ -5457,7 +5496,7 @@ PortableServer::POA::InvalidPolicy::operator= (const ::PortableServer::POA::Inva
 PortableServer::POA::InvalidPolicy *
 PortableServer::POA::InvalidPolicy::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidPolicy *, exc);
     }
@@ -5510,7 +5549,10 @@ void PortableServer::POA::InvalidPolicy::_tao_decode (
 PortableServer::POA::InvalidPolicy::InvalidPolicy (
     CORBA::UShort _tao_index
   )
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0",
+        "InvalidPolicy"
+      )
 {
   this->index = _tao_index;
 }
@@ -5519,7 +5561,10 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (
 
 // Default constructor.
 PortableServer::POA::NoServant::NoServant (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/NoServant:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/NoServant:1.0",
+        "NoServant"
+      )
 {
 }
 
@@ -5530,7 +5575,10 @@ PortableServer::POA::NoServant::~NoServant (void)
 
 // Copy constructor.
 PortableServer::POA::NoServant::NoServant (const ::PortableServer::POA::NoServant &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5545,7 +5593,7 @@ PortableServer::POA::NoServant::operator= (const ::PortableServer::POA::NoServan
 PortableServer::POA::NoServant *
 PortableServer::POA::NoServant::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/NoServant:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/NoServant:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NoServant *, exc);
     }
@@ -5599,7 +5647,10 @@ void PortableServer::POA::NoServant::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:1.0",
+        "ObjectAlreadyActive"
+      )
 {
 }
 
@@ -5610,7 +5661,10 @@ PortableServer::POA::ObjectAlreadyActive::~ObjectAlreadyActive (void)
 
 // Copy constructor.
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (const ::PortableServer::POA::ObjectAlreadyActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5625,7 +5679,7 @@ PortableServer::POA::ObjectAlreadyActive::operator= (const ::PortableServer::POA
 PortableServer::POA::ObjectAlreadyActive *
 PortableServer::POA::ObjectAlreadyActive::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ObjectAlreadyActive *, exc);
     }
@@ -5677,7 +5731,10 @@ void PortableServer::POA::ObjectAlreadyActive::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::ObjectNotActive::ObjectNotActive (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/ObjectNotActive:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/ObjectNotActive:1.0",
+        "ObjectNotActive"
+      )
 {
 }
 
@@ -5688,7 +5745,10 @@ PortableServer::POA::ObjectNotActive::~ObjectNotActive (void)
 
 // Copy constructor.
 PortableServer::POA::ObjectNotActive::ObjectNotActive (const ::PortableServer::POA::ObjectNotActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5703,7 +5763,7 @@ PortableServer::POA::ObjectNotActive::operator= (const ::PortableServer::POA::Ob
 PortableServer::POA::ObjectNotActive *
 PortableServer::POA::ObjectNotActive::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectNotActive:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectNotActive:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ObjectNotActive *, exc);
     }
@@ -5755,7 +5815,10 @@ void PortableServer::POA::ObjectNotActive::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/ServantAlreadyActive:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/ServantAlreadyActive:1.0",
+        "ServantAlreadyActive"
+      )
 {
 }
 
@@ -5766,7 +5829,10 @@ PortableServer::POA::ServantAlreadyActive::~ServantAlreadyActive (void)
 
 // Copy constructor.
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (const ::PortableServer::POA::ServantAlreadyActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5781,7 +5847,7 @@ PortableServer::POA::ServantAlreadyActive::operator= (const ::PortableServer::PO
 PortableServer::POA::ServantAlreadyActive *
 PortableServer::POA::ServantAlreadyActive::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantAlreadyActive:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantAlreadyActive:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ServantAlreadyActive *, exc);
     }
@@ -5833,7 +5899,10 @@ void PortableServer::POA::ServantAlreadyActive::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::ServantNotActive::ServantNotActive (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/ServantNotActive:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/ServantNotActive:1.0",
+        "ServantNotActive"
+      )
 {
 }
 
@@ -5844,7 +5913,10 @@ PortableServer::POA::ServantNotActive::~ServantNotActive (void)
 
 // Copy constructor.
 PortableServer::POA::ServantNotActive::ServantNotActive (const ::PortableServer::POA::ServantNotActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5859,7 +5931,7 @@ PortableServer::POA::ServantNotActive::operator= (const ::PortableServer::POA::S
 PortableServer::POA::ServantNotActive *
 PortableServer::POA::ServantNotActive::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantNotActive:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantNotActive:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ServantNotActive *, exc);
     }
@@ -5911,7 +5983,10 @@ void PortableServer::POA::ServantNotActive::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::WrongAdapter::WrongAdapter (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/WrongAdapter:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/WrongAdapter:1.0",
+        "WrongAdapter"
+      )
 {
 }
 
@@ -5922,7 +5997,10 @@ PortableServer::POA::WrongAdapter::~WrongAdapter (void)
 
 // Copy constructor.
 PortableServer::POA::WrongAdapter::WrongAdapter (const ::PortableServer::POA::WrongAdapter &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5937,7 +6015,7 @@ PortableServer::POA::WrongAdapter::operator= (const ::PortableServer::POA::Wrong
 PortableServer::POA::WrongAdapter *
 PortableServer::POA::WrongAdapter::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongAdapter:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongAdapter:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongAdapter *, exc);
     }
@@ -5989,7 +6067,10 @@ void PortableServer::POA::WrongAdapter::_tao_decode (
 
 // Default constructor.
 PortableServer::POA::WrongPolicy::WrongPolicy (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/POA/WrongPolicy:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/POA/WrongPolicy:1.0",
+        "WrongPolicy"
+      )
 {
 }
 
@@ -6000,7 +6081,10 @@ PortableServer::POA::WrongPolicy::~WrongPolicy (void)
 
 // Copy constructor.
 PortableServer::POA::WrongPolicy::WrongPolicy (const ::PortableServer::POA::WrongPolicy &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -6015,7 +6099,7 @@ PortableServer::POA::WrongPolicy::operator= (const ::PortableServer::POA::WrongP
 PortableServer::POA::WrongPolicy *
 PortableServer::POA::WrongPolicy::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongPolicy:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongPolicy:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongPolicy *, exc);
     }
@@ -6380,7 +6464,10 @@ const char* PortableServer::Current::_interface_repository_id (void) const
 
 // Default constructor.
 PortableServer::Current::NoContext::NoContext (void)
-  : CORBA_UserException ("IDL:omg.org/PortableServer/Current/NoContext:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/PortableServer/Current/NoContext:1.0",
+        "NoContext"
+      )
 {
 }
 
@@ -6391,7 +6478,10 @@ PortableServer::Current::NoContext::~NoContext (void)
 
 // Copy constructor.
 PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::NoContext &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -6406,7 +6496,7 @@ PortableServer::Current::NoContext::operator= (const ::PortableServer::Current::
 PortableServer::Current::NoContext *
 PortableServer::Current::NoContext::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/Current/NoContext:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/Current/NoContext:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NoContext *, exc);
     }

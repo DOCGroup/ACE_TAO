@@ -1614,7 +1614,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::AlreadyRegistered &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -1628,7 +1628,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::A
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::CannotActivate &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
   {
     // now marshal the members (if any)
     if (
@@ -1656,7 +1656,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,ImplementationRepositor
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::NotFound &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;

@@ -430,7 +430,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList_out::operator[] (CORBA::ULong index)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::EmptyProfileList &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -444,7 +444,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::EmptyProfileList&)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::NotFound &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -458,7 +458,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::NotFound&)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::Duplicate &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -472,7 +472,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::Duplicate&)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::Invalid_IOR &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -486,7 +486,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::Invalid_IOR&)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::MultiProfileList &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
