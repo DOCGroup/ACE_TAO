@@ -300,7 +300,7 @@ protected:
   Hash_Map hash_map_;
   // internal hash table.
 
-  CORBA::Ulong counter_;
+  CORBA::ULong counter_;
 };
 
 class TAO_Export TAO_Dynamic_Hash_ObjTable_Iterator : public TAO_Object_Table_Iterator_Impl
