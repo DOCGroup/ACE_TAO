@@ -22,21 +22,21 @@ module DynAnyTests
   typedef long test_array [DIM];
 
   enum test_enum {
-    ZEROTH,
-    FIRST,
-    SECOND,
-    THIRD
+    TE_ZEROTH,
+    TE_FIRST,
+    TE_SECOND,
+    TE_THIRD
   };
 
   union test_union switch (test_enum)
     {
-      case SECOND:
+      case TE_SECOND:
         long l;//TypeCode tc;
-      case FIRST:
+      case TE_FIRST:
         short s;
-      case THIRD:
+      case TE_THIRD:
         string str;
-      case ZEROTH:
+      case TE_ZEROTH:
         octet o;
     };
 };
