@@ -298,7 +298,7 @@ TAO_Profile::create_tagged_profile (void)
 #else
       this->tagged_profile_->profile_data.length (length);
       CORBA::Octet *buffer =
-        this->tagged_profile_.profile_data.get_buffer ();
+        this->tagged_profile_->profile_data.get_buffer ();
 
       for (const ACE_Message_Block *i = encap.begin ();
            i != encap.end ();
