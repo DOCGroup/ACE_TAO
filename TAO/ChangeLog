@@ -8,6 +8,10 @@ Wed Sep 25 12:40:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  Commented out an unused parameter.
 
+	* TAO_IDL/be/be_visitor_component/component_ss.cpp:
+
+	  Filled in visit_component() method.
+
 Wed Sep 25 12:24:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/Makefile.BE:
