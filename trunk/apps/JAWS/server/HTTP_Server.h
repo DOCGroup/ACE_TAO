@@ -15,19 +15,8 @@ class ACE_Proactor;
 
 #include "JAWS/server/HTTP_Handler.h"
 
-// Specialize ACE_SOCK_Acceptor to lock around accept();
-template <class LOCK>
-class LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
-{
-public:
-  int accept (ACE_SOCK_Stream &new_stream,
-	      ACE_Addr *remote_addr = 0,
-	      ACE_Time_Value *timeout = 0,
-	      int restart = 1) const;
-  
-private:
-  LOCK lock_;
-};
+// Include the templates here.
+#include "JAWS/server/HTTP_Server_T.h"
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define ONESHOT_SOCK_ACCEPTOR HTTP_SOCK_Acceptor
@@ -146,13 +135,6 @@ private:
 
 ACE_STATIC_SVC_DECLARE (HTTP_Server)
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "JAWS/server/HTTP_Server.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTTP_Server.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* HTTP_SERVER_H */
+
 

@@ -70,19 +70,7 @@ public:
   JAWS_VFS_Node_List (int sz);
 };
 
-template <class LOCK>
-class JAWS_VFS_Node_Bucket
-{
-public:
-  JAWS_VFS_Node_Bucket (int size = 1);
-
-  JAWS_VFS_Node * find (char *URI);
-  
-private:
-  JAWS_VFS_Node_List bucket_;
-  
-  LOCK lock_;
-};
+#include "JAWS/server/VFS_T.h"
 
 class JAWS_VFS_Hash_Table
 {
@@ -111,14 +99,6 @@ private:
 };
 
 typedef ACE_Singleton <JAWS_VFS, ACE_Thread_Mutex> VFS;
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "JAWS/server/VFS.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("VFS.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* VFS_H */
 
