@@ -1,7 +1,7 @@
 project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
   exename = Consumer_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-  libs += dsuiwrappers dskiwrappers dski
+  libs += wrappers dsui
   includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include $(TAO_ROOT)/orbsvcs
 
   Source_Files {
@@ -19,7 +19,7 @@ project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent {
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 
   //except for "libs += wrappers", this is copied from kokyu project:
-  after    += RGKokyu
+  after    += Kokyu
   libs     += wrappers Kokyu dsui
   libpaths += $(DATASTREAM_ROOT)/lib
   includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include $(TAO_ROOT)/orbsvcs
