@@ -22,17 +22,14 @@
 // Use 9/93 POSIX.1 .2 and .4 definitions only.
 //#define _POSIX_C_SOURCE 199309L
 
-#include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
-
 #if defined _POSIX_ASYNCHRONOUS_IO
 
 #if defined _POSIX_ASYNC_IO
 
 #if _POSIX_ASYNC_IO == -1
 
-int have_asynchio (void)
+int
+have_asynchio (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "_POSIX_ASYNC_IO = -1.. Not supported at all\n"));
@@ -41,7 +38,8 @@ int have_asynchio (void)
 
 #else /* _POSIX_ASYNC_IO is != -1 */
 // Supported everywhere.
-int have_asynchio (void)
+int
+have_asynchio (void)
 {
   ACE_DEBUG ((LM_DEBUG, "_POSIX_ASYNC_IO is != -1..AIO is supported everywhere\n"));
   ACE_DEBUG ((LM_DEBUG, "System claims to have  POSIX_ASYNCHRONOUS_IO\n"));
@@ -85,10 +83,8 @@ int have_asynchio (void)
 #else /* _POSIX_ASYNC_IO_ is not defined */
 
 
-#include <limits.h>
-#include <fcntl.h>
-
-char *asynch_io_files[] =
+char *
+asynch_io_files[] =
 {
   "/tmp/fu",
   "/fu",
@@ -99,7 +95,8 @@ char *asynch_io_files[] =
   NULL
 };
 
-int have_asynchio (void)
+int
+have_asynchio (void)
 {
   int i, res, num_ok;
 
@@ -179,7 +176,8 @@ int have_asynchio (void)
 #endif /* _POSIX_ASYNC_IO_ */
 
 #else  /* _POSIX_ASYNCHRONOUS_IO is not defined*/
-int have_asynchio (void)
+int
+have_asynchio (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "_POSIX_ASYNCHRONOUS_IO itself is not defined\n"));
@@ -188,13 +186,17 @@ int have_asynchio (void)
 #endif /* _POSIX_ASYNCHRONOUS_IO */
 
 int
-main ()
+main (int, char *[])
 {
+  ACE_START_TEST ("Aio_Platform_Test");
+
   int ret_val = have_asynchio ();
 
   if (ret_val == 1)
-    ACE_DEBUG ((LM_DEBUG, "Supported\n"));
+    ACE_DEBUG ((LM_DEBUG, "POSIX Asynchronous IO is supported\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, "Not Supported\n"));
+    ACE_DEBUG ((LM_DEBUG, "POSIX Asynchronous IO is not supported\n"));
+
+  ACE_END_TEST;
   return 0;
 }
