@@ -3,6 +3,10 @@ Wed May 27 12:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/EC_Multiple/Makefile: ran make depend to
           remove dependency on tao/Timeprobe.i.
 
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp: added casts of
+          ACE_hrtime_t to long now that ACE_hrtime_t is an __int64 on WIN32.
+          Thanks to Irfan for reporting this.
+
 Tue May 26 22:25:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/ORB.cpp (CORBA_ORB): Never assume a pointer will be
