@@ -514,7 +514,7 @@ validate_properties (Prop_Map &prop_map,
        i++)
     {
       const char *n = props[i].name;
-      if (TAO_Trader_Base::is_valid_identifier_name (n) == 0)
+      if (TAO_Trader_Base::is_valid_property_name (n) == 0)
         ACE_THROW (CosTrading::IllegalPropertyName (n));
       else
         {

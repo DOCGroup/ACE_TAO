@@ -1168,7 +1168,7 @@ resolve (const CosTrading::TraderName &name
                   CosTrading::Register::RegisterNotSupported))
 {
   // Determine if the first link is a legal link name.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name[0]))
+  if (! TAO_Trader_Base::is_valid_link_name (name[0]))
     ACE_THROW_RETURN (CosTrading::Register::IllegalTraderName (name),
                       CosTrading::Register::_nil ());
 
@@ -1680,7 +1680,7 @@ add_link (const char *name,
                   CosTrading::Link::LimitingFollowTooPermissive))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
@@ -1730,7 +1730,7 @@ remove_link (const char *name
                   CosTrading::Link::UnknownLinkName))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
@@ -1751,7 +1751,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name
                    CosTrading::Link::UnknownLinkName))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
 
   // Ensure this isn't a duplicate link name.
@@ -1820,7 +1820,7 @@ modify_link (const char *name,
                    CosTrading::Link::LimitingFollowTooPermissive))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.

@@ -339,7 +339,7 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
     {
       const CosTrading::Property& prop = this->props_[i];
 
-      if (! TAO_Trader_Base::is_valid_identifier_name (prop.name))
+      if (! TAO_Trader_Base::is_valid_property_name (prop.name))
         ACE_THROW (CosTrading::IllegalPropertyName (prop.name));
 
       TAO_String_Hash_Key prop_name = prop.name.in ();
@@ -1103,7 +1103,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes
   for (i = 0; i < length; i++)
     {
       const char* dname = ACE_static_cast (const char*,  deletes[i]);
-      if (! TAO_Trader_Base::is_valid_identifier_name (dname))
+      if (! TAO_Trader_Base::is_valid_property_name (dname))
         ACE_THROW (CosTrading::IllegalPropertyName (dname));
       else
         {
@@ -1145,7 +1145,7 @@ merge_properties (const CosTrading::PropertySeq& modifies
   for (i = 0, length = modifies.length (); i < length; i++)
     {
       const char* mname = modifies[i].name;
-      if (TAO_Trader_Base::is_valid_identifier_name (mname))
+      if (TAO_Trader_Base::is_valid_property_name (mname))
         {
           TAO_String_Hash_Key prop_name (mname);
           if (this->readonly_.find (prop_name) == 0)
@@ -1442,7 +1442,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props
           const char* pname = prop_seq[i];
 
           // Check for errors or duplicates
-          if (TAO_Trader_Base::is_valid_identifier_name (pname))
+          if (TAO_Trader_Base::is_valid_property_name (pname))
             {
               TAO_String_Hash_Key prop_name (pname);
               if (this->props_.insert (prop_name) == 1)
