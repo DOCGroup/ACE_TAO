@@ -1,3 +1,11 @@
+Sun Jun 11 13:01:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.i
+
+	  Fixed member initialization order in the constructor.
+
+	  Added missing return type to method <give_profile>.
+
 Sun Jun 11 01:45:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/MProfile.h
