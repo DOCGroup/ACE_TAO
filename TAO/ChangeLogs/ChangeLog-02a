@@ -1,3 +1,9 @@
+Thu Aug 10 10:42:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added new files in to the above.
+
 Thu Aug 10 05:35:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
