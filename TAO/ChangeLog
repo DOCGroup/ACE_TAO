@@ -10,6 +10,13 @@ Tue Apr 29 12:56:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           each time one of these sequences is used as a base class 
           in generated code.
 
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+
+          Added the tao_ValueBase_life struct similar to what is generated
+          for derived value types, so that ValueBase can be used in the
+          TAO_Unbounded_Valuetype_Sequence template class.
+
 Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
