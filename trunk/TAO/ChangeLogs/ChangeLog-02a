@@ -1,3 +1,19 @@
+Thu Mar 15 09:21:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * tao/Sequence.i:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+
+          Recommit of changes from Fri Mar  9 14:38:06 2001 with
+          additional changes to fix the assignment operators
+          that broke Param_Test.
+
+          Fix a memory leak with bounded sequences of all types.
+          Also cleaned up some indentation in the generated code
+          and added a missing data member initialization.
+
 Thu Mar 15 07:21:21 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
         * orbsvcs/tests/FaultTolerance/Makefile: 
