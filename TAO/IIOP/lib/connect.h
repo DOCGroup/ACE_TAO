@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 #if !defined(ACE_ROA_CONNECT_H)
 #  define ACE_ROA_CONNECT_H
 

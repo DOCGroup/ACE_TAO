@@ -1,4 +1,6 @@
-// @(#)iiopobj.hh	1.9 95/11/04
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -20,35 +22,42 @@ typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
 
 class _EXPCLASS IIOP
 {			// namespace
-  public:
+public:
 
-    struct Version { CORBA_Octet	major, minor; };
+  struct Version
+  {
+    CORBA_Octet	major;
+    CORBA_Octet minor;
 
-    //
-    // IIOP Protocol version is distinct from GIOP version.
-    //
-    enum { MY_MAJOR = 1, MY_MINOR = 0 };
+    Version(CORBA_Octet maj = MY_MAJOR, CORBA_Octet min = MY_MINOR);
+  };
 
-    //
-    // IOR support ... ProfileBody is encapsulated in an IIOP
-    // profile entry within an IOR.
-    //
-    struct ProfileBody {
-	Version			iiop_version;
-	CORBA_String		host;
-	CORBA_UShort		port;
-	opaque			object_key;
+  //
+  // IIOP Protocol version is distinct from GIOP version.
+  //
+  enum { MY_MAJOR = 1, MY_MINOR = 0 };
 
-				ProfileBody ()
-				: host (0) { }
+  //
+  // IOR support ... ProfileBody is encapsulated in an IIOP
+  // profile entry within an IOR.
+  //
+  struct ProfileBody
+  {
+    Version			iiop_version;
+    CORBA_String		host;
+    CORBA_UShort		port;
+    opaque			object_key;
 
-				ProfileBody (const ProfileBody &src);
+    ProfileBody ();
 
-				~ProfileBody ()
-				{ delete host; delete object_key.buffer; }
-      private:
-	ProfileBody		&operator = (const ProfileBody &src);
-    };
+    ProfileBody (const ProfileBody &src);
+    ProfileBody (const Version& v, const CORBA_String& h, const CORBA_UShort& p, const opaque& object_key);
+
+    ~ProfileBody ();
+
+  private:
+    ProfileBody		&operator = (const ProfileBody &src);
+  };
 };
 
 
@@ -90,14 +99,10 @@ public:
   //
   // Support for tables keyed by objrefs.
   //
-  CORBA_ULong		hash (
-			      CORBA_ULong		maximum,
-			      CORBA_Environment	&env
-			      );
-  CORBA_Boolean	is_equivalent (
-			       CORBA_Object_ptr	other_obj,
-			       CORBA_Environment	&env
-			       );
+  CORBA_ULong		hash (CORBA_ULong maximum,
+			      CORBA_Environment &env);
+  CORBA_Boolean	is_equivalent (CORBA_Object_ptr other_obj,
+			       CORBA_Environment &env);
 
   //
   // XXX All objref representations should know how to marshal themselves.
@@ -114,23 +119,19 @@ public:
   IIOP::ProfileBody		profile;
   IIOP::ProfileBody		*fwd_profile;
 
-  IIOP_Object (char *repository_id)
-    : fwd_profile (0), base (this),
-      STUB_Object (repository_id),
-      _refcount (1)
-  { }
+  IIOP_Object (char *repository_id);
+  IIOP_Object (char* repository_id,
+               TAO_IIOP_ProfileBody profile);
 
   //
   // COM stuff
   //
-  ULONG __stdcall		AddRef ();
-  ULONG __stdcall		Release ();
-  HRESULT __stdcall		QueryInterface (
-						REFIID	type_id,
-						void	**ppv
-						);
+  ULONG __stdcall AddRef ();
+  ULONG __stdcall Release ();
+  HRESULT __stdcall QueryInterface (REFIID type_id, void **ppv);
 
   virtual CORBA_String  _get_name(CORBA_Environment &env);
+
 private:
   CORBA_Object		base;
   ACE_Thread_Mutex lock_;
@@ -139,9 +140,7 @@ private:
   //
   // Destructor is to be called only through Release()
   //
-  ~IIOP_Object ()
-  { assert (_refcount == 0);
-  delete fwd_profile; }
+  ~IIOP_Object ();
 
   //
   // Disallow copy constructor and assignment operator
@@ -156,5 +155,9 @@ private:
   friend class everyone_needs_a_friend;
 #endif
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "iiopobj.i"
+#  endif
 
 #endif	// _iiopobj_hh

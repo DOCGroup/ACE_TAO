@@ -58,10 +58,10 @@ ROA::init (CORBA_ORB_ptr parent,
 
 ROA::ROA (CORBA_ORB_ptr owning_orb,
 	  CORBA_Environment &env)
-  : do_exit(CORBA_B_FALSE), 
-    _orb(owning_orb),
-    call_count(0),
-    skeleton(0)
+  : do_exit_(CORBA_B_FALSE), 
+    orb_(owning_orb),
+    call_count_(0),
+    skeleton_(0)
 {
   ROA_Parameters* p = ROA_PARAMS::instance();
   ROA_Factory* f = ROA_FACTORY::instance();
@@ -94,16 +94,16 @@ ROA::~ROA ()
 // Generic routine to handle a message.
 //
 int
-ROA::handle_message (Dispatch_Context& ctx, CORBA_Environment& env)
+ROA::handle_message (TAO_Dispatch_Context& ctx, CORBA_Environment& env)
 {
   int result =
-    GIOP::incoming_message (ctx.endpoint,
-			    GIOP::ForwardFunc(ctx.check_forward ? request_forwarder : 0),
+    GIOP::incoming_message (ctx.endpoint_,
+			    GIOP::ForwardFunc(ctx.check_forward_ ? request_forwarder : 0),
 			    GIOP::RequestHandler(request_dispatcher), &ctx, env);
 
   ACE_MT(ACE_GUARD_RETURN(ACE_Thread_Mutex, roa_mon, lock_, -1));
 
-  call_count--;
+  call_count_--;
 
   return result;
 }
@@ -113,8 +113,8 @@ ROA::handle_message (Dispatch_Context& ctx, CORBA_Environment& env)
 //
 CORBA_Object_ptr
 ROA::create (CORBA_OctetSeq& key,
-		CORBA_String type_id,
-		CORBA_Environment& env)
+             CORBA_String type_id,
+             CORBA_Environment& env)
 {
   CORBA_String id;
   IIOP_Object* data;
@@ -123,7 +123,11 @@ ROA::create (CORBA_OctetSeq& key,
     id = CORBA_string_copy (type_id);
   else
     id = 0;
-  data = new IIOP_Object (id);
+  IIOP::Version ver(IIOP::MY_MAJOR, IIOP::MY_MINOR);
+  data = new IIOP_Object (id, IIOP::ProfileBody(ver,
+                                                addr_.get_host_name(),
+                                                addr_.get_port_number(),
+                                                key));
 
   if (data != 0)
     {
@@ -134,28 +138,6 @@ ROA::create (CORBA_OctetSeq& key,
       env.exception (new CORBA_NO_MEMORY (COMPLETED_NO));
       return 0;
     }
-
-  data->profile.iiop_version.major = IIOP::MY_MAJOR;
-  data->profile.iiop_version.minor = IIOP::MY_MINOR;
-  data->profile.host = ACE_OS::strdup(addr.get_host_name());
-  data->profile.port = addr.get_port_number();
-  data->profile.object_key.length =  key.length;
-  data->profile.object_key.maximum = key.length;
-  data->profile.object_key.buffer = new CORBA_Octet [(size_t) key.length];
-
-  //
-  // Verify the memory allocations we just did ...
-  //
-  if (data->profile.host == 0 || data->profile.object_key.buffer == 0)
-    {
-      env.exception (new CORBA_NO_MEMORY (COMPLETED_NO));
-      data->Release ();
-      return 0;
-    }
-
-  ACE_OS::memcpy (data->profile.object_key.buffer,
-		  key.buffer,
-		  (size_t) key.length);
 
   //
   // Return the CORBA_Object_ptr interface to this objref.
@@ -222,7 +204,7 @@ ROA::please_shutdown(CORBA_Environment& env)
   ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
 
   env.clear ();
-  do_exit = CORBA_B_TRUE;
+  do_exit_ = CORBA_B_TRUE;
 }
 
 //
@@ -235,7 +217,7 @@ ROA::clean_shutdown(CORBA_Environment& env)
 
   env.clear ();
 
-  if (call_count != 0)
+  if (call_count_ != 0)
     {
       dmsg ("called clean_shutdown with requests outstanding");
       env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
@@ -258,7 +240,7 @@ ROA::register_dir (CORBA_BOA::dsi_handler handler, void* ctx, CORBA_Environment&
       return;
     }
 
-  skeleton = handler;
+  skeleton_ = handler;
   context = ctx;
 
   env.clear ();
@@ -267,15 +249,15 @@ ROA::register_dir (CORBA_BOA::dsi_handler handler, void* ctx, CORBA_Environment&
 // OBSOLETE!!!  But for now I'm afraid to take it out.
 void
 ROA::get_request(CORBA_Boolean use_threads,
-		    struct timeval *tvp,
-		    CORBA_Environment& env)
+                 struct timeval *tvp,
+                 CORBA_Environment& env)
 {
   //
   // API spec calls for the DIR to be registered and for this to
   // report an invocation order problem if this is called after
   // shutdown was started (app can always avoid the latter).
   //
-  if (skeleton == 0)
+  if (skeleton_ == 0)
     {
       env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
       return;
@@ -285,7 +267,7 @@ ROA::get_request(CORBA_Boolean use_threads,
   // Just call the IIOP level dispatch code without allowing it to
   // ever forward requests to another ROA.
   //
-  get_request (skeleton, 0, use_threads, context, tvp, env);
+  get_request (skeleton_, 0, use_threads, context_, tvp, env);
 }
 
 // OBSOLETE!!!  But stays in b/c the one above calls it.
@@ -322,7 +304,7 @@ ROA::get_request (
     // Applications sometimes make mistakes:  here, it'd be
     // polling for a new request after initiating shutdown.
     //
-    if (do_exit)
+    if (do_exit_)
       {
 	dmsg ("called get_request during OA shutdown");
 	env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
@@ -501,14 +483,14 @@ ROA::get_request (
   // Handle it in this thread.  We can do it without any need
   // to dynamically allocate memory.
   //
-  Dispatch_Context		ctx;
+  TAO_Dispatch_Context		ctx;
 
-  ctx.skeleton = handler;
-  ctx.check_forward = check_forward;
-  ctx.context = app_state;
-  ctx.oa = this;
+  ctx.skeleton_ = handler;
+  ctx.check_forward_ = check_forward;
+  ctx.context_ = app_state;
+  ctx.oa_ = this;
 #if 0 // g++ didn't complain about this assignment, but Sun C++ does
-  ctx.endpoint = fd;
+  ctx.endpoint_ = fd;
 #endif
 
   handle_message (ctx, env);
@@ -539,7 +521,7 @@ __stdcall
 ROA::AddRef ()
 {
   ACE_MT(ACE_GUARD_RETURN(ACE_Thread_Mutex, roa_mon, com_lock_, 0));
-  return ++refcount;
+  return ++refcount_;
 }
 
 ULONG
@@ -549,8 +531,8 @@ ROA::Release ()
   {
     ACE_MT(ACE_GUARD_RETURN(ACE_Thread_Mutex, roa_mon, com_lock_, 0));
 
-    if (--refcount != 0)
-	return refcount;
+    if (--refcount_ != 0)
+      return refcount_;
 
   }
 
@@ -587,7 +569,7 @@ static void
 request_dispatcher (GIOP::RequestHeader& req,
 		    CDR& request_body,
 		    CDR* reply,
-		    Dispatch_Context* helper,
+		    TAO_Dispatch_Context* helper,
 		    CORBA_Environment& env)
 {
   ROA_Parameters* p = ROA_PARAMS::instance();
@@ -609,8 +591,8 @@ request_dispatcher (GIOP::RequestHeader& req,
 #endif
 
   CORBA_BOA_ptr oa = p->oa();
-  CORBA_BOA::dsi_handler ptmf = helper->skeleton;
-  (oa->*ptmf)(req.object_key, svr_req, helper->context, env);
+  CORBA_BOA::dsi_handler ptmf = helper->skeleton_;
+  (oa->*ptmf)(req.object_key, svr_req, helper->context_, env);
   // is this the correct way to do it? skeleton is a member function
 
   svr_req.release ();
@@ -720,12 +702,12 @@ request_dispatcher (GIOP::RequestHeader& req,
 static GIOP::LocateStatusType
 request_forwarder (opaque& target_key,
 		   CORBA_Object_ptr& forward_reference,
-		   Dispatch_Context* helper)
+		   TAO_Dispatch_Context* helper)
 {
     CORBA_Environment		env;
 
-    assert (helper->check_forward != 0);
-    helper->check_forward (target_key, forward_reference, helper->context, env);
+    assert (helper->check_forward_ != 0);
+    helper->check_forward (target_key, forward_reference, helper->context_, env);
 
     if (env.exception () != 0)
 	return GIOP::UNKNOWN_OBJECT;

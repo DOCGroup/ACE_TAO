@@ -1,4 +1,5 @@
-// @(#)boa.cpp	1.3 95/09/29
+// @(#) $Id$
+//
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -56,44 +57,42 @@ TAO_Object_Table::~TAO_Object_Table()
 // not know specifically about the Internet ORB !!
 //
 CORBA_BOA_ptr
-CORBA_BOA::get_named_boa (
-    CORBA_ORB_ptr	orb,
-    CORBA_String	name,
-    CORBA_Environment	&env
-)
+CORBA_BOA::get_named_boa (CORBA_ORB_ptr orb,
+                          CORBA_String name,
+                          CORBA_Environment &env)
 {
-    env.clear ();
+  env.clear ();
 
-    //
-    // If the ORB is an Internet ORB, we know this must be a TCP OA.
-    //
-    {
-	IIOP_ORB	*internet;
+  //
+  // If the ORB is an Internet ORB, we know this must be a TCP OA.
+  //
+  {
+    IIOP_ORB	*internet;
 
-	if (orb->QueryInterface (IID_IIOP_ORB, (void **)&internet)
-		== NOERROR) {
-	    ROA* tcp_oa;
+    if (orb->QueryInterface (IID_IIOP_ORB, (void **)&internet) == NOERROR)
+      {
+        ROA* tcp_oa;
 
-	    internet->Release ();
+        internet->Release ();
 
-	    //
-	    // ROA initialization with name specified; it'll
-	    // come from /etc/services if it's not a port number.
-	    //
-	    ACE_INET_Addr boa_name(name, INADDR_ANY);
-	    tcp_oa = ROA::init (orb, boa_name, env);
-	    if (env.exception () != 0)
-		return 0;
-	    else
-		return tcp_oa;		// derives from BOA
-	}
-    }
+        //
+        // ROA initialization with name specified; it'll
+        // come from /etc/services if it's not a port number.
+        //
+        ACE_INET_Addr boa_name(name, INADDR_ANY);
+        tcp_oa = ROA::init (orb, boa_name, env);
+        if (env.exception () != 0)
+          return 0;
+        else
+          return tcp_oa;		// derives from BOA
+      }
+  }
 
-    //
-    // We don't know how to deal with this kind of ORB.  Report error.
-    //
-    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
-    return 0;
+  //
+  // We don't know how to deal with this kind of ORB.  Report error.
+  //
+  env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+  return 0;
 }
 
 
@@ -103,48 +102,48 @@ CORBA_BOA::get_named_boa (
 // a short lifespan, namely that of the process acquiring this BOA.
 //
 CORBA_BOA_ptr
-CORBA_BOA::get_boa (
-    CORBA_ORB_ptr	orb,
-    CORBA_Environment	&env
-)
+CORBA_BOA::get_boa(CORBA_ORB_ptr orb,
+                   CORBA_Environment &env)
 {
-    env.clear ();
+  env.clear ();
 
-    //
-    // If the ORB is an Internet ORB, we know this must be a TCP OA.
-    //
-    {
-	IIOP_ORB	*internet;
+  //
+  // If the ORB is an Internet ORB, we know this must be a TCP OA.
+  //
+  {
+    IIOP_ORB	*internet;
 
-	if (orb->QueryInterface (IID_IIOP_ORB, (void **)&internet)
-		== NOERROR) {
-	    ROA* tcp_oa;
+    if (orb->QueryInterface (IID_IIOP_ORB, (void **)&internet) == NOERROR)
+      {
+        ROA* tcp_oa;
 
-	    internet->Release ();
+        internet->Release ();
 
-	    //
-	    // ROA initialization with null name means anonymous OA
-	    //
-	    ACE_INET_Addr anonymous((unsigned short)0, INADDR_ANY);
-	    tcp_oa = ROA::init (orb, anonymous, env);
-	    if (env.exception () != 0)
-		return 0;
-	    else
-		return tcp_oa;		// derives from BOA
-	}
-    }
+        //
+        // ROA initialization with null name means anonymous OA
+        //
+        ACE_INET_Addr anonymous((unsigned short)0, INADDR_ANY);
+        tcp_oa = ROA::init (orb, anonymous, env);
+        if (env.exception () != 0)
+          return 0;
+        else
+          return tcp_oa;		// derives from BOA
+      }
+  }
 
-    //
-    // We don't know how to deal with this kind of ORB.  Report error.
-    //
-    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
-    return 0;
+  //
+  // We don't know how to deal with this kind of ORB.  Report error.
+  //
+  env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+  return 0;
 }
 
-void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
-			*context, CORBA_Environment &env)
+void CORBA_BOA::dispatch(CORBA_OctetSeq &key,
+                         CORBA_ServerRequest &req,
+                         void *context,
+                         CORBA_Environment &env)
 {
-  skeleton skel;  // pointer to function pointer for the operation
+  TAO_Skeleton skel;  // pointer to function pointer for the operation
   CORBA_Object_ptr obj;  // object that will be looked up based on the key
   CORBA_OctetSeq		*obj_key;
   CORBA_String  opname;
@@ -166,9 +165,8 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
     return;
   }
 #endif
-  obj = this->lookup(key);
   // get the skeleton
-  if (obj != 0) // should really be !is_nil
+  if (this->find(key, obj) != -1)
     {
       opname = req.op_name();
       skel = obj->lookup(opname);
@@ -188,5 +186,6 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
   // do we do it??
 }
 
-
-
+#if !defined(__ACE_INLINE__)
+#  include "boa.i"
+#endif
