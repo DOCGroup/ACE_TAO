@@ -29,32 +29,6 @@ module PortableInterceptor
   typedef sequence<Cookie>  Cookies;
   // Collections of Cookie's become Cookies'es.
 
-  interface RequestInfo
-    {
-      unsigned long get_request_id ();
-      /*
-      boolean set_request_id (in unsigned long rid);
-      // This method is disabled for now because I don't know
-      // the purpose of changing request id and how does it
-      // fit into TAO's current structure.
-      */
-
-      boolean response_expected ();
-      // This method will eventually changed to support
-      // AMI.
-
-      CORBA::Object get_object ();
-      // Get the object reference the targeting object.
-
-      string get_operation ();
-      // We don't allow changing operation for now.
-      // Otherwise, we'll change
-
-      CORBA::NVList get_arguments ();
-      boolean set_arguments (in CORBA::NVList args);
-      // Accessing and changing the operation arguments/return value.
-    };
-
   interface Interceptor
     {
       // Base interface for Interceptors.
@@ -65,18 +39,38 @@ module PortableInterceptor
     {
       // Server side request interceptor definition.
 
-      void preinvoke (inout RequestInfo ri,
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
                       inout IOP::ServiceContextList sc,
+                      // inout NVList arguments,
                       inout Cookies ck);
       // Interception pointer before invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
 
-      void postinvoke (inout RequestInfo ri,
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
                        inout IOP::ServiceContextList sc,
+                       // inout NVList arguments,
                        inout Cookies ck);
       // Interception pointer after invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
 
-      void exception_occurred (inout RequestInfo ri,
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
                                inout IOP::ServiceContextList sc,
+                               inout CORBA::Exception exc,
                                inout Cookies ck);
       // Exception interception point.
     };
@@ -85,18 +79,38 @@ module PortableInterceptor
     {
       // Client side interceptor.
 
-      void preinvoke (inout RequestInfo ri,
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
                       inout IOP::ServiceContextList sc,
+                      // inout NVList arguments,
                       inout Cookies ck);
       // Before remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
 
-      void postinvoke (inout RequestInfo ri,
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
                        inout IOP::ServiceContextList sc,
+                       // inout NVList arguments,
                        inout Cookies ck);
       // After returned from remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
 
-      void exception_occurred (inout RequestInfo ri,
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
                                inout IOP::ServiceContextList sc,
+                               inout CORBA::Exception exc,
                                inout Cookies ck);
       // Exception occurred.
     };

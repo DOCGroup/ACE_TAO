@@ -38,7 +38,7 @@ PortableInterceptor::Cookie_var::Cookie_var (PortableInterceptor::Cookie_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE PortableInterceptor::Cookie_ptr
+ACE_INLINE PortableInterceptor::Cookie_ptr 
 PortableInterceptor::Cookie_var::ptr (void) const
 {
   return this->ptr_;
@@ -74,19 +74,19 @@ PortableInterceptor::Cookie_var::operator= (const PortableInterceptor::Cookie_va
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Cookie_var::operator const PortableInterceptor::Cookie_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::Cookie_var::operator PortableInterceptor::Cookie_ptr &() // cast
+ACE_INLINE 
+PortableInterceptor::Cookie_var::operator PortableInterceptor::Cookie_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Cookie_ptr
+ACE_INLINE PortableInterceptor::Cookie_ptr 
 PortableInterceptor::Cookie_var::operator-> (void) const
 {
   return this->ptr_;
@@ -112,7 +112,7 @@ PortableInterceptor::Cookie_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Cookie_ptr
+ACE_INLINE PortableInterceptor::Cookie_ptr 
 PortableInterceptor::Cookie_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -173,7 +173,7 @@ PortableInterceptor::Cookie_out::operator= (PortableInterceptor::Cookie_ptr p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Cookie_out::operator PortableInterceptor::Cookie_ptr &() // cast
 {
   return this->ptr_;
@@ -185,7 +185,7 @@ PortableInterceptor::Cookie_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Cookie_ptr
+ACE_INLINE PortableInterceptor::Cookie_ptr 
 PortableInterceptor::Cookie_out::operator-> (void)
 {
   return this->ptr_;
@@ -196,7 +196,7 @@ PortableInterceptor::Cookie_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLEINTERCEPTOR_COOKIES_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLEINTERCEPTOR_COOKIES_CI_
 
@@ -204,34 +204,34 @@ PortableInterceptor::Cookie_out::operator-> (void)
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (CORBA::ULong nelems)
   {
     PortableInterceptor::Cookie **buf = 0;
-
+    
     ACE_NEW_RETURN (buf, PortableInterceptor::Cookie*[nelems], 0);
-
+    
     for (CORBA::ULong i = 0; i < nelems; i++)
       buf[i] = PortableInterceptor::Cookie::_nil ();
-
+    
     return buf;
   }
-
-  ACE_INLINE void
+  
+  ACE_INLINE void 
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::freebuf (PortableInterceptor::Cookie **buffer)
   {
     if (buffer == 0)
       return;
     delete[] buffer;
   }
-
+  
   ACE_INLINE
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies (void)
   {
   }
-
+  
   ACE_INLINE
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (maximum))
   {
   }
-
+  
   ACE_INLINE
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -240,30 +240,30 @@ PortableInterceptor::Cookie_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
-
+  
   ACE_INLINE
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies(const PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     PortableInterceptor::Cookie **tmp1 = PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (this->maximum_);
     PortableInterceptor::Cookie ** const tmp2 = ACE_reinterpret_cast (PortableInterceptor::Cookie ** ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       tmp1[i] = PortableInterceptor::Cookie::_duplicate (tmp2[i]);
-
+    
     this->buffer_ = tmp1;
   }
-
+  
   ACE_INLINE PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies &
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::operator= (const PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies &rhs)
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_)
     {
       PortableInterceptor::Cookie **tmp = ACE_reinterpret_cast (PortableInterceptor::Cookie **, this->buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
@@ -277,18 +277,18 @@ PortableInterceptor::Cookie_out::operator-> (void)
     }
     else
       this->buffer_ = PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (rhs.maximum_);
-
+    
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-
+    
     PortableInterceptor::Cookie **tmp1 = ACE_reinterpret_cast (PortableInterceptor::Cookie **, this->buffer_);
     PortableInterceptor::Cookie ** const tmp2 = ACE_reinterpret_cast (PortableInterceptor::Cookie ** ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       tmp1[i] = PortableInterceptor::Cookie::_duplicate (tmp2[i]);
-
+    
     return *this;
   }
-
+  
   ACE_INLINE TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::operator[] (CORBA::ULong index) const
   // read-write accessor
@@ -297,7 +297,7 @@ PortableInterceptor::Cookie_out::operator-> (void)
     PortableInterceptor::Cookie ** const tmp = ACE_reinterpret_cast (PortableInterceptor::Cookie ** ACE_CAST_CONST, this->buffer_);
     return TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var> (tmp + index, this->release_);
   }
-
+  
   ACE_INLINE PortableInterceptor::Cookie* *
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::get_buffer (CORBA::Boolean orphan)
   {
@@ -330,18 +330,18 @@ PortableInterceptor::Cookie_out::operator-> (void)
     }
     return result;
   }
-
+  
   ACE_INLINE const PortableInterceptor::Cookie* *
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const PortableInterceptor::Cookie ** ACE_CAST_CONST, this->buffer_);
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEINTERCEPTOR_COOKIES_CI_)
 #define _PORTABLEINTERCEPTOR_COOKIES_CI_
@@ -406,25 +406,25 @@ PortableInterceptor::Cookies_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Cookies_var::operator const PortableInterceptor::Cookies &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::Cookies_var::operator PortableInterceptor::Cookies &() // cast
+ACE_INLINE 
+PortableInterceptor::Cookies_var::operator PortableInterceptor::Cookies &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::Cookies_var::operator PortableInterceptor::Cookies &() const// cast
+ACE_INLINE 
+PortableInterceptor::Cookies_var::operator PortableInterceptor::Cookies &() const// cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
+ACE_INLINE TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var> 
 PortableInterceptor::Cookies_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -442,7 +442,7 @@ PortableInterceptor::Cookies_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE PortableInterceptor::Cookies *&
 PortableInterceptor::Cookies_var::out (void)
 {
@@ -503,7 +503,7 @@ PortableInterceptor::Cookies_out::operator= (PortableInterceptor::Cookies *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Cookies_out::operator PortableInterceptor::Cookies *&() // cast
 {
   return this->ptr_;
@@ -521,197 +521,10 @@ PortableInterceptor::Cookies_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
+ACE_INLINE TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var> 
 PortableInterceptor::Cookies_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-PortableInterceptor::RequestInfo::RequestInfo (void) // default constructor
-{}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo::RequestInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo::~RequestInfo (void) // destructor
-{}
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::RequestInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::RequestInfo_var (void) // default constructor
-  : ptr_ (PortableInterceptor::RequestInfo::_nil ())
-{}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::RequestInfo_var (PortableInterceptor::RequestInfo_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::RequestInfo_var (const PortableInterceptor::RequestInfo_var &p) // copy constructor
-  : ptr_ (PortableInterceptor::RequestInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::~RequestInfo_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_var &
-PortableInterceptor::RequestInfo_var::operator= (PortableInterceptor::RequestInfo_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_var &
-PortableInterceptor::RequestInfo_var::operator= (const PortableInterceptor::RequestInfo_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableInterceptor::RequestInfo::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::operator const PortableInterceptor::RequestInfo_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::operator PortableInterceptor::RequestInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = PortableInterceptor::RequestInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  PortableInterceptor::RequestInfo_ptr val = this->ptr_;
-  this->ptr_ = PortableInterceptor::RequestInfo::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::RequestInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (PortableInterceptor::RequestInfo_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = PortableInterceptor::RequestInfo::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (PortableInterceptor::RequestInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = PortableInterceptor::RequestInfo::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (const PortableInterceptor::RequestInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (PortableInterceptor::RequestInfo_out&,p).ptr_)
-{}
-
-ACE_INLINE PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (const PortableInterceptor::RequestInfo_out &p)
-{
-  this->ptr_ = ACE_const_cast (PortableInterceptor::RequestInfo_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (const PortableInterceptor::RequestInfo_var &p)
-{
-  this->ptr_ = PortableInterceptor::RequestInfo::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (PortableInterceptor::RequestInfo_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::operator PortableInterceptor::RequestInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_out::operator-> (void)
-{
-  return this->ptr_;
 }
 
 
@@ -748,7 +561,7 @@ PortableInterceptor::Interceptor_var::Interceptor_var (PortableInterceptor::Inte
   : ptr_ (p)
 {}
 
-ACE_INLINE PortableInterceptor::Interceptor_ptr
+ACE_INLINE PortableInterceptor::Interceptor_ptr 
 PortableInterceptor::Interceptor_var::ptr (void) const
 {
   return this->ptr_;
@@ -784,19 +597,19 @@ PortableInterceptor::Interceptor_var::operator= (const PortableInterceptor::Inte
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Interceptor_var::operator const PortableInterceptor::Interceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::Interceptor_var::operator PortableInterceptor::Interceptor_ptr &() // cast
+ACE_INLINE 
+PortableInterceptor::Interceptor_var::operator PortableInterceptor::Interceptor_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Interceptor_ptr
+ACE_INLINE PortableInterceptor::Interceptor_ptr 
 PortableInterceptor::Interceptor_var::operator-> (void) const
 {
   return this->ptr_;
@@ -822,7 +635,7 @@ PortableInterceptor::Interceptor_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Interceptor_ptr
+ACE_INLINE PortableInterceptor::Interceptor_ptr 
 PortableInterceptor::Interceptor_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -883,7 +696,7 @@ PortableInterceptor::Interceptor_out::operator= (PortableInterceptor::Intercepto
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::Interceptor_out::operator PortableInterceptor::Interceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -895,7 +708,7 @@ PortableInterceptor::Interceptor_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::Interceptor_ptr
+ACE_INLINE PortableInterceptor::Interceptor_ptr 
 PortableInterceptor::Interceptor_out::operator-> (void)
 {
   return this->ptr_;
@@ -935,7 +748,7 @@ PortableInterceptor::ServerRequestInterceptor_var::ServerRequestInterceptor_var 
   : ptr_ (p)
 {}
 
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr 
 PortableInterceptor::ServerRequestInterceptor_var::ptr (void) const
 {
   return this->ptr_;
@@ -971,19 +784,19 @@ PortableInterceptor::ServerRequestInterceptor_var::operator= (const PortableInte
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::ServerRequestInterceptor_var::operator const PortableInterceptor::ServerRequestInterceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_var::operator PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
+ACE_INLINE 
+PortableInterceptor::ServerRequestInterceptor_var::operator PortableInterceptor::ServerRequestInterceptor_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr 
 PortableInterceptor::ServerRequestInterceptor_var::operator-> (void) const
 {
   return this->ptr_;
@@ -1009,7 +822,7 @@ PortableInterceptor::ServerRequestInterceptor_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr 
 PortableInterceptor::ServerRequestInterceptor_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -1070,7 +883,7 @@ PortableInterceptor::ServerRequestInterceptor_out::operator= (PortableIntercepto
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::ServerRequestInterceptor_out::operator PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -1082,7 +895,7 @@ PortableInterceptor::ServerRequestInterceptor_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr 
 PortableInterceptor::ServerRequestInterceptor_out::operator-> (void)
 {
   return this->ptr_;
@@ -1122,7 +935,7 @@ PortableInterceptor::ClientRequestInterceptor_var::ClientRequestInterceptor_var 
   : ptr_ (p)
 {}
 
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr 
 PortableInterceptor::ClientRequestInterceptor_var::ptr (void) const
 {
   return this->ptr_;
@@ -1158,19 +971,19 @@ PortableInterceptor::ClientRequestInterceptor_var::operator= (const PortableInte
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::ClientRequestInterceptor_var::operator const PortableInterceptor::ClientRequestInterceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_var::operator PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
+ACE_INLINE 
+PortableInterceptor::ClientRequestInterceptor_var::operator PortableInterceptor::ClientRequestInterceptor_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr 
 PortableInterceptor::ClientRequestInterceptor_var::operator-> (void) const
 {
   return this->ptr_;
@@ -1196,7 +1009,7 @@ PortableInterceptor::ClientRequestInterceptor_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr 
 PortableInterceptor::ClientRequestInterceptor_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -1257,7 +1070,7 @@ PortableInterceptor::ClientRequestInterceptor_out::operator= (PortableIntercepto
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableInterceptor::ClientRequestInterceptor_out::operator PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -1269,7 +1082,7 @@ PortableInterceptor::ClientRequestInterceptor_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr 
 PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
 {
   return this->ptr_;
@@ -1277,3 +1090,4 @@ PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
 
 
 #endif /* end #if !defined */
+

@@ -11,12 +11,12 @@ module CORBA
   typedef string  Identifier;
   typedef unsigned long Flags;
 
-  interface NamedValue
-    {
-      readonly attribute Identifier name;
-      readonly attribute any value;
-      readonly attribute Flags flags;
-    };
+  struct NamedValue
+  {
+    Identifier name;
+    any value;
+    Flags flags;
+  };
 
   enum exception_type
   {
@@ -28,6 +28,7 @@ module CORBA
   interface Object;
   interface Request;
   interface NVList;
+  interface Exception;
 
   typedef sequence<Request> RequestSeq;
 
@@ -44,11 +45,11 @@ module CORBA
     sequence <octet> service_detail;
   };
 
-   struct ServiceInformation
-   {
-     sequence <ServiceOption> service_options;
-     sequence <ServiceDetail> service_details;
-   };
+  struct ServiceInformation
+  {
+    sequence <ServiceOption> service_options;
+    sequence <ServiceDetail> service_details;
+  };
 
 };
 

@@ -95,152 +95,6 @@ TAO_NAMESPACE  POA_PortableInterceptor
 #endif /* end #if !defined */
 
 
-  class RequestInfo;
-  typedef RequestInfo *RequestInfo_ptr;
-  class TAO_Export RequestInfo :  public virtual TAO_Local_ServantBase
-  {
-  protected:
-    RequestInfo (void);
-
-  public:
-    virtual ~RequestInfo (void);
-
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    PortableInterceptor::RequestInfo *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::ULong get_request_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean response_expected (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual IOP::ServiceContextList * get_service_contexts (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Object_ptr get_object (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual char * get_operation (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::NVList_ptr get_arguments (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-
-  };
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___DIRECT_COLLOCATED_SH_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___DIRECT_COLLOCATED_SH_
-
-  class TAO_Export _tao_direct_collocated_RequestInfo     : public virtual PortableInterceptor::RequestInfo
-  {
-  public:
-    _tao_direct_collocated_RequestInfo (
-        RequestInfo_ptr  servant,
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
-    RequestInfo_ptr _get_servant (void) const;
-
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
-        virtual CORBA::ULong get_request_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean response_expected (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual IOP::ServiceContextList * get_service_contexts (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Object_ptr get_object (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual char * get_operation (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::NVList_ptr get_arguments (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-
-  private:
-    RequestInfo_ptr servant_;
-  };
-
-
-#endif /* end #if !defined */
-
-
   class Interceptor;
   typedef Interceptor *Interceptor_ptr;
   class TAO_Export Interceptor :  public virtual TAO_Local_ServantBase
@@ -342,21 +196,34 @@ TAO_NAMESPACE  POA_PortableInterceptor
     virtual const char* _interface_repository_id (void) const;
 
     virtual void preinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void postinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void exception_occurred (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -389,21 +256,34 @@ TAO_NAMESPACE  POA_PortableInterceptor
       );
 
         virtual void preinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     virtual void postinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     virtual void exception_occurred (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -447,21 +327,34 @@ TAO_NAMESPACE  POA_PortableInterceptor
     virtual const char* _interface_repository_id (void) const;
 
     virtual void preinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void postinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void exception_occurred (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -494,21 +387,34 @@ TAO_NAMESPACE  POA_PortableInterceptor
       );
 
         virtual void preinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     virtual void postinvoke (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     virtual void exception_occurred (
-        PortableInterceptor::RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()

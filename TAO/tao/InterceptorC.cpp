@@ -219,63 +219,6 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Cookies, &_tc_TAO_tc_PortableInterceptor_Cookies)
 TAO_NAMESPACE_END
-PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  if (CORBA::is_nil (obj))
-    return PortableInterceptor::RequestInfo::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:TAO/PortableInterceptor/RequestInfo:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableInterceptor::RequestInfo::_nil ());
-  if (is_a == 0)
-    return PortableInterceptor::RequestInfo::_nil ();
-  void *servant = 0;
-  if (!obj->_is_collocated ()
-        || !obj->_servant ()
-        || (servant = obj->_servant()->_downcast ("IDL:TAO/PortableInterceptor/RequestInfo:1.0")) == 0
-      )
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::RequestInfo::_nil ());
-  return new POA_PortableInterceptor::_tao_direct_collocated_RequestInfo(
-      ACE_reinterpret_cast (POA_PortableInterceptor::RequestInfo_ptr, servant),
-      0
-    );
-}
-
-PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo::_duplicate (PortableInterceptor::RequestInfo_ptr obj)
-{
-  if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
-  return obj;
-}
-
-CORBA::Boolean PortableInterceptor::RequestInfo::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
-{
-  if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:TAO/PortableInterceptor/RequestInfo:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
-  return 1; // success using local knowledge
-  else
-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
-}
-
-const char* PortableInterceptor::RequestInfo::_interface_repository_id (void) const
-{
-  return "IDL:TAO/PortableInterceptor/RequestInfo:1.0";
-}
-
-static const CORBA::Long _oc_PortableInterceptor_RequestInfo[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  44, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f2f), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x496e7465), ACE_NTOHL (0x72636570), ACE_NTOHL (0x746f722f), ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737449), ACE_NTOHL (0x6e666f3a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO/PortableInterceptor/RequestInfo:1.0
-  12, ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737449), ACE_NTOHL (0x6e666f00),  // name = RequestInfo
-};
-static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_RequestInfo (CORBA::tk_objref, sizeof (_oc_PortableInterceptor_RequestInfo), (char *) &_oc_PortableInterceptor_RequestInfo, 0, sizeof (PortableInterceptor::RequestInfo));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestInfo, &_tc_TAO_tc_PortableInterceptor_RequestInfo)
-TAO_NAMESPACE_END
 PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV
@@ -575,64 +518,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
   ACE_ENDTRY;
   return 0;
 }
-
-void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::RequestInfo_ptr _tao_elem)
-{
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableInterceptor::RequestInfo::_duplicate (_tao_elem);
-    _tao_any.replace (PortableInterceptor::_tc_RequestInfo, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::RequestInfo_ptr &_tao_elem)
-{
-  CORBA::Object_ptr *tmp = 0;
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = PortableInterceptor::RequestInfo::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (PortableInterceptor::_tc_RequestInfo, ACE_TRY_ENV)) return 0; // not equal
-    ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (PortableInterceptor::_tc_RequestInfo, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    {
-      _tao_elem = PortableInterceptor::RequestInfo::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (PortableInterceptor::_tc_RequestInfo, tmp, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      return 1;
-    }
-    // failure
-  }
-  ACE_CATCHANY
-  {
-    delete tmp;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var>;
-template class TAO_Object_Manager<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var>
-#  pragma instantiate TAO_Object_Manager<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Interceptor_ptr _tao_elem)
 {
