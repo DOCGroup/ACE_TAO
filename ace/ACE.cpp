@@ -473,14 +473,37 @@ ACE::crc32 (const char *buffer, ACE_UINT32 len)
   for (const char *p = buffer;
        p != buffer + len;
        ++p)
-    {
-      COMPUTE (crc, *p);
-    }
+    COMPUTE (crc, *p);
 
   // Include the length of the string.
 
   for (; len != 0; len >>= 8)
     COMPUTE (crc, len & 0xff);
+
+  return ~crc;
+}
+
+u_long 
+ACE::crc32 (iovec *iov, int len)
+{
+  register ACE_UINT32 crc = 0;
+
+  int total_len = 0;
+
+  for (int i = 0; i < len; ++i) 
+    {
+      for (const char *p = iov[i].iov_base;
+           p != iov[i].iov_base + iov[i].iov_len;
+           ++p)
+        COMPUTE (crc, *p);
+
+      total_len += iov[i].iov_len;
+    }
+
+  // Include the length of the string.
+
+  for (; total_len != 0; total_len >>= 8)
+    COMPUTE (crc, total_len & 0xff);
 
   return ~crc;
 }
