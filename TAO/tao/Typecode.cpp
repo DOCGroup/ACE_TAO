@@ -1939,7 +1939,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 
       // If we are computing the label for the default index,
       // the label must contain an octet value of 0.
-      if (i == (ACE_static_cast (CORBA::ULong, this->private_default_index ())))
+      if (i == (ACE_static_cast (CORBA::ULong, 
+                                 this->private_default_index_i ())))
         {
           label_tc = CORBA::_tc_octet;
 
@@ -2048,11 +2049,22 @@ CORBA_TypeCode::private_discriminator_type_i (
 }
 
 CORBA::Long
-CORBA_TypeCode::private_default_index (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::private_default_index (
+    CORBA::Environment &ACE_TRY_ENV
+  ) const
 {
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
+
+  return this->private_default_index_i (ACE_TRY_ENV);
+}
+
+CORBA::Long
+CORBA_TypeCode::private_default_index_i (
+    CORBA::Environment &ACE_TRY_ENV
+  ) const
+{
   if (this->private_state_->tc_default_index_used_known_)
     return this->private_state_->tc_default_index_used_;
 
