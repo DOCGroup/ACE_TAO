@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Typecodes essentially consist of just the CDR octets that get
 // marshaled and unmarshaled, and this code knows how to parse those
 // octets and answer questions CORBA's TypeCode APIs require.
@@ -26,6 +27,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Typecode, "$Id$")
+
 
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)

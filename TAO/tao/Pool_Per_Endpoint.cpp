@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Pool_Per_Endpoint.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
@@ -14,6 +15,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Pool_Per_Endpoint, "$Id$")
+
 
 
 TAO_Pool_Per_Endpoint::TAO_Pool_Per_Endpoint (CORBA::ORB_ptr orb,

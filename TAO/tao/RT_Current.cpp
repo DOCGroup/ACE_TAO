@@ -1,5 +1,6 @@
 //
 // $Id$
+
 //
 
 #include "tao/RT_Current.h"
@@ -17,6 +18,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, RT_Current, "$Id$")
+
 
 TAO_RT_Current_ptr
 TAO_RT_Current::_duplicate (TAO_RT_Current_ptr obj)

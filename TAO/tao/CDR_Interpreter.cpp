@@ -1,5 +1,6 @@
 // $Id$
 
+
 // @(#)interp.cpp       1.4 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -17,6 +18,7 @@
 #include "tao/Union.h"
 
 ACE_RCSID(tao, CDR_Interpreter, "$Id$")
+
 
 TAO_CDR_Interpreter::Table_Element
 TAO_CDR_Interpreter::table_[CORBA::TC_KIND_COUNT] =

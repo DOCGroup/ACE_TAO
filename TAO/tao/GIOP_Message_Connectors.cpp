@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "tao/Principal.h"
 #include "tao/TAOC.h"
+#include "tao/operation_details.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Connectors.i"
@@ -11,11 +12,8 @@
 
 CORBA::Boolean
 TAO_GIOP_Message_Connectors::
-  write_request_header (const IOP::ServiceContextList& /*svc_ctx*/,
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification & /*spec*/,
-                        const char * /*opname*/,
                         TAO_OutputCDR &msg)
 {
   // Adding only stuff that are common to all versions of GIOP.
@@ -24,7 +22,9 @@ TAO_GIOP_Message_Connectors::
   // anyway.
 
   // First the request id
-  msg << request_id;
+  msg << opdetails.request_id ();
+
+  const CORBA::Octet response_flags = opdetails.response_flags ();
 
    // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
   if (response_flags == 131)
@@ -127,23 +127,17 @@ process_connector_messages (TAO_Transport * /*transport*/,
 
 CORBA::Boolean
 TAO_GIOP_Message_Connector_11::
-  write_request_header (const IOP::ServiceContextList& svc_ctx, 
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
-                        const char *opname,
                         TAO_OutputCDR &msg)
 {
   // This is sepecific to GIOP 1.1. So put them here
-  msg << svc_ctx;
+  msg << opdetails.service_info ();
 
   // Let us  call our parent class to check what he can do for
   // us.
-  TAO_GIOP_Message_Connectors::write_request_header (svc_ctx,
-                                                     request_id,
-                                                     response_flags,
+  TAO_GIOP_Message_Connectors::write_request_header (opdetails,
                                                      spec,
-                                                     opname,
                                                      msg);
 
   // In this case we cannot recognise anything other than the Object
@@ -163,9 +157,15 @@ TAO_GIOP_Message_Connector_11::
       return 0;
     }
 
-  msg << opname;
-
-  // The principal is not used. So send a null pointer
+  msg.write_string (opdetails.opname_len (), 
+                    opdetails.opname ());
+  
+  // Last element of request header is the principal; no portable way
+  // to get it, we just pass empty principal (convention: indicates
+  // "anybody").  Steps upward in security include passing an
+  // unverified user ID, and then verifying the message (i.e. a dummy
+  // service context entry is set up to hold a digital signature for
+  // this message, then patched shortly before it's sent).
   static CORBA::Principal_ptr principal = 0;
   msg << principal;
 

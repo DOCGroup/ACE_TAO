@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "tao/Request.h"
 #include "tao/GIOP_Utils.h"
 
@@ -14,6 +15,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Request, "$Id$")
+
 
 
 CORBA::ULong

@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+
 // ================================================================
 //
 // = LIBRARY
@@ -69,7 +70,7 @@ static const CORBA::Long _oc_GIOP_IORAddressingInfo[] =
     4, ACE_NTOHL (0x494f5200),  // name = IOR
     2, // member count
     8, ACE_NTOHL (0x74797065), ACE_NTOHL (0x5f696400),  // name = type_id
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     9, ACE_NTOHL (0x70726f66), ACE_NTOHL (0x696c6573), ACE_NTOHL (0x0),  // name = profiles
     CORBA::tk_sequence, // typecode kind
@@ -305,7 +306,7 @@ static const CORBA::Long _oc_GIOP_TargetAddress[] =
       4, ACE_NTOHL (0x494f5200),  // name = IOR
       2, // member count
       8, ACE_NTOHL (0x74797065), ACE_NTOHL (0x5f696400),  // name = type_id
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       9, ACE_NTOHL (0x70726f66), ACE_NTOHL (0x696c6573), ACE_NTOHL (0x0),  // name = profiles
       CORBA::tk_sequence, // typecode kind
@@ -389,7 +390,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
     else
     {
       ACE_NEW_RETURN (_tao_elem, GIOP::IORAddressingInfo, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (GIOP::_tc_IORAddressingInfo, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -406,7 +408,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -482,7 +484,8 @@ CORBA::Boolean operator>>= (
     else
     {
       ACE_NEW_RETURN (_tao_elem, GIOP::TargetAddress, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       stream >> *_tao_elem;
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           GIOP::_tc_TargetAddress,
@@ -491,7 +494,7 @@ CORBA::Boolean operator>>= (
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
-      
+
       return 1;
     }
   }
@@ -502,6 +505,4 @@ CORBA::Boolean operator>>= (
   ACE_ENDTRY;
   return 0;
 }
-
-
 

@@ -2,6 +2,7 @@
 
 
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -46,6 +47,8 @@
 #if (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
 #endif /* TAO_HAS_AMI_POLLER == 1 */
+
+
 
 
 ACE_RCSID(tao, Typecode_Constants, "$Id$")

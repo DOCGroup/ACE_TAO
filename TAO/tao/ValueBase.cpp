@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -26,6 +27,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ValueBase, "$Id$")
+
 
 // destructor
 CORBA_ValueBase::~CORBA_ValueBase (void)

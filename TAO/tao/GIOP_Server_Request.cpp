@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
 
 #include "tao/GIOP_Server_Request.h"
@@ -20,6 +21,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, GIOP_Server_Request, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -72,7 +74,6 @@ TAO_GIOP_ServerRequest::
        requesting_principal_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
-  
   //  parse_error = this->parse_header ();
 }
 
@@ -264,7 +265,8 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
             }
           else
             {
-              TAO_InputCDR cdr (retval_->_tao_get_cdr ());
+              TAO_InputCDR cdr (this->retval_->_tao_get_cdr (),
+                                this->retval_->_tao_byte_order ());
               (void) this->outgoing_->append (tc.in (), &cdr,
                                               ACE_TRY_ENV);
               ACE_CHECK;
@@ -530,8 +532,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_GIOP_ServerRequest::marshal - "
-                      "encoding forwarded objref failed\n"));
+                      ASYS_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
+                      ASYS_TEXT ("encoding forwarded objref failed\n")));
           return;
         }
     }
@@ -554,7 +556,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       this->outgoing_->write_ulong (this->exception_type_);
 
       // we use the any's ACE_Message_Block
-      TAO_InputCDR cdr (this->exception_->_tao_get_cdr ());
+      TAO_InputCDR cdr (this->exception_->_tao_get_cdr (),
+                        this->exception_->_tao_byte_order ());
       (void) this->outgoing_->append (except_tc, &cdr, ACE_TRY_ENV);
     }
 }
@@ -598,8 +601,8 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
           // No exception but some kind of error, yet a response
           // is required.
           ACE_ERROR ((LM_ERROR,
-                      "TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n",
-                      "TAO_GIOP_ServerRequest::send_no_exception_reply"));
+                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
+                      ASYS_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
         }
     }
 }

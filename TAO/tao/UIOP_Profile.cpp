@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
@@ -14,6 +15,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Profile, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Profile.i"

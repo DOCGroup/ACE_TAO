@@ -31,6 +31,10 @@
 
 ACE_RCSID(tao, PollableS, "$Id$")
 
+<<<<<<< PollableS.cpp
+ACE_RCSID(tao, PollableS, "$Id$")
+=======
+>>>>>>> 1.9.2.2
 
 class TAO_CORBA_Pollable_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {

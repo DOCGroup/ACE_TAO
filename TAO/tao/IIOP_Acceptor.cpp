@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -15,7 +16,6 @@
 
 
 ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -10,6 +10,7 @@
 
 ACE_RCSID(tao, Environment, "$Id$")
 
+
 #if 0
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),

@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "tao/UIOP_Connect.h"
 
 #if TAO_HAS_UIOP == 1
@@ -23,6 +24,7 @@
 #include "tao/GIOP_Message_Connectors.h"
 
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/default_resource.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -7,6 +8,7 @@
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
+#include "tao/SHMIOP_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Single_Reactor.h"
@@ -28,6 +30,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, default_resource, "$Id$")
+
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
@@ -335,12 +338,29 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       // You do *NOT* need modify this code to add your own protocol,
       // instead simply add the following to your svc.conf file:
       //
-      // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
-      // static Resource_Factory "-ORBProtocolFactory PN_Factory"
+      // dynamic PP_Factory Service_Object * LIB:_make_PP_Protocol_Factory() ""
+      // static Resource_Factory "-ORBProtocolFactory PP_Factory"
       //
-      // where PN is the name of your protocol and LIB is the base
-      // name of the shared library that implements the protocol.
+      // where "PP_Factory" is the name of your protocol, i.e. the
+      // second argument passed to the ACE_STATIC_SVC_DEFINE macro:
       //
+      // ACE_STATIC_SVC_DEFINE (PP_Protocol_Factory,
+      //                        ASYS_TEXT ("PP_Factory"), ...)
+      //
+      // "PP_Protocol_Factory" is the name of your protocol factory
+      // class.  A "_make_" is prepended to your protocol factory
+      // class name by the ACE_FACTORY_DECLARE macro.  The resulting
+      // factory function "_make_PP_Protocol_Factory()" is what should
+      // be used in the "dynamic" line in your svc.conf file.
+      // 
+      // LIB is the base name of the shared library that implements
+      // the protocol.  The directory containing your library must be
+      // in your library search path, typically defined by the
+      // LD_LIBRARY_PATH environment variable on UNIX systems, and/or
+      // the `/etc/ld.so.conf' file on some UNIX systems.  Remember to
+      // run "ldconfig" if you modify `/etc/ld.so.conf'.
+
+
       TAO_Protocol_Factory *protocol_factory = 0;
       TAO_Protocol_Item *item = 0;
 
@@ -421,6 +441,45 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
                       "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
         }
 #endif /* TAO_HAS_UIOP == 1 */
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+      protocol_factory =
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
+
+      if (protocol_factory == 0)
+        {
+          if (TAO_orbdebug)
+            ACE_ERROR ((LM_WARNING,
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "SHMIOP Protocol Factory"));
+
+          ACE_NEW_RETURN (protocol_factory,
+                          TAO_SHMIOP_Protocol_Factory,
+                          -1);
+        }
+
+      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SHMIOP_Factory"), -1);
+      item->factory (protocol_factory);
+
+      if (this->protocol_factories_.insert (item) == -1)
+        {
+          delete item;
+          delete protocol_factory;
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
+        }
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <SHMIOP_Factory>\n"));
+        }
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
       return 0;
     }
 

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Reactor_Per_Priority.h"
 #include "tao/ORB_Core.h"
 #include "tao/Resource_Factory.h"
@@ -13,6 +14,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Reactor_Per_Priority, "$Id$")
+
 
 TAO_Reactor_Per_Priority::~TAO_Reactor_Per_Priority (void)
 {

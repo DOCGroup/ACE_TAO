@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Asynch_Invocation.h"
 
 #include "tao/Timeprobe.h"
@@ -14,6 +15,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Asynch_Invocation, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -151,7 +153,7 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // heap allocated reply dispatcher.
 
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                this->rd_);
   if (retval == -1)
     {

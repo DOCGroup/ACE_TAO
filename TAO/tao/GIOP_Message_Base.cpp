@@ -1,7 +1,8 @@
 //$Id$
 
 #include "tao/GIOP_Message_Base.h"
-#include "debug.h"
+#include "tao/debug.h"
+#include "tao/operation_details.h"
 
 
 
@@ -92,7 +93,7 @@ TAO_GIOP_Message_Base::
 
 CORBA::Boolean
 TAO_GIOP_Message_Base::
-  write_message_header (const TAO_Pluggable_Connector_Params &params, 
+  write_message_header (const TAO_Operation_Details &opdetails,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &cdr)
@@ -100,15 +101,12 @@ TAO_GIOP_Message_Base::
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
-      return this->write_request_header (params.svc_ctx,
-                                         params.request_id,
-                                         params.response_flags,
+      return this->write_request_header (opdetails,
                                          spec,
-                                         params.operation_name,
                                          cdr);
       break;
     case TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
-      return this->write_locate_request_header (params.request_id,
+      return this->write_locate_request_header (opdetails.request_id (),
                                                 spec,
                                                 cdr);
       break;
@@ -437,7 +435,6 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   state->cdr.skip_bytes (this->message_size_offset ());
   state->cdr.read_ulong (state->message_size);
 
-  cout << "Message size "<< state->message_size <<endl;
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
