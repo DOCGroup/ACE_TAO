@@ -37,7 +37,8 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 
   if (this->reactor ()->register_handler (this,
 					  ACE_STDIN) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));		    
+    ACE_ERROR ((LM_ERROR,
+                "Registration with Reactor could not be done\n"));		    
 }
 
 int 
