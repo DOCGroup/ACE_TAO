@@ -56,7 +56,12 @@ public:
   friend class ACE_Framework_Repository;
 
   /// Constructor.
-  ACE_Framework_Component (const void *_this);
+  ACE_Framework_Component (void *_this, 
+                           const ACE_TCHAR *dll_name = 0,
+                           const ACE_TCHAR *name = 0);
+
+  /// Close the contained singleton.
+  virtual void close_singleton (void) = 0;
 
 protected:
   /// Destructor.
@@ -65,6 +70,12 @@ protected:
 private:
   /// Pointer to the actual component.
   const void *this_;
+
+  /// Library associated with this component
+  const ACE_TCHAR *dll_name_;
+
+  /// Component name
+  const ACE_TCHAR *name_;
 };
 
 /**
@@ -99,7 +110,8 @@ public:
   int close (void);
 
   /// Get pointer to a process-wide <ACE_Framework_Repository>.
-  static ACE_Framework_Repository *instance (int size = ACE_Framework_Repository::DEFAULT_SIZE);
+  static ACE_Framework_Repository *instance 
+    (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
@@ -108,7 +120,14 @@ public:
 
   /// Insert a new component.  Returns -1 when the repository is full
   /// and 0 on success.
-  int register_component (const ACE_Framework_Component *fc);
+  int register_component (ACE_Framework_Component *fc);
+
+  /// Remove a component.  Returns -1 on error or if component not found
+  /// and 0 on success.
+  int remove_component (const ACE_TCHAR *name);
+
+  /// Remove all components associated with a particular dll.
+  int remove_dll_components (const ACE_TCHAR *dll_name);
 
   /// Return the current size of the repository.
   int current_size (void) const;
@@ -128,8 +147,15 @@ private:
   /// Initialize the repository.
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
+  /// Actually removes the dll components, must be called with locks held.
+  int remove_dll_components_i (const ACE_TCHAR *dll_name);
+
+  /// Compact component_vector_ after components have been removed__maintains
+  /// order.
+  void compact (void);
+
   /// Contains all the framework components.
-  const ACE_Framework_Component **component_vector_;
+  ACE_Framework_Component **component_vector_;
 
   /// Current number of components.
   int current_size_;
@@ -139,6 +165,12 @@ private:
 
   /// Pointer to a process-wide <ACE_Framework_Repository>.
   static ACE_Framework_Repository *repository_;
+
+  /// Flag set when repository is the process of shutting down.  This
+  /// is necessary to keep from self-deadlocking since some of
+  /// the components might make calls back to the repository to 
+  /// unload their components, e.g., ACE_DLL_Manager.
+  static sig_atomic_t shutting_down_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository

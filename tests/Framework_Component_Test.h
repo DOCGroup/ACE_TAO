@@ -22,25 +22,18 @@
 
 #include "ace/Log_Msg.h"
 
-/// This is a singleton we will use to test the ACE_Framework_Repository
-class My_Singleton
+/// This  we will use to test the ACE_Framework_Repository
+class Simple_Service
 {
 public:
-  My_Singleton (void)
+  Simple_Service (void)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::ctor\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::Simple_Service\n")));
     }
-  virtual ~My_Singleton (void)
+  virtual ~Simple_Service (void)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::dtor\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::~Simple_Service\n")));
     }
-
-  static My_Singleton * instance (void);
-
-  static void close_singleton (void);
-
-private:
-  static My_Singleton *instance_;
 };
 
 #endif /* ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H */

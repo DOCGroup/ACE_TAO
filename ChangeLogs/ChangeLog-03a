@@ -1,3 +1,118 @@
+Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* tests/Logging_Strategy_Test.cpp:
+
+	  Fixed typo, ACE_AS_* > ACE_HAS_*.
+	
+	* tests/Makefile.Framework_Component_DLL:
+	* tests/Makefile:
+	* tests/Makefile.bor:
+
+	  Added/modified Makefiles to add new test file, and updated 
+	  dependancies.
+	
+	* tests/Framework_Component_Test.{h,cpp}:
+	* tests/Framework_Component_DLL.{h,cpp}:  Added.
+	* tests/Framework_Component_DLL_export.h:  Added.
+
+	  Modified to test to exercise the new ACE_DLL_Singleton and 
+	  ACE_DLL* classed in concert with the Service Config framework
+	  and new Framework Component mechanisms. 
+
+	* tests/DLL_Test.{h,cpp}:
+
+	  Modified test to fully test all the features of the new
+	  ACE_DLL, ACE_DLL_Handle, and ACE_DLL_Manager classes.
+	
+	* ace/Makefile:
+	* ace/Makefile.bor: 
+	 
+	  Added DLL_Manager and updated dependancies.	
+
+	* bin/generate_export_file.pl:
+
+	  Added generation of library specific TRACE macros in
+	  terms of the new ACE_TRACE_IMPL macro below.
+
+	* ace/Global_Macros.h: 
+
+	  Added new macro, ACE_TRACE_IMPL and implemented ACE_TRACE 
+	  in terms of it if tracing is enabled.  This allows you
+	  to turn tracing on for a particular cpp by just undef'ing
+	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.  
+	
+	* ace/Parse_Node.{h,cpp}:
+
+	  Removed handle() method and added a dll() method.  Also, 
+	  since ACE_DLL_Handle::symbol() calls ACE::ldname() internally, 
+	  changed the ACE::ldname() calls in the ctors for 
+	  ACE_Object_node and ACE_Function_Node to ACE::strnew().
+
+	* ace/Svc_Conf_y.cpp:
+
+	  Changed call to ACE_Location_Node::handle() to ACE_Location_Node::dll()
+	  in ACE_Service_Type::ctor.
+	
+	* ace/Service_Object.{h,cpp,i}:
+
+	  Modified ACE_Service_Type to maintain an ACE_DLL member variable 
+	  instead of an ACE_SHLIB_HANDLE, and changed ctor accordingly.  
+	  Removed call to ACE_OS::dlclose() from dtor.  Removed handle()
+	  methods.
+
+	* ace/Object_Manager.cpp:
+	* ace/Service_Config.cpp:
+
+	  The Object Manager is now always responsible for cleaning up
+	  the ACE_Framework_Repository, but only after the Service 
+	  Config framework has been cleanup.  ACE_Service_Config no longer
+	  knows anything about ACE_Framework_Repository.
+	
+	* ace/Service_Config.cpp:
+
+	  Changed create_service_type() to take an ACE_DLL& instead of
+	  an ACE_SHLIB_HANDLE.  Removed unneeded call to ACE::ldname().	
+
+	* ace/DLL_Manager.{h,cpp}:
+	* ace/DLL.{h,cpp}:
+
+	  Added new classes, ACE_DLL_Manager_Ex and ACE_DLL_Handle, and
+	  and moved all functionalility from ACE_DLL to the new classes.
+	  ACE_DLL maintains the same interface and semantics but defers
+	  all calls to the new classes.  ACE_DLL_Manager is a singleton
+	  that manages the lifetimes of instances of refcounted 
+	  ACE_DLL_Handle objects that represent the actual dlls.  The
+	  following unloading strategies are available: per-process/dll,
+	  eager/lazy.
+
+	  Added copy ctor to ACE_DLL so that the get/set_handle() methods 
+	  aren't needed--there use in the Service Config framework can
+	  complicate orderly destruction of singletons based on
+	  ACE_DLL_Singleton.
+
+	  Added call to ACE::ldname() to the symbol() method so that
+	  the caller no longer needs to do it themselves. 
+
+	* ace/Singleton.{h,cpp,i}:
+
+	  Added new singleton template, ACE_DLL_Singleton, that registers
+	  itself with the ACE_Framework_Repository so that it can be 
+	  destroyed when the dll with which it is associated is unloaded.
+
+
+	* ace/Proactor.{h,cpp}:
+	* ace/Reactor.{h,cpp}:
+
+	  Added name() method as needed by changes below, and implemented
+	  dll_name() method to return "ACE".
+	
+	* ace/Framework_Component.{h,cpp,inl}:
+	* ace/Framework_Component_T.{h,cpp}:
+
+	  Enhanced the Framework Component "framework" ;-) to allow the
+	  removal of registered components, either individually by name or
+	  as a group, based on the dll that registered them.
+
 Mon May 27 15:59:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/XML_Codecs.h:

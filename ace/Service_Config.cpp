@@ -11,7 +11,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Framework_Component.h"
 
 #include "ace/Service_Config.h"
 #include "ace/XML_Svc_Conf.h"
@@ -130,8 +129,6 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   // Initialize the Service Repository.
   ACE_Service_Repository::instance (size);
 
-  ACE_Framework_Repository::instance ();
-
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
   ACE_Reactor::instance ();
@@ -231,12 +228,12 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_Service_Type_Impl *o,
-                                          const ACE_SHLIB_HANDLE handle,
+                                          ACE_DLL &dll,
                                           int active)
 {
   ACE_Service_Type *sp = 0;
   ACE_NEW_RETURN (sp,
-                  ACE_Service_Type (n, o, handle, active),
+                  ACE_Service_Type (n, o, dll, active),
                   0);
   return sp;
 }
@@ -392,11 +389,7 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
                       0);
 
   void *foo;
-
-  // @@ Now this sucks..  Why can't we just pass the operation name to dll.symbol?
-  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
-  foo = xmldll.symbol (cdecl_str);
-  delete[] cdecl_str;
+  foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
@@ -857,8 +850,6 @@ int
 ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
-
-  ACE_Framework_Repository::close_singleton ();
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();

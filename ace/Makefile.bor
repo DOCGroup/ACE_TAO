@@ -54,6 +54,7 @@ OBJFILES = \
 	$(OBJDIR)\Dirent.obj \
 	$(OBJDIR)\Dirent_Selector.obj \
 	$(OBJDIR)\DLL.obj \
+	$(OBJDIR)\DLL_Manager.obj \
 	$(OBJDIR)\Dump.obj \
 	$(OBJDIR)\Dynamic.obj \
 	$(OBJDIR)\Dynamic_Service.obj \

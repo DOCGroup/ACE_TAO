@@ -34,26 +34,12 @@ ACE_Service_Type::type (void) const
   return this->type_;
 }
 
-ACE_INLINE ACE_SHLIB_HANDLE
-ACE_Service_Type::handle (void) const
-{
-  ACE_TRACE ("ACE_Service_Type::handle");
-  return this->handle_;
-}
-
 ACE_INLINE void
 ACE_Service_Type::type (const ACE_Service_Type_Impl *o, int enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");
   this->type_ = o;
   ((ACE_Service_Type *) this)->active_ = enabled;
-}
-
-ACE_INLINE void
-ACE_Service_Type::handle (const ACE_SHLIB_HANDLE h)
-{
-  ACE_TRACE ("ACE_Service_Type::handle");
-  this->handle_ = h;
 }
 
 ACE_INLINE int

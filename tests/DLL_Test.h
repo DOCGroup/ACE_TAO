@@ -12,6 +12,7 @@
 #define ACE_TESTS_DLL_TEST_H
 
 #include "ace/Log_Msg.h"
+#include "ace/Trace.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +27,10 @@ class Hello
 {
 public:
   /// Destructor
-  virtual ~Hello (void) {}
+  virtual ~Hello (void) 
+    {
+      ACE_TRACE ("Hello::~Hello");
+    }
 
   /**
    * @name Methods invoked by the test
