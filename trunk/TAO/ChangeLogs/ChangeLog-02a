@@ -1,3 +1,10 @@
+Tue Jun 19 10:38:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/RTCORBA/Server_Protocol/client.cpp:
+
+          Added RTCORBA.h include as it has been removed (indirectly?)
+          somehow.
+
 Tue Jun 19 09:46:30 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tests/Exposed_Policies/Makefile:
