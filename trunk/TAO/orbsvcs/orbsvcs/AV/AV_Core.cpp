@@ -37,7 +37,7 @@ TAO_AV_Core::~TAO_AV_Core (void)
 CORBA::ORB_ptr
 TAO_AV_Core::orb (void)
 {
-  return this->orb_;
+  return this->orb_.in ();
 }
 
 void
@@ -49,7 +49,7 @@ TAO_AV_Core::orb (CORBA::ORB_ptr orb)
 PortableServer::POA_ptr
 TAO_AV_Core::poa (void)
 {
-  return this->poa_;
+  return this->poa_.in ();
 }
 
 void
