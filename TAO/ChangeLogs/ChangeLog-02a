@@ -1,3 +1,7 @@
+Fri Sep  8 17:35:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependenices in orbsvcs
+
 Fri Sep  8 17:24:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated all the Makefiles in examples/*
