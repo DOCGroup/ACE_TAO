@@ -8,9 +8,9 @@
 #include "ace/config.h"
 #include "ace/Timer_List.h"
 
-#if defined (ACE_HPUX_BROKEN_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_List_T.cpp"
-#endif /* ACE_HPUX_BROKEN_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Timer_List_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>;
