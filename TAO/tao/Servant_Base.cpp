@@ -193,7 +193,6 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
     }
 }
 
-//BRT CHANGE
 void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
                                                   void *context,
                                                   void *derived_this,
@@ -230,6 +229,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
     if ((!req.sync_with_server() && req.response_expected()))
     {
       req.tao_send_reply();
+	  ACE_TRY_CHECK;
     }
   }
   ACE_CATCH(CORBA::Exception,ex)
@@ -484,12 +484,13 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
       request.dsi_marshal (ACE_TRY_ENV);
       ACE_CHECK;
     }
-//BRT
+
    ACE_TRY
    {
      if ((!request.sync_with_server() && request.response_expected()))
      {
        request.tao_send_reply();
+	   ACE_TRY_CHECK;
      }
    }
    ACE_CATCH(CORBA::Exception,ex)
