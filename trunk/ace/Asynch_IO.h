@@ -902,6 +902,9 @@ public:
 			  const ACE_INET_Addr &local_address);
   // Called by ACE_Asynch_Acceptor to pass the addresses of the new
   // connections.
+
+  virtual void act (const void *);
+  // Called by ACE_Asynch_Acceptor to pass the act.
 };
 
 #if defined (__ACE_INLINE__)

@@ -2014,6 +2014,11 @@ ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
 }
 
 void
+ACE_Service_Handler::act (const void *)
+{
+}
+
+void
 ACE_Service_Handler::open (ACE_HANDLE,
                            ACE_Message_Block &)
 {
