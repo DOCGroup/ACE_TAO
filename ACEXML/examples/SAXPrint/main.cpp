@@ -146,5 +146,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
     }
   ACEXML_ENDTRY;
+  delete handler;
   return 0;
 }

@@ -2806,6 +2806,7 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
   if (this->push_context (new_context) != 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to switch input streams"));
+      delete new_context;
       return -1;
     }
   this->current_ = new_context;
@@ -2978,6 +2979,7 @@ ACEXML_Parser::warning (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
   ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
   if (this->error_handler_)
     this->error_handler_->warning (*exception ACEXML_ENV_ARG_PARAMETER);
+  delete exception;
   return;
 }
 
