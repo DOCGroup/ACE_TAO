@@ -1,3 +1,9 @@
+Fri Apr 13 16:41:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Thread_Pool.cpp:
+          More missing template instantiations, this time for builds with
+          inline=0
+
 Fri Apr 13 16:09:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Thread_Pool.cpp:
