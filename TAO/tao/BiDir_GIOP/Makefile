@@ -61,6 +61,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/BiDirGIOP.o .obj/BiDirGIOP.so .shobj/BiDirGIOP.o .shobj/BiDirGIOP.so: BiDirGIOP.cpp BiDirGIOP.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -319,6 +321,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/BiDirPolicyC.o .obj/BiDirPolicyC.so .shobj/BiDirPolicyC.o .shobj/BiDirPolicyC.so: BiDirPolicyC.cpp BiDirGIOP.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -484,6 +488,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  BiDir_ORBInitializer.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -668,6 +674,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.so .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.so: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -852,6 +860,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.so .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.so: BiDir_Policy_i.cpp BiDir_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1115,6 +1125,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  BiDirPolicy_Validator.h \
  $(ACE_ROOT)/ace/pre.h \
  bidirgiop_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \

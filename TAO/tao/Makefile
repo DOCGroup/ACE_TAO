@@ -507,9 +507,11 @@ realclean:
 
 .obj/Transport_Acceptor.o .obj/Transport_Acceptor.so .shobj/Transport_Acceptor.o .shobj/Transport_Acceptor.so: Transport_Acceptor.cpp Transport_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -543,11 +545,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -612,34 +614,36 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
  Transport_Acceptor.inl
 
 .obj/Transport_Connector.o .obj/Transport_Connector.so .shobj/Transport_Connector.o .shobj/Transport_Connector.so: Transport_Connector.cpp Transport_Connector.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -673,12 +677,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Transport_Connector.inl Transport.h Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -743,15 +747,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -786,83 +790,83 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -885,30 +889,32 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Invocation.h CDR.h Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i MProfile.h \
- MProfile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
  Profile.h Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  GIOP_Message_Version.h Profile.i Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  debug.h Connect_Strategy.h Client_Strategy_Factory.h
 
 .obj/Transport.o .obj/Transport.so .shobj/Transport.o .shobj/Transport.so: Transport.cpp Transport.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -942,12 +948,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1012,15 +1018,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1055,83 +1061,83 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -1155,38 +1161,40 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Client_Strategy_Factory.h Wait_Strategy.h \
  Wait_Strategy.inl Transport_Mux_Strategy.h Stub.h \
- MProfile.h \
- MProfile.i \
- ORB.h \
- ORB_Core.h \
- Stub.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Stub.i \
  Sync_Strategies.h \
- Transport.h \
- TAOC.h \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Sync_Strategies.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Sync_Strategies.i \
  Connection_Handler.h LF_Event.h LF_Event.inl \
- Connection_Handler.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
  Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
  Synch_Queued_Message.h Queued_Message.h Queued_Message.inl \
  Asynch_Queued_Message.h Flushing_Strategy.h Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  debug.h Resume_Handle.h Resume_Handle.inl
 
 .obj/Incoming_Message_Queue.o .obj/Incoming_Message_Queue.so .shobj/Incoming_Message_Queue.o .shobj/Incoming_Message_Queue.so: Incoming_Message_Queue.cpp \
  Incoming_Message_Queue.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable_Messaging_Utils.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1220,11 +1228,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1289,49 +1297,49 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl ORB_Core.h corbafwd.h ORB.h Exception.h \
  Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1343,24 +1351,24 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h DynamicC.i ObjectReferenceTemplateC.h \
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -1384,11 +1392,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -1423,6 +1431,8 @@ realclean:
 
 .obj/Resume_Handle.o .obj/Resume_Handle.so .shobj/Resume_Handle.o .shobj/Resume_Handle.so: Resume_Handle.cpp Resume_Handle.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1458,12 +1468,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i ORB.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i ORB.h \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1528,42 +1538,42 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1575,29 +1585,29 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -1622,12 +1632,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -1663,6 +1673,8 @@ realclean:
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp Profile.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1696,14 +1708,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Tagged_Components.h \
- IOPC.h \
- corbafwd.h \
- Exception.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1768,99 +1780,99 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Profile.i Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  Messaging_PolicyValueC.h IOPC.h Sequence.h Messaging_PolicyValueC.i \
- Stub.h MProfile.h \
- PolicyC.h \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ Stub.h $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- CurrentC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1881,18 +1893,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1901,10 +1913,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1920,17 +1932,19 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i debug.h \
- target_specification.h \
- Object_KeyC.h \
- target_specification.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i debug.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/target_specification.i
 
 .obj/Endpoint.o .obj/Endpoint.so .shobj/Endpoint.o .shobj/Endpoint.so: Endpoint.cpp \
- Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1964,10 +1978,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -1983,13 +1997,15 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i
+ $(TAO_ROOT)/tao/Endpoint.i
 
 .obj/Connector_Registry.o .obj/Connector_Registry.so .shobj/Connector_Registry.o .shobj/Connector_Registry.so: Connector_Registry.cpp \
- Connector_Registry.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2023,11 +2039,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Endpoint.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -2043,11 +2059,11 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i \
- Connector_Registry.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2097,89 +2113,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2200,18 +2216,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2220,10 +2236,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2239,29 +2255,31 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- Transport_Connector.h \
- Transport_Connector.inl \
- Protocol_Factory.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Transport_Connector.h \
+ $(TAO_ROOT)/tao/Transport_Connector.inl \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl
 
 .obj/Connection_Handler.o .obj/Connection_Handler.so .shobj/Connection_Handler.o .shobj/Connection_Handler.so: Connection_Handler.cpp Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h LF_Event.h \
  TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  LF_Event.inl \
- Connection_Handler.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
  ORB_Core.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2294,12 +2312,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i ORB.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i ORB.h \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2364,42 +2382,42 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2411,29 +2429,29 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -2458,12 +2476,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -2496,19 +2514,19 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Server_Strategy_Factory.h debug.h Resume_Handle.h \
  Resume_Handle.inl Transport.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -2518,10 +2536,12 @@ realclean:
  $(ACE_ROOT)/ace/SOCK.i
 
 .obj/Acceptor_Registry.o .obj/Acceptor_Registry.so .shobj/Acceptor_Registry.o .shobj/Acceptor_Registry.so: Acceptor_Registry.cpp \
- Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2555,11 +2575,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2630,97 +2650,97 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.h \
- Exception.i \
- Acceptor_Registry.i \
- Profile.h \
- Tagged_Components.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- Transport_Acceptor.h \
- Transport_Acceptor.inl \
- Protocol_Factory.h \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2741,18 +2761,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2761,10 +2781,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2780,19 +2800,21 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- MProfile.h \
- MProfile.i \
- Acceptor_Filter.h \
- Acceptor_Filter.i \
- Endpoint.h \
- Endpoint.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Acceptor_Filter.h \
+ $(TAO_ROOT)/tao/Acceptor_Filter.i \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i
 
 .obj/Protocol_Factory.o .obj/Protocol_Factory.so .shobj/Protocol_Factory.o .shobj/Protocol_Factory.so: Protocol_Factory.cpp \
- Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2826,10 +2848,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2906,10 +2928,12 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Acceptor_Filter.o .obj/Acceptor_Filter.so .shobj/Acceptor_Filter.o .shobj/Acceptor_Filter.so: Acceptor_Filter.cpp \
- Acceptor_Filter.h \
+ $(TAO_ROOT)/tao/Acceptor_Filter.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2943,16 +2967,18 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Acceptor_Filter.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Acceptor_Filter.i
 
 .obj/iiop_endpoints.o .obj/iiop_endpoints.so .shobj/iiop_endpoints.o .shobj/iiop_endpoints.so: iiop_endpoints.cpp iiop_endpoints.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2986,25 +3012,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -3067,24 +3093,26 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
  iiop_endpoints.i
 
 .obj/IIOP_Factory.o .obj/IIOP_Factory.so .shobj/IIOP_Factory.o .shobj/IIOP_Factory.so: IIOP_Factory.cpp \
- IIOP_Factory.h \
+ $(TAO_ROOT)/tao/IIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- Protocol_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3118,10 +3146,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -3212,35 +3240,35 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- IIOP_Acceptor.h \
- Transport_Acceptor.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Transport_Acceptor.inl \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
@@ -3312,26 +3340,26 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Transport.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -3344,108 +3372,110 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.i \
- Acceptor_Impl.h \
- Acceptor_Impl.i \
- Acceptor_Impl.cpp \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.h \
+ $(TAO_ROOT)/tao/Acceptor_Impl.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- ORB_Core.i \
- ORB_Table.h \
- ORB_Table.inl \
- Server_Strategy_Factory.h \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Table.h \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Connector.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.i \
+ $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.cpp \
- Transport_Connector.h \
- Transport_Connector.inl \
- Connector_Impl.h \
- Connector_Impl.inl \
- Connector_Impl.cpp
+ $(TAO_ROOT)/tao/Transport_Connector.h \
+ $(TAO_ROOT)/tao/Transport_Connector.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp
 
 .obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.so .shobj/IIOP_Lite_Factory.o .shobj/IIOP_Lite_Factory.so: IIOP_Lite_Factory.cpp \
- IIOP_Lite_Factory.h \
+ $(TAO_ROOT)/tao/IIOP_Lite_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- Protocol_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3479,10 +3509,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -3573,35 +3603,35 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- IIOP_Acceptor.h \
- Transport_Acceptor.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Transport_Acceptor.inl \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
@@ -3673,26 +3703,26 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Transport.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -3705,101 +3735,101 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.i \
- Acceptor_Impl.h \
- Acceptor_Impl.i \
- Acceptor_Impl.cpp \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.h \
+ $(TAO_ROOT)/tao/Acceptor_Impl.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- ORB_Core.i \
- ORB_Table.h \
- ORB_Table.inl \
- Server_Strategy_Factory.h \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Table.h \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Connector.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.i \
+ $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.cpp \
- Transport_Connector.h \
- Transport_Connector.inl \
- Connector_Impl.h \
- Connector_Impl.inl \
- Connector_Impl.cpp \
+ $(TAO_ROOT)/tao/Transport_Connector.h \
+ $(TAO_ROOT)/tao/Transport_Connector.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -3809,9 +3839,11 @@ realclean:
 
 .obj/IIOP_Profile.o .obj/IIOP_Profile.so .shobj/IIOP_Profile.o .shobj/IIOP_Profile.so: IIOP_Profile.cpp IIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
- Profile.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3845,13 +3877,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Tagged_Components.h \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -3916,67 +3948,67 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- Object_KeyC.h \
- Object_KeyC.i \
- IIOP_Endpoint.h \
- Endpoint.h \
- Endpoint.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- IIOP_Endpoint.i \
- IIOP_Profile.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.i \
  CDR.h Environment.h ORB.h ORB_Core.h corbafwd.h Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -3988,24 +4020,24 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h CurrentC.h DynamicC.h DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -4029,11 +4061,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -4067,11 +4099,13 @@ realclean:
  ORB_Core.i debug.h iiop_endpoints.h iiop_endpoints.i
 
 .obj/IIOP_Transport.o .obj/IIOP_Transport.so .shobj/IIOP_Transport.o .shobj/IIOP_Transport.so: IIOP_Transport.cpp \
- IIOP_Transport.h \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4105,11 +4139,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -4174,14 +4208,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4216,38 +4250,38 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -4308,10 +4342,10 @@ realclean:
  $(ACE_ROOT)/ace/Connection_Recycling_Strategy.h \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -4323,153 +4357,153 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Connection_Handler.i \
- IIOP_Acceptor.h \
- Transport_Acceptor.h \
- Transport_Acceptor.inl \
- Acceptor_Impl.h \
- Acceptor_Impl.i \
- Acceptor_Impl.cpp \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl \
+ $(TAO_ROOT)/tao/Acceptor_Impl.h \
+ $(TAO_ROOT)/tao/Acceptor_Impl.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- ORB_Core.i \
- ORB_Table.h \
- ORB_Table.inl \
- Server_Strategy_Factory.h \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Table.h \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Profile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- Object_KeyC.h \
- Object_KeyC.i \
- IIOP_Endpoint.h \
- IIOP_Endpoint.i \
- IIOP_Profile.i \
- Acceptor_Registry.h \
- Acceptor_Registry.i \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- target_specification.i \
- operation_details.i \
- Timeprobe.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.i \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- Transport_Mux_Strategy.h \
- Sync_Strategies.h \
- TAOC.h \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Sync_Strategies.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- Stub.i \
- GIOP_Message_Base.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging.i \
- GIOP_Message_Generator_Parser_Impl.h \
- GIOP_Message_Generator_Parser_11.h \
- GIOP_Message_Generator_Parser_10.h \
- GIOP_Message_Generator_Parser.h \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
- GIOP_Message_Generator_Parser_11.inl \
- GIOP_Message_Generator_Parser_12.h \
- GIOP_Message_Generator_Parser_12.inl \
- GIOP_Message_Generator_Parser_Impl.inl \
- GIOP_Utils.h \
- GIOP_Utils.i \
- GIOP_Message_State.h \
- GIOP_Message_State.inl \
- GIOP_Message_Base.i \
- GIOP_Message_Lite.h \
- GIOP_Message_Lite.i
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Sync_Strategies.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Sync_Strategies.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Base.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.inl \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Base.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
 .obj/IIOP_Connector.o .obj/IIOP_Connector.so .shobj/IIOP_Connector.o .shobj/IIOP_Connector.so: IIOP_Connector.cpp IIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4478,6 +4512,8 @@ realclean:
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4686,148 +4722,150 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Transport_Connector.inl \
- Connector_Impl.h \
- corbafwd.h \
- Connector_Impl.inl \
- Connector_Impl.cpp \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Transport.h \
- Transport.h \
- Exception.h \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  IIOP_Profile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- Object_KeyC.h \
- Object_KeyC.i \
- IIOP_Endpoint.h \
- Endpoint.h \
- Endpoint.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- IIOP_Endpoint.i \
- IIOP_Profile.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.i \
  debug.h ORB_Core.h ORB.h Environment.h Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h objectid.h CORBA_String.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h CurrentC.h DynamicC.h DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h PortableInterceptorC.i \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
  PICurrent.inl ORB_Core.i Client_Strategy_Factory.h \
  Base_Transport_Property.h \
- Base_Transport_Property.inl \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl \
  Protocols_Hooks.h Policy_ForwardC.h Transport_Cache_Manager.h \
  Invocation.h CDR.h Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h target_specification.i operation_details.i \
  Invocation.i Connect_Strategy.h Thread_Lane_Resources.h \
- Thread_Lane_Resources.i
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i
 
 .obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.so .shobj/IIOP_Acceptor.o .shobj/IIOP_Acceptor.so: IIOP_Acceptor.cpp \
- IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport_Acceptor.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4861,11 +4899,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -4930,31 +4968,31 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Transport_Acceptor.inl \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -5052,26 +5090,26 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Transport.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -5084,113 +5122,115 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.i \
- Acceptor_Impl.h \
- Acceptor_Impl.i \
- Acceptor_Impl.cpp \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.h \
+ $(TAO_ROOT)/tao/Acceptor_Impl.i \
+ $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- ORB_Core.i \
- ORB_Table.h \
- ORB_Table.inl \
- Server_Strategy_Factory.h \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Table.h \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Profile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- Object_KeyC.h \
- Object_KeyC.i \
- IIOP_Endpoint.h \
- IIOP_Endpoint.i \
- IIOP_Profile.i \
- MProfile.h \
- MProfile.i \
- Protocols_Hooks.h
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/IIOP_Acceptor.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h
 
 .obj/IIOP_Connection_Handler.o .obj/IIOP_Connection_Handler.so .shobj/IIOP_Connection_Handler.o .shobj/IIOP_Connection_Handler.so: IIOP_Connection_Handler.cpp \
- IIOP_Connection_Handler.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5380,59 +5420,59 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Wait_Strategy.h \
- Wait_Strategy.inl \
- Connection_Handler.h \
- LF_Event.h \
- LF_Event.inl \
- Connection_Handler.inl \
- IIOP_Transport.h \
- Transport.h \
- Exception.h \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -5445,94 +5485,96 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- IIOPC.h \
- IIOPC.i \
- IIOP_Transport.i \
- IIOP_Connection_Handler.i \
- Timeprobe.h \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
+ $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- debug.h \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- ORB_Core.i \
- Server_Strategy_Factory.h \
- IIOP_Endpoint.h \
- Endpoint.h \
- Endpoint.i \
- IIOP_Endpoint.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
- Base_Transport_Property.h \
- Base_Transport_Property.inl \
- Resume_Handle.h \
- Resume_Handle.inl
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Base_Transport_Property.h \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl \
+ $(TAO_ROOT)/tao/Resume_Handle.h \
+ $(TAO_ROOT)/tao/Resume_Handle.inl
 
 .obj/IIOP_Endpoint.o .obj/IIOP_Endpoint.so .shobj/IIOP_Endpoint.o .shobj/IIOP_Endpoint.so: IIOP_Endpoint.cpp \
- IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
- Endpoint.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5566,10 +5608,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -5585,9 +5627,9 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -5637,52 +5679,54 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- IIOP_Endpoint.i \
- debug.h
+ $(TAO_ROOT)/tao/IIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/IIOPC.o .obj/IIOPC.so .shobj/IIOPC.o .shobj/IIOPC.so: IIOPC.cpp \
- IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5714,23 +5758,23 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
- Sequence_T.h \
- Sequence.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -5793,25 +5837,27 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- IIOPC.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Any.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i
 
 .obj/default_client.o .obj/default_client.so .shobj/default_client.o .shobj/default_client.so: default_client.cpp default_client.h \
  $(ACE_ROOT)/ace/pre.h \
- Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5843,7 +5889,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -5926,7 +5972,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_client.i \
+ $(TAO_ROOT)/tao/default_client.i \
  ORB_Core.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -5936,72 +5982,72 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i ORB.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i ORB.h \
  Exception.h \
- corbafwd.h \
- Exception.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -6009,12 +6055,12 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -6046,21 +6092,23 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Wait_On_Read.h \
- Wait_Strategy.h \
- Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
  Wait_On_Reactor.h Wait_On_Leader_Follower.h Exclusive_TMS.h \
- Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  Muxed_TMS.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  Blocked_Connect_Strategy.h Connect_Strategy.h \
  Reactive_Connect_Strategy.h LF_Connect_Strategy.h
 
 .obj/default_server.o .obj/default_server.so .shobj/default_server.o .shobj/default_server.so: default_server.cpp \
- default_server.h \
+ $(TAO_ROOT)/tao/default_server.h \
  $(ACE_ROOT)/ace/pre.h \
- Server_Strategy_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6094,10 +6142,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -6188,99 +6236,99 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_server.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/default_server.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6289,10 +6337,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6308,15 +6356,17 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/default_resource.o .obj/default_resource.so .shobj/default_resource.o .shobj/default_resource.so: default_resource.cpp \
- default_resource.h \
+ $(TAO_ROOT)/tao/default_resource.h \
  $(ACE_ROOT)/ace/pre.h \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6348,7 +6398,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -6431,9 +6481,9 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_resource.i \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/default_resource.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -6442,99 +6492,99 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6543,10 +6593,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6562,37 +6612,37 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- IIOP_Factory.h \
- Protocol_Factory.h \
- Acceptor_Registry.h \
- Acceptor_Registry.i \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Reactive_Flushing_Strategy.h \
- Flushing_Strategy.h \
- Block_Flushing_Strategy.h \
- Leader_Follower_Flushing_Strategy.h \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/IIOP_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Reactive_Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/Block_Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/Leader_Follower_Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LRU_Connection_Purging_Strategy.h \
- Connection_Purging_Strategy.h \
- Connection_Purging_Strategy.inl \
- LF_Strategy_Complete.h \
- LF_Strategy.h \
- LF_Strategy.inl \
- LF_Strategy_Complete.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LRU_Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.h \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.inl \
  $(ACE_ROOT)/ace/TP_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
@@ -6615,13 +6665,15 @@ realclean:
  $(ACE_ROOT)/ace/Arg_Shifter.h
 
 .obj/xt_resource.o .obj/xt_resource.so .shobj/xt_resource.o .shobj/xt_resource.so: xt_resource.cpp \
- xt_resource.h \
+ $(TAO_ROOT)/tao/xt_resource.h \
  $(ACE_ROOT)/ace/pre.h \
- default_resource.h \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/default_resource.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6653,7 +6705,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -6736,16 +6788,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_resource.i
+ $(TAO_ROOT)/tao/default_resource.i
 
 .obj/qt_resource.o .obj/qt_resource.so .shobj/qt_resource.o .shobj/qt_resource.so: qt_resource.cpp \
- qt_resource.h \
+ $(TAO_ROOT)/tao/qt_resource.h \
  $(ACE_ROOT)/ace/pre.h \
- default_resource.h \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/default_resource.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6777,7 +6831,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -6860,13 +6914,15 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_resource.i
+ $(TAO_ROOT)/tao/default_resource.i
 
 .obj/append.o .obj/append.so .shobj/append.o .shobj/append.so: append.cpp \
- Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6900,11 +6956,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -6920,7 +6976,7 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -6970,55 +7026,57 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Principal.h \
- OctetSeqC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- OctetSeqC.i \
- Principal.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i \
- ValueBase.h \
- ValueBase.i \
- debug.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp \
- Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7052,11 +7110,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -7072,7 +7130,7 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -7122,52 +7180,54 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Principal.h \
- OctetSeqC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- OctetSeqC.i \
- Principal.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i
 
 .obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
- Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7201,11 +7261,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -7221,7 +7281,7 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -7271,55 +7331,57 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Principal.h \
- OctetSeqC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- OctetSeqC.i \
- Principal.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i \
- ValueBase.h \
- ValueBase.i \
- debug.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Managed_Types.o .obj/Managed_Types.so .shobj/Managed_Types.o .shobj/Managed_Types.so: Managed_Types.cpp \
- Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7353,13 +7415,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Managed_Types.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -7424,42 +7486,44 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i
 
 .obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+ $(TAO_ROOT)/tao/Any.h \
  $(ACE_ROOT)/ace/pre.h \
- CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7493,10 +7557,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7563,92 +7627,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
- Marshal.h \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -7669,18 +7733,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7689,10 +7753,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -7708,13 +7772,19 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/AbstractBase.h \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.inl
 
 .obj/CORBA_String.o .obj/CORBA_String.so .shobj/CORBA_String.o .shobj/CORBA_String.so: CORBA_String.cpp \
- CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7748,20 +7818,22 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
- CORBA_String.inl
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl
 
 .obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
- CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(ACE_ROOT)/ace/pre.h \
- Object.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7795,25 +7867,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7876,14 +7948,16 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i
 
 .obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7892,8 +7966,8 @@ realclean:
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7923,10 +7997,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -7991,91 +8065,91 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.h \
- Typecode.i \
- Environment.h \
- Environment.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8096,18 +8170,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8116,10 +8190,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8135,13 +8209,15 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Dynamic_Adapter.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Dynamic_Adapter.h
 
 .obj/WrongTransactionC.o .obj/WrongTransactionC.so .shobj/WrongTransactionC.o .shobj/WrongTransactionC.so: WrongTransactionC.cpp WrongTransactionC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8175,11 +8251,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -8244,95 +8320,95 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  TAO_Export.h WrongTransactionC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8353,18 +8429,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8373,10 +8449,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8392,37 +8468,39 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
- Environment.h \
+ $(TAO_ROOT)/tao/Environment.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8456,14 +8534,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Environment.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -8528,87 +8606,87 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8629,18 +8707,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8649,10 +8727,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8668,13 +8746,15 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp \
- Object.h \
+ $(TAO_ROOT)/tao/Object.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8708,25 +8788,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -8789,81 +8869,81 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8884,18 +8964,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8904,10 +8984,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8923,39 +9003,39 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- Connector_Registry.h \
- Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
- Remote_Object_Proxy_Broker.h \
- Object_Proxy_Broker.h \
- Dynamic_Adapter.h \
- IFR_Client_Adapter.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Dynamic_Adapter.h \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -8963,8 +9043,10 @@ realclean:
 
 .obj/LocalObject.o .obj/LocalObject.so .shobj/LocalObject.o .shobj/LocalObject.so: LocalObject.cpp LocalObject.h \
  $(ACE_ROOT)/ace/pre.h Object.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8998,25 +9080,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -9079,23 +9161,25 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
  LocalObject.i PolicyC.h CurrentC.h \
- Object.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i
 
 .obj/ObjectIDList.o .obj/ObjectIDList.so .shobj/ObjectIDList.o .shobj/ObjectIDList.so: ObjectIDList.cpp \
- ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9129,25 +9213,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- ObjectIDList.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -9159,7 +9243,7 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -9209,36 +9293,38 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Any.h \
- Any.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i
 
 .obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9272,12 +9358,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -9342,34 +9428,34 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i ORB_Table.h \
+ $(TAO_ROOT)/tao/ORB.i ORB_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9404,85 +9490,85 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- ORB_Table.inl \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
  Connector_Registry.h Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
  IOR_Parser.h \
- Exception.h \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Object.h Typecode.h \
- Typecode.i Stub.h \
- MProfile.h \
- PolicyC.h \
- MProfile.i \
- ORB.h \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- objectid.h \
- CORBA_String.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Typecode.i Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- CurrentC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -9498,24 +9584,24 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i ORB_Core.h \
  debug.h TAO_Internal.h TAO_Export.h NVList.h \
- NVList.i \
+ $(TAO_ROOT)/tao/NVList.i \
  Dynamic_Adapter.h CDR.h MProfile.h Profile.h Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Profile.i default_ports.h ORBInitInfo.h PortableInterceptorC.h \
  LocalObject.h StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
  CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
  PICurrent_ORBInitializer.h PICurrent.h ValueFactory_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- ValueFactory_Map.i \
+ $(TAO_ROOT)/tao/ValueFactory_Map.i \
  Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -9545,9 +9631,11 @@ realclean:
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
 .obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9581,15 +9669,17 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i
 
 .obj/Policy_ForwardC.o .obj/Policy_ForwardC.so .shobj/Policy_ForwardC.o .shobj/Policy_ForwardC.so: Policy_ForwardC.cpp Policy_ForwardC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9623,24 +9713,24 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -9703,84 +9793,84 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  Policy_ForwardC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- CDR.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9801,18 +9891,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9821,10 +9911,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -9840,36 +9930,38 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp PolicyC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9903,27 +9995,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -9986,81 +10078,81 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- MProfile.i \
- ORB.h \
- Exception.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- CurrentC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10081,18 +10173,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10101,10 +10193,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -10120,36 +10212,38 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/Policy_Validator.o .obj/Policy_Validator.so .shobj/Policy_Validator.o .shobj/Policy_Validator.so: Policy_Validator.cpp Policy_Validator.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10183,25 +10277,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -10264,30 +10358,30 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
  Environment.h ORB_Core.h corbafwd.h ORB.h Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -10299,30 +10393,30 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -10347,12 +10441,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -10386,10 +10480,12 @@ realclean:
  ORB_Core.i debug.h
 
 .obj/Encodable.o .obj/Encodable.so .shobj/Encodable.o .shobj/Encodable.so: Encodable.cpp \
- Encodable.h \
+ $(TAO_ROOT)/tao/Encodable.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10423,16 +10519,18 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i
 
 .obj/Abstract_Servant_Base.o .obj/Abstract_Servant_Base.so .shobj/Abstract_Servant_Base.o .shobj/Abstract_Servant_Base.so: Abstract_Servant_Base.cpp \
- Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10466,16 +10564,18 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i
 
 .obj/Object_Proxy_Broker.o .obj/Object_Proxy_Broker.so .shobj/Object_Proxy_Broker.o .shobj/Object_Proxy_Broker.so: Object_Proxy_Broker.cpp \
- Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10509,17 +10609,19 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Object_Proxy_Impl.h
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h
 
 .obj/Remote_Object_Proxy_Broker.o .obj/Remote_Object_Proxy_Broker.so .shobj/Remote_Object_Proxy_Broker.o .shobj/Remote_Object_Proxy_Broker.so: Remote_Object_Proxy_Broker.cpp \
- Remote_Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Broker.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10553,19 +10655,21 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Object_Proxy_Broker.h \
- Object_Proxy_Impl.h \
- Remote_Object_Proxy_Impl.h
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h
 
 .obj/Object_Proxy_Impl.o .obj/Object_Proxy_Impl.so .shobj/Object_Proxy_Impl.o .shobj/Object_Proxy_Impl.so: Object_Proxy_Impl.cpp \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10599,16 +10703,18 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i
 
 .obj/Remote_Object_Proxy_Impl.o .obj/Remote_Object_Proxy_Impl.so .shobj/Remote_Object_Proxy_Impl.o .shobj/Remote_Object_Proxy_Impl.so: Remote_Object_Proxy_Impl.cpp \
- Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10642,12 +10748,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Object_Proxy_Impl.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -10712,92 +10818,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Typecode.i \
- Any.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10818,18 +10924,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10838,10 +10944,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -10857,26 +10963,26 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- IFR_Client_Adapter.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -10884,11 +10990,13 @@ realclean:
 
 .obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp DomainC.h \
  $(ACE_ROOT)/ace/pre.h \
- corba.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10920,11 +11028,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -10940,7 +11048,7 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -10990,109 +11098,111 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- NVList.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- NVList.i \
- LocalObject.h \
- LocalObject.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- BoundsC.h \
- BoundsC.i \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- DomainC.h \
- WrongTransactionC.h \
- WrongTransactionC.i \
- Object_KeyC.h \
- Object_KeyC.i \
- ObjectIDList.h \
- ObjectIDList.i \
- StringSeqC.h \
- StringSeqC.i \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.h \
+ $(TAO_ROOT)/tao/AbstractBase.inl \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/WrongTransactionC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  PolicyC.h Sequence.h DomainC.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -11113,18 +11223,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11133,10 +11243,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -11152,30 +11262,30 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl \
- IFR_Client_Adapter.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -11183,8 +11293,10 @@ realclean:
 
 .obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp TimeBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11218,11 +11330,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -11289,97 +11401,97 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Any.h \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
  TAO_Export.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  TimeBaseC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -11400,18 +11512,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11420,10 +11532,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -11439,32 +11551,34 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- RequestInfo_Util.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
- Principal.h \
+ $(TAO_ROOT)/tao/Principal.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11498,25 +11612,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- OctetSeqC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- OctetSeqC.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -11528,8 +11642,8 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- Principal.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -11581,13 +11695,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i
+ $(TAO_ROOT)/tao/CDR.i
 
 .obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp \
- Sequence.h \
+ $(TAO_ROOT)/tao/Sequence.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11621,28 +11737,30 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i
 
 .obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp \
- MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11682,7 +11800,7 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -11691,24 +11809,24 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -11760,36 +11878,38 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- Profile.h \
- Tagged_Components.h \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i
 
 .obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11823,10 +11943,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -11842,22 +11962,22 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Endpoint.i Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -11909,77 +12029,77 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12000,18 +12120,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12020,10 +12140,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -12039,67 +12159,69 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i Profile.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i Profile.h \
  corbafwd.h Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  PolicyC.h GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Profile.i Sequence.h Object.h Invocation.h CDR.h \
  Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  Messaging_SyncScopeC.h operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i \
  Asynch_Invocation.h \
- Invocation.h \
- Asynch_Reply_Dispatcher_Base.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Asynch_Reply_Dispatcher_Base.i \
- Asynch_Invocation.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
  ORB_Core.h Client_Strategy_Factory.h TAO_Export.h Sync_Strategies.h \
- TAOC.h \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Sync_Strategies.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Sync_Strategies.i \
  Buffering_Constraint_Policy.h \
- Buffering_Constraint_Policy.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i \
  debug.h
 
 .obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
- Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12139,8 +12261,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -12149,10 +12271,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -12202,54 +12324,56 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Environment.h \
- Environment.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Any.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- Marshal.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i \
- debug.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/debug.h
 
-.obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp \
- CDR.h \
+.obj/AbstractBase.o .obj/AbstractBase.so .shobj/AbstractBase.o .shobj/AbstractBase.so: AbstractBase.cpp \
+ $(TAO_ROOT)/tao/AbstractBase.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12283,10 +12407,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -12307,10 +12447,6 @@ realclean:
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12353,89 +12489,84 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.inl \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12456,18 +12587,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12476,10 +12607,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -12495,13 +12626,24 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i
 
-.obj/ValueFactory.o .obj/ValueFactory.so .shobj/ValueFactory.o .shobj/ValueFactory.so: ValueFactory.cpp \
- ValueFactory.h \
+.obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12535,10 +12677,266 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i
+
+.obj/ValueFactory.o .obj/ValueFactory.so .shobj/ValueFactory.o .shobj/ValueFactory.so: ValueFactory.cpp \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Time_Value.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -12554,12 +12952,14 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- ValueFactory.i
+ $(TAO_ROOT)/tao/ValueFactory.i
 
 .obj/ValueFactory_Map.o .obj/ValueFactory_Map.so .shobj/ValueFactory_Map.o .shobj/ValueFactory_Map.so: ValueFactory_Map.cpp \
- ValueFactory_Map.h \
+ $(TAO_ROOT)/tao/ValueFactory_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12684,19 +13084,19 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Export.h \
- orbconf.h \
- TAO_Singleton_Manager.inl \
- corbafwd.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -12705,48 +13105,50 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ValueFactory_Map.i \
- ValueFactory.h \
- ValueFactory.i \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ValueFactory_Map.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i
 
 .obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
- Timeprobe.h \
+ $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12774,8 +13176,8 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -12784,10 +13186,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -12854,89 +13256,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12957,18 +13359,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12977,10 +13379,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -12996,14 +13398,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.so .shobj/Client_Strategy_Factory.o .shobj/Client_Strategy_Factory.so: Client_Strategy_Factory.cpp \
- Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13035,21 +13439,25 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h
+ $(TAO_ROOT)/tao/TAO_Export.h
 
 .obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
- debug.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl
 
 .obj/Object_KeyC.o .obj/Object_KeyC.so .shobj/Object_KeyC.o .shobj/Object_KeyC.so: Object_KeyC.cpp \
- Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13083,25 +13491,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Object_KeyC.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -13113,7 +13521,7 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -13163,12 +13571,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i
 
 .obj/Protocols_Hooks.o .obj/Protocols_Hooks.so .shobj/Protocols_Hooks.o .shobj/Protocols_Hooks.so: Protocols_Hooks.cpp Protocols_Hooks.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13202,26 +13612,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Policy_ForwardC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -13284,7 +13694,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  Policy_ForwardC.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -13302,6 +13712,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  Protocols_Hooks.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13335,26 +13747,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Policy_ForwardC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -13417,7 +13829,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  Policy_ForwardC.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -13445,16 +13857,16 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Default_Protocols_Hooks.i \
+ $(TAO_ROOT)/tao/Default_Protocols_Hooks.i \
  PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
@@ -13465,6 +13877,8 @@ realclean:
  Messaging_SyncScopeC.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13498,12 +13912,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Messaging_SyncScopeC.i \
- Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -13519,8 +13933,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -13570,13 +13984,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i
 
 .obj/Invocation.o .obj/Invocation.so .shobj/Invocation.o .shobj/Invocation.so: Invocation.cpp Invocation.h \
  $(ACE_ROOT)/ace/pre.h CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13610,10 +14026,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -13680,105 +14096,105 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
  operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -13799,18 +14215,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -13819,10 +14235,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -13838,53 +14254,55 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i Profile.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i Profile.h \
  Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  PolicyC.h GIOP_Message_Version.h Profile.i Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  Object_KeyC.h debug.h Transport.h Exception.h \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl Connector_Registry.h \
  Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
  Wait_Strategy.h Wait_Strategy.inl Transport_Mux_Strategy.h \
  Bind_Dispatcher_Guard.h \
- Bind_Dispatcher_Guard.i \
- Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Bind_Dispatcher_Guard.i \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  Transport_Connector.h Transport_Connector.inl GIOP_Utils.h \
- GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
  ORB_Core.h Endpoint_Selector_Factory.h \
  Invocation_Endpoint_Selectors.h \
- Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
  TAOC.h TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  TimeBaseC.i TAOC.i
 
 .obj/Invocation_Endpoint_Selectors.o .obj/Invocation_Endpoint_Selectors.so .shobj/Invocation_Endpoint_Selectors.o .shobj/Invocation_Endpoint_Selectors.so: Invocation_Endpoint_Selectors.cpp \
- Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13918,13 +14336,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Invocation_Endpoint_Selectors.i \
- Invocation.h \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -13991,108 +14409,108 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -14113,18 +14531,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -14133,10 +14551,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -14152,28 +14570,30 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- Endpoint.h \
- Endpoint.i \
- Base_Transport_Property.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Base_Transport_Property.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Base_Transport_Property.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl
 
 .obj/Asynch_Invocation.o .obj/Asynch_Invocation.so .shobj/Asynch_Invocation.o .shobj/Asynch_Invocation.so: Asynch_Invocation.cpp \
- Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
  $(ACE_ROOT)/ace/pre.h \
- Invocation.h \
- CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14207,10 +14627,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -14277,55 +14697,55 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- Asynch_Reply_Dispatcher_Base.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -14360,91 +14780,91 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Asynch_Reply_Dispatcher_Base.i \
- Asynch_Invocation.i \
- Timeprobe.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -14460,21 +14880,23 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- Transport_Mux_Strategy.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h
 
 .obj/operation_details.o .obj/operation_details.so .shobj/operation_details.o .shobj/operation_details.so: operation_details.cpp \
- operation_details.h \
+ $(TAO_ROOT)/tao/operation_details.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14508,13 +14930,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Service_Context.h \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -14579,46 +15001,48 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i
 
 .obj/ClientRequestInfo.o .obj/ClientRequestInfo.so .shobj/ClientRequestInfo.o .shobj/ClientRequestInfo.so: ClientRequestInfo.cpp ClientRequestInfo.h \
  $(ACE_ROOT)/ace/pre.h orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -14647,27 +15071,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -14730,28 +15154,28 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i ClientRequestInfo.inl ClientRequestInfo_i.h \
  Service_Context.h \
- IOPC.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -14761,6 +15185,8 @@ realclean:
 .obj/ClientRequestInfo_i.o .obj/ClientRequestInfo_i.so .shobj/ClientRequestInfo_i.o .shobj/ClientRequestInfo_i.so: ClientRequestInfo_i.cpp ClientRequestInfo_i.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14794,29 +15220,29 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -14879,85 +15305,85 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i Service_Context.h \
- IOPC.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  LocalObject.h LocalObject.i PICurrent.inl ClientRequestInfo_i.inl \
  Invocation.h CDR.h Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  operation_details.h target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i Stub.h \
- MProfile.h \
- PolicyC.h \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -14978,15 +15404,15 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -14995,9 +15421,9 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15013,17 +15439,24 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ AbstractBase.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.inl \
+ Profile.h Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  GIOP_Message_Version.h Profile.i debug.h
 
 .obj/RequestInfo_Util.o .obj/RequestInfo_Util.so .shobj/RequestInfo_Util.o .shobj/RequestInfo_Util.so: RequestInfo_Util.cpp RequestInfo_Util.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15057,14 +15490,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  DynamicC.h \
- corbafwd.h \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -15131,31 +15564,33 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  Any.h StringSeqC.h Sequence.h StringSeqC.i
 
 .obj/ClientInterceptorAdapter.o .obj/ClientInterceptorAdapter.so .shobj/ClientInterceptorAdapter.o .shobj/ClientInterceptorAdapter.so: ClientInterceptorAdapter.cpp \
  ClientInterceptorAdapter.h \
  $(ACE_ROOT)/ace/pre.h orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15190,29 +15625,29 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -15275,23 +15710,23 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -15299,32 +15734,32 @@ realclean:
  Interceptor_List.inl ClientInterceptorAdapter.inl ClientRequestInfo.h \
  LocalObject.h LocalObject.i ClientRequestInfo.inl \
  ClientRequestInfo_i.h Service_Context.h \
- IOPC.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  PICurrent.h PICurrent.inl ClientRequestInfo_i.inl Invocation.h CDR.h \
  Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  operation_details.h target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i ORB_Core.h \
  ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -15336,19 +15771,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -15371,11 +15806,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -15405,8 +15840,10 @@ realclean:
 .obj/ObjectReferenceTemplateC.o .obj/ObjectReferenceTemplateC.so .shobj/ObjectReferenceTemplateC.o .shobj/ObjectReferenceTemplateC.so: ObjectReferenceTemplateC.cpp \
  ObjectReferenceTemplateC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15440,24 +15877,24 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  OctetSeqC.h corbafwd.h Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -15470,7 +15907,7 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -15520,80 +15957,80 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  ObjectReferenceTemplateC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -15614,18 +16051,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -15634,10 +16071,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15653,40 +16090,42 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- ValueFactory.h \
- ValueFactory.i \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- StringSeqC.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/PortableInterceptorC.o .obj/PortableInterceptorC.so .shobj/PortableInterceptorC.o .shobj/PortableInterceptorC.so: PortableInterceptorC.cpp \
  PortableInterceptorC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15720,27 +16159,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -15803,69 +16242,69 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -15886,19 +16325,19 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -15907,10 +16346,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15926,39 +16365,41 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Messaging_SyncScopeC.h \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- DynamicC.h \
- ClientRequestInfo_i.h \
- StringSeqC.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/PICurrent.o .obj/PICurrent.so .shobj/PICurrent.o .shobj/PICurrent.so: PICurrent.cpp PICurrent.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15992,31 +16433,31 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  PortableInterceptorC.h TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -16078,36 +16519,36 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i PICurrent.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -16119,19 +16560,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -16154,12 +16595,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -16186,23 +16627,25 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i TAO_Server_Request.h Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  TAO_Server_Request.i debug.h
 
 .obj/PICurrent_ORBInitializer.o .obj/PICurrent_ORBInitializer.so .shobj/PICurrent_ORBInitializer.o .shobj/PICurrent_ORBInitializer.so: PICurrent_ORBInitializer.cpp \
  PICurrent_ORBInitializer.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  LocalObject.h Object.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16234,25 +16677,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -16315,41 +16758,41 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
  LocalObject.i PortableInterceptorC.h CurrentC.h \
- Object.h \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  PICurrent.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -16361,19 +16804,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -16396,12 +16839,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -16431,8 +16874,10 @@ realclean:
 
 .obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -16466,12 +16911,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -16538,90 +16983,90 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -16642,18 +17087,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -16662,10 +17107,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -16681,35 +17126,37 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/OctetSeqC.o .obj/OctetSeqC.so .shobj/OctetSeqC.o .shobj/OctetSeqC.so: OctetSeqC.cpp OctetSeqC.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -16743,27 +17190,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Sequence.h \
- corbafwd.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  OctetSeqC.i Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -16826,34 +17273,34 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i CDR.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i CDR.h \
  Typecode.h ORB_Core.h ORB.h Exception.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -16865,24 +17312,24 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h DynamicC.i \
  ObjectReferenceTemplateC.h StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h IOPC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -16906,12 +17353,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -16947,6 +17394,8 @@ realclean:
 .obj/StringSeqC.o .obj/StringSeqC.so .shobj/StringSeqC.o .shobj/StringSeqC.so: StringSeqC.cpp StringSeqC.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -16980,27 +17429,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Sequence.h \
- corbafwd.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  StringSeqC.i Any.h \
- CDR.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -17063,21 +17512,23 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i CDR.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i CDR.h \
  Typecode.h
 
 .obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -17111,12 +17562,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i ORB.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i ORB.h \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -17181,42 +17632,42 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -17228,30 +17679,30 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -17276,12 +17727,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -17313,99 +17764,99 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i ORB_Table.h \
- ORB_Table.inl \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
  TAO_Internal.h default_client.h \
- Client_Strategy_Factory.h \
- default_client.i \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.i \
  default_server.h \
- Server_Strategy_Factory.h \
- default_server.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_server.i \
  default_resource.h \
- Resource_Factory.h \
- default_resource.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/default_resource.i \
  debug.h MProfile.h \
- MProfile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
  Profile.h Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
  GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Profile.i Stub.h \
- MProfile.h \
- ORB.h \
- ORB_Core.h \
- Stub.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Stub.i \
  Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
  Connector_Registry.h Endpoint.h \
- Endpoint.i \
- Connector_Registry.i \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i \
  Sync_Strategies.h \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- TAOC.h \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Sync_Strategies.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Sync_Strategies.i \
  Object_Loader.h Object_Loader.i ObjectIDList.h \
- ObjectIDList.i \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
  Services_Activate.h Invocation.h CDR.h Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i \
  BiDir_Adapter.h Collocation_Resolver.h \
- Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Collocation_Resolver.i \
  Endpoint_Selector_Factory.h Flushing_Strategy.h Request_Dispatcher.h \
  Stub_Factory.h Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  Thread_Lane_Resources_Manager.h \
- Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
  Protocols_Hooks.h Buffering_Constraint_Policy.h \
- Buffering_Constraint_Policy.i \
- LF_Event_Loop_Thread_Helper.h \
- LF_Strategy.h \
- LF_Strategy.inl \
- LF_Event_Loop_Thread_Helper.inl \
- ClientRequestInfo.h \
- PortableInterceptorC.h \
- ClientRequestInfo.inl \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i \
+ $(TAO_ROOT)/tao/LF_Event_Loop_Thread_Helper.h \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Event_Loop_Thread_Helper.inl \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -17415,16 +17866,18 @@ realclean:
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
 .obj/Collocation_Resolver.o .obj/Collocation_Resolver.so .shobj/Collocation_Resolver.o .shobj/Collocation_Resolver.so: Collocation_Resolver.cpp \
- Collocation_Resolver.h \
+ $(TAO_ROOT)/tao/Collocation_Resolver.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -17453,9 +17906,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -17464,24 +17917,26 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Collocation_Resolver.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Default_Collocation_Resolver.o .obj/Default_Collocation_Resolver.so .shobj/Default_Collocation_Resolver.o .shobj/Default_Collocation_Resolver.so: Default_Collocation_Resolver.cpp \
- Default_Collocation_Resolver.h \
+ $(TAO_ROOT)/tao/Default_Collocation_Resolver.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Collocation_Resolver.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Collocation_Resolver.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -17510,9 +17965,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -17521,7 +17976,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Collocation_Resolver.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -17604,29 +18059,31 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Default_Collocation_Resolver.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Default_Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i
 
 .obj/Stub_Factory.o .obj/Stub_Factory.so .shobj/Stub_Factory.o .shobj/Stub_Factory.so: Stub_Factory.cpp Stub_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -17660,10 +18117,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -17679,7 +18136,9 @@ realclean:
 
 .obj/ORB_Table.o .obj/ORB_Table.so .shobj/ORB_Table.o .shobj/ORB_Table.so: ORB_Table.cpp ORB_Table.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -17804,7 +18263,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- ORB_Table.inl \
+ $(TAO_ROOT)/tao/ORB_Table.inl \
  ORB_Core.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -17814,72 +18273,72 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i ORB.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i ORB.h \
  Exception.h \
- corbafwd.h \
- Exception.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -17887,12 +18346,12 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -17917,16 +18376,18 @@ realclean:
  ORB_Core.i
 
 .obj/LF_Follower.o .obj/LF_Follower.so .shobj/LF_Follower.o .shobj/LF_Follower.so: LF_Follower.cpp \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -17965,10 +18426,10 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- Leader_Follower.h \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -17977,10 +18438,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -18030,89 +18491,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18133,18 +18594,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18153,10 +18614,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18172,26 +18633,28 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i
+ $(TAO_ROOT)/tao/Leader_Follower.i
 
 .obj/LF_Follower_Auto_Ptr.o .obj/LF_Follower_Auto_Ptr.so .shobj/LF_Follower_Auto_Ptr.o .shobj/LF_Follower_Auto_Ptr.so: LF_Follower_Auto_Ptr.cpp \
- LF_Follower_Auto_Ptr.h \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Leader_Follower.h \
- LF_Follower.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -18230,9 +18693,9 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -18241,10 +18704,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -18294,89 +18757,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18397,18 +18860,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18417,10 +18880,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18436,27 +18899,29 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LF_Follower_Auto_Ptr.inl
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Ptr.inl
 
 .obj/LF_Follower_Auto_Adder.o .obj/LF_Follower_Auto_Adder.so .shobj/LF_Follower_Auto_Adder.o .shobj/LF_Follower_Auto_Adder.so: LF_Follower_Auto_Adder.cpp \
- LF_Follower_Auto_Adder.h \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Adder.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Leader_Follower.h \
- LF_Follower.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -18495,9 +18960,9 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -18506,10 +18971,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -18559,89 +19024,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18662,18 +19127,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18682,10 +19147,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18701,26 +19166,28 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LF_Follower_Auto_Adder.inl
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Adder.inl
 
 .obj/Leader_Follower.o .obj/Leader_Follower.so .shobj/Leader_Follower.o .shobj/Leader_Follower.so: Leader_Follower.cpp \
- Leader_Follower.h \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
  $(ACE_ROOT)/ace/pre.h \
- LF_Follower.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -18759,9 +19226,9 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -18770,10 +19237,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -18823,89 +19290,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18926,18 +19393,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18946,10 +19413,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18965,50 +19432,52 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LF_Follower_Auto_Ptr.h \
- LF_Follower_Auto_Ptr.inl \
- LF_Follower_Auto_Adder.h \
- LF_Follower_Auto_Adder.inl \
- LF_Event.h \
- LF_Event.inl \
- LF_Event_Binder.h \
- LF_Event_Binder.inl \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Ptr.h \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Ptr.inl \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Adder.h \
+ $(TAO_ROOT)/tao/LF_Follower_Auto_Adder.inl \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Event_Binder.h \
+ $(TAO_ROOT)/tao/LF_Event_Binder.inl \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl
 
 .obj/Leader_Follower_Flushing_Strategy.o .obj/Leader_Follower_Flushing_Strategy.so .shobj/Leader_Follower_Flushing_Strategy.o .shobj/Leader_Follower_Flushing_Strategy.so: \
  Leader_Follower_Flushing_Strategy.cpp \
- Leader_Follower_Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/Leader_Follower_Flushing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- Flushing_Strategy.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/Flushing_Strategy.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- Leader_Follower.h \
- LF_Follower.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -19050,9 +19519,9 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -19061,10 +19530,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -19114,89 +19583,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19217,18 +19686,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19237,10 +19706,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19256,44 +19725,46 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Queued_Message.h \
- LF_Event.h \
- LF_Event.inl \
- Queued_Message.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Queued_Message.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Queued_Message.inl
 
 .obj/LF_Event.o .obj/LF_Event.so .shobj/LF_Event.o .shobj/LF_Event.so: LF_Event.cpp \
- LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- LF_Event.inl \
- LF_Follower.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -19335,10 +19806,10 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- Leader_Follower.h \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -19347,10 +19818,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -19400,89 +19871,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19503,18 +19974,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19523,10 +19994,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19542,61 +20013,69 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i
+ $(TAO_ROOT)/tao/Leader_Follower.i
 
 .obj/LF_Event_Binder.o .obj/LF_Event_Binder.so .shobj/LF_Event_Binder.o .shobj/LF_Event_Binder.so: LF_Event_Binder.cpp \
- LF_Event_Binder.h \
+ $(TAO_ROOT)/tao/LF_Event_Binder.h \
  $(ACE_ROOT)/ace/pre.h \
- LF_Event.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- LF_Event.inl \
- LF_Event_Binder.inl
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Event_Binder.inl
 
 .obj/LF_Event_Loop_Thread_Helper.o .obj/LF_Event_Loop_Thread_Helper.so .shobj/LF_Event_Loop_Thread_Helper.o .shobj/LF_Event_Loop_Thread_Helper.so: LF_Event_Loop_Thread_Helper.cpp \
- LF_Event_Loop_Thread_Helper.h \
+ $(TAO_ROOT)/tao/LF_Event_Loop_Thread_Helper.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- LF_Strategy.h \
- TAO_Export.h \
- LF_Strategy.inl \
- LF_Event_Loop_Thread_Helper.inl
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Event_Loop_Thread_Helper.inl
 
 .obj/LF_Strategy.o .obj/LF_Strategy.so .shobj/LF_Strategy.o .shobj/LF_Strategy.so: LF_Strategy.cpp \
- LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- LF_Strategy.inl
+ $(TAO_ROOT)/tao/LF_Strategy.inl
 
 .obj/LF_Strategy_Complete.o .obj/LF_Strategy_Complete.so .shobj/LF_Strategy_Complete.o .shobj/LF_Strategy_Complete.so: LF_Strategy_Complete.cpp \
- LF_Strategy_Complete.h \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.h \
  $(ACE_ROOT)/ace/pre.h \
- LF_Strategy.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- LF_Strategy.inl \
- LF_Strategy_Complete.inl \
- Leader_Follower.h \
- LF_Follower.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -19638,9 +20117,9 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -19649,10 +20128,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -19702,89 +20181,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19805,18 +20284,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19825,10 +20304,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19844,18 +20323,20 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i
+ $(TAO_ROOT)/tao/Leader_Follower.i
 
 .obj/params.o .obj/params.so .shobj/params.o .shobj/params.so: params.cpp \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -19889,15 +20370,15 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- objectid.h \
- CORBA_String.h \
- Managed_Types.h \
- Managed_Types.i \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -19965,11 +20446,13 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i
+ $(TAO_ROOT)/tao/params.i
 
 .obj/Resource_Factory.o .obj/Resource_Factory.so .shobj/Resource_Factory.o .shobj/Resource_Factory.so: Resource_Factory.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -19983,7 +20466,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -20011,7 +20494,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -20071,8 +20554,8 @@ realclean:
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/SString.i \
- Protocol_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -20081,88 +20564,88 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -20183,18 +20666,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -20203,10 +20686,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20222,14 +20705,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Client_Strategy_Factory.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h
 
 .obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.so .shobj/Server_Strategy_Factory.o .shobj/Server_Strategy_Factory.so: Server_Strategy_Factory.cpp \
- Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -20263,10 +20748,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -20277,10 +20762,12 @@ realclean:
  $(ACE_ROOT)/ace/Service_Object.i
 
 .obj/Sync_Strategies.o .obj/Sync_Strategies.so .shobj/Sync_Strategies.o .shobj/Sync_Strategies.so: Sync_Strategies.cpp \
- Sync_Strategies.h \
+ $(TAO_ROOT)/tao/Sync_Strategies.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -20314,12 +20801,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Transport.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -20384,14 +20871,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -20426,122 +20913,122 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- TAOC.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Sync_Strategies.i \
- Buffering_Constraint_Policy.h \
- LocalObject.h \
- LocalObject.i \
- Buffering_Constraint_Policy.i \
- Stub.h \
- MProfile.h \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Sync_Strategies.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20557,17 +21044,19 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i
 
 .obj/TAO_Internal.o .obj/TAO_Internal.so .shobj/TAO_Internal.o .shobj/TAO_Internal.so: TAO_Internal.cpp TAO_Internal.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  default_server.h \
- Server_Strategy_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20599,10 +21088,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -20693,109 +21182,109 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- default_server.i \
+ $(TAO_ROOT)/tao/default_server.i \
  default_client.h \
- Client_Strategy_Factory.h \
- default_client.i \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.i \
  default_resource.h \
- Resource_Factory.h \
- default_resource.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/default_resource.i \
  IIOP_Factory.h \
- Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
  MCAST_Parser.h \
- IOR_Parser.h \
- Exception.h \
- Exception.i \
- IOR_Parser.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -20804,10 +21293,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20823,7 +21312,7 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  MCAST_Parser.i CORBANAME_Parser.h CORBANAME_Parser.i \
  CORBALOC_Parser.h CORBALOC_Parser.i FILE_Parser.h FILE_Parser.i \
  DLL_Parser.h DLL_Parser.i StringSeqC.h Object_Loader.h \
@@ -20833,20 +21322,20 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  Default_Stub_Factory.h \
- Stub_Factory.h \
+ $(TAO_ROOT)/tao/Stub_Factory.h \
  Default_Endpoint_Selector_Factory.h \
- Endpoint_Selector_Factory.h \
+ $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
  Default_Protocols_Hooks.h Protocols_Hooks.h corbafwd.h \
  Policy_ForwardC.h \
- Default_Protocols_Hooks.i \
+ $(TAO_ROOT)/tao/Default_Protocols_Hooks.i \
  Default_Thread_Lane_Resources_Manager.h \
- Thread_Lane_Resources_Manager.h \
- Thread_Lane_Resources_Manager.i \
- Default_Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/Default_Thread_Lane_Resources_Manager.i \
  Default_Collocation_Resolver.h \
- Collocation_Resolver.h \
- Collocation_Resolver.i \
- Default_Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Collocation_Resolver.h \
+ $(TAO_ROOT)/tao/Collocation_Resolver.i \
+ $(TAO_ROOT)/tao/Default_Collocation_Resolver.i \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
@@ -20860,6 +21349,8 @@ realclean:
 .obj/TAO_Server_Request.o .obj/TAO_Server_Request.so .shobj/TAO_Server_Request.o .shobj/TAO_Server_Request.so: TAO_Server_Request.cpp TAO_Server_Request.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -20893,10 +21384,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -20962,68 +21453,68 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  Tagged_Profile.h \
- IOPC.h \
- corbafwd.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  OctetSeqC.h Sequence.h OctetSeqC.i Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  Object.h PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  PortableInterceptorC.h TAO_Export.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i PICurrent.inl TAO_Server_Request.i CDR.h Environment.h \
  Principal.h \
- Principal.i \
+ $(TAO_ROOT)/tao/Principal.i \
  ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -21035,19 +21526,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -21070,11 +21561,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -21103,31 +21594,33 @@ realclean:
  ORB_Core.i Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h debug.h \
  Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
  GIOP_Utils.h \
- GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
  Transport.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Incoming_Message_Queue.inl Transport.inl
 
 .obj/Typecode_Constants.o .obj/Typecode_Constants.so .shobj/Typecode_Constants.o .shobj/Typecode_Constants.so: Typecode_Constants.cpp \
- Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21167,8 +21660,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -21177,10 +21670,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -21230,88 +21723,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Object_KeyC.h \
- Object_KeyC.i \
- DomainC.h \
- corba.h \
- Any.h \
- Any.i \
- NVList.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- NVList.i \
- LocalObject.h \
- LocalObject.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- BoundsC.h \
- BoundsC.i \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- WrongTransactionC.h \
- WrongTransactionC.i \
- ObjectIDList.h \
- ObjectIDList.i \
- StringSeqC.h \
- StringSeqC.i \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
- DomainC.i \
- PollableC.h \
- PollableC.i
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.h \
+ $(TAO_ROOT)/tao/AbstractBase.inl \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/WrongTransactionC.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i
 
 .obj/TypeCodeFactory_Adapter.o .obj/TypeCodeFactory_Adapter.so .shobj/TypeCodeFactory_Adapter.o .shobj/TypeCodeFactory_Adapter.so: TypeCodeFactory_Adapter.cpp \
- TypeCodeFactory_Adapter.h \
+ $(TAO_ROOT)/tao/TypeCodeFactory_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21345,10 +21842,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -21413,25 +21910,27 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Typecode.h \
- Typecode.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Wait_Strategy.o .obj/Wait_Strategy.so .shobj/Wait_Strategy.o .shobj/Wait_Strategy.so: Wait_Strategy.cpp \
- Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21465,18 +21964,20 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Wait_Strategy.inl
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl
 
 .obj/Wait_On_Read.o .obj/Wait_On_Read.so .shobj/Wait_On_Read.o .shobj/Wait_On_Read.so: Wait_On_Read.cpp \
- Wait_On_Read.h \
+ $(TAO_ROOT)/tao/Wait_On_Read.h \
  $(ACE_ROOT)/ace/pre.h \
- Wait_Strategy.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21510,13 +22011,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Wait_Strategy.inl \
- Transport.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -21581,14 +22082,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -21623,53 +22124,55 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Resume_Handle.h \
- Resume_Handle.inl \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Resume_Handle.h \
+ $(TAO_ROOT)/tao/Resume_Handle.inl \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl
 
 .obj/Wait_On_Reactor.o .obj/Wait_On_Reactor.so .shobj/Wait_On_Reactor.o .shobj/Wait_On_Reactor.so: Wait_On_Reactor.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21727,9 +22230,9 @@ realclean:
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Wait_On_Reactor.h \
- Wait_Strategy.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Wait_On_Reactor.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -21738,14 +22241,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Wait_Strategy.inl \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -21788,89 +22291,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -21879,18 +22382,18 @@ realclean:
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -21899,10 +22402,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -21918,38 +22421,40 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl
 
 .obj/Wait_On_Leader_Follower.o .obj/Wait_On_Leader_Follower.so .shobj/Wait_On_Leader_Follower.o .shobj/Wait_On_Leader_Follower.so: Wait_On_Leader_Follower.cpp \
- Wait_On_Leader_Follower.h \
+ $(TAO_ROOT)/tao/Wait_On_Leader_Follower.h \
  $(ACE_ROOT)/ace/pre.h \
- Wait_Strategy.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -21983,14 +22488,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Wait_Strategy.inl \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22055,89 +22560,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22158,18 +22663,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -22178,10 +22683,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -22197,49 +22702,51 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl
 
 .obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.so .shobj/Transport_Mux_Strategy.o .shobj/Transport_Mux_Strategy.so: Transport_Mux_Strategy.cpp \
- Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -22273,11 +22780,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22342,39 +22849,41 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i
 
 .obj/Exclusive_TMS.o .obj/Exclusive_TMS.so .shobj/Exclusive_TMS.o .shobj/Exclusive_TMS.so: Exclusive_TMS.cpp \
- Exclusive_TMS.h \
+ $(TAO_ROOT)/tao/Exclusive_TMS.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport_Mux_Strategy.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -22408,11 +22917,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22477,42 +22986,42 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- debug.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/debug.h \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -22547,7 +23056,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
@@ -22555,12 +23064,14 @@ realclean:
  Incoming_Message_Queue.inl Transport.inl
 
 .obj/Muxed_TMS.o .obj/Muxed_TMS.so .shobj/Muxed_TMS.o .shobj/Muxed_TMS.so: Muxed_TMS.cpp \
- Muxed_TMS.h \
+ $(TAO_ROOT)/tao/Muxed_TMS.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport_Mux_Strategy.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -22594,11 +23105,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22663,29 +23174,29 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -22721,22 +23232,22 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- debug.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
@@ -22744,11 +23255,13 @@ realclean:
  Incoming_Message_Queue.inl Transport.inl
 
 .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
- Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -22782,11 +23295,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22851,38 +23364,40 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i
 
 .obj/Synch_Reply_Dispatcher.o .obj/Synch_Reply_Dispatcher.so .shobj/Synch_Reply_Dispatcher.o .shobj/Synch_Reply_Dispatcher.so: Synch_Reply_Dispatcher.cpp \
- Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h \
- Reply_Dispatcher.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -22916,11 +23431,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -22985,95 +23500,95 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -23094,18 +23609,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23114,10 +23629,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23133,37 +23648,39 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Incoming_Message_Queue.inl \
- Transport.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl
 
 .obj/Asynch_Reply_Dispatcher_Base.o .obj/Asynch_Reply_Dispatcher_Base.so .shobj/Asynch_Reply_Dispatcher_Base.o .shobj/Asynch_Reply_Dispatcher_Base.so: Asynch_Reply_Dispatcher_Base.cpp \
- Asynch_Reply_Dispatcher_Base.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Transport.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -23192,10 +23709,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -23260,14 +23777,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23302,112 +23819,112 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- Asynch_Reply_Dispatcher_Base.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23423,12 +23940,14 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -23462,10 +23981,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -23530,95 +24049,95 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i Any.h \
- Object.h \
- Typecode.h \
- Exception.h \
- Typecode.i \
- Any.i IOPC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i IOPC.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -23639,18 +24158,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23659,10 +24178,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23678,36 +24197,38 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/PollableC.o .obj/PollableC.so .shobj/PollableC.o .shobj/PollableC.so: PollableC.cpp PollableC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -23741,10 +24262,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  TAO_Export.h Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -23810,97 +24331,97 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
  PollableC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- CurrentC.i \
- Exception.h \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -23921,18 +24442,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23941,10 +24462,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23960,38 +24481,40 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
- CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(ACE_ROOT)/ace/pre.h \
- CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24025,10 +24548,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -24095,34 +24618,36 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CONV_FRAMEC.i \
- Any.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i
 
 .obj/Tagged_Components.o .obj/Tagged_Components.so .shobj/Tagged_Components.o .shobj/Tagged_Components.so: Tagged_Components.cpp \
- Tagged_Components.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24156,11 +24681,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -24225,97 +24750,97 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- Profile.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -24336,18 +24861,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -24356,10 +24881,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -24375,14 +24900,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Service_Context.o .obj/Service_Context.so .shobj/Service_Context.o .shobj/Service_Context.so: Service_Context.cpp \
- Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24416,11 +24943,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -24485,36 +25012,38 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Service_Context.inl
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Service_Context.inl
 
 .obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
- GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24548,12 +25077,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -24618,37 +25147,39 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i
 
 .obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp BoundsC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24682,10 +25213,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  TAO_Export.h Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -24751,95 +25282,95 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i CDR.h \
+ $(TAO_ROOT)/tao/Exception.i CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i BoundsC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i BoundsC.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -24860,18 +25391,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -24880,10 +25411,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -24899,36 +25430,38 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -24962,27 +25495,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -25045,41 +25578,43 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i TimeBaseC.h \
- Any.h \
- Typecode.h \
- Exception.h \
- Typecode.i \
- Any.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
  TAO_Export.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  TimeBaseC.i TAOC.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25113,10 +25648,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -25181,7 +25716,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -25195,9 +25730,11 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/TAO_Singleton_Manager.o .obj/TAO_Singleton_Manager.so .shobj/TAO_Singleton_Manager.o .shobj/TAO_Singleton_Manager.so: TAO_Singleton_Manager.cpp \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25243,11 +25780,11 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- TAO_Singleton_Manager.h \
- TAO_Export.h \
- TAO_Singleton_Manager.inl \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -25256,8 +25793,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -25307,17 +25844,19 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.h \
- Typecode.i
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i
 
 .obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp \
- DLL_ORB.h \
+ $(TAO_ROOT)/tao/DLL_ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25476,51 +26015,51 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- ORB.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- DLL_ORB.inl \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- debug.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/DLL_ORB.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -25531,10 +26070,12 @@ realclean:
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
 .obj/Adapter.o .obj/Adapter.so .shobj/Adapter.o .shobj/Adapter.so: Adapter.cpp \
- Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25568,11 +26109,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -25637,92 +26178,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Adapter.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Object_KeyC.h \
- Object_KeyC.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -25743,18 +26284,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -25763,10 +26304,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -25782,17 +26323,19 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Services_Activate.o .obj/Services_Activate.so .shobj/Services_Activate.o .shobj/Services_Activate.so: Services_Activate.cpp \
- Services_Activate.h \
+ $(TAO_ROOT)/tao/Services_Activate.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25826,10 +26369,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -25838,7 +26381,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Exception.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -25901,18 +26444,20 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Service_Callbacks.o .obj/Service_Callbacks.so .shobj/Service_Callbacks.o .shobj/Service_Callbacks.so: Service_Callbacks.cpp \
- Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -25946,11 +26491,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26015,43 +26560,45 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Service_Callbacks.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i
 
 .obj/Parser_Registry.o .obj/Parser_Registry.so .shobj/Parser_Registry.o .shobj/Parser_Registry.so: Parser_Registry.cpp \
- Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -26085,13 +26632,13 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Parser_Registry.i \
- IOR_Parser.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26156,92 +26703,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -26262,16 +26809,16 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -26280,10 +26827,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -26299,9 +26846,9 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- default_resource.h \
- default_resource.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/default_resource.h \
+ $(TAO_ROOT)/tao/default_resource.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -26310,10 +26857,12 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i
 
 .obj/IOR_Parser.o .obj/IOR_Parser.so .shobj/IOR_Parser.o .shobj/IOR_Parser.so: IOR_Parser.cpp \
- IOR_Parser.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -26347,11 +26896,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26416,14 +26965,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -26431,9 +26980,11 @@ realclean:
 
 .obj/DLL_Parser.o .obj/DLL_Parser.so .shobj/DLL_Parser.o .shobj/DLL_Parser.so: DLL_Parser.cpp DLL_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- IOR_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -26467,11 +27018,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26536,14 +27087,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -26565,23 +27116,23 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  DLL_Parser.i Object_Loader.h Object_Loader.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -26589,9 +27140,11 @@ realclean:
 
 .obj/FILE_Parser.o .obj/FILE_Parser.so .shobj/FILE_Parser.o .shobj/FILE_Parser.so: FILE_Parser.cpp FILE_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- IOR_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -26625,11 +27178,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26694,14 +27247,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -26723,47 +27276,49 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  FILE_Parser.i \
- Object_Loader.h \
- Object_Loader.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Object_Loader.h \
+ $(TAO_ROOT)/tao/Object_Loader.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
 .obj/CORBALOC_Parser.o .obj/CORBALOC_Parser.so .shobj/CORBALOC_Parser.o .shobj/CORBALOC_Parser.so: CORBALOC_Parser.cpp CORBALOC_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- IOR_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -26797,11 +27352,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26866,14 +27421,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -26895,63 +27450,63 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  CORBALOC_Parser.i ORB_Core.h corbafwd.h ORB.h Exception.h Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
  PortableInterceptorC.i \
@@ -26959,12 +27514,12 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -26996,20 +27551,22 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Stub.h \
- MProfile.h \
- MProfile.i \
- ORB.h \
- ORB_Core.h \
- Stub.i MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Stub.i MProfile.h \
  Connector_Registry.h Endpoint.h \
- Endpoint.i \
- Connector_Registry.i
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i
 
 .obj/CORBANAME_Parser.o .obj/CORBANAME_Parser.so .shobj/CORBANAME_Parser.o .shobj/CORBANAME_Parser.so: CORBANAME_Parser.cpp CORBANAME_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- IOR_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27043,11 +27600,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -27112,14 +27669,14 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -27143,109 +27700,109 @@ realclean:
  CORBANAME_Parser.i Invocation.h CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
+ $(TAO_ROOT)/tao/CDR.i \
  Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
  operation_details.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i Invocation.i Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27254,10 +27811,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27273,14 +27830,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i debug.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i debug.h
 
 .obj/MCAST_Parser.o .obj/MCAST_Parser.so .shobj/MCAST_Parser.o .shobj/MCAST_Parser.so: MCAST_Parser.cpp MCAST_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- IOR_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOR_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27314,11 +27873,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -27383,92 +27942,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/IOR_Parser.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -27489,18 +28048,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27509,10 +28068,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27528,10 +28087,10 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  MCAST_Parser.i default_ports.h \
- Object_Loader.h \
- Object_Loader.i \
+ $(TAO_ROOT)/tao/Object_Loader.h \
+ $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -27552,10 +28111,12 @@ realclean:
  $(ACE_ROOT)/ace/SOCK_Dgram.i
 
 .obj/Bind_Dispatcher_Guard.o .obj/Bind_Dispatcher_Guard.so .shobj/Bind_Dispatcher_Guard.o .shobj/Bind_Dispatcher_Guard.so: Bind_Dispatcher_Guard.cpp \
- Bind_Dispatcher_Guard.h \
+ $(TAO_ROOT)/tao/Bind_Dispatcher_Guard.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27589,14 +28150,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Bind_Dispatcher_Guard.i \
- Reply_Dispatcher.h \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Bind_Dispatcher_Guard.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -27661,39 +28222,41 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Reply_Dispatcher.i \
- Transport_Mux_Strategy.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h
 
 .obj/Fault_Tolerance_Service.o .obj/Fault_Tolerance_Service.so .shobj/Fault_Tolerance_Service.o .shobj/Fault_Tolerance_Service.so: Fault_Tolerance_Service.cpp \
- Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27780,7 +28343,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -27789,104 +28352,104 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Fault_Tolerance_Service.i \
- Service_Callbacks.h \
- IOPC.h \
- Exception.h \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Services_Activate.h \
+ $(TAO_ROOT)/tao/Services_Activate.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -27907,14 +28470,14 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27923,10 +28486,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27942,14 +28505,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Client_Strategy_Factory.h
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h
 
 .obj/Interceptor_List.o .obj/Interceptor_List.so .shobj/Interceptor_List.o .shobj/Interceptor_List.so: Interceptor_List.cpp \
- Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27983,28 +28548,28 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- PortableInterceptorC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -28067,48 +28632,50 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PolicyC.h \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Interceptor_List.inl \
- CORBA_String.h \
- CORBA_String.inl
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl
 
 .obj/IFR_Client_Adapter.o .obj/IFR_Client_Adapter.so .shobj/IFR_Client_Adapter.o .shobj/IFR_Client_Adapter.so: IFR_Client_Adapter.cpp \
- IFR_Client_Adapter.h \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28142,10 +28709,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -28162,6 +28729,8 @@ realclean:
 .obj/ORBInitInfo.o .obj/ORBInitInfo.so .shobj/ORBInitInfo.o .shobj/ORBInitInfo.so: ORBInitInfo.cpp ORBInitInfo.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28195,29 +28764,29 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -28280,36 +28849,36 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i ORBInitInfo.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -28321,19 +28890,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -28356,12 +28925,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- IOPC.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -28396,11 +28965,13 @@ realclean:
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
  ORBInitializer_Registry.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -28432,27 +29003,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -28515,49 +29086,51 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp ORB.h \
  Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
  PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28591,29 +29164,29 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  TAO_Export.h CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -28676,23 +29249,23 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -28725,11 +29298,13 @@ realclean:
  $(ACE_ROOT)/ace/Reactor_Impl.h
 
 .obj/Cache_Entries.o .obj/Cache_Entries.so .shobj/Cache_Entries.o .shobj/Cache_Entries.so: Cache_Entries.cpp \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport_Descriptor_Interface.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28763,16 +29338,16 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -28837,8 +29412,8 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -28873,45 +29448,47 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl
 
 .obj/Base_Transport_Property.o .obj/Base_Transport_Property.so .shobj/Base_Transport_Property.o .shobj/Base_Transport_Property.so: Base_Transport_Property.cpp \
- Base_Transport_Property.h \
+ $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(ACE_ROOT)/ace/pre.h \
- Transport_Descriptor_Interface.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28945,12 +29522,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Transport_Descriptor_Interface.inl \
- Endpoint.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -28966,16 +29543,18 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i \
- Base_Transport_Property.inl
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl
 
 .obj/Transport_Cache_Manager.o .obj/Transport_Cache_Manager.so .shobj/Transport_Cache_Manager.o .shobj/Transport_Cache_Manager.so: Transport_Cache_Manager.cpp \
- Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -29009,14 +29588,14 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -29115,112 +29694,112 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
- Transport.h \
- Exception.h \
- Exception.i \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Incoming_Message_Queue.inl \
- Transport.inl \
- debug.h \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -29236,25 +29815,24 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Connection_Purging_Strategy.h \
- Connection_Purging_Strategy.inl \
- Condition.h \
- Condition.inl \
- Condition.cpp
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
+ $(TAO_ROOT)/tao/Condition.h \
+ $(TAO_ROOT)/tao/Condition.inl \
+ $(TAO_ROOT)/tao/Condition.cpp
 
 .obj/Cleanup_Func_Registry.o .obj/Cleanup_Func_Registry.so .shobj/Cleanup_Func_Registry.o .shobj/Cleanup_Func_Registry.so: Cleanup_Func_Registry.cpp \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -29276,6 +29854,9 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  Cleanup_Func_Registry.inl \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -29283,10 +29864,12 @@ realclean:
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Transport_Descriptor_Interface.o .obj/Transport_Descriptor_Interface.so .shobj/Transport_Descriptor_Interface.o .shobj/Transport_Descriptor_Interface.so: Transport_Descriptor_Interface.cpp \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -29320,12 +29903,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Transport_Descriptor_Interface.inl \
- Endpoint.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -29341,11 +29924,13 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Endpoint.i
+ $(TAO_ROOT)/tao/Endpoint.i
 
 .obj/Object_Ref_Table.o .obj/Object_Ref_Table.so .shobj/Object_Ref_Table.o .shobj/Object_Ref_Table.so: Object_Ref_Table.cpp Object_Ref_Table.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -29379,10 +29964,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -29482,44 +30067,46 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Object.h \
- corbafwd.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i ORB.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i ORB.h \
  Exception.h \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- Object.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h debug.h
 
 .obj/BiDir_Adapter.o .obj/BiDir_Adapter.so .shobj/BiDir_Adapter.o .shobj/BiDir_Adapter.so: BiDir_Adapter.cpp \
- BiDir_Adapter.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
- Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -29553,10 +30140,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -29621,7 +30208,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -29635,10 +30222,12 @@ realclean:
 
 .obj/CodecFactory.o .obj/CodecFactory.so .shobj/CodecFactory.o .shobj/CodecFactory.so: CodecFactory.cpp CodecFactory.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -29670,10 +30259,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -29738,39 +30327,41 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i Any.h \
- Object.h \
- Typecode.h \
- Exception.h \
- Typecode.i \
- Any.i IOPC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i IOPC.i \
  LocalObject.h LocalObject.i CDR_Encaps_Codec.h
 
 .obj/CodecFactory_ORBInitializer.o .obj/CodecFactory_ORBInitializer.so .shobj/CodecFactory_ORBInitializer.o .shobj/CodecFactory_ORBInitializer.so: CodecFactory_ORBInitializer.cpp \
  CodecFactory_ORBInitializer.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableInterceptorC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -29802,27 +30393,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -29885,30 +30476,32 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- DynamicC.h Any.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i DynamicC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i DynamicC.i \
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i CodecFactory.h ORBInitInfo.h ORBInitInfo.inl
 
 .obj/CDR_Encaps_Codec.o .obj/CDR_Encaps_Codec.so .shobj/CDR_Encaps_Codec.o .shobj/CDR_Encaps_Codec.so: CDR_Encaps_Codec.cpp CDR.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -29942,10 +30535,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -30012,56 +30605,58 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i OctetSeqC.h \
+ $(TAO_ROOT)/tao/CDR.i OctetSeqC.h \
  corbafwd.h Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  OctetSeqC.i Any.h \
- CDR.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i Typecode.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i Typecode.h \
  Marshal.h \
- Principal.h \
- OctetSeqC.h \
- Principal.i \
- Any.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Marshal.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
  CDR_Encaps_Codec.h TAO_Export.h IOPC.h Exception.h Object.h IOPC.i \
  LocalObject.h LocalObject.i
 
 .obj/Endpoint_Selector_Factory.o .obj/Endpoint_Selector_Factory.so .shobj/Endpoint_Selector_Factory.o .shobj/Endpoint_Selector_Factory.so: Endpoint_Selector_Factory.cpp \
- Endpoint_Selector_Factory.h \
+ $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -30095,10 +30690,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -30114,6 +30709,8 @@ realclean:
 
 .obj/Flushing_Strategy.o .obj/Flushing_Strategy.so .shobj/Flushing_Strategy.o .shobj/Flushing_Strategy.so: Flushing_Strategy.cpp Flushing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl
@@ -30122,6 +30719,8 @@ realclean:
  Block_Flushing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  Flushing_Strategy.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -30157,12 +30756,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -30227,15 +30826,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -30270,36 +30869,36 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl Queued_Message.h LF_Event.h \
  LF_Event.inl Queued_Message.inl
 
@@ -30307,6 +30906,8 @@ realclean:
  Reactive_Flushing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  Flushing_Strategy.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -30342,12 +30943,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -30412,15 +31013,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -30455,83 +31056,83 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -30558,6 +31159,8 @@ realclean:
 
 .obj/Connect_Strategy.o .obj/Connect_Strategy.so .shobj/Connect_Strategy.o .shobj/Connect_Strategy.so: Connect_Strategy.cpp Connect_Strategy.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl
@@ -30566,6 +31169,8 @@ realclean:
  Blocked_Connect_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  Connect_Strategy.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -30599,11 +31204,13 @@ realclean:
  Reactive_Connect_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  Connect_Strategy.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  Connection_Handler.h LF_Event.h LF_Event.inl \
- Connection_Handler.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
  Transport.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -30636,12 +31243,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -30706,15 +31313,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -30749,83 +31356,83 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -30854,11 +31461,13 @@ realclean:
 .obj/LF_Connect_Strategy.o .obj/LF_Connect_Strategy.so .shobj/LF_Connect_Strategy.o .shobj/LF_Connect_Strategy.so: LF_Connect_Strategy.cpp LF_Connect_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  Connect_Strategy.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  Connection_Handler.h LF_Event.h LF_Event.inl \
- Connection_Handler.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
  Transport.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -30891,12 +31500,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -30961,15 +31570,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31004,83 +31613,83 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h params.h \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -31103,17 +31712,17 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
  debug.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i
@@ -31121,6 +31730,8 @@ realclean:
 .obj/Queued_Message.o .obj/Queued_Message.so .shobj/Queued_Message.o .shobj/Queued_Message.so: Queued_Message.cpp Queued_Message.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -31154,10 +31765,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  LF_Event.h TAO_Export.h LF_Event.inl Queued_Message.inl
 
 .obj/Synch_Queued_Message.o .obj/Synch_Queued_Message.so .shobj/Synch_Queued_Message.o .shobj/Synch_Queued_Message.so: Synch_Queued_Message.cpp \
@@ -31165,6 +31776,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  Queued_Message.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -31198,10 +31811,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  LF_Event.h TAO_Export.h LF_Event.inl Queued_Message.inl \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -31213,6 +31826,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  Queued_Message.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -31246,10 +31861,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  LF_Event.h TAO_Export.h LF_Event.inl Queued_Message.inl \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -31258,6 +31873,8 @@ realclean:
 
 .obj/Transport_Timer.o .obj/Transport_Timer.so .shobj/Transport_Timer.o .shobj/Transport_Timer.so: Transport_Timer.cpp Transport_Timer.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -31295,12 +31912,12 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -31363,15 +31980,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31406,55 +32023,59 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl
 
 .obj/Connection_Purging_Strategy.o .obj/Connection_Purging_Strategy.so .shobj/Connection_Purging_Strategy.o .shobj/Connection_Purging_Strategy.so: Connection_Purging_Strategy.cpp \
- Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- Connection_Purging_Strategy.inl
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl
 
 .obj/LRU_Connection_Purging_Strategy.o .obj/LRU_Connection_Purging_Strategy.so .shobj/LRU_Connection_Purging_Strategy.o .shobj/LRU_Connection_Purging_Strategy.so: LRU_Connection_Purging_Strategy.cpp \
  LRU_Connection_Purging_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- Connection_Purging_Strategy.h \
- TAO_Export.h \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- Connection_Purging_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
  Transport.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -31487,11 +32108,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  Exception.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -31556,15 +32177,15 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31599,50 +32220,52 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- IOPC.h \
- Exception.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl
 
 .obj/Policy_Set.o .obj/Policy_Set.so .shobj/Policy_Set.o .shobj/Policy_Set.so: Policy_Set.cpp \
- Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- PolicyC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -31671,26 +32294,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -31753,26 +32376,28 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- Policy_Set.i \
- debug.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Default_Endpoint_Selector_Factory.o .obj/Default_Endpoint_Selector_Factory.so .shobj/Default_Endpoint_Selector_Factory.o .shobj/Default_Endpoint_Selector_Factory.so: \
  Default_Endpoint_Selector_Factory.cpp \
- Default_Endpoint_Selector_Factory.h \
+ $(TAO_ROOT)/tao/Default_Endpoint_Selector_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- Endpoint_Selector_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -31806,10 +32431,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -31900,20 +32525,22 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Invocation_Endpoint_Selectors.h \
- Invocation_Endpoint_Selectors.i
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i
 
 .obj/Thread_Lane_Resources.o .obj/Thread_Lane_Resources.so .shobj/Thread_Lane_Resources.o .shobj/Thread_Lane_Resources.so: Thread_Lane_Resources.cpp \
- Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -31942,9 +32569,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -31960,10 +32587,10 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- Thread_Lane_Resources.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -32013,89 +32640,89 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -32116,18 +32743,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -32136,10 +32763,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32155,43 +32782,45 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Acceptor_Registry.h \
- Acceptor_Registry.i \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
  Connector_Registry.h corbafwd.h Endpoint.h \
- Endpoint.i \
- Connector_Registry.i
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Registry.i
 
 .obj/Thread_Lane_Resources_Manager.o .obj/Thread_Lane_Resources_Manager.so .shobj/Thread_Lane_Resources_Manager.o .shobj/Thread_Lane_Resources_Manager.so: Thread_Lane_Resources_Manager.cpp \
- Thread_Lane_Resources_Manager.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -32220,9 +32849,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -32231,9 +32860,9 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Thread_Lane_Resources_Manager.i \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -32252,10 +32881,10 @@ realclean:
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -32303,83 +32932,83 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -32400,18 +33029,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -32420,10 +33049,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32439,14 +33068,14 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LF_Strategy.h \
- LF_Strategy.inl \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -32454,17 +33083,19 @@ realclean:
 
 .obj/Default_Thread_Lane_Resources_Manager.o .obj/Default_Thread_Lane_Resources_Manager.so .shobj/Default_Thread_Lane_Resources_Manager.o .shobj/Default_Thread_Lane_Resources_Manager.so: \
  Default_Thread_Lane_Resources_Manager.cpp \
- Default_Thread_Lane_Resources_Manager.h \
+ $(TAO_ROOT)/tao/Default_Thread_Lane_Resources_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Thread_Lane_Resources_Manager.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -32493,9 +33124,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -32504,7 +33135,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -32587,99 +33218,99 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Default_Thread_Lane_Resources_Manager.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Default_Thread_Lane_Resources_Manager.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -32688,10 +33319,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32707,29 +33338,31 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Acceptor_Registry.h \
- Acceptor_Registry.i \
- Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i
+ $(TAO_ROOT)/tao/Leader_Follower.i
 
 .obj/Default_Stub_Factory.o .obj/Default_Stub_Factory.so .shobj/Default_Stub_Factory.o .shobj/Default_Stub_Factory.so: Default_Stub_Factory.cpp \
  Default_Stub_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- Stub_Factory.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Stub_Factory.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -32763,10 +33396,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -32857,100 +33490,100 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -32959,10 +33592,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32978,14 +33611,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i
 
 .obj/Request_Dispatcher.o .obj/Request_Dispatcher.so .shobj/Request_Dispatcher.o .shobj/Request_Dispatcher.so: Request_Dispatcher.cpp Request_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h \
- Object_KeyC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -33019,26 +33654,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Object_KeyC.i \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -33099,53 +33734,53 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
  TAO_Server_Request.h corbafwd.h Tagged_Profile.h \
- GIOPC.h \
- GIOPC.i \
- Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  OctetSeqC.h Sequence.h OctetSeqC.i Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  Object.h PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  PortableInterceptorC.h TAO_Export.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i PICurrent.inl TAO_Server_Request.i ORB_Core.h ORB.h \
  Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -33157,19 +33792,19 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -33192,11 +33827,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -33225,11 +33860,13 @@ realclean:
  ORB_Core.i
 
 .obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp \
- Services.h \
+ $(TAO_ROOT)/tao/Services.h \
  $(ACE_ROOT)/ace/pre.h \
- Sequence.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -33263,24 +33900,24 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -33343,78 +33980,78 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Any.h \
- Object.h \
- Policy_ForwardC.h \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
- ORB_Core.h \
- ORB.h \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -33435,18 +34072,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -33455,10 +34092,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -33474,13 +34111,15 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
- NVList.h \
+ $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -33516,9 +34155,9 @@ realclean:
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Any.h \
- CDR.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -33527,9 +34166,9 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -33589,54 +34228,56 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Policy_ForwardC.i \
- Object.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- Any.i \
- NVList.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- BoundsC.h \
- BoundsC.i \
- debug.h \
- Marshal.h \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- Marshal.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Marshal.i
 
 .obj/IFR_TypeCodes.o .obj/IFR_TypeCodes.so .shobj/IFR_TypeCodes.o .shobj/IFR_TypeCodes.so: IFR_TypeCodes.cpp \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -33670,16 +34311,18 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i
 
 .obj/Dynamic_Adapter.o .obj/Dynamic_Adapter.so .shobj/Dynamic_Adapter.o .shobj/Dynamic_Adapter.so: Dynamic_Adapter.cpp \
- Dynamic_Adapter.h \
+ $(TAO_ROOT)/tao/Dynamic_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -33713,10 +34356,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -33725,9 +34368,9 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- ORB_Core.h \
- ORB.h \
- Exception.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -33790,83 +34433,83 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- params.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -33887,18 +34530,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -33907,10 +34550,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -33926,25 +34569,27 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Policy_Manager.o .obj/Policy_Manager.so .shobj/Policy_Manager.o .shobj/Policy_Manager.so: Policy_Manager.cpp \
- Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Policy_Set.h \
- PolicyC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -33973,26 +34618,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -34055,74 +34700,74 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -34143,18 +34788,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -34163,10 +34808,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -34182,29 +34827,31 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Buffering_Constraint_Policy.h \
- TAOC.h \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- Buffering_Constraint_Policy.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i
 
 .obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.so .shobj/Buffering_Constraint_Policy.o .shobj/Buffering_Constraint_Policy.so: Buffering_Constraint_Policy.cpp \
- Buffering_Constraint_Policy.h \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.h \
  $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- TAOC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -34233,27 +34880,27 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -34316,45 +34963,47 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Exception.h \
- Exception.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- TimeBaseC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- LocalObject.h \
- LocalObject.i \
- Buffering_Constraint_Policy.i
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i
 
 .obj/Messaging_PolicyValueC.o .obj/Messaging_PolicyValueC.so .shobj/Messaging_PolicyValueC.o .shobj/Messaging_PolicyValueC.so: Messaging_PolicyValueC.cpp \
  Messaging_PolicyValueC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -34388,10 +35037,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i IOPC.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i IOPC.h \
  Exception.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -34456,96 +35105,96 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
+ $(TAO_ROOT)/tao/Exception.i \
  Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i Any.h \
- Object.h \
- Typecode.h \
- Exception.h \
- Typecode.i \
- Any.i IOPC.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i IOPC.i \
  Sequence.h Messaging_PolicyValueC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -34566,18 +35215,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -34586,10 +35235,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -34605,39 +35254,41 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
- Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
  $(ACE_ROOT)/ace/pre.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -34671,11 +35322,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -34740,38 +35391,40 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i
 
 .obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.so .shobj/Pluggable_Messaging_Utils.o .shobj/Pluggable_Messaging_Utils.so: Pluggable_Messaging_Utils.cpp \
- Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -34805,11 +35458,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -34874,91 +35527,91 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -34979,18 +35632,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -34999,10 +35652,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -35018,15 +35671,17 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/GIOP_Message_Base.o .obj/GIOP_Message_Base.so .shobj/GIOP_Message_Base.o .shobj/GIOP_Message_Base.so: GIOP_Message_Base.cpp GIOP_Message_Base.h \
  $(ACE_ROOT)/ace/pre.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -35060,11 +35715,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -35129,72 +35784,72 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_Generator_Parser_Impl.h \
- GIOP_Message_Generator_Parser_11.h \
- GIOP_Message_Generator_Parser_10.h \
- GIOP_Message_Generator_Parser.h \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
- GIOP_Message_Generator_Parser_11.inl \
- GIOP_Message_Generator_Parser_12.h \
- GIOP_Message_Generator_Parser_12.inl \
- GIOP_Message_Generator_Parser_Impl.inl \
- GIOP_Utils.h \
- GIOP_Utils.i \
- GIOP_Message_State.h \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
- GIOP_Message_Base.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.inl \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  operation_details.h corbafwd.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
  target_specification.i operation_details.i GIOP_Utils.h debug.h \
  ORB_Core.h ORB.h Exception.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -35206,24 +35861,24 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h DynamicC.i ObjectReferenceTemplateC.h \
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -35247,11 +35902,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -35283,49 +35938,51 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- ORB_Core.h \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
  TAO_Server_Request.h Tagged_Profile.h \
- GIOPC.h \
- GIOPC.i \
- Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  Object.h TAO_Server_Request.i GIOP_Message_Locate_Header.h \
- Tagged_Profile.h \
- GIOP_Message_Locate_Header.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.i \
  Transport.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
  Incoming_Message_Queue.inl Transport.inl LF_Strategy.h \
- LF_Strategy.inl \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
  Request_Dispatcher.h
 
 .obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.so .shobj/GIOP_Message_Lite.o .shobj/GIOP_Message_Lite.so: GIOP_Message_Lite.cpp \
- GIOP_Message_Lite.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
  $(ACE_ROOT)/ace/pre.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -35359,11 +36016,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -35428,106 +36085,106 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Utils.h \
- GIOP_Utils.i \
- GIOP_Message_State.h \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
- GIOP_Message_Lite.i \
- debug.h \
- TAOC.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
- TimeBaseC.i \
- TAOC.i \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -35548,18 +36205,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -35568,10 +36225,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -35587,57 +36244,59 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- TAO_Server_Request.h \
- Tagged_Profile.h \
- GIOPC.h \
- GIOPC.i \
- Tagged_Profile.i \
- TAO_Server_Request.i \
- GIOP_Message_Locate_Header.h \
- GIOP_Message_Locate_Header.i \
- Leader_Follower.h \
- LF_Follower.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.i \
+ $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.h \
  $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
  $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
- LF_Follower.inl \
- New_Leader_Generator.h \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(TAO_ROOT)/tao/New_Leader_Generator.h \
  $(ACE_ROOT)/ace/Intrusive_List.h \
  $(ACE_ROOT)/ace/Intrusive_List.inl \
  $(ACE_ROOT)/ace/Intrusive_List.cpp \
- Leader_Follower.i \
- LF_Strategy.h \
- LF_Strategy.inl \
- Transport.h \
- Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
- Transport_Cache_Manager.h \
- Cache_Entries.h \
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
- Incoming_Message_Queue.h \
- Incoming_Message_Queue.inl \
- Transport.inl
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Transport.inl
 
 .obj/GIOP_Message_Generator_Parser.o .obj/GIOP_Message_Generator_Parser.so .shobj/GIOP_Message_Generator_Parser.o .shobj/GIOP_Message_Generator_Parser.so: GIOP_Message_Generator_Parser.cpp \
- GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -35671,11 +36330,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -35740,50 +36399,52 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- GIOP_Utils.h \
- GIOP_Utils.i \
- Object_KeyC.h \
- Object_KeyC.i \
- Tagged_Profile.h \
- GIOPC.h \
- GIOPC.i \
- Tagged_Profile.i \
- debug.h
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/GIOP_Message_Generator_Parser_10.o .obj/GIOP_Message_Generator_Parser_10.so .shobj/GIOP_Message_Generator_Parser_10.o .shobj/GIOP_Message_Generator_Parser_10.so: \
  GIOP_Message_Generator_Parser_10.cpp \
  GIOP_Message_Generator_Parser_10.h \
  $(ACE_ROOT)/ace/pre.h \
- GIOP_Message_Generator_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -35817,11 +36478,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -35886,77 +36547,79 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
  GIOP_Utils.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOP_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
  GIOP_Message_Locate_Header.h \
- Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- GIOP_Message_Locate_Header.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.i \
  operation_details.h corbafwd.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h target_specification.i operation_details.i \
  CDR.h Any.h debug.h OctetSeqC.h Sequence.h OctetSeqC.i \
  Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  TAO_Server_Request.h Tagged_Profile.h Object.h PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  PortableInterceptorC.h TAO_Export.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i PICurrent.inl TAO_Server_Request.i GIOP_Message_State.h \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
  CORBA_String.h \
- CORBA_String.inl
+ $(TAO_ROOT)/tao/CORBA_String.inl
 
 .obj/GIOP_Message_Generator_Parser_11.o .obj/GIOP_Message_Generator_Parser_11.so .shobj/GIOP_Message_Generator_Parser_11.o .shobj/GIOP_Message_Generator_Parser_11.so: \
  GIOP_Message_Generator_Parser_11.cpp \
- GIOP_Message_Generator_Parser_11.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
  $(ACE_ROOT)/ace/pre.h \
- GIOP_Message_Generator_Parser_10.h \
- GIOP_Message_Generator_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -35990,11 +36653,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -36059,18 +36722,20 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
- GIOP_Message_Generator_Parser_11.inl
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl
 
 .obj/GIOP_Message_Generator_Parser_12.o .obj/GIOP_Message_Generator_Parser_12.so .shobj/GIOP_Message_Generator_Parser_12.o .shobj/GIOP_Message_Generator_Parser_12.so: \
  GIOP_Message_Generator_Parser_12.cpp \
  GIOP_Message_Generator_Parser_12.h \
  $(ACE_ROOT)/ace/pre.h \
- GIOP_Message_Generator_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -36104,11 +36769,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -36173,92 +36838,92 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_12.inl \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
  GIOP_Utils.h \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- IOPC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOP_Utils.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
  GIOP_Message_State.h \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
  GIOP_Message_Locate_Header.h \
- Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- GIOP_Message_Locate_Header.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.i \
  operation_details.h corbafwd.h Service_Context.h \
- Service_Context.inl \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  target_specification.h target_specification.i operation_details.i \
  CDR.h Any.h debug.h Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  TAO_Server_Request.h Tagged_Profile.h OctetSeqC.h Sequence.h \
  OctetSeqC.i Object.h PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  PortableInterceptorC.h TAO_Export.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
  LocalObject.i PICurrent.inl TAO_Server_Request.i TAOC.h TimeBaseC.h \
- SmartProxies/Smart_Proxies.h \
- SmartProxies/smartproxies_export.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  TimeBaseC.i TAOC.i ORB_Core.h ORB.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
- objectid.h ORB.i \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ objectid.h $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -36270,7 +36935,7 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h TAO_Singleton.h Adapter.h Adapter.i \
  PolicyFactory_Registry.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -36294,11 +36959,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -36325,14 +36990,14 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Transport.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
@@ -36340,13 +37005,15 @@ realclean:
 
 .obj/GIOP_Message_Generator_Parser_Impl.o .obj/GIOP_Message_Generator_Parser_Impl.so .shobj/GIOP_Message_Generator_Parser_Impl.o .shobj/GIOP_Message_Generator_Parser_Impl.so: \
  GIOP_Message_Generator_Parser_Impl.cpp \
- GIOP_Message_Generator_Parser_Impl.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
- GIOP_Message_Generator_Parser_11.h \
- GIOP_Message_Generator_Parser_10.h \
- GIOP_Message_Generator_Parser.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -36380,11 +37047,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -36449,20 +37116,22 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
- GIOP_Message_Generator_Parser_11.inl \
- GIOP_Message_Generator_Parser_12.h \
- GIOP_Message_Generator_Parser_12.inl \
- GIOP_Message_Generator_Parser_Impl.inl
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.inl
 
 .obj/GIOP_Utils.o .obj/GIOP_Utils.so .shobj/GIOP_Utils.o .shobj/GIOP_Utils.so: GIOP_Utils.cpp \
- GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
- Object.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -36496,25 +37165,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -36577,79 +37246,79 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- IOPC.h \
- Exception.h \
- Exception.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOP_Utils.i \
- debug.h \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -36670,18 +37339,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -36690,10 +37359,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -36709,30 +37378,32 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  Transport.h corbafwd.h Exception.h Transport_Descriptor_Interface.h \
- Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
- Cache_Entries.h \
- Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/Recyclable.h \
  $(ACE_ROOT)/ace/Recyclable.inl \
- Cache_Entries.inl \
- Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Transport.inl
 
 .obj/GIOP_Message_Locate_Header.o .obj/GIOP_Message_Locate_Header.so .shobj/GIOP_Message_Locate_Header.o .shobj/GIOP_Message_Locate_Header.so: GIOP_Message_Locate_Header.cpp \
- GIOP_Message_Locate_Header.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.h \
  $(ACE_ROOT)/ace/pre.h \
- Tagged_Profile.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -36766,11 +37437,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -36835,42 +37506,44 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- GIOP_Message_Locate_Header.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Locate_Header.i
 
 .obj/target_specification.o .obj/target_specification.so .shobj/target_specification.o .shobj/target_specification.so: target_specification.cpp \
- target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.h \
  $(ACE_ROOT)/ace/pre.h \
- Object_KeyC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -36904,26 +37577,26 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Object_KeyC.i \
- IOPC.h \
- Exception.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -36984,28 +37657,30 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- target_specification.i
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/target_specification.i
 
 .obj/GIOP_Message_State.o .obj/GIOP_Message_State.so .shobj/GIOP_Message_State.o .shobj/GIOP_Message_State.so: GIOP_Message_State.cpp \
- GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(ACE_ROOT)/ace/pre.h \
- GIOP_Message_Version.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -37039,17 +37714,17 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
- GIOP_Message_Generator_Parser_Impl.h \
- GIOP_Message_Generator_Parser_11.h \
- GIOP_Message_Generator_Parser_10.h \
- GIOP_Message_Generator_Parser.h \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_State.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -37114,97 +37789,97 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- GIOP_Message_Generator_Parser.inl \
- GIOP_Message_Generator_Parser_10.inl \
- GIOP_Message_Generator_Parser_11.inl \
- GIOP_Message_Generator_Parser_12.h \
- GIOP_Message_Generator_Parser_12.inl \
- GIOP_Message_Generator_Parser_Impl.inl \
- ORB_Core.h \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.inl \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
+ $(TAO_ROOT)/tao/params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
- Messaging_SyncScopeC.i \
- IOPC.h \
- IOPC.i \
- PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -37225,18 +37900,18 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -37245,10 +37920,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -37264,21 +37939,23 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- GIOP_Message_Base.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Utils.h \
- GIOP_Utils.i \
- GIOP_Message_Base.i
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Base.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Base.i
 
 .obj/GIOP_Message_Version.o .obj/GIOP_Message_Version.so .shobj/GIOP_Message_Version.o .shobj/GIOP_Message_Version.so: GIOP_Message_Version.cpp \
  GIOP_Message_Version.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -37312,17 +37989,19 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- GIOP_Message_Version.inl
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl
 
 .obj/Tagged_Profile.o .obj/Tagged_Profile.so .shobj/Tagged_Profile.o .shobj/Tagged_Profile.so: Tagged_Profile.cpp Tagged_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
- corbafwd.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -37356,11 +38035,11 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- Exception.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -37425,52 +38104,52 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- Any.h \
- Typecode.h \
- Typecode.i \
- Any.i \
- IOPC.i \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  ORB_Core.h corbafwd.h ORB.h Exception.h Services.h \
- Services.i \
+ $(TAO_ROOT)/tao/Services.i \
  CORBA_String.h \
- CORBA_String.inl \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  objectid.h PolicyC.h CurrentC.h \
- CurrentC.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
- ORB.i \
+ $(TAO_ROOT)/tao/ORB.i \
  Environment.h Policy_Manager.h \
- Policy_Set.h \
- PolicyC.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
+ $(TAO_ROOT)/tao/Policy_Set.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
  Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -37482,24 +38161,24 @@ realclean:
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
+ $(TAO_ROOT)/tao/params.i \
  TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h DynamicC.i ObjectReferenceTemplateC.h \
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
- ValueBase.i \
+ $(TAO_ROOT)/tao/ValueBase.i \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -37523,11 +38202,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  Parser_Registry.h \
- Parser_Registry.i \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  Service_Callbacks.h \
- Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
@@ -37559,10 +38238,10 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Acceptor_Registry.h \
- Resource_Factory.h \
- Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
  Transport_Acceptor.h Transport_Acceptor.inl Thread_Lane_Resources.h \
- Thread_Lane_Resources.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  debug.h target_specification.h target_specification.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

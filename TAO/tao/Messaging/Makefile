@@ -63,6 +63,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Twoway_Asynch_Invocation.h \
  $(ACE_ROOT)/ace/pre.h Messaging.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -376,6 +378,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Asynch_Reply_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h Messaging.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -666,6 +670,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Asynch_Timeout_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -891,6 +897,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1153,6 +1161,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Messaging.o .obj/Messaging.so .shobj/Messaging.o .shobj/Messaging.so: Messaging.cpp Messaging.h \
  $(ACE_ROOT)/ace/pre.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1424,6 +1434,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/MessagingC.o .obj/MessagingC.so .shobj/MessagingC.o .shobj/MessagingC.so: MessagingC.cpp Messaging.h \
  $(ACE_ROOT)/ace/pre.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1717,6 +1729,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/MessagingS.o .obj/MessagingS.so .shobj/MessagingS.o .shobj/MessagingS.so: MessagingS.cpp MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  messaging_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2063,6 +2077,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2349,6 +2365,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2500,9 +2518,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  Messaging_Policy_i.h \
- Messaging.h \
- messaging_export.h \
- MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging.h \
+ $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.h \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2522,9 +2540,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- MessagingC.i \
- TAO_ExtC.h \
- TAO_ExtC.i \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  Messaging_Policy_i.i Connection_Timeout_Policy_i.h TAO_ExtC.h \
@@ -2623,6 +2641,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2774,9 +2794,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  Messaging_Policy_i.h \
- Messaging.h \
- messaging_export.h \
- MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging.h \
+ $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.h \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2796,9 +2816,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- MessagingC.i \
- TAO_ExtC.h \
- TAO_ExtC.i \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  Messaging_Policy_i.i Connection_Timeout_Policy_i.h TAO_ExtC.h \
@@ -2806,18 +2826,20 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i
 
 .obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.so .shobj/Messaging_Policy_i.o .shobj/Messaging_Policy_i.so: Messaging_Policy_i.cpp \
- Messaging_Policy_i.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- Messaging.h \
- messaging_export.h \
- MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging.h \
+ $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2967,14 +2989,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i \
- TAO_ExtC.h \
- TAO_ExtC.i \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- Messaging_Policy_i.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
