@@ -15,7 +15,11 @@
 #include "ace/Auto_Ptr.h"
 #include "Hash_Naming_Context.h"
 
-ACE_RCSID(Naming, Hash_Naming_Context, "$Id:")
+ACE_RCSID(Naming, Hash_Naming_Context, "$Id$")
+
+TAO_Bindings_Map::~TAO_Bindings_Map (void)
+{
+}
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)
@@ -80,9 +84,6 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
       CORBA::ULong rest_len = ex.rest_of_name.length () + 1;
       ex.rest_of_name.length (rest_len);
       ex.rest_of_name[rest_len - 1] = name[name_len - 1];
-
-      if (ex.why == CosNaming::NamingContext::not_object)
-        ex.why = CosNaming::NamingContext::missing_node;
 
       ACE_RETHROW;
     }
@@ -199,12 +200,20 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
   else
     // If we received a simple name, we need to rebind it in this
     // context.
-    if (this->context_->rebind (n[0].id,
-                               n[0].kind,
-                               obj,
-                               CosNaming::nobject)
-        == -1)
-      ACE_THROW (CORBA::INTERNAL ());
+    {
+      int result = this->context_->rebind (n[0].id,
+                                           n[0].kind,
+                                           obj,
+                                           CosNaming::nobject);
+      // Check for error conditions.
+      if (result == -1)
+        ACE_THROW (CORBA::INTERNAL ());
+
+      else if (result == -2)
+        ACE_THROW (CosNaming::NamingContext::NotFound
+                   (CosNaming::NamingContext::not_object,
+                    n));
+    }
 }
 
 void
@@ -221,6 +230,10 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   // invoked on it.
   if (this->destroyed_)
     ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+
+  // Do not allow binding of nil context reference.
+  if (CORBA::is_nil (nc))
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   // Get the length of the name.
   CORBA::ULong name_len = n.length ();
@@ -298,14 +311,23 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
       context->rebind_context (simple_name, nc, ACE_TRY_ENV);
       ACE_CHECK;
     }
-  // If we received a simple name, we need to rebind it in this
-  // context.
   else
-    if (this->context_->rebind (n[0].id,
-                               n[0].kind,
-                               nc,
-                               CosNaming::ncontext) < 0)
-      ACE_THROW (CORBA::INTERNAL ());
+    // If we received a simple name, we need to rebind it in this
+    // context.
+    {
+      int result = this->context_->rebind (n[0].id,
+                                           n[0].kind,
+                                           nc,
+                                           CosNaming::ncontext);
+      // Check for error conditions.
+      if (result == -1)
+        ACE_THROW (CORBA::INTERNAL ());
+
+      else if (result == -2)
+        ACE_THROW (CosNaming::NamingContext::NotFound
+                   (CosNaming::NamingContext::not_context,
+                    n));
+    }
 }
 
 CORBA::Object_ptr
@@ -342,7 +364,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
                             obj,
                             type) == -1)
     ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
-                      (CosNaming::NamingContext::not_object,
+                      (CosNaming::NamingContext::missing_node,
                        n),
                       CORBA::Object::_nil ());
 
@@ -444,7 +466,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
     if (this->context_->unbind (n[0].id,
                                 n[0].kind) == -1)
       ACE_THROW (CosNaming::NamingContext::NotFound
-                 (CosNaming::NamingContext::not_object,
+                 (CosNaming::NamingContext::missing_node,
                   n));
 }
 

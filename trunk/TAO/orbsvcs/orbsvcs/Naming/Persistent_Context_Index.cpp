@@ -28,6 +28,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
+  // Allocate memory for items to be stored in the table.
   size_t poa_id_len = ACE_OS::strlen (poa_id) + 1;
   size_t counter_len = sizeof (ACE_UINT32);
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
@@ -36,6 +37,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
     return -1;
   else
     {
+      // Populate memory with data.
       counter = ACE_reinterpret_cast (ACE_UINT32 *, ptr);
       *counter = 0;
       char * poa_id_ptr = ptr + counter_len;
@@ -119,8 +121,12 @@ TAO_Persistent_Context_Index::open (LPCTSTR file_name,
 }
 
 int
-TAO_Persistent_Context_Index::init (void)
+TAO_Persistent_Context_Index::init (size_t context_size)
 {
+  // Note: in case of an early exit from this (or helper) function due
+  // to an error condition, we rely on POA to clean up all of the servants
+  // already registered with it.
+
   // Return value of this function (necessary to keep compilers quiet).
   int status = 0;
 
@@ -132,8 +138,8 @@ TAO_Persistent_Context_Index::init (void)
 
       CosNaming::NamingContext_var result =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
-                                                         "NameService",
-                                                         ACE_DEFAULT_MAP_SIZE,
+                                                         TAO_ROOT_NAMING_CONTEXT,
+                                                         context_size,
                                                          this,
                                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
@@ -153,13 +159,13 @@ TAO_Persistent_Context_Index::init (void)
 int
 TAO_Persistent_Context_Index::recreate_all (void)
 {
-  INDEX::ITERATOR *index_iter = 0;
+  CONTEXT_INDEX::ITERATOR *index_iter = 0;
 
   ACE_NEW_RETURN (index_iter,
-                  (INDEX::ITERATOR) (*index_),
+                  (CONTEXT_INDEX::ITERATOR) (*index_),
                   -1);
 
-  ACE_Auto_Basic_Ptr<INDEX::ITERATOR> it (index_iter);
+  ACE_Auto_Basic_Ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
 
   // Because of broken old g++!!!
   typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
@@ -170,6 +176,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file... \n"));
 
+  // For each entry in <index_>, create a Naming Context servant.
   do
     {
       index_iter->next (entry);
@@ -198,9 +205,10 @@ TAO_Persistent_Context_Index::recreate_all (void)
       // Let <implementation> know about it's <interface>.
       context_impl->interface (context);
 
-      // Change what we hold in auto pointer.
+      // Release auto pointer and start using reference counting to
+      // control our servant.
       temp.release ();
-      ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
+      PortableServer::ServantBase_var s = context;
 
       // Register with the POA.
       ACE_DECLARE_NEW_CORBA_ENV;
@@ -215,19 +223,13 @@ TAO_Persistent_Context_Index::recreate_all (void)
       CosNaming::NamingContext_var result = context->_this (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
-      // Give POA the ownership of this servant.
-      context->_remove_ref (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
+      // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
         {
           this->root_ior_=
             orb_->object_to_string (result.in (), ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
         }
-
-      temp2.release ();
-
     } while (index_iter->advance ());
 
   return 0;
@@ -236,6 +238,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
 int
 TAO_Persistent_Context_Index::create_index (void)
 {
+  // Make sure that the file name is of the legal length.
   if (ACE_OS::strlen (index_file_) >= MAXNAMELEN + MAXPATHLEN)
     {
       errno = ENAMETOOLONG;
@@ -253,7 +256,7 @@ TAO_Persistent_Context_Index::create_index (void)
 #endif /* CHORUS */
 
   // Create the allocator with the appropriate options.  The name used
-  // for  the lock is the same one as used for the file.
+  // for  the lock is the same as one used for the file.
   ACE_NEW_RETURN (this->allocator_,
                   ALLOCATOR (this->index_file_,
                              this->index_file_,
@@ -261,7 +264,7 @@ TAO_Persistent_Context_Index::create_index (void)
                   -1);
 
 #if !defined (ACE_LACKS_ACCESS)
-  // Now check if the backing store has been created successfully
+  // Now check if the backing store has been created successfully.
   if (ACE_OS::access (this->index_file_, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "create_index\n"),
@@ -270,29 +273,39 @@ TAO_Persistent_Context_Index::create_index (void)
 
   void *context_index = 0;
 
-  // This is the easy case since if we find the Context Index Map
-  // we know it's already initialized.
+  // This is the easy case since if we find hash table in the
+  // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (TAO_NAMING_CONTEXT_INDEX, context_index) == 0)
-    this->index_ = (INDEX *) context_index;
+    this->index_ = (CONTEXT_INDEX *) context_index;
 
+  // Create a new <index_> (because we've just created a new
+  // memory-mapped file).
   else
     {
-      size_t index_size = sizeof (INDEX);
+      size_t index_size = sizeof (CONTEXT_INDEX);
       context_index = this->allocator_->malloc (index_size);
 
-      if (context_index == 0)
-        return -1;
-
-      // @@Need to deal with exception below?
-      // Initialize the map into its memory location (e.g., shared memory).
-      ACE_NEW_RETURN (this->index_,
-                      (context_index) INDEX (this->allocator_),
-                      -1);
-
-      if (this->allocator_->bind (TAO_NAMING_CONTEXT_INDEX, context_index) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "create_index\n"), -1);
+      if (context_index == 0
+          || create_index_helper (context_index) == -1
+          || this->allocator_->bind (TAO_NAMING_CONTEXT_INDEX,
+                                     context_index) == -1)
+        {
+          // Attempt to clean up.
+          ACE_ERROR ((LM_ERROR,
+                      "create_index\n"));
+          this->allocator_->remove ();
+          return -1;
+        }
     }
+  return 0;
+}
 
+int
+TAO_Persistent_Context_Index::create_index_helper (void *buffer)
+{
+  ACE_NEW_RETURN (this->index_,
+                  (buffer) CONTEXT_INDEX (this->allocator_),
+                  -1);
   return 0;
 }
 

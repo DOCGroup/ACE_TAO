@@ -1,3 +1,45 @@
+Mon Jul  5 19:47:04 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
+	* orbsvcs/orbsvcs/Naming/Entries.h
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.h
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h :
+	  Fixed several memory leaks that were due to superclass
+	  destructors not being virtual.
+	  Updated the implementation to reflect several
+	  changes/clarifications from the INS specification (mostly
+	  regarding exception conditions).
+	  Added comments, cleaned up the code, etc. in the remaining
+	  files, which brings my 'review' of Naming implementation files
+	  to a close.
+
+	* orbsvcs/orbsvcs/Naming/README
+	  Added a short description about the structure of implementation
+	  files.
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	  Destroy the POA on shutdown.
+
+	* orbsvcs/Naming_Service/README
+	  Updated the file and added description of
+	  implementation-specific policies.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp
+	  Updated test to reflect changes in the behaviour of the Naming
+	  Service (due to clarifications in the INS spec).
+
 Mon Jul  5 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
@@ -5,7 +47,7 @@ Mon Jul  5 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}
           orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils[_T].{cpp, h}: bug
 	  fixes from testing, added missing schedule configuration code.
-	
+
 Mon Jul 05 16:06:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Exception.cpp (_info): Added _info() to CORBA::Exception and

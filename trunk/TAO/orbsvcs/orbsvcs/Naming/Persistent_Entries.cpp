@@ -50,12 +50,6 @@ TAO_Persistent_IntId::operator= (const TAO_Persistent_IntId &rhs)
   ref_ = rhs.ref_;
 }
 
-CosNaming::BindingType
-TAO_Persistent_IntId::type (void)
-{
-  return type_;
-}
-
 TAO_Persistent_ExtId::TAO_Persistent_ExtId (void)
   : id_ (0),
     kind_ (0)

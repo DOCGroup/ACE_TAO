@@ -73,7 +73,7 @@ TAO_Persistent_Bindings_Map::find (const char *id,
       ACE_DECLARE_NEW_CORBA_ENV;
       obj = orb_->string_to_object (entry.ref_, ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-      type = entry.type ();
+      type = entry.type_;
 
       return 0;
     }
@@ -93,7 +93,7 @@ TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map (void)
 void
 TAO_Persistent_Bindings_Map::destroy (void)
 {
-//  (void) this->map_->~ACE_Hash_Map_With_Allocator ();
+  this->map_->ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::~ACE_Hash_Map_With_Allocator ();
   this->allocator_->free (map_);
 }
 
@@ -211,29 +211,40 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
             }
         }
       else
+        // Rebind.
         {
-          // Do a rebind.  If there's already any entry, this will return the existing
-          // <new_name> and <new_internal> and overwrite the existing name binding.
           TAO_Persistent_ExtId old_name;
           TAO_Persistent_IntId old_entry;
 
-          result = this->map_->rebind (new_name, new_entry,
-                                       old_name, old_entry,
-                                       this->allocator_);
+          // Check that the types of old and new entries match.
+          if (this->map_->find (new_name,
+                                old_entry,
+                                this->allocator_) == 0
+              && type != old_entry.type_)
+            result = -2;
+
+          // If types match, perform rebind.
+          else
+            result = this->map_->rebind (new_name, new_entry,
+                                         old_name, old_entry,
+                                         this->allocator_);
           if (result == 1)
             {
-              // Free up the memory we allocated in shared_bind().  Note that this
-              // assumes that the "ref" pointer comes first and that the id,
-              // kind, and ref are contiguously allocated (see above for details)
+              // Free up the old binding's memory, if it was replaced.
+              // Note, this assumes that the "ref" pointer comes
+              // first, and that the id, kind, and ref are contiguously
+              // allocated (see beginning of this method for details).
               this->allocator_->free ((void *) old_entry.ref_);
             }
         }
 
-      if (result == -1)
-        // Free our dynamically allocated memory.
+      // Check for failures, and clean up dynamically allocated memory
+      // if necessary.
+      if (result < 0)
         this->allocator_->free ((void *) ptr);
+
       else
-        // If bind() or rebind() succeed, they will automatically sync
+        // If bind() or rebind() succeeded, they will automatically sync
         // up the map manager entry.  However, we must sync up our
         // name/value memory.
         this->allocator_->sync (ptr, total_len);
