@@ -1,3 +1,11 @@
+Thu Jun 17 12:33:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	* tao/IIOP_Factory.cpp:
+	* tao/UIOP_Factory.cpp:
+	* tao/Protocol_Factory.cpp:
+	  Fixed typo in the last commit.
+
 Thu Jun 17 12:04:50 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface_fwd.cpp:
