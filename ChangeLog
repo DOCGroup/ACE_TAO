@@ -1,3 +1,10 @@
+Mon Aug 16 10:58:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h (recv):
+
+	  Fixed DLL export qualifier.  Addresses "unresolved external
+	  symbol" link-time errors in MS Windows builds.
+
 Mon Aug 16 12:14:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
@@ -11,18 +18,18 @@ Mon Aug 16 12:14:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon Aug 16 09:27:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:
-    
+
            Added MSVC 7.1 compatibility through '-vc7' option.
-    
+
         * bin/msvc_static_compile.pl:
-    
+
           Added MSVC 7.1 compatibility through '-vc7' option. Added
-	  support for MPC '-name_modifier' option.  
-      
+	  support for MPC '-name_modifier' option.
+
         * bin/msvc_static_compile.lst:
-    
+
           Removed projectfile extensions to be able to generate these
-	  dynamically from 'msvc_static_compile.pl'. 
+	  dynamically from 'msvc_static_compile.pl'.
 
 Sat Aug 14 19:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
