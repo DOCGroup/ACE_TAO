@@ -66,7 +66,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     ace_mon,
                     this->lock_,
-		    -1);
+                    -1);
 
   int result =
     this->dispatcher_table_.bind (request_id, rd);
@@ -190,19 +190,31 @@ TAO_Muxed_TMS::idle_after_reply (void)
 void
 TAO_Muxed_TMS::connection_closed (void)
 {
-  ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_);
-  // @@ This should be done using a mutex, the table
+  ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX,
+             ace_mon,
+             this->lock_);
 
   REQUEST_DISPATCHER_TABLE::ITERATOR end =
     this->dispatcher_table_.end ();
+
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
-       i != end;
-       ++i)
+       i != end;)
     {
+      CORBA::ULong request_id = (*i).ext_id_;
+
       (*i).int_id_->connection_closed ();
+
+      // OK, maybe the first element was removed, check again...
+      i = this->dispatcher_table_.begin ();
+      if((*i).ext_id_ == request_id)
+        {
+          // Nope, it was not removed, it is our job to do so:
+          this->dispatcher_table_.unbind(request_id);
+          i = this->dispatcher_table_.begin ();
+        }
+      // else, nothing to do, already moved to the next element
     }
-  this->dispatcher_table_.unbind_all ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
