@@ -989,7 +989,7 @@ describe (const char *id,
   CosTrading::Register::OfferInfo *offer_info = 0;
   ACE_NEW_RETURN (offer_info, CosTrading::Register::OfferInfo, 0);
 
-  offer_info->reference = offer->reference->_duplicate (offer->reference.in ());
+  offer_info->reference = CORBA::Object::_duplicate (offer->reference.in ());
   offer_info->type = CORBA::string_dup (type);
 
   // Let the offer_info prop_seq "borrow" the sequence of properties.
