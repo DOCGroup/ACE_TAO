@@ -143,6 +143,18 @@ public:
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
 
+  virtual int mask_ops (ACE_Event_Handler *eh,
+                        ACE_Reactor_Mask mask,
+                        int ops);
+  // GET/SET/ADD/CLR the dispatch mask "bit" bound with the <eh> and
+  // <mask>.
+
+  virtual int mask_ops (ACE_HANDLE handle,
+                        ACE_Reactor_Mask mask,
+                        int ops);
+  // GET/SET/ADD/CLR the dispatch mask "bit" bound with the <handle>
+  // and <mask>.
+
   static void no_op_sleep_hook (void *);
   // Called from handle events
 
