@@ -243,7 +243,7 @@ libACE_Connection_la_SOURCES = \
 
 libACE_Sockets_la_SOURCES = \
   Addr.cpp \
-  INET_ddr.cpp
+  INET_Addr.cpp \
   IPC_SAP.cpp \
   LSOCK.cpp \
   LSOCK_Acceptor.cpp \

@@ -1,3 +1,7 @@
+Fri Jan 17 20:21:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/Makefile.am: Fix syntax errors for libACE_Sockets_la_SOURCES.
+
 Tue Jan  7 22:59:05 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
