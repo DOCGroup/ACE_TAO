@@ -1,3 +1,46 @@
+Sat Dec  4 16:59:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	Circular dependency fixes/updates:
+
+	* ace/OS.h:
+
+	  Include "ace/Log_Msg.h" before "ace/OS.i" because the methods in
+	  ACE_OS depend on ACE_Log_Msg for output and error reporting.
+
+	* ace/Log_Record.h:
+
+	  Include "ace/OS.h" instead of "ace/ACE.h."  OS.h is needed to
+	  pull in the definition of ACE_Export.  ACE.h was overkill.  This
+	  change is at the core of the circular dependency fix.
+
+	* ace/Log_Record.cpp:
+
+	  Include "ace/ACE.cpp" to pull in definition of ACE::log2().
+
+	The above changes made the following changes necessary.  They also
+	corrected an annoying circular dependency problem that was
+	occurring when using an automatically generated ace/config.h.  The
+	below changes are actually legitimate fixes since the source files
+	in question unnecessarily relied on other headers to pull in ACE
+	class definitions.
+
+	* ace/DLL.cpp:
+
+	  Include "ace/ACE.h" because ACE_DLL::open() uses ACE::ldfind().
+
+	* ace/Functor.h:
+
+	  Include "ace/ACE.h" instead of "ace/OS.h" because
+	  "ace/Functor.i" needs the hash functions in the ACE class.
+
+	All of the above changes nicely reduced the number of source files
+	that depend on ace/ACE.{h,i}!
+
+	* ace/Makefile:
+	* apps/gperf/src/Makefile:
+
+	  Updated dependencies.
+
 Fri Dec  3 21:51:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (shared_malloc): Changed the for loop to
