@@ -1,6 +1,19 @@
 /* -*- C++ -*- */
 /* $Id$ */
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests
+//
+// = FILENAME
+//    Timer.h
+//
+// = AUTHOR
+//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan Surendran.
+//
+// ============================================================================
+
 #if !defined (_MT_CUBIT_TIMER_H)
 #define _MT_CUBIT_TIMER_H
 

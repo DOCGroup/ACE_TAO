@@ -1,18 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    Globals.cpp
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-// ============================================================================
-
 #include "Globals.h"
 
 Globals::Globals (void)
