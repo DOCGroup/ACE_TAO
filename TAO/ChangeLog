@@ -1,3 +1,33 @@
+Wed Mar  3 17:49:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Discarding/Makefile:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+	* orbsvcs/tests/Notify/Ordering/Makefile:
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Test_Filter/Makefile:
+	* orbsvcs/tests/Notify/lib/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Redundant_Naming/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Time/Makefile:
+	* performance-tests/POA/Demux/Makefile:
+	* utils/nslist/Makefile:
+
+	  The orbsvcs_component check were screwed up in all of the above
+	  files.  
+
+	  I did manage to locate Thomas Lockhart's bug report listing out
+	  many of the above files. Thanks to him for identifying the
+	  problem. 
+
 Wed Mar  3 13:32:52 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:

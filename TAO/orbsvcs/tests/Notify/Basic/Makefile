@@ -22,14 +22,6 @@ BIN2 =  ConnectDisconnect \
 	MultiTypes \
 	Sequence
 
-#### If the orbsvcs library wasn't built with all components, don't
-#### try to build certain tests.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
-  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Naming
-endif # Notify
 
 PSRC=$(addsuffix .cpp,$(BIN)) Updates.cpp
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
@@ -42,6 +34,14 @@ CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the orbsvcs library wasn't built with all components, don't
+#### try to build certain tests.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
+endif # Notify
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
