@@ -1,3 +1,14 @@
+Wed Oct 13 06:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCCM/Priority_Test/Workers/Worker.mpc
+        * tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+          Added Priority_Test_stub to the libs, this should fix the link errors
+          in the borland builds
+
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+          Added CIDL_Basic_stub to the libs, this should fix the link errors
+          in the borland builds
+
 Tue Oct 12 09:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
