@@ -786,7 +786,6 @@ nobase_include_HEADERS += \
   PI_ForwardC.inl \
   ParameterModeC.inl \
   Parser_Registry.i \
-  Pluggable_Messaging.i \
   Pluggable_Messaging_Utils.i \
   PolicyC.inl \
   Policy_ForwardC.i \

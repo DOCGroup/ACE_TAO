@@ -118,29 +118,28 @@ public:
 // keeping off. I dont want to add something for the kick of it :-)
 enum TAO_Pluggable_Header_Type
 {
-  // = TITLE
-  // = DESCRIPTION
-  //
   TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER = 0,
   TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
 };
 
 
+/**
+ * Provide an external interface for the users of this pluggable
+ * messaging framework to denote  existing message types. This has
+ * an inspiration from GIOP. So if anybody wants to add more message
+ * types you are welcome but please do not change the numbering
+ * scheme as this would affect GIOP.
+ *
+ * @note
+ * We may not need everything here. It would be good if we
+ * have only the following messages TAO_PLUGGABLE_MESSAGE_REQUEST,
+ * TAO_PLUGGABLE_MESSAGE_REPLY,
+ * TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+ * TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.  Changes will be made once
+ * the rest of the stuff gets ready to roll
+ */
 enum TAO_Pluggable_Message_Type
 {
-  // = DESCRIPTION
-  //   Provide an external interface for the users of this pluggable
-  //   messaging framework to denote  existing message types. This has
-  //   an inspiration from GIOP. So if anybody wants to add more message
-  //   types you are welcome but please do not change the numbering
-  //   scheme as this would affect GIOP.
-
-  //   NOTE: We may not need evrything here. It would be good if we
-  //   have only the following messages TAO_PLUGGABLE_MESSAGE_REQUEST,
-  //   TAO_PLUGGABLE_MESSAGE_REPLY,
-  //   TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
-  //   TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.  Changes will be made once
-  //   the rest of the stuff gets ready to roll.
   TAO_PLUGGABLE_MESSAGE_REQUEST = 0,                // sent by client.
   TAO_PLUGGABLE_MESSAGE_REPLY = 1,                  // by server.
   TAO_PLUGGABLE_MESSAGE_CANCELREQUEST = 2,          // by client.
@@ -154,31 +153,32 @@ enum TAO_Pluggable_Message_Type
 // @@ Bala: This is a hopeless GIOPism.
 // @@ Carlos: Agreed.
 
+/**
+ * Provide an external interface for the users of this pluggable
+ * messaging framework to denote  existing Exception types. This has
+ * an inspiration from GIOP. So if anybody wants to add more message
+ * types you are welcome but please do not change the numbering
+ * scheme as this would affect GIOP.
+ */
 enum TAO_Pluggable_Message_Exception_Type
 {
-  // = DESCRIPTION
-  //   Provide an external interface for the users of this pluggable
-  //   messaging framework to denote  existing Exception types. This has
-  //   an inspiration from GIOP. So if anybody wants to add more message
-  //   types you are welcome but please do not change the numbering
-  //   scheme as this would affect GIOP.
+  /// Request completed successfully
   TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION = 0,
-  // Request completed successfully
 
+  /// Request terminated with user exception
   TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION,
-  // Request terminated with user exception
 
+  /// Request terminated with system exception
   TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION,
-  // Request terminated with system exception
 
+  /// Reply is a location forward type
   TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD,
-  // Reply is a location forward type
 
+  /// PLUGGABLE_MESSAGE 1.2, Reply is a location forward perm type..
   TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM,
-  // PLUGGABLE_MESSAGE 1.2, Reply is a location forward perm type..
 
+  /// GIOP1.2,
   TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE
-  // GIOP1.2,
 };
 
 #if defined (__ACE_INLINE__)
