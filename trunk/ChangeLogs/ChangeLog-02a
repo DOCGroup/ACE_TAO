@@ -1,3 +1,10 @@
+Fri Nov 10 12:58:53 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/generate_doxygen.pl:
+        * etc/tao_implrepo.doxygen:
+
+          New Implementation Repository documentation.
+
 Fri Nov 10 12:53:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
