@@ -1,3 +1,8 @@
+Thu Aug 19 13:06:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* ace/Read_Buffer.cpp: Fixed a bug in rec_read () method
+	  which prohibited reading more than 1024 bytes at once.
+
 Thu Aug 19 13:03:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.h (ACE): Fixed a "cut & paste" error in the comment --
