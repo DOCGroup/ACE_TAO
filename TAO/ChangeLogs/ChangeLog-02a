@@ -1,10 +1,23 @@
+Sat Sep  2 12:26:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+          Use the new ACE_LONG_DOUBLE_INITIALIZER macro to initialize the
+          dummy LongDouble values returned from the get_value() methods.
+          Otherwise we get some harmless but confusing warnings in some
+          compilers.
+
 Sat Sep  2 08:14:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Portable_Interceptors/Benchmark/Makefile:
         * tests/Portable_Interceptors/Dynamic/Makefile:
         * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
           The ifeq(interceptors,1) protection was commented out in one
-	  case, the other files needed to refresh their dependencies.
+          case, the other files needed to refresh their dependencies.
 
 Fri Sep  1 23:51:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -34,19 +47,19 @@ Fri Sep  1 18:16:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Sep 01 16:15:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/PortableServer/Collocated_Object.cpp:
-	  Fixed implementation of TAO_Collocated_Object::_is_a(), try
-	  using the hint before testing the servant.
+        * tao/PortableServer/Collocated_Object.cpp:
+          Fixed implementation of TAO_Collocated_Object::_is_a(), try
+          using the hint before testing the servant.
 
         * TAOACE_Static.dsw:
-	  Include the new static projects into this workspace, update some
-	  dependencies.
+          Include the new static projects into this workspace, update some
+          dependencies.
 
         * orbsvcs/tests/ImplRepo/airplane_client.dsp:
         * orbsvcs/tests/ImplRepo/airplane_server.dsp:
         * orbsvcs/tests/ImplRepo/nestea_client.dsp:
         * orbsvcs/tests/ImplRepo/nestea_server.dsp:
-	  Add missing TAO_PortableServer library to these project files
+          Add missing TAO_PortableServer library to these project files
 
 Fri Sep  1 16:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
