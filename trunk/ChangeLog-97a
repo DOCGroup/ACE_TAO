@@ -5,8 +5,13 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
           to use straight multiplication instead of pow (). Updated
           Makefile to not link -lm.
 
-
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
+
+	* examples/Registry/Registry.mak: Replaced the old makefiles with
+ 	  this one. Also added _AFXDLL as a preprocessor define, forcing
+ 	  the correct inclusion of header files that give a consistent
+ 	  definition of HKEY. This is a hack till we have a better
+ 	  solution.
 
 	* tests/Process_Strategy_Test.cpp: Fixed #define typo.
 
