@@ -251,6 +251,18 @@ ACE_Select_Reactor::size (void)
   return this->handler_rep_.size ();
 }
 
+ACE_INLINE int
+ACE_Select_Reactor::supress_notify_renew (void)
+{
+  return this->supress_renew_;
+}
+
+ACE_INLINE void
+ACE_Select_Reactor::supress_notify_renew (int sr)
+{
+  this->supress_renew_ = sr;
+}
+
 
 ACE_INLINE
 ACE_Event_Tuple::ACE_Event_Tuple (void)

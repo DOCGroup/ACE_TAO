@@ -944,10 +944,20 @@ protected:
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
+
+  int supress_notify_renew (void);
+  void supress_notify_renew (int sr);
+  // Controls/access whether the notify handler should renew the
+  // Select_Reactor's token or not.
+
   friend class ACE_Select_Reactor_Notify;
   friend class ACE_Select_Reactor_Handler_Repository;
 
 private:
+  int supress_renew_;
+  // Determine whether we should renew Select_Reactor's token after handling
+  // the notification message.
+
   ACE_Select_Reactor (const ACE_Select_Reactor &);
   ACE_Select_Reactor &operator = (const ACE_Select_Reactor &);
   // Deny access since member-wise won't work...
