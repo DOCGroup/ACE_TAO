@@ -104,8 +104,9 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_ASSERT (ns_context->resolve (w_name, w_value, type_out) == result);
       if (w_value.char_rep ())
 	{
+          ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
+                      name, w_value.char_rep (), type_out));
 	  ACE_ASSERT (w_value == val);
-	  cerr << "Name: " << name << "\tValue: " << w_value.char_rep () << "\tType: " << type_out << endl;
 	  if (type_out)
 	    {
 	      ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
