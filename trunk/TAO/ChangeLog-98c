@@ -15,7 +15,7 @@ Wed Apr 15 09:11:11 1998  David L. Levine  <levine@cs.wustl.edu>
           casts, so that ANSI static_casts will succeed.
 
         * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp (create):
-          removing extraneous trailing semicolon.
+          removed extraneous trailing semicolon.
 
         * orbsvcs/orbsvcs/Event/RT_Task.h (ACE_RT_Task): added "class"
           to declaration of friend ACE_RT_Thread_Manager.
