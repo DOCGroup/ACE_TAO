@@ -7,6 +7,7 @@ University of California at Irvine.
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
+Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@uci.edu>
 Chris Cleeland <cleeland@cs.wustl.edu>
@@ -1458,7 +1459,9 @@ Chip Jones <jones_c@ociweb.com>
 Patrick J Lardieri <plardier@atl.lmco.com>
 Ken O'Brien <kmobrien@fedex.com>
 Daniel Troesser <troesser_d@ociweb.com>
-Ivan Pia <pia@octet.spb.ru>
+Ivan Pazymenko <pia@octet.spb.ru>
+Dan Green <dan.c.green@lmco.com>
+cyrille@softek.fr
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
