@@ -41,6 +41,7 @@ Sender::Sender (void)
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
+    addr_file_ ("addr_file"),
     frame_rate_ (10.0),
     mb_ (BUFSIZ),
     sender_name_ ("sender")
@@ -52,13 +53,16 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:f:r:d");
+  ACE_Get_Opt opts (argc, argv, "s:f:r:da:");
 
   int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
         {
+	case 'a':
+	  this->addr_file_ = opts.opt_arg ();
+	  break;
         case 'f':
           this->filename_ = opts.opt_arg ();
           break;
@@ -97,12 +101,16 @@ Sender::init (int argc,
   if (result != 0)
     return result;
 
+
+
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
     return result;
+
+  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
 
   // Open file to read.
   this->input_file_ =
@@ -139,7 +147,8 @@ Sender::init (int argc,
   ACE_CHECK_RETURN (-1);
 
   // Connect to the receivers
-  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_receivers (mmdevice.in ()
+								ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
