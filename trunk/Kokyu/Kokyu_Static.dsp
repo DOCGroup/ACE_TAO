@@ -72,23 +72,23 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;cxx;c"
 # Begin Source File
 
-SOURCE=.\Default_Dispatcher_Impl
+SOURCE=.\Default_Dispatcher_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Dispatcher_Impl
+SOURCE=.\Dispatcher_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Dispatcher_Task
+SOURCE=.\Dispatcher_Task.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu
+SOURCE=.\Kokyu.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu_defs
+SOURCE=.\Kokyu_defs.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -176,27 +176,27 @@ SOURCE=.\Kokyu_dsrt.i
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\DSRT_Direct_Dispatcher_Impl_T
+SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatch_Item_T
+SOURCE=.\DSRT_Dispatch_Item_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatcher_Impl_T
+SOURCE=.\DSRT_Dispatcher_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Sched_Queue_T
+SOURCE=.\DSRT_Sched_Queue_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu_dsrt
+SOURCE=.\Kokyu_dsrt.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group

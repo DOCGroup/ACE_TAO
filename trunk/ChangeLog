@@ -1,3 +1,11 @@
+Fri Jul 25 22:01:14 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
+	* Kokyu/Kokyu.dsp:
+	* Kokyu/Kokyu_DLL.dsp:
+	* Kokyu/Kokyu_Static.dsp:
+
+	  No .cpp extension was generated in MPC created .dsp
+	  file. Corrected this manually.
+
 Fri Jul 25 17:41:08 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
 
 	* Kokyu/Kokyu_DLL.dsp:
