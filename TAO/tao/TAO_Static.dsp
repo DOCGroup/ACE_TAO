@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -323,10 +323,6 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
@@ -464,6 +460,38 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.h
 # End Source File
 # Begin Source File
 
@@ -1151,6 +1179,38 @@ SOURCE=.\Leader_Follower.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LocalObject.i
 # End Source File
 # Begin Source File
@@ -1784,6 +1844,38 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.cpp
 # End Source File
 # Begin Source File
 

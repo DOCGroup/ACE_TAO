@@ -552,7 +552,7 @@ TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
       if (CORBA::is_nil (this->rt_orb_.in ()))
         {
           // Save a reference to the priority mapping manager.
-          this->rt_orb_ = 
+          this->rt_orb_ =
               this->object_ref_table ().resolve_initial_references (
               TAO_OBJID_RTORB,
               ACE_TRY_ENV);
@@ -573,7 +573,7 @@ TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
       if (CORBA::is_nil (this->rt_current_.in ()))
         {
           // Save a reference to the priority mapping manager.
-          this->rt_current_ = 
+          this->rt_current_ =
               this->object_ref_table ().resolve_initial_references (
               TAO_OBJID_RTCURRENT,
               ACE_TRY_ENV);

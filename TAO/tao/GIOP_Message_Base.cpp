@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "GIOP_Message_Base.h"
 #include "operation_details.h"
 #include "GIOP_Utils.h"
@@ -11,14 +10,13 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
+#include "tao/LF_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
-
-
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)

@@ -13,11 +13,15 @@
 #define TAO_LEADER_FOLLOWER_H
 #include "ace/pre.h"
 
+#include "tao/LF_Follower.h"
 #include "tao/ORB_Core.h"
+#include "ace/Intrusive_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_LF_Event;
 
 class TAO_Export TAO_Leader_Follower
 {
@@ -49,6 +53,22 @@ public:
   /// A server thread has finished is making a request.
   void reset_client_thread (void);
 
+  /// Wait on the Leader/Followers loop until one event happens.
+  /**
+   * @param event The event we wait for, the loop iterates until the
+   * event is sucessful, or it fails due to timeout, and error or a
+   * connection closed.
+   * @param transport The transport attached to the event
+   * @param max_wait_time Limit the time spent on the loop
+   *
+   * @todo Document this better, split the Follower code to the
+   * TAO_LF_Follower class, we probably don't need the transport
+   * object.
+   */
+  int wait_for_event (TAO_LF_Event *event,
+                      TAO_Transport *transport,
+                      ACE_Time_Value *max_wait_time);
+
   /// The current thread has become the leader thread in the
   /// client side leader-follower set.
   void set_client_leader_thread (void) ;
@@ -71,39 +91,62 @@ public:
    */
   int elect_new_leader (void);
 
-  /// Node structure for the queue of followers
-  struct TAO_Export TAO_Follower_Node
-  {
-    /// Constructor
-    TAO_Follower_Node (TAO_SYNCH_CONDITION* follower_ptr);
-
-    /// Follower
-    TAO_SYNCH_CONDITION *follower_;
-
-    /// Pointer to the next follower
-    TAO_Follower_Node  *next_;
-  };
-  /**
-   * adds the a follower to the set of followers in the leader-
-   * follower model
-   * returns 0 on success, -1 on failure.
+  /** @name Follower creation/destructions
+   *
+   * The Leader/Followers set acts as a factory for the Follower
+   * objects.  Followers are used to represent a thread blocked
+   * waiting in the Follower set.
+   *
+   * The Leader/Followers abstraction keeps a list of the waiting
+   * followers, so it can wake up one when the leader thread stops
+   * handling events.
+   *
+   * For performance reasons the Leader/Followers set uses a pool (or
+   * free-list) to keep Follower objects unattached to any thread.  It
+   * could be tempting to use TSS to keep such followers, after all a
+   * thread can only need one such Follower object, however, that does
+   * not work with multiple Leader/Followers sets, consult this bug
+   * report for more details:
+   *
+   * http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=296
+   *
    */
-  int add_follower (TAO_Follower_Node *follower_ptr);
+  //@{
+  /// Allocate a new follower to the caller.
+  TAO_LF_Follower *allocate_follower (void);
 
-  /// checks for the availablity of a follower
-  /// returns 1 on available, 0 else
+  /// The caller has finished using a follower.
+  void release_follower (TAO_LF_Follower *);
+  //@}
+
+  /** @name Follower Set Operations
+   *
+   */
+  //@{
+  /// Add a new follower to the set
+  void add_follower (TAO_LF_Follower *follower);
+
+  /// Removes a follower from the leader-follower set
+  void remove_follower (TAO_LF_Follower *follower);
+
+  /// Checks if there are any followers available
+  /**
+   * @return 1 if there follower set is not empty
+   */
   int follower_available (void) const;
 
-  /// removes a follower from the leader-follower set
-  /// returns 0 on success, -1 on failure
-  int remove_follower (TAO_Follower_Node *follower_ptr);
+  //@}
 
-  /// returns randomly a follower from the leader-follower set
-  /// returns follower on success, else 0
-  TAO_SYNCH_CONDITION *get_next_follower (void);
-
-  /// Accessors
+  /// Get a reference to the underlying mutex
   TAO_SYNCH_MUTEX &lock (void);
+
+  /// Provide a pre-initialized reverse lock for the Leader/Followers
+  /// set.
+  /**
+   * The Leader/Followers set mutex must be release during some long
+   * running operations.  This helper class simplifies the process of
+   * releasing and reacquiring said mutex.
+   */
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
@@ -126,6 +169,21 @@ private:
    */
   void reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss);
 
+  /** @name Follower Set Operations
+   *
+   */
+  //@{
+  /// Remote a follower from the Followers set and promote it to the
+  /// leader role.
+  /**
+   * This is a helper routine for elect_new_leader(), after verifying
+   * that all the pre-conditions are satisfied the Follower set is
+   * changed and the promoted Follower is signaled.
+   */
+  int elect_new_leader_i (void);
+
+  //@}
+
 private:
   /// The orb core
   TAO_ORB_Core *orb_core_;
@@ -136,32 +194,12 @@ private:
   /// do protect the access to the following three members
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
-  /// Queue to store the followers.
-  struct TAO_Export TAO_Follower_Queue
-  {
-    /// Constructor
-    TAO_Follower_Queue (void);
+  /// Implement the Leader/Followers set using an intrusive list
+  typedef ACE_Intrusive_List<TAO_LF_Follower> Follower_Set;
+  Follower_Set follower_set_;
 
-    /// Checks if the queue is empty.
-    int is_empty (void) const;
-
-    /// Removes a follower from the queue.
-    int remove (TAO_Follower_Node *);
-
-    /// Inserts a follower into the queue.
-    /// Returns 0 on success, -1 for failure, 1 if the element is already
-    /// present.
-    int insert (TAO_Follower_Node *);
-
-    /// Pointer to the head of the queue.
-    TAO_Follower_Node *head_;
-
-    /// Pointer to the tail of the queue.
-    TAO_Follower_Node *tail_;
-  };
-
-  /// Queue to keep the followers on the stack.
-  TAO_Follower_Queue follower_set_;
+  /// Use a free list to allocate and release Follower objects
+  Follower_Set follower_free_list_;
 
   /**
    * Count the number of active leaders.
@@ -215,80 +253,6 @@ public:
 private:
   /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
-};
-
-class TAO_LF_Strategy;
-
-class TAO_Export TAO_LF_Event_Loop_Thread_Helper
-{
-public:
-  /// Constructor
-  TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower,
-                                   TAO_LF_Strategy &lf_strategy);
-
-  /// Destructor
-  ~TAO_LF_Event_Loop_Thread_Helper (void);
-
-  /// Calls <set_event_loop_thread> on the leader/followers object.
-  int set_event_loop_thread (ACE_Time_Value *max_wait_time);
-
-private:
-  /// Reference to leader/followers object.
-  TAO_Leader_Follower &leader_follower_;
-
-  TAO_LF_Strategy &lf_strategy_;
-
-  /// Remembers whether we have to call the reset method in the
-  /// destructor.
-  int call_reset_;
-};
-
-class TAO_Export TAO_LF_Strategy
-{
-public:
-  TAO_LF_Strategy ();
-
-  virtual ~TAO_LF_Strategy ();
-
-  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower) = 0;
-
-  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
-                                     TAO_Leader_Follower &leader_follower) = 0;
-
-  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
-                                                             TAO_Leader_Follower &leader_follower) = 0;
-};
-
-class TAO_Export TAO_Complete_LF_Strategy : public TAO_LF_Strategy
-{
-public:
-  TAO_Complete_LF_Strategy ();
-
-  virtual ~TAO_Complete_LF_Strategy ();
-
-  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower);
-
-  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
-                                     TAO_Leader_Follower &leader_follower);
-
-  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
-                                                             TAO_Leader_Follower &leader_follower);
-};
-
-class TAO_Export TAO_Null_LF_Strategy : public TAO_LF_Strategy
-{
-public:
-  TAO_Null_LF_Strategy ();
-
-  virtual ~TAO_Null_LF_Strategy ();
-
-  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower);
-
-  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
-                                     TAO_Leader_Follower &leader_follower);
-
-  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
-                                                             TAO_Leader_Follower &leader_follower);
 };
 
 #if defined (__ACE_INLINE__)

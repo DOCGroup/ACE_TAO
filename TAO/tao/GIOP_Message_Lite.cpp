@@ -10,7 +10,8 @@
 #include "tao/GIOP_Message_Locate_Header.h"
 #include "tao/target_specification.h"
 #include "tao/Leader_Follower.h"
-#include "Transport.h"
+#include "tao/LF_Strategy.h"
+#include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
