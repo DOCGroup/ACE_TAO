@@ -1,3 +1,7 @@
+Tue Dec 29 14:37:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.9 released.
+
 Tue Dec 29 13:32:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_SELF): Changed it's definition from -1 to 0 on NT
