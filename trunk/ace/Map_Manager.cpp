@@ -19,6 +19,16 @@
 
 ACE_RCSID(ace, Map_Manager, "$Id$")
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator_Base)
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
+
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
                                                  ACE_Allocator *alloc)
@@ -75,7 +85,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
 {
   // Try to find the key.
   size_t index = 0;
-  int result = this->find_i (ext_id, index);
+  int result = this->find_and_return_index (ext_id, 
+                                            index);
   
   if (result == 0)
     {
@@ -211,8 +222,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 {
   // First try to find the key.
   size_t index = 0;
-  int result = this->find_i (ext_id, 
-                             index);
+  int result = this->find_and_return_index (ext_id, 
+                                            index);
 
   if (result == 0)
     {
@@ -244,8 +255,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 
   // First try to find the key.
   size_t index = 0;
-  int result = this->find_i (ext_id, 
-                             index);
+  int result = this->find_and_return_index (ext_id, 
+                                            index);
 
   if (result == 0)
     {
@@ -273,8 +284,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 {
   // Try to find the key.
   size_t index = 0;
-  int result = this->find_i (ext_id,
-                             index);
+  int result = this->find_and_return_index (ext_id,
+                                            index);
 
   if (result == 0)
     {
@@ -292,8 +303,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
-                                                   size_t &index)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &ext_id,
+                                                                  size_t &index)
 {
   // Go through the entire occupied list looking for the key.
   for (size_t i = this->occupied_list_.next ();
@@ -319,8 +330,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
 {
   // Try to find the key.
   size_t index = 0;
-  int result = this->find_i (ext_id,
-                             index);
+  int result = this->find_and_return_index (ext_id,
+                                            index);
 
   if (result == 0)
     {
@@ -336,8 +347,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
                                                      size_t &index)
 {
   // Try to find the key.
-  int result = this->find_i (ext_id, 
-                             index);
+  int result = this->find_and_return_index (ext_id, 
+                                            index);
 
   if (result == 0)
     {
@@ -467,16 +478,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
       this->search_structure_ = 0;
     }
 }
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator_Base)
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
 
 template <class EXT_ID, class INT_ID> void
 ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const

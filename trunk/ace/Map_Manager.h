@@ -261,8 +261,8 @@ protected:
   // Performs a find of <int_id> using <ext_id> as the key.  Must be
   // called with locks held.
 
-  int find_i (const EXT_ID &ext_id,
-              size_t &index);
+  int find_and_return_index (const EXT_ID &ext_id,
+                             size_t &index);
   // Performs a find using <ext_id> as the key.  Must be called with
   // locks held.
 
@@ -275,8 +275,8 @@ protected:
   // Performs an unbind using <ext_id> as the key.  Must be called
   // with locks held.
 
-  int unbind_i (const EXT_ID &ext_id,
-                size_t &index);
+  int unbind_and_return_index (const EXT_ID &ext_id,
+                               size_t &index);
   // Performs an unbind using <ext_id> as the key.  Must be called
   // with locks held.
 
