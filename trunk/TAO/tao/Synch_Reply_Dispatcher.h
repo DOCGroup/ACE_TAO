@@ -20,13 +20,14 @@
 #include "ace/pre.h"
 
 #include "tao/Reply_Dispatcher.h"
-#include "tao/LF_Event.h"
-#include "tao/GIOP_Message_Version.h"
-#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/LF_Invocation_Event.h"
+#include "tao/GIOP_Message_Version.h"
+#include "tao/CDR.h"
 
 class TAO_Pluggable_Reply_Params;
 
@@ -38,7 +39,7 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Synch_Reply_Dispatcher
   : public TAO_Reply_Dispatcher
-  , public TAO_LF_Event
+  , public TAO_LF_Invocation_Event
 {
 
 public:
