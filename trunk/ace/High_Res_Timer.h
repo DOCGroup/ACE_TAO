@@ -113,15 +113,16 @@ public:
   void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Stop timing.
 
-  void elapsed_time (ACE_Time_Value &tv);
+  void elapsed_time (ACE_Time_Value &tv) const;
   // Set <tv> to the number of microseconds elapsed.
 
-  void elapsed_time (ACE_hrtime_t &nanoseconds);
+  void elapsed_time (ACE_hrtime_t &nanoseconds) const;
   // Set <nanoseconds> to the number of nanoseconds elapsed.
 
 #if defined (ACE_HAS_POSIX_TIME)
-  void elapsed_time (struct timespec &);
-  // returns the elapsed (stop - start) time in a struct timespec (sec, nsec)
+  void elapsed_time (struct timespec &) const;
+  // Returns the elapsed (stop - start) time in a struct timespec
+  // (sec, nsec).
 #endif /* ACE_HAS_POSIX_TIME */
 
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
@@ -143,13 +144,13 @@ public:
   //    print out the result.
   void print_total (const char *message,
                     const int iterations = 1,
-                    ACE_HANDLE handle = ACE_STDOUT);
+                    ACE_HANDLE handle = ACE_STDOUT) const;
   // Print total time.  NOTE:  only use print_total ()
   // if incremental timings had been used!
 
   void print_ave (const char *message,
                   const int iterations = 1,
-                  ACE_HANDLE handle = ACE_STDOUT);
+                  ACE_HANDLE handle = ACE_STDOUT) const;
   // Print average time.
 #endif /* !ACE_HAS_WINCE */
 

@@ -121,10 +121,6 @@ public:
   //
   // See also <spawn>.
 
-  static int join (const ACE_Thread_ID &,
-                   void **status = 0);
-  // Wait for one or more threads to exit.
-
   static int join (ACE_thread_t,
                    ACE_thread_t *,
                    void **status = 0);
