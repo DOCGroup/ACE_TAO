@@ -47,7 +47,7 @@ BIN2 = client server Factory_Finder Generic_Factory
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   ifeq (LifeCycle,$(findstring LifeCycle,$(TAO_ORBSVCS)))
     BIN = $(BIN2)
