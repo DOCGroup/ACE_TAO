@@ -103,7 +103,7 @@ ifneq ("$(BIN_UNCHECKED)","")
   EXEEXT = .out
   PRJ_DIR = .
   VXWORKSLINK = true
-  GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
+  GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE) ctdt.c
 endif
 
 include $(TGT_DIR)/h/make/defs.default
