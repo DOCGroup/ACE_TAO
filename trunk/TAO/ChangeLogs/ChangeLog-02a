@@ -1,11 +1,4 @@
-Mon Feb 25 19:25:27 2002 UTC  Don Hinton <dhinton@ieee.org>
-
-	* tao/default_resource.cpp (allocate_reactor_impl):
-	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
-	  Modified the ctors for the multi-threaded Select_Reactor 
-	  and TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	
-
-Mon Feb 25 12:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
+Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 
 	* tao/Asynch_Invocation.h:
 	* tao/Asynch_Invocation.i:
