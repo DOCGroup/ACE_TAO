@@ -172,7 +172,7 @@ _EOF_
   cd $DEST/images
   /bin/cp *.png thumbnails
   for i in *.png; do
-    /usr/bin/X11/mogrify -geometry '25%' thumbnails/$i
+    /usr/local/bin/mogrify -geometry '25%' thumbnails/$i
   done
 )
 
