@@ -120,11 +120,13 @@ public:
     // = DESCRIPTION
     //     Tagged components in the profile containing TAG_FT_GROUP
 
-    FT::FTDomainId  ft_domain_id_;
+    ACE_CString  ft_domain_id_;
     // Identifier of the FT domain
+    // @@ We could have used FT::FTDomainId, but, ACE_CString wins
+    //    over by simplicity of use.
 
     FT::ObjectGroupId object_group_id_;
-    // The idetifier of the Object Group
+    // The identifier of the Object Group
 
     FT::ObjectGroupRefVersion object_group_ref_version_;
     // The version number of the Object Group Reference

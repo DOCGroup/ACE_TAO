@@ -102,7 +102,7 @@ TAO_Tagged_Components::ft_group_tagged_component (void)
 }
 
 ACE_INLINE const TAO_Tagged_Components::TAO_FT_Group_Tagged_Component&
-TAO_Tagged_Components::ft_group_tagged_component (void)
+TAO_Tagged_Components::ft_group_tagged_component (void) const
 {
   return this->ft_tagged_component_;
 }

@@ -896,9 +896,20 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_FT_CORBA 1
 #endif /*TAO_HAS_FT_CORBA*/
 
-// FT_CORBA support is disabled by default.
-// To explicitly enable FT_CORBA support uncomment the following
-        //#define TAO_HAS_FT_CORBA 1
+#if (TAO_HAS_FT_CORBA == 1)
+// This is the version of the FT_CORBA spec that TAO supports. The
+// exact use of this version has not been emphasised. But TAO would
+// get TaggedComponents for a group with version number. So, for the
+// present we will have this here and do a sanity check for our
+// supported version and the one we receive -- raise an error if
+// necessary.
+#if !defined (TAO_DEF_FT_CORBA_MAJOR)
+#define TAO_DEF_FT_CORBA_MAJOR 1
+#endif /* TAO_DEF_FT_CORBA_MAJOR */
+#if !defined (TAO_DEF_FT_CORBA_MINOR)
+#define TAO_DEF_FT_CORBA_MINOR 0
+#endif /* TAO_DEF_FT_CORBA_MINOR */
+#endif /*TAO_HAS_FT_CORBA == 1 */
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */
