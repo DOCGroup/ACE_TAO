@@ -54,7 +54,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       if (idl_global->ami_call_back () == I_TRUE)
         {
-          be_interface_type_strategy *old_strategy =  
+          be_interface_type_strategy *old_strategy =
             node->set_strategy (new be_interface_ami_handler_strategy (node));
 
           // Set the context.
@@ -199,17 +199,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "static " << node->local_name () << "_ptr "
                 << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-                << "CORBA::Environment &env = " << be_idt_nl
-                << "TAO_default_environment ()"
-                << be_uidt << be_uidt_nl
-                << ");" << be_uidt_nl
-          << "static " << node->local_name () << "_ptr "
-                << "_unchecked_narrow (" << be_idt << be_idt_nl
-          << "CORBA::Object_ptr obj," << be_nl
-                << "CORBA::Environment &env = " << be_idt_nl
-                << "TAO_default_environment ()"
-                << be_uidt << be_uidt_nl
-                << ");" << be_uidt_nl;
+          << "CORBA::Environment &env = " << be_idt_nl
+          << "TAO_default_environment ()"
+          << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+
+      // There's no need for an _unchecked_narrow for locality constraint object.
+      if (!idl_global->gen_locality_constraint ())
+        *os << "static " << node->local_name () << "_ptr "
+            << "_unchecked_narrow (" << be_idt << be_idt_nl
+            << "CORBA::Object_ptr obj," << be_nl
+            << "CORBA::Environment &env = " << be_idt_nl
+            << "TAO_default_environment ()"
+            << be_uidt << be_uidt_nl
+            << ");" << be_uidt_nl;
+
       // This method is defined in the header file to workaround old
       // g++ problems
       *os << "static " << node->local_name () << "_ptr _nil (void)"
@@ -284,7 +288,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // = Generate the default stub code for Handler.
 
-          be_interface_type_strategy *old_strategy =  
+          be_interface_type_strategy *old_strategy =
             node->set_strategy (new be_interface_ami_handler_strategy (node));
 
 

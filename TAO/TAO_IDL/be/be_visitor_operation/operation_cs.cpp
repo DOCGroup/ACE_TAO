@@ -54,6 +54,10 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 int
 be_visitor_operation_cs::visit_operation (be_operation *node)
 {
+  // For locality constraint interface, all operations are pure virtual.
+  if (idl_global->gen_locality_constraint ())
+    return 0;
+
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node
   be_visitor_context ctx;  // visitor context

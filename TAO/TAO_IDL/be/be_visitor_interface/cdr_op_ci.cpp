@@ -44,6 +44,10 @@ be_visitor_interface_cdr_op_ci::~be_visitor_interface_cdr_op_ci (void)
 int
 be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
 {
+  // No CDR operations for locality constraint interfaces.
+  if (idl_global->gen_locality_constraint ())
+    return 0;
+
   // already generated and/or we are imported. Don't do anything.
   if (node->cli_inline_cdr_op_gen () || node->imported ())
     return 0;
