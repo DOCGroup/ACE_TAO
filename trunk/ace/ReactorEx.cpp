@@ -12,6 +12,17 @@
 #include "ace/ReactorEx.i"
 #endif /* __ACE_INLINE__ */
 
+int
+ACE_Wakeup_All_Threads_Handler::handle_signal (int signum, 
+					       siginfo_t *siginfo, 
+					       ucontext_t *)
+{
+  // This will get called when <ReactorEx->wakeup_all_threads_> event
+  // is signaled. There is nothing to be done here.
+  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
+  return 0;
+}
+
 ACE_ReactorEx_Handler_Repository::ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx)
   : reactorEx_ (reactorEx)
 {
@@ -30,8 +41,8 @@ ACE_ReactorEx_Handler_Repository::open (size_t size)
   // Initialization
   this->max_size_ = size;
   this->max_handlep1_ = 0;
-  this->number_added_ = 0;
-  this->number_deleted_ = 0;
+  this->handles_to_be_added_ = 0;
+  this->handles_to_be_deleted_ = 0;
   for (size_t i = 0; i < size; i++)
     {
       this->current_handles_[i] = ACE_INVALID_HANDLE;
@@ -64,33 +75,17 @@ ACE_ReactorEx_Handler_Repository::~ACE_ReactorEx_Handler_Repository (void)
   delete[] this->to_be_deleted_set_;
 }
 
-int
-ACE_ReactorEx_Handler_Repository::handle_signal (int signum, 
-						 siginfo_t *siginfo, 
-						 ucontext_t *)
-{
-  // This will get called when the <ReactorEx->wakeup_all_threads_>
-  // event is signaled. There is nothing to be done here.
-  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
-  return 0;
-}
-
 int 
-ACE_ReactorEx_Handler_Repository::remove_handler (size_t index,
-						  ACE_Reactor_Mask mask)
+ACE_ReactorEx_Handler_Repository::remove_handler_i (size_t index,
+						    ACE_Reactor_Mask mask)
 {
-  // This GUARD is necessary so that we make sure that the check for
-  // whether <index> has already been removed is atomic. Also,
-  // incrementing <number_deleted_> should be atomic.
-  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
-
   // Make sure that the DONT_CALL mask is not set and that we haven't
   // already called handle_close() on this handle.
   if (this->to_be_deleted_set_[index] == 0)
     {
       // Add to <to_be_deleted_set_>
       this->to_be_deleted_set_[index] = 1;
-      this->number_deleted_++;
+      this->handles_to_be_deleted_++;
 
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
 	this->current_event_handlers_[index]->handle_close 
@@ -103,16 +98,25 @@ int
 ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
 					  ACE_Reactor_Mask mask)
 {
-  // Go through all the handles looking for <handle>.  Even if we find
-  // it, we continue through the rest of the list since <handle> could
-  // appear multiple times. All handles are checked except the 0th one
-  // and the 1st one (i.e., the "wakeup all" event and the notify
-  // event).
-  for (size_t i = 2; i < this->max_handlep1_; i++)
-    {
-      if (this->current_handles_[i] == handle)
-	this->remove_handler (i, mask);
-    }
+  {
+    ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
+    
+    // Go through all the handles looking for <handle>.  Even if we find
+    // it, we continue through the rest of the list since <handle> could
+    // appear multiple times. All handles are checked except the 0th one
+    // and the 1st one (i.e., the "wakeup all" event and the notify
+    // event).
+    for (size_t i = 2; i < this->max_handlep1_; i++)
+      {
+	if (this->current_handles_[i] == handle)
+	  this->remove_handler_i (i, mask);
+      }
+  }
+  // The guard is released here
+
+  // Wake up all threads in WaitForMultipleObjects so that they can
+  // reconsult the handle set
+  this->reactorEx_.wakeup_all_threads ();
 
   return 0;
 }
@@ -120,52 +124,65 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
 void
 ACE_ReactorEx_Handler_Repository::unbind_all (void)
 {
-  // Remove all the handlers except the 0th one and the 1st one (i.e.,
-  // the "wakeup all" event and the notify event).
-  for (size_t i = 2; i < this->max_handlep1_; i++)
-    this->remove_handler (i, ACE_Event_Handler::NULL_MASK);
+  {
+    ACE_GUARD (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_);
+    
+    // Remove all the handlers except the 0th one and the 1st one (i.e.,
+    // the "wakeup all" event and the notify event).
+    for (size_t i = 2; i < this->max_handlep1_; i++)
+      this->remove_handler_i (i, ACE_Event_Handler::NULL_MASK);
+  }
+  // The guard is released here
+
+  // Wake up all threads in WaitForMultipleObjects so that they can
+  // reconsult the handle set
+  this->reactorEx_.wakeup_all_threads ();
 }
 
-// Unlike <this->remove_handler>, this method must be synchronized
 int
 ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
 					ACE_Event_Handler *event_handler)
 {
-  // This GUARD is necessary since we are updating shared state.
-  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
-
-  int result = 0;
+  // Make sure that the <handle> is valid
   if (handle == ACE_INVALID_HANDLE)
     handle = event_handler->get_handle ();
+  if (this->invalid_handle (handle))
+    return -1;
+  
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
+  
+  int current_size = this->max_handlep1_ + 
+                     this->handles_to_be_added_ - 
+                     this->handles_to_be_deleted_;
 
-  // Make sure that the <handle> is valid and that there's room in the
-  // table. 
-  if (this->invalid_handle (handle) == 0
-      && this->max_handlep1_ + this->number_added_ - this->number_deleted_ < this->max_size_)
+  // Make sure that there's room in the table.
+  if (current_size < this->max_size_)
     {
       // Cache this set into the <to_be_added_*> arrays, till we come
       // around to actually add to the <current_*> arrays
-      this->to_be_added_handles_[this->number_added_] = handle;
-      this->to_be_added_event_handlers_[this->number_added_] = event_handler;
-      this->number_added_++;
+      this->to_be_added_handles_[this->handles_to_be_added_] = handle;
+      this->to_be_added_event_handlers_[this->handles_to_be_added_] = event_handler;
+      this->handles_to_be_added_++;
+
       // Assign *this* <ReactorEx> to the <Event_Handler>.
       event_handler->reactorEx (&this->reactorEx_);      
 
-      // This is necessary to wake up the owner thread of <ReactorEx>
-      // or else this added handle may not get noticed immediately
-      this->reactorEx_.notify ();
+      // Wake up all threads in WaitForMultipleObjects so that they can
+      // reconsult the handle set
+      this->reactorEx_.wakeup_all_threads ();
     }
   else
-    result = -1;
+    return -1;
   
-  return result;
+  return 0;
 }
 
 int
 ACE_ReactorEx_Handler_Repository::changes_required ()
 {
   // Check if handles have be scheduled for additions or removal
-  return (this->number_added_ > 0) || (this->number_deleted_ > 0);
+  return (this->handles_to_be_added_ > 0) || (this->handles_to_be_deleted_ > 0);
 }
 
 int
@@ -177,7 +194,17 @@ ACE_ReactorEx_Handler_Repository::make_changes ()
   // neccessary.
 
   // DELETIONS first
-  
+  this->handle_deletions ();
+
+  // ADDITIONS here
+  this->handle_additions ();
+
+  return 0;
+}
+
+int
+ACE_ReactorEx_Handler_Repository::handle_deletions ()
+{
   // This will help us in keeping track of the last valid index in the
   // handle arrays
   int last_valid_index = this->max_handlep1_ - 1;
@@ -207,14 +234,18 @@ ACE_ReactorEx_Handler_Repository::make_changes ()
       }
   // Since all to be deleted handles have been taken care of, reset
   // the flag
-  this->number_deleted_ = 0;
+  this->handles_to_be_deleted_ = 0;
   // Reset <this->max_handlep1_>
   this->max_handlep1_ = last_valid_index + 1;
 
-  // ADDITIONS here
-  
+  return 0;
+}
+
+int
+ACE_ReactorEx_Handler_Repository::handle_additions ()
+{
   // Go through the <to_be_added_*> arrays
-  for (i = 0; i < this->number_added_; i++)
+  for (int i = 0; i < this->handles_to_be_added_; i++)
     {
       // Add to the end of the current handles set
       this->current_handles_[this->max_handlep1_] = this->to_be_added_handles_[i];
@@ -227,24 +258,23 @@ ACE_ReactorEx_Handler_Repository::make_changes ()
     }
   // Since all to be added handles have been taken care of, reset the
   // counter
-  this->number_added_ = 0;
+  this->handles_to_be_added_ = 0;
 
   return 0;
 }
+
 
 ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
 			      ACE_Timer_Queue *tq)
   : timer_queue_ (tq),
     delete_timer_queue_ (0),
-    lock_ (),
     handler_rep_ (*this),
-    notify_handler_ (),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
-    wakeup_all_threads_ (),
+    wakeup_all_threads_ (0),
     // this event is initially unsignaled
-    waiting_to_change_state_ (),
+    waiting_to_change_state_ (0),
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0)
@@ -259,15 +289,13 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
 			      ACE_Timer_Queue *tq)
   : timer_queue_ (tq),
     delete_timer_queue_ (0),
-    lock_ (),
     handler_rep_ (*this),
-    notify_handler_ (),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
-    wakeup_all_threads_ (),
+    wakeup_all_threads_ (0),
     // this event is initially unsignaled
-    waiting_to_change_state_ (),
+    waiting_to_change_state_ (0),
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0)
@@ -282,31 +310,40 @@ ACE_ReactorEx::open (size_t size,
 		     ACE_Sig_Handler *sh,
 		     ACE_Timer_Queue *tq)
 {
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+
   // Setup the atomic wait array (used later in <handle_events>)
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
   
+  // Open the handle repository
   // Two additional handles for internal purposes
   if (this->handler_rep_.open (size + 2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "opening handler repository"), 
 		      -1);
 
+  // Open the notification handler
   if (this->notify_handler_.open (*this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "opening notify handler "), 
 		      -1);
 
-  if (this->register_handler (&this->handler_rep_, 
+  // Register for <wakeup_all_threads> event
+  if (this->register_handler (&this->wakeup_all_threads_handler_, 
 			      this->wakeup_all_threads_.handle ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "registering thread wakeup handler"), 
 		      -1);
 
+  // Since we have added two handles into the handler repository,
+  // update the <handler_repository_>
   if (this->handler_rep_.changes_required ())    
     // Make necessary changes to the handler repository
     this->handler_rep_.make_changes ();
 
+  // Timer Queue 
   if (this->timer_queue_ == 0)
     {
       ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
@@ -319,6 +356,9 @@ ACE_ReactorEx::open (size_t size,
 int
 ACE_ReactorEx::close (void)
 {
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+
   if (this->delete_timer_queue_ == 1)
     {
       delete this->timer_queue_;
@@ -332,6 +372,12 @@ ACE_ReactorEx::close (void)
 ACE_ReactorEx::~ACE_ReactorEx (void)
 {
   this->close ();
+}
+
+void
+ACE_ReactorEx::wakeup_all_threads ()
+{
+  this->wakeup_all_threads_.signal ();
 }
 
 int 
@@ -373,33 +419,86 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
   return result;
 }
 
-int
-ACE_ReactorEx::calculate_timeout (ACE_Time_Value *max_wait_time)
+// Waits for and dispatches all events.  Returns -1 on error, 0 if
+// max_wait_time expired, or the number of events that were dispatched.
+int 
+ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
+			      int alertable)
 {
-  int result;
-  if (max_wait_time == 0)
-    result = INFINITE;
-  else
-    {
-      if (this->owner_ == ACE_Thread::self ())
-	{
-	  ACE_Time_Value *time = this->timer_queue_->calculate_timeout (max_wait_time);	  
-	  result = time->msec ();
-	}
-      else
-	result = max_wait_time->msec ();      
-    }
+  ACE_TRACE ("ACE_ReactorEx::handle_events");
+
+  // Stash the current time -- the destructor of this object will
+  // automatically compute how much time elapsed since this method was
+  // called.
+  ACE_Countdown_Time countdown (max_wait_time);
+
+  // Check to see if it is ok to enter ::WaitForMultipleObjects
+  // This will acquire <this->lock_> on success
+  int result = this->ok_to_wait (max_wait_time, alertable);  
+  if (result != 1)
+    return result;
+
+  // Increment the number of active threads
+  this->active_threads_++;
+
+  // Release the <lock_>
+  this->lock_.release ();
+
+  // Update the countdown to reflect time waiting to play with the
+  // mutex and event.
+  countdown.update ();
+
+  int wait_status = this->wait_for_multiple_events (max_wait_time,
+						    alertable);
+
+  result = this->dispatch (wait_status);  
+  
+  this->update_state ();
 
   return result;
 }
 
+int
+ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
+			   int alertable)
+{
+  // Calculate the max time we should spend here 
+  //
+  // Note: There is really no need to involve the <timer_queue_> here
+  // because even if a timeout in the <timer_queue_> does expire we
+  // will not be able to dispatch it
+  int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
+
+  // Atomically wait for both the <lock_> and <ok_to_wait_> event
+  int result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
+					   this->atomic_wait_array_,
+					   TRUE,
+					   timeout,
+					   alertable);
+  
+  switch (result)
+    {
+    case WAIT_TIMEOUT: 
+      errno = ETIME;
+      return 0;
+    case WAIT_FAILED: 
+    case WAIT_ABANDONED_0:
+      errno = ::GetLastError ();
+      return -1;      
+    default:
+      break;
+    }  
+  
+  // It is ok to enter ::WaitForMultipleObjects
+  return 1;
+}
 
 int 
 ACE_ReactorEx::update_state ()
 {
-  // Re-aquire <lock_>
-  this->lock_.acquire ();
-  
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
+
   // Decrement active threads
   this->active_threads_--;
 
@@ -414,17 +513,17 @@ ACE_ReactorEx::update_state ()
 	  // Make sure no new threads are allowed to enter 
 	  this->ok_to_wait_.reset ();
 
-	  if (this->active_threads_ != 0)
+	  if (this->active_threads_ > 0)
 	    // Check for other active threads
 	    {
 	      // Wake up all other threads
 	      this->wakeup_all_threads_.signal ();
 	      // Release <lock_>
-	      this->lock_.release ();
+	      monitor.release ();
 	      // Go to sleep waiting for all other threads to get done
 	      this->waiting_to_change_state_.wait ();
 	      // Re-acquire <lock_> again
-	      this->lock_.acquire ();
+	      monitor.acquire ();
 	    }
 	  
 	  // Make necessary changes to the handler repository
@@ -446,94 +545,44 @@ ACE_ReactorEx::update_state ()
 	}
     }
 
-  // Let go of <lock_>
-  this->lock_.release ();
-  
   return 0;
 }
 
-// Waits for and dispatches all events.  Returns -1 on error, 0 if
-// max_wait_time expired, or the number of events that were dispatched.
-int 
-ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
-			      int wait_all,
-			      ACE_Event_Handler *wait_all_callback,
-			      int alertable)
-{
-  ACE_TRACE ("ACE_ReactorEx::handle_events");
-
-  // Stash the current time -- the destructor of this object will
-  // automatically compute how much time elapsed since this method was
-  // called.
-  ACE_Countdown_Time countdown (max_wait_time);
-
-  // Calculate next timeout
-  int timeout = this->calculate_timeout (max_wait_time);
-
-  // Atomically wait for both the <lock_> and <ok_to_wait_> event
-  int result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
-					   this->atomic_wait_array_,
-					   TRUE,
-					   timeout,
-					   alertable);
-  
-  switch (result)
-    {
-    case WAIT_TIMEOUT: 
-      errno = ETIME;
-      return 0;
-    case WAIT_FAILED: 
-    case WAIT_ABANDONED_0:
-      errno = ::GetLastError ();
-      return -1;      
-    default:
-      break;
-    }
-  
-  // Increment the number of active threads
-  this->active_threads_++;
-
-  // Release the <lock_>
-  this->lock_.release ();
-
-  // Update the countdown to reflect time waiting to play with the
-  // mutex and event.
-  countdown.update ();
-
-  int wait_status =
-    this->wait_for_multiple_events (max_wait_time,
-				    wait_all,
-				    alertable);
-
-  result = this->dispatch (wait_status, 
-			   wait_all, 
-			   wait_all_callback);  
-  this->update_state ();
-  return result;
-}
 
 int
 ACE_ReactorEx::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
-					 int wait_all,
 					 int alertable)
 {
   int timeout = this->calculate_timeout (max_wait_time);
 
   // Wait for any of handles_ to be active, or until timeout expires.
-  // If wait_all is true, then wait for all handles_ to be active.  If
-  // <alertable> is enabled allow asynchronous completion of
+  // If <alertable> is enabled allow asynchronous completion of
   // ReadFileEx and WriteFileEx operations.
   return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
 				     this->handler_rep_.handles (),
-				     wait_all,
+				     FALSE,
 				     timeout,
 				     alertable);
 }
 
 int
-ACE_ReactorEx::dispatch (int wait_status,
-			 int wait_all,
-			 ACE_Event_Handler *wait_all_callback)
+ACE_ReactorEx::calculate_timeout (ACE_Time_Value *max_wait_time)
+{
+  ACE_Time_Value *time = 0;
+  if (this->owner_ == ACE_Thread::self ())
+    time = this->timer_queue_->calculate_timeout (max_wait_time);	  
+  else
+    time = max_wait_time;
+  
+  if (time == 0)
+    return INFINITE;
+  else
+    return time->msec ();
+}
+
+
+int
+ACE_ReactorEx::dispatch (int wait_status)
 {
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
@@ -551,40 +600,7 @@ ACE_ReactorEx::dispatch (int wait_status,
     case WAIT_ABANDONED_0:
       // We'll let dispatch worry about abandoned mutexes.
     default:  // Dispatch.
-      if (wait_all != 0)
-	return this->dispatch_callbacks (wait_all_callback);
-      else
-	return this->dispatch_handles (wait_status - WAIT_OBJECT_0);
-    }
-}
-
-int
-ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
-{
-  if (wait_all_callback != 0)
-    {
-      siginfo_t handles (this->handler_rep_.handles ());
-
-      if (wait_all_callback->handle_signal (0, &handles) == -1)
-	{
-	  // Remove all the handlers.
-	  this->handler_rep_.unbind_all ();
-	  return -1;
-	}
-      else
-	return 1;
-    }
-  else
-    {
-      int result = 0;
-
-      for (int i = 0; i < this->handler_rep_.max_handlep1 (); i++)
-	{
-	  this->dispatch_handler (i);
-	  result++;
-	}
-      // Return the number of handler dispatches.
-      return result;
+      return this->dispatch_handles (wait_status - WAIT_OBJECT_0);
     }
 }
 

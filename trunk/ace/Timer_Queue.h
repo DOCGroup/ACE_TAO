@@ -86,6 +86,9 @@ class ACE_Export ACE_Timer_Queue_Iterator
   //     the head of the timer queue up by one every time.
 {
 public:
+  ACE_Timer_Queue_Iterator (void);
+  virtual ~ACE_Timer_Queue_Iterator (void);
+
   virtual int next (ACE_Timer_Node *&timer_node, 
 		    const ACE_Time_Value &cur_time) = 0;
   // Pass back the next <timer_node> that hasn't been seen yet, if its
