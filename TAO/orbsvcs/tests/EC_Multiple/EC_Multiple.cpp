@@ -265,7 +265,7 @@ Test_ECG::run (int argc, char* argv[])
 
         case Test_ECG::ss_local:
           {
-            auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl (new ACE_Config_Scheduler);
+            auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
             scheduler_impl = auto_scheduler_impl;
           }
           if (scheduler_impl.get () == 0)
