@@ -7,17 +7,26 @@
 #       way to do that is to set "optimize = 0", either below or on
 #       your make command line.
 
+# NOTE: On Solaris86, you'll need to use GNU as instead of /usr/ccs/bin/as,
+#       if you want -gstabs+ and -pipe support.
+
 debug = 1
 optimize = 1
+
+ifeq ($(shell /bin/uname -i),i86pc)
+  #### gcc on Solaris86 doesn't use -g
+  DCFLAGS         += -gstabs+
+else  # ! i86pc
+  DCFLAGS         += -g
+endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wall -Wpointer-arith -pipe #### -Winline
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
-LDFLAGS         += # -z muldefs
+LDFLAGS         +=
 LIBS            += -lsocket -ldl -lgen -lnsl -lposix4 -lthread -lw
 OCFLAGS         += -O2
 PIC             = -fpic
@@ -25,6 +34,5 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
 SOFLAGS         = -G $(CPPFLAGS)
-# SOBUILD - compile into .so directly
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
