@@ -9,6 +9,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -48,77 +49,56 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-namespace CIAO
+BEGIN_DEPLOYMENT_NAMESPACE
+
+class MID_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
-    class MID_Handler
-    {
-    public:
+public:
 
-      MID_Handler (DOMDocument* doc, unsigned long filter_);
+  MID_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-      MID_Handler (DOMNodeIterator* iter, bool release = false);
+  MID_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      ~MID_Handler();
+  void process_MonolithicImplementationDescription (::Deployment::MonolithicImplementationDescription &mid);
 
-      void process_MonolithicImplementationDescription (::Deployment::MonolithicImplementationDescription &mid);
+protected:
+  /// process exec parameter element
+  void process_exec_parameter_element (DOMNode* node,
+                                       DOMDocument* doc, DOMNodeIterator* iter,
+                                       Deployment::MonolithicImplementationDescription& mid);
 
-      /// process exec parameter element
-      void process_exec_parameter_element (DOMNode* node,
-        DOMDocument* doc, DOMNodeIterator* iter,
-        Deployment::MonolithicImplementationDescription& mid);
+  /// process attributes for property element
+  void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
+                                        DOMDocument* doc,
+                                        DOMNodeIterator* iter,
+                                        int value,
+                                        Deployment::Property& ccd_property);
 
-      /// process attributes for property element
-      void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
-        DOMDocument* doc,
-        DOMNodeIterator* iter,
-        int value,
-        Deployment::Property& ccd_property);
+  /// parse a document
+  DOMDocument* create_document (const char *url);
 
-     /// parse a document
-      DOMDocument* create_document (const char *url);
+  /// process attributes for deploy requirement
+  void process_attributes_for_deploy_requirement (DOMNamedNodeMap* nm,
+                                                  DOMDocument* doc,
+                                                  DOMNodeIterator* iter,
+                                                  int value,
+                                                  Deployment::ImplementationRequirement& req);
 
-      /// process attributes for deploy requirement
-      void process_attributes_for_deploy_requirement (DOMNamedNodeMap* nm,
-        DOMDocument* doc,
-        DOMNodeIterator* iter,
-        int value,
-        Deployment::ImplementationRequirement& req);
+  /// process attributes for NIA
+  void process_attributes_for_nia (DOMNamedNodeMap* nm,
+                                   DOMDocument* doc,
+                                   DOMNodeIterator* iter,
+                                   int value,
+                                   Deployment::NamedImplementationArtifact& nia);
 
-      /// process attributes for NIA
-      void process_attributes_for_nia (DOMNamedNodeMap* nm,
-        DOMDocument* doc,
-        DOMNodeIterator* iter,
-        int value,
-        Deployment::NamedImplementationArtifact& nia);
+  /// process IDREFS
+  void process_refs (DOMNamedNodeMap* named_node_map);
 
-      /// process IDREFS
-      void process_refs (DOMNamedNodeMap* named_node_map);
+};
 
-    private:
-
-      typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
-      typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
-      typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
-      DOMDocumentTraversal* traverse_;
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-      int index_;
-      REF_MAP id_map_;
-      IDREF_MAP idref_map_;
-
-    };
-  }
-}
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 

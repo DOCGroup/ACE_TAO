@@ -42,7 +42,7 @@ namespace CIAO
     class Config_Handler_Export CPK_Handler
     {
     public:
-      static void process_CCMComponentPortKing (DOMNodeIterator * iter,
+      static void process_CCMComponentPortKind (DOMNodeIterator * iter,
                                                 Deployment::CCMComponentPortKind &kind);
       // process elements of type CCMComponentPortKind definitions in
       // the descriptor files

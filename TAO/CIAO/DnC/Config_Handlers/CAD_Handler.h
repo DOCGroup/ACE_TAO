@@ -111,10 +111,6 @@ public:
   void process_package (DOMNodeIterator* iter,
                         Deployment::ComponentPackageDescription& sid_package);
 
-  /// process CPR
-  void process_reference (DOMNodeIterator* iter,
-                          Deployment::ComponentPackageReference& sid_ref);
-
   /// update spe refs
   void update_spe_refs (Deployment::ComponentAssemblyDescription& cad);
 

@@ -17,6 +17,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -56,72 +57,37 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-namespace CIAO
+BEGIN_DEPPLOYMENT_NAMESPACE
+
+/**
+ * @class CAP_Handler
+ *
+ * @brief Handler class for <Capability> type
+ *
+ * This class defines handler methods to parse Capability
+ * types in the descriptor files. The corresponding
+ * CORBA IDL type for the schema element is returned.
+ *
+ */
+class Config_Handler_Export CAP_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
-    /**
-     * @class CAP_Handler
-     *
-     * @brief Handler class for <Capability> type
-     *
-     * This class defines handler methods to parse Capability
-     * types in the descriptor files. The corresponding
-     * CORBA IDL type for the schema element is returned.
-     *
-     */
-    class Config_Handler_Export CAP_Handler
-    {
-    public:
+public:
 
-     /// constructor
-      CAP_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  CAP_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-      /// constructor
-      CAP_Handler (DOMNodeIterator* iter, bool release = false);
+  /// constructor
+  CAP_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// destructor
-      ~CAP_Handler(void);
-      
-     void process_Capability (DOMNodeIterator * iter,
-			      Deployment::Capability &ret_struct);
-      // process elements of type Capability definitions in
-      // the descriptor files
+  void process_Capability (DOMNodeIterator * iter,
+                           Deployment::Capability &ret_struct);
+  // process elements of type Capability definitions in
+  // the descriptor files
+};
 
-     /// Process the attributes for the property
-      void process_attributes_for_satisfier_property (DOMNamedNodeMap* nm,
-        DOMDocument* doc,
-        DOMNodeIterator* iter,
-        int length,
-        Deployment::SatisfierProperty& pro);
-
-      /// create a document
-      DOMDocument* create_document (const char *url);
-
-    private:
-      typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
-      typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
-      typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
-
-      DOMDocumentTraversal* traverse_;
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-      int index_;
-
-      REF_MAP id_map_;
-      IDREF_MAP idref_map_;
-
-    };
-  }
-}
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 

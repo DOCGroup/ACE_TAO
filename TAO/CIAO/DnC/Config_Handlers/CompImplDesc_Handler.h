@@ -13,6 +13,7 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -42,60 +43,39 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class CompImplDesc_Handler
+ *
+ * @brief Handler class for <ComponentImplementationDescription> type 
+ *
+ * This class is within the Execution Data Model subpackage of the
+ * Deployment & Configuration package.
+ *
+ * This class defines handler methods to parse the aforementioned type
+ * in the description files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
+class Config_Handler_Export CompImplDesc_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
-    /**
-     * @class CompImplDesc_Handler
-     *
-     * @brief Handler class for <ComponentImplementationDescription> type 
-     *
-     * This class is within the Execution Data Model subpackage of the
-     * Deployment & Configuration package.
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the description files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
+ public:
 
-    class Config_Handler_Export CompImplDesc_Handler
-    {
-    public:
+  /// constructor
+  CompImplDesc_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-      /// constructor
-      CompImplDesc_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  CompImplDesc_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      CompImplDesc_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the monolithic deployment description
+  void process_ComponentImplementationDescription (::Deployment::ComponentImplementationDescription &cid);
 
-      /// destructor
-      ~CompImplDesc_Handler(void);
-
-      /// Process the monolithic deployment description
-      void process_ComponentImplementationDescription (::Deployment::ComponentImplementationDescription &cid);
-
-      /// Process the name attribute
-      void process_label (const XMLCh* label, ::Deployment::ComponentImplementationDescription &cid);
-
-      /// Process the source attribute
-      void process_UUID (const XMLCh* UUID, ::Deployment::ComponentImplementationDescription &cid);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-  };
 };
+
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 

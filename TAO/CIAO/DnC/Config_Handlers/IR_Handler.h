@@ -14,6 +14,7 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -44,63 +45,46 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+class IR_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
+public:
 
-    class IR_Handler
-    {
-    public:
+  /// constructor
+  IR_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-      /// constructor
-      IR_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  IR_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      IR_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the package configuration
+  void process_ImplementationRequirement (::Deployment::ImplementationRequirement &ir);
 
-      /// destructor
-      ~IR_Handler();
+protected:
+  /// Process the resourceUsage attribute
+  void process_resourceUsage (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
-      /// Process the package configuration
-      void process_ImplementationRequirement (::Deployment::ImplementationRequirement &ir);
+  /// Process the resourcePort attribute
+  void process_resourcePort (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
-      /// Process the resourceUsage attribute
-      void process_resourceUsage (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
+  /// Process the componentPort attribute
+  void process_componentPort (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
-      /// Process the resourcePort attribute
-      void process_resourcePort (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
+  /*
+   * Derived from Requirement
+   */
 
-      /// Process the componentPort attribute
-      void process_componentPort (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
+  /// Process the label attribute
+  void process_name (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
-      /*
-       * Derived from Requirement
-       */
+  /// Process the label attribute
+  void process_resourceType (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
 
-      /// Process the label attribute
-      void process_name (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
+};
 
-      /// Process the label attribute
-      void process_resourceType (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-
-  }
-
-}
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
