@@ -86,7 +86,6 @@ be_interface::compute_coll_name (int type)
   else
     {
       cached_type = type;
-// @@ this is causing segfault on NT, why?
       delete this->full_coll_name_;
       delete this->local_coll_name_;
     }
