@@ -80,11 +80,8 @@ endif
 ifndef  VSHDIR
 VSHDIR		= .shobj/
 endif # VSHDIR
-ifdef SHLIBA
-VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
-else
-VLDLIBS :=$(VLDLIBS) $(ACELIB) $(LIBS)
-endif
+# NOTE: VLDLIBS is defined below, in case it is overridden for static-
+#       or shared-only builds.
 YACC		= yacc
 
 #----------------------------------------------------------------------------
@@ -110,6 +107,31 @@ else # default settings
 endif # optimize
 endif # profile
 endif # debug
+
+ifdef shared_libs_only
+  #### don't build static objects:
+  BUILD           = $(VSHLIB) $(SHLIBA) $(VBIN)
+  LIB             =
+  OBJDIRS         = .shobj
+  SHOBJ           = $(addsuffix .$(SOEXT),$(FILES))
+  VDIR            =
+else
+ifdef static_libs_only
+  #### don't build shared objects:
+  BUILD           = $(VLIB) $(VBIN)
+  OBJDIRS         = .obj
+  SHLIB           =
+  SHOBJ           = $(addsuffix .o,$(FILES))
+  SOEXT           = o
+  VSHDIR          = .obj/
+  VLDLIBS         = $(LDLIBS:%.$(SOEXT)=%.o)
+endif # static_libs_only
+endif # shared_libs_only
+ifdef SHLIBA
+VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
+else
+VLDLIBS :=$(VLDLIBS) $(ACELIB) $(LIBS)
+endif
 
 ifdef quantify
 #### You might want to adjust the Quantify options below.
