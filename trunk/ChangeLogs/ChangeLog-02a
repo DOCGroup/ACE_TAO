@@ -1,3 +1,12 @@
+Fri Apr 28 13:11:20 2000  Ossama Othman  <ossama@uci.edu>
+
+	  Renamed `platform_linux_lxpthread.GNU' to
+	  platform_linux_lxpthreads.GNU to be consistent with the name of
+	  its corresponding config header `config-linux-lxpthreads.h'.
+
+	  `platform_linux_lxpthread.GNU' now includes the newly renamed
+	  file for backward compatibility.
+
 Fri Apr 28 11:54:21 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SString.cpp: Fixed the delimiter_replace() method so that
