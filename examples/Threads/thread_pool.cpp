@@ -96,7 +96,7 @@ Thread_Pool::svc (void)
 		    count, length, length - 1, mb->rd_ptr ()));
 
       // We're responsible for deallocating this.
-      delete mb;
+      mb->release ();
 
       if (length == 0)
 	{

@@ -1,5 +1,6 @@
-// Service_Object.cpp
 // $Id$
+
+// Service_Object.cpp
 
 #define ACE_BUILD_DLL
 #include "ace/Service_Object.h"
@@ -9,8 +10,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-
-/* Provide the abstract base class common to all services */
 
 ACE_Service_Object::ACE_Service_Object (void)
 {
@@ -48,10 +47,20 @@ ACE_Service_Type::ACE_Service_Type (const void *so,
 				    const char *s_name, 
 				    unsigned int f)
   : obj_ (so), 
-    flags_ (f)
+    flags_ (f),
+    name_ (0)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
-  this->name (ACE_OS::strcpy (new char[::strlen (s_name) + 1], s_name));
+  this->name (s_name);
+}
+
+ACE_Service_Type::~ACE_Service_Type (void)
+{
+  ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
+
+  // It's ok to call this, even though we may have already deleted it
+  // in the fini() method since it would then be NULL.
+  delete [] (char *) this->name_;
 }
 
 int
@@ -62,10 +71,13 @@ ACE_Service_Type::fini (void) const
 	     this->name_, this->flags_));
 
   delete [] (char *) this->name_;
+  ((ACE_Service_Type *) this)->name_ = 0;
+
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
     delete (void *) this->object ();
+
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
-    delete (void *) this; // Prevent object's destructor from being called...
+    delete (ACE_Service_Type *) this; 
+
   return 0;
 }
-

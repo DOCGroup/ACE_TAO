@@ -24,11 +24,15 @@ ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
 	      "high_water_mark = %d\n"	     
 	      "cur_bytes = %d\n"	     
 	      "cur_count = %d\n",
+	      "head_ = %u\n",
+	      "tail_ = %u\n",
 	      this->deactivated_,
 	      this->low_water_mark_, 
 	      this->high_water_mark_,
 	      this->cur_bytes_, 
-	      this->cur_count_));
+	      this->cur_count_,
+	      this->head_,
+	      this->tail_));
   ACE_DEBUG ((LM_DEBUG,"notfull_cond: \n"));
   notfull_cond_.dump();
   ACE_DEBUG ((LM_DEBUG,"notempty_cond: \n"));
@@ -74,7 +78,6 @@ ACE_Message_Queue<ACE_SYNCH_2>::open (size_t hwm,
   this->cur_count_ = 0;
   this->tail_ = 0;
   this->head_ = 0;
-
   this->notification_strategy_ = ns;
   return 0;
 }
@@ -121,18 +124,22 @@ ACE_Message_Queue<ACE_SYNCH_2>::close (void)
 
   for (this->tail_ = 0; this->head_ != 0; )
     {
+      this->cur_count_--;
+
       ACE_Message_Block *temp;
 
-      // Make sure we decrement all the counts.
+      // Decrement all the counts.
       for (temp = this->head_;
 	   temp != 0; 
 	   temp = temp->cont ())
 	this->cur_bytes_ -= temp->size ();
 
-      this->cur_count_--;
-
+      temp = this->head_;
       this->head_ = this->head_->next ();
-      delete temp;
+
+      // Make sure to use <release> rather than <delete> since this is
+      // reference counted.
+      temp->release ();
     }
 
   return res;
@@ -160,7 +167,6 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
   // Link at the end.
   else 
     {
-      
       new_item->next (0);
       this->tail_->next (new_item);
       new_item->prev (this->tail_);

@@ -130,6 +130,13 @@ private:
   // Periodically callback to perform timer-based performance
   // profiling.
 
+  ACE_Lock *message_block_locking_strategy (void);
+  // The strategy for locking <ACE_Message_Block> reference counting.
+  // This is NULL if our threading strategy is REACTIVE, else it
+  // points to the ACE_Lock_Adapter<ACE_Thread_Mutex> defined below.
+
+  ACE_Lock_Adapter<ACE_Thread_Mutex> *lock_adapter_;
+
   Proxy_Handler_Connector connector_;
   // Used to establish the connections actively.
 

@@ -382,10 +382,10 @@ main (int, char *[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-		  (u_long) task_count,
-		  (u_long) future_count,
-		  (u_long) capsule_count,
-		  (u_long) methodobject_count));
+		  (int) task_count,
+		  (int) future_count,
+		  (int) capsule_count,
+		  (int) methodobject_count));
     }
 
   // Close things down.
@@ -398,10 +398,10 @@ main (int, char *[])
   
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-	      (u_long) task_count,
-	      (u_long) future_count,
-	      (u_long) capsule_count,
-	      (u_long) methodobject_count));
+	      (int) task_count,
+	      (int) future_count,
+	      (int) capsule_count,
+	      (int) methodobject_count));
 
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 

@@ -2456,11 +2456,19 @@ private:
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-     } while (0)
+   } while (0)
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
-     } while (0)
+   } while (0)
+#define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
 
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
 

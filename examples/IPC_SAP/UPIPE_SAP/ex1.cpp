@@ -49,7 +49,7 @@ peer1 (void *)
   ACE_DEBUG ((LM_DEBUG, "(%t) peer1 ack is \"%s\"\n", mb->rd_ptr ()));
 
   // Free up the memory block.
-  delete mb;
+  mb->release ();
 
   // Now try the send()/recv() interface.
   char mytext[] = "This string is sent by peer1 as buffer";

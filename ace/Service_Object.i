@@ -21,6 +21,8 @@ ACE_INLINE void
 ACE_Service_Type::name (const char *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
-  this->name_ = n;
-}
 
+  delete [] (char *) this->name_;
+  ACE_NEW (this->name_, char[::strlen (n) + 1]);
+  ACE_OS::strcpy ((char *) this->name_, n);
+}

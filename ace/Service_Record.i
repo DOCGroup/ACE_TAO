@@ -49,6 +49,8 @@ ACE_INLINE void
 ACE_Service_Record::name (const char *n)
 {
   ACE_TRACE ("ACE_Service_Record::name");
+
+  delete [] (char *) this->name_;
   this->name_ = ACE_OS::strcpy (new char [::strlen (n) + 1], n);
 }
 

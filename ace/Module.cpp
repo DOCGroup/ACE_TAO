@@ -98,10 +98,6 @@ ACE_Module<ACE_SYNCH_2>::open (const char *mod_name,
   this->reader (reader_q);
   this->writer (writer_q);
 
-  // Setup back pointers.
-  reader_q->mod_ = this;
-  writer_q->mod_ = this;
-
   // Save the flags
   this->flags_ = flags;
 
@@ -113,13 +109,14 @@ ACE_Module<ACE_SYNCH_2>::open (const char *mod_name,
       this->close_i (0, M_DELETE_READER);
       this->close_i (1, M_DELETE_WRITER);
 
-      // Reset back pointers.
-      reader_q->mod_ = 0;
-      writer_q->mod_ = 0;
-
       errno = ENOMEM;
       return -1;
     }
+
+  // Setup back pointers (this must come last, after we've made sure
+  // there's memory allocated here.
+  reader_q->mod_ = this;
+  writer_q->mod_ = this;
 
   return 0;
 }

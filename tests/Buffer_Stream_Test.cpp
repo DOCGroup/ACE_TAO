@@ -174,7 +174,7 @@ Consumer::svc (void)
 	  ACE_ASSERT (c == output[0]);
 	  c++;
 	}
-      delete mb;
+      mb->release ();
 
       if (length == 0)
       {

@@ -195,7 +195,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
       bytes += ss->int_id_->put (data_block);
     }
 
-  delete mb;
+  mb->release ();
   return bytes == 0 ? 0 : bytes / iterations;
 }
 
