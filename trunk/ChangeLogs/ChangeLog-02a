@@ -1,3 +1,9 @@
+Thu May 17 16:52:17 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/CDR_File_Test.cpp (run_test): 
+	  Modified ACE_OutputCDR instantiation to follow the new modified
+	  constructor.
+	
 Thu May 17 17:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Re-enabled Core and Full builds on
