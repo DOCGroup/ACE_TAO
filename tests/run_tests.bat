@@ -70,6 +70,7 @@ call %run_cmd% %dopure% %platform% Buffer_Stream_Test
 call %run_cmd% %dopure% %platform% Cache_Map_Manager_Test
 call %run_cmd% %dopure% %platform% Cached_Conn_Test
 call %run_cmd% %dopure% %platform% Cached_Accept_Conn_Test
+call %run_cmd% %dopure% %platform% Capabilities_Test
 call %run_cmd% %dopure% %platform% CDR_Test
 call %run_cmd% %dopure% %platform% Collection_Test
 call %run_cmd% %dopure% %platform% Conn_Test

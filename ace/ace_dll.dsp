@@ -371,7 +371,7 @@ LINK32=link.exe
 # Name "ACE DLL - Win32 MFC Release"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "cpp"
 # Begin Source File
 
 SOURCE=.\ACE.cpp
@@ -780,6 +780,33 @@ SOURCE=.\Based_Pointer_Repository.cpp
 # Begin Source File
 
 SOURCE=.\Basic_Types.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Capabilities.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
@@ -4911,7 +4938,7 @@ SOURCE=.\XtReactor.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "h"
 # Begin Source File
 
 SOURCE=.\Acceptor.h
@@ -5011,6 +5038,10 @@ SOURCE=.\Caching_Strategies_T.h
 # Begin Source File
 
 SOURCE=.\Caching_Strategy_Utility_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Capabilities.h
 # End Source File
 # Begin Source File
 
@@ -5815,7 +5846,7 @@ SOURCE=.\XtReactor.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor.i
@@ -5907,6 +5938,10 @@ SOURCE=.\Caching_Strategies_T.i
 # Begin Source File
 
 SOURCE=.\Caching_Strategy_Utility_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Capabilities.i
 # End Source File
 # Begin Source File
 
