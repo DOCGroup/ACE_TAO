@@ -67,14 +67,9 @@ visit_union_branch (be_union_branch *node)
 
   this->ctx_->node (node); // save the node
 
-  if (node->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
-    {
-      *os << "case " << node->label ()->label_val ()->n ()  << ":" << be_idt_nl;
-    }
-  else
-    {
-      *os << "case " << node->label ()->label_val () << ":" << be_idt_nl;
-    }
+  *os << "case ";
+  node->gen_label_value (os);
+  *os << ":" << be_idt_nl;
 
   if (bt->accept (this) == -1)
     {
