@@ -54,8 +54,9 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-typedef ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> REF_MAP;
-typedef ACE_Hash_Map_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> REF_ITER;
+typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_MAP;
+typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_ITER;
+typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_SYNCH_RW_MUTEX> IDREF_MAP;
 
 namespace CIAO 
 {
@@ -181,8 +182,10 @@ namespace CIAO
       DOMNodeIterator* iter_;
 
       bool release_;
+      int index_;
 
       REF_MAP id_map_;
+      IDREF_MAP idref_map_;
 
     };
   };
