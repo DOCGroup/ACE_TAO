@@ -1,6 +1,6 @@
 #include "Resume_Handle.h"
 #include "ORB_Core.h"
-
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Resume_Handle.inl"
