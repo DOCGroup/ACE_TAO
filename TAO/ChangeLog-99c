@@ -1,7 +1,8 @@
 Sun Oct 03 13:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
-	  be/be_visitor_valuetype/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
+	  tao/MessagingC.h:
 	  Fixed the generation and usage of a typedef for anonymous
 	  valuetype field types. This also involved generating a typedef 
 	  for the "var" type.
