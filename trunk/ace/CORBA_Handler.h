@@ -87,8 +87,8 @@ protected:
 
 private:
   // = Disallow assignment and initialization.
-  ACE_CORBA_Handler (const ACE_CORBA_Handler &rhs);
-  const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs);
+  ACE_UNIMPLEMENTED_FUNC (ACE_CORBA_Handler (const ACE_CORBA_Handler &rhs));
+  ACE_UNIMPLEMENTED_FUNC (const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs));
 };
 
 class ACE_Export ACE_ST_CORBA_Handler : public ACE_CORBA_Handler

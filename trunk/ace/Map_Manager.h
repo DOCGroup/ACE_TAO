@@ -244,6 +244,10 @@ private:
 
   size_t cur_size_;
   // Index of highest active elementin this->search_structure_.
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager &operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &));
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>

@@ -565,7 +565,7 @@ ACE_Log_Msg::log (const char *format_str,
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
                              this->getpid ());
-  char *bp = this->msg ();
+  char *bp = (char *) this->msg ();
   int abort_prog = 0;
   int exit_value = 0;
   int result = 0;
@@ -1146,14 +1146,14 @@ ACE_Log_Msg::file (const char *s)
                    (sizeof this->file_ / sizeof (char)));
 }
 
-char *
+const char *
 ACE_Log_Msg::msg (void)
 {
   return this->msg_ + ACE_Log_Msg::msg_off_;
 }
 
 void
-ACE_Log_Msg::msg (char *m)
+ACE_Log_Msg::msg (const char *m)
 {
   ACE_OS::strncpy (this->msg_, m,
                    (sizeof this->msg_ / sizeof (char)));

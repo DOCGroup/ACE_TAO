@@ -348,8 +348,8 @@ private:
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   // Disallow copying by not implementing the following . . .
-  ACE_Object_Manager (const ACE_Object_Manager &);
-  ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Manager (const ACE_Object_Manager &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Manager &operator= (const ACE_Object_Manager &));
 };
 
 #if defined (ACE_HAS_THREADS)

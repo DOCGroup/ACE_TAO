@@ -171,8 +171,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_File_Lock &);
-  ACE_File_Lock (const ACE_File_Lock &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_File_Lock &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_File_Lock (const ACE_File_Lock &));
 };
 
 class ACE_Export ACE_Semaphore
@@ -257,8 +257,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Semaphore &);
-  ACE_Semaphore (const ACE_Semaphore &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Semaphore &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Semaphore (const ACE_Semaphore &));
 };
 
 class ACE_Export ACE_Process_Semaphore
@@ -402,8 +402,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_RW_Mutex &);
-  ACE_RW_Mutex (const ACE_RW_Mutex &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_RW_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_RW_Mutex (const ACE_RW_Mutex &));
 };
 
 class ACE_Export ACE_Mutex
@@ -473,8 +473,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Mutex &);
-  ACE_Mutex (const ACE_Mutex &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Mutex (const ACE_Mutex &));
 };
 
 class ACE_Export ACE_Process_Mutex
@@ -575,8 +575,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Barrier &);
-  ACE_Null_Barrier (const ACE_Null_Barrier &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Barrier &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Barrier (const ACE_Null_Barrier &));
 };
 
 class ACE_Export ACE_Null_Mutex
@@ -631,9 +631,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Condition &);
-  ACE_Null_Condition (const ACE_Null_Condition &c): mutex_
-    (c.mutex_) {}
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Condition &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Condition (const ACE_Null_Condition &));
 };
 
 class ACE_Export ACE_Null_Mutex_Guard
@@ -658,8 +657,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Mutex_Guard &);
-  ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Mutex_Guard &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &));
 };
 
 class ACE_TSS_Adapter
@@ -769,8 +768,8 @@ protected:
 
 private:
   // = Prevent copying.
-  ACE_Event (const ACE_Event& event);
-  const ACE_Event &operator= (const ACE_Event &rhs);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Event (const ACE_Event& event));
+  ACE_UNIMPLEMENTED_FUNC (const ACE_Event &operator= (const ACE_Event &rhs));
 };
 
 class ACE_Export ACE_Manual_Event : public ACE_Event
@@ -898,8 +897,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex &);
-  ACE_Thread_Mutex (const ACE_Thread_Mutex &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex (const ACE_Thread_Mutex &));
 };
 
 class ACE_Export ACE_Thread_Mutex_Guard
@@ -952,8 +951,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex_Guard &);
-  ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &g): lock_ (g.lock_) {}
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex_Guard &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &));
 };
 
 class ACE_Export ACE_Condition_Thread_Mutex
@@ -1030,8 +1029,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Thread_Mutex &);
-  ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &c): mutex_ (c.mutex_) {}
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &));
 };
 
 class ACE_Export ACE_Recursive_Thread_Mutex
@@ -1134,8 +1133,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Recursive_Thread_Mutex &);
-  ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Recursive_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &));
 };
 
 class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
@@ -1247,8 +1246,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Barrier &);
-  ACE_Barrier (const ACE_Barrier &): sub_barrier_1_ (0, lock_), sub_barrier_2_ (0, lock_) {}
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Barrier &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Barrier (const ACE_Barrier &));
 };
 
 #if 0

@@ -1,3 +1,49 @@
+Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
+
+	* ace/Log_Msg (msg): Changed the parameters from char * to const
+ 	  char *.
+
+	* ace: Added unimplemented copy constructors and assignment
+ 	  operators to the following classes:
+	  
+	  ACE_Map_Manager
+	  ACE_Message_Block
+	  ACE_Data_Block
+	  ACE_Log_Msg
+	  ACE_Message_Queue
+	  ACE_Task
+          ACE_Task_Base
+
+	  Added ACE_UNIMPLEMENTED_FUNC macros to these classes:
+	  
+	  ACE_Mem_Map
+	  ACE_Priority_Reactor
+	  ACE_Select_Reactor
+	  ACE_WFMO_Reactor
+	  ACE_XtReactor
+	  ACE_Reactor
+	  ACE_Read_Buffer
+	  ACE_CORBA_Handler
+	  ACE_TSS_TPQ_Entry
+	  ACE_Object_Manager
+	  ACE_File_Lock
+	  ACE_Semaphore
+	  ACE_RW_Mutex
+	  ACE_Mutex
+	  ACE_Null_Barrier
+	  ACE_Null_Condition
+	  ACE_Null_Mutex_Guard
+	  ACE_Event
+	  ACE_Thread_Mutex
+	  ACE_Thread_Mutex_Guard
+	  ACE_Condition_Thread_Mutex
+	  ACE_Recursive_Thread_Mutex
+	  ACE_Barrier
+	  ACE_Condition
+	
+	  Thanks to Stanley D Leeson <STANLEY.D.LEESON@cdev.com> for these
+ 	  suggestions.
+	
 Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
 	* All MSVC 5.0 project files: Removed unnecessary library

@@ -207,10 +207,10 @@ public:
   const char *file (void);
   // Get the file name where an error occurred.
 
-  void msg (char *);
+  void msg (const char *);
   // Set the message that describes what type of error occurred.
 
-  char *msg (void);
+  const char *msg (void);
   // Get the message that describes what type of error occurred.
 
   void restart (int);
@@ -387,6 +387,10 @@ private:
   // For cleanup, at program termination.
 
   friend void ACE_OS::cleanup_tss (const u_int);
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg &operator= (const ACE_Log_Msg &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg (const ACE_Log_Msg &));
 };
 
 // #if defined (__ACE_INLINE__)
