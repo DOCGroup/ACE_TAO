@@ -43,8 +43,8 @@ OBJFILES = \
 	$(OBJDIR)\CDR_Base.obj \
 	$(OBJDIR)\CDR_Stream.obj \
         $(OBJDIR)\Codecs.obj \
-        $(OBJDIR)\Codeset_Repository.obj \
-        $(OBJDIR)\Codeset_Repository_db.obj \
+        $(OBJDIR)\Codeset_Registry.obj \
+        $(OBJDIR)\Codeset_Registry_db.obj \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Configuration_Import_Export.obj \
         $(OBJDIR)\Connection_Recycling_Strategy.obj \
