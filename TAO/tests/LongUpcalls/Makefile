@@ -26,7 +26,7 @@ BLOCKING_SERVER_OBJS = blocking_server.o Manager.o TestC.o TestS.o
 AMI_CLIENT_OBJS = ami_client.o Controller.o Manager_Handler.o TestC.o TestS.o
 AMI_SERVER_OBJS = ami_server.o AMI_Manager.o TestC.o TestS.o
 
-TAO_IDLFLAGS += -Ge 1 -GC
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -36,6 +36,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(ami),1)
+TAO_IDLFLAGS += GC
 BIN += ami_client ami_server
 endif
 
