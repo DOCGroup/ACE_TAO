@@ -1,3 +1,9 @@
+Mon May 24 22:15:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	  Added a 'CORBA_' to one of the TypeCode typedefs so it 
+	  cosmetically matches the other groups of typedefs.
+
 Mon May 24 17:56:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:

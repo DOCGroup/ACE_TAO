@@ -487,7 +487,7 @@ public:
 
 
   typedef CORBA_TypeCode TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  typedef CORBA_TypeCode *TypeCode_ptr;
   typedef CORBA_TypeCode_var TypeCode_var;
   typedef CORBA_TypeCode_out TypeCode_out;
 
