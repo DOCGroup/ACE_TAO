@@ -1,62 +1,65 @@
-Sun Jan 03 19:04:34 1999  David L. Levine  <levine@cs.wustl.edu>
+Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SString: The set(const char *, size_t, int = 1) and
+ 	  set(const char *, size_t) methods were inherently ambiguous.
+  	  I've fixed this by changing the order of parameters to
+ 	  set(size_t, const char *, int = 1).
+
+	* ace/Mem_Map.cpp: mmap() will fail if the length of the file
+ 	  mapping is 0, which will be the case if we've just created the
+ 	  file.  Therefore, don't even bother trying to mmap() in this
+ 	  case and return a successful result.
+
+	* ace/FILE: Moved the get_remote_addr() and get_local_addr()
+ 	  methods from the FILE_IO class to the FILE class since that's
+ 	  more properly where they belong.  Also added a new remove()
+ 	  method that unlinks the file.
+
+	* tests/Priority_Reactor_Test.cpp,
+	  tests/Conn_Test.cpp,
+	  tests/Notify_Performance_Test.cpp,
+	  Priority_Reactor_Test.cpp,
+	  Reactor_Performance_Test.cpp: Since the default is to skip argv0
+ 	  there's no sense explicitly saying this in the constructor of
+ 	  ACE_Get_Opt.
+
+	* ace/FILE_Connector.h: Updated the comments to reflect recent
+	  changes.
+
+	* ace/FILE.h: Added a new get_info() method that takes a reference
+ 	  to an ACE_FILE_Info rather than a pointer.  This is a cleaner
+ 	  API, IMHO.
+
+	* ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
+ 	  is ACE_Addr::sap_any, then connect will select a temporary
+ 	  filename using the new feature of ACE_FILE_Addr described below.
+
+	* ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
+ 	  then we'll select a new temporary filename using the new
+ 	  ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
+
+	* ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
+ 	  to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
+ 	  to create a temporary file when it's given an ACE_Addr::sap_any.
+
+	* ace/FILE_Addr.h: The <set> accessor should return an int to be
+ 	  consistent.
+
+	* ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
+ 	  much easier to cast the ACE_Addr::sap_any to the right subclass.
+
+	* tests/Reactor_Performance_Test.cpp,
+	  tests/Reactor_Exceptions_Test.cpp,
+	  tests/Process_Strategy_Test.cpp,
+	  tests/Priority_Reactor_Test.cpp,
+	  tests/IOStream_Test.cpp,
+	  tests/Conn_Test.cpp: Replaced all the C-style casts for
+ 	  ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
+
+Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: with GreenHills, added
           ACE_LACKS_LINEBUFFERED_STREAMBUF and ACE_LACKS_SIGNED_CHAR.
-
-Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/Mem_Map.cpp: mmap() will fail if the length of the file
-          mapping is 0, which will be the case if we've just created the
-          file.  Therefore, don't even bother trying to mmap() in this
-          case and return a successful result.
-
-        * ace/FILE: Moved the get_remote_addr() and get_local_addr()
-          methods from the FILE_IO class to the FILE class since that's
-          more properly where they belong.  Also added a new remove()
-          method that unlinks the file.
-
-        * tests/Priority_Reactor_Test.cpp,
-          tests/Conn_Test.cpp,
-          tests/Notify_Performance_Test.cpp,
-          Priority_Reactor_Test.cpp,
-          Reactor_Performance_Test.cpp: Since the default is to skip argv0
-          there's no sense explicitly saying this in the constructor of
-          ACE_Get_Opt.
-
-        * ace/FILE_Connector.h: Updated the comments to reflect recent
-          changes.
-
-        * ace/FILE.h: Added a new get_info() method that takes a reference
-          to an ACE_FILE_Info rather than a pointer.  This is a cleaner
-          API, IMHO.
-
-        * ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
-          is ACE_Addr::sap_any, then connect will select a temporary
-          filename using the new feature of ACE_FILE_Addr described below.
-
-        * ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
-          then we'll select a new temporary filename using the new
-          ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
-
-        * ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
-          to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
-          to create a temporary file when it's given an ACE_Addr::sap_any.
-
-        * ace/FILE_Addr.h: The <set> accessor should return an int to be
-          consistent.
-
-        * ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
-          much easier to cast the ACE_Addr::sap_any to the right subclass.
-
-        * tests/Reactor_Performance_Test.cpp,
-          tests/Reactor_Exceptions_Test.cpp,
-          tests/Process_Strategy_Test.cpp,
-          tests/Priority_Reactor_Test.cpp,
-          tests/IOStream_Test.cpp,
-          tests/Conn_Test.cpp: Replaced all the C-style casts for
-          ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
-
-Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.* (ACE_U_LongLong): unioned the data members
           with a double, to ensure alignment on 8-byte boundaries.  It
