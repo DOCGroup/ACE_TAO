@@ -1,3 +1,10 @@
+Fri Jun 20 12:56:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+
+	  Fixed case error in spelling of included file. Thanks to Diego
+	  Sevilla Ruiz <dsevilla@ditec.um.es> for reporting the mistake.
+
 Fri Jun 20 10:08:25 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/AMI/Makefile
