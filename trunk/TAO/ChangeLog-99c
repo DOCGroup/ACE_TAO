@@ -1,34 +1,40 @@
+Thu Mar 25 16:24:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/{MT_Cubit_Test,run_test.pl}:
+          changed iioplite to gioplite.  See
+          ChangeLogTag:Mon Mar  8 20:49:45 1999  Carlos O'Ryan.
+
 Thu Mar 25 15:09:37 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the following files for the InterOperable Naming Service
-	test.
-	* tests/InterOp-Naming/InterOp_test.cpp: 
-	* tests/InterOp-Naming/README: 
-	* tests/InterOp-Naming/Makefile: 
+        Added the following files for the InterOperable Naming Service
+        test.
+        * tests/InterOp-Naming/InterOp_test.cpp:
+        * tests/InterOp-Naming/README:
+        * tests/InterOp-Naming/Makefile:
 
 Thu Mar 25 07:41:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp: 
-	  Fixed use of ACE_NEW_RETURN, ACE_NEW was the right macro here.
+        * TAO_IDL/util/utl_global.cpp:
+          Fixed use of ACE_NEW_RETURN, ACE_NEW was the right macro here.
 
 Thu Mar 25 01:05:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/include/idl_global.h (class IDL_GlobalData): 
+        * TAO_IDL/include/idl_global.h (class IDL_GlobalData):
 
-	* TAO_IDL/driver/drv_preproc.cpp: Removed the code that was
-	  resolving "TEMP" variable to figure out temp directory. Instead
-	  use the global temp_dir () which has already been resolved once
-	  in drv_args.cpp
+        * TAO_IDL/driver/drv_preproc.cpp: Removed the code that was
+          resolving "TEMP" variable to figure out temp directory. Instead
+          use the global temp_dir () which has already been resolved once
+          in drv_args.cpp
 
-	* TAO_IDL/util/utl_global.cpp (temp_dir): 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_global.cpp (temp_dir):
+        * TAO_IDL/driver/drv_args.cpp:
           Added an option -t to specify temp directory for the IDL
-	  COMPILER. If this is not specified, it will be resolved from
+          COMPILER. If this is not specified, it will be resolved from
           ACE_DEFAULT_TEMP_DIR_ENV environment variable. IF that is also
-	  not defined, /tmp/ will be used.
+          not defined, /tmp/ will be used.
 
         * TAO_IDL/be/be_interface.cpp: Fixed to use the temp directory to
-	  keep the gperf temp files. 
+          keep the gperf temp files.
 
 Wed Mar 24 16:39:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -41,16 +47,16 @@ Wed Mar 24 15:07:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           automatically put an CVS ID string in the y.tab.cpp also.
 
         * TAO_IDL/fe/y.tab.cpp.diff:
-        * TAO_IDL/fe/y.tab.cpp: 
+        * TAO_IDL/fe/y.tab.cpp:
           Removed some warnings and updated the diff.
 
 Wed Mar 24 10:04:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp: 
-	  Removed definitions of inline functions for the T_var and T_out
-	  classes corresponding to a forward declaration. The classes will 
-	  be generated again for the interface.  This change should let us 
-	  use inline versions of T::_nil() and T::_duplicate().
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+          Removed definitions of inline functions for the T_var and T_out
+          classes corresponding to a forward declaration. The classes will
+          be generated again for the interface.  This change should let us
+          use inline versions of T::_nil() and T::_duplicate().
 
 Wed Mar 24 09:00:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
