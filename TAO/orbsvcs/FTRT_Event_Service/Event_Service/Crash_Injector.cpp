@@ -119,11 +119,11 @@ void Crash_Injector::check_on_sending_reply(const char* operation)
 void Crash_Injector::crash_timeout()
 {
 #ifndef WIN32
-    if (time_to_crash > 0) {
+    if (time_to_crash_ > 0) {
       signal(SIGALRM, &crash_handler);
       struct itimerval in, out;
-      in.it_value.tv_sec = time_to_crash/1000;
-      in.it_value.tv_usec = (time_to_crash%1000)*1000;
+      in.it_value.tv_sec = time_to_crash_/1000;
+      in.it_value.tv_usec = (time_to_crash_%1000)*1000;
       setitimer(ITIMER_REAL, &in, &out);
     }
     else
