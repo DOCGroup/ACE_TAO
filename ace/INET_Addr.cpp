@@ -702,7 +702,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
                                            this->ip_addr_size (),
                                            this->get_type ());
 #  else
-      int h_errno = 0;  // Not the same as errno!
+      int h_errno;  // Not the same as errno!
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp =
