@@ -1,3 +1,9 @@
+Mon Sep 15 07:05:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/RTCORBA/RTCORBA.mpc:
+
+          Added a requires of rt_corba to the RTCORBA project.
+
 Sun Sep 14 17:01:31 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.cpp:
@@ -23,12 +29,12 @@ Fri Sep 12 13:36:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep 12 10:58:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile (SRVR_LIBS):
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile (SRVR_LIBS):
 
-	  Explicitly link the ACE_SSL library to address an unresolved
-	  symbol link-time error in Solaris Sun CC 5.3 builds.  The
-	  server binary appears to needs the ACE_SSL_Context::instance()
-	  method, at least according to the linker error.
+          Explicitly link the ACE_SSL library to address an unresolved
+          symbol link-time error in Solaris Sun CC 5.3 builds.  The
+          server binary appears to needs the ACE_SSL_Context::instance()
+          method, at least according to the linker error.
 
 Fri Sep 12 12:50:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -45,12 +51,12 @@ Fri Sep 12 12:50:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep 12 10:42:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
 
-	  Moved typedefs within the preprocessor block that is enabled
-	  when ACE_ENABLE_TIMEPROBES and ACE_COMPILE_TIMEPROBES are
-	  defined.  Fixes compile-time errors on builds that do not enable
-	  timeprobe support.
+          Moved typedefs within the preprocessor block that is enabled
+          when ACE_ENABLE_TIMEPROBES and ACE_COMPILE_TIMEPROBES are
+          defined.  Fixes compile-time errors on builds that do not enable
+          timeprobe support.
 
 Fri Sep 12 10:29:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
@@ -62,7 +68,7 @@ Fri Sep 12 12:14:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
 
-          Added dependencies on PortableServer and RTCORBA for 
+          Added dependencies on PortableServer and RTCORBA for
           RTScheduler.
 
         * tao/RTScheduling/TAO_RTScheduler.dsp:
@@ -83,11 +89,11 @@ Fri Sep 12 10:54:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Sep 11 15:41:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-	* tests/OBV/Supports/Supports_Test_impl.cpp:
-	* tests/OBV/Supports/Supports_Test_impl.h:
-	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.h:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
 
-	  Fixed compile errors due to missing ACE_ENV_ARG_DECL.
+          Fixed compile errors due to missing ACE_ENV_ARG_DECL.
 
 Thu Sep 11 14:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -98,11 +104,11 @@ Thu Sep 11 14:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Sep 11 08:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
-	* examples/RTScheduling/MIF_Scheduler/Makefile:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+        * examples/RTScheduling/MIF_Scheduler/Makefile:
 
-	  Removed duplicate library instances in link command.  Addresses
-	  link errors showing up in statically linked builds.
+          Removed duplicate library instances in link command.  Addresses
+          link errors showing up in statically linked builds.
 
 Wed Sep 10 17:49:10 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -152,11 +158,11 @@ Wed Sep 10 13:19:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Sep 10 08:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.i:
+        * tao/IOP_IORC.i:
 
-	  Explicitly #undef IOR in this file to work around an HPUX
-	  namespace conflict.  For some reason, the same #undef in
-	  IOP_IORC.h is not enough.
+          Explicitly #undef IOR in this file to work around an HPUX
+          namespace conflict.  For some reason, the same #undef in
+          IOP_IORC.h is not enough.
 
 Wed Sep 10 10:05:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 
