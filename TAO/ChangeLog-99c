@@ -1,3 +1,13 @@
+Wed Jul  7 21:16:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_to_service): Revised the code to use
+	  TAO_DEFAULT_IOR_SIZE rather than 2*BUFSIZ since we can
+ 	  explicitly control this size, whereas BUFSIZ ranges a lot across
+ 	  platforms.
+
+	* tao/orbconf.h: Added a new macro called TAO_DEFAULT_IOR_SIZE,
+	  which is set to 1024.
+
 Wed Jul  7 20:36:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/ORB.{h,cpp}
