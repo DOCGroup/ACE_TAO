@@ -145,8 +145,9 @@ public:
 
   int wait (const ACE_Time_Value *timeout = 0);	
   // Block until there are no more threads running in the
-  // <Thread_Manager> or <timeout> expires.  Returns 0 on success and
-  // -1 on failure.
+  // <Thread_Manager> or <timeout> expires.  Note that <timeout> is
+  // treated as "absolute" time.  Returns 0 on success and -1 on
+  // failure.
 
   // = Accessors for ACE_Thread_Descriptors.
   int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &);
