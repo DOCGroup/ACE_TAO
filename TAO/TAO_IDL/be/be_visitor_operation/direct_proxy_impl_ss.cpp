@@ -91,7 +91,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   if (!node->void_return_type ())
     {
-      *os << "((TAO::Arg_Traits<";
+      *os << "((TAO::Arg_Traits< ";
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
@@ -164,7 +164,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       arg = AST_Argument::narrow_from_decl (si.item ());
 
       *os << (index == 1 ? "" : ",") << be_nl
-          << "((TAO::Arg_Traits<";
+          << "((TAO::Arg_Traits< ";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
