@@ -1,3 +1,9 @@
+Fri Oct 30 09:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString.h: Cleaned up the ACE_SString comments to be more
+ 	  helpful.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
+	  motivating this.
+
 Thu Oct 29 22:19:19 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/ACE-FMM.html: 

@@ -29,7 +29,7 @@ class ACE_Allocator;
 class ACE_Export ACE_CString
 {
   // = TITLE
-  //   A simple "C String" (ACE_CString) class.
+  //   A simple C String <ACE_CString> class.
   //
   // = DESCRIPTION
   //   This is a place holder until all compilers implement the
@@ -173,19 +173,22 @@ ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
 #endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_SString
-  // = TITLE
-  //   A very "Simple String" (ACE_SString) class.
-  //
-  // = DESCRIPTION
-  //   This is *not* a general-purpose string class.  It is only
-  //   intended for use with applications that understand how it
-  //   works.  In particular, it has no destructor...  Note that we
-  //   need to use this class since the ACE ACE_Map_Manager requires
-  //   an object that supports the operator== and operator!=.
-  //   This class uses an ACE_Allocator to allocate memory
-  //   The user can make this a persistant class by providing an
-  //   ACE_Allocator with a persistable memory pool
 {
+  // = TITLE
+  //   A very Simple String <ACE_SString> class.  This is not a
+  //   general-purpose string class, and you should probably consider
+  //   using <ACE_CString> is you don't understand why this class
+  //   exists...
+  //
+  // = DESCRIPTION 
+  //   This class is only intended for use with applications that
+  //   understand how it works.  In particular, its destructor does
+  //   not deallocate its memory when it is destroyed...  We need this
+  //   class since the <ACE_Map_Manager> requires an object that
+  //   supports the operator== and operator!=.  This class uses an
+  //   <ACE_Allocator> to allocate memory.  The user can make this a
+  //   persistant class by providing an <ACE_Allocator> with a
+  //   persistable memory pool.
 public:
   static const int npos;
   // No position constant
@@ -298,18 +301,16 @@ ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
 #endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_WString
+{
   // = TITLE
   //   A persistent wide string class.
   //
   // = DESCRIPTION
-  //   This is *not* a general-purpose string class.  It is only
-  //   intended for use with applications that understand how it
-  //   works.  Note that we need to use this class since the ACE
-  //   ACE_Map_Manager requires an object that supports the operator==
-  //   and operator!=.  This class uses an ACE_Allocator to allocate
-  //   memory The user can make this a persistant class by providing
-  //   an ACE_Allocator with a persistable memory pool
-{
+  //   We need to use this class since the <ACE_Map_Manager> requires
+  //   an object that supports the operator== and operator!=.  This
+  //   class uses an <ACE_Allocator> to allocate memory.  The user can
+  //   make this a persistant class by providing an <ACE_Allocator>
+  //   with a persistable memory pool
 public:
   static const int npos;
   // No position constant
