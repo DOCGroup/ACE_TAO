@@ -1477,7 +1477,10 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
 }
 
 // Static service macros
-# define ACE_STATIC_SVC_DECLARE(X) extern ACE_Static_Svc_Descriptor ace_svc_desc_##X ;
+# define ACE_STATIC_SVC_DECLARE(X) \
+extern ACE_Static_Svc_Descriptor ace_svc_desc_##X ;
+#define ACE_STATIC_SVC_DECLARE_EXPORT(CLS,X) \
+extern CLS##_Export ACE_Static_Svc_Descriptor ace_svc_desc_##X;
 # define ACE_STATIC_SVC_DEFINE(X, NAME, TYPE, FN, FLAGS, ACTIVE) \
 ACE_Static_Svc_Descriptor ace_svc_desc_##X = { NAME, TYPE, FN, FLAGS, ACTIVE };
 
