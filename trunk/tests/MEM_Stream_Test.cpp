@@ -44,16 +44,16 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
 #include "MEM_Stream_Test.h"         // Defines Echo_Handler
 
-#define NO_OF_REACTIVE_CONNECTION 3
+#define NUMBER_OF_REACTIVE_CONNECTIONS 3
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
-# define NO_OF_MT_CONNECTION 3
+# define NUMBER_OF_MT_CONNECTIONS 3
 #else
   // We will use SysV Semaphore in this case which is not very scalable
   // and can only handle one connection.
-# define NO_OF_MT_CONNECTION 1
+# define NUMBER_OF_MT_CONNECTIONS 1
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
-#define NO_OF_ITERATION 100
+#define NUMBER_OF_ITERATIONS 100
 
 // If we don't have winsock2 we can't use WFMO_Reactor.
 #if defined (ACE_WIN32) \
@@ -63,9 +63,9 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 # define TEST_CAN_USE_WFMO_REACTOR
 #endif
 
-#if defined(TEST_CAN_USE_WFMO_REACTOR)
+#if defined (TEST_CAN_USE_WFMO_REACTOR)
 static const int opt_wfmo_reactor = 1;
-#endif
+#endif /* TEST_CAN_USE_WFMO_REACTOR */
 
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
@@ -82,14 +82,13 @@ typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
 static void reset_handler (int conn)
 {
   // Reset the number of connection the test should perform.
-  (*Waiting::instance ()) = conn;
+  *Waiting::instance () = conn;
   connection_count = 0;
 }
 
 int
 Echo_Handler::open (void *)
 {
-  // @@ Nanbor, this method doesn't anything?
   return 0;
 }
 
@@ -134,16 +133,14 @@ Echo_Handler::handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask mask)
 {
   // Reduce count.
-  (*Waiting::instance ())--;
+  *Waiting::instance ()--;
 
-#if 1
   if (client_strategy != ACE_MEM_IO::Reactive)
     this->reactor ()->remove_handler (this,
                                       mask | ACE_Event_Handler::DONT_CALL);
-#endif /* tests */
 
   // If no connections are open.
-  if ((*Waiting::instance ()) == 0)
+  if (*Waiting::instance () == 0)
     ACE_Reactor::instance ()->end_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -159,12 +156,13 @@ int
 Echo_Handler::svc (void)
 {
   while (this->handle_input (this->get_handle ()) >= 0)
-    ;
+    continue;
   return 0;
 }
 
 static int
-run_client (unsigned short port, ACE_MEM_IO::Signal_Strategy strategy)
+run_client (u_short port,
+            ACE_MEM_IO::Signal_Strategy strategy)
 {
   int status = 0;
   ACE_MEM_Addr to_server (port);
@@ -181,7 +179,7 @@ run_client (unsigned short port, ACE_MEM_IO::Signal_Strategy strategy)
 
   ACE_TCHAR buf[MAXPATHLEN];
 
-  for (ssize_t cntr = 0; cntr < NO_OF_ITERATION; cntr ++)
+  for (ssize_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
     {
       ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SSIZE_T_FORMAT_SPECIFIER,
                        cntr);
@@ -204,34 +202,32 @@ run_client (unsigned short port, ACE_MEM_IO::Signal_Strategy strategy)
           break;
         }
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("connect_client, got echo %s\n"), buf));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("connect_client, got echo %s\n"),
+                  buf));
     }
 
   status = stream.close () == -1 ? -1 : status;
   return status;
 }
 
-
-void *
+static void *
 connect_client (void *arg)
 {
-  u_short sport =  (*ACE_reinterpret_cast (u_short *, arg));
-  run_client (sport, client_strategy);
+  u_short *sport =  ACE_reinterpret_cast (u_short *, arg);
+  run_client (*sport, client_strategy);
   return 0;
 }
 
-
-void
+static void
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
 
 #if defined (TEST_CAN_USE_WFMO_REACTOR)
   if (opt_wfmo_reactor)
-    {
-      ACE_NEW (impl,
-               ACE_WFMO_Reactor);
-    }
+    ACE_NEW (impl,
+             ACE_WFMO_Reactor);
 #endif /* TEST_CAN_USE_WFMO_REACTOR */
 
   if (impl == 0 && opt_select_reactor)
@@ -244,7 +240,9 @@ create_reactor (void)
   ACE_Reactor::instance (reactor);
 }
 
-int test_reactive (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
+static int 
+test_reactive (const ACE_TCHAR *prog,
+               ACE_MEM_Addr &server_addr)
 {
   ACE_DEBUG ((LM_DEBUG, "Testing Reactive MEM_Stream\n\n"));
 
@@ -267,43 +265,44 @@ int test_reactive (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
 
   ACE_MEM_Addr local_addr;
   if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
-                        1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                      1);
 
   u_short sport = local_addr.get_port_number ();
 
 #if defined (_TEST_USES_THREADS)
-  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_REACTIVE_CONNECTION,
-                                            connect_client,
-                                            &sport);
+  if (ACE_Thread_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
+                                                connect_client,
+                                                &sport) == -1);
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -r"), prog, sport);
-  if (-1==ACE_Process_Manager::instance ()->spawn_n (NO_OF_REACTIVE_CONNECTION,
-                                                     opts))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
-#endif
+  if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
+                                                 opts) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
+#endif /* _TEST_USES_THREADS */
 
-  ACE_Time_Value tv(60, 0);
+  ACE_Time_Value tv (60, 0);
   ACE_Reactor::instance ()->run_event_loop (tv);
 
   if (tv == ACE_Time_Value::zero)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("Reactor::run_event_loop timeout\n")));
+                  ACE_TEXT ("Reactor::run_event_loop timeout\n")));
       status = 1;
     }
 
   ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
-  ACE_Thread_Manager::instance ()->wait ();
+  if (ACE_Thread_Manager::instance ()->wait () == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));    
 #else
-  ACE_Process_Manager::instance ()->wait ();
-#endif
+  if (ACE_Process_Manager::instance ()->wait () == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));    
+#endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
     {
@@ -316,12 +315,13 @@ int test_reactive (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
   return status;
 }
 
-int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
+static int 
+test_concurrent (const ACE_TCHAR *prog,
+                 ACE_MEM_Addr &server_addr)
 {
   ACE_DEBUG ((LM_DEBUG, "Testing Multithreaded MEM_Stream\n\n"));
 
   int status = 0;
-
   client_strategy = ACE_MEM_IO::MT;     // Echo_Handler uses this.
 
   ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
@@ -333,7 +333,6 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
 #endif /* ACE_HAS_THREADS */
   S_ACCEPTOR acceptor;
 
-
   if (acceptor.open (server_addr,
                      ACE_Reactor::instance (),
                      &create_strategy,
@@ -342,49 +341,55 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
 
-  acceptor.acceptor ().malloc_options ().minimum_bytes_ = 1024 * 1024 ;
+  acceptor.acceptor ().malloc_options ().minimum_bytes_ = 1024 * 1024;
   acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
   acceptor.acceptor ().preferred_strategy (ACE_MEM_IO::MT);
 
   ACE_MEM_Addr local_addr;
   if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
-                        1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                      1);
 
   u_short sport = local_addr.get_port_number ();
 
 #if defined (_TEST_USES_THREADS)
-  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
-                                            connect_client,
-                                            &sport);
+  ACE_UNUSED_ARG (prog);
+
+  if (ACE_Thread_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
+                                                connect_client,
+                                                &sport) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT (%p\n"), ACE_TEXT ("spawn_n()")));
 #else
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
-  if (-1 == ACE_Process_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
-                                                       opts))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
-#endif
+  if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
+                                                 opts) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
+#endif /* _TEST_USES_THREADS */
 
-  ACE_Time_Value tv(60, 0);
+  ACE_Time_Value tv (60, 0);
   ACE_Reactor::instance ()->run_event_loop (tv);
 
   if (tv == ACE_Time_Value::zero)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("Reactor::run_event_loop timeout\n")));
+                  ACE_TEXT ("Reactor::run_event_loop timeout\n")));
       status = 1;
     }
   else
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
-#if defined (_TEST_USES_THREADS)
-  ACE_Thread_Manager::instance ()->wait ();
+#if defined (_TEST_USES_THREADS) 
 #else
   ACE_Process_Manager::instance ()->wait ();
-#endif
+
+#if defined (ACE_HAS_THREADS)
+  // We need to call this method if we use the
+  // ACE_Thread_Strategy<Echo_Handler>.
+  ACE_Thread_Manager::instance ()->wait ();
+#endif /* ACE_HAS_THREADS */
+#endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
     {
@@ -393,81 +398,78 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
       status = 1;
     }
 
-  ACE_UNUSED_ARG (prog);
   return status;
 }
 
 int
 main (int argc, ACE_TCHAR *argv[])
 {
-  unsigned short port = 0;
+  u_short port = 0;
 
   if (argc == 1)
     {
+      // This is the "master" process.
+
       ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
-
       create_reactor ();
-
       ACE_MEM_Addr server_addr (port);
 
-      reset_handler (NO_OF_REACTIVE_CONNECTION);
-
+      reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
       test_reactive (argv[0], server_addr);
-
       ACE_Reactor::instance ()->reset_event_loop ();
-
 
 #if !defined (ACE_WIN32) && defined (_ACE_USE_SV_SEM)
       ACE_ERROR ((LM_DEBUG,
-              ACE_TEXT ("\n *** Platform only support non-scalable SysV semaphores ***\n\n")));
+                  ACE_TEXT ("\n *** Platform only supports non-scalable SysV semaphores ***\n\n")));
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
-
-      reset_handler (NO_OF_MT_CONNECTION);
-
-      test_multithreaded (argv[0], server_addr);
+      reset_handler (NUMBER_OF_MT_CONNECTIONS);
+      test_concurrent (argv[0], server_addr);
 
       ACE_END_TEST;
       return 0;
     }
-
-  // Here if this is a child process spawned for one of the test passes.
-  // command line is:   -p <port> -r (reactive) | -m (multithreaded)
-
-  ACE_TCHAR lognm[MAXPATHLEN];
-  int mypid (ACE_OS::getpid ());
-  ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
-  ACE_START_TEST (lognm);
-
-  ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));
-  int opt, iport, status;
-  ACE_MEM_IO::Signal_Strategy model = ACE_MEM_IO::Reactive;
-
-  while ((opt = opts()) != -1)
+  else
     {
-      switch (opt)
+      // We end up here if this is a child process spawned for one of
+      // the test passes.  command line is: -p <port> -r (reactive) |
+      // -m (multithreaded)
+
+      ACE_TCHAR lognm[MAXPATHLEN];
+      int mypid (ACE_OS::getpid ());
+      ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
+      ACE_START_TEST (lognm);
+
+      ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));
+      int opt, iport, status;
+      ACE_MEM_IO::Signal_Strategy model = ACE_MEM_IO::Reactive;
+
+      while ((opt = opts()) != -1)
         {
-        case 'p':
-          iport = ACE_OS::atoi (opts.optarg);
-          port = ACE_static_cast (unsigned short, iport);
-          break;
+          switch (opt)
+            {
+            case 'p':
+              iport = ACE_OS::atoi (opts.optarg);
+              port = ACE_static_cast (u_short, iport);
+              break;
 
-        case 'r':
-          model = ACE_MEM_IO::Reactive;
-          break;
+            case 'r':
+              model = ACE_MEM_IO::Reactive;
+              break;
 
-        case 'm':
-          model = ACE_MEM_IO::MT;
-          break;
+            case 'm':
+              model = ACE_MEM_IO::MT;
+              break;
 
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("Invalid option (-p <port> -r | -m)\n")),
-                            1);
+            default:
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Invalid option (-p <port> -r | -m)\n")),
+                                1);
+            }
         }
+      status = run_client (port, model);
+      ACE_END_TEST;
+      return status;
     }
-  status = run_client (port, model);
-  ACE_END_TEST;
-  return status;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
