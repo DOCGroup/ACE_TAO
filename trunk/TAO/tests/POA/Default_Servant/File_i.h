@@ -5,8 +5,8 @@
 //     File_i.h
 //
 // = DESCRIPTION
-//     This Program defines the implementation class for the File IDL
-//     interface.
+//     This Program defines the implementation classes for the File IDL
+//     module
 //
 // = AUTHOR
 //     Irfan Pyarali
