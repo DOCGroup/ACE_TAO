@@ -10,7 +10,7 @@
 
 #include "Options.h"
 #include "NT_Service.h"
-
+#include "tao/Strategies/advanced_resource.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
 
@@ -240,7 +240,6 @@ Options::init (int argc, char *argv[])
     return result;
 
   // Save the leftovers to a ACE_ARGV class
-
   for (i = 1; i < argc; ++i)
     {
       if (orb_args.add (argv[i]) == -1)
@@ -267,8 +266,16 @@ Options::init (int argc, char *argv[])
   if (result != 0)
     return result;
 
-  // Now initialize the orb and pass it the leftover arguments
+  if (orb_args.add ("-ORBSvcConfDirective\"static Advanced_Resource_Factory '-ORBReactorType select_st'\"") == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_ImR_Activator- Could not add"
+                         " SvcConfDirective \n"),
+                        -1);
+    }
+  orb_argc = orb_args.argc ();
 
+  // Now initialize the orb and pass it the leftover arguments
   ACE_TRY_NEW_ENV
     {
       this->orb_ = CORBA::ORB_init (orb_argc,
@@ -279,6 +286,8 @@ Options::init (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception \n");
       ACE_ERROR ((LM_ERROR, "Error: Cannot initialize ORB\n"));
       return -1;
     }
@@ -354,7 +363,7 @@ Options::initialize_file_persistence (const char *filename)
   }
 
   Repository_Configuration *repo_config = 0;
-  
+
   ACE_NEW_RETURN (repo_config,
                   Repository_Configuration ("h"),
                   -1);
