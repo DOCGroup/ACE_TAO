@@ -252,8 +252,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "run_test [-chorus <target>] test\n";
       print "\n";
       print "-chorus <target>   -- Runs the test on Chorus target\n";
-      print "test               -- Runs a specific test\n";
-      print "                      airplane, airplane_ir, nestea, nestea_ir, both_ir\n";
+      print "test               -- Runs a specific test:\n";
+      print "                         airplane, airplane_ir, nt_service_ir, nestea,\n";
+      print "                         nestea_ir, both_ir, persistent_ir\n";
       exit;
     }
     if ($ARGV[$i] eq "airplane")
