@@ -69,7 +69,7 @@ void check_bounds
 #include <vector.h>
 
 #ifdef __MMULTITHREAD
-#include "mutex.h"
+#include /**/ "mutex.h"
 #endif
 
 const size_t NPOS  = (size_t)(-1);
