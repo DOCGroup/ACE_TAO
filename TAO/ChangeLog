@@ -1,3 +1,9 @@
+Sat Jan 25 17:55:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp: Added necessary 
+	  libraries for linking.
+
 Sat Jan 25 18:55:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.h: Fixed a compilation error.
