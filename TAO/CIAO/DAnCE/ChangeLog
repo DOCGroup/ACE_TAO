@@ -1,3 +1,9 @@
+Wed Mar 09 13:40:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* Plan_Launcher/Plan_Launcher.cpp
+
+          Fixed a minor bug.
+
 Tue Mar  8 19:24:57 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * Config_Handlers/IDREF_Base.h:
@@ -82,6 +88,7 @@ Sun Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	  to ACE_NEW.
 
 Fri Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+>>>>>>> 1.1.2.36
 
 	* Config_Handlers/Config_Handlers.mpc
 	* Config_Handlers/Deployment.hpp
