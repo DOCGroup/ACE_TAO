@@ -79,7 +79,7 @@ void Domain_Handler::process_node (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:Node")))
         {
         }
@@ -122,7 +122,7 @@ void Domain_Handler::process_resource
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:Resource")))
         {
         }
@@ -152,7 +152,7 @@ void Domain_Handler::process_bridge
     {
       XStr node_name (node->getNodeName());
           
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:Bridge")))
         {
         }
@@ -189,7 +189,7 @@ void Domain_Handler::process_interconnect (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:Interconnect")))
         {
         }
@@ -234,7 +234,7 @@ void Domain_Handler::process_sr
     {
       XStr node_name (node->getNodeName());
           
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:SharedResource")))
         {
         }

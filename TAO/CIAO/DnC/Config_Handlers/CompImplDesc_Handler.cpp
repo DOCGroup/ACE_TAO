@@ -45,7 +45,7 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
       ACE_DEBUG ((LM_DEBUG, "node name is %s\n", 
                   XMLString::transcode (node_name)));
 
-      else if (node_name == XStr
+      if (node_name == XStr
           (ACE_TEXT ("Deployment:ComponentImplementationDescription")))
         {
         }
