@@ -6,7 +6,7 @@
 #define TAO_TUTORIAL_QUOTER_EVENT_SERVICE_STOCK_FACTORY_I_H
 
 #include "QuoterS.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include <orbsvcs/CosEventChannelAdminS.h>
 
 class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory {
 public:
@@ -25,4 +25,3 @@ private:
 };
 
 #endif /* TAO_TUTORIAL_QUOTER_EVENT_SERVICE_STOCK_FACTORY_I_H */
-

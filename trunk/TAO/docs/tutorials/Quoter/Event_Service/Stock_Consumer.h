@@ -5,8 +5,8 @@
 #ifndef TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
 #define TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
 
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include <orbsvcs/CosEventCommS.h>
+#include <orbsvcs/CosEventChannelAdminC.h>
 
 class Stock_Consumer : public POA_CosEventComm::PushConsumer {
 public:

@@ -5,8 +5,8 @@
 #ifndef TAO_TUTORIALS_QUOTER_RT_EVENT_SERVICE_STOCK_CONSUMER_H
 #define TAO_TUTORIALS_QUOTER_RT_EVENT_SERVICE_STOCK_CONSUMER_H
 
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include <orbsvcs/RtecEventCommS.h>
+#include <orbsvcs/RtecEventChannelAdminC.h>
 
 class Stock_Consumer : public POA_RtecEventComm::PushConsumer {
 public:
