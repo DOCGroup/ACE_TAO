@@ -1,3 +1,10 @@
+Thu Aug 24 12:08:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_decl.cpp:
+
+	  Fixed some previous cosmetic changes to 
+	  compute_full_name(), which may have altered its behavior.
+
 Thu Aug 24 11:18:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp:
