@@ -3483,9 +3483,16 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/wait.h>
 #     include /**/ <pwd.h>
-#     ifndef howmany
+      // sets O_NDELAY
+#     include /**/ <unix.h>
+#     include /**/ <sys/param.h> /* for NBBY */
+      typedef long fd_mask;
+#     if !defined (NFDBITS)
+#       define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
+#     endif /* ! NFDBITS */
+#     if !defined (howmany)
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* howmany */
+#     endif /* ! howmany */
 #   elif ! defined (VXWORKS)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
@@ -4702,7 +4709,7 @@ class ACE_Export ACE_Errno_Guard
   //
   // = DESCRIPTION
   //   The typical use-case for this is the following:
-  //  
+  //
   //   int error = errno;
   //   call_some_function_that_might_change_errno ();
   //   errno = error;
@@ -4716,7 +4723,7 @@ class ACE_Export ACE_Errno_Guard
   //
   //   This implementation is more elegant and more efficient since it
   //   avoids an unnecessary second access to thread-specific storage
-  //   by caching a pointer to the value of errno in TSS.  
+  //   by caching a pointer to the value of errno in TSS.
 public:
   // = Initialization and termination methods.
   ACE_Errno_Guard (int &errno_ref,
@@ -4727,9 +4734,9 @@ public:
   ACE_Errno_Guard (int &errno_ref);
   //  Stash the value of <errno> into <error_> and initialize the
   //  <errno_ptr_> to the address of <errno_ref>.
-  
+
   ~ACE_Errno_Guard (void);
-  // Reset the value of <errno> to <error>.  
+  // Reset the value of <errno> to <error>.
 
   int operator= (int error);
   // Assign <error> to <error_>.
@@ -4770,7 +4777,7 @@ public:
   // = Get/set the token bucket size in bytes.
   u_long token_bucket_size (void);
   void token_bucket_size (u_long tbs);
-  
+
   // = Get/set the PeakBandwidth in bytes/sec.
   u_long peak_bandwidth (void);
   void peak_bandwidth (u_long pb);
@@ -4796,7 +4803,7 @@ public:
   void minimum_policed_size (u_long mps);
 };
 
-class ACE_Export ACE_QoS 
+class ACE_Export ACE_QoS
 #if defined (ACE_HAS_WINSOCK2)
   : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
