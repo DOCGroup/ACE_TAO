@@ -28,7 +28,7 @@ Naming_Service::Naming_Service (void)
 // Constructor taking command-line arguments
 
 Naming_Service::Naming_Service (int argc,
-				char** argv)
+                                char** argv)
   :ior_output_file_ (0)
 {
    this->init (argc,argv);
@@ -62,7 +62,6 @@ Naming_Service::parse_args (int argc,
                            "\n",
                            argv [0]),
                           -1);
-        break;
       }
   return 0;
 }
@@ -70,22 +69,22 @@ Naming_Service::parse_args (int argc,
 // Initialize the state of the Naming_Service object
 int
 Naming_Service::init (int argc,
-		      char** argv)
+                      char** argv)
 {
   int result;
 
   TAO_TRY
     {
       this->orb_manager_.init_child_poa (argc,
-					 argv,
-					 "child_poa",
-					 TAO_TRY_ENV);
+                                         argv,
+                                         "child_poa",
+                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       CORBA::ORB_ptr orb = this->orb_manager_.orb ();
       PortableServer::POA_ptr
-	child_poa = this->orb_manager_.child_poa ();
-      
+        child_poa = this->orb_manager_.child_poa ();
+
       result = this->my_naming_server_.init (orb,
                                              child_poa);
       TAO_CHECK_ENV;
@@ -105,7 +104,7 @@ Naming_Service::init (int argc,
 
   if (result < 0)
     return result;
-  if (this->ior_output_file_ != 0) 
+  if (this->ior_output_file_ != 0)
     {
       CORBA::String_var str =
         this->my_naming_server_.naming_service_ior ();
@@ -156,4 +155,3 @@ main (int argc, char ** argv)
   TAO_ENDTRY;
   return 0;
 }
-
