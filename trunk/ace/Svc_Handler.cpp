@@ -191,12 +191,12 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
   // Enqueue <mb> onto the message queue.
   if (this->putq (mb, tv) == -1)
     return -1;
-  else 
+  else
     {
       // Flush the buffer when the number of bytes exceeds the maximum
       // buffer size or when the timeout period has elapsed.
       if (mb->total_size () >= this->maximum_buffer_size_
-          || (this->timeoutp_ != 0 
+          || (this->timeoutp_ != 0
               && this->timeout_ > ACE_OS::gettimeofday ()))
           return this->flush ();
 
@@ -217,7 +217,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
 
   // Iterate over all the <ACE_Message_Block>s in the
   // <ACE_Message_Queue> and prepare them to be written out.
-  for (ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> iterator (*this->msg_queue ());
+  for (ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
        iterator.next (entry) != 0
          && result == 0;
        iterator.advance ())
@@ -225,11 +225,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
       // Iterate over all the <Message_Block>s in a chain, including
       // continuations.
       for (ACE_Message_Block *temp = entry;
-           entry != 0;
-           entry = entry->cont ())
+           temp != 0;
+           temp = entry->cont ())
         {
-          iov[i].iov_len = entry->length ();
-          iov[i].iov_base = entry->rd_ptr ();
+          iov[i].iov_len = temp->length ();
+          iov[i].iov_base = temp->rd_ptr ();
 
           i++;
 
@@ -263,7 +263,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
       ACE_DEBUG ((LM_DEBUG,
                   "sending data (final flush, i = %d)\n",
                   i));
-#endif (ACE_DEBUGGING)
+#endif /* ACE_DEBUGGING */
     }
 
   // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
