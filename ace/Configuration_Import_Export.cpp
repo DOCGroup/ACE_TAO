@@ -362,8 +362,8 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
     {
       ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
-      if (line[0] == ACE_LIB_TEXT (';')  || 
-          line[0] == ACE_LIB_TEXT ('#')  || 
+      if (line[0] == ACE_LIB_TEXT (';')  ||
+          line[0] == ACE_LIB_TEXT ('#')  ||
           line[0] == '\0')
         continue;
 

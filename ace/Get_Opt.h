@@ -288,7 +288,7 @@ public:
   ACE_TCHAR **argv (void) const;
 
   /// Accessor for the @c last_option that was processed.  This allows
-  /// applications to know if the found option was a short or long 
+  /// applications to know if the found option was a short or long
   /// option, and is especially useful in cases where it was invalid
   /// and the caller wants to print out the invalid value.
   const ACE_TCHAR *last_option (void) const;
