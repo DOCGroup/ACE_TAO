@@ -1,3 +1,12 @@
+Thu Jan 29 18:14:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+        
+          When executing validate_included_idl_files() on a non-windows
+          platform, the system function realpath() is called. Denny
+          Kolb <kolb@g2ss.com> has submitted a version for use on LynxOS,
+          which does not have a native version of this function.
+
 Thu Jan 29 15:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
