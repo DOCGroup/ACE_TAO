@@ -1,8 +1,12 @@
 Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: removed
-         ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR because it caused compilation
-         failure with egcs 1.0.2.
+          ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR because it caused compilation
+          failure with egcs 1.0.2.
+
+        * ace/IOStream_T.i (eof): fixed return value calculation
+          logic.  Thanks to Arturo and James Johnson for providing
+          and verifying the fix.
 
 Tue Nov 17 09:12:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
