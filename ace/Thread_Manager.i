@@ -44,6 +44,94 @@ ACE_Thread_Descriptor::state (void)
   return thr_state_;
 }
 
+//////////////////////////////////////////////////
+#if defined (NANBOR_EXP_CODES)
+ACE_INLINE
+ACE_Thread_Descriptor_Adapter::ACE_Thread_Descriptor_Adapter (void)
+  : thr_desc_ (0)
+{
+}
+
+ACE_INLINE
+ACE_Thread_Descriptor_Adapter::ACE_Thread_Descriptor_Adapter
+   (ACE_Thread_Descriptor *thr_desc)
+     : thr_desc_ (thr_desc)
+{
+}
+
+ACE_INLINE
+ACE_Thread_Descriptor_Adapter::ACE_Thread_Descriptor_Adapter
+  (const ACE_Thread_Descriptor_Adapter &td)
+    : thr_desc_ (td.thr_desc_)
+{
+}
+
+ACE_INLINE ACE_Thread_Descriptor_Adatper&
+ACE_Thread_Descriptor_Adapter::operator= (const ACE_Thread_Descriptor_Adapter &td)
+{
+  this->thr_desc_ = td.thr_desc_;
+}
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Adapter::operator== (const ACE_Thread_Descriptor_Adapter &td) const
+{
+  return (this->self () == td.self ());
+}
+
+// = Accessing the underlying methods of ACE_Thread_Descriptor.
+
+ACE_INLINE ACE_thread_t
+ACE_Thread_Descriptor_Adapter::self (void)
+{
+  return this->thr_desc_->self ();
+}
+
+ACE_INLINE void
+ACE_Thread_Descriptor_Adapter::self (ACE_hthread_t &handle)
+{
+  this->thr_desc_->self (handle);
+}
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Adapter::grp_id (void)
+{
+  return this->thr_desc_->grp_id ();
+}
+
+ACE_INLINE ACE_Thread_State
+ACE_Thread_Descriptor_Adapter::state (void)
+{
+  return this->thr_desc_->state ();
+}
+
+ACE_INLINE ACE_Task_Base *
+ACE_Thread_Descriptor_Adapter::task (void)
+{
+  return this->thr_desc_->task ();
+}
+
+ACE_INLINE void
+ACE_Thread_Descriptor_Adapter::dump (void) const
+{
+  this->thr_desc_->dump ();
+}
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Adapter::at_exit (void *object,
+                                        ACE_CLEANUP_FUNC cleanup_hook,
+                                        void *param)
+{
+  return this->thr_desc_->at_exit (object, cleanup_hook, param);
+}
+
+ACE_INLINE ACE_Thread_Descriptor *
+ACE_Thread_Descriptor_Adapter::get_thread_descriptor (void)
+{
+  return this->thr_desc_;
+}
+#endif /* NANBOR_EXP_CODES */
+//////////////////////////////////////////////////
+
 // Set the exit status.
 
 ACE_INLINE void *

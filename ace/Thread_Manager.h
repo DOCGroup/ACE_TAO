@@ -96,6 +96,85 @@ private:
   // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
 };
 
+//////////////////////////////////////////////////
+
+// @@ Thread handle comparison, how?  When we duplicate a handle, (on
+// Win32) the returning handle won't have the same value as the
+// original handle.  Therefore, I don't see a way to distinguish
+// whether two handles point to the same theread or not.
+// Motto: Always use thread ids to manipulate Thread_Manager. (???)
+
+#if defined (NANBOR_EXP_CODES)
+CLASS ACE_Export ACE_Thread_Descriptor_Adapter
+  // = TITLE
+  //     Wrap ACE_Thread_Descriptor for putting it into a container.
+  //
+  // = DESCRIPTION
+  //     This class contains a pointer to a ACE_Thread_Descriptor.
+  //     It then gets put into a container.  This is to avoid extra
+  //     data copying and also expose ACE_Thread_Descriptor's methods
+  //     to the external world.
+  //
+  //     *I assume no two threads will have the same thread id.*
+{
+public:
+  ACE_Thread_Descriptor_Adapter ();
+  // Default constructor.  Used by container classes.
+
+  ACE_Thread_Descriptor_Adapter (ACE_Thread_Descriptor *thr_desc);
+  // Construct a adapter containing <thr_desc>.  User should call this method.
+
+  ACE_Thread_Descriptor_Adapter (const ACE_Thread_Descriptor_Adapter &td);
+  // Copy constructor.  Required by container classes.
+
+  ACE_Thread_Descriptor_Adatper& operator= (const ACE_Thread_Descriptor_Adapter &td);
+  // Assignment operation.  Required by container classes.
+
+  int operator== (const ACE_Thread_Descriptor_Adapter &td) const;
+  // Comparison operator.  Required by container classes.
+
+  // = Accessing the underlying methods of ACE_Thread_Descriptor.
+
+  ACE_thread_t self (void);
+  // Unique thread id.
+
+  void self (ACE_hthread_t &);
+  // Unique handle to thread (used by Win32 and AIX).
+
+  int grp_id (void);
+  // Group ID.
+
+  ACE_Thread_State state (void);
+  // Current state of the thread.
+
+  ACE_Task_Base *task (void);
+  // Return the pointer to an <ACE_Task_Base> or NULL if there's no
+  // <ACE_Task_Base> associated with this thread.;
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  int at_exit (void *object,
+	       ACE_CLEANUP_FUNC cleanup_hook,
+	       void *param);
+  // Register an object (or array) for cleanup at thread termination.
+  // "cleanup_hook" points to a (global, or static member) function
+  // that is called for the object or array when it to be destroyed.
+  // It may perform any necessary cleanup specific for that object or
+  // its class.  "param" is passed as the second parameter to the
+  // "cleanup_hook" function; the first parameter is the object (or
+  // array) to be destroyed.  Returns 0 on success, non-zero on
+  // failure: -1 if virtual memory is exhausted or 1 if the object (or
+  // arrayt) had already been registered.
+
+  ACE_Thread_Descriptor *get_thread_descriptor (void);
+
+private:
+  ACE_Thread_Descriptor *thr_desc_;
+  // Underlying thread descriptor location.
+};
+#endif /* NANBOR_EXP_CODES */
+
 // Forward declaration.
 class ACE_Thread_Control;
 
@@ -215,7 +294,9 @@ public:
   // Passes out the "real" handle to the calling thread, caching it if
   // necessary in TSS to speed up subsequent lookups.  This is
   // necessary since on some platforms (e.g., Win32) we can't get this
-  // handle via direct method calls.
+  // handle via direct method calls.  Notice that you should *not* close
+  // the handle passed back from this method.  It is used internally
+  // by Thread Manager.
 
   ACE_thread_t thr_self (void);
   // Return the unique ID of the thread.  This is not strictly
