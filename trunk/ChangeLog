@@ -1,3 +1,17 @@
+Thu May  1 12:55:13 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+
+          Use the get_validated_ordering() method.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a method to get the validated ordering instead of modifying
+          the projects dependencies.  That way the project caching still
+          functions properly in the case of overlapping projects within
+          multiple workspaces.
+
 Thu May  1 10:32:26 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
