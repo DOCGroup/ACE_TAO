@@ -104,7 +104,7 @@ TAO/tests/Codec/run_test.pl
 TAO/tests/IDL_Test/run_test.pl
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
-TAO/tests/ORB_shutdwon/run_test.pl
+TAO/tests/ORB_shutdown/run_test.pl
 TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 # BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
