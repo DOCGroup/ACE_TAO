@@ -1,4 +1,28 @@
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* Makefile
+	* client.tss.conf
+        * server.dsp
+	* test_i.cpp
+	* README
+	* orb_creation.cpp
+	* simple-client.conf
+	* test_i.h
+	* client.conf
+	* orb_creation.dsp
+	* simple-client.cpp
+	* test_i.i
+	* client.cpp
+	* run_test.pl*
+	* simple_client.dsp
+	* update.log
+	* client.dsp
+	* server.conf
+	* test-handC.cpp
+  	
+  	  Files for the simple test. But you actually need server and
+	  simple-client test files right now.
+  
 
 	* tests/AMI/simple-client.cpp: Removed the iteration part from the
 	  test. Let us keep it really simple.
