@@ -20,6 +20,7 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
   : reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                0,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,

@@ -36,6 +36,7 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
         orb_core->resource_factory ()->output_cdr_msgblock_allocator ()
       ),
    input_cdr_ (orb_core->create_input_cdr_data_block (input_cdr_size),
+               0,
                TAO_ENCAP_BYTE_ORDER,
                TAO_DEF_GIOP_MAJOR,
                TAO_DEF_GIOP_MINOR,
