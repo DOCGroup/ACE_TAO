@@ -1,3 +1,17 @@
+Mon Aug  9 15:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * ace/Sock_Connect.cpp
+          Added missing #include "ace/OS_NS_fcntl.h"
+
+        * ace/DEV_IO.h
+        * ace/FILE_IO.h
+        * ace/FIFO_Send_Msg.h
+          Added missing #include "ace/OS_NS_stropts.h"
+
+        * ace/Pipe.cpp
+        * ace/SPIPE_Acceptor.cpp
+          Added missing #include "ace/OS_NS_unistd.h"
+
 Mon Aug  9 15:05:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * include/makeinclude/platform_hpux_gcc.GNU:

@@ -7,6 +7,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -258,7 +259,7 @@ get_windows_version()
 
 int
 ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
-                             ACE_UINT32 ip_addr, 
+                             ACE_UINT32 ip_addr,
                              int address_family)
 {
   ACE_TRACE ("ACE_Sock_Connect::bind_port");
@@ -407,7 +408,7 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
-	  // see mk_broadcast@SOCK_Dgram_Bcast.cpp
+  // see mk_broadcast@SOCK_Dgram_Bcast.cpp
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
         ((ifr->ifr_addr.sa_len > sizeof (struct sockaddr)) ?
           (nbytes >= (int) sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len) : 1);
