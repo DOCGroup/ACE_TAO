@@ -12,6 +12,8 @@ BIN   	= gatewayd
 LIB   	= libGateway.a
 SHLIB	= libGateway.$(SOEXT)
 
+ACE_SHLIB += $(ACELIB)
+
 FILES	= Concrete_Connection_Handlers \
 	  Config_Files \
 	  File_Parser \
