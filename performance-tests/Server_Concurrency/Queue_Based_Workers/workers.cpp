@@ -72,16 +72,8 @@ Worker_Task::svc (void)
                             -1);
         }
 
-      Message_Block *message_block =
-        ACE_dynamic_cast (Message_Block *, mb);
-
-      // Record arrival time.
-      this->stats_.sample (ACE_OS::gethrtime () - message_block->start_of_burst_);
-
       ACE_Message_Block::ACE_Message_Type message_type =
-        message_block->msg_type ();
-
-      message_block->release ();
+        mb->msg_type ();
 
       // If STOP message, break loop and end the task.
       if (message_type == ACE_Message_Block::MB_STOP)
@@ -93,31 +85,38 @@ Worker_Task::svc (void)
                           this->messages_dequeued_));
             }
 
+          mb->release ();
           break;
         }
-      else
+
+      Message_Block *message_block =
+        ACE_dynamic_cast (Message_Block *, mb);
+
+      // Record arrival time.
+      this->stats_.sample (ACE_OS::gethrtime () - message_block->start_of_burst_);
+
+      mb->release ();
+
+      // Counter.
+      ++this->messages_dequeued_;
+
+      if (debug)
         {
-          // Counter.
-          ++this->messages_dequeued_;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) dequeued its %d message\n",
+                      this->messages_dequeued_));
+        }
 
-          if (debug)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%t) dequeued its %d message\n",
-                          this->messages_dequeued_));
-            }
+      //
+      // Process message here.
+      //
 
-          //
-          // Process message here.
-          //
-
-          for (int j = 0; j < message_size; ++j)
-            {
-              // Eat a little CPU
-              /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-              u_long n = 1279UL;
-              ACE::is_prime (n, 2, n / 2);
-            }
+      for (int j = 0; j < message_size; ++j)
+        {
+          // Eat a little CPU
+          /* takes about 40.2 usecs on a 167 MHz Ultra2 */
+          u_long n = 1279UL;
+          ACE::is_prime (n, 2, n / 2);
         }
     }
 
