@@ -15,11 +15,11 @@ Options::count (void)
   for (int i = 0; i < options.thr_wc_size; i++)
     {
       if (options.thr_work_count[i] != 0)
-	{
-	  if (options.verbose ())
-	    ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, options.thr_work_count[i]));
-	  total += options.thr_work_count[i];
-	}
+        {
+          if (options.verbose ())
+            ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, options.thr_work_count[i]));
+          total += options.thr_work_count[i];
+        }
     }
 
   return total;
@@ -33,33 +33,33 @@ Options::init (void)
 }
 
 Options::Options (void)
-		 : thr_wc_size (10000),
-		   _service_entry (0),
-		   _mapped_file (0),
-		   _pipe_addr (ACE_DEFAULT_RENDEZVOUS),
-		   _sleep_time (100),
-		   _n_lwps (0),
-		   _thr_count (4),
-		   _t_flags (0),
-		   _high_water_mark (8 * 1024),
-		   _low_water_mark (1024),
-		   _msg_size (128),
-		   _initial_queue_length (0),
-		   _logical_connections (1),
-		   _physical_connections (1),
-		   _iterations (100000),
-		   _generate (0),
-		   _udp (0),
-		   _debugging (0),
-		   _verbosity (0),
-		   _ack (1),
-		   _checksum (1),
-		   _xdr (1),
-		   _free_memory (1),
-		   _zero_copy (0),
-		   _print_summary (0),
-		   _consecutive_ports (1),
-		   _eager_exit (0)
+                 : thr_wc_size (10000),
+                   _service_entry (0),
+                   _mapped_file (0),
+                   _pipe_addr (ACE_DEFAULT_RENDEZVOUS),
+                   _sleep_time (100),
+                   _n_lwps (0),
+                   _thr_count (4),
+                   _t_flags (0),
+                   _high_water_mark (8 * 1024),
+                   _low_water_mark (1024),
+                   _msg_size (128),
+                   _initial_queue_length (0),
+                   _logical_connections (1),
+                   _physical_connections (1),
+                   _iterations (100000),
+                   _generate (0),
+                   _udp (0),
+                   _debugging (0),
+                   _verbosity (0),
+                   _ack (1),
+                   _checksum (1),
+                   _xdr (1),
+                   _free_memory (1),
+                   _zero_copy (0),
+                   _print_summary (0),
+                   _consecutive_ports (1),
+                   _eager_exit (0)
 {
   this->thr_work_count = new int[this->thr_wc_size];
   this->init ();
@@ -75,160 +75,160 @@ Options::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'a':
-	this->_ack = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_ack = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'A':
-	this->pipe_addr (get_opt.optarg);
-	break;
+        this->pipe_addr (get_opt.optarg);
+        break;
       case 'B':
-	this->t_flags (THR_BOUND);
-	break;
+        this->t_flags (THR_BOUND);
+        break;
       case 'c':
-	{
-	  long connections = ACE_OS::atoi (get_opt.optarg);
+        {
+          long connections = ACE_OS::atoi (get_opt.optarg);
 
-	  if (connections < 0)
-	    this->physical_connections (size_t (-connections));
-	  else if (connections > 0)
-	    this->logical_connections (size_t (connections));
-	  else
-	    ACE_DEBUG ((LM_WARNING, "warning, 0 connections!\n"));
+          if (connections < 0)
+            this->physical_connections (size_t (-connections));
+          else if (connections > 0)
+            this->logical_connections (size_t (connections));
+          else
+            ACE_DEBUG ((LM_WARNING, "warning, 0 connections!\n"));
 
-	  break;
-	}
+          break;
+        }
       case 'C':
-	this->_checksum = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_checksum = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'd':
-	this->_debugging = 1;
-	break;
+        this->_debugging = 1;
+        break;
       case 'D':
-	this->t_flags (THR_DETACHED);
-	break;
+        this->t_flags (THR_DETACHED);
+        break;
       case 'e':
-	this->_eager_exit = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_eager_exit = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'F':
-	this->_free_memory = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_free_memory = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'g':
-	this->_generate = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_generate = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'H':
-	this->high_water_mark (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->high_water_mark (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'i':
-	this->iterations (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->iterations (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'L':
-	this->low_water_mark (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->low_water_mark (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'l':
-	this->initial_queue_length (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->initial_queue_length (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'M':
-	this->msg_size (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->msg_size (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'm':
-	this->mapped_file (get_opt.optarg);
-	break;
+        this->mapped_file (get_opt.optarg);
+        break;
       case 'N':
-	this->t_flags (THR_NEW_LWP);
-	break;
+        this->t_flags (THR_NEW_LWP);
+        break;
       case 'n':
-	this->n_lwps (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->n_lwps (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'p':
-	this->_print_summary = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_print_summary = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'P':
-	this->consecutive_ports (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->consecutive_ports (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'S':
-	this->service_entry (get_opt.optarg);
-	break;
+        this->service_entry (get_opt.optarg);
+        break;
       case 's':
-	this->sleep_time (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->sleep_time (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'T':
-	if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
-	  ACE_Trace::start_tracing ();
-	else if (ACE_OS::strcasecmp (get_opt.optarg, "OFF") == 0)
-	  ACE_Trace::stop_tracing ();
-	break;
+        if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
+          ACE_Trace::start_tracing ();
+        else if (ACE_OS::strcasecmp (get_opt.optarg, "OFF") == 0)
+          ACE_Trace::stop_tracing ();
+        break;
       case 't':
-	this->thr_count (ACE_OS::atoi (get_opt.optarg));
-	break;
+        this->thr_count (ACE_OS::atoi (get_opt.optarg));
+        break;
       case 'u':
-	this->_udp = 1;
-	break;
+        this->_udp = 1;
+        break;
       case 'v':
-	this->_verbosity = 1;
-	break;
+        this->_verbosity = 1;
+        break;
       case 'X':
-	this->_xdr = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_xdr = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       case 'Z':
-	this->_zero_copy = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
-	break;
+        this->_zero_copy = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
+        break;
       default:
-	ACE_DEBUG ((LM_INFO,
-		   "%s\n"
-		   "\t[-a] (send acknowledgement)\n"
-		   "\t[-A] address of pipe [%s]\n"
-		   "\t[-B] (THR_BOUND)\n"
-		   "\t[-c] + number of logical connections\n"
-		   "\t[-c] - number of physical connections\n"
-		   "\t[-C] (enable checksumming)\n"
-		   "\t[-d] (enable debugging)\n"
-		   "\t[-D] (THR_DETACHED)\n"
-		   "\t[-e] (eager exit)\n"
-		   "\t[-F] (free memory)\n"
-		   "\t[-g] (generate data)\n"
-		   "\t[-H] high water mark\n"
-		   "\t[-i] number of test iterations [%d]\n"
-		   "\t[-L] low water mark\n"
-		   "\t[-m] mapped file\n"
-		   "\t[-M] message size\n"
-		   "\t[-n] number of LWPs\n"
-		   "\t[-N] (THR_NEW_LWP)\n"
-		   "\t[-p] (print benchmark summary)\n"
-		   "\t[-P] number of consecutive ports\n"
-		   "\t[-s] sleep time\n"
-		   "\t[-S] service entry\n"
-		   "\t[-t] number of threads [%d]\n"
-		   "\t[-T] (enable tracing)\n"
-		   "\t[-u] (UDP) \n"
-		   "\t[-v] (verbose) \n"
-		   "\t[-X] (enable xdr conversion)\n"
-		   "\t[-Z] (enable zero-copy driver)\n%a",
-		   argv[0],
-		   this->pipe_addr (),
-		   this->iterations (),
-		   this->thr_count (),
-		   1));
-	/* NOTREACHED */
-	break;
+        ACE_DEBUG ((LM_INFO,
+                   "%s\n"
+                   "\t[-a] (send acknowledgement)\n"
+                   "\t[-A] address of pipe [%s]\n"
+                   "\t[-B] (THR_BOUND)\n"
+                   "\t[-c] + number of logical connections\n"
+                   "\t[-c] - number of physical connections\n"
+                   "\t[-C] (enable checksumming)\n"
+                   "\t[-d] (enable debugging)\n"
+                   "\t[-D] (THR_DETACHED)\n"
+                   "\t[-e] (eager exit)\n"
+                   "\t[-F] (free memory)\n"
+                   "\t[-g] (generate data)\n"
+                   "\t[-H] high water mark\n"
+                   "\t[-i] number of test iterations [%d]\n"
+                   "\t[-L] low water mark\n"
+                   "\t[-m] mapped file\n"
+                   "\t[-M] message size\n"
+                   "\t[-n] number of LWPs\n"
+                   "\t[-N] (THR_NEW_LWP)\n"
+                   "\t[-p] (print benchmark summary)\n"
+                   "\t[-P] number of consecutive ports\n"
+                   "\t[-s] sleep time\n"
+                   "\t[-S] service entry\n"
+                   "\t[-t] number of threads [%d]\n"
+                   "\t[-T] (enable tracing)\n"
+                   "\t[-u] (UDP) \n"
+                   "\t[-v] (verbose) \n"
+                   "\t[-X] (enable xdr conversion)\n"
+                   "\t[-Z] (enable zero-copy driver)\n%a",
+                   argv[0],
+                   this->pipe_addr (),
+                   this->iterations (),
+                   this->thr_count (),
+                   1));
+        /* NOTREACHED */
+        break;
       }
 
   if (this->do_print_summary ())
     ACE_DEBUG ((LM_INFO,
-		  "%8d = total iterations\n"
-		  "%8d = logical connections\n"
-		  "%8d = physical connections\n"
-		  "%8d = message_size\n"
-		  "%8d = calculated checksum\n"
-		  "%8d = perform xdr conversion\n"
-		  "%8d = number of LWPs requested\n"
-		  "%8d = number of LWPs used\n",
-		  this->iterations (),
-		  this->logical_connections (),
-		  this->physical_connections (),
-		  this->msg_size (),
-		  this->do_checksum () != 0,
-		  this->do_xdr() != 0,
-		  this->n_lwps (),
-	       ACE_Thread::getconcurrency ()));
+                  "%8d = total iterations\n"
+                  "%8d = logical connections\n"
+                  "%8d = physical connections\n"
+                  "%8d = message_size\n"
+                  "%8d = calculated checksum\n"
+                  "%8d = perform xdr conversion\n"
+                  "%8d = number of LWPs requested\n"
+                  "%8d = number of LWPs used\n",
+                  this->iterations (),
+                  this->logical_connections (),
+                  this->physical_connections (),
+                  this->msg_size (),
+                  this->do_checksum () != 0,
+                  this->do_xdr() != 0,
+                  this->n_lwps (),
+               ACE_Thread::getconcurrency ()));
   else if (this->verbose ())
     ACE_DEBUG ((LM_INFO,
                 "%8d = total iterations\n"
@@ -292,9 +292,9 @@ Options::print_results (void)
   mutex_timer.print_total ("ACE_Thread_Mutex overhead:", mutex_counter, 2);
   condition_timer.print_total ("ACE_Condition overhead:", condition_counter, 2);
   ACE_DEBUG ((LM_INFO,
-		"%8d (number of ACE_Thread_Mutex operations)\n"
-		"%8d (number of ACE_Condition operations)",
-	     mutex_counter, condition_counter));
+                "%8d (number of ACE_Thread_Mutex operations)\n"
+                "%8d (number of ACE_Condition operations)",
+             mutex_counter, condition_counter));
 #endif /* NDEBUG */
 
   if (this->do_print_summary ())
@@ -345,7 +345,7 @@ Options::print_results (void)
                   rusage.ru_majflt,
                   rusage.ru_minflt,
                   ACE_Thread::getconcurrency ()));
-#else defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
+#elif defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
       // Need more stuff for Win32.
       ACE_DEBUG ((LM_INFO,
                   "\n%8d PEs\n"
