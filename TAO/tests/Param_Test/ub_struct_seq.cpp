@@ -166,7 +166,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_String_Sequence::add_args\n");
+                           "Test_Struct_Sequence::add_args\n");
 
       return -1;
     }
