@@ -28,7 +28,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (be_interface *node)
 
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                    Direct  Impl. Declaration" << be_nl 
+      << "//                    Direct  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
@@ -43,13 +43,6 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (be_interface *node)
         {
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
-          be_decl *scope = 0;
-          if (inherited->is_nested ())
-            {
-              // inherited node is used in the scope of "node" node
-              scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
-            }
 
           *os << "public virtual ";
           *os << inherited->full_direct_proxy_impl_name ();
@@ -64,22 +57,22 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (be_interface *node)
 
   *os << be_uidt_nl;
   *os << "{" << be_nl << "public:" << be_idt_nl;
-  
+
   // Dtor
   *os << "~" << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "(%N:%l) direct_proxy_impl_sh::"
-			 "visit_interface - "
+                         "(%N:%l) direct_proxy_impl_sh::"
+                         "visit_interface - "
                          "codegen for scope failed\n"), -1);
     }
 
   *os << "};" << be_uidt << be_nl << be_nl;
   *os << be_nl
       << "//" << be_nl
-      << "//                Direct  Proxy Impl. Declaration" << be_nl 
+      << "//                Direct  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
   //  os->gen_endif ();

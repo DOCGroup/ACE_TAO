@@ -1,3 +1,18 @@
+Mon Nov 20 18:59:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+	* TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
+
+	  Modified indentation\spacing\newlines in the generated code
+	  to make the code look better.
+
+	  Removed unused vars. that were causing warning on some platfom.
+
 Mon Nov 20 15:49:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
@@ -6,7 +21,7 @@ Mon Nov 20 15:49:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
  	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
 
-	  Updated to use the right resource factory keeping in view 
+	  Updated to use the right resource factory keeping in view
 	  the advanced resource factory arguments passed to it.
 
 Mon Nov 20 15:55:38 2000  Ossama Othman  <ossama@uci.edu>
@@ -24,10 +39,10 @@ Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Nov 20 15:04:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Declared/server.conf: 
+	* tests/RTCORBA/Server_Declared/server.conf:
 	  Updated to provide the right arguments.
-	
-	* tests/RTCORBA/Client_Propagated/svc.conf: 
+
+	* tests/RTCORBA/Client_Propagated/svc.conf:
 	  Not needed. Removed.
 
 Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -51,25 +66,25 @@ Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Mon Nov 20 11:49:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * tests/EndPoint_Per_Priority/server.conf
-          Changed back to the original version. It got committed in 
+          Changed back to the original version. It got committed in
           the previous commit unintentionally.
 
 Mon Nov 20 11:35:56 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * tests/EndPoint_Per_Priority/server.dsp
         * tests/EndPoint_Per_Priority/client.dsp
-          
+
           Updated settings to link TAO_Strategiesd.lib
 
 Mon Nov 20 06:26:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/IIOP_Connector.h: 
+        * tao/IIOP_Connector.h:
         * tao/IIOP_Connector.cpp:
         * tao/Strategies/UIOP_Connector.h:
         * tao/Strategies/UIOP_Connector.cpp:
         * tao/Strategies/SHMIOP_Connector.h:
         * tao/Strategies/SHMIOP_Connector.cpp: Changed the
-          ACE_NOOP_Concurrency strategy to ACE_Concurrency_Strategy. 
+          ACE_NOOP_Concurrency strategy to ACE_Concurrency_Strategy.
 
 Mon Nov 20 05:34:07 2000  Marina Spivak  <marina@cs.wustl.edu>
 

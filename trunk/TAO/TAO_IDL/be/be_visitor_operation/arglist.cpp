@@ -47,17 +47,16 @@ int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  *os << " (" << be_idt << be_idt_nl;
+  os->indent ();
+  *os << " (" << be_idt // idt = 1
+      << be_idt_nl; // idt = 2
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
-
-      os->indent ();
-      *os << "CORBA_Object *_collocated_tao_target_ " << be_nl;
+      *os << "CORBA_Object *_collocated_tao_target_";
       if (node->argument_count () > 0 || !be_global->exception_support () )
         *os << ",\n";
       break;
@@ -67,6 +66,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     }
 
   // all we do is hand over code generation to our scope
+  os->indent ();
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,7 +107,8 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
           break;
         }
     }
-  *os << be_uidt_nl << ")" << be_uidt;
+  *os << be_uidt_nl // idt = 1
+      << ")" << be_uidt; // idt = 0
 
   // now generate the throw specs
   if (this->gen_throw_spec (node) == -1)

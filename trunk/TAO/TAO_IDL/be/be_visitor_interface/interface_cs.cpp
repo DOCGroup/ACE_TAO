@@ -69,14 +69,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       visitor = tao_cg->make_visitor (&ctx);
 
       if (!visitor || (node->accept (visitor) == -1))
-	{
-	  delete visitor;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "be_visitor_interface_cs::"
-			     "visit_interface - "
-			     "codegen for Base Proxy Broker class failed\n"),
-			    -1);
-	}
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
       delete visitor;
 
 
@@ -84,19 +84,19 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS);
       visitor = tao_cg->make_visitor (&ctx);
-      
+
       if (!visitor || (node->accept (visitor) == -1))
-	{
-	  delete visitor;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "be_visitor_interface_cs::"
-			     "visit_interface - "
-			     "codegen for Base Proxy Broker class failed\n"),
-			    -1);
-	}
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
       delete visitor;
     }
-  
+
    // Generate the destructor and default constructor.
   *os << be_nl;
   *os << "// default constructor" << be_nl;
@@ -104,13 +104,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (!node->is_local ())
     {
       *os << " (int collocated)" << be_nl
-	  << "{" << be_idt_nl
-	  << "this->setup_collocation (collocated);" << be_uidt_nl;  
+          << "{" << be_idt_nl
+          << "this->setup_collocation (collocated);" << be_uidt_nl;
     }
-  else 
+  else
     {
       *os << " ()" << be_nl
-	  << "{" << be_idt_nl;
+          << "{" << be_idt_nl;
     }
 
   *os << be_uidt << "}" << be_nl << be_nl;
@@ -123,44 +123,36 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (!node->is_local ())
     {
       // Collocation setup method.
-      *os << "void" << be_nl 
-	  << node->name () << "::setup_collocation (int collocated)" << be_nl
-	  << "{"
-	  << be_idt_nl // idt = 1
-	  << "if (collocated)" << be_idt_nl //idt = 2
-	  << "this->the" << node->base_proxy_broker_name () 
-	  << "_ =" << be_idt_nl // idt = 3
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_function_pointer (this);"
-	  << be_uidt << be_uidt_nl // idt = 1
-	  << "else" << be_idt_nl // idt = 2
-	  << "this->the" << node->base_proxy_broker_name () 
-	  << "_ =" << be_idt_nl  // idt = 3
-	  << "::" << node->client_enclosing_scope () <<  "the" << node->remote_proxy_broker_name () 
-	  << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
-      
+      *os << "void" << be_nl
+          << node->name () << "::setup_collocation (int collocated)" << be_nl
+          << "{"
+          << be_idt_nl // idt = 1
+          << "if (collocated)" << be_idt_nl //idt = 2
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl // idt = 3
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer (this);"
+          << be_uidt << be_uidt_nl // idt = 1
+          << "else" << be_idt_nl // idt = 2
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl  // idt = 3
+          << "::" << node->client_enclosing_scope () <<  "the" << node->remote_proxy_broker_name ()
+          << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
+
       // Now we setup the immediate parents.
       if (node->n_inherits () > 0)
-	{
-	  for (int i = 0; i < node->n_inherits (); i++)
-	    {
-	      be_interface *inherited =
-		be_interface::narrow_from_decl (node->inherits ()[i]);
-	      be_decl *scope = 0;
-	      if (inherited->is_nested ())
-		{
-		  // inherited node is used in the scope of "node" node
-		  scope =
-		    be_scope::narrow_from_scope (node->defined_in ())->decl ();
-		}
-	  
-	      *os << "this->" << inherited->local_name ()<< "::setup_collocation" << " (collocated);" << be_nl;
-	    } 
-	}
-      
+        {
+          for (int i = 0; i < node->n_inherits (); i++)
+            {
+              be_interface *inherited =
+                be_interface::narrow_from_decl (node->inherits ()[i]);
+              *os << "this->" << inherited->local_name ()<< "::setup_collocation" << " (collocated);" << be_nl;
+            }
+        }
+
       *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
-  
+
   // Then generate the code for the static methods
   // Local interfaces don't have any operators.
   if (! node->is_local ())
@@ -235,25 +227,25 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       // function to create one.
       os->indent ();
       *os << "if (" << be_idt << be_idt_nl // 2 idt
-	  << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl  
-	  << "stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&"
-	  << be_nl
-	  << "obj->_is_collocated () &&"
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_function_pointer != 0" << be_uidt_nl << ")"  // 1 idt 
+          << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl
+          << "stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&"
+          << be_nl
+          << "obj->_is_collocated () &&"
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer != 0" << be_uidt_nl << ")"  // 1 idt
           << be_uidt_nl << "{" // 0 idt
-	  << be_idt_nl   // 1 idt
-	  << "ACE_NEW_RETURN (" << be_idt_nl  // 2 idt
-	  << "default_proxy," << be_nl
-	  << "::" <<  bt->name () << " (" << be_idt_nl  // 3 idt
-	  << "stub," << be_nl
-	  << "1," << be_nl
-	  << "obj->_servant ())," << be_nl
-	  << be_uidt_nl // 2 idt
-	  <<  bt->nested_type_name (this->ctx_->scope ())
+          << be_idt_nl   // 1 idt
+          << "ACE_NEW_RETURN (" << be_idt_nl  // 2 idt
+          << "default_proxy," << be_nl
+          << "::" <<  bt->name () << " (" << be_idt_nl  // 3 idt
+          << "stub," << be_nl
+          << "1," << be_nl
+          << "obj->_servant ())," << be_nl
+          << be_uidt_nl // 2 idt
+          <<  bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ());"
-	  << be_uidt_nl   // 1 idt
-	  << "}" << be_uidt_nl; // 0 idt
+          << be_uidt_nl   // 1 idt
+          << "}" << be_uidt_nl; // 0 idt
 
 
       // The default proxy will either be returned else be transformed to
