@@ -131,13 +131,6 @@ protected:
   // must overwrite this method for this class to work.
 
   ACE_Lock *lock_;
-
-private:
-  ACE_Adaptive_Lock (const ACE_Adaptive_Lock &);
-  ACE_Adaptive_Lock & operator= (const ACE_Adaptive_Lock & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 class ACE_Export ACE_File_Lock
@@ -251,7 +244,7 @@ public:
                  int max = 0x7fffffff);
   // Initialize the semaphore, with initial value of "count".
 
-  virtual ~ACE_Semaphore (void);
+  ~ACE_Semaphore (void);
   // Implicitly destroy the semaphore.
 
   int remove (void);
@@ -453,7 +446,7 @@ public:
                 void *arg = 0);
   // Initialize a readers/writer lock.
 
-  virtual ~ACE_RW_Mutex (void);
+  ~ACE_RW_Mutex (void);
   // Implicitly destroy a readers/writer lock
 
   int remove (void);
@@ -771,7 +764,7 @@ class ACE_Export ACE_Null_Mutex
   //     no ops.
 public:
   ACE_Null_Mutex (LPCTSTR = 0);
-  virtual ~ACE_Null_Mutex (void);
+  ~ACE_Null_Mutex (void);
   int remove (void);
 
   int acquire (void);
@@ -892,12 +885,6 @@ public:
 
   ACE_THR_DEST func_;
   // The real cleanup routine for ts_obj;
-private:
-  ACE_TSS_Adapter (const ACE_TSS_Adapter &);
-  ACE_TSS_Adapter & operator= (const ACE_TSS_Adapter & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 class ACE_Export ACE_Event
@@ -916,7 +903,7 @@ public:
              void *arg = 0);
   // Constructor which will create event.
 
-  virtual ~ACE_Event (void);
+  ~ACE_Event (void);
   // Implicitly destroy the event variable.
 
   int remove (void);
@@ -1046,7 +1033,7 @@ class ACE_Barrier
   //   This is a no-op to make ACE "syntactically consistent."
 public:
   ACE_Barrier (u_int, LPCTSTR = 0, void * = 0) {}
-  virtual ~ACE_Barrier (void) {}
+  ~ACE_Barrier (void) {}
   int wait (void) { ACE_NOTSUP_RETURN (-1); }
   void dump (void) const {}
 };
@@ -1590,7 +1577,7 @@ public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
-  virtual ~ACE_Guard (void) {}
+  ~ACE_Guard (void) {}
 
   int acquire (void) { return 0; }
   int tryacquire (void) { return 0; }

@@ -127,14 +127,6 @@ public:
 
   size_t file_perms_;
   // File permissions to use when creating/opening a segment.
-
-private:
-  ACE_Shared_Memory_Pool_Options (const ACE_Shared_Memory_Pool_Options &);
-  ACE_Shared_Memory_Pool_Options &
-      operator= (const ACE_Shared_Memory_Pool_Options & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
@@ -246,13 +238,6 @@ protected:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Handle SIGSEGV and SIGBUS signals to remap shared memory
   // properly.
-
-private:
-  ACE_Shared_Memory_Pool (const ACE_Shared_Memory_Pool &);
-  ACE_Shared_Memory_Pool & operator= (const ACE_Shared_Memory_Pool & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
@@ -370,13 +355,6 @@ public:
   LPSECURITY_ATTRIBUTES sa_;
   // Pointer to a security attributes object.  Only used on NT.
 
-private:
-  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &);
-  ACE_MMAP_Memory_Pool_Options &
-      operator= (const ACE_MMAP_Memory_Pool_Options & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -491,12 +469,6 @@ protected:
   LPSECURITY_ATTRIBUTES sa_;
   // Security attributes object, only used on NT.
 
-private:
-  ACE_MMAP_Memory_Pool (const ACE_MMAP_Memory_Pool &);
-  ACE_MMAP_Memory_Pool & operator= (const ACE_MMAP_Memory_Pool & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool

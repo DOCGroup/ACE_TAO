@@ -39,7 +39,7 @@ class ACE_Export ACE_SOCK : public ACE_IPC_SAP
   //    set socket options, get the local and remote addresses, and
   //    close the socket.
 public:
-  virtual ~ACE_SOCK (void);
+  ~ACE_SOCK (void);
   // Default ctor/dtor.
 
   int set_option (int level,

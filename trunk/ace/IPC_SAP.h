@@ -29,7 +29,7 @@ class ACE_Export ACE_IPC_SAP
   //     Defines the member functions for the base class of the
   //     ACE_IPC_SAP abstraction.
 public:
-  virtual ~ACE_IPC_SAP (void);
+  ~ACE_IPC_SAP (void);
   // Default dtor.
 
   int control (int cmd, void *) const;
