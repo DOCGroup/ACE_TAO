@@ -25,7 +25,15 @@ TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane)
 void
 TAO_RT_New_Leader_Generator::no_leaders_available (void)
 {
-  if (this->lane_.dynamic_threads () == 0)
+  // Note that we are checking this condition below without the lock
+  // held.  The value of <static_threads> and <dynamic_threads> does
+  // not change, but <current_threads> increases when new dynamic
+  // threads are created.  Even if we catch <current_threads> in an
+  // inconsistent state, we will double check later with the lock
+  // held.  Therefore, this check should not cause any big problems.
+  if (this->lane_.current_threads () ==
+      this->lane_.static_threads () +
+      this->lane_.dynamic_threads ())
     return;
 
   TAO_Thread_Pool_Manager &manager =
