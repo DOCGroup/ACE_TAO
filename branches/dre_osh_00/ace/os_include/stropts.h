@@ -26,9 +26,29 @@
 
 #include "ace/os_include/unistd.h"
 
+#if defined (ACE_HAS_TIMOD_H)
+#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#    define queue _Queue_
+#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+#  include /**/ <sys/timod.h>
+#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#    undef queue
+#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+#elif defined (ACE_HAS_OSF_TIMOD_H)
+#  include /**/ <tli/timod.h>
+#endif /* ACE_HAS_TIMOD_H */
+
 #if !defined (ACE_LACKS_SYS_IOCTL_H)
 # include /**/ <sys/ioctl.h>
 #endif /* !ACE_LACKS_IOCTL_H */
+
+# if defined (ACE_HAS_SYS_FILIO_H)
+# include /**/ <sys/filio.h>
+# endif /* ACE_HAS_SYS_FILIO_H */
+
+#if defined (ACE_HAS_SOCKIO_H)
+#   include /**/ <sys/sockio.h>
+#endif /* ACE_HAS_SOCKIO_ */
 
 #if !defined (ACE_LACKS_STROPTS_H)
 # include /**/ <stropts.h>

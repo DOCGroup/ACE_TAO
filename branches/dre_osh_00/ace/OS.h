@@ -1356,19 +1356,19 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
   // Need to #include thread.h before #defining THR_BOUND, etc.,
   // when building without threads on SunOS 5.x.
 #  if defined (sun)
-#    include /**/x <thread.h>
+#    include /**/ <thread.h>
 #  endif /* sun */
 
   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-# include /**/x <sys/rtpriocntl.h>
-# include /**/x <sys/tspriocntl.h>
+# include /**/ <sys/rtpriocntl.h>
+# include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
 # if defined (ACE_HAS_THREADS)
 
 #   if defined (ACE_HAS_STHREADS)
-#     include /**/x <synch.h>
-#     include /**/x <thread.h>
+#     include /**/ <synch.h>
+#     include /**/ <thread.h>
 #     define ACE_SCOPE_PROCESS P_PID
 #     define ACE_SCOPE_LWP P_LWPID
 #     define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
@@ -1709,10 +1709,10 @@ protected:
         // If we are on Solaris we can just reuse the existing
         // implementations of these synchronization types.
 #         if !defined (ACE_LACKS_RWLOCK_T)
-#           include /**/x <synch.h>
+#           include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #         endif /* !ACE_LACKS_RWLOCK_T */
-#         include /**/x <thread.h>
+#         include /**/ <thread.h>
 #       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
 
 #     else
@@ -2090,7 +2090,7 @@ protected:
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
-#     include /**/x <synch.h>
+#     include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #   endif /* ACE_LACKS_RWLOCK_T */
 
@@ -3480,9 +3480,9 @@ extern "C" {
 #define RTLD_GLOBAL 3
 #endif /* !RTLD_GLOBAL */
 
-#   if defined (ACE_HAS_SOCKIO_H)
-#     include /**/x <sys/sockio.h>
-#   endif /* ACE_HAS_SOCKIO_ */
+//#   if defined (ACE_HAS_SOCKIO_H)
+//#     include /**/ <sys/sockio.h>
+//#   endif /* ACE_HAS_SOCKIO_ */
 
 // There must be a better way to do this...
 #   if !defined (RLIMIT_NOFILE)
@@ -3516,29 +3516,29 @@ extern "C"
 #     include "ace/os_include/sys/mman.h"
 #   endif /* ACE_HAS_BROKEN_MMAP_H */
 
-// OSF1 has problems with sys/msg.h and C++...
-#   if defined (ACE_HAS_BROKEN_MSG_H)
-#     define _KERNEL
-#   endif /* ACE_HAS_BROKEN_MSG_H */
-#   if !defined (ACE_LACKS_SYSV_MSG_H)
+//// OSF1 has problems with sys/msg.h and C++...
+//#   if defined (ACE_HAS_BROKEN_MSG_H)
+//#     define _KERNEL
+//#   endif /* ACE_HAS_BROKEN_MSG_H */
+//#   if !defined (ACE_LACKS_SYSV_MSG_H)
 #     include "ace/os_include/sys/msg.h"
-#   endif /* ACE_LACKS_SYSV_MSG_H */
-#   if defined (ACE_HAS_BROKEN_MSG_H)
-#     undef _KERNEL
-#   endif /* ACE_HAS_BROKEN_MSG_H */
+//#   endif /* ACE_LACKS_SYSV_MSG_H */
+//#   if defined (ACE_HAS_BROKEN_MSG_H)
+//#     undef _KERNEL
+//#   endif /* ACE_HAS_BROKEN_MSG_H */
 
-#   if defined (ACE_LACKS_SYSV_MSQ_PROTOS)
-extern "C"
-{
-  int msgget (key_t, int);
-  int msgrcv (int, void *, size_t, long, int);
-  int msgsnd (int, const void *, size_t, int);
-  int msgctl (int, int, struct msqid_ds *);
-}
-#   endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
+//#   if defined (ACE_LACKS_SYSV_MSQ_PROTOS)
+//extern "C"
+//{
+//  int msgget (key_t, int);
+//  int msgrcv (int, void *, size_t, long, int);
+//  int msgsnd (int, const void *, size_t, int);
+//  int msgctl (int, int, struct msqid_ds *);
+//}
+//#   endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
 #   if defined (ACE_HAS_PRIOCNTL)
-#     include /**/x <sys/priocntl.h>
+#     include /**/ <sys/priocntl.h>
 #   endif /* ACE_HAS_PRIOCNTL */
 
 #   if defined (ACE_HAS_IDTYPE_T)
@@ -4113,17 +4113,17 @@ typedef int ucontext_t;
 #   define SA_RESTART 0
 # endif /* SA_RESTART */
 
-# if defined (ACE_HAS_TIMOD_H)
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     define queue _Queue_
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/x <sys/timod.h>
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     undef queue
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-# elif defined (ACE_HAS_OSF_TIMOD_H)
-#   include /**/x <tli/timod.h>
-# endif /* ACE_HAS_TIMOD_H */
+//# if defined (ACE_HAS_TIMOD_H)
+//#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+//#     define queue _Queue_
+//#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+//#   include /**/ <sys/timod.h>
+//#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+//#     undef queue
+//#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+//# elif defined (ACE_HAS_OSF_TIMOD_H)
+//#   include /**/ <tli/timod.h>
+//# endif /* ACE_HAS_TIMOD_H */
 
 /**
  * @class ACE_Thread_ID
@@ -4372,9 +4372,9 @@ typedef double ACE_timer_t;
 # include "ace/os_include/syslog.h"
 # endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
-# if defined (ACE_HAS_SYS_FILIO_H)
-# include /**/x <sys/filio.h>
-# endif /* ACE_HAS_SYS_FILIO_H */
+//# if defined (ACE_HAS_SYS_FILIO_H)
+//# include /**/ <sys/filio.h>
+//# endif /* ACE_HAS_SYS_FILIO_H */
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;
