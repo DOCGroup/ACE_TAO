@@ -162,7 +162,7 @@ run Reactor_Timer_Test                  # tests ACE_Event_Handler, ACE_Reactor
 test $chorus || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
 run Notify_Performance_Test             # tests ACE_Event_Handler, ACE_Reactor
 run Reader_Writer_Test                  # tests ACE_Thread_Manager, ACE_Mutex
-test $chorus || test $LynxOS || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
+test $chorus || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
 test $chorus || run SOCK_Test           # tests ACE_Thread_Manager, ACE_SOCK_SAP
 test $chorus || run MT_SOCK_Test        # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector
 
