@@ -4090,8 +4090,17 @@ typeprefix_dcl
         {
 // typeprefix_dcl : IDL_TYPEPREFIX scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2, 
-                                           I_TRUE);
+          AST_Decl *d = ScopeAsDecl (s);
+
+          // If we are in a module, we want to avoid a lookup unless the
+          // typeprefix is to be applied to some other scope, since we
+          // might get a previous opening of the module, and the prefix
+          // of this opening would never get checked or set.
+          if (d->name ()->compare ($2) != 0)
+            {
+              d = s->lookup_by_name ($2, 
+                                     I_TRUE);
+            }
 
           if (d == 0)
             {

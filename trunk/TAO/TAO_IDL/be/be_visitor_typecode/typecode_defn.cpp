@@ -991,13 +991,16 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
     }
 
   os->indent ();
-  // now reduce the indentation appropriately
+
+  // Now reduce the indentation appropriately.
   for (i = (node->n_dims () - 1); i > 0; i--)
     {
       *os << node->dims ()[i] << "," << be_uidt_nl;
-      // size of the dimension which is a 4 byte quantity
+
+      // Size of the dimension which is a 4 byte quantity.
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
     }
+
   *os << node->dims ()[0] << ",\n";
   // size of the dimension which is a 4 byte quantity
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1089,8 +1092,6 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
-
   *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
   // size of the encapsulation byte order flag. Although it is 1 byte, the
   // aligned size is 4 bytes
@@ -1100,7 +1101,6 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
   this->gen_repoID (node);
 
   // generate name
-  os->indent ();
   this->gen_name (node);
 
   // generate the member count
@@ -1111,6 +1111,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
 
   // hand over to the scope to generate the typecode for elements
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1128,8 +1129,6 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum_val *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
-
   // generate name
   this->gen_name (node);
 
@@ -1141,11 +1140,10 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
-
   // check if we are repeated
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
+
   if (qnode)
     {
       // we are repeated, so we must generate an indirection here
