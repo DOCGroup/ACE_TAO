@@ -688,7 +688,7 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
   if (scheduler == 0 || scheduler->reactor () == 0)
     this->reactor_ = ACE_Reactor::instance ();
   else
-    this->reactor_ = this->scheduler_->reactor ();
+    this->reactor_ = scheduler->reactor ();
 }
 
 template <class SVC_HANDLER> int
@@ -723,7 +723,7 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strat
   if (scheduler == 0 || scheduler->thr_mgr () == 0)
     this->thr_mgr_ = ACE_Thread_Manager::instance ();
   else
-    this->thr_mgr_ = this->scheduler_->thr_mgr ();
+    this->thr_mgr_ = scheduler->thr_mgr ();
 }
 
 template <class SVC_HANDLER> int
