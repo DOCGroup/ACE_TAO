@@ -1,3 +1,8 @@
+Fri Apr  2 12:33:45 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Default_Servant/File_i.cpp: 
+	Fixed error in IRIX
+
 Thu Apr 01 22:52:00 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.17 released.
