@@ -17,70 +17,69 @@ public:
   Ping_i (int debug = 0) : debug_ (debug) {}
 
   virtual void ping (CORBA::Environment &env = CORBA_Environment::default_environment ())
-  {
-    if (this->debug_)
-      ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
+    {
+      if (this->debug_)
+        ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
 
-    ACE_UNUSED_ARG (env);
-    // Does nothing, just returns.
-  }
+      ACE_UNUSED_ARG (env);
+      // Does nothing, just returns.
+    }
 private:
   int debug_;
 };
-
 
 IR_Helper::IR_Helper (char *server_name, 
                       PortableServer::POA_ptr poa, 
                       CORBA::ORB_ptr orb,
                       int debug)
   : name_ (ACE::strnew (server_name)),
-    ping_ (new Ping_i (debug)),
-    implrepo_ (0),
     ir_key_ (0),
     ir_addr_ (0),
+    ping_ (new Ping_i (debug)),
+    implrepo_ (0),
     poa_ (poa),
     orb_ (orb),
     debug_ (debug)
 {
   
   TAO_TRY
-  {
-    this->read_ir_ior (TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+    {
+      this->read_ir_ior (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    // Resolve the IR.
-    CORBA::Object_var implrepo_object =
-      this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      // Resolve the IR.
+      CORBA::Object_var implrepo_object =
+        this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    if (CORBA::is_nil (implrepo_object.in ()))
-      ACE_ERROR ((LM_ERROR,
-                  "invalid implrepo key <%s>\n",
-                  this->ir_key_));
+      if (CORBA::is_nil (implrepo_object.in ()))
+        ACE_ERROR ((LM_ERROR,
+                    "invalid implrepo key <%s>\n",
+                    this->ir_key_));
 
-    this->implrepo_ = 
-      Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      this->implrepo_ = 
+        Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    // Now register the Ping Object
-     PortableServer::ObjectId_var ping_id =
-    PortableServer::string_to_ObjectId ("ping");
+      // Now register the Ping Object
+       PortableServer::ObjectId_var ping_id =
+      PortableServer::string_to_ObjectId ("ping");
 
-    this->poa_->activate_object_with_id (ping_id.in (),
-                                         this->ping_,
-                                         TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      this->poa_->activate_object_with_id (ping_id.in (),
+                                           this->ping_,
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    this->ping_ptr_ = 
-      this->poa_->id_to_reference (ping_id.in (),
-                                   TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-  }
+      this->ping_ptr_ = 
+        this->poa_->id_to_reference (ping_id.in (),
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
   TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("IR_Helper::IR_Helper");
-    return;
-  }
+    {
+      TAO_TRY_ENV.print_exception ("IR_Helper::IR_Helper");
+      return;
+    }
   TAO_ENDTRY;
 }
 
@@ -99,34 +98,34 @@ IR_Helper::register_server (const char *comm_line,
                             CORBA_Environment &_env)
 {
   TAO_TRY 
-  {
-    CORBA::Object_var implrepo_object =
-      this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+    {
+      CORBA::Object_var implrepo_object =
+        this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    Implementation_Repository *ImplRepo = 
-      Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      Implementation_Repository *ImplRepo = 
+        Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    if (CORBA::is_nil (implrepo_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "invalid implrepo key <%s>\n",
-                         this->ir_key_),
-                        -1);
+      if (CORBA::is_nil (implrepo_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid implrepo key <%s>\n",
+                           this->ir_key_),
+                          -1);
 
-    Implementation_Repository::Process_Options proc_opts;
+      Implementation_Repository::Process_Options proc_opts;
 
-    proc_opts.command_line_ = CORBA::string_dup (comm_line);
-    proc_opts.environment_ = CORBA::string_dup (environment);
-    proc_opts.working_directory_ = CORBA::string_dup (working_dir);
+      proc_opts.command_line_ = CORBA::string_dup (comm_line);
+      proc_opts.environment_ = CORBA::string_dup (environment);
+      proc_opts.working_directory_ = CORBA::string_dup (working_dir);
 
-    ImplRepo->reregister_server (this->name_, proc_opts, TAO_TRY_ENV);
-  }
+      ImplRepo->reregister_server (this->name_, proc_opts, TAO_TRY_ENV);
+    }
   TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("IR_Helper::register_server");
-    return -1;
-  }
+    {
+      TAO_TRY_ENV.print_exception ("IR_Helper::register_server");
+      return -1;
+    }
   TAO_ENDTRY;
   return 0;
 }
