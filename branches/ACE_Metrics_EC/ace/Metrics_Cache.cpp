@@ -2,7 +2,7 @@
  * $Id$
  */
 
-#define ACE_BUILD_DLL
+//#define ACE_BUILD_DLL
 
 #include "ace/OS.h"
 

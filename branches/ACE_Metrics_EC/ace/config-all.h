@@ -621,5 +621,13 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
+
+// Enable ACE Timeprobes
+#if defined (ACE_ENABLE_TIMEPROBES)
+  #if !defined (ACE_COMPILE_TIMEPROBES)
+    #define ACE_COMPILE_TIMEPROBES
+  #endif /* ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_ENABLE_TIMEPROBES */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_ALL_H */
