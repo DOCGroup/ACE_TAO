@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Naming_Utils.h"
+#include "Naming_Server.h"
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "Storable_Naming_Context.h"
@@ -21,7 +21,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (Naming,
-           Naming_Utils,
+           Naming_Server,
            "$Id$")
 
 TAO_Naming_Server::TAO_Naming_Server (void)
@@ -738,59 +738,4 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
   if (this->use_servant_activator_)
     delete this->servant_activator_;
 #endif /* TAO_HAS_MINIMUM_POA */
-}
-
-
-CosNaming::NamingContext_ptr
-TAO_Naming_Client::operator -> (void) const
-{
-  return this->naming_context_.ptr ();
-}
-
-CosNaming::NamingContext_ptr
-TAO_Naming_Client::get_context (void) const
-{
-  // Must duplicate this pointer so it can be stored in a _var.
-  return CosNaming::NamingContext::_duplicate (this->naming_context_.ptr ());
-}
-
-int
-TAO_Naming_Client::init (CORBA::ORB_ptr orb,
-                         ACE_Time_Value *timeout)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", timeout ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the NameService.\n"),
-                          -1);
-      this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
-TAO_Naming_Client::TAO_Naming_Client (void)
-{
-  // Do nothing
-}
-
-TAO_Naming_Client::~TAO_Naming_Client (void)
-{
-  // Do nothing
 }

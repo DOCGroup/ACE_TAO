@@ -20,6 +20,7 @@
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
 

@@ -33,7 +33,7 @@
 #include "ace/OS.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "Logger_i.h"
 #include "LoggerS.h"
 #include "LoggerC.h"

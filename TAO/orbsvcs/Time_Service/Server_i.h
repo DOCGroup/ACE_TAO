@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
 
 class Server_i

@@ -23,7 +23,7 @@
 #define _CONSUMER_HANDLER_H
 
 #include "Event_Comm_i.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/CosNamingC.h"
 
 class Consumer_Handler

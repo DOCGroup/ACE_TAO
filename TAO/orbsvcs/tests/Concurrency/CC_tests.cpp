@@ -19,6 +19,8 @@
 
 #include "CC_tests.h"
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(Concurrency, CC_tests, "$Id$")
 
 CC_Test::CC_Test (CC_naming_service *ns)

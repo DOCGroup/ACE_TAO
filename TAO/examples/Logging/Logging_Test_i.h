@@ -30,7 +30,7 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "LoggerC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 class Logger_Client
 {

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Client_i.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Time, client, "$Id$")
 

@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 
 #include "orbsvcs/TimeServiceS.h"
 #include "Timer_Helper.h"

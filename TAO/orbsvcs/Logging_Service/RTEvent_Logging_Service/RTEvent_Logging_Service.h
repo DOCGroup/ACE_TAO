@@ -25,7 +25,7 @@
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
