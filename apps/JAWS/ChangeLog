@@ -1,3 +1,8 @@
+Tue Dec 16 09:29:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * server/Makefile: expanded rules.bin.GNU, but without
+          $(VOBJS), to avoid make warnings.
+
 Fri Dec 12 03:06:16 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/Parse_Headers.cpp:  Many things have been touched, but
