@@ -1,3 +1,16 @@
+Mon Dec  3 19:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/orbconf.h:
+	  Documented the TAO_ENV_* macros using Doxygen
+	  Add new macro to generate code only if the build is using
+	  CORBA::Environment arguments.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+	  My change was not that great after all, it generated warnings on
+	  the Linux build with exceptions enabled.
+	  I have fixed the problem by taking advantage of a
+	  TAO_ENV_EMIT_CODE macro.
+
 Mon Dec 03 13:51:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
