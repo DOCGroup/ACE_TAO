@@ -1,4 +1,10 @@
+Mon Jun 21 11:56:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/TAO.dsp: Added IORC, IORS, and IORManipulation.
+
 Mon Jun 21 11:52:10 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * Fixed problem with Makefile - removed POAS.h from PUB_HDRS
 
 Mon Jun 21 11:32:12 1999  Steve Huston  <shuston@riverace.com>
@@ -9,7 +15,7 @@ Mon Jun 21 11:32:12 1999  Steve Huston  <shuston@riverace.com>
 Mon Jun 21 11:07:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/AST_Expression.cpp:
-	  Eliminated dependency on <limits.h> and <float.h> by using 
+	  Eliminated dependency on <limits.h> and <float.h> by using
 	  values defined in Basic_Types.h and deleting a broken
 	  #define of MAXCHAR. Thanks to Hata Yoshiaki <hatay@alpha.co.jp>
 	  for pointing out that setting signed short and long
@@ -34,21 +40,21 @@ Mon Jun 21 08:07:46 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Enhanced MProfile to facilitate the new IOR Manipulation
           class.  MProfile objects can now grow dynamically, that is
-          if you try to add a profile to an already full MProfile, 
+          if you try to add a profile to an already full MProfile,
           the internal buffer will be increased in size rather then
           returning an error.
 
         * Added the default per ORB IOR manipulation object to the ORB
           class.
 
-        * Updated the Makefile 
+        * Updated the Makefile
 
         * Addressed comments in IIOP_factory.
 
         * Removed CORBA::Environment arg from TAO_XX_Profile::is_equivalent ()
-          and CORBA_Object::is_equivalent () and TAO_Stub::is_equivalent () 
+          and CORBA_Object::is_equivalent () and TAO_Stub::is_equivalent ()
 
-        * Added the following macro to orbconf.h 
+        * Added the following macro to orbconf.h
              #define TAO_OBJID_IORMANIPULATION "IORManipulation"
 
 Sun Jun 20 19:35:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -65,7 +71,7 @@ Sun Jun 20 16:33:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  response. Thanks to J. Russell Noseworthy
 	  <rnosewor@objectsciences.com> for reporting this problem.
 
-	* tao/GIOP.cpp: 
+	* tao/GIOP.cpp:
 	  Fixed error messages.
 
 	* tests/Multiple_Inheritance/run_test.pl:
@@ -91,15 +97,15 @@ Sun Jun 20 14:39:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.h: Reformatted the documentation
 	  so it'll conform to the "ACE+TAO style."
-  
+
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.h: Added a definition for
 	  TAO_Dynamic_Property::operator=(TAO_Dynamic_Property const &) so
  	  that the code will compile with G++.  Thanks to Jean-Marc
  	  Strauss <jms97@club-internet.fr> for reporting this.
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp (startup): Make sure to 
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp (startup): Make sure to
 	  use .in() to work around broken G++ compilers...  Thanks to
- 	  Jean-Marc Strauss <jms97@club-internet.fr> for reporting this.	
+ 	  Jean-Marc Strauss <jms97@club-internet.fr> for reporting this.
 
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
@@ -197,7 +203,7 @@ Sat Jun 19 15:46:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	One more step Generating Reply Handler skeleton code in the client
 	header file. Again, this will get enabled only when the TAO_IDL is
-	called with the -GC flag.  
+	called with the -GC flag.
 
 	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
 	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
@@ -222,11 +228,11 @@ Sat Jun 19 15:46:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
 	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_ch.h:
 
-	Added all these files. 
+	Added all these files.
 
 	Rename the arglist_* to meaningful *_arglist unformly with
-	meaningful names. 
-  
+	meaningful names.
+
 	* TAO_IDL/Makefile:
 	* TAO_IDL/be/be_visitor_argument.cpp:
 	* TAO_IDL/be/be_visitor_factory.cpp:
@@ -246,14 +252,14 @@ Sat Jun 19 15:46:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/be_include/be_visitor_interface/ami_handler_fwd_ci.h:
 
 	Changes for the above work.
-  
+
 	* TAO_IDL/be/be_visitor_argument/arglist_ami.cpp:
    	* TAO_IDL/be/be_visitor_operation/arglist_ami.cpp:
 	* be_include/be_visitor_argument/arglist_ami.h:
    	* be_include/be_visitor_operation/arglist_ami.h:
-  
-  	Removed these files since they have been renamed already. 
-  
+
+  	Removed these files since they have been renamed already.
+
 Sat Jun 19 15:43:38 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Cubit/TAO/DII_Cubit/client.dsp:
@@ -265,7 +271,7 @@ Sat Jun 19 15:43:38 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* POA/Object_Creation_And_Registration/registration.dsp:
 	* Pluggable/client.dsp:
 	* Pluggable/server.dsp: Changed the tao_idl invocation options.
-	
+
 	* docs/compiler.html: Updated documentation.
 
 Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -277,7 +283,7 @@ Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/DynUnion_i.h:
 	* tao/DynUnion_i.cpp:
 	  Class DynUnion_i contains a functor class DU_Extractor to
-	  check for a match in TypeCode::member-label when 
+	  check for a match in TypeCode::member-label when
 	  constructing or assigning from an Any. DU_Extractor is a
 	  template class containing one function check_match(). The
 	  cases where the discriminator is a wchar or an enum caused
@@ -299,14 +305,14 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  line. If the application developer wants to change the default
 	  through his make file he can override them by using the rule
 	  TAO_IDLFLAGS.
-	
-	* TAO_IDL/util/utl_global.cpp : 
+
+	* TAO_IDL/util/utl_global.cpp :
 	* TAO_IDL/driver/drv_args.cpp: Made changes to generate code
 	  according to the following rules.
-	  
+
 	  - If the compilation is on a platform with native C++ exceptions
-	  like NT, we may not want the ACE_TRY_ENV variables by default. 
-	  
+	  like NT, we may not want the ACE_TRY_ENV variables by default.
+
 	  - If the compilation is on a platform with NO native C++
 	  exceptions like say g++, the compiler  generates the environment
 	  variables.
@@ -319,7 +325,7 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  - A case that is vice-versa to the above. The option for such a
 	  case is -Ge 0
-	
+
 	* docs/compiler.html: Added documentation for the -u option in the
 	  IDL compiler.
 
@@ -385,7 +391,7 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/time/client.dsp:
 	* examples/Simple/time/server.dsp:
 	* examples/Simple/time-date/Time_Date.dsp:
-	* examples//Simulator/DOVEMIB/DOVEMIBx.dsp 
+	* examples//Simulator/DOVEMIB/DOVEMIBx.dsp
 	* examples//Simulator/DOVEMIB/TestClient.dsp:
 	* examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
 	* examples/Simulator/Event_Supplier/Event_Sup.dsp:
@@ -427,9 +433,9 @@ Fri Jun 18 21:00:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  that's read in as '\\' is stored in an
 	  AST_Expression as '\'. isprint() sees this as a
 	  printable character, so the case below it testing
-	  for '\\' was never reached, and char consts 
+	  for '\\' was never reached, and char consts
 	  assigned the value of '\\' were getting output as
-	  '\', causing a C++ compile error. Thanks to 
+	  '\', causing a C++ compile error. Thanks to
 	  Hata Yoshiaki <hatay@alpha.co.jp> for pointing
 	  out this problem.
 
@@ -441,7 +447,7 @@ Fri Jun 18 18:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	  Fixed old g++ warnings 
+	  Fixed old g++ warnings
 
 Fri Jun 18 16:22:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
