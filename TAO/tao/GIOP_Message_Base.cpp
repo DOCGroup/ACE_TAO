@@ -242,10 +242,12 @@ TAO_GIOP_Message_Base::message_type (
   switch (msg_state.message_type_)
     {
     case TAO_GIOP_REQUEST:
-    case TAO_GIOP_LOCATEREQUEST:
       return TAO_PLUGGABLE_MESSAGE_REQUEST;
+    case TAO_GIOP_LOCATEREQUEST:
+      return TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST;
 
     case TAO_GIOP_LOCATEREPLY:
+      return TAO_PLUGGABLE_MESSAGE_LOCATEREPLY;
     case TAO_GIOP_REPLY:
       return TAO_PLUGGABLE_MESSAGE_REPLY;
 
@@ -534,7 +536,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   switch (qd->msg_type_)
     {
-    case TAO_GIOP_REQUEST:
+    case TAO_PLUGGABLE_MESSAGE_REQUEST:
       // Should be taken care by the state specific invocations. They
       // could raise an exception or write things in the output CDR
       // stream
@@ -542,7 +544,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                     input_cdr,
                                     output);
 
-    case TAO_GIOP_LOCATEREQUEST:
+    case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST:
       return this->process_locate_request (transport,
                                            input_cdr,
                                            output);
@@ -597,12 +599,12 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   switch (qd->msg_type_)
     {
-    case TAO_GIOP_REPLY:
+    case TAO_PLUGGABLE_MESSAGE_REPLY:
       // Should be taken care by the state specific parsing
       return this->generator_parser_->parse_reply (input_cdr,
                                                    params);
 
-    case TAO_GIOP_LOCATEREPLY:
+    case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
       return this->generator_parser_->parse_locate_reply (input_cdr,
                                                           params);
       default:
