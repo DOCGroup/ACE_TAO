@@ -1,14 +1,19 @@
+Mon Sep 27 08:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Context_Impl_Base.cpp:
+          Use false instead of FALSE.
+
 Wed Sep 22 17:46:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Removed unused parameter identifiers and fixed the order of some
           class member initializations.
 
 Tue Sep 21 13:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/value_factory_registration.html:
-        
+
           New documentation file, describing the behavior of the CIDL
           compiler with respect to automatic generation of code to
           register valuetype factories for eventtypes referenced by
@@ -18,25 +23,25 @@ Tue Sep 21 13:04:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Added code to check an eventtype used as an event consumer
           in a component for the presence of an operation or
           factory. If either is found, code generation for registering
           the associated _init class with the container's ORB is skipped.
           Also added command line option to toggle off generation of
-          the factory registration in all cases. Thanks to 
+          the factory registration in all cases. Thanks to
           Vasili Goutas <vasili@goutas.de> for the posting to the ciao-users
-          mailing list that prompted us to make the CIDL compiler 
+          mailing list that prompted us to make the CIDL compiler
           smarter and more friendly with regard to this feature.
 
 Tue Sep 21 13:00:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/IDL3/IDL3.vcproj:
-        
+
           Added new files create by Boris for eventtype factory support.
-          
+
         * CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
-        
+
           Fixed search-and-replace error in EventTypeFactory constructor
           that had it inheriting from itself.
 
