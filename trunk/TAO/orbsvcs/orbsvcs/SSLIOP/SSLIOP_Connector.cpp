@@ -370,7 +370,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
   // If the invocation wants integrity without confidentiality but the
   // server does not support "no protection," then it won't be
-  // possible provide integrity.  In order to support integrity
+  // possible to provide integrity.  In order to support integrity
   // without confidentiality, encryption must be disabled but secure
   // hashes must remain enabled.  This is achieved using the "eNULL"
   // cipher.  However, the "eNULL" cipher is only enabled on the
@@ -515,7 +515,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
         }
 
-      TAO::SSLIOP::Credentials_var credentials =
+      TAO::SSLIOP::OwnCredentials_var credentials =
         this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ()
                                     ACE_ENV_ARG_PARAMETER);
@@ -725,6 +725,12 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
       // Use the default certificate and private key, i.e. the one set
       // in the SSL_CTX that was used when creating the SSL data
       // structure.
+      
+      /**
+       * @todo Check if the CredentialsCurator contains a default set
+       *       of SSLIOP OwnCredentials.
+       */
+
       TAO::SSLIOP::OwnCredentials_ptr & c = ssliop_credentials.out ();
       ACE_NEW_THROW_EX (c,
                         TAO::SSLIOP::OwnCredentials (

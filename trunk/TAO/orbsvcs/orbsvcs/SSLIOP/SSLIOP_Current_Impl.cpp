@@ -34,7 +34,9 @@ TAO::SSLIOP::Current_Impl::client_credentials (
 
   SecurityLevel3::ClientCredentials_ptr creds;
   ACE_NEW_THROW_EX (creds,
-                    TAO::SSLIOP::ClientCredentials (cert.in (), 0),
+                    TAO::SSLIOP::ClientCredentials (cert.in (),
+                                                    0,
+                                                    this->ssl_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
