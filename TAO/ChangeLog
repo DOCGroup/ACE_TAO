@@ -108,15 +108,24 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  - Changed the order of constructor calls in IDL compiler
 	    source files, to eliminate warnings from gcc 3.3.
 
-	  - Fixed bug in code generation for impl classes.
+	  - Fixed bug in code generation for impl classes. Thanks to
+            Victor N. <dreamland_skib2@mailru.com> for reporting the
+            bug.
 
 	  - Fixed bug in code generation for typedef'd string
 	    constant when it appears inside an interface or
-	    valuetype.
+	    valuetype. Thanks to Francesco Baldi <Francesco.Baldi@hit.it>
+            for reporting the bug.
 
 	  - Fixed bug in typecode generation for recursive types
 	    using a typdef'd sequence and forward struct/union
-	    declaration.
+	    declaration. Thanks to Thomas Wiegert <wiegert@schlund.de>
+            for reporting the bug.
+
+          - Fixed bug in code generation for sequences of managed
+            types, when the managed type is declared in different
+            module than the sequence. Thanks to Huang-Ming Huang 
+            <hh1@cse.wustl.edu> for reporting the bug.
 
 	  - Added infrastructure to store and pass a default
 	    value of 0 for the 'custom' flag applied to
@@ -161,7 +170,8 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Changed the position of 'const' qualifiers, which causes
 	  no change in semantics, but makes it easier for MSVC to
-	  deal with.
+	  deal with. The workaround on MSVC was causing problems
+          with irix, as reported by Michael Rice <MichaelARice@knology.net>.
 
 Tue Jun 17 09:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
