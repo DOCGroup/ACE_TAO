@@ -1,11 +1,11 @@
 Mon Mar 30 13:13:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Typecode.cpp: 
+	* tao/Typecode.cpp:
 	  Fixed cast that dropped constness when only reinterpret_cast was
 	  needed; thanks to David Levine (levine@cs.wustl.edu) for
 	  detecting this.
 
-	* tao/Server_Request.cpp: 
+	* tao/Server_Request.cpp:
 	  bytes_remaining was called in a debug message (not seen in
 	  Solaris); thanks to Nanbor Wang (nanbor@cs.wustl.edu) for
 	  reporting this.
@@ -14,7 +14,7 @@ Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.i: only specialize ACE_Hash_Addr<ACE_INET_Addr>
           with ACE inlining enabled, to avoid link collision with the
-          instantiation in ORB.cpp
+          instantiation in Connect.cpp.
 
         * tao/CDR.cpp (TAO_OuputCDR ctors): rearranged initializations
           to match declaration order.
@@ -30,47 +30,47 @@ Mon Mar 30 10:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	  The change affected the following files:
 
-	* TAO/tao/Align.h: 
-	* TAO/tao/CDR.cpp: 
-	* TAO/tao/CDR.h: 
-	* TAO/tao/CDR.i: 
-	* TAO/tao/Connect.cpp: 
-	* TAO/tao/Connect.h: 
-	* TAO/tao/Exception.cpp: 
-	* TAO/tao/GIOP.cpp: 
-	* TAO/tao/GIOP.h: 
-	* TAO/tao/GIOP.i: 
-	* TAO/tao/IIOP_Interpreter.cpp: 
-	* TAO/tao/IIOP_Interpreter.h: 
-	* TAO/tao/IIOP_ORB.cpp: 
-	* TAO/tao/ORB.h: 
-	* TAO/tao/Server_Request.cpp: 
-	* TAO/tao/Server_Request.h: 
-	* TAO/tao/Server_Request.i: 
-	* TAO/tao/Typecode.cpp: 
-	* TAO/tao/Typecode.h: 
-	* TAO/tao/decode.cpp: 
-	* TAO/tao/deep_copy.cpp: 
-	* TAO/tao/deep_free.cpp: 
-	* TAO/tao/encode.cpp: 
-	* TAO/tao/orbconf.h: 
-	* TAO/tao/params.h: 
+	* TAO/tao/Align.h:
+	* TAO/tao/CDR.cpp:
+	* TAO/tao/CDR.h:
+	* TAO/tao/CDR.i:
+	* TAO/tao/Connect.cpp:
+	* TAO/tao/Connect.h:
+	* TAO/tao/Exception.cpp:
+	* TAO/tao/GIOP.cpp:
+	* TAO/tao/GIOP.h:
+	* TAO/tao/GIOP.i:
+	* TAO/tao/IIOP_Interpreter.cpp:
+	* TAO/tao/IIOP_Interpreter.h:
+	* TAO/tao/IIOP_ORB.cpp:
+	* TAO/tao/ORB.h:
+	* TAO/tao/Server_Request.cpp:
+	* TAO/tao/Server_Request.h:
+	* TAO/tao/Server_Request.i:
+	* TAO/tao/Typecode.cpp:
+	* TAO/tao/Typecode.h:
+	* TAO/tao/decode.cpp:
+	* TAO/tao/deep_copy.cpp:
+	* TAO/tao/deep_free.cpp:
+	* TAO/tao/encode.cpp:
+	* TAO/tao/orbconf.h:
+	* TAO/tao/params.h:
 	  In most cases it was only a matter of changing the class name
 	  and the method invocations.
-	
-	* tests/Param_Test/options.cpp: 
+
+	* tests/Param_Test/options.cpp:
 	  Use CORBA::string_copy instead of ACE::strdup because we delete
 	  the buffer with CORBA::string_free.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp:
 	  I limited the size of the sequences, otherwise the test time
 	  grows non-linearly with the number of loops.
 
-	* tests/Param_Test/README: 
+	* tests/Param_Test/README:
 	  The test can also check string sequences, but the option to do
 	  so (-t strseq) was not documented.
 
-	* tests/CDR/basic_types.cpp: 
+	* tests/CDR/basic_types.cpp:
 	  The test is run several times; this is useful when trying to
 	  verify performance.
 
