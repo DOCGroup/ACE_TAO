@@ -122,9 +122,8 @@ namespace TAO_Notify
     Standard_Event_Persistence_Factory * factory_;
   };
 
+  ACE_FACTORY_DECLARE (TAO_Notify_Serv, Standard_Event_Persistence)
 }
-
-ACE_FACTORY_DECLARE (TAO_Notify_Serv, Standard_Event_Persistence)
 
 #include /**/ "ace/post.h"
 #endif /* STANDARD_EVENT_PERSISTENCE_H */

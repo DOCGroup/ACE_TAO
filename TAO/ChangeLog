@@ -1,9 +1,20 @@
+Sat Nov 27 23:44:56 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/Notify/XML_Topology_Factory.h
+          Moved ACE_FACTORY_DECLARE to within TAO_NOTIFY namespace.
+
+        * orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+          Added dummy method to remove warnings 'hidden overloaded
+          virtual method'.
+
 Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Connector_Registry.cpp:
 
 	  Used an auto_ptr <> instead of using delete's in the error
-	  paths. 
+	  paths.
 
 	The following checkin adds a simple command line option which
         allows configuring the client ORB during initializing with a
@@ -14,20 +25,20 @@ Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         -ORBPreferredInterfaces, and
 	-ORBEnforcePreferredInterfaces. Please see docs/Options.html for
         more details.
-	
+
 	* tao/Endpoint.h:
 
 	  Cosmetic fixes.
-	
+
 	* tao/IIOP_Connection_Handler.cpp:
 
-	  Added a debug statement 
+	  Added a debug statement
 
 	* tao/IIOP_Connector.cpp:
-	  
+
 	  Used the local addr for connect () instead of using the default
-	  ACE_Addr::sap_any.  
-	
+	  ACE_Addr::sap_any.
+
 	* tao/IIOP_Endpoint.cpp:
 	* tao/IIOP_Endpoint.h:
 
@@ -37,26 +48,26 @@ Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  organized as multiple endpoints (with same target) with different
 	  preferred networks stringed through the next_ pointer. This
 	  allows the Invocation code path to pick things through its
-	  iteration process. 
-	
+	  iteration process.
+
 	* tao/IIOP_Profile.cpp:
 
 	  Called TAO_IIOP_Endpoint::preferred_interfaces () from within
 	  decode_profile ().
-	
+
 	* tao/IIOP_Profile.h:
 
-	  Added documentation. 
-	
+	  Added documentation.
+
 	* tao/ORB_Core.cpp:
 
-	  Added the two new options. 
-	
+	  Added the two new options.
+
 	* tao/params.cpp:
 	* tao/params.h:
 
-	  Stored the options. 
-	
+	  Stored the options.
+
 	* tao/Strategies/SCIOP_Connection_Handler.cpp:
 	* tao/Strategies/SCIOP_Connector.cpp:
 	* tao/Strategies/SCIOP_Endpoint.cpp:
@@ -93,7 +104,7 @@ Sat Nov 27 14:26:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 Sat Nov 27 14:19:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* utils/catior/catior.cpp:
-	  Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds 
+	  Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds
 	  (VxWorks DIAB).
 
 Fri Nov 26 17:49:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
