@@ -4723,12 +4723,16 @@ typedef double ACE_timer_t;
 # include /**/ <sys/filio.h>
 #endif /* ACE_HAS_SYS_FILIO_H */
 
-# if defined (ACE_WIN32)
-    // = typedef for the _stat data structure
-    typedef struct _stat ACE_stat;
+# if defined (ACE_HAS_PACE)
+  // = typedef for the _stat data structure
+  typedef pace_stat_s ACE_stat;
 # else
-    typedef struct stat ACE_stat;
-# endif /* ACE_WIN32 */
+#   if defined (ACE_WIN32)
+      typedef struct _stat ACE_stat;
+#   else
+      typedef struct stat ACE_stat;
+#   endif /* ACE_WIN32 */
+# endif /* ACE_HAS_PACE */
 
 // We need this for MVS...
 extern "C" {
