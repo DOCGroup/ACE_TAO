@@ -159,6 +159,7 @@ public:
 
   static void exit (void *status = 0);
   // Exit the current thread and return "status".
+  // Should _not_ be called by main thread.
 
   static int getconcurrency (void);
   // Get the LWP concurrency level of the process.
