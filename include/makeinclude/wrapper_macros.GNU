@@ -286,20 +286,17 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), rtti off (0), and
+#### Defaults are exceptions off (0), fast off (0), rtti on (1), and
 #### versioned_so on (1).
 ####
 exceptions ?= 0
 
 fast ?= 0
 
-# @@@ Should this really be the default?  Or should we let the
-# compiler choose?
-rtti ?= 0
+rtti ?= 1
 
-ifeq (,$(versioned_so))
-  versioned_so = 1
-endif
+versioned_so ?= 1
+
 SOVERSION ?=
 SONAME ?=
 
