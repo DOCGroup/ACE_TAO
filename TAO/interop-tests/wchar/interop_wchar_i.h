@@ -42,75 +42,84 @@ public:
   //Destructor
   virtual ~interop_WChar_Passer_i (void);
 
-  virtual char * orb_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * orb_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean wchar_to_server (CORBA::WChar test,
                                           CORBA::Short key
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::WChar wchar_from_server (CORBA::Short key
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean wstring_to_server (const CORBA::WChar * test,
                                             CORBA::Short key
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::WChar * wstring_from_server (CORBA::Short key
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean warray_to_server (const interop::warray test,
                                            CORBA::Short key
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual interop::warray_slice * warray_from_server (CORBA::Short key
-                                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean wstruct_to_server (const interop::wstruct & test,
                                             CORBA::Short key
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual interop::wstruct * wstruct_from_server (CORBA::Short key
-                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
-  virtual CORBA::Boolean wunion_to_server (const interop::wunion & test,
+  virtual CORBA::Boolean wstructseq_to_server (const interop::wstructseq & test,
+                                            CORBA::Short key
+                                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC (( CORBA::SystemException ));
+
+  virtual interop::wstructseq * wstructseq_from_server (CORBA::Short key
+                                             ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC (( CORBA::SystemException ));
+
+ virtual CORBA::Boolean wunion_to_server (const interop::wunion & test,
                                            CORBA::Short key
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual interop::wunion * wunion_from_server (CORBA::Short key,
                                                 interop::wchar_types type
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean any_to_server (const CORBA::Any &test,
                                         CORBA::Short key
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Any* any_from_server (CORBA::Short key,
                                        interop::wchar_types type
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Any* any_echo (const CORBA::Any &test
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ));
 
 virtual void exception_test (CORBA::Short key
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException,
                     interop::WChar_Passer::WStringException ));
 
-virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ));
 
 private:
