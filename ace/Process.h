@@ -133,9 +133,9 @@ public:
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
 
-  ACE_HANDLE stdin (void);
-  ACE_HANDLE stdout (void);
-  ACE_HANDLE stderr (void);
+  ACE_HANDLE std_in (void);
+  ACE_HANDLE std_out (void);
+  ACE_HANDLE std_err (void);
 
 #endif /* ACE_WIN32 */
 
@@ -162,17 +162,44 @@ protected:
 
   int environment_inherited_;
   // Ensures once only call to inherit environment.
+
+  STARTUPINFO startup_info_;
+  int set_handles_called_;
+  // Is 1 if stdhandles was called.
+
+  BOOL handle_inheritence_;
+  // Default TRUE.
+
+  BOOL new_console_;
+  // Default FALSE.
+
+  LPSECURITY_ATTRIBUTES process_attributes_;
+  // Pointer to security_buf1_.
+
+  LPSECURITY_ATTRIBUTES thread_attributes_;
+  // Pointer to security_buf2_.
+
+  SECURITY_ATTRIBUTES security_buf1_;
+  // Data for process_attributes_.
+
+  SECURITY_ATTRIBUTES security_buf2_;
+  // Data for thread_attributes_.
+
+#else /* !ACE_WIN32 */
+  ACE_HANDLE stdin_;
+  ACE_HANDLE stdout_;
+  ACE_HANDLE stderr_;
 #endif /* ACE_WIN32 */
 
   int environment_buf_index_;
   // Pointer into environment_buf_.  This should point to the next
   // free spot.
 
-  TCHAR environment_buf_[ENVIRONMENT_BUFFER];
-  // Buffer containing all environment strings.
-
   int environment_argv_index_;
   // Pointer to environment_argv_.
+
+  TCHAR environment_buf_[ENVIRONMENT_BUFFER];
+  // Buffer containing all environment strings.
 
   char *environment_argv_[MAX_ENVIRONMENT_ARGS];
   // Pointers into environment_buf_.
@@ -191,31 +218,6 @@ protected:
 
   TCHAR path_[MAXPATHLEN + 1];
   // The application path.
-#if defined (ACE_WIN32)
-  STARTUPINFO startup_info_;
-  int set_handles_called_;
-  // Is 1 if stdhandles was called.
-
-  BOOL handle_inheritence_;
-  // Default TRUE.
-
-  BOOL new_console_;
-  // Default FALSE.
-
-  LPSECURITY_ATTRIBUTES process_attributes_;
-  // Pointer to security_buf1_.
-  LPSECURITY_ATTRIBUTES thread_attributes_;
-  // Pointer to security_buf2_.
-  SECURITY_ATTRIBUTES security_buf1_;
-  // Data for process_attributes_.
-  SECURITY_ATTRIBUTES security_buf2_;
-  // Data for thread_attributes_.
-
-#else /* ACE_WIN32 */
-  ACE_HANDLE stdin_;
-  ACE_HANDLE stdout_;
-  ACE_HANDLE stderr_;
-#endif /* ACE_WIN32 */
 };
 
 // ************************************************************

@@ -12,8 +12,8 @@
 ACE_Tokenizer::ACE_Tokenizer (char *buffer)
   : buffer_ (buffer),
     index_ (0),
-    delimiter_index_ (0),
-    preserves_index_ (0)
+    preserves_index_ (0),
+    delimiter_index_ (0)
 {
 }
 
@@ -233,54 +233,7 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
     // CreateProcess failed.
     return -1;
 #else /* ACE_WIN32 */
-  // Fork the new process.
-  this->child_id_ = ACE_OS::fork (options.path ());
-
-  switch (this->child_id_)
-    {
-    case -1:
-      // Error.
-      return -1;
-    case 0:
-      // Child process.
-      {
-	if (stdin_ != ACE_INVALID_HANDLE
-	    && ACE_OS::dup2 (stdin_, ACE_STDIN) == -1)
-	  return -1;
-	else if (stdout_ != ACE_INVALID_HANDLE
-		 && ACE_OS::dup2 (stdout_, ACE_STDOUT) == -1)
-	  return -1;
-	else if (stderr_ != ACE_INVALID_HANDLE
-		 && ACE_OS::dup2 (stderr_, ACE_STDERR) == -1)
-	  return -1;
-
-	// If we must, set the working directory for the child process.
-	if (options.working_directory () != 0)
-	  ::chdir (options.working_directory ());
-
-	// Child process executes the command.
-	int result;
-      
-	if (envp == 0)
-	  // Not sure if options.path () will work.
-	  result = ACE_OS::execvp (options.path (), 
-				   options.argv_cl_options ()); // command-line args
-	else
-	  result = ACE_OS::execve (options.path (),
-				   options.argv_cl_options (), // command-line args
-				   options.argv_env ()); // environment variables
-
-	if (result == -1)
-	  // If the execv fails, this child needs to exit.
-	  ACE_OS::exit (errno);
-
-	return 0;
-      }
-
-    default:
-      // Server process.  The fork succeeded.
-      return this->child_id_;
-    }
+  return 0;
 #endif /* ACE_WIN32 */
 }
 
@@ -536,24 +489,27 @@ ACE_Process::ACE_Process (char *argv[],
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
-  : cl_options_ (0),
+  : 
 #if defined (ACE_WIN32)
-    new_console_ (FALSE),
+    inherit_environment_ (ie),
+    environment_inherited_ (0),
     handle_inheritence_ (TRUE),
+    new_console_ (FALSE),
     set_handles_called_ (0),
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
-    inherit_environment_ (ie),
-    environment_inherited_ (0),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
 #endif /* ACE_WIN32 */
     environment_buf_index_ (0),
-    environment_argv_index_ (0)
+    environment_argv_index_ (0),
+    cl_options_buf_ (0),
+    cl_options_ (0)
 {
-  cl_options_ = new char[cobl];
+  ACE_NEW (cl_options_, char[cobl]);
+
   if (cl_options_ == 0)
     ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_Process_Options::ACE_Process_Options"));
   cl_options_[0] = '\0';

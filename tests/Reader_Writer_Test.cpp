@@ -199,6 +199,8 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, " (%t) exiting main thread\n"));
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
