@@ -1,3 +1,9 @@
+Thu Oct 15 18:02:51 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/config-win32.h: For non-winnt systems, define ACE_LACKS_RECVMSG
+	  and ACE_LACKS_SENDMSG.  Thanks to Bill Hall <hts@gte.net> for 
+	  pointing this out.
+
 Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.i (set_option): Need to convert the
