@@ -1,7 +1,19 @@
+Sun Nov  2 13:28:19 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IDL_Compiler: The bug resulting out of encoding object
+	references has been fixed atleast on Solaris using g++ as well as
+	SunCC. Changes made to be_operation.cpp and be_state.cpp such that
+	the return value for object references is always of type
+	CORBA::Object_ptr rather than the real interface type. In
+	addition, keeping in perspective the change that Irfan made and
+	described below (in encode.cpp), the Any that holds the result
+	*does not* own the value. In contrast, for the rest of the cases
+	the result (of type Any) owns the result.
+
 Fri Oct 31 22:20:06 1997    <irfan@TWOSTEP>
 
 	* tao/encode.cpp (encode): Changed cast of data from
- 	  *(CORBA::Object_ptr *) to (CORBA::Object_ptr). 
+ 	  *(CORBA::Object_ptr *) to (CORBA::Object_ptr).
 
 	* tao/default_server.cpp (parse_args): Manipulation of curarg was
  	  all messed up.  Fixed it such that it was not incremented
