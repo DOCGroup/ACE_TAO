@@ -44,6 +44,22 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
+  // If we contain an anonymous sequence,
+  // generate code for that sequence here.
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (this->gen_anonymous_base_type (bt,
+                                         TAO_CodeGen::TAO_SEQUENCE_CH)
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ch::"
+                             "gen_unbounded_sequence - "
+                             "gen_anonymous_base_type failed\n"),
+                            -1);
+        }
+    }
+
   // generate the class name
   be_type  *pt; // base types
 

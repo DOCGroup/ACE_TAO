@@ -232,6 +232,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   be_type *bt;       // type node
   TAO_OutStream *os = this->ctx_->stream ();
 
+  if (node->defined_in () == 0)
+    {
+      // The node is a nested sequence, and has had no scope defined.
+      node->set_defined_in (DeclAsScope (this->ctx_->scope ()));
+    }
+
   // first create a name for ourselves
   if (node->create_name (this->ctx_->tdef ()) == -1)
     {

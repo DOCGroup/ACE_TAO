@@ -89,6 +89,7 @@ be_sequence::gen_name (void)
       // our base type is an anonymous sequence
       be_sequence *seq;
       seq = be_sequence::narrow_from_decl (bt);
+
       if (!seq)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,8 +98,19 @@ be_sequence::gen_name (void)
                              "error converting base type to sequence\n"),
                             0);
         }
-      seq->set_defined_in (this); // set ourselves as its parent
-      this->fe_add_sequence (seq); // add the child to our scope
+
+      // Some platforms define IDL sequences as template classes
+      // and some do not. If the nested sequence were defined in
+      // the scope of the enclosing sequence, we would have to 
+      // not only define the nested class in two places, but also
+      // deal with the fact that, for the template classes, the
+      // enclosing sequence's template type is a class defined 
+      // inside it. So we define the nested sequence in the next
+      // scope up, and the existing code generation works for both 
+      // template and non-template implementations of IDL sequences.
+      UTL_Scope *parent = this->defined_in ();
+      seq->set_defined_in (parent);
+      parent->add_sequence (seq);
       ACE_OS::sprintf (namebuf, "_tao_seq_%s", seq->gen_name ());
     }
   else
@@ -137,24 +149,32 @@ be_sequence::create_name (be_typedef *node)
       ACE_OS::strcpy (namebuf, this->gen_name ()); // generate a local name
 
       // now see if we have a fully scoped name and if so, generate one
-      scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      UTL_Scope *us = this->defined_in ();
+
+      scope = be_scope::narrow_from_scope (us)->decl ();
+
       if (scope)
         {
           // make a copy of the enclosing scope's  name
           n = (UTL_ScopedName *)scope->name ()->copy () ;
 
           // add our local name as the last component
-          n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                        (namebuf), 1,
-                                                        0, I_FALSE),
-                                        NULL));
+          n->nconc (
+              new UTL_ScopedName (
+                  new Identifier (ACE_OS::strdup (namebuf), 
+                                  1,
+                                  0, 
+                                  I_FALSE),
+                  NULL
+                )
+            );
           // set the fully scoped name
           this->set_name (n);
         }
       else
         {
           // We better be not here because we must be inside some scope,
-          // atleast the ROOT scope.
+          // at least the ROOT scope.
           return -1;
         }
     }
