@@ -67,5 +67,6 @@
 #include "be_visitor_operation/interceptors_ss.cpp"
 #include "be_visitor_operation/interceptors_exceptlist.cpp"
 #include "be_visitor_operation/interceptors_info_rettype.cpp"
+#include "be_visitor_operation/interceptors_result.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")
