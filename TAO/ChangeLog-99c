@@ -1,3 +1,7 @@
+1999-03-27  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the A/V documentation.
+
 Sat Mar 27 14:20:09 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	*  examples/Event_Comm/Consumer_Input_Handler.cpp,
